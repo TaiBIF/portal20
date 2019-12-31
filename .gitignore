@@ -1,0 +1,13 @@
+# Python bytecode
+__pycache__
+
+# Django dynamic directories
+logs
+media
+
+# Environment variables
+.env
+.env.*
+
+# Static files
+node_modules
