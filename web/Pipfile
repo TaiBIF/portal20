@@ -10,6 +10,10 @@ django = "*"
 gunicorn = "*"
 psycopg2-binary = "*"
 pillow = "*"
+django-environ = "*"
 
 [requires]
 python_version = "3.7"
+
+[scripts]
+serve = "python manage.py runserver"

@@ -1,0 +1,48 @@
+version: '3.7'
+
+services:
+  web:
+    build: ./web
+    container_name: taibif-web-container
+    image: taibif-web-image
+    expose:
+      - 8001
+    depends_on:
+      - db
+    links:
+      - db:db
+    volumes:
+      - .:/code
+      - static:/code/taibif_volumes/static
+      - media:/code/taibif_volumes/media
+    #command: "./docker/webapp/wait-for-it.sh db:5432 -t 30 -- ./docker/webapp/startup.sh"
+    #command: python web/manage.py runserver 0.0.0.0:8001
+    command: ./docker-web-entry.sh
+    restart: always
+    env_file:
+      - web/.env
+  db:
+    container_name: taibif-db-container
+    image: postgres:12-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=
+      - POSTGRES_DB=taibif
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - ../taibif_volumns/pgdata:/var/lib/postgresql/data/
+  nginx:
+    image: nginx:1.17.6-alpine
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - static:/code/taibif_volumes/static
+    links:
+      - web:web
+
+volumes:
+  static:
+  media:

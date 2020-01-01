@@ -12,21 +12,32 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+import environ
 
+env = environ.Env()
+root_path = environ.Path(__file__) - 2 # web
+
+ENV = env('ENV', default='prod')
+assert ENV in ['dev', 'test', 'prod', 'qa']
+
+ROOT_URLCONF = 'conf.urls'
+WSGI_APPLICATION = 'conf.wsgi.application'
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = root_path()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '8+#4)q=(-hma7fk*jmj-dxd+8^#1j&e)bcsnly5j&-x$f(y#v^'
+SECRET_KEY = env('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DEBUG', default=False)
 
 ALLOWED_HOSTS = []
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = env('MEDIA_ROOT', default=root_path('media'))
 
 # Application definition
 
@@ -72,14 +83,8 @@ WSGI_APPLICATION = 'conf.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
+DJANGO_DATABASE_URL = env.db('DATABASE_URL')
+DATABASES = {'default': DJANGO_DATABASE_URL}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -103,9 +108,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
+#LANGUAGE_CODE = 'zh-hant'
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Taipei'
 
 USE_I18N = True
 
@@ -118,3 +124,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = env('STATIC_ROOT', default=root_path('static'))
