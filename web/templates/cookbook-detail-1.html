@@ -6,6 +6,14 @@
 
 <!-- container begin -->
 <div class="container">
+
+  <div class="thumbnail">
+    <img src="{% static 'images/content-cookbook-ch1.jpg' %}" alt="Pandion haliaetus haliaetus (Linnaeus, 1758) 魚鷹，李豐曉 攝 (CC BY-NC)">
+    <div class="caption">
+      <span class="text-muted"><em>Pandion haliaetus haliaetus</em> (Linnaeus, 1758) 魚鷹，李豐曉 攝 (CC BY-NC)</span>
+    </div>
+  </div>
+
     <!-- story title & share btns begin -->
     <div class="article-head-wrapper">
       {#<span class="article-post-date">2018/12/08</span>#}
@@ -13,6 +21,7 @@
         第一章 介紹
         <span class="article-author">作者：Tsuyoshi Hosoya 細矢 剛</span>
       </h1>
+      {% comment %}
       <div class="article-share-btn-wrapper">
         分享文章
         <a href="#" class="navbar-oval-btn"><span class="myicon icon-social-fb"></span></a>
@@ -21,6 +30,7 @@
         <a href="#" class="navbar-oval-btn"><span class="myicon icon-mail"></span></a>
       </div>
     </div>
+    {% endcomment %}
     <!-- story title & share btns end -->
 
     <!-- article content begin -->

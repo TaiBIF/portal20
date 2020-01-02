@@ -43,7 +43,7 @@
         <div class="panel-heading" role="tab" id="headingTwo">
           <h4 class="panel-title">
             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-              第二章：標準化數據
+              第二章：資料標準化
             </a>
           </h4>
         </div>
@@ -51,9 +51,10 @@
         <!-- accordion collapse begin -->
         <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
           <ul class="panel-body">
-            <li><a href="02-cookbookStory.html">2.1 關於生物多樣性的描述</a></li>
-            <li><a href="02-cookbookStory.html">2.2 生物多樣性水平</a></li>
-            <li><a href="02-cookbookStory.html">2.3 什麼是生物多樣性信息學？</a></li>
+            <li><a href="{% url 'cookbook_detail_2' %}#section1">2.1 使用通用的原始資料格式</a></li>
+            <li><a href="{% url 'cookbook_detail_2' %}#section2">2.2 使用達爾文核心集作為主要標準</a></li>
+            <li><a href="{% url 'cookbook_detail_2' %}#section3">2.3 使用純文字檔而非Excel檔</a></li>
+            <li><a href="{% url 'cookbook_detail_2' %}#section4">2.4 使用UTF-8進行字元編碼</a></li>
           </ul>
         </div>
         <!-- accordion collapse end -->
@@ -66,7 +67,7 @@
         <div class="panel-heading" role="tab" id="headingThree">
           <h4 class="panel-title">
             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-              第三章：準備清單數據集
+              第三章：準備用於發布的資料集
             </a>
           </h4>
         </div>
@@ -74,9 +75,10 @@
         <!-- accordion collapse begin -->
         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
           <ul class="panel-body">
-            <li><a href="02-cookbookStory.html">3.1 關於生物多樣性的描述</a></li>
-            <li><a href="02-cookbookStory.html">3.2 生物多樣性水平</a></li>
-            <li><a href="02-cookbookStory.html">3.3 什麼是生物多樣性信息學？</a></li>
+            <li><a href="{% url 'cookbook_detail_3' %}#section1">3.1 透過GBIF發布生物多樣性資料集</a></li>
+            <li><a href="{% url 'cookbook_detail_3' %}#section2">3.2 什麼是調查活動資料？</a></li>
+            <li><a href="{% url 'cookbook_detail_3' %}#section3">3.3 達爾文核心集—資料的星型結構</a></li>
+            <li><a href="{% url 'cookbook_detail_3' %}#section4">3.4 使用Excel模板準備調查活動資料構</a></li>
           </ul>
         </div>
         <!-- accordion collapse end -->

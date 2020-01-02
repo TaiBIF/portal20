@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+{% include "inc_breadcrumb.html" with tab="02" active_label="Cookbook"%}
+<!-- container begin -->
+
+<div class="container">
+
+    <div class="thumbnail">
+    <img src="{% static 'images/content-cookbook-ch2.jpg' %}" alt="Pseudagrion microcephalum (Rambur, 1842), CheongWeei Gan, Photo via iNaturalist (CC BY-NC 4.0)">
+    <div class="caption">
+      <span class="text-muted"><em>Pseudagrion microcephalum</em> (Rambur, 1842), CheongWeei Gan, Photo via iNaturalist (CC BY-NC 4.0)</span>
+    </div>
+  </div>
+
+    <!-- story title & share btns begin -->
+    <div class="article-head-wrapper">
+      {#<span class="article-post-date">2018/12/08</span>#}
+      <h1 class="heading-lg-ul">
+        第二章 資料標準化
+        <span class="article-author">作者：Tsuyoshi Hosoya 細矢 剛</span>
+      </h1>
+      {% comment %}
+      <div class="article-share-btn-wrapper">
+        分享文章
+        <a href="#" class="navbar-oval-btn"><span class="myicon icon-social-fb"></span></a>
+        <a href="#" class="navbar-oval-btn"><span class="myicon icon-social-twitter"></span></a>
+        <a href="#" class="navbar-oval-btn"><span class="myicon icon-social-line"></span></a>
+        <a href="#" class="navbar-oval-btn"><span class="myicon icon-mail"></span></a>
+      </div>
+    </div>
+    {% endcomment %}
+    <!-- article content begin -->
+    <div class="article-content-wrapper">
+      <h4 class="heading-md" id="section1">2.1 使用通用的原始資料格式</h4>
+      <p>如前一章所述，生物多樣性資料無所不在，只是以不同格式、不同媒介的方式存在著。 可能以Excel或Word檔案的方式儲存於筆電或電腦中，或者透過PDF檔案印出來以紙本方式儲存。</p>
+      <p>為了避免造成混淆，我們先將詞彙進行定義。 如你所見，一組生物多樣資料是由許多數據所組成，用於顯示物種在何時何地發現，以及如何識別物種。 這種單次的觀察或描述稱之為「紀錄」。 如果你去野外考察，可以使用特定方法獲得多筆紀錄。 這組紀錄稱之為「資料集」（例如「藉由穿越線調查法記錄在玉山中觀察到的樹種」）。</p>
+      <p>想像一下你取得一份資料表，可能是一個包含了數十行和數百列的文字串或數字的Excel檔或純文字檔案。 為了理解這份資料檔案的內容，首先你會怎麼做呢？ 如果沒有其他額外的資訊來說明這份資料，你可能會先嘗試閱讀表格內的第一列資料（表頭）。</p>
+    </div>
+
+    🚧 🚧 🚧 🚧 🚧 🚧
+</div>
+
+{% endblock %}
