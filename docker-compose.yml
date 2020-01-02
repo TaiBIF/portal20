@@ -12,12 +12,11 @@ services:
     links:
       - db:db
     volumes:
-      - .:/code
-      - static:/code/taibif_volumes/static
-      - media:/code/taibif_volumes/media
-    #command: "./docker/webapp/wait-for-it.sh db:5432 -t 30 -- ./docker/webapp/startup.sh"
-    #command: python web/manage.py runserver 0.0.0.0:8001
-    command: ./docker-web-entry.sh
+      - .:/taibif-code
+      - ../taibif-volumes/static:/taibif-volumes/static
+      - ../taibif-volumes/media:/taibif-volumes/media
+    command: "./scripts/wait-for-it.sh db:5432 -t 30 -- ./scripts/docker-web-entry.sh"
+    #command: ./docker-web-entry.sh
     restart: always
     env_file:
       - web/.env
@@ -31,7 +30,7 @@ services:
       - POSTGRES_DB=taibif
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
-      - ../taibif_volumns/pgdata:/var/lib/postgresql/data/
+      - ../taibif-volumes/pgdata:/var/lib/postgresql/data/pgdata
   nginx:
     image: nginx:1.17.6-alpine
     restart: always
@@ -39,10 +38,7 @@ services:
       - 80:80
     volumes:
       - ./nginx:/etc/nginx/conf.d
-      - static:/code/taibif_volumes/static
+      - ../taibif-volumes/static:/taibif-volumes/static
+      - ../taibif-volumes/media:/taibif-volumes/media
     links:
       - web:web
-
-volumes:
-  static:
-  media:

@@ -18,7 +18,7 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime
 RUN echo "Asia/Taipei" > /etc/timezone
 ENV TZ=Asia/Taipei
 
-WORKDIR /code/
+WORKDIR /taibif-code/
 
 # install python package
 RUN pip install --upgrade pip

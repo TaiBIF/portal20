@@ -14,8 +14,21 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.conf.urls import url
+from django.views.static import serve
+
+from conf import settings
+from apps.data.views import occurrence_view, dataset_view
 
 urlpatterns = [
+    url('^media/(?P<path>.*)$', serve, {
+            'document_root': settings.MEDIA_ROOT,
+        }),
+    path('search/', include('apps.data.urls')),
+    path('occurrence/<int:pk>', occurrence_view, name='occurrence'),
+    path('dataset/<name>', dataset_view, name='dataset'),
+    path('article/', include('apps.article.urls')),
+    path('',  include('apps.page.urls')),
     path('admin/', admin.site.urls),
 ]
