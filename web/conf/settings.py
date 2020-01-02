@@ -34,7 +34,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = env('MEDIA_ROOT', default=root_path('media'))
@@ -87,8 +87,7 @@ WSGI_APPLICATION = 'conf.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-DJANGO_DATABASE_URL = env.db('DATABASE_URL')
-DATABASES = {'default': DJANGO_DATABASE_URL}
+DATABASES = {'default': env.db('DATABASE_URL')}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
