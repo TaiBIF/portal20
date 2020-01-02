@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head %}
+    <!-- date range picker CSS -->
+    <link rel="stylesheet" href="{% static 'css/daterangepicker.css' %}">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static 'css/dataTables.bootstrap.min.css' %}">
+{% endblock %}
+
+{% block script %}
+  <!-- date range picker -->
+  <script src="{% static 'js/daterangepicker/moment.min.js' %}"></script>
+  <script src="{% static 'js/daterangepicker/daterangepicker.js' %}"></script>
+  <script>
+    $(function () {
+      //Date range picker
+      $('#newsFilter').daterangepicker({
+        locale: {
+          format: 'YYYY-MM-DD'
+        },
+      }, function(start, end, label) {
+        const start_date = start.format('YYYY-MM-DD');
+        const end_date = end.format('YYYY-MM-DD');
+        window.location = `?start=${start_date}&end=${end_date}`;
+      });
+
+      // topic type select
+      // 用 API 處理 !
+      $('.select-category-sci').click(function(e){
+        const selectedType = e.target.dataset.type;
+        window.location = `${window.location.origin}/article/category/${selectedType}`;
+      });
+    });
+  </script>
+{#<script src="{% static 'js/article.js' %}"></script>#}
+{% endblock %}
+
+{% block main %}
+  <!-- carousel begin -->
+  <div id="carousel-example" class="carousel slide" data-ride="carousel">
+    <!-- carousel indicators begin -->
+    <ol class="carousel-indicators">
+      <li data-target="#carousel-example" data-slide-to="0" class="active"></li>
+      <li data-target="#carousel-example" data-slide-to="1"></li>
+    </ol>
+    <!-- carousel indicators end -->
+
+    <!-- carousel content wrapper begin -->
+    <div class="carousel-inner" role="listbox">
+      {% for i in cover_list %}
+      <div class="head-carousel-wrapper item{% if forloop.counter == 1 %} active{% endif %}" style="background-image: url('{% if i.cover %}{{ i.cover.url}}{% endif %}');">
+        <a href="04-topicStory.html" class="head-carousel-btn"></a>
+        <div class="carousel-caption">
+          <span class="head-carousel-cate">{{ i.get_category_display }}</span>
+          <h3 class="head-carousel-title">{{ i.title }}</h3>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <!-- carousel content wrapper begin -->
+
+    <!-- carousel controls begin -->
+    <a class="left carousel-control" href="#carousel-example" role="button" data-slide="prev">
+      <span class="myicon icon-arrow-left" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#carousel-example" role="button" data-slide="next">
+      <span class="myicon icon-arrow-right" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+    <!-- carousel controls end -->
+  </div>
+  <!-- carousel end -->
+
+  {% include "inc_breadcrumb.html" with tab="04" active_label="" %}
+
+  <!-- container begin -->
+  <div class="container">
+    {% if layout_type == "A1" %}
+    <h1 class="heading-lg-ul">
+      {{ article_cat_label }}
+      <span class="heading-footnote">全部</span>
+    </h1>
+    <!-- sort by begin -->
+    <div class="heading-sort-ctn">
+      <form class="form-inline">
+        <span class="heading-sort-name">篩選</span>
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="glyphicon glyphicon-calendar"></i>
+          </div>
+          <input type="text" class="form-control" placeholder="以時間篩選新聞..." id="newsFilter" value="{% if request.GET.start and request.GET.end %}{{ request.GET.start }} - {{request.GET.end }}{% endif %}">
+        </div>
+      </form>
+    </div>
+    {% elif layout_type == "A2" %}
+    <h1 class="heading-lg-ul">
+      {{ article_cat_label }}
+      <span class="heading-footnote">全部</span>
+    </h1>
+    <!-- sort by begin -->
+    <div class="heading-sort-ctn">
+      <form class="form-inline">
+        <span class="heading-sort-name">篩選</span>
+
+        <label class="custom-input-ctn">
+          <input type="checkbox" class="select-category-sci" data-type="sci"{% if article_cat == "sci" %} checked="checked"{% endif %}>
+          <span class="checkmark"></span>
+         科普文章
+        </label>
+
+        <label class="custom-input-ctn">
+          <input type="checkbox" class="select-category-sci" data-type="tech"{% if article_cat == "tech" %} checked="checked"{% endif %}>
+          <span class="checkmark"></span>
+          技術專欄
+        </label>
+
+        <label class="custom-input-ctn">
+          <input type="checkbox" class="select-category-sci" data-type="pub"{% if article_cat == "pub" %} checked="checked"{% endif %}>
+          <span class="checkmark"></span>
+          出版品資料
+        </label>
+        <label class="custom-input-ctn">
+          <input type="checkbox" class="select-category-sci" data-type="pos"{% if article_cat == "pos" %} checked="checked"{% endif %}>
+          <span class="checkmark"></span>
+          發表文章/海報
+        </label> 
+      </form>
+    </div>
+    {% endif %}
+    <!-- sort by end -->
+    {% for article in article_list %}
+    <div class="row listbox-img-right-wrapper">
+      <div class="col-xs-8">
+        <span class="listbox-inner-date">{{ article.created|date:'Y/m/d' }}</span>
+        <h3 class="listbox-inner-title"><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h3>
+        <p class="listbox-inner-summary hidden-xs">
+            {% if article.memo|slice:"0:4" == "nid:" %}
+            {# old article content #}
+            {% if article.category == "UPDATE" %}
+            {% else %}
+            {{ article.content|striptags|truncatechars:150 }}
+            <p><a href="{% url 'article-detail' slug=article.slug %}">閱讀更多</a></p>
+            {% endif %}
+            {% else %}
+            <a href="{% url 'article-detail' slug=article.slug %}">
+              {{ article.content|linebreaksbr }}
+              </a>
+            {% endif %}
+        </p>
+      </div>
+      {% comment %}
+      <div class="col-xs-4">
+        <a href="{% url 'article_detail' slug=article.slug %}"><img src="images/photo-3.jpg" class="img-responsive"></a>
+      </div>
+      {% endcomment %}
+    </div>
+    {% endfor %}
+
+    {% include "inc_pagination.html" with object_list=article_list %}
+
+  </div>
+   <!-- container end -->
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block main %}
+{% include "inc_breadcrumb.html" with tab="01" active_label="資料期刊/論文" %}
+
+  <!-- container begin -->
+  <div class="container">
+    <h1 class="heading-lg-ul">
+      資料期刊/論文
+    </h1>
+
+    <div class="journals-intro-ctn">
+      <p>在這篇研究中，研究員探討並比較了 3,500 種非原生豆科植物中，有共生與無共生的物種拓展族群的模式。研究者藉由GBIF整合的分布資料，查核了國際豆科資料庫與資訊服務中心 (ILDIS) 的分布資料，透過每個物種的固氮程度，發現共生型豆科植物在非原生地拓殖的可能性顯著較低，顯示了「共生現象」為拓展族群的限制因子，作者們認為可能的原因為缺乏適當的菌種或是不適當的固氮環境。其他因素 (例如：原生地之緯度、木化程度與人為利用) 也對豆科植物的拓殖具有重要影響，只是影響程度不比「共生」來得高。這篇研究彰顯了互利共生及物種交互作用對評估入侵性的重要性。</p>
+    </div>
+
+    <!-- list begin -->
+    <div class="row relateed-datasabe-wrapper">
+      <div class="col-md-2 col-xs-4">
+        <a href="https://bdj.pensoft.net/" target="_blank"><img src="{% static 'images/logo-bdj.jpg' %}"></a>
+      </div>
+      <div class="col-md-10 col-xs-8">
+        <a href="https://bdj.pensoft.net/" target="_blank"><span class="myicon icon-link"></span> Biodiversity Data Journal</a>
+        <p>50 字透過每個物種的固氮程度，發現共生型豆科植物在非原生地拓殖的可能性顯著較低，顯示共生現象為拓展族群的。</p>
+      </div>
+    </div>
+
+    <div class="row relateed-datasabe-wrapper">
+      <div class="col-md-2 col-xs-4">
+        <a href="https://journals.plos.org/plosone/" target="_blank"><img src="{% static 'images/logo-plos.jpg' %}"></a>
+      </div>
+      <div class="col-md-10 col-xs-8">
+        <a href="https://journals.plos.org/plosone/" target="_blank"><span class="myicon icon-link"></span> PLOS one</a>
+        <p>50 字透過每個物種的固氮程度，發現共生型豆科植物在非原生地拓殖的可能性顯著較低，顯示共生現象為拓展族群的。</p>
+      </div>
+    </div>
+
+    <div class="row relateed-datasabe-wrapper">
+      <div class="col-md-2 col-xs-4">
+        <a href="https://www.nature.com/sdata/" target="_blank"><img src="{% static 'images/logo-scientific-data.jpg' %}"></a>
+      </div>
+      <div class="col-md-10 col-xs-8">
+        <a href="https://www.nature.com/sdata/" target="_blank"><span class="myicon icon-link"></span> Scientific Data</a>
+        <p>50 字透過每個物種的固氮程度，發現共生型豆科植物在非原生地拓殖的可能性顯著較低，顯示共生現象為拓展族群的。</p>
+      </div>
+    </div>
+
+    <div class="row relateed-datasabe-wrapper">
+      <div class="col-md-2 col-xs-4">
+        <a href="https://tesri.tesri.gov.tw/list_protect.php" target="_blank"><img src="{%static 'images/logo-tjb.jpg' %}"></a>
+      </div>
+      <div class="col-md-10 col-xs-8">
+        <a href="https://tesri.tesri.gov.tw/list_protect.php" target="_blank"><span class="myicon icon-link"></span> 台灣生物多樣性研究</a>
+        <p>50 字透過每個物種的固氮程度，發現共生型豆科植物在非原生地拓殖的可能性顯著較低，顯示共生現象為拓展族群的。</p>
+      </div>
+    </div>
+    <!-- list end -->
+  </div>
+{% endblock %}

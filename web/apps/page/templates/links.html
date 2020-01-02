@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+{% include "inc_breadcrumb.html" with tab="03" active_label="相關連結" %}
+
+  <!-- container begin -->
+  <div class="container">
+    <h1 class="heading-lg-ul">
+      相關連結
+    </h1>
+    <!-- web site begin -->
+    <h2 class="heading-md-bg">網站</h2>
+    <p>透過每個物種的固氮程度，發現共生型豆科植物在非原生地拓殖的可能性顯著較低，顯示共生現象為拓展族群的限制因子，作者們認為可能的原因為缺乏適當的菌種或是不適當的固氮環境。</p>
+    <ul class="row relateed-website-wrapper">
+      <li class="col-md-2 col-xs-6">
+        <a href="https://www.most.gov.tw/" target="_blank"><img src="{% static 'images/logo-most.jpg' %}"></a>
+        <a class="text-ellipsis-h2" href="https://www.most.gov.tw/" target="_blank"><span class="myicon icon-link"></span> 科技部</a>
+      </li>
+      <li class="col-md-2 col-xs-6">
+        <a href="https://www.coa.gov.tw/" target="_blank"><img src="{% static 'images/logo-coa.jpg' %}"></a>
+        <a class="text-ellipsis-h2" href="https://www.coa.gov.tw/" target="_blank"><span class="myicon icon-link"></span> 行政院農農業委員會</a>
+      </li>
+      <li class="col-md-2 col-xs-6">
+        <a href="http://www.biodiv.tw/tw/" target="_blank"><img src="{% static 'images/logo-brcas.jpg' %}"></a>
+        <a class="text-ellipsis-h2" href="http://www.biodiv.tw/tw/" target="_blank"><span class="myicon icon-link"></span> 生物多樣性研究中心</a>
+      </li>
+      <li class="col-md-2 col-xs-6">
+        <a href="https://www.sinica.edu.tw/ch" target="_blank"><img src="{% static 'images/logo-sinica.jpg' %}"></a>
+        <a class="text-ellipsis-h2" href="https://www.sinica.edu.tw/ch" target="_blank"><span class="myicon icon-link"></span> 中央研究院</a>
+      </li>
+      <li class="col-md-2 col-xs-6">
+        <a href="https://www.forest.gov.tw/" target="_blank"><img src="{% static 'images/logo-forest.jpg' %}"></a>
+        <a class="text-ellipsis-h2" href="https://www.forest.gov.tw/" target="_blank"><span class="myicon icon-link"></span> 行政院農委會林務局</a>
+      </li>
+      <li class="col-md-2 col-xs-6">
+        <a href="https://tesri.tesri.gov.tw/show_index.php" target="_blank"><img src="{% static 'images/logo-endemic.jpg' %}"></a>
+        <a class="text-ellipsis-h2" href="https://tesri.tesri.gov.tw/show_index.php" target="_blank"><span class="myicon icon-link"></span> 行政院農委會特種生物研究保育中心</a>
+      </li>
+    </ul>
+    <!-- web site end -->
+
+    <!-- database begin -->
+    <h2 class="heading-md-bg">資料庫</h2>
+    
+    <div class="row relateed-datasabe-wrapper">
+      <div class="col-md-2 col-xs-4">
+        <a href="http://taibnet.sinica.edu.tw/home.php" target="_blank"><img src="{% static 'images/logo-taibnet.jpg' %}"></a>
+      </div>
+      <div class="col-md-10 col-xs-8">
+        <a href="http://taibnet.sinica.edu.tw/home.php" target="_blank"><span class="myicon icon-link"></span> 臺灣物種名錄</a>
+        <p>50 字透過每個物種的固氮程度，發現共生型豆科植物在非原生地拓殖的可能性顯著較低，顯示共生現象為拓展族群的。</p>
+      </div>
+    </div>
+
+    <div class="row relateed-datasabe-wrapper">
+      <div class="col-md-2 col-xs-4">
+        <a href="http://taieol.tw/" target="_blank"><img src="{% static 'images/logo-vigor.jpg' %}"></a>
+      </div>
+      <div class="col-md-10 col-xs-8">
+        <a href="http://taieol.tw/" target="_blank"><span class="myicon icon-link"></span> Taiwan Encyclopedia of Life 臺灣生命大百科</a>
+        <p>50 字透過每個物種的固氮程度，發現共生型豆科植物在非原生地拓殖的可能性顯著較低，顯示共生現象為拓展族群的。</p>
+      </div>
+    </div>
+
+    <!-- database end -->
+  </div>
+{% endblock %}

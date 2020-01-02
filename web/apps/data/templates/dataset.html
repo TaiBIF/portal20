@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block main %}
+{# include "inc_breadcrumb.html" with tab="03" active_label="" #}
+
+<!-- container begin -->
+<div class="container">
+  <h2>{{ dataset.title }}</h2>
+  <div class="article-head-wrapper">
+    <h1 class="heading-lg-ul">
+      簡介
+    </h1>
+  </div>
+  <p>{{ dataset.description }}
+  </p>
+
+  <pre>
+  DwC type: {{ dataset.dwc_core_type_human}}
+  詮釋資料最後修改日:
+  資料最後上傳日: {{ dataset.pub_date|date:'Y/m/d'}}
+  引用格式: {{ dataset.data_license }}
+  DOI:
+
+  </pre>
+
+  <!-- data wall begin -->
+  <div class="data-wall-wrapper">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <div class="data-wall-ctn">
+            <span class="dtat-wall-name">出現紀錄筆數</span>
+            <span class="data-wall-numbers">{{ dataset.stats_num_occurrence|intcomma }}</span>
+            <span class="data-wall-icon myicon icon-data-stats"></span>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <div class="data-wall-ctn">
+            <span class="dtat-wall-name">有對應的分類群</span>
+            <span class="data-wall-numbers">--%</span>
+            <span class="data-wall-icon myicon icon-data-folder"></span>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <div class="data-wall-ctn">
+            <span class="dtat-wall-name">含座標</span>
+            <span class="data-wall-numbers">--%</span>
+            <span class="data-wall-icon myicon icon-data-tw"></span>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <div class="data-wall-ctn">
+            <span class="dtat-wall-name">年份</span>
+            <span class="data-wall-numbers">--%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- data wall end -->
+
+
+  <div class="article-head-wrapper">
+    <h1 class="heading-lg-ul">
+      地理分佈
+    </h1>
+  </div>
+
+    <div class="article-head-wrapper">
+    <h1 class="heading-lg-ul">
+      聯絡資訊 {{ dataset.author }}
+    </h1>
+  </div>
+</div>
+  <!-- container end -->
+{% endblock %}

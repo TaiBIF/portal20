@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+{% include "inc_breadcrumb.html" with tab="02" active_label="Cookbook"%}
+
+  <!-- container begin -->
+  <div class="container">
+    <h1 class="heading-lg-ul">
+      Cookbook
+    </h1>
+
+    <!-- panel-group begin -->
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <!-- 1st accordion-panel begin -->
+      <div class="panel panel-main">
+        <!-- accordion heading begin -->
+        <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              第一章：介紹
+            </a>
+          </h4>
+        </div>
+        <!-- accordion heading end -->
+        <!-- accordion collapse begin -->
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <ul class="panel-body">
+            <li><a href="{% url 'cookbook_detail_1' %}#section1">1.1 生物多樣性是什麼？</a></li>
+            <li><a href="{% url 'cookbook_detail_1' %}#section2">1.2 生物多樣性的層級</a></li>
+            <li><a href="{% url 'cookbook_detail_1' %}#section3">1.3 生物多樣性資訊學是什麼？</a></li>
+            <li><a href="{% url 'cookbook_detail_1' %}#section3">1.4 聚焦於物種生物多樣性</a></li>
+            <li><a href="{% url 'cookbook_detail_1' %}#section3">1.5 生物多樣性資料 / 資訊</a></li>
+          </ul>
+        </div>
+        <!-- accordion collapse end -->
+      </div>
+      <!-- 1st accordion-panel begin -->
+
+      <!-- 2nd accordion-panel begin -->
+      <div class="panel panel-main">
+        <!-- accordion heading begin -->
+        <div class="panel-heading" role="tab" id="headingTwo">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              第二章：標準化數據
+            </a>
+          </h4>
+        </div>
+        <!-- accordion heading end -->
+        <!-- accordion collapse begin -->
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <ul class="panel-body">
+            <li><a href="02-cookbookStory.html">2.1 關於生物多樣性的描述</a></li>
+            <li><a href="02-cookbookStory.html">2.2 生物多樣性水平</a></li>
+            <li><a href="02-cookbookStory.html">2.3 什麼是生物多樣性信息學？</a></li>
+          </ul>
+        </div>
+        <!-- accordion collapse end -->
+      </div>
+      <!-- 2nd accordion-panel begin -->
+
+      <!-- 3rd accordion-panel begin -->
+      <div class="panel panel-main">
+        <!-- accordion heading begin -->
+        <div class="panel-heading" role="tab" id="headingThree">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              第三章：準備清單數據集
+            </a>
+          </h4>
+        </div>
+        <!-- accordion heading end -->
+        <!-- accordion collapse begin -->
+        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <ul class="panel-body">
+            <li><a href="02-cookbookStory.html">3.1 關於生物多樣性的描述</a></li>
+            <li><a href="02-cookbookStory.html">3.2 生物多樣性水平</a></li>
+            <li><a href="02-cookbookStory.html">3.3 什麼是生物多樣性信息學？</a></li>
+          </ul>
+        </div>
+        <!-- accordion collapse end -->
+      </div>
+      <!-- 3rd accordion-panel begin -->
+    </div>
+    <!-- panel-group end -->
+
+  </div>
+   <!-- container end -->
+{% endblock %}

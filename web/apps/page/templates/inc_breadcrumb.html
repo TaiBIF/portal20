@@ -1,0 +1,17 @@
+<!-- breadcrumb begin -->
+  <div class="container">
+    <ol class="breadcrumb">
+      <li><a href="{% url 'index' %}">首頁</a></li>
+      {% if tab == "01" %}
+      <li>資料開放</li>
+      {% elif tab  == "02" %}
+      <li>工具與文件</li>
+      {% elif tab  == "03" %}
+      <li>關於 TaiBIF</li>
+      {% elif tab  == "04" %}
+      <li>新聞</li>
+      {% endif %}
+      <li class="active">{{ active_label }}</li>
+    </ol>
+  </div>
+  <!-- breadcrumb end -->

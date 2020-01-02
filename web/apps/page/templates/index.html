@@ -1,0 +1,307 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block main %}
+  <!-- xs-search-modal begin -->
+  <div class="modal fade xs-modal-wrapper xs-search-modal-pos" data-backdrop="false">
+    <div class="xs-modal-content">
+      <div class="xs-modal-header">
+        <span class="xs-search-modal-close myicon icon-close" data-dismiss="modal" aria-label="Close"></span>
+        <p class="text-center xs-modal-title">搜尋</p>
+      </div>
+      <div class="xs-modal-body">
+        <div class="xs-search-modal-input-group">
+          <input type="text" class="navbar-search-input" placeholder="請輸入關鍵字...">
+          <button class="navbar-search-btn" type="button">
+            <span class="myicon icon-search"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- xs-search-modal end -->
+
+  <!-- xs-lang-modal begin -->
+  <div class="modal fade xs-modal-wrapper xs-lang-modal-pos" role="dialog" data-backdrop="false">
+    <div class="xs-modal-content">
+      <div class="xs-modal-header">
+        <span class="xs-search-modal-close myicon icon-close" data-dismiss="modal" aria-label="Close"></span>
+        <p class="text-center xs-modal-title">Change Lamguage</p>
+      </div>
+      <div class="xs-modal-body">
+        <label class="custom-input-ctn">
+          <input type="radio" name="radio">
+          <span class="radiomark"></span>
+          English
+        </label>
+      </div>
+    </div>
+  </div>
+  <!-- xs-lang-modal end -->
+
+  <!-- Header end -->
+
+  <!-- carousel begin -->
+  <div id="carousel-example" class="carousel slide" data-ride="carousel">
+    <!-- carousel content wrapper begin -->
+    <div class="carousel-inner" role="listbox">
+      <div class="head-carousel-wrapper item active" style="background-image: url('{% static 'images/photo-1.jpg' %}');">
+        <div class="head-carousel-search-wrapper">
+          <h1 class="head-carousel-tagline">TaiBIF-生物多樣性資料開放的推手</h1>
+          <div class="head-carousel-search-ctn">
+
+            <ul class="row head-carousel-search-cate">
+              <li class="col-xs-3"><a href="#">出現紀錄</a></li>
+              <li class="col-xs-3"><a href="#">物種</a></li>
+              <li class="col-xs-3"><a href="#">資料集</a></li>
+              <li class="col-xs-3"><a href="#">發布者</a></li>
+            </ul>
+
+            <div class="head-carousel-search-form-wrapper">
+              <input type="text" class="head-carousel-search-input" placeholder="全站搜尋...">
+              <button class="head-carousel-search-btn" type="button">
+                <span class="myicon icon-search"></span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- carousel content wrapper begin -->
+  </div>
+  <!-- carousel end -->
+
+  <!-- data wall begin -->
+  <div class="data-wall-wrapper">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <div class="data-wall-ctn">
+            <span class="dtat-wall-name">資料筆數</span>
+            <span class="data-wall-numbers">4,242,487</span>
+            <span class="data-wall-icon myicon icon-data-stats"></span>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <div class="data-wall-ctn">
+            <span class="dtat-wall-name">資料集</span>
+            <span class="data-wall-numbers">105</span>
+            <span class="data-wall-icon myicon icon-data-folder"></span>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <div class="data-wall-ctn">
+            <span class="dtat-wall-name">涵蓋物種數</span>
+            <span class="data-wall-numbers">70,006</span>
+            <span class="data-wall-icon myicon icon-data-tw"></span>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <div class="data-wall-ctn">
+            <a href="{% url 'data_stats' %}?most=1">
+            <span class="dtat-wall-name">看更多</span>
+            <span class="data-wall-numbers"><small>科技部資料</small></span>
+            <span class="data-wall-icon myicon icon-arrow-right"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- data wall end -->
+
+  <!-- News board begin -->
+  <div class="container">
+    <h1 class="heading-xlg-center">最新消息</h1>
+    <div class="row">
+      <!-- news list begin -->
+      <div class="col-sm-12 col-md-4">
+        <div class="news-card-wrapper">
+          <a href="{% url 'article-list' category='news' %}" class="news-card-cate"><span class="myicon icon-news"></span>新聞</a>
+          <div class="news-card-img-wrapper">
+            <a href="{{ news_list.first.get_absolute_url }}">
+            <div class="news-card-title-ctn">
+              <p class="img-date">{{ news_list.first.created|date:'Y/m/d' }}</p>
+              <p class="img-title">{{ news_list.first.title }}</p>
+            </div>
+            <div class="news-card-img-overlay"></div>
+            <img src="{% static 'images/photo-1.jpg' %}">
+            </a>
+          </div>
+          <ul class="news-card-list-ctn">
+            {% for i in news_list|slice:"1:4" %}
+            <li>
+              <a href="{{ i.get_absolute_url }}">{{ i.title }}</a>
+              <span>{{ i.created|date:'Y/m/d' }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <!-- news list end -->
+      <!-- event list begin -->
+      <div class="col-sm-12 col-md-4">
+        <div class="news-card-wrapper">
+          <a href="{% url 'article-list' category='event' %}" class="news-card-cate"><span class="myicon icon-event"></span>活動</a>
+          <div class="news-card-img-wrapper">
+            <a href="{{ news_list.first.get_absolute_url }}">
+            <div class="news-card-title-ctn">
+              <p class="img-date">{{ event_list.first.created|date:'Y/m/d' }}</p>
+              <p class="img-title">{{ event_list.first.title }}</p>
+            </div>
+            <div class="news-card-img-overlay"></div>
+            <img src="{% static 'images/photo-1.jpg' %}">
+            </a>
+          </div>
+          <ul class="news-card-list-ctn">
+            {% for i in event_list|slice:"1:4" %}
+            <li>
+              <a href="{{ i.get_absolute_url }}">{{ i.title }}</a>
+              <span>{{ i.created|date:'Y/m/d' }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <!-- event list end -->
+      <!-- update list begin -->
+      <div class="col-sm-12 col-md-4">
+        <div class="news-card-wrapper">
+          <a href="{% url 'article-list' category='update' %}" class="news-card-cate"><span class="myicon icon-update"></span>更新</a>
+          <div class="news-card-img-wrapper">
+            <a href="{{ update_list.first.get_absolute_url }}">
+            <div class="news-card-title-ctn">
+              <p class="img-date">{{ update_list.first.created|date:'Y/m/d' }}</p>
+              <p class="img-title">{{ update_list.first.title }}</p>
+            </div>
+            <div class="news-card-img-overlay"></div>
+            <img src="{% static 'images/photo-1.jpg' %}">
+            </a>
+          </div>
+          <ul class="news-card-list-ctn">
+            {% for i in update_list|slice:"1:4" %}
+            <li>
+              <a href="{{ i.get_absolute_url }}">{{ i.title }}</a>
+              <span>{{ i.created|date:'Y/m/d' }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <!-- update list end -->
+    </div>
+  </div>
+  <!-- News board end -->
+
+  <!-- Topic board begin -->
+  <div class="topic-board-wrapper">
+    <h1 class="heading-xlg-center">專題文章</h1>
+    <div class="container">
+      <div class="owl-carousel owl-theme" id="topic-board">
+        {% for i in topic_list %}
+        <div class="topic-card-wrapper item">
+          <span class="topic-inner-ctn">
+            <a class="topic-inner-cate" href="{% url 'article-list' category=i.category|lower  %}">{{ i.get_category_display }}</a>
+          </span>
+          <p class="topic-inner-ctn">
+            <a class="topic-inner-title" href="{{ article.get_absolute_url }}">{{ i.title }}</a>
+          </p>
+          {% comment %}{# TODO #}
+          <img src="{% static 'images/photo-1.jpg' %}">
+          <span class="topic-inner-ctn">
+            <a class="topic-inner-tag" href="#">標籤</a>
+            <a class="topic-inner-tag" href="#">標籤</a>
+          </span>
+          {% endcomment %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <!-- Topic board end -->
+
+  <!-- Partners board begin -->
+  <div class="container">
+    <h1 class="heading-xlg-center">指導單位</h1>
+    <ul class="row partner-list-ctn">
+      <li class="col-xs-6">
+        <a href="https://www.most.gov.tw/" target="_blank"><img src="{% static 'images/logo-most.jpg' %}"></a>
+      </li>
+      <li class="col-xs-6">
+        <a href="https://www.coa.gov.tw/" target="_blank"><img src="{% static 'images/logo-coa.jpg' %}"></a>
+      </li>
+      <li class="col-xs-6">
+        <a href="http://www.biodiv.tw/tw/" target="_blank"><img src="{% static 'images/logo-brcas.jpg' %}"></a>
+      </li>
+      <li class="col-xs-6">
+        <a href="https://www.sinica.edu.tw/ch" target="_blank"><img src="{% static 'images/logo-sinica.jpg' %}"></a>
+      </li>
+    </ul>
+    <h1 class="heading-xlg-center">夥伴組織</h1>
+    <ul class="row partner-list-ctn">
+      <li class="col-xs-6">
+        <a href="https://www.forest.gov.tw/" target="_blank"><img src="{% static 'images/logo-forest.jpg' %}"></a>
+      </li>
+      <li class="col-xs-6">
+        <a href="https://tesri.tesri.gov.tw/show_index.php" target="_blank"><img src="{% static 'images/logo-endemic.jpg' %}"></a>
+      </li>
+    </ul>
+  </div>
+  <!-- Partners board end -->
+  {% comment %}
+  <!-- full calendar -->
+  <script src="js/fullcalendar/core-main.min.js"></script>
+  <script src="js/fullcalendar/daygrid-main.min.js"></script>
+  {% endcomment %}
+
+  {% comment %}
+<!-- script 4 full calendar begin -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      plugins: [ 'dayGrid' ],
+      defaultView: 'dayGridMonth',
+      aspectRatio: 3,
+      header: {
+        left: '',
+        center: 'title',
+        right: ''
+      },
+      footer: {
+        center: 'prev,next',
+      },
+
+      events: [
+        {
+          title: '聯合國生物多樣性研討會',
+          start: '2019-03-26',
+          url: 'http://google.com/'
+        },
+        {
+          title: '生物多樣性資訊學工作坊',
+          start: '2019-03-26',
+          url: 'http://google.com/'
+        }    
+      ],
+      eventClick: function(info) {
+        info.jsEvent.preventDefault(); // don't let the browser navigate
+        if (info.event.url) {
+          window.open(info.event.url);
+        }
+      }
+      
+    });
+
+    calendar.render();
+
+  });
+</script>
+<!-- script 4 full calendar end -->
+{% endcomment %}
+{% endblock %}
+

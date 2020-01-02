@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head %}
+<style>
+  .axis {
+      font: 10px sans-serif;
+  }
+  .axis path,
+  .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+  }
+
+svg text.label {
+  fill: black;
+  font-size: 15px;
+  font-weight: 400;
+  text-anchor: middle;
+}
+
+</style>
+{% endblock %}
+
+{% block script %}
+{#<script src="https://d3js.org/d3.v3.min.js"></script>#}
+<script src="{% static 'js/d3.min.js' %}"></script>
+<script src="{% static 'js/analytics.js' %}"></script>
+<script>
+  const checkboxMOST = document.querySelector('.check-most');
+  checkboxMOST.onclick = function(e){
+    let baseURL = `${window.location.origin}${window.location.pathname}`;
+    if (e.target.checked === true) {
+      window.location.href =  `${baseURL}?most=1`
+    }
+    else {
+      window.location.href = baseURL;
+    }
+  }
+</script>
+{% endblock %}
+
+{% block main %}
+{% include "inc_breadcrumb.html" with tab="01" active_label="資料發佈狀況" %}
+
+<div class="container">
+  <div class="row">
+    <h1 class="heading-lg-ul">
+      資料發佈狀況
+      <span class="heading-footnote">全部</span>
+    </h1>
+    <div class="heading-sort-ctn">
+      <label class="custom-input-ctn">
+        <input type="checkbox" class="check-most"{% if request.GET.most %} checked{% endif %}>
+        <span class="checkmark"></span>
+        僅檢視科技部發佈狀況
+      </label>
+    </div>
+
+
+    <h3>統整數據</h3>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">今年度上傳資料筆數</div>
+      <div class="panel-body">
+        <div id="taibif-stats__this_year_occurrence"></div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">今年度上傳資料集數量</div>
+      <div class="panel-body">
+        <div id="taibif-stats__this_year_dataset"></div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">累積資料筆數</div>
+      <div class="panel-body">
+        <div id="taibif-stats__trend_occurrence"></div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">累積資料集數量</div>
+      <div class="panel-body">
+        <div id="taibif-stats__trend_dataset"></div>
+      </div>
+    </div>
+
+    <h3>已發佈資料列表</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr><th width="50%">資料集名稱</th><th width="%10">執行單位</th><th width="10%">資料類型</th><th width="5%">資料筆數</th><th width="10%">發佈時間</th><th width="5%">公開狀態</th></tr>
+      </thead>
+      {% for i in dataset_list %}
+      <tr><td>{{ i.title }}</td><td>{{ i.author }}</td><td>{{ i.dwc_core_type_human }}</td><td>{{ i.stats_num_record }}</td><td>{{ i.pub_date|date:'Y/m/d' }}</td><td>公開</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+{% include "inc_breadcrumb.html" with tab="03" active_label="年度計畫" %}
+
+  <!-- container begin -->
+  <div class="container">
+    <h1 class="heading-lg-ul">
+      TaiBIF 年度計畫成果
+      <span class="heading-footnote">2017 - 2019</span>
+    </h1>
+    <!-- sort by begin -->
+    <div class="heading-sort-ctn">
+      <form class="form-inline">
+        <span class="heading-sort-name">搜尋</span>
+        <div class="custom-select">
+          <select>
+            <option>選擇年份查找...</option>
+            <option>2015 -2017</option>
+          </select>
+        </div>
+      </form>
+    </div>
+    <!-- sort by end -->
+
+    <!-- list begin (firset one) -->
+    <div class="row listbox-img-right-wrapper">
+      <div class="col-xs-8">
+        <span class="listbox-inner-date">2018/12/08</span>
+        <h3 class="listbox-inner-title"><a href="#">GBIF 正式與生物多樣性評估平台展開合作</a></h3>
+        <p class="listbox-inner-summary hidden-xs">
+          <a href="#">這項 MoU 在哥倫比亞麥德林市舉辦的 IPBES 第六次全體會議的中簽署，超過 80 個政府組織同意除將評估非洲、美洲、亞洲與太平洋以及歐洲與中亞等四個地區的生物多樣性與生態服務納入提案外，亦會將評估土地流失與恢復納入。</a>
+        </p>
+      </div>
+      <div class="col-xs-4">
+        <a href="#"><img src="{% static 'images/photo-3.jpg' %}" class="img-responsive"></a>
+      </div>
+    </div>
+    <!-- list end (firset one) -->
+
+
+    <!-- pagination begin -->
+    <div class="center-block text-center">
+      <ul class="pagination">
+        <li>
+          <a href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li>
+          <a href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-- pagination end -->
+
+  </div>
+  <!-- container end -->
+{% endblock %}

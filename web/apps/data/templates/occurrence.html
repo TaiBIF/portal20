@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+{# include "inc_breadcrumb.html" with tab="03" active_label="" #}
+<!-- container begin -->
+<div class="container">
+  <div class="article-head-wrapper">
+    <span class="article-post-date">{{ occur.event_date|date:'Y-m-d' }}</span>
+    <h1 class="heading-lg-ul">
+      {{ occur.scientific_name }}
+    </h1>
+  </div>
+  <div class="row">
+  <dl>
+    <dt>date</dt>
+    <dd>{{ occur.event_date }}</dd>
+    <dt>dataset</dt>
+    <dd>{{ occur.dataset.title }}</dd>
+    <dt>publisher</dt>
+    <dd>{{ occur.dataset.author }}</dd>
+    <dt>species</dt>
+    <dd>{{ occur.scientific_name}}</dd>
+    <dt>Location</dt><dd>{{ occur.country }}</dd>
+    <dt>Basis of record</dt><dd>{{occur.basis_of_record}}</dd>
+  </dl>
+  {% comment %}
+photo
+
+map
+  {% endcomment %}
+  </div>
+  <hr>
+  <table class="table">
+    <thead><tr><th>Term</th><th>Value</th></tr></thead>
+    <tbody>
+      {% for term, value in occur.display_terms.items %}
+      <tr><td>{{ term }}</td><td>{{ value }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+  <!-- container end -->
+{% endblock %}

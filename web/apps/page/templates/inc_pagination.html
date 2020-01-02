@@ -1,0 +1,23 @@
+{% load helper_tags %}
+
+{% get_pagination_info object_list request.GET as page_info %}
+
+<!-- pagination begin -->
+<div class="center-block text-center">
+  <ul class="pagination">
+    {% if object_list.has_previous %}
+    <li><a href="?page={{ object_list.previous_page_number}}{{ page_info.append_query_string }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+    {% endif %}
+    {% for p in page_info.page_range %}
+      {% if object_list.number == p %}
+        <li class="active"><a href="#">{{ p }}</a></li>
+      {% else %}
+        <li><a href="{% if p == '...' %}javascript: void(0){% else %}?page={{ p }}{{ page_info.append_query_string }}{% endif %}">{{ p }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if object_list.has_next %}
+    <li><a href="?page={{ object_list.next_page_number }}{{page_info.append_querystring }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+    {% endif %}
+  </ul>
+</div>
+<!-- pagination end -->

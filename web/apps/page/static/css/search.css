@@ -1,0 +1,64 @@
+.search-container {
+    width: 100%;
+    margin: unset;
+    padding: unset;
+}
+
+.search-main {
+    padding-left: 40px;
+    border: 1px solid green;
+}
+
+.search-sidebar {
+    border-right: 1px #e5e5e5 solid;
+    padding-right: unset;
+    /*overflow: auto;*/
+}
+
+.search-sidebar__input-wrapper {
+    /*position: absolute;
+    width: 100%;*/
+}
+.search-sidebar__submit-btn {
+    position: absolute;
+    top: 55px;
+    right: 8px;
+    background: transparent;
+    border: 0;
+    font-size: 24px;
+    color: #846C5B;
+}
+.search-sidebar__title {
+     margin: auto;
+     padding: 12px;
+     border-bottom: 1px solid #e5e5e5;
+     height: 48px;
+}
+.search-sidebar__title--head {
+    background-color: #4A3E3A;
+    color: #fff;
+}
+.search-sidebar__input {
+    /*border: #846C5B solid 1px;*/
+    font-size: 14px;
+    color: #888;
+    padding: 12px 16px;
+    width: 100%;
+}
+#search-taxon-tree {
+    font-size: 14px;
+}
+
+.search-main-tag-wrapper {
+    font-size: 16px;
+    color: #929292;
+    padding: 20px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.search-main-tag-item {
+    padding: 0px 6px;
+    margin-top: -4px;
+}
