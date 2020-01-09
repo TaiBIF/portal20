@@ -1,0 +1,17 @@
+      <div class="search-sidebar__title search-sidebar__title--head"><span>出現紀錄</span></div>
+      <!-- search form -->
+      <div class="head-carousel-search-wrapper-xx search-sidebar__input-wrapper">
+        <form action="{% url 'search' %}" method="POST">
+          {% csrf_token %}
+          <input type="text" class="search-sidebar__input" placeholder="請輸入關鍵字..." {% if request.GET.q %} value="{{ request.GET.q }}"{% endif %} name="q">
+          <button class="search-sidebar__submit-btn" type="submit">
+            <span class="myicon icon-search"></span>
+          </button>
+        </form>
+      </div>
+      <!-- end search form -->
+      <div class="search-sidebar__title"><span>授權狀態</span></div>
+      <div class="search-sidebar__title"><span>學名</span></div>
+      <div class="">
+        <div id="search-taxon-tree"></div>
+      </div>

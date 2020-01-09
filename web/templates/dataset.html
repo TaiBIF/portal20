@@ -16,14 +16,17 @@
   <p>{{ dataset.description }}
   </p>
 
-  <pre>
-  DwC type: {{ dataset.dwc_core_type_human}}
-  詮釋資料最後修改日:
-  資料最後上傳日: {{ dataset.pub_date|date:'Y/m/d'}}
-  引用格式: {{ dataset.data_license }}
-  DOI:
-
-  </pre>
+  <br>
+  <div>
+    發佈單位: {{ dataset.organization }}<br>
+    國家及地區: {{ dataset.country_for_human }}<br>
+    DwC type: {{ dataset.dwc_core_type_for_human}}<br>
+    詮釋資料最後修改日: {{ dataset.mod_date|date:'Y/m/d' }}<br>
+    資料最後上傳日: {{ dataset.pub_date|date:'Y/m/d'}}<br>
+    引用格式: {{ dataset.data_license }}<br>
+    {% if dataset.gbif_doi %} DOI: {{ dataset.gbif_doi }}<br>{% endif %}
+    </p>
+  </div>
 
   <!-- data wall begin -->
   <div class="data-wall-wrapper">
@@ -32,7 +35,7 @@
         <div class="col-xs-12 col-sm-6 col-md-3">
           <div class="data-wall-ctn">
             <span class="dtat-wall-name">出現紀錄筆數</span>
-            <span class="data-wall-numbers">{{ dataset.stats_num_occurrence|intcomma }}</span>
+            <span class="data-wall-numbers">{{ dataset.num_occurrence|intcomma }}</span>
             <span class="data-wall-icon myicon icon-data-stats"></span>
           </div>
         </div>
@@ -52,7 +55,7 @@
         </div>
         <div class="col-xs-12 col-sm-6 col-md-3">
           <div class="data-wall-ctn">
-            <span class="dtat-wall-name">年份</span>
+            <span class="dtat-wall-name">含年份</span>
             <span class="data-wall-numbers">--%</span>
           </div>
         </div>
@@ -70,9 +73,18 @@
 
     <div class="article-head-wrapper">
     <h1 class="heading-lg-ul">
-      聯絡資訊 {{ dataset.author }}
+      聯絡資訊
     </h1>
-  </div>
+    <p>
+      {{ dataset.author }}
+    </p>
+    </div>
+
+    <div class="article-head-wrapper">
+    <h1 class="heading-lg-ul">
+      引用格式    </h1>
+    </div>
+  <p>{{ dataset.gbif_cite }}</p>
 </div>
   <!-- container end -->
 {% endblock %}

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from apps.data.models import DataSet
+from apps.data.models import Dataset
 from apps.article.models import Article
 
 def index(request):
@@ -59,7 +59,7 @@ def open_data(request):
 
 def data_stats(request):
     is_most = request.GET.get('most', '')
-    query = DataSet.objects
+    query = Dataset.objects
     if is_most:
         query = query.filter(is_most_project=True)
     context = {

@@ -42,13 +42,18 @@ MEDIA_ROOT = env('MEDIA_ROOT', default=root_path('media'))
 # Application definition
 
 INSTALLED_APPS = [
+    # default
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # first party
+    'django.contrib.humanize',
+
     # local
+    'apps.api.apps.ApiConfig',
     'apps.data.apps.DataConfig',
     'apps.article.apps.ArticleConfig',
     'apps.page.apps.PageConfig',

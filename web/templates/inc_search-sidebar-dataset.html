@@ -1,0 +1,91 @@
+<div class="search-sidebar__title search-sidebar__title--head"><span>資料集</span></div>
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="heading-publisher">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-publisher" aria-expanded="false" aria-controls="collapse-publisher">
+          發布者
+        </a>
+      </h4>
+    </div>
+    <div id="collapse-publisher" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-publisher">
+      <div class="panel-body">
+        <ul>
+          {% for i in leftbar.publisher %}
+          <li>{{ i.organisation }}: {{ i.count }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  {% comment %}
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="heading-hosting">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-hosting" aria-expanded="false" aria-controls="collapse-hosting">
+          主持單位
+        </a>
+      </h4>
+    </div>
+    <div id="collapse-hosting" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-hosting">
+      <div class="panel-body">
+        <ul>
+        </ul>
+      </div>
+    </div>
+  </div>
+  {% endcomment %}
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="heading-country">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-country" aria-expanded="false" aria-controls="collapse-country">
+          分布地區/國家
+        </a>
+      </h4>
+    </div>
+    <div id="collapse-country" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-country">
+      <div class="panel-body">
+        <ul>
+          {% for i in leftbar.country %}
+          <li>{{ i.country }}: {{ i.count }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  {% comment %}
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="heading-project">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-project" aria-expanded="false" aria-controls="collapse-project">
+          計畫
+        </a>
+      </h4>
+    </div>
+    <div id="collapse-project" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-project">
+      <div class="panel-body">
+        <ul>
+        </ul>
+      </div>
+    </div>
+  </div>
+  {% endcomment %}
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="heading-rights">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-rights" aria-expanded="false" aria-controls="collapse-rights">
+          授權狀態
+        </a>
+      </h4>
+    </div>
+    <div id="collapse-rights" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-rights">
+      <div class="panel-body">
+        <ul>
+          {% for i in leftbar.data_license %}
+          <li>{{ i.data_license }}: {{ i.count }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

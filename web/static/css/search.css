@@ -62,3 +62,14 @@
     padding: 0px 6px;
     margin-top: -4px;
 }
+
+.panel-title a:link,
+.panel-title a:visited,
+.panel-title a:hover{
+    text-decoration: none;
+    color: unset;
+}
+
+.panel .panel-group {
+    border-radius: unset;
+}

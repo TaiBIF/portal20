@@ -25,9 +25,10 @@ urlpatterns = [
     url('^media/(?P<path>.*)$', serve, {
             'document_root': settings.MEDIA_ROOT,
         }),
+    path('api/', include('apps.api.urls')),
     path('search/', include('apps.data.urls')),
     path('occurrence/<int:pk>', occurrence_view, name='occurrence'),
-    path('dataset/<name>', dataset_view, name='dataset'),
+    path('dataset/<name>', dataset_view, name='dataset-detail'),
     path('article/', include('apps.article.urls')),
     path('',  include('apps.page.urls')),
     path('admin/', admin.site.urls),

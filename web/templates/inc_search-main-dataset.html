@@ -1,0 +1,20 @@
+  <!-- container begin -->
+  <div class="container">
+    <h1 class="heading-lg-ul">資料集
+      <span class="heading-footnote"> 共 {{ data_list.count }} 筆資料</span>
+    </h1>
+    {% for i in data_list %}
+    <div class="row listbox-img-right-wrapper">
+      <div class="col-xs-8">
+        <span class="label label-warning">{{ i.dwc_core_type_for_human_simple }}</span>
+        <h3 class="listbox-inner-title">{{ i.title }}</h3>
+        <p class="listbox-inner-summary hidden-xs">
+          {{ i.description|truncatechars:150 }}
+        </p>
+        <span class="badge">紀錄數量: {{ i.num_record }}</span>
+        <div><a href="{% url 'dataset-detail' name=i.name %}" class="">觀看資料集</a></div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <div>

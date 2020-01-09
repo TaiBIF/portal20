@@ -1,13 +1,13 @@
 from django.contrib import admin
 
-from .models import Taxon, TaxonTree, DataSet
+from .models import Taxon, TaxonTree, Dataset
 
-class DataSetAdmin(admin.ModelAdmin):
-    model = DataSet
-    list_display = ('title', 'name', 'stats_num_occurrence', 'pub_date', 'guid')
+class DatasetAdmin(admin.ModelAdmin):
+    model = Dataset
+    list_display = ('title', 'name', 'num_occurrence', 'pub_date', 'guid')
     list_filter = ('is_most_project', 'dwc_core_type')
-    fields = ('title', 'name', 'description','author', 'pub_date', 'guid', 'dwc_core_type', 'stats_num_record', 'stats_num_occurrence', 'stats_extensions', 'is_most_project')
-    readonly_fields = ('title', 'name', 'description','author', 'pub_date', 'guid', 'dwc_core_type', 'stats_num_record', 'stats_num_occurrence', 'stats_extensions')
+    fields = ('title', 'name', 'description','author', 'pub_date', 'guid', 'dwc_core_type', 'num_record', 'num_occurrence', 'extension_data', 'is_most_project')
+    readonly_fields = ('title', 'name', 'description','author', 'pub_date', 'guid', 'dwc_core_type', 'num_record', 'num_occurrence', 'extension_data')
 
 
 class TaxonAdmin(admin.ModelAdmin):
@@ -26,4 +26,4 @@ class TaxonTreeAdmin(admin.ModelAdmin):
 
 admin.site.register(Taxon, TaxonAdmin)
 admin.site.register(TaxonTree, TaxonTreeAdmin)
-admin.site.register(DataSet, DataSetAdmin)
+admin.site.register(Dataset, DatasetAdmin)

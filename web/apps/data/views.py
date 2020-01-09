@@ -8,7 +8,7 @@ from django.db.models import Count
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect
 
-from .models import Taxon, Occurrence, DataSet
+from .models import Taxon, Occurrence, Dataset
 
 def do_search(q, page):
 
@@ -32,7 +32,7 @@ def do_search(q, page):
     #query = query.filter(phylum=q)
     #query = query.filter(phyluminchineem=q)
 
-    rows = query.all()
+    rows = []#query.all()
 
     paginator = Paginator(rows, 50)
     occurrence_list = paginator.get_page(page)
@@ -84,5 +84,17 @@ def occurrence_view(request, pk):
 
 def dataset_view(request, name):
     context = {}
-    context['dataset'] = get_object_or_404(DataSet, name=name)
+    context['dataset'] = get_object_or_404(Dataset, name=name)
     return render(request, 'dataset.html', context)
+
+def search_dataset(request):
+    context = {
+        'leftbar': {},
+        'data_list': []
+    }
+    context['leftbar']['publisher'] = Dataset.objects.values('organisation').exclude(organisation__exact='').annotate(count=Count('organisation')).order_by('-count')
+    context['leftbar']['country'] = Dataset.objects.values('country').exclude(country__exact='').annotate(count=Count('country')).order_by('-count')
+    context['leftbar']['data_license'] = Dataset.objects.values('data_license').exclude(data_license__exact='').annotate(count=Count('data_license')).order_by('-count')
+
+    context['data_list'] = Dataset.objects.all()
+    return render(request, 'search.html', context)

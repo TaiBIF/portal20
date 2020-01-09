@@ -14,84 +14,52 @@
 <script src="{% static 'js/search.js' %}"></script>
 {#<script src="{% static 'js/uikit.min.js' %}"></script>#}
 {#<script src="{% static 'js/uikit-icons.min.js' %}"></script>#}
+<script>
+  $(document).ready(function() {
+    $('.panel-collapse').collapse({
+      toggle: false
+    });
+  });
+</script>
+<script src="{% static 'js/react.development.js' %}"></script>
+<script src="{% static 'js/react-dom.development.js' %}"></script>
+
+<script src="{% static 'js/bundle.js' %}"></script>
 {% endblock %}
 
 {% block main %}
+<div class="container search-container" id="taibif-search-container">
+</div>
 <div class="container search-container">
   <div class="row">
+    <hr>
+    <div id="taibif-search-container"></div>
     <div class="col-xs-6 col-md-3 search-sidebar">
-      <div class="search-sidebar__title search-sidebar__title--head"><span>出現紀錄</span></div>
-      <!-- search form -->
-      <div class="head-carousel-search-wrapper-xx search-sidebar__input-wrapper">
-        <form action="{% url 'search' %}" method="POST">
-          {% csrf_token %}
-          <input type="text" class="search-sidebar__input" placeholder="請輸入關鍵字..." {% if request.GET.q %} value="{{ request.GET.q }}"{% endif %} name="q">
-          <button class="search-sidebar__submit-btn" type="submit">
-            <span class="myicon icon-search"></span>
-          </button>
-        </form>
-      </div>
-      <!-- end search form -->
-      <div class="search-sidebar__title"><span>授權狀態</span></div>
-      <div class="search-sidebar__title"><span>學名</span></div>
-      <div class="">
-        <div id="search-taxon-tree"></div>
-      </div>
-      <div class="search-sidebar__title"><span>資料集</span></div>
-      <div class="search-sidebar__title"><span>發佈者</span></div>
+      {% if request.resolver_match.url_name == "search" %}
+        {% include "inc_search-sidebar-occurrence.html" %}
+      {% elif request.resolver_match.url_name == "search-dataset" %}
+        {% include "inc_search-sidebar-dataset.html" with leftbar=leftbar %}
+      {% endif %}
     </div><!-- end search-sidebar-->
     <div class="col-xs-12 col-md-9">
-      <h2>出現紀錄<small> / 共 {{ occurrence_list.paginator.count |intcomma }} 筆資料 (搜尋時間: {{ search_time }} 秒)</small></h2>
-      <div class="search-main-tag-wrapper">篩選條件: {% for i in search_tags %}<div class="search-main-tag-item"><span class="badge">{{ i }}</span></div>{% endfor %}</div>
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>學名</th>
-            <th>國家/地區</th>
-            <th>座標</th>
-            <th>記錄依據</th>
-            <th>界</th>
-            <th>門</th>
-            <th>綱</th>
-            <th>目</th>
-            <th>科</th>
-            <th>屬</th>
-            <th>種</th>
-            <th>資料集</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for i in occurrence_list %}
-          <tr>
-            <td><a href="{% url 'occurrence' i.id %}">{{ forloop.counter }}</a></td>
-            <td><a href="http://taibif.tw/zh/namecode/{{ i.name_code }}">{{ i.scientificName}}</a>{% if i.vernacularName %} / {{ i.vernacularName }}{% endif %}</td>
-            <td>{{ i.country }} / {{ i.locality }}</td>
-            <td>{{ i.longitude }} {{ i.latitude}}</td>
-            <td>{{ i.basisofrecord }}</td>
-            <td>{{ i.kingdom }} / {{ i.kingdominchinese }}</td>
-            <td>{{ i.phylum }} / {{ i.phyluminchinese }}</td>
-            <td>{{ i.class_field }} / {{i.classinchinese }}</td>
-            <td>{{ i.order }} / {{ i.orderinchinese }}</td>
-            <td>{{ i.family }} / {{ i.familyinchinese }}</td>
-            <td>{{ i.genus }} / {{ i.genusinchinese }}</td>
-            <td>{{ i.species }} / {{ i.speciesinchinese }}</td>
-            <td><a href={% url 'dataset' i.dataset_name %}>{{ i.dataset_name }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      {% if request.resolver_match.url_name == "search" %}
+        {% include "inc_search-main-occurrence.html" with data_list=data_list%}
+      {% elif request.resolver_match.url_name == "search-dataset" %}
+        {% include "inc_search-main-dataset.html" with data_list=data_list%}
+      {% endif %}
     </div><!-- end search-main -->
   </div><!-- end row-->
 </div>
 
+{% if occurrence_list %}
 {% include "inc_pagination.html" with object_list=occurrence_list %}
+{% endif %}
 {% endblock %}
 
-------------
+
 <div class="search-container">
+
   <div class="search-sidebar">
-    aoeu
   </div>
   <div class="search-main">
     <div class="uk-container">
