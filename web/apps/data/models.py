@@ -3,6 +3,22 @@ from django.utils import timezone
 from django.contrib.postgres.fields import JSONField
 from django.shortcuts import get_object_or_404
 
+DATA_MAPPING = {
+    'country': {
+        'TW': '台灣',
+        'PH': '菲律賓',
+        'NP': '尼泊爾',
+        'ZM': '尚比亞',
+        'BI': '蒲隆地'
+    },
+    'rights': {
+        'Creative Commons Attribution Non Commercial (CC-BY-NC) 4.0 License': 'cc-by-nc',
+        'Creative Commons Attribution (CC-BY) 4.0 License': 'cc-by',
+        'Public Domain (CC0 1.0)': 'cc0'
+    }
+}
+
+
 
 class Dataset(models.Model):
     STATUS_CHOICE = {
@@ -27,7 +43,9 @@ class Dataset(models.Model):
     gbif_cite = models.TextField(blank=True, null=True)
     gbif_doi = models.TextField(blank=True, null=True)
     gbif_mod_date = models.DateTimeField('Modified Date from gbif', null=True)
-    organisation = models.TextField(blank=True, null=True)
+    organization_verbatim = models.TextField(blank=True, null=True)
+    organization = models.ForeignKey('DatasetOrganization', null=True, blank=True, on_delete=models.SET_NULL)
+    #models.TextField(blank=True, null=True)
     num_record = models.PositiveIntegerField(default=0)
     num_occurrence = models.PositiveIntegerField(default=0)
     #stats_num_year_column = models.PositiveIntegerField(default=0)
@@ -58,15 +76,8 @@ class Dataset(models.Model):
 
     @property
     def country_for_human(self):
-        country_map = {
-            'TW': '台灣',
-            'PH': '菲律賓',
-            'NP': '尼泊爾',
-            'ZM': '尚比亞',
-            'BI': '蒲隆地'
-        }
-        if self.country and self.country in country_map:
-            return country_map[self.country]
+        if self.country and self.country in DATA_MAPPING['country']:
+            return DATA_MAPPING['country'][self.country]
         return self.country
 
     @property
@@ -84,6 +95,9 @@ class Dataset(models.Model):
     def __str__(self):
         r = '<Dataset {}>'.format(self.name)
         return r
+
+class DatasetOrganization(models.Model):
+    name = models.CharField('name', max_length=128)
 
 class TaxonTree(models.Model):
     name = models.CharField('name', max_length=64)

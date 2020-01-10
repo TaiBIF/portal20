@@ -56,9 +56,12 @@ async function fetchTree(rank, taxon_id='') {
   if (rank !== 'kingdom') {
     apiURL += `?rank=${rank}&taxon_id=${taxon_id}`;
   }
+  /*
   console.log('fetch:', apiURL);
   let response = await fetch(apiURL);
   let data = await response.json();
+  */
+  let data = {};
   //console.log('data', data);
   return data;
 }

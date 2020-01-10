@@ -8,14 +8,14 @@ def json_ret(fun):
 
     @functools.wraps(fun)
     def wrapper(*args, **kwds):
-        data = {'results': 0}
+        ret = {'data': {}}
         ## offset: 0, limit: 0, endOfRecords: false
         try:
-            ret = fun(*args, **kwds)
-            data['results'] = ret['data']
+            fun_ret = fun(*args, **kwds)
+            ret['data'] = fun_ret['data']
         except Exception as e:
-            data['error'] = str(e)
+            ret['error'] = str(e)
 
-        return HttpResponse(json.dumps(data), content_type="application/json")
+        return HttpResponse(json.dumps(ret), content_type="application/json")
 
     return wrapper

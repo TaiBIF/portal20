@@ -87,14 +87,5 @@ def dataset_view(request, name):
     context['dataset'] = get_object_or_404(Dataset, name=name)
     return render(request, 'dataset.html', context)
 
-def search_dataset(request):
-    context = {
-        'leftbar': {},
-        'data_list': []
-    }
-    context['leftbar']['publisher'] = Dataset.objects.values('organisation').exclude(organisation__exact='').annotate(count=Count('organisation')).order_by('-count')
-    context['leftbar']['country'] = Dataset.objects.values('country').exclude(country__exact='').annotate(count=Count('country')).order_by('-count')
-    context['leftbar']['data_license'] = Dataset.objects.values('data_license').exclude(data_license__exact='').annotate(count=Count('data_license')).order_by('-count')
-
-    context['data_list'] = Dataset.objects.all()
-    return render(request, 'search.html', context)
+def search_view(request, search_type):
+    return render(request, 'search.html')

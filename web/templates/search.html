@@ -4,7 +4,7 @@
 {% load humanize %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/search.css' %}" />
+{#<link rel="stylesheet" href="{% static 'css/search.css' %}" />#}
 <link rel="stylesheet" href="{% static 'css/tree.css' %}" />
 {#<link rel="stylesheet" href="{% static 'css/uikit.min.css' %}" />#}
 {% endblock %}
@@ -21,8 +21,6 @@
     });
   });
 </script>
-<script src="{% static 'js/react.development.js' %}"></script>
-<script src="{% static 'js/react-dom.development.js' %}"></script>
 
 <script src="{% static 'js/bundle.js' %}"></script>
 {% endblock %}
@@ -31,24 +29,7 @@
 <div class="container search-container" id="taibif-search-container">
 </div>
 <div class="container search-container">
-  <div class="row">
-    <hr>
-    <div id="taibif-search-container"></div>
-    <div class="col-xs-6 col-md-3 search-sidebar">
-      {% if request.resolver_match.url_name == "search" %}
-        {% include "inc_search-sidebar-occurrence.html" %}
-      {% elif request.resolver_match.url_name == "search-dataset" %}
-        {% include "inc_search-sidebar-dataset.html" with leftbar=leftbar %}
-      {% endif %}
-    </div><!-- end search-sidebar-->
-    <div class="col-xs-12 col-md-9">
-      {% if request.resolver_match.url_name == "search" %}
-        {% include "inc_search-main-occurrence.html" with data_list=data_list%}
-      {% elif request.resolver_match.url_name == "search-dataset" %}
-        {% include "inc_search-main-dataset.html" with data_list=data_list%}
-      {% endif %}
-    </div><!-- end search-main -->
-  </div><!-- end row-->
+  <div class="row" id="taibif-search-container"></div>
 </div>
 
 {% if occurrence_list %}

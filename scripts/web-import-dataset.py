@@ -53,7 +53,7 @@ for i in d.rows:
         title = i['title'],
         name = i['name'],
         description = i['descr'],
-        organisation = i['org'],
+        organization_verbatim = i['org'],
         dwc_core_type = i['core'],
         pub_date = parse_date(i['pub_date']),
         mod_date = parse_date(i['mod_date']),

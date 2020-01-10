@@ -12,11 +12,12 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
       }
     ],
   },
-  devtool: 'cheap-module-eval-source-map',
-  devServer: {
-    contentBase: path.join(__dirname, 'static/js')
-  }
+  devtool: 'cheap-module-eval-source-map'
 };
