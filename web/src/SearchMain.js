@@ -1,7 +1,51 @@
 import React from 'react';
 
 function SearchMainOccurrence(props) {
-  return <h1>Ourr</h1>
+  console.log(props);
+  const rows = props.data.results.map((row, index) => {
+    return (
+        <tr key={row.taibif_id}>
+        <td><a href="/occurrence">{ index+1 }</a></td>
+        <td>{/*http://taibif.tw/zh/namecode/{{ i.name_code */}{ row.scientific_name }</td>
+        <td>{ row.vernacular_name }</td>
+        <td>{ row.basis_of_record }</td>
+        <td>{ row.country }{/*/ i.locality */}</td>
+        <td><a href={"/dataset/"+row.dataset.name+"/"}>{ row.dataset.title }</a></td>
+        </tr>
+    )
+  });
+
+  const filterTags = [];
+  for (let f of props.filters) {
+    const menuKey = f.split('.');
+    const found = props.menus.find((x) => x['key'] === menuKey[0]);
+    const tagLabel = `${found['label']}: ${menuKey[1]}`;
+          filterTags.push((<span key={tagLabel} className="badge search-tag">{ tagLabel }</span>));
+  }
+
+  return (
+      <div className="col-xs-12 col-md-9">
+      <div className="container">
+      <h2>出現紀錄<small> / 共 occurrence_list.paginator.count  筆資料 {/*(搜尋時間: search_time  秒)*/}</small></h2>
+      <div className="search-main-tag-wrapper">篩選條件: <div className="search-main-tag-item">{ filterTags }</div></div>
+      <table className="table table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>學名</th>
+            <th>俗名</th>
+            <th>記錄依據</th>
+            <th>國家/地區</th>
+            <th>資料集</th>
+          </tr>
+        </thead>
+        <tbody>
+      {rows}
+        </tbody>
+      </table>
+      </div>
+      </div>
+  )
 }
 
 function SearchMainDataset(props) {
@@ -22,25 +66,42 @@ function SearchMainDataset(props) {
     )
   });
 
+  let activeTabList = ['active', '', '', '', ''];
+  console.log(props.filters);
+  const filterTags = [];
+  for (let f of props.filters) {
+    if (f.indexOf('core.') >= 0) {
+      activeTabList[0] = '';
+      activeTabList[1] = (f === 'core.occurrence') ? 'active' : '';
+      activeTabList[2] = (f === 'core.taxon') ? 'active' : '';
+      activeTabList[3] = (f === 'core.event') ? 'active' : '';
+      activeTabList[4] = (f === 'core.meta') ? 'active' : '';
+    }
+    else {
+      const menuKey = f.split('.');
+      const found = props.menus.find((x) => x['key'] === menuKey[0]);
+      const tagLabel = `${found['label']}: ${menuKey[1]}`;
+      filterTags.push((<span key={tagLabel} className="badge search-tag">{ tagLabel }</span>));
+    }
+  }
   return (
       <div className="col-xs-12 col-md-9">
       <div className="container">
-      <h1 className="heading-lg-ul">資料集
+      <h2 className="heading-lg-ul">資料集
       <span className="heading-footnote"> 共 {props.data.count} 筆資料</span>
-      </h1>
+      </h2>
+      <div className="search-main-tag-wrapper">篩選條件: <div className="search-main-tag-item">{ filterTags }</div></div>
+      <ul className="nav nav-tabs search-menu-tabs">
+      <li className={activeTabList[0]}><a href="#" onClick={(e)=>props.onClickTab(e, 'all')}>全部</a></li>
+      <li className={activeTabList[1]}><a href="#" onClick={(e)=>props.onClickTab(e, 'occurrence')}>出現紀錄</a></li>
+      <li className={activeTabList[2]}><a href="#" onClick={(e)=>props.onClickTab(e, 'taxon')}>物種名錄</a></li>
+      <li className={activeTabList[3]}><a href="#" onClick={(e)=>props.onClickTab(e, 'event')}>調查活動</a></li>
+      <li className={activeTabList[4]}><a href="#" onClick={(e)=>props.onClickTab(e, 'meta')}>詮釋資料</a></li>
+      </ul>
       {rows}
       </div>
       </div>
   )
 }
 
-function SearchMain(props) {
-  if (props.searchType === 'dataset') {
-    return <SearchMainDataset data={props.data} searchType={props.searchType} />
-  }
-  else if (props.searchType === 'occurrence') {
-    return <SearchMainOccurrence data={props.data} searchType={props.searchType} />
-  }
-}
-
-export default SearchMain;
+export {SearchMainDataset, SearchMainOccurrence};

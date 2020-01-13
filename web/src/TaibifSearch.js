@@ -1,13 +1,47 @@
 import React from 'react';
 import SearchSidebar from './SearchSidebar.js';
-import SearchMain from './SearchMain.js';
+import {SearchMainDataset, SearchMainOccurrence} from './SearchMain.js';
 import './SearchStyles.css';
+
+
+function Pagination (props) {
+  const numPerPage = props.limit - props.offset;
+  const lastPage = Math.ceil(props.count / numPerPage);
+  const pages = [];
+
+  for (let i=1; i<=lastPage; i++)  {
+    let url = window.location.href;
+    if (url.indexOf('page=') >=0) {
+      url = url.replace(/page=([0-9]+)/, `page=${i}`);
+    }
+    else {
+      if (window.location.search) {
+        url = `${url}&page=${i}`;
+      }
+      else {
+        url = `${url}?page=${i}`;
+      }
+    }
+    const activeClass = (parseInt(props.current, 10) === i) ? 'active' : '';
+    pages.push(<li className={activeClass} key={i}><a href={url}> {i} </a></li>);
+  }
+  return (
+      <div className="center-block text-center">
+      <ul className="pagination">
+      <li><a href="?page=1" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+      {pages}
+      <li><a href={"?page="+lastPage} aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+      </ul>
+      </div>
+  )
+}
 
 class TaibifSearch extends React.Component {
   constructor(props) {
     super(props);
 
     let searchType = '';
+    let page = 0;
     if (window.location.pathname === '/dataset/search/') {
       searchType = 'dataset';
     }
@@ -15,19 +49,43 @@ class TaibifSearch extends React.Component {
       searchType = 'occurrence';
     }
 
+    if (window.location.search.indexOf('page=')) {
+      let found = window.location.search.split('&').find((x)=>x.indexOf('page=') >=0)
+      if (found) {
+        page = found.split('=')[1]
+      }
+    }
     this.state = {
       isLoaded: false,
       data: {},
       filters: new Set(),
       searchType: searchType,
-      queryKeyword: ''
+      queryKeyword: '',
+      page: page
     }
     this.handleMenuClick = this.handleMenuClick.bind(this);
     this.handleKeywordChange = this.handleKeywordChange.bind(this);
     this.getSearch = this.getSearch.bind(this);
     this.applyFilters = this.applyFilters.bind(this);
     this.handleSubmitKeywordClick = this.handleSubmitKeywordClick.bind(this);
+    this.handleTabClick = this.handleTabClick.bind(this);
   }
+
+  handleTabClick(e, core){
+    const filters = this.state.filters;
+    // only one core (tab)
+    filters.forEach(function(x){
+      if (x.indexOf('core.') === 0) {
+        filters.delete(x);
+      }
+    });
+    if (core !== 'all') {
+      filters.add(`core.${core}`);
+
+    this.applyFilters(filters);
+    }
+  }
+
   handleSubmitKeywordClick(){
     const filters = this.state.filters;
     const q = this.state.queryKeyword;
@@ -75,6 +133,7 @@ class TaibifSearch extends React.Component {
     /* filters: Set() will affect API url and change current URL but not redirect */
     let apiUrl = `${window.location.origin}/api${window.location.pathname}`;
     let url = `${window.location.origin}${window.location.pathname}`;
+
     // convert Set to object
     if (filters) {
       const obj = {};
@@ -91,9 +150,20 @@ class TaibifSearch extends React.Component {
       apiUrl = `${apiUrl}?${queryString}`;
       url = `${url}?${queryString}`;
     }
-    // do not redirect
-    window.history.pushState("object or string", "taibif-search", url);
-  
+
+    // if has page, redirect occur ?
+    if (this.state.page) {
+      if (filters) {
+        apiUrl = `${apiUrl}&page=${this.state.page}`;
+      }
+      else {
+        apiUrl = `${apiUrl}?page=${this.state.page}`;
+      }
+    }
+    else {
+      //有 page 的話, 會rudirect 變成拿掉 page
+      window.history.pushState("object or string", "taibif-search", url);
+    }
     console.log('fetch:', apiUrl)
     //const resp = await fetch(url);
     // const json = await resp.json();
@@ -126,15 +196,16 @@ class TaibifSearch extends React.Component {
       let mkeys = window.location.search.replace(/%2C/g,',').replace('?', '').split('&');
       let q = '';
       mkeys.forEach((m)=>{
-        const mArr = m.split('=');
-        if (mArr[0] === 'q') {
-          this.setState({queryKeyword:mArr[1]});
+        if (m.indexOf('page=') < 0) {
+          const mArr = m.split('=');
+          if (mArr[0] === 'q') {
+            this.setState({queryKeyword:mArr[1]});
+          }
+          mArr[1].split(',').forEach((x) => {
+            filters.add(`${mArr[0]}.${x}`);
+          })
         }
-        mArr[1].split(',').forEach((x) => {
-          filters.add(`${mArr[0]}.${x}`);
-        })
       });
-
       this.applyFilters(filters);
     }
     else {
@@ -164,10 +235,22 @@ class TaibifSearch extends React.Component {
         'offset':  this.state.data.offset
       };
       const queryKeyword = this.state.queryKeyword;
-      return (<div className="row">
-              <SearchSidebar menus={menus} onClick={this.handleMenuClick} filters={filters} onClickClear={(e)=>this.applyFilters()} queryKeyword={queryKeyword} onChangeKeyword={(e)=>{this.handleKeywordChange(e)}} onClickSubmitKeyword={this.handleSubmitKeywordClick} searchType={searchType} />
-              <SearchMain data={mainData} searchType={searchType} />
-              </div>);
+      let searchMainContainer = '';
+      if (searchType === 'dataset') {
+        searchMainContainer = <SearchMainDataset data={mainData} searchType={searchType} filters={filters} menus={menus} onClickTab={this.handleTabClick}/>
+      }
+      else if (searchType === 'occurrence') {
+        searchMainContainer = <SearchMainOccurrence data={mainData} searchType={searchType} filters={filters} menus={menus} />
+      }
+
+      const defaultPage = (this.state.page) ? this.state.page : '1';
+      return (
+          <div className="row">
+          <SearchSidebar menus={menus} onClick={this.handleMenuClick} filters={filters} onClickClear={(e)=>this.applyFilters()} queryKeyword={queryKeyword} onChangeKeyword={(e)=>{this.handleKeywordChange(e)}} onClickSubmitKeyword={this.handleSubmitKeywordClick} searchType={searchType} />
+          {searchMainContainer}
+          <Pagination limit={mainData.limit} offset={mainData.offset} count={mainData.count} current={defaultPage } />
+          </div>
+      );
     }
   }
 }

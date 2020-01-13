@@ -15,16 +15,25 @@ DATA_MAPPING = {
         'Creative Commons Attribution Non Commercial (CC-BY-NC) 4.0 License': 'cc-by-nc',
         'Creative Commons Attribution (CC-BY) 4.0 License': 'cc-by',
         'Public Domain (CC0 1.0)': 'cc0'
+    },
+    'core': {
+        'occurrence': 'Occurrence',
+        'taxon': 'Checklist',
+        'event': 'Sampling event',
+        'meta': 'Metadata-only'
     }
 }
 
 
 
 class Dataset(models.Model):
+
+    NUM_PER_PAGE = 20
     STATUS_CHOICE = {
         ('Public', 'Public'),
         ('Private', 'Private'),
     }
+
     title = models.CharField('title', max_length=300)
     name = models.CharField('name', max_length=128) # ipt shortname
     description = models.TextField('Description')
@@ -291,3 +300,154 @@ class Occurrence(models.Model):
     #class Meta:
     #    managed = False
     #    db_table = 'data_occurrence'
+
+
+# This is an auto-generated Django model module.
+# You'll have to do the following manually to clean this up:
+#   * Rearrange models' order
+#   * Make sure each model has one field with primary_key=True
+#   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
+#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
+# Feel free to rename the models, but don't rename db_table values or field names.
+
+
+class RawDataOccurrence(models.Model):
+    taibif_id = models.BigIntegerField(primary_key=True)
+    lifestage = models.TextField(db_column='lifeStage', blank=True, null=True)  # Field name made lowercase.
+    institutioncode = models.TextField(db_column='institutionCode', blank=True, null=True)  # Field name made lowercase.
+    datageneralizations = models.TextField(db_column='dataGeneralizations', blank=True, null=True)  # Field name made lowercase.
+    dateidentified = models.TextField(db_column='dateIdentified', blank=True, null=True)  # Field name made lowercase.
+    language = models.TextField(blank=True, null=True)
+    locationaccordingto = models.TextField(db_column='locationAccordingTo', blank=True, null=True)  # Field name made lowercase.
+    namepublishedinyear = models.TextField(db_column='namePublishedInYear', blank=True, null=True)  # Field name made lowercase.
+    informationwithheld = models.TextField(db_column='informationWithheld', blank=True, null=True)  # Field name made lowercase.
+    collectionid = models.TextField(db_column='collectionID', blank=True, null=True)  # Field name made lowercase.
+    eventid = models.TextField(db_column='eventID', blank=True, null=True)  # Field name made lowercase.
+    disposition = models.TextField(blank=True, null=True)
+    institutionid = models.TextField(db_column='institutionID', blank=True, null=True)  # Field name made lowercase.
+    namepublishedin = models.TextField(db_column='namePublishedIn', blank=True, null=True)  # Field name made lowercase.
+    rightsholder = models.TextField(db_column='rightsHolder', blank=True, null=True)  # Field name made lowercase.
+    recordedby = models.TextField(db_column='recordedBy', blank=True, null=True)  # Field name made lowercase.
+    organismquantitytype = models.TextField(db_column='organismQuantityType', blank=True, null=True)  # Field name made lowercase.
+    acceptednameusageid = models.TextField(db_column='acceptedNameUsageID', blank=True, null=True)  # Field name made lowercase.
+    kingdom = models.TextField(blank=True, null=True)
+    taxonid = models.TextField(db_column='taxonID', blank=True, null=True)  # Field name made lowercase.
+    minimumdepthinmeters = models.TextField(db_column='minimumDepthInMeters', blank=True, null=True)  # Field name made lowercase.
+    organismquantity = models.TextField(db_column='organismQuantity', blank=True, null=True)  # Field name made lowercase.
+    identificationremarks = models.TextField(db_column='identificationRemarks', blank=True, null=True)  # Field name made lowercase.
+    islandgroup = models.TextField(db_column='islandGroup', blank=True, null=True)  # Field name made lowercase.
+    fieldnotes = models.TextField(db_column='fieldNotes', blank=True, null=True)  # Field name made lowercase.
+    preparations = models.TextField(blank=True, null=True)
+    modified = models.TextField(blank=True, null=True)
+    verbatimlocality = models.TextField(db_column='verbatimLocality', blank=True, null=True)  # Field name made lowercase.
+    datasetid = models.TextField(db_column='datasetID', blank=True, null=True)  # Field name made lowercase.
+    verbatimeventdate = models.TextField(db_column='verbatimEventDate', blank=True, null=True)  # Field name made lowercase.
+    decimallongitude = models.TextField(db_column='decimalLongitude', blank=True, null=True)  # Field name made lowercase.
+    verbatimdepth = models.TextField(db_column='verbatimDepth', blank=True, null=True)  # Field name made lowercase.
+    associatedtaxa = models.TextField(db_column='associatedTaxa', blank=True, null=True)  # Field name made lowercase.
+    countrycode = models.TextField(db_column='countryCode', blank=True, null=True)  # Field name made lowercase.
+    verbatimlatitude = models.TextField(db_column='verbatimLatitude', blank=True, null=True)  # Field name made lowercase.
+    verbatimelevation = models.TextField(db_column='verbatimElevation', blank=True, null=True)  # Field name made lowercase.
+    georeferenceprotocol = models.TextField(db_column='georeferenceProtocol', blank=True, null=True)  # Field name made lowercase.
+    recordnumber = models.TextField(db_column='recordNumber', blank=True, null=True)  # Field name made lowercase.
+    phylum = models.TextField(blank=True, null=True)
+    geodeticdatum = models.TextField(db_column='geodeticDatum', blank=True, null=True)  # Field name made lowercase.
+    verbatimtaxonrank = models.TextField(db_column='verbatimTaxonRank', blank=True, null=True)  # Field name made lowercase.
+    order = models.TextField(blank=True, null=True)
+    individualcount = models.TextField(db_column='individualCount', blank=True, null=True)  # Field name made lowercase.
+    startdayofyear = models.TextField(db_column='startDayOfYear', blank=True, null=True)  # Field name made lowercase.
+    maximumelevationinmeters = models.TextField(db_column='maximumElevationInMeters', blank=True, null=True)  # Field name made lowercase.
+    occurrencestatus = models.TextField(db_column='occurrenceStatus', blank=True, null=True)  # Field name made lowercase.
+    island = models.TextField(blank=True, null=True)
+    datasetname = models.TextField(db_column='datasetName', blank=True, null=True)  # Field name made lowercase.
+    parenteventid = models.TextField(db_column='parentEventID', blank=True, null=True)  # Field name made lowercase.
+    identifiedby = models.TextField(db_column='identifiedBy', blank=True, null=True)  # Field name made lowercase.
+    id = models.TextField(blank=True, null=True)
+    decimallatitude = models.TextField(db_column='decimalLatitude', blank=True, null=True)  # Field name made lowercase.
+    vernacularname = models.TextField(db_column='vernacularName', blank=True, null=True)  # Field name made lowercase.
+    footprintwkt = models.TextField(db_column='footprintWKT', blank=True, null=True)  # Field name made lowercase.
+    scientificname = models.TextField(db_column='scientificName', blank=True, null=True)  # Field name made lowercase.
+    ownerinstitutioncode = models.TextField(db_column='ownerInstitutionCode', blank=True, null=True)  # Field name made lowercase.
+    infraspecificepithet = models.TextField(db_column='infraspecificEpithet', blank=True, null=True)  # Field name made lowercase.
+    specificepithet = models.TextField(db_column='specificEpithet', blank=True, null=True)  # Field name made lowercase.
+    georeferencesources = models.TextField(db_column='georeferenceSources', blank=True, null=True)  # Field name made lowercase.
+    type = models.TextField(blank=True, null=True)
+    nomenclaturalcode = models.TextField(db_column='nomenclaturalCode', blank=True, null=True)  # Field name made lowercase.
+    month = models.TextField(blank=True, null=True)
+    originalnameusage = models.TextField(db_column='originalNameUsage', blank=True, null=True)  # Field name made lowercase.
+    collectioncode = models.TextField(db_column='collectionCode', blank=True, null=True)  # Field name made lowercase.
+    eventremarks = models.TextField(db_column='eventRemarks', blank=True, null=True)  # Field name made lowercase.
+    highergeography = models.TextField(db_column='higherGeography', blank=True, null=True)  # Field name made lowercase.
+    identificationqualifier = models.TextField(db_column='identificationQualifier', blank=True, null=True)  # Field name made lowercase.
+    nameaccordingto = models.TextField(db_column='nameAccordingTo', blank=True, null=True)  # Field name made lowercase.
+    coordinateuncertaintyinmeters = models.TextField(db_column='coordinateUncertaintyInMeters', blank=True, null=True)  # Field name made lowercase.
+    country = models.TextField(blank=True, null=True)
+    stateprovince = models.TextField(db_column='stateProvince', blank=True, null=True)  # Field name made lowercase.
+    verbatimcoordinatesystem = models.TextField(db_column='verbatimCoordinateSystem', blank=True, null=True)  # Field name made lowercase.
+    subgenus = models.TextField(blank=True, null=True)
+    verbatimlongitude = models.TextField(db_column='verbatimLongitude', blank=True, null=True)  # Field name made lowercase.
+    family = models.TextField(blank=True, null=True)
+    organismid = models.TextField(db_column='organismID', blank=True, null=True)  # Field name made lowercase.
+    locationid = models.TextField(db_column='locationID', blank=True, null=True)  # Field name made lowercase.
+    coordinateprecision = models.TextField(db_column='coordinatePrecision', blank=True, null=True)  # Field name made lowercase.
+    enddayofyear = models.TextField(db_column='endDayOfYear', blank=True, null=True)  # Field name made lowercase.
+    taxonremarks = models.TextField(db_column='taxonRemarks', blank=True, null=True)  # Field name made lowercase.
+    waterbody = models.TextField(db_column='waterBody', blank=True, null=True)  # Field name made lowercase.
+    associatedsequences = models.TextField(db_column='associatedSequences', blank=True, null=True)  # Field name made lowercase.
+    othercatalognumbers = models.TextField(db_column='otherCatalogNumbers', blank=True, null=True)  # Field name made lowercase.
+    county = models.TextField(blank=True, null=True)
+    maximumdepthinmeters = models.TextField(db_column='maximumDepthInMeters', blank=True, null=True)  # Field name made lowercase.
+    pointradiusspatialfit = models.TextField(db_column='pointRadiusSpatialFit', blank=True, null=True)  # Field name made lowercase.
+    coreid = models.TextField(blank=True, null=True)
+    eventdate = models.TextField(db_column='eventDate', blank=True, null=True)  # Field name made lowercase.
+    georeferenceremarks = models.TextField(db_column='georeferenceRemarks', blank=True, null=True)  # Field name made lowercase.
+    basisofrecord = models.TextField(db_column='basisOfRecord', blank=True, null=True)  # Field name made lowercase.
+    municipality = models.TextField(blank=True, null=True)
+    verbatimcoordinates = models.TextField(db_column='verbatimCoordinates', blank=True, null=True)  # Field name made lowercase.
+    eventtime = models.TextField(db_column='eventTime', blank=True, null=True)  # Field name made lowercase.
+    genus = models.TextField(blank=True, null=True)
+    associatedmedia = models.TextField(db_column='associatedMedia', blank=True, null=True)  # Field name made lowercase.
+    establishmentmeans = models.TextField(db_column='establishmentMeans', blank=True, null=True)  # Field name made lowercase.
+    day = models.TextField(blank=True, null=True)
+    references = models.TextField(blank=True, null=True)
+    identificationverificationstatus = models.TextField(db_column='identificationVerificationStatus', blank=True, null=True)  # Field name made lowercase.
+    georeferencedby = models.TextField(db_column='georeferencedBy', blank=True, null=True)  # Field name made lowercase.
+    georeferenceddate = models.TextField(db_column='georeferencedDate', blank=True, null=True)  # Field name made lowercase.
+    materialsampleid = models.TextField(db_column='materialSampleID', blank=True, null=True)  # Field name made lowercase.
+    rights = models.TextField(blank=True, null=True)
+    license = models.TextField(blank=True, null=True)
+    continent = models.TextField(blank=True, null=True)
+    reproductivecondition = models.TextField(db_column='reproductiveCondition', blank=True, null=True)  # Field name made lowercase.
+    occurrenceid = models.TextField(db_column='occurrenceID', blank=True, null=True)  # Field name made lowercase.
+    georeferenceverificationstatus = models.TextField(db_column='georeferenceVerificationStatus', blank=True, null=True)  # Field name made lowercase.
+    catalognumber = models.TextField(db_column='catalogNumber', blank=True, null=True)  # Field name made lowercase.
+    minimumelevationinmeters = models.TextField(db_column='minimumElevationInMeters', blank=True, null=True)  # Field name made lowercase.
+    scientificnameid = models.TextField(db_column='scientificNameID', blank=True, null=True)  # Field name made lowercase.
+    acceptednameusage = models.TextField(db_column='acceptedNameUsage', blank=True, null=True)  # Field name made lowercase.
+    scientificnameauthorship = models.TextField(db_column='scientificNameAuthorship', blank=True, null=True)  # Field name made lowercase.
+    fieldnumber = models.TextField(db_column='fieldNumber', blank=True, null=True)  # Field name made lowercase.
+    class_field = models.TextField(db_column='class', blank=True, null=True)  # Field renamed because it was a Python reserved word.
+    higherclassification = models.TextField(db_column='higherClassification', blank=True, null=True)  # Field name made lowercase.
+    samplingprotocol = models.TextField(db_column='samplingProtocol', blank=True, null=True)  # Field name made lowercase.
+    behavior = models.TextField(blank=True, null=True)
+    previousidentifications = models.TextField(db_column='previousIdentifications', blank=True, null=True)  # Field name made lowercase.
+    sex = models.TextField(blank=True, null=True)
+    occurrenceremarks = models.TextField(db_column='occurrenceRemarks', blank=True, null=True)  # Field name made lowercase.
+    taxonrank = models.TextField(db_column='taxonRank', blank=True, null=True)  # Field name made lowercase.
+    typestatus = models.TextField(db_column='typeStatus', blank=True, null=True)  # Field name made lowercase.
+    habitat = models.TextField(blank=True, null=True)
+    locality = models.TextField(blank=True, null=True)
+    year = models.TextField(blank=True, null=True)
+    samplingeffort = models.TextField(db_column='samplingEffort', blank=True, null=True)  # Field name made lowercase.
+    footprintspatialfit = models.TextField(db_column='footprintSpatialFit', blank=True, null=True)  # Field name made lowercase.
+    associatedreferences = models.TextField(db_column='associatedReferences', blank=True, null=True)  # Field name made lowercase.
+    taibif_dataset_name = models.TextField(blank=True, null=True)
+
+    @property
+    def taibif_dataset(self):
+        d = Dataset.objects.values('title', 'id', 'name').filter(name__exact=self.taibif_dataset_name).first()
+        return d
+
+    class Meta:
+        managed = False
+        db_table = 'raw_data_occurrence'

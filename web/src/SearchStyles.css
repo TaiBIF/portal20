@@ -62,3 +62,15 @@
     border-color: unset;
     border-bottom: unset;
 }
+
+.search-tag {
+    margin: 10px 6px;
+    padding: 4px 12px;
+}
+
+.search-menu-tabs>li.active>a, .search-menu-tabs>li.active>a:focus, .search-menu-tabs>li.active>a:hover {
+    cursor: default;
+    background-color: #fff;
+    border: 1px solid #fff;
+    border-bottom: 3px solid #7b2626;
+}
