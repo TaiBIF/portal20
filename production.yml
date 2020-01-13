@@ -15,6 +15,7 @@ services:
       - .:/taibif-code
       - ../taibif-volumes/static:/taibif-volumes/static
       - ../taibif-volumes/media:/taibif-volumes/media
+      - ../taibif-volumes/bucket:/taibif-bucket
     command: "./scripts/wait-for-it.sh db:5432 -t 30 -- ./scripts/docker-web-entry.sh"
     #command: ./docker-web-entry.sh
     restart: always
@@ -31,6 +32,7 @@ services:
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - ../taibif-volumes/pgdata:/var/lib/postgresql/data/pgdata
+      - ../taibif-volumes/bucket:/taibif-bucket
   nginx:
     image: nginx:1.17.6-alpine
     restart: always
