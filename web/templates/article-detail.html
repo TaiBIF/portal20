@@ -16,6 +16,7 @@
         <li class="listbox-inner-tag"><a href="#">標籤</a></li>
         <li class="listbox-inner-tag"><a href="#">標籤</a></li>
       </ul>
+      {% comment %}
       <div class="article-share-btn-wrapper">
         分享文章
         <a href="#" class="navbar-oval-btn"><span class="myicon icon-social-fb"></span></a>
@@ -23,11 +24,10 @@
         <a href="#" class="navbar-oval-btn"><span class="myicon icon-social-line"></span></a>
         <a href="#" class="navbar-oval-btn"><span class="myicon icon-mail"></span></a>
       </div>
+      {% endcomment %}
     </div>
     <!-- story title & share btns end -->
-    {% comment %}
-      --- TODO 以下要套 ---
-    <div class="mg-todo">
+    <div class="mg-todox">
     <!-- article content begin -->
     <div class="article-content-wrapper">
       <p>
@@ -38,6 +38,7 @@
         {% endif %}
       </p>
 
+      {% comment %}
       <div class="article-img-wrapper" style="background">
         <img src="{% static 'images/photo-3.jpg' %}" class="img-responsive">
         <span>臺灣八角金盤 (Fatsia polycarpa), a near threatened evergreen shrub endemic to Taiwan. Photo by yun_shuan_lee licensed under CC BY-NC 4.0.</span>
@@ -45,19 +46,20 @@
       <h4 class="heading-md">標題追蹤開花植物的播遷路程</h4>
 
       <p>台灣是在地質活動頻繁的大陸島，於 200-300 萬年前形成於四塊板塊所組成的聚合板塊邊緣之上。在這篇台灣植物相的研究中，研究者運用了 GBIF 整合之東亞與南亞開花植物類群分布的點位資料，再區分特有種與非特有種後，推測出後者潛在的播遷來源。被海洋切割於所有大陸之外的特性造就了每個島嶼獨一無二的生態棲位。</p>
-      </div>
+    </div>
+    {% endcomment %}
     <!-- article content begin -->
 
+    {% comment %}
     <!-- attachment info begin -->
     <ul class="article-attachment-wrapper">
       <li>資料來源：GBIF</li>
       <li>原文連結：Tracing the migration of flowering plants from continents to islands</li>
       <li>附件下載：<a href="#" class="myicon icon-download-document">Species count for specimen records</a></li>
     </ul>
+    {% endcomment %}
     <!-- attachment info end -->
     </div>
-    --- 以上未套 ---
-    {% endcomment %}
 
     {% if article.category == "PUB" and article.memo_text|slice:"0:9" == "__files__" %}
     <ul class="article-attachment-wrapper">
@@ -72,8 +74,8 @@
       <!-- owl-carousel begin -->
       <div class="owl-carousel owl-theme" id="topic-board">
         {% for i in recommended %}
-        <div class="item">
-          <a href="#"><img src="{% static 'images/photo-1.jpg' %}"></a>
+        <div class="item article-recommended-item">
+          {#<a href="#"><img src="{% static 'images/photo-1.jpg' %}"></a>#}
           <a class="topic-inner-title" href="{{ i.get_absolute_url }}">{{ i.title }}</a>
         </div>
         {% endfor %}

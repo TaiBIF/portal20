@@ -56,6 +56,7 @@ class Article(models.Model):
     changed = models.DateTimeField('修改時間', default=timezone.now)
     category = models.CharField(u"分類", max_length=50, choices=CATEGORY_CHOICE, default='NEWS')
     is_pinned = models.CharField(u"置頂", max_length=2, default='N', choices=PINNED_CHOICE)
+    is_homepage = models.BooleanField(u"首頁專題文章", null=True)
     cover = models.ImageField(upload_to=article_cover_path, blank=True)
     cover_license_text = models.CharField('授權文字', max_length=100, blank=True)
     tags = models.ManyToManyField(Tag, verbose_name=u"標籤", related_name='articles', blank=True)

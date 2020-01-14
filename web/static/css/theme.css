@@ -923,10 +923,6 @@ a.navbar-icon-btn:last-child {
   background-color: rgba(74, 62, 58, 0.3);
 }
 
-.head-carousel-search-cate li a.active {
-  background-color: rgba(74, 62, 58, 0.3);
-}
-
 .head-carousel-search-cate li a:after {
   content: "";
   border-right: rgba(74, 62, 58, 0.6) solid 1px;
@@ -2616,4 +2612,11 @@ div.dataTables_wrapper div.dataTables_paginate {
     background-color: #def;
     padding: 20px;
     border: 2px dashed red;
+}
+
+.article-recommended-item {
+    border: 1px solid #dcdcdc;
+    background-color: #eee;
+    border-radius: 4px;
+    padding: 10px;
 }

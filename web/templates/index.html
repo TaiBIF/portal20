@@ -2,28 +2,6 @@
 
 {% load static %}
 
-{% block script %}
-<script>
-  $(document).ready(function() {
-    $('.search-type-btn').click(function(e) {
-      const searchType = e.target.dataset['type'];
-      if (searchType == 'occurrence' || searchType == 'dataset') {
-        $('#search-type').val(searchType);
-        $('.search-type-btn').each((k,v)=>{
-          if (v.dataset['type'] === searchType ) {
-            v.classList.add('active');
-          }
-          else {
-            v.classList.remove('active');
-          }
-        });
-      }
-    });
-  });
-</script>
-{% endblock %}
-
-
 {% block main %}
   <!-- xs-search-modal begin -->
   <div class="modal fade xs-modal-wrapper xs-search-modal-pos" data-backdrop="false">
@@ -74,14 +52,14 @@
           <div class="head-carousel-search-ctn">
             <form action="/search/" method="post">
               {% csrf_token %}
-            <ul class="row head-carousel-search-cate">
-              <li class="col-xs-3"><a href="#" class="search-type-btn active" data-type="occurrence">出現紀錄</a></li>
-              <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="species">物種</a></li>
-              <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="dataset">資料集</a></li>
-              <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="publisher">發布者</a></li>
-            </ul>
-            <input type="hidden" name="search_type" id="search-type" value="occurrence">
-            <div class="head-carousel-search-form-wrapper">
+              <ul class="row head-carousel-search-cate">
+                <li class="col-xs-3"><a href="{% url 'search-occurrence' %}" class="search-type-btn" data-type="occurrence">出現紀錄</a></li>
+                <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="species">物種</a></li>
+                <li class="col-xs-3"><a href="{% url 'search-dataset' %}" class="search-type-btn" data-type="dataset">資料集</a></li>
+                <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="publisher">發布者</a></li>
+              </ul>
+              <input type="hidden" name="search_type" id="search-type" value="occurrence">
+              <div class="head-carousel-search-form-wrapper">
               <input type="text" class="head-carousel-search-input" placeholder="全站搜尋..." name="q">
               <button class="head-carousel-search-btn" type="submit">
                 <span class="myicon icon-search"></span>

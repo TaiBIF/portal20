@@ -100,6 +100,6 @@ def dataset_view(request, name):
     context['dataset'] = get_object_or_404(Dataset, name=name)
     return render(request, 'dataset.html', context)
 
-def search_view(request, search_type):
+def search_view(request):
     context = {'env': settings.ENV}
     return render(request, 'search.html', context)
