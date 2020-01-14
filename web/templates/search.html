@@ -6,21 +6,12 @@
 {% block head %}
 {#<link rel="stylesheet" href="{% static 'css/search.css' %}" />#}
 <link rel="stylesheet" href="{% static 'css/tree.css' %}" />
-{#<link rel="stylesheet" href="{% static 'css/uikit.min.css' %}" />#}
 {% endblock %}
 
 {% block script %}
-<script src="{% static 'js/tree.js' %}"></script>
+{#<script src="{% static 'js/tree.js' %}"></script>#}
 <script src="{% static 'js/search.js' %}"></script>
-{#<script src="{% static 'js/uikit.min.js' %}"></script>#}
-{#<script src="{% static 'js/uikit-icons.min.js' %}"></script>#}
-<script>
-  $(document).ready(function() {
-    $('.panel-collapse').collapse({
-      toggle: false
-    });
-  });
-</script>
+
 {% if env == "dev" %}
 <script src="{% static 'js/bundle.js' %}"></script>
 {% elif env == "prod" %}
@@ -29,9 +20,5 @@
 {% endblock %}
 
 {% block main %}
-<div class="container search-container" id="taibif-search-container">
-</div>
-<div class="container search-container">
-  <div class="row" id="taibif-search-container"></div>
-</div>
+<div class="container search-container" id="taibif-search-container"></div>
 {% endblock %}

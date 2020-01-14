@@ -14,6 +14,7 @@ services:
     volumes:
       - .:/taibif-code
       - ../taibif-volumes/bucket:/taibif-bucket
+      - ../taibif-volumes/media:/taibif-media
     command: "./scripts/wait-for-it.sh postgres:5432 -t 5 -- python web/manage.py runserver 0.0.0.0:8000"
 
     restart: always

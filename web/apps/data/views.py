@@ -45,17 +45,15 @@ def do_search(q, page):
         'search_time': round((end_time - begin_time), 2)
     }
 
-def search(request):
+def search_all(request):
     if request.method == 'POST':
-        search_type = request.POST.get('search_type', 'occurrence')
         q = request.POST.get('q', '')
-        url = '/{}/search/'.format(search_type)
+        url = '/search/'
         if q:
             url = '{}?q={}'.format(url, q)
         return HttpResponseRedirect(url)
     elif request.method == 'GET':
-        return HttpResponseRedirect('/search/')
-
+        return render(request, 'search_all.html')
 
 def search_old(request):
     page = 0

@@ -94,7 +94,7 @@ def search_occurrence(request):
                     query = query.filter(month__exact=key)
             if menu_key == 'countrycode':
                 for key in item_keys.split(','):
-                    query = query.filter(country_code__exact=key)
+                    query = query.filter(countrycode__exact=key)
             if menu_key == 'dataset':
                 for key in item_keys.split(','):
                     query = query.filter(taibif_dataset_name__exact=key)

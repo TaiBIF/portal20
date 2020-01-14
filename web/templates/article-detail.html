@@ -30,6 +30,7 @@
     <div class="mg-todox">
     <!-- article content begin -->
     <div class="article-content-wrapper">
+      <img src="/media/{{ article.cover }}" class="img-responsive">
       <p>
         {% if article.memo|slice:"0:4" == "nid:" %}
         {{ article.content|safe }}
