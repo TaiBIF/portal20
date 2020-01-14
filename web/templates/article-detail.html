@@ -30,7 +30,12 @@
     <div class="mg-todox">
     <!-- article content begin -->
     <div class="article-content-wrapper">
-      <img src="/media/{{ article.cover }}" class="img-responsive">
+      {% if article.cover %}
+      <div class="article-img-wrapper" style="background">
+        <img src="/media/{{ article.cover }}" class="img-responsive">
+        <span>{{ article.cover_license_text }}</span>
+      </div>
+      {% endif %}
       <p>
         {% if article.memo|slice:"0:4" == "nid:" %}
         {{ article.content|safe }}
@@ -38,17 +43,6 @@
         {{ article.content|linebreaksbr }}
         {% endif %}
       </p>
-
-      {% comment %}
-      <div class="article-img-wrapper" style="background">
-        <img src="{% static 'images/photo-3.jpg' %}" class="img-responsive">
-        <span>臺灣八角金盤 (Fatsia polycarpa), a near threatened evergreen shrub endemic to Taiwan. Photo by yun_shuan_lee licensed under CC BY-NC 4.0.</span>
-      </div>
-      <h4 class="heading-md">標題追蹤開花植物的播遷路程</h4>
-
-      <p>台灣是在地質活動頻繁的大陸島，於 200-300 萬年前形成於四塊板塊所組成的聚合板塊邊緣之上。在這篇台灣植物相的研究中，研究者運用了 GBIF 整合之東亞與南亞開花植物類群分布的點位資料，再區分特有種與非特有種後，推測出後者潛在的播遷來源。被海洋切割於所有大陸之外的特性造就了每個島嶼獨一無二的生態棲位。</p>
-    </div>
-    {% endcomment %}
     <!-- article content begin -->
 
     {% comment %}

@@ -2620,3 +2620,8 @@ div.dataTables_wrapper div.dataTables_paginate {
     border-radius: 4px;
     padding: 10px;
 }
+.home-banner-cover-license {
+    font-size: 12px;
+    padding: 0 5px;
+    color: #ababab;
+}
