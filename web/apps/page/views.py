@@ -60,7 +60,7 @@ def open_data(request):
 
 def data_stats(request):
     is_most = request.GET.get('most', '')
-    query = Dataset.objects
+    query = Dataset.objects.exclude(status='Private')
     if is_most:
         query = query.filter(is_most_project=True)
     context = {

@@ -32,7 +32,7 @@ def search_occurrence(request):
     import json
     s = json.dumps(year_rows_update)
     '''
-    dataset_query = Dataset.objects.values('name', 'title')
+    dataset_query = Dataset.objects.exclude(status='Private').values('name', 'title')
     publisher_query = Dataset.objects\
                              .values('organization','organization_verbatim')\
                              .exclude(organization__isnull=True)\
@@ -179,7 +179,7 @@ def search_dataset(request):
     ]
 
     page = 1
-    query = Dataset.objects
+    query = Dataset.objects.exclude(status='Private')
     if request.GET:
         for menu_key, item_keys in request.GET.items():
             if menu_key == 'q':
