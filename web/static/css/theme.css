@@ -922,6 +922,11 @@ a.navbar-icon-btn:last-child {
 .head-carousel-search-cate li a:hover {
   background-color: rgba(74, 62, 58, 0.3);
 }
+
+.head-carousel-search-cate li a.active {
+  background-color: rgba(74, 62, 58, 0.3);
+}
+
 .head-carousel-search-cate li a:after {
   content: "";
   border-right: rgba(74, 62, 58, 0.6) solid 1px;

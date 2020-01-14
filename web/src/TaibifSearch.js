@@ -5,8 +5,9 @@ import './SearchStyles.css';
 
 
 function Pagination (props) {
+  const hasCount = parseInt(props.count) ? true : false;
   const numPerPage = props.limit - props.offset;
-  const lastPage = Math.ceil(props.count / numPerPage);
+  const lastPage = hasCount ? Math.ceil(props.count / numPerPage) : parseInt(props.current)+1;
   const pages = [];
 
   for (let i=1; i<=lastPage; i++)  {
@@ -23,7 +24,9 @@ function Pagination (props) {
       }
     }
     const activeClass = (parseInt(props.current, 10) === i) ? 'active' : '';
-    pages.push(<li className={activeClass} key={i}><a href={url}> {i} </a></li>);
+    if (hasCount) {
+      pages.push(<li className={activeClass} key={i}><a href={url}> {i} </a></li>);
+    }
   }
   return (
       <div className="center-block text-center">
@@ -219,7 +222,7 @@ class TaibifSearch extends React.Component {
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
-      return <div className="search-loading"> 🌱 Loading... ⏳ </div>
+      return <div className="search-loading"> 🌱 Searching... ⏳ </div>
     }  else if (serverError) {
       return `[server]: ${serverError}`; // should not shou this on production
     }

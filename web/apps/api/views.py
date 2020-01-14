@@ -2,7 +2,6 @@ import timeit
 
 from django.shortcuts import render
 from django.db.models import Count, Q
-
 from apps.data.models import Dataset, DATA_MAPPING
 from apps.data.models import RawDataOccurrence
 from utils.decorators import json_ret
@@ -34,7 +33,6 @@ def search_occurrence(request):
     s = json.dumps(year_rows_update)
     '''
     dataset_query = Dataset.objects.values('name', 'title')
-
     publisher_query = Dataset.objects\
                              .values('organization','organization_verbatim')\
                              .exclude(organization__isnull=True)\
@@ -76,19 +74,46 @@ def search_occurrence(request):
 
     query_start = timeit.timeit()
     #query = RawDataOccurrence.objects.values('basisofrecord', 'vernacularname', 'countrycode', 'scientificname', 'taibif_id', 'taibif_dataset_name', 'taibif_dataset_name__title')
-    query_rows = RawDataOccurrence.objects.all()[:50]
+    #query_rows = RawDataOccurrence.objects.all()[:50]
 
-    results = [{
-        'taibif_id': x.taibif_id,
-        'basis_of_record': x.basisofrecord,
-        'vernacular_name': x.vernacularname,
-        'country_code': x.countrycode,
-        'scientific_name': x.scientificname,
-        'taibif_index': x.taibif_id,
-        'dataset':  x.taibif_dataset
-    } for x in query_rows]
+    page = 1
+    query = RawDataOccurrence.objects.values('basisofrecord', 'vernacularname', 'countrycode', 'scientificname', 'taibif_id', 'taibif_dataset_name')
+    if request.GET:
+        for menu_key, item_keys in request.GET.items():
+            if menu_key == 'q':
+                query = query.filter(Q(vernacularname__icontains=item_keys) | Q(scientificname__icontains=item_keys))
+            if menu_key == 'core':
+                print (item_keys,'--')
+                d = DATA_MAPPING['core'][item_keys]
+                query = query.filter(dwc_core_type__exact=d)
+            if menu_key == 'year':
+                for key in item_keys.split(','):
+                    query = query.filter(year__exact=key)
+            if menu_key == 'month':
+                for key in item_keys.split(','):
+                    query = query.filter(month__exact=key)
+            if menu_key == 'countrycode':
+                for key in item_keys.split(','):
+                    query = query.filter(country_code__exact=key)
+            if menu_key == 'dataset':
+                for key in item_keys.split(','):
+                    query = query.filter(taibif_dataset_name__exact=key)
+            if menu_key == 'page':
+                page = int(item_keys)
+
+    offset = (page-1) * RawDataOccurrence.NUM_PER_PAGE
+    limit = page * RawDataOccurrence.NUM_PER_PAGE
+    query_fin = query.all()[offset:limit]
     #count = query.count()
     count = '--'
+    results = [{
+        'taibif_id': x['taibif_id'],
+        'basis_of_record': x['basisofrecord'],
+        'vernacular_name': x['vernacularname'],
+        'country_code': x['countrycode'],
+        'scientific_name': x['scientificname'],
+        'dataset':  x['taibif_dataset_name']
+    } for x in query_fin]
     query_elapsed = timeit.timeit() - query_start
 
     data = {

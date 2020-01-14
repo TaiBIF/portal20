@@ -19,14 +19,19 @@ function SearchMainOccurrence(props) {
   for (let f of props.filters) {
     const menuKey = f.split('.');
     const found = props.menus.find((x) => x['key'] === menuKey[0]);
-    const tagLabel = `${found['label']}: ${menuKey[1]}`;
-          filterTags.push((<span key={tagLabel} className="badge search-tag">{ tagLabel }</span>));
+    if (found) {
+      const tagLabel = `${found['label']}: ${menuKey[1]}`;
+      filterTags.push((<span key={tagLabel} className="badge search-tag">{ tagLabel }</span>));
+    }
+    else if (menuKey[0] === 'q') {
+      filterTags.push((<span key="q" className="badge search-tag">關鍵字: {menuKey[1] }</span>));
+    }
   }
 
   return (
       <div className="col-xs-12 col-md-9">
       <div className="container">
-      <h2>出現紀錄<small> / 共 occurrence_list.paginator.count  筆資料 {/*(搜尋時間: search_time  秒)*/}</small></h2>
+      <h2>出現紀錄<small>{/* / 共 occurrence_list.paginator.count  筆資料 */}{/*(搜尋時間: search_time  秒)*/}</small></h2>
       <div className="search-main-tag-wrapper">篩選條件: <div className="search-main-tag-item">{ filterTags }</div></div>
       <table className="table table-hover">
         <thead>
@@ -67,7 +72,7 @@ function SearchMainDataset(props) {
   });
 
   let activeTabList = ['active', '', '', '', ''];
-  console.log(props.filters);
+  //console.log(props.filters);
   const filterTags = [];
   for (let f of props.filters) {
     if (f.indexOf('core.') >= 0) {
@@ -80,8 +85,13 @@ function SearchMainDataset(props) {
     else {
       const menuKey = f.split('.');
       const found = props.menus.find((x) => x['key'] === menuKey[0]);
-      const tagLabel = `${found['label']}: ${menuKey[1]}`;
-      filterTags.push((<span key={tagLabel} className="badge search-tag">{ tagLabel }</span>));
+      if (found) {
+        const tagLabel = `${found['label']}: ${menuKey[1]}`;
+        filterTags.push((<span key={tagLabel} className="badge search-tag">{ tagLabel }</span>));
+      }
+      else if (menuKey[0] === 'q') {
+        filterTags.push((<span key="q" className="badge search-tag">關鍵字: {menuKey[1]}</span>));
+      }
     }
   }
   return (

@@ -25,6 +25,7 @@
       </div>
     </div>
     <!-- story title & share btns end -->
+    {% comment %}
       --- TODO 以下要套 ---
     <div class="mg-todo">
     <!-- article content begin -->
@@ -56,6 +57,8 @@
     <!-- attachment info end -->
     </div>
     --- 以上未套 ---
+    {% endcomment %}
+
     {% if article.category == "PUB" and article.memo_text|slice:"0:9" == "__files__" %}
     <ul class="article-attachment-wrapper">
       {% for i in article.get_legacy_info.files %}

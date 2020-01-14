@@ -312,6 +312,7 @@ class Occurrence(models.Model):
 
 
 class RawDataOccurrence(models.Model):
+    NUM_PER_PAGE = 50
     taibif_id = models.BigIntegerField(primary_key=True)
     lifestage = models.TextField(db_column='lifeStage', blank=True, null=True)  # Field name made lowercase.
     institutioncode = models.TextField(db_column='institutionCode', blank=True, null=True)  # Field name made lowercase.

@@ -21,8 +21,11 @@
     });
   });
 </script>
-
+{% if env == "dev" %}
 <script src="{% static 'js/bundle.js' %}"></script>
+{% elif env == "prod" %}
+<script src="{% static 'js/bundle.min.js' %}"></script>
+{% endif %}
 {% endblock %}
 
 {% block main %}
@@ -31,38 +34,4 @@
 <div class="container search-container">
   <div class="row" id="taibif-search-container"></div>
 </div>
-
-{% if occurrence_list %}
-{% include "inc_pagination.html" with object_list=occurrence_list %}
-{% endif %}
 {% endblock %}
-
-
-<div class="search-container">
-
-  <div class="search-sidebar">
-  </div>
-  <div class="search-main">
-    <div class="uk-container">
-      {% comment %}
-      <!-- search form -->
-      <form action="{% url 'search' %}" method="POST">
-        {% csrf_token %}
-        <div class="head-carousel-search-wrapper">
-          <div class="head-carousel-search-ctn">
-            <ul class="row head-carousel-search-cate">
-              <li class="col-xs-3" style="width: 14%;"><a href="#">物種名稱</a></li>
-            </ul>
-            <div class="head-carousel-search-form-wrapper">
-              <input type="text" class="head-carousel-search-input" placeholder="搜尋..." {% if request.GET.q %} value="{{ request.GET.q }}"{% endif %} name="q">
-              <button class="head-carousel-search-btn" type="submit">
-                <span class="myicon icon-search"></span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </form>
-      <!-- end search form -->
-      {% endcomment %}
-
-

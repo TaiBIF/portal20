@@ -7,6 +7,8 @@ from django.core.paginator import Paginator
 from django.db.models import Count
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect
+from django.urls import reverse
+from django.conf import settings
 
 from .models import Taxon, Occurrence, Dataset
 
@@ -44,6 +46,18 @@ def do_search(q, page):
     }
 
 def search(request):
+    if request.method == 'POST':
+        search_type = request.POST.get('search_type', 'occurrence')
+        q = request.POST.get('q', '')
+        url = '/{}/search/'.format(search_type)
+        if q:
+            url = '{}?q={}'.format(url, q)
+        return HttpResponseRedirect(url)
+    elif request.method == 'GET':
+        return HttpResponseRedirect('/search/')
+
+
+def search_old(request):
     page = 0
     q = ''
     if request.method == 'POST':
@@ -73,7 +87,6 @@ def search(request):
                 result['search_tags'].append(request.GET[i])
             else:
                 result['search_tags'].append('{}:{}'.format(i, request.GET[i]))
-
     return render(request, 'search.html', result)
 
 
@@ -88,4 +101,5 @@ def dataset_view(request, name):
     return render(request, 'dataset.html', context)
 
 def search_view(request, search_type):
-    return render(request, 'search.html')
+    context = {'env': settings.ENV}
+    return render(request, 'search.html', context)
