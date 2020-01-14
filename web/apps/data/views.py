@@ -13,38 +13,6 @@ from django.conf import settings
 from apps.article.models import Article
 from .models import Taxon, Occurrence, Dataset, RawDataOccurrence
 
-def do_search(q, page):
-
-    begin_time = time.time()
-    #query = Catalog.objects.using('gbif').values('guid','institutioncode','country', 'locality','basisofrecord', 'longitude', 'latitude','scientificname','scientificnameinchinese', 'kingdom', 'phylum', 'class_field', 'order', 'family', 'genus', 'species', 'kingdominchinese', 'phyluminchinese', 'classinchinese', 'orderinchinese', 'familyinchinese', 'genusinchinese', 'speciesinchinese', 'name_code').order_by('scientificname')
-    query = Occurrence.objects.values('id','dataset_id','country', 'locality','basis_of_record', 'decimal_longitude', 'decimal_latitude','scientific_name', 'kingdom', 'phylum', 'class_field', 'order_field', 'family', 'genus', 'vernacular_name', 'dataset_name').order_by('scientific_name')
-
-    #mtv = MgTimeEvent()
-
-    #if kingdom:
-    #    query = query.filter(kingdom=kingdom)
-    q = q.strip()
-    if q:
-        if len(q) == len(q.encode()):
-            # is ascii
-            query = query.filter(scientific_name__icontains=q)
-        else:
-            query = query.filter(Q(scientific_name__icontains=q) |
-                                 Q(vernacular_name__icontains=q))
-    #query = query.filter(kingdominchnese=q)
-    #query = query.filter(phylum=q)
-    #query = query.filter(phyluminchineem=q)
-
-    rows = []#query.all()
-
-    paginator = Paginator(rows, 50)
-    occurrence_list = paginator.get_page(page)
-
-    end_time = time.time()
-    return {
-        'occurrence_list': occurrence_list,
-        'search_time': round((end_time - begin_time), 2)
-    }
 
 def search_all(request):
     if request.method == 'POST':
@@ -76,7 +44,7 @@ def search_all(request):
         count += len(occur_rows)
 
         dataset_rows = []
-        for x in Dataset.objects.values('title', 'description', 'name').filter(Q(title__icontains=q) | Q(description__icontains=q)).all()[:20]:
+        for x in Dataset.objects.values('title', 'description', 'name').filter(Q(title__icontains=q) | Q(description__icontains=q)).exclude(status='Private').all()[:20]:
             dataset_rows.append({
                 'title': x['title'],
                 'content':x['description'],
