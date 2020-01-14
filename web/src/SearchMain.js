@@ -24,7 +24,8 @@ function SearchMainOccurrence(props) {
       filterTags.push((<span key={tagLabel} className="badge search-tag">{ tagLabel }</span>));
     }
     else if (menuKey[0] === 'q') {
-      filterTags.push((<span key="q" className="badge search-tag">關鍵字: {menuKey[1] }</span>));
+      const q = decodeURIComponent(menuKey[1]);
+      filterTags.push((<span key="q" className="badge search-tag">關鍵字:{ q }</span>));
     }
   }
 
@@ -90,7 +91,8 @@ function SearchMainDataset(props) {
         filterTags.push((<span key={tagLabel} className="badge search-tag">{ tagLabel }</span>));
       }
       else if (menuKey[0] === 'q') {
-        filterTags.push((<span key="q" className="badge search-tag">關鍵字: {menuKey[1]}</span>));
+        const q = decodeURIComponent(menuKey[1]);
+        filterTags.push((<span key="q" className="badge search-tag">關鍵字: {q}</span>));
       }
     }
   }

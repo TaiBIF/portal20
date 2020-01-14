@@ -10,7 +10,8 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.conf import settings
 
-from .models import Taxon, Occurrence, Dataset
+from apps.article.models import Article
+from .models import Taxon, Occurrence, Dataset, RawDataOccurrence
 
 def do_search(q, page):
 
@@ -53,7 +54,57 @@ def search_all(request):
             url = '{}?q={}'.format(url, q)
         return HttpResponseRedirect(url)
     elif request.method == 'GET':
-        return render(request, 'search_all.html')
+        q = request.GET.get('q', '')
+        ## 預設最多每組 20 筆
+        count = 0
+        article_rows = []
+        for x in Article.objects.filter(title__icontains=q).all()[:20]:
+            article_rows.append({
+                'title': x.title,
+                'content': x.content,
+                'url': x.get_absolute_url()
+            })
+        count += len(article_rows)
+
+        occur_rows = []
+        for x in RawDataOccurrence.objects.values('vernacularname', 'scientificname', 'taibif_id', 'taibif_dataset_name').filter(Q(scientificname__icontains=q)|Q(vernacularname__icontains=q)).all()[:20]:
+            occur_rows.append({
+                'title': '{} {}'.format(x['scientificname'], x['vernacularname']),
+                'content': '資料集: {}'.format(x['taibif_dataset_name']),
+                'url': '/occurrence/{}'.format(x['taibif_id']) #x.get_absolute_url()
+            })
+        count += len(occur_rows)
+
+        dataset_rows = []
+        for x in Dataset.objects.values('title', 'description', 'name').filter(Q(title__icontains=q) | Q(description__icontains=q)).all()[:20]:
+            dataset_rows.append({
+                'title': x['title'],
+                'content':x['description'],
+                'url': '/dataset/{}'.format(x['name'])
+            })
+        count += len(dataset_rows)
+
+        context = {
+            'count': count,
+            'results': [
+                {
+                    'cat': 'article',
+                    'label': '文章',
+                    'rows': article_rows
+                },
+                {
+                    'cat': 'occurrence',
+                    'label': '出現記錄',
+                    'rows': occur_rows
+                },
+                {
+                    'cat': 'dataset',
+                    'label': '資料集',
+                    'rows': dataset_rows
+                }
+            ]
+        }
+        return render(request, 'search_all.html', context)
 
 def search_old(request):
     page = 0
@@ -88,9 +139,23 @@ def search_old(request):
     return render(request, 'search.html', result)
 
 
-def occurrence_view(request, pk):
+def occurrence_view(request, taibif_id):
     context = {}
-    context['occur'] = get_object_or_404(Occurrence, pk=pk)
+    obj = get_object_or_404(RawDataOccurrence, taibif_id=taibif_id)
+    context['fields'] = RawDataOccurrence._meta.get_fields()
+    context['occur'] = obj
+    data = {}
+    for i in RawDataOccurrence._meta.get_fields():
+        data[i.column] = getattr(obj, i.name, '')
+    context['columns'] = data
+    n = RawDataOccurrence.objects.values('scientificname','taibif_dataset_name','eventdate', 'decimallongitude', 'decimallatitude').filter(scientificname__exact=obj.scientificname).all()
+    context['n'] = n
+    dataset = {}
+    for i in n:
+        if i['taibif_dataset_name'] not in dataset:
+            dataset[i['taibif_dataset_name']] = 0
+        dataset[i['taibif_dataset_name']] += 1
+    context['in_dataset'] = dataset
     return render(request, 'occurrence.html', context)
 
 def dataset_view(request, name):

@@ -9,7 +9,6 @@ function Pagination (props) {
   const numPerPage = props.limit - props.offset;
   const lastPage = hasCount ? Math.ceil(props.count / numPerPage) : parseInt(props.current)+1;
   const pages = [];
-
   for (let i=1; i<=lastPage; i++)  {
     let url = window.location.href;
     if (url.indexOf('page=') >=0) {
@@ -149,7 +148,7 @@ class TaibifSearch extends React.Component {
           obj[k[0]] = [k[1]];
         }
       });
-      const queryString = new URLSearchParams(obj).toString();
+      let queryString = new URLSearchParams(obj).toString();
       apiUrl = `${apiUrl}?${queryString}`;
       url = `${url}?${queryString}`;
     }
@@ -165,8 +164,9 @@ class TaibifSearch extends React.Component {
     }
     else {
       //有 page 的話, 會rudirect 變成拿掉 page
-      window.history.pushState("object or string", "taibif-search", url);
+      //window.history.pushState("object or string", "taibif-search", url);
     }
+    ///apiUrl = '';
     console.log('fetch:', apiUrl)
     //const resp = await fetch(url);
     // const json = await resp.json();
@@ -202,7 +202,7 @@ class TaibifSearch extends React.Component {
         if (m.indexOf('page=') < 0) {
           const mArr = m.split('=');
           if (mArr[0] === 'q') {
-            this.setState({queryKeyword:mArr[1]});
+            this.setState({queryKeyword:decodeURIComponent(mArr[1])});
           }
           mArr[1].split(',').forEach((x) => {
             filters.add(`${mArr[0]}.${x}`);

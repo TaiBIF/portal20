@@ -27,7 +27,7 @@ urlpatterns = [
         }),
     path('api/', include('apps.api.urls')),
     path('search/', include('apps.data.urls')),
-    path('occurrence/<int:pk>', occurrence_view, name='occurrence'),
+    path('occurrence/<int:taibif_id>', occurrence_view, name='occurrence'),
     #re_path('(?P<search_type>dataset|occurrence)/search/', search_view, name='search-type'),
     path('dataset/search/', search_view, name='search-dataset'),
     path('occurrence/search/', search_view, name='search-occurrence'),

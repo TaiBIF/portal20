@@ -2,22 +2,49 @@
 
 {% load static %}
 
+{% block script %}
+<script>
+  $(document).ready(function() {
+    // TODO why?
+    const ele = document.querySelector('.search-q');
+    ele.addEventListener('change', (event) => {
+      //const result = document.querySelector('.result');
+      //result.textContent = `You like ${event.target.value}`;
+      //console.log(event.target);
+    });
+  });
+</script>
+{% endblock %}
+
 {% block main %}
-  <!-- xs-search-modal begin -->
+<!-- xs-search-modal begin -->
+<script>
+  function changeQueryKeyword(q) {
+    const a = document.querySelectorAll('.search-type-btn');
+    a.forEach((x)=> {
+      if (x.dataset.type === 'occurrence' || x.dataset.type === 'dataset') {
+        x.href = `/${x.dataset.type}/search/?q=${q}`;
+      }
+    });
+  }
+</script>
   <div class="modal fade xs-modal-wrapper xs-search-modal-pos" data-backdrop="false">
     <div class="xs-modal-content">
+      <form action="/search/" method="post">
+        {% csrf_token %}
       <div class="xs-modal-header">
         <span class="xs-search-modal-close myicon icon-close" data-dismiss="modal" aria-label="Close"></span>
         <p class="text-center xs-modal-title">搜尋</p>
       </div>
       <div class="xs-modal-body">
         <div class="xs-search-modal-input-group">
-          <input type="text" class="navbar-search-input" placeholder="請輸入關鍵字...">
-          <button class="navbar-search-btn" type="button">
+          <input type="text" class="navbar-search-input search-q" placeholder="請輸入關鍵字..." name="q">
+          <button class="navbar-search-btn" type="submit">
             <span class="myicon icon-search"></span>
           </button>
         </div>
       </div>
+      </form>
     </div>
   </div>
   <!-- xs-search-modal end -->
@@ -58,9 +85,8 @@
                 <li class="col-xs-3"><a href="{% url 'search-dataset' %}" class="search-type-btn" data-type="dataset">資料集</a></li>
                 <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="publisher">發布者</a></li>
               </ul>
-              <input type="hidden" name="search_type" id="search-type" value="occurrence">
               <div class="head-carousel-search-form-wrapper">
-              <input type="text" class="head-carousel-search-input" placeholder="全站搜尋..." name="q">
+              <input type="text" class="head-carousel-search-input search-q" placeholder="全站搜尋..." name="q" onchange="changeQueryKeyword(this.value);">
               <button class="head-carousel-search-btn" type="submit">
                 <span class="myicon icon-search"></span>
               </button>
@@ -126,10 +152,12 @@
             <a href="{{ news_list.first.get_absolute_url }}">
             <div class="news-card-title-ctn">
               <p class="img-date">{{ news_list.first.created|date:'Y/m/d' }}</p>
-              <p class="img-title">{{ news_list.first.title }}</p>
+              <p class="img-title">{{ news_list.first.title|truncatechars:40 }}</p>
+              <p class="img-license">Fratercula arctica (Linnaeus, 1758) Observed in Canada by crgillette. Photo via iNaturalist (CC BY-NC 4.0)</p>
             </div>
             <div class="news-card-img-overlay"></div>
-            <img src="{% static 'images/photo-1.jpg' %}">
+            {#<img src="{% static 'images/photo-1.jpg' %}">#}
+            <img src="{% static 'images/banner/002.jpg' %}">
             </a>
           </div>
           <ul class="news-card-list-ctn">
@@ -151,10 +179,11 @@
             <a href="{{ event_list.first.get_absolute_url }}">
             <div class="news-card-title-ctn">
               <p class="img-date">{{ event_list.first.created|date:'Y/m/d' }}</p>
-              <p class="img-title">{{ event_list.first.title }}</p>
+              <p class="img-title">{{ event_list.first.title|truncatechars:40 }}</p>
+              <p class="img-license">Chelonia mydas (Linnaeus, 1758) Observed in Maldives by Gina. Photo via iNaturalist (CC BY-NC 4.0)</p>
             </div>
             <div class="news-card-img-overlay"></div>
-            <img src="{% static 'images/banner/007.jpg' %}" height="179px">
+            <img src="{% static 'images/banner/007.jpg' %}">
             </a>
           </div>
           <ul class="news-card-list-ctn">
@@ -176,7 +205,8 @@
             <a href="{{ update_list.first.get_absolute_url }}">
             <div class="news-card-title-ctn">
               <p class="img-date">{{ update_list.first.created|date:'Y/m/d' }}</p>
-              <p class="img-title">{{ update_list.first.title }}</p>
+              <p class="img-title">{{ update_list.first.title|truncatechars:40 }}</p>
+              <p class="img-license">Lutra lutra (Linnaeus, 1758) Observed in Norway by Bird Explorers. Photo via iNaturalist (CC BY-NC 4.0)</p>
             </div>
             <div class="news-card-img-overlay"></div>
             <img src="{% static 'images/banner/005.jpg' %}">

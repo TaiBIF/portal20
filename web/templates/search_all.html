@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load humanize %}
+
+{% block head %}
+{% endblock %}
+
+
+{% block main %}
+<div class="container">
+  <br><br>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2" style="position: unset"><!--strange bug-->
+          <div class="head-carousel-search-ctn">
+            <form action="/search/" method="post">
+              {% csrf_token %}
+              <ul class="row head-carousel-search-cate search-all-wrapper">
+                <li class="search-all-tab"><a href="#" class="search-type-btn active">搜尋全部</a></li>
+                <li class="search-all-tab"><a href="{% url 'search-occurrence' %}/秋海棠" class="search-type-btn" data-type="occurrence">出現紀錄</a></li>
+                <li class="search-all-tab"><a href="#" class="search-type-btn" data-type="species">物種</a></li>
+                <li class="search-all-tab"><a href="{% url 'search-dataset' %}?q={{ request.GET.q }}" class="search-type-btn" data-type="dataset">資料集</a></li>
+                <li class="search-all-tab"><a href="#" class="search-type-btn" data-type="publisher">發布者</a></li>
+              </ul>
+              <div class="head-carousel-search-form-wrapper">
+              <input type="text" class="head-carousel-search-input" placeholder="全站搜尋..." name="q" value="{{ request.GET.q }}">
+              <button class="head-carousel-search-btn" type="submit">
+                <span class="myicon icon-search"></span>
+              </button>
+            </div>
+            </form>
+          </div>
+  </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <br>
+      {% if count > 0 %}
+        {% for cat in results %}
+          {% if cat.rows %}
+          <h4>{{ cat.label }}</h4>
+            {% for i in cat.rows %}
+              <div class=" search-all-result-item">
+              <h4>{{ i.title }}</h4>
+              <p class="search-all-result-item__content">{{ i.content|truncatechars:280 }}</p>
+              <div><a href="{{ i.url }}">繼續閱讀</a></div>
+              </div>
+            {% endfor %}
+          {% endif %}
+      {% endfor %}
+      {% else %}
+      <h2>查無資料</h2>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

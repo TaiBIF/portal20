@@ -6,39 +6,55 @@
 <!-- container begin -->
 <div class="container">
   <div class="article-head-wrapper">
-    <span class="article-post-date">{{ occur.event_date|date:'Y-m-d' }}</span>
-    <h1 class="heading-lg-ul">
-      {{ occur.scientific_name }}
+    <span class="article-post-date">{{ occur.eventdate|date:'Y-m-d' }}</span>
+    <h1>
+      {{ occur.scientificname }}{% if occur.vernacularname %}, {{ occur.vernacularname }}{% endif %}
     </h1>
   </div>
-  <div class="row">
-  <dl>
-    <dt>date</dt>
-    <dd>{{ occur.event_date }}</dd>
-    <dt>dataset</dt>
-    <dd>{{ occur.dataset.title }}</dd>
-    <dt>publisher</dt>
-    <dd>{{ occur.dataset.author }}</dd>
-    <dt>species</dt>
-    <dd>{{ occur.scientific_name}}</dd>
-    <dt>Location</dt><dd>{{ occur.country }}</dd>
-    <dt>Basis of record</dt><dd>{{occur.basis_of_record}}</dd>
-  </dl>
+
   {% comment %}
 photo
 
 map
-  {% endcomment %}
+    {% endcomment %}
+  <div class="article-head-wrapper">
+    <h1 class="heading-lg-ul">資料集出現記錄</h1>
   </div>
-  <hr>
   <table class="table">
-    <thead><tr><th>Term</th><th>Value</th></tr></thead>
+    <thead><tr><th>資料集</th><th>次數</th></tr></thead>
     <tbody>
-      {% for term, value in occur.display_terms.items %}
-      <tr><td>{{ term }}</td><td>{{ value }}</td></tr>
+      {% for k,v in in_dataset.items %}
+      <tr><td>{{ k }}</td><td>{{ v }}</td></tr>
       {% endfor %}
     </tbody>
   </table>
+  <div class="article-head-wrapper">
+    <h1 class="heading-lg-ul">
+      出現記錄</h1>
+  <span>共計 {{ n|length }} 筆出現記錄。</span>
+  </div>
+    <table class="table">
+      <thead><tr><th>scientificName</th><th>eventDate</th><th>Country</th><th>decimalLongitude</th><th>decimalLatitude</th><th>資料集</th></tr></thead>
+      <tbody>
+        {% for i in n %}
+        <tr><td>{{ i.scientificname }}</td><td>{{ i.eventDate }}</td><td>{{ i.country }}</td><td>{{ i.decimalLongitude}}</td><td>{{ i.decimalLatitude}}</td><td>{{ i.taibif_dataset_name }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="article-head-wrapper">
+      <h1 class="heading-lg-ul">
+        Occurrence Terms</h1>
+    </div>
+    <table class="table">
+      <thead><tr><th>Term</th><th>Value</th></tr></thead>
+      <tbody>
+        {% for k,v in columns.items %}
+        <tr><td>{{ k }}</td><td>{{ v }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
   <!-- container end -->
 {% endblock %}

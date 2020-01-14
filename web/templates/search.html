@@ -19,6 +19,6 @@
 {% endif %}
 {% endblock %}
 
-{% block main %}
-<div class="container search-container" id="taibif-search-container"></div>
+{% block main%}
+<div class="container search-container" id="taibif-search-container" data-q="{{ request.GET.q }}"></div>
 {% endblock %}

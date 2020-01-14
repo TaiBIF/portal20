@@ -922,6 +922,9 @@ a.navbar-icon-btn:last-child {
 .head-carousel-search-cate li a:hover {
   background-color: rgba(74, 62, 58, 0.3);
 }
+.head-carousel-search-cate li a.active {
+  background-color: rgba(74, 62, 58, 0.3);
+}
 
 .head-carousel-search-cate li a:after {
   content: "";
@@ -1513,6 +1516,13 @@ a.navbar-icon-btn:last-child {
   font-size: 12px;
   margin: 0;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
+}
+
+.news-card-title-ctn .img-license {
+  font-size: 9px;
+  margin-bottom:-10px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
+  color: #777777;
 }
 
 .news-card-title-ctn .img-title {
@@ -2624,4 +2634,21 @@ div.dataTables_wrapper div.dataTables_paginate {
     font-size: 12px;
     padding: 0 5px;
     color: #ababab;
+}
+.search-all-tab {
+    width: 20%;
+}
+.search-all-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.search-all-result-item {
+    background-color: #f1f1f1;
+    padding: 20px 30px;
+    border: 2px solid #cecece;
+    margin: 20px;
+}
+.jumptron .search-all-result-item__content {
+    font-size: 14px; !important
 }
