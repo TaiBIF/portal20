@@ -149,7 +149,7 @@ class TaibifSearch extends React.Component {
         }
       });
       let queryString = new URLSearchParams(obj).toString();
-      queryString = decodeURIComponent(decodeURIComponent);
+      queryString = decodeURIComponent(queryString);
       apiUrl = `${apiUrl}?${queryString}`;
       url = `${url}?${queryString}`;
     }
@@ -203,6 +203,7 @@ class TaibifSearch extends React.Component {
         if (m.indexOf('page=') < 0) {
           const mArr = m.split('=');
           if (mArr[0] === 'q') {
+            console.log(mArr[1]);
             this.setState({queryKeyword:decodeURIComponent(mArr[1])});
           }
           mArr[1].split(',').forEach((x) => {
