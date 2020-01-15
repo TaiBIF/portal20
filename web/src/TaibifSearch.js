@@ -149,6 +149,7 @@ class TaibifSearch extends React.Component {
         }
       });
       let queryString = new URLSearchParams(obj).toString();
+      queryString = decodeURIComponent(decodeURIComponent);
       apiUrl = `${apiUrl}?${queryString}`;
       url = `${url}?${queryString}`;
     }
