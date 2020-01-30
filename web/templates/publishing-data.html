@@ -11,7 +11,13 @@
   }
   .pub-data-section h4 {
       font-weight: bold;
-  }  
+  }
+  p, li{
+  line-height: 1.8;
+  }
+  hr {
+  border-top: 1px solid;
+    }
 </style>
 {% endblock %}
 {% block script %}
@@ -79,21 +85,34 @@
 
       <div class="col-xs-12 col-sm-9 pub-data-content hide" data-cat="cc">
 
-        <dl>
-          <dt>姓名標示 (CC-BY)</dt>
-          <dd><img src="{% static 'images/cc-by.png' %}" width="120px"><br>本授權條款允許使用者重製、散布、傳輸以及修改著作（包括商業性利用），惟使用時必須按照著作人或授權人所指定的方式，表彰其姓名。</dd>
-          <dt>姓名標示-非商業性(CC-BY-NC)</dt>
-          <dd><img src="{% static 'images/cc-by-nc.png' %}" width="120px"><br>本授權條款允許使用者重製、散布、傳輸以及修改著作，但不得為商業目的之使用。使用時必須按照授權者指定的方式表彰其姓名。</dd>
-          <dt>公眾領域貢獻宣告 (CC0)</dt>
-          <dd>可使科學家、教育工作者、藝術家、其他創作者及著作權人，或內容受資料庫保護的權利人等拋棄他們對各自著作的利益，並盡可能將這些著作釋出到公眾領域，讓其他人可以任何目的自由地以該著作為基礎，從事創作、提升或再使用等行為，而不受著作權或是資料庫相關法律的限制。 CC0與其它創用CC授權不同，後者允許著作權人在一定範圍內選擇釋出的權利，並保留部分權利；相反的，CC0則提供另一種｢不保留權利｣的授權選擇，讓權利人能選擇不受著作權及資料庫相關法律保護，也不享有法律直接提供給創作人的排他權。參考: <a href="https://creativecommons.org/publicdomain/zero/1.0/legalcode.zh-Hant" target="_blank"> Public Domain (CC0 1.0)</a></dd>
-        </dl>
+        <div class="schedule-flow-wrapper schedule-flow-skin-1">
+          <div class="schedule-flow-title">姓名標示 (CC-BY)</div>
+          <div class="schedule-flow-content"><img src="{% static 'images/cc-by.png' %}" width="120px">
+            <br>本授權條款允許使用者重製、散布、傳輸以及修改著作（包括商業性利用），惟使用時必須按照著作人或授權人所指定的方式，表彰其姓名。</div>
+        </div>
+
+        <br>
+
+        <div class="schedule-flow-wrapper schedule-flow-skin-1">
+          <div class="schedule-flow-title">姓名標示-非商業性(CC-BY-NC)</div>
+          <div class="schedule-flow-content"><img src="{% static 'images/cc-by-nc.png' %}" width="120px">
+            <br>本授權條款允許使用者重製、散布、傳輸以及修改著作，但不得為商業目的之使用。使用時必須按照授權者指定的方式表彰其姓名。</div>
+        </div>
+        <br>
+
+          <div class="schedule-flow-wrapper schedule-flow-skin-1">
+          <div class="schedule-flow-title">公眾領域貢獻宣告 (CC0)<</div>
+          <div class="schedule-flow-content">可使科學家、教育工作者、藝術家、其他創作者及著作權人，或內容受資料庫保護的權利人等拋棄他們對各自著作的利益，並盡可能將這些著作釋出到公眾領域，讓其他人可以任何目的自由地以該著作為基礎，從事創作、提升或再使用等行為，而不受著作權或是資料庫相關法律的限制。 CC0與其它創用CC授權不同，後者允許著作權人在一定範圍內選擇釋出的權利，並保留部分權利；相反的，CC0則提供另一種｢不保留權利｣的授權選擇，讓權利人能選擇不受著作權及資料庫相關法律保護，也不享有法律直接提供給創作人的排他權。參考: <a href="https://creativecommons.org/publicdomain/zero/1.0/legalcode.zh-Hant" target="_blank"> Public Domain (CC0 1.0)</a></div>
+        </div>
+
 
         <p>參考: <a href="https://cc.ocf.tw/" target="_blank">CC 台灣社群</a></p>
       </div>
 
       <div class="col-xs-12 col-sm-9 pub-data-content hide" data-cat="format">
-        <h1 class="heading-lg-ul">各類型資料的達爾文核心標準 (DwC) 必填欄位
-        </h1>
+        <h2 class="h2">各類型資料的達爾文核心標準 (DwC) 必填欄位
+        </h2>
+        <hr>
         <div class="pub-data-section">
           <blockquote>一份好的資料集，必須可以再利用（具互操作性），若能提供越多欄位資料，則資料的品質及價值也能相對地提高，在任何情況下，資料集至少要有下列所述 Darwin Core 欄位</blockquote>
         </div>
@@ -148,9 +167,10 @@
         </div>
       </div>
       <div class="col-xs-12 col-sm-9 pub-data-content hide" data-cat="rule">
-        <h1 class="heading-lg-ul">
+        <h2 class="h2">
           科技部生物多樣性學科相關計畫開放資料繳交規範
-        </h1>
+        </h2>
+        <hr>
         <p>
           科技部負責辦理《生物多樣性行動計畫》中 D12010「建立生物多樣性資訊交換機制及各類或各機構資料庫之建置與整合，並定期增修補充各項資料庫之內容」及 D21010「維護及更新生物多樣性監測資料之資訊管理系統」，從 2012 年起要求研究計畫必須在計畫結案三個月內繳交報告的同時，繳交計畫過程產生的生態分布資料（見說明1）。資料繳交之規範經學門召集人於2018年1月17日開會討論後，調整如下：
         </p>
@@ -173,9 +193,10 @@
         <p>NSF, 2013. Dissemination and Sharing of Research Results. Available at: http://www.nsf.gov/bfa/dias/policy/dmp.jsp</p>
       </div>
       <div class="col-xs-12 col-sm-9 pub-data-content hide" data-cat="schedule">
-        <h1 class="heading-lg-ul">
+        <h2 class="h2">
            科技部資料繳交依據與時程
-        </h1>
+        </h2>
+        <hr>
         <p>依國際資料標準整理及繳交生物多樣性資料，便利學術同儕資料共享及引用，提昇研究水準。</p>
 
         <div class="article-img-wrapper">

@@ -4,6 +4,18 @@
 {% block main %}
 {% include "inc_breadcrumb.html" with tab="02" active_label="Cookbook"%}
 
+<style>
+  p, li{
+  line-height: 1.8;
+  }
+
+  hr {
+  border-top: 1px solid;
+    }
+</style>
+
+
+
 <!-- container begin -->
 
 
@@ -20,10 +32,12 @@
     <!-- story title & share btns begin -->
     <div class="article-head-wrapper">
       {#<span class="article-post-date">2018/12/08</span>#}
-      <h1 class="heading-lg-ul">
+      <h2 class="h2">
         第一章 介紹
         <span class="article-author">作者：Tsuyoshi Hosoya 細矢 剛</span>
-      </h1>
+      </h2>
+      <hr>
+
       {% comment %}
       <div class="article-share-btn-wrapper">
         分享文章

@@ -4,6 +4,17 @@
 
 {% block main %}
 {% include "inc_breadcrumb.html" with tab="02" active_label="Cookbook"%}
+
+<style>
+  p, li{
+  line-height: 1.8;
+  }
+  hr {
+  border-top: 1px solid;
+    }
+</style>
+
+
 <!-- container begin -->
 
 <link rel="stylesheet" href="{% static 'css/cookbook-detail-2.css' %}">
@@ -21,10 +32,11 @@
     <!-- story title & share btns begin -->
     <div class="article-head-wrapper">
       {#<span class="article-post-date">2018/12/08</span>#}
-      <h1 class="heading-lg-ul">
+      <h2 class="h2">
         第二章 資料標準化
         <span class="article-author">作者：Tsuyoshi Hosoya 細矢 剛</span>
-      </h1>
+      </h2>
+      <hr>
       {% comment %}
       <div class="article-share-btn-wrapper">
         分享文章
@@ -203,18 +215,18 @@
 
     <h4 class="heading-md" id="section2" style="font-weight:bold">2.2 使用達爾文核心集作為主要標準</h4>
       <p>達爾文核心集是由一群科學家所建立（生物分類學資料庫工作小組，TDWG，現為生物多樣性資訊標準）。 簡單來說，達爾文核心集是一組具有特定定義的術語詞彙表，且建議用於記錄生物多樣性資料。它最初是文獻中的都柏林核心延伸集，現在則成為用於分享生物多樣性資訊且廣為人知的穩定準則參考。 達爾文核心集允許建立超過150個項目的資料集（在資料庫術語中稱為「欄位」）。 每個欄位都有嚴格定義，且需遵循格式規則。 由於DwC是由許多不同的欄位所組成，因此會依照欄位的性質進行分組。 這樣的分組稱之為「類別 Class」（這邊的「Class」的意思和分類學中的「Class（綱）」的意思不一樣）。</p>
-      <p>以下是DwC中一些類別的列表和一些欄位的例子。 相關完整說明，請參閱網站http://rs.tdwg.org/dwc/terms/ 或 http://tools.gbif.org/dwca-assistant/。</p>
-      <p>[ 類別 ] Record-Level（紀錄等級）提供管理每筆資料的資訊，此分類的欄位可以提供與其他資料庫資料的連結。</p>
-      <p>[ 類別 ] Occurrence（出現紀錄）提供了資料被記錄的時間和地點的基本資訊。</p>
-      <p>[ 類別 ] Organism（生物體）提供了該生物體性質的資訊，例如文字名稱或標籤、該生物體屬於無性生殖或菌落等。 此類別是為了描述更多非正式的分類學資訊，而從類別Taxon分出來的（見下方）。</p>
-      <p>[ 類別 ] MaterialSample（樣本材料）可依據標本被典藏的具體性質來選擇及區分。</p>
-      <p>[ 類別 ] Event（活動）在某段時間發生在某個地點的行動。</p>
-      <p>[ 類別 ] Location（地點）可提供紀錄取得的地點資訊。</p>
-      <p>[ 類別 ] GeologicalContext（地質狀況）可提供關於採集地點之地質環境資訊，舉例來說，可藉由地層學來確認一個地方或區域。 因這個類別是使用於達爾文核心集，故化石資訊也可被納入其中。</p>
-      <p>[ 類別 ] Identification（鑑定資訊）提供了分類判定的資訊，例如當初這分類是由何人何時鑑定的，以及鑑定的參考來源等。</p>
-      <p>[ 類別 ] Taxon（分類資訊）提供了分類學相關資訊，例如學名、更高階層的分類等級等。</p>
-      <p>[ 輔助類別 ] MeasurementOrFact（測量或事實）提供該筆紀錄的量測資料或事實。</p>
-      <p>[ 輔助類別 ] ResourceRelationship（資源關係）可提供關於紀錄間或標本間的關係資訊。</p>
+    <p>以下是DwC中一些類別的列表和一些欄位的例子。 相關完整說明，請參閱網站<a href="http://rs.tdwg.org/dwc/terms/">http://rs.tdwg.org/dwc/terms/</a> 或 <a href="http://tools.gbif.org/dwca-assistant/">http://tools.gbif.org/dwca-assistant/</a>。</p>
+      <p>[ 類別 ] Record-Level（紀錄等級）提供管理每筆資料的資訊，此分類的欄位可以提供與其他資料庫資料的連結。<br>
+      [ 類別 ] Occurrence（出現紀錄）提供了資料被記錄的時間和地點的基本資訊。<br>
+      [ 類別 ] Organism（生物體）提供了該生物體性質的資訊，例如文字名稱或標籤、該生物體屬於無性生殖或菌落等。 此類別是為了描述更多非正式的分類學資訊，而從類別Taxon分出來的（見下方）。<br>
+      [ 類別 ] MaterialSample（樣本材料）可依據標本被典藏的具體性質來選擇及區分。<br>
+      [ 類別 ] Event（活動）在某段時間發生在某個地點的行動。<br>
+      [ 類別 ] Location（地點）可提供紀錄取得的地點資訊。<br>
+      [ 類別 ] GeologicalContext（地質狀況）可提供關於採集地點之地質環境資訊，舉例來說，可藉由地層學來確認一個地方或區域。 因這個類別是使用於達爾文核心集，故化石資訊也可被納入其中。<br>
+      [ 類別 ] Identification（鑑定資訊）提供了分類判定的資訊，例如當初這分類是由何人何時鑑定的，以及鑑定的參考來源等。<br>
+      [ 類別 ] Taxon（分類資訊）提供了分類學相關資訊，例如學名、更高階層的分類等級等。<br>
+      [ 輔助類別 ] MeasurementOrFact（測量或事實）提供該筆紀錄的量測資料或事實。<br>
+      [ 輔助類別 ] ResourceRelationship（資源關係）可提供關於紀錄間或標本間的關係資訊。</p>
     <p>為了簡化適用於記錄生物多樣性資料的欄位名稱，全球生物多樣性資訊機構（GBIF）提供了Excel模板，用於記錄物種名錄和出現紀錄，以及任何有關於此資料表的其他資訊細節（亦稱為「詮釋資料」）。  我們之後會討論「詮釋資料」。 你可以從這裡<a href="https://github.com/gbif/ipt/wiki/checklistData">（https://github.com/gbif/ipt/wiki/checklistData）</a>下載用於記錄物種名錄資料的Excel模板，從這裡下載物種出現紀錄資料模板<a href="https://github.com/gbif/ipt/wiki/occurrenceData">（https://github.com/gbif/ipt/wiki/occurrenceData）</a>， 以及從這裡下載調查活動資料模板<a href="https://github.com/gbif/ipt/wiki/sampleEventData">（https://github.com/gbif/ipt/wiki/sampleEventData）</a>。 但要注意的是，有些欄位是必填的，而有些是選擇性提供即可。 若你需要更多的選擇性欄位詞彙來描述你的資料，你可以從達爾文核心延伸集找到更多的選項<a href="http://tools.gbif.org/dwca-validator/extensions.do">（http://tools.gbif.org/dwca-validator/extensions.do）</a>，再從中選取適合的詞彙。</p>
       <p>相關連結：<br>
       <ul>
