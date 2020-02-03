@@ -3,6 +3,17 @@
 
 {% block main %}
 {% include "inc_breadcrumb.html" with tab="02" active_label="Cookbook"%}
+
+<style>
+  p, li{
+  line-height: 1.8;
+  }
+  hr {
+  border-top: 1px solid;
+    }
+</style>
+
+
 <!-- container begin -->
 <div class="container">
 
@@ -16,10 +27,12 @@
     <!-- story title & share btns begin -->
     <div class="article-head-wrapper">
       {#<span class="article-post-date">2018/12/08</span>#}
-      <h1 class="heading-lg-ul">
+      <h2 class="h2">
         第三章 準備用於發布的資料集
         <span class="article-author">作者：王豫煌 博士</span>
-      </h1>
+      </h2>
+      <hr>
+
       {% comment %}
       <div class="article-share-btn-wrapper">
         分享文章

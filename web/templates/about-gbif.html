@@ -3,12 +3,23 @@
 
 {% block main %}
 {% include "inc_breadcrumb.html" with tab="03" active_label="關於 GBIF" %}
+<style>
+  p, li {
+  line-height: 1.8;
+  }
+
+  hr {
+  border-top: 1px solid;
+    }
+</style>
 
 <!-- container begin -->
 <div class="container">
-  <h1 class="heading-lg-ul">
+  <h2 class="h2">
     什麼是 GBIF ?
-  </h1>
+  </h2>
+  <hr>
+
   {% comment %}
   <blockquote>全球生物多樣性資訊機構，簡稱 GBIF，是一個由全球政府資助而成立的跨國合作網絡及研究基礎建設，成立宗旨在於提供大眾無論何時、何地均能公開且自由存取的、各種地球上的生物資料</blockquote>
   {% endcomment %}
