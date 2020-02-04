@@ -2009,6 +2009,7 @@ a.navbar-icon-btn:last-child {
 
 .article-content-wrapper {
   margin: 10px 0;
+  line-height: 1.8;
 }
 .article-content-wrapper h1, .article-content-wrapper h2, .article-content-wrapper h3, .article-content-wrapper h4, .article-content-wrapper h5, .article-content-wrapper h6 {
   margin: 40px 0 20px 0;
