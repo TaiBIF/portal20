@@ -14,6 +14,7 @@ body {
   font-size: 16px;
   color: #666;
   font-family: sans-serif, 'Microsoft JhengHei', 'Noto Sans TC';
+  line-height:1.8;
 }
 
 @media (max-width: 767px) {
@@ -2009,7 +2010,9 @@ a.navbar-icon-btn:last-child {
 
 .article-content-wrapper {
   margin: 10px 0;
+
 }
+
 .article-content-wrapper h1, .article-content-wrapper h2, .article-content-wrapper h3, .article-content-wrapper h4, .article-content-wrapper h5, .article-content-wrapper h6 {
   margin: 40px 0 20px 0;
   padding: 10px 0;
