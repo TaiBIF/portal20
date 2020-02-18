@@ -17,44 +17,61 @@
 
     <!-- list begin -->
     <div class="row relateed-datasabe-wrapper">
+      {% for jo in Journal_url%}
+      {% if jo.sort == 0 %}
       <div class="col-md-2 col-xs-4">
-        <a href="https://bdj.pensoft.net/" target="_blank"><img src="{% static 'images/logo-bdj.jpg' %}"></a>
+        <a href="{{jo.url}}" target="_blank"><img src="{{jo.upload.url}}"></a>
       </div>
       <div class="col-md-10 col-xs-8">
-        <a href="https://bdj.pensoft.net/" target="_blank"><span class="myicon icon-link"></span> Biodiversity Data Journal</a>
-        <p>50 字透過每個物種的固氮程度，發現共生型豆科植物在非原生地拓殖的可能性顯著較低，顯示共生現象為拓展族群的。</p>
+        <a href="{{jo.url}}" target="_blank"><span class="myicon icon-link"></span> {{jo.title}}</a>
+        <p>{{jo.content}}</p>
       </div>
+      {% endif %}
+      {% endfor %}
     </div>
 
     <div class="row relateed-datasabe-wrapper">
+      {% for jo in Journal_url%}
+      {% if jo.sort == 1 %}
       <div class="col-md-2 col-xs-4">
-        <a href="https://journals.plos.org/plosone/" target="_blank"><img src="{% static 'images/logo-plos.jpg' %}"></a>
+        <a href="{{jo.url}}" target="_blank"><img src="{{jo.upload.url}}"></a>
       </div>
       <div class="col-md-10 col-xs-8">
-        <a href="https://journals.plos.org/plosone/" target="_blank"><span class="myicon icon-link"></span> PLOS one</a>
-        <p>50 字透過每個物種的固氮程度，發現共生型豆科植物在非原生地拓殖的可能性顯著較低，顯示共生現象為拓展族群的。</p>
+        <a href="{{jo.url}}" target="_blank"><span class="myicon icon-link"></span> {{jo.title}}</a>
+        <p>{{jo.content}}</p>
       </div>
+      {% endif %}
+      {% endfor %}
     </div>
 
-    <div class="row relateed-datasabe-wrapper">
+        <div class="row relateed-datasabe-wrapper">
+      {% for jo in Journal_url%}
+      {% if jo.sort == 2 %}
       <div class="col-md-2 col-xs-4">
-        <a href="https://www.nature.com/sdata/" target="_blank"><img src="{% static 'images/logo-scientific-data.jpg' %}"></a>
+        <a href="{{jo.url}}" target="_blank"><img src="{{jo.upload.url}}"></a>
       </div>
       <div class="col-md-10 col-xs-8">
-        <a href="https://www.nature.com/sdata/" target="_blank"><span class="myicon icon-link"></span> Scientific Data</a>
-        <p>50 字透過每個物種的固氮程度，發現共生型豆科植物在非原生地拓殖的可能性顯著較低，顯示共生現象為拓展族群的。</p>
+        <a href="{{jo.url}}" target="_blank"><span class="myicon icon-link"></span> {{jo.title}}</a>
+        <p>{{jo.content}}</p>
       </div>
+      {% endif %}
+      {% endfor %}
     </div>
 
-    <div class="row relateed-datasabe-wrapper">
+        <div class="row relateed-datasabe-wrapper">
+      {% for jo in Journal_url%}
+      {% if jo.sort == 3 %}
       <div class="col-md-2 col-xs-4">
-        <a href="https://tesri.tesri.gov.tw/list_protect.php" target="_blank"><img src="{%static 'images/logo-tjb.jpg' %}"></a>
+        <a href="{{jo.url}}" target="_blank"><img src="{{jo.upload.url}}"></a>
       </div>
       <div class="col-md-10 col-xs-8">
-        <a href="https://tesri.tesri.gov.tw/list_protect.php" target="_blank"><span class="myicon icon-link"></span> 台灣生物多樣性研究</a>
-        <p>50 字透過每個物種的固氮程度，發現共生型豆科植物在非原生地拓殖的可能性顯著較低，顯示共生現象為拓展族群的。</p>
+        <a href="{{jo.url}}" target="_blank"><span class="myicon icon-link"></span> {{jo.title}}</a>
+        <p>{{jo.content}}</p>
       </div>
+      {% endif %}
+      {% endfor %}
     </div>
+
     <!-- list end -->
   </div>
 {% endblock %}

@@ -23,31 +23,20 @@
     <h2 class="heading-md-bg">網站</h2>
     <p>透過每個物種的固氮程度，發現共生型豆科植物在非原生地拓殖的可能性顯著較低，顯示共生現象為拓展族群的限制因子，作者們認為可能的原因為缺乏適當的菌種或是不適當的固氮環境。</p>
     <ul class="row relateed-website-wrapper">
+
+      {% for post in Post_url %}
+      {% if post.cat == "web" %}
       <li class="col-md-2 col-xs-6">
-        <a href="https://www.most.gov.tw/" target="_blank"><img src="{% static 'images/logo-most.jpg' %}"></a>
-        <a class="text-ellipsis-h2" href="https://www.most.gov.tw/" target="_blank"><span class="myicon icon-link"></span> 科技部</a>
+
+        <a href="{{post.url}}" alt="" target="_blank"><img src="{{post.upload.url}}"></a>
+        <a class="text-ellipsis-h2" href="{{post.url}}" alt="" target="_blank"><span class="myicon icon-link"></span> {{post.title}} </a>
       </li>
-      <li class="col-md-2 col-xs-6">
-        <a href="https://www.coa.gov.tw/" target="_blank"><img src="{% static 'images/logo-coa.jpg' %}"></a>
-        <a class="text-ellipsis-h2" href="https://www.coa.gov.tw/" target="_blank"><span class="myicon icon-link"></span> 行政院農農業委員會</a>
-      </li>
-      <li class="col-md-2 col-xs-6">
-        <a href="http://www.biodiv.tw/tw/" target="_blank"><img src="{% static 'images/logo-brcas.jpg' %}"></a>
-        <a class="text-ellipsis-h2" href="http://www.biodiv.tw/tw/" target="_blank"><span class="myicon icon-link"></span> 生物多樣性研究中心</a>
-      </li>
-      <li class="col-md-2 col-xs-6">
-        <a href="https://www.sinica.edu.tw/ch" target="_blank"><img src="{% static 'images/logo-sinica.jpg' %}"></a>
-        <a class="text-ellipsis-h2" href="https://www.sinica.edu.tw/ch" target="_blank"><span class="myicon icon-link"></span> 中央研究院</a>
-      </li>
-      <li class="col-md-2 col-xs-6">
-        <a href="https://www.forest.gov.tw/" target="_blank"><img src="{% static 'images/logo-forest.jpg' %}"></a>
-        <a class="text-ellipsis-h2" href="https://www.forest.gov.tw/" target="_blank"><span class="myicon icon-link"></span> 行政院農委會林務局</a>
-      </li>
-      <li class="col-md-2 col-xs-6">
-        <a href="https://tesri.tesri.gov.tw/show_index.php" target="_blank"><img src="{% static 'images/logo-endemic.jpg' %}"></a>
-        <a class="text-ellipsis-h2" href="https://tesri.tesri.gov.tw/show_index.php" target="_blank"><span class="myicon icon-link"></span> 行政院農委會特種生物研究保育中心</a>
-      </li>
+
+      {% endif %}
+      {% endfor %}
+
     </ul>
+
     <!-- web site end -->
 
     <!-- database begin -->
@@ -55,22 +44,36 @@
     
     <div class="row relateed-datasabe-wrapper">
       <div class="col-md-2 col-xs-4">
-        <a href="http://taibnet.sinica.edu.tw/home.php" target="_blank"><img src="{% static 'images/logo-taibnet.jpg' %}"></a>
+        {% for post in Post_url%}
+        {% if post.cat == "data" %}
+        {% if post.sort == 1 %}
+        <a href="{{post.url}}" target="_blank"><img src="{{post.upload.url}}"></a>
       </div>
+
       <div class="col-md-10 col-xs-8">
-        <a href="http://taibnet.sinica.edu.tw/home.php" target="_blank"><span class="myicon icon-link"></span> 臺灣物種名錄</a>
-        <p>50 字透過每個物種的固氮程度，發現共生型豆科植物在非原生地拓殖的可能性顯著較低，顯示共生現象為拓展族群的。</p>
+        <a href="{{post.url}}" target="_blank"><span class="myicon icon-link"></span> {{post.title}} </a>
+        <p>{{post.content}}</p>
       </div>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
     </div>
 
     <div class="row relateed-datasabe-wrapper">
       <div class="col-md-2 col-xs-4">
-        <a href="http://taieol.tw/" target="_blank"><img src="{% static 'images/logo-vigor.jpg' %}"></a>
+        {% for post in Post_url%}
+        {% if post.cat == "data" %}
+        {% if post.sort == 0 %}
+        <a href="{{post.url}}" target="_blank"><img src="{{post.upload.url}}"></a>
       </div>
+
       <div class="col-md-10 col-xs-8">
-        <a href="http://taieol.tw/" target="_blank"><span class="myicon icon-link"></span> Taiwan Encyclopedia of Life 臺灣生命大百科</a>
-        <p>50 字透過每個物種的固氮程度，發現共生型豆科植物在非原生地拓殖的可能性顯著較低，顯示共生現象為拓展族群的。</p>
+        <a href="{{post.url}}" target="_blank"><span class="myicon icon-link"></span> {{post.title}} </a>
+        <p>{{post.content}}</p>
       </div>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
     </div>
 
     <!-- database end -->
