@@ -29,10 +29,10 @@ DATA_MAPPING = {
 class Dataset(models.Model):
 
     NUM_PER_PAGE = 20
-    STATUS_CHOICE = {
+    STATUS_CHOICE = (
         ('Public', 'Public'),
         ('Private', 'Private'),
-    }
+    )
 
     title = models.CharField('title', max_length=300)
     name = models.CharField('name', max_length=128) # ipt shortname
