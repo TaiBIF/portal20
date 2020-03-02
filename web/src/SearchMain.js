@@ -1,7 +1,7 @@
 import React from 'react';
 
 function SearchMainOccurrence(props) {
-  console.log(props);
+  //console.log(props);
   const rows = props.data.results.map((row, index) => {
     return (
         <tr key={row.taibif_id}>
@@ -32,8 +32,9 @@ function SearchMainOccurrence(props) {
   return (
       <div className="col-xs-12 col-md-9">
       <div className="container">
-      <h2>出現紀錄<small>{/* / 共 occurrence_list.paginator.count  筆資料 */}{/*(搜尋時間: search_time  秒)*/}</small></h2>
-      <div className="search-main-tag-wrapper">篩選條件: <div className="search-main-tag-item">{ filterTags }</div></div>
+        <h2>出現紀錄<small>{/* / 共 occurrence_list.paginator.count  筆資料 */}{/*(搜尋時間: search_time  秒)*/}</small></h2>
+        <div className="loading-overlay"></div>
+        <div className="search-main-tag-wrapper">篩選條件: <div className="search-main-tag-item">{ filterTags }</div></div>
       <table className="table table-hover">
         <thead>
           <tr>
