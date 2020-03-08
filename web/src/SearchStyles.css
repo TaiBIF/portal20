@@ -12,6 +12,7 @@
 .search-sidebar {
     border-right: 1px #e5e5e5 solid;
     padding-right: unset;
+    margin-top: 10px;
     /*overflow: auto;*/
 }
 

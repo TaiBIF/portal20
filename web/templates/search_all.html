@@ -38,9 +38,9 @@
       {% if count > 0 %}
         {% for cat in results %}
           {% if cat.rows %}
-          <h4>{{ cat.label }}</h4>
+          <h1 class="heading-lg-ul">{{ cat.label }}</h1>
             {% for i in cat.rows %}
-              <div class=" search-all-result-item">
+              <div class="search-all-result-item">
               <h4>{{ i.title }}</h4>
               <p class="search-all-result-item__content">{{ i.content|truncatechars:280 }}</p>
               <div><a href="{{ i.url }}">繼續閱讀</a></div>
