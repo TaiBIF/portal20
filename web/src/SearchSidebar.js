@@ -24,8 +24,11 @@ function SearchSidebar(props) {
   if (props.searchType === 'dataset') {
     searchTypeLabel = '資料集';
   }
-  if (props.searchType === 'occurrence') {
+  else if (props.searchType === 'occurrence') {
     searchTypeLabel = '出現紀錄';
+  }
+  else if (props.searchType === 'publisher') {
+    searchTypeLabel = '發布者';
   }
   return (
       <div className="col-xs-6 col-md-3 search-sidebar">

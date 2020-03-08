@@ -24,7 +24,19 @@ DATA_MAPPING = {
     }
 }
 
+# DEPRICATED?
+class Organization(models.Model):
 
+    NUM_PER_PAGE = 20
+    STATUS_CHOICE = (
+        ('Public', 'Public'),
+        ('Private', 'Private'),
+    )
+
+    title = models.CharField('title', max_length=300)
+    name = models.CharField('name', max_length=128) # ipt shortname
+    description = models.TextField('Description')
+    author = models.CharField('author', max_length=128)
 
 class Dataset(models.Model):
 
@@ -53,7 +65,7 @@ class Dataset(models.Model):
     gbif_doi = models.TextField(blank=True, null=True)
     gbif_mod_date = models.DateTimeField('Modified Date from gbif', null=True)
     organization_verbatim = models.TextField(blank=True, null=True)
-    organization = models.ForeignKey('DatasetOrganization', null=True, blank=True, on_delete=models.SET_NULL)
+    organization = models.ForeignKey('DatasetOrganization', null=True, blank=True, on_delete=models.SET_NULL, related_name='datasets')
     #models.TextField(blank=True, null=True)
     num_record = models.PositiveIntegerField(default=0)
     num_occurrence = models.PositiveIntegerField(default=0)
@@ -106,7 +118,17 @@ class Dataset(models.Model):
         return r
 
 class DatasetOrganization(models.Model):
-    name = models.CharField('name', max_length=128)
+    NUM_PER_PAGE = 20
+
+    name = models.CharField('name', max_length=512)
+    description = models.TextField('description', default='')
+
+    @property
+    def sum_occurrence(self):
+        n = 0
+        for d in self.datasets.values('num_occurrence').all():
+            n += d['num_occurrence']
+        return n
 
 class TaxonTree(models.Model):
     name = models.CharField('name', max_length=64)

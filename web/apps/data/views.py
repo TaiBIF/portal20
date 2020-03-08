@@ -11,7 +11,7 @@ from django.urls import reverse
 from django.conf import settings
 
 from apps.article.models import Article
-from .models import Taxon, Occurrence, Dataset, RawDataOccurrence
+from .models import Taxon, Occurrence, Dataset, RawDataOccurrence, DatasetOrganization
 
 
 def search_all(request):
@@ -130,6 +130,11 @@ def dataset_view(request, name):
     context = {}
     context['dataset'] = get_object_or_404(Dataset, name=name)
     return render(request, 'dataset.html', context)
+
+def publisher_view(request, pk):
+    context = {}
+    context['publisher'] = get_object_or_404(DatasetOrganization, pk=pk)
+    return render(request, 'publisher.html', context)
 
 def search_view(request):
     context = {'env': settings.ENV}

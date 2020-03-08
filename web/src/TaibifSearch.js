@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchSidebar from './SearchSidebar.js';
-import {SearchMainDataset, SearchMainOccurrence} from './SearchMain.js';
+import {SearchMainDataset, SearchMainOccurrence, SearchMainPublisher} from './SearchMain.js';
 import './SearchStyles.css';
 
 
@@ -49,6 +49,9 @@ class TaibifSearch extends React.Component {
     }
     else if (window.location.pathname === '/occurrence/search/') {
       searchType = 'occurrence';
+    }
+    else if (window.location.pathname === '/publisher/search/') {
+      searchType = 'publisher';
     }
 
     if (window.location.search.indexOf('page=')) {
@@ -246,6 +249,9 @@ class TaibifSearch extends React.Component {
       }
       else if (searchType === 'occurrence') {
         searchMainContainer = <SearchMainOccurrence data={mainData} searchType={searchType} filters={filters} menus={menus} />
+      }
+      else if (searchType === 'publisher') {
+        searchMainContainer = <SearchMainPublisher data={mainData} searchType={searchType} filters={filters} menus={menus} />
       }
 
       const defaultPage = (this.state.page) ? this.state.page : '1';
