@@ -117,4 +117,41 @@ function SearchMainDataset(props) {
   )
 }
 
-export {SearchMainDataset, SearchMainOccurrence};
+function SearchMainPublisher(props) {
+  //console.log(props);
+  const rows = props.data.results.map((row) => {
+    return (
+        <div className="row listbox-img-right-wrapper" key={row.id}>
+        <div className="col-xs-8">
+        <h3 className="listbox-inner-title">{ row.name }</h3>
+        <p className="listbox-inner-summary hidden-xs">
+        {row.description}
+        </p>
+        <span className="badge">資料集數量: {row.num_dataset} </span>
+        <div><a href={"/publisher/"+row.id} className="">發布者</a></div>
+        </div>
+        </div>
+    )
+  });
+
+  const filterTags = [];
+  for (let f of props.filters) {
+    const menuKey = f.split('.');
+    if (menuKey[0] === 'q') {
+      const q = decodeURIComponent(menuKey[1]);
+      filterTags.push((<span key="q" className="badge search-tag">關鍵字: {q}</span>));
+    }
+  }
+  return (
+      <div className="col-xs-12 col-md-9">
+      <div className="container">
+      <h2 className="heading-lg-ul">發布者
+      <span className="heading-footnote"> 共 {props.data.count} 筆資料</span>
+      </h2>
+      <div className="search-main-tag-wrapper">篩選條件: <div className="search-main-tag-item">{ filterTags }</div></div>
+      {rows}
+      </div>
+      </div>
+  )
+}
+export {SearchMainDataset, SearchMainOccurrence, SearchMainPublisher};

@@ -2,11 +2,13 @@ import timeit
 
 from django.shortcuts import render
 from django.db.models import Count, Q
-from apps.data.models import Dataset, DATA_MAPPING
+from apps.data.models import Dataset, DATA_MAPPING, DatasetOrganization
 from apps.data.models import RawDataOccurrence
 from utils.decorators import json_ret
 
 from .cached import COUNTRY_ROWS, YEAR_ROWS
+
+
 
 @json_ret
 def search_occurrence(request):
@@ -223,3 +225,124 @@ def search_dataset(request):
     }
 
     return {'data': data }
+
+@json_ret
+def search_publisher(request):
+
+    query = DatasetOrganization.objects
+    page = 1
+    if request.GET:
+        for menu_key, item_keys in request.GET.items():
+            if menu_key == 'q':
+                query = query.filter(name__icontains=item_keys)
+            if menu_key == 'page':
+                page = int(item_keys)
+
+    offset = (page-1) * DatasetOrganization.NUM_PER_PAGE
+    limit = page * DatasetOrganization.NUM_PER_PAGE
+    query_fin = query.all()[offset:limit]
+
+    results = []
+    for x in query_fin:
+        n = 0
+        m = 0
+
+        #for d in x.datasets.values('num_occurrence').all():
+        #    m += 1
+        #    n += d['num_occurrence']
+        results.append({
+            'id': x.id,
+            'name': x.name,
+            'description': x.description,
+            'num_dataset': x.datasets.count(),
+            'num_occurrence': x.sum_occurrence
+        })
+    data = {
+        'menus': [],
+        'results': results,
+        'offset': offset,
+        'limit': limit,
+        'count': query.count()
+    }
+
+    return {'data': data }
+
+@json_ret
+def search_species(request):
+
+    '''abel':x['data_license'],
+        'count': x['count']
+    } for x in rights_query]
+    country_query = Dataset.objects\
+                           .values('country')\
+                           .exclude(country__exact='')\
+                           .annotate(count=Count('country'))\
+                           .order_by('-count')
+    country_rows = [{
+        'key':x['country'],
+        'label':DATA_MAPPING['country'][x['country']],
+        'count': x['count']
+    } for x in country_query]
+
+    menu_list = [
+        {
+            'key':'publisher',
+            'label': '發布者',
+            'rows': publisher_rows
+        },
+        {
+            'key': 'country',
+            'label': '分布地區/國家',
+            'rows': country_rows
+        },
+        {
+            'key': 'rights',
+            'label': '授權狀態',
+            'rows': rights_rows
+        }
+    ]
+
+    page = 1
+    query = Dataset.objects.exclude(status='Private')
+    if request.GET:
+        for menu_key, item_keys in request.GET.items():
+            if menu_key == 'q':
+                query = query.filter(Q(title__icontains=item_keys) | Q(description__icontains=item_keys))
+            if menu_key == 'core':
+                print (item_keys,'--')
+                d = DATA_MAPPING['core'][item_keys]
+                query = query.filter(dwc_core_type__exact=d)
+            if menu_key == 'publisher':
+                for key in item_keys.split(','):
+                    query = query.filter(organization__exact=key)
+            if menu_key == 'rights':
+                rights_reverse_map = {v: k for k,v in DATA_MAPPING['rights'].items()}
+                for key in item_keys.split(','):
+                    query = query.filter(data_license__exact=rights_reverse_map[key])
+            if menu_key == 'country':
+                for key in item_keys.split(','):
+                    query = query.filter(country__exact=key)
+            if menu_key == 'page':
+                page = int(item_keys)
+
+    offset = (page-1) * Dataset.NUM_PER_PAGE
+    limit = page * Dataset.NUM_PER_PAGE
+    query_fin = query.all()[offset:limit]
+
+    results = [{
+        'title': x.title,
+        'description': x.description,
+        'id': x.id,
+        'name': x.name,
+        'num_record': x.num_record,
+        'dwc_type': x.dwc_core_type_for_human_simple,
+    } for x in query_fin]
+    data = {
+        'menus': menu_list,
+        'results': results,
+        'offset': offset,
+        'limit': limit,
+        'count': query.count()
+    }'''
+
+    return {'data': {} }

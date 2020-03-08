@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block main %}
+{# include "inc_breadcrumb.html" with tab="03" active_label="" #}
+
+<!-- container begin -->
+<div class="container">
+  <h2>{{ publisher.name }}</h2>
+  <div class="article-head-wrapper">
+    <h1 class="heading-lg-ul">
+      簡介
+    </h1>
+  </div>
+  <p>{{ publisher.description }}
+  </p>
+
+  <br>
+  <div>
+    資料集數量: {{ publisher.datasets.count }}<br>
+    發現記錄數量: {{ publisher.sum_occurrence|intcomma }}<br>
+    </p>
+  </div>
+
+</div>
+  <!-- container end -->
+{% endblock %}
