@@ -7,6 +7,7 @@ from apps.data.models import RawDataOccurrence
 from utils.decorators import json_ret
 
 from .cached import COUNTRY_ROWS, YEAR_ROWS
+
 @json_ret
 def search_occurrence(request):
     # cache

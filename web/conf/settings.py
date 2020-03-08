@@ -11,8 +11,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-
 import environ
+import socket # djdt for docker
 
 env = environ.Env()
 root_path = environ.Path(__file__) - 2 # web
@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # first party
     'django.contrib.humanize',
-
     # local
     'apps.api.apps.ApiConfig',
     'apps.data.apps.DataConfig',
@@ -136,3 +135,26 @@ STATIC_ROOT = env('STATIC_ROOT', default=root_path('static'))
 STATICFILES_DIRS = [
     root_path('static')
 ]
+
+# for djdt
+if DEBUG:
+    MIDDLEWARE += (
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+        'apps.api.middleware.DebugToolbarForJsonMiddleware'
+    )
+    INSTALLED_APPS += ( 'debug_toolbar',)
+    #DEBUG_TOOLBAR_PANELS = (
+    #    'debug_toolbar.panels.version.VersionDebugPanel',
+    #    'debug_toolbar.panels.timer.TimerDebugPanel',
+    #    'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
+    #    'debug_toolbar.panels.headers.HeaderDebugPanel',
+    #    'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
+    #    'debug_toolbar.panels.template.TemplateDebugPanel',
+    #    'debug_toolbar.panels.sql.SQLDebugPanel',
+    #    'debug_toolbar.panels.signals.SignalDebugPanel',
+    #    'debug_toolbar.panels.logger.LoggingPanel',
+    #)
+
+    # get internal ip, ex: docker
+    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+    INTERNAL_IPS = [ip[:-1] + '1' for ip in ips] + ['127.0.0.1', '10.0.2.2']

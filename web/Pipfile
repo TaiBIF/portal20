@@ -11,6 +11,7 @@ gunicorn = "*"
 psycopg2-binary = "*"
 pillow = "*"
 django-environ = "*"
+django-debug-toolbar = "*"
 
 [requires]
 python_version = "3.7"
