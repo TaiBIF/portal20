@@ -228,13 +228,27 @@ def search_dataset(request):
 
 @json_ret
 def search_publisher(request):
-
+    country_list = DatasetOrganization.objects\
+                               .values('country_code')\
+                               .exclude(country_code__isnull=True)\
+                               .annotate(count=Count('country_code'))\
+                               .order_by('-count').all()
+    print (country_list)
+    menus = [
+        {
+            'key': 'country_code',
+            'label': '國家/區域',
+            'rows': [{'label': DATA_MAPPING['country'][x['country_code']], 'key': x['country_code'], 'count': x['count']} for x in country_list]
+        },
+    ]
     query = DatasetOrganization.objects
     page = 1
     if request.GET:
         for menu_key, item_keys in request.GET.items():
             if menu_key == 'q':
                 query = query.filter(name__icontains=item_keys)
+            if menu_key == 'country_code':
+                query = query.filter(country_code=item_keys)
             if menu_key == 'page':
                 page = int(item_keys)
 
@@ -244,12 +258,6 @@ def search_publisher(request):
 
     results = []
     for x in query_fin:
-        n = 0
-        m = 0
-
-        #for d in x.datasets.values('num_occurrence').all():
-        #    m += 1
-        #    n += d['num_occurrence']
         results.append({
             'id': x.id,
             'name': x.name,
@@ -258,7 +266,7 @@ def search_publisher(request):
             'num_occurrence': x.sum_occurrence
         })
     data = {
-        'menus': [],
+        'menus': menus,
         'results': results,
         'offset': offset,
         'limit': limit,

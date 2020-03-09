@@ -118,10 +118,13 @@ class Dataset(models.Model):
         return r
 
 class DatasetOrganization(models.Model):
+    '''publisher'''
+
     NUM_PER_PAGE = 20
 
     name = models.CharField('name', max_length=512)
     description = models.TextField('description', default='')
+    country_code = models.CharField('country_code', max_length=8, default='TW')
 
     @property
     def sum_occurrence(self):
