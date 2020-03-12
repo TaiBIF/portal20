@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1e03ec09-978e-412a-8829-f1ff1cd072d2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/web/apps/page/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/apps/page/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/apps/page/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/apps/page/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/apps/page/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/apps/page/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/templates/links.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/templates/links.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/web/Pipfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/css/theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/css/theme.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
