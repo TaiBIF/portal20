@@ -13,8 +13,8 @@ services:
       - db:db
     volumes:
       - .:/taibif-code
-      - ../taibif-volumes/bucket:/taibif-bucket
-      - ../taibif-volumes/media:/taibif-media
+      - ../taibif-volumes/bucket:/taibif-volumes/bucket
+      - ../taibif-volumes/media:/taibif-volumes/media
     command: "./scripts/wait-for-it.sh postgres:5432 -t 5 -- python web/manage.py runserver 0.0.0.0:8000"
 
     restart: always
@@ -31,7 +31,7 @@ services:
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - ../taibif-volumes/pgdata:/var/lib/postgresql/data/pgdata
-      - ../taibif-volumes/bucket:/taibif-bucket
+      - ../taibif-volumes/bucket:/taibif-volumes/bucket
   adminer:
     image: adminer
     restart: always
