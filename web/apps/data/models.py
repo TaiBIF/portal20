@@ -150,6 +150,8 @@ class Taxon(models.Model):
     count = models.PositiveIntegerField('count', default=0)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
     tree = models.ForeignKey(TaxonTree, on_delete=models.CASCADE, null=True)
+    is_accepted_name = models.BooleanField('is accepted name', default=True)
+    verbose = models.CharField('verbose', max_length=1000, default='')
 
     def __str__(self):
         r = '{}: {}'.format(self.rank, self.get_name())
