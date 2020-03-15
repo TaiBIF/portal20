@@ -2,12 +2,25 @@ import timeit
 
 from django.shortcuts import render
 from django.db.models import Count, Q
-from apps.data.models import Dataset, DATA_MAPPING, DatasetOrganization
+from apps.data.models import Dataset, DATA_MAPPING, DatasetOrganization, Taxon
 from apps.data.models import RawDataOccurrence
 from utils.decorators import json_ret
 
 from .cached import COUNTRY_ROWS, YEAR_ROWS
 
+
+
+@json_ret
+def taxon_tree(request):
+    rank = request.GET.get('rank', '')
+    result = Taxon.get_tree(rank)
+
+    return {
+        'data': {
+            'rank': result['rank'],
+            'result': [x.get_name() for x in result['taxon_list']]
+        }
+    }
 
 
 @json_ret
@@ -86,7 +99,7 @@ def search_occurrence(request):
             if menu_key == 'q':
                 query = query.filter(Q(vernacularname__icontains=item_keys) | Q(scientificname__icontains=item_keys))
             if menu_key == 'core':
-                print (item_keys,'--')
+                #print (item_keys,'--')
                 d = DATA_MAPPING['core'][item_keys]
                 query = query.filter(dwc_core_type__exact=d)
             if menu_key == 'year':
@@ -233,7 +246,7 @@ def search_publisher(request):
                                .exclude(country_code__isnull=True)\
                                .annotate(count=Count('country_code'))\
                                .order_by('-count').all()
-    print (country_list)
+    #print (country_list)
     menus = [
         {
             'key': 'country_code',
@@ -277,59 +290,42 @@ def search_publisher(request):
 
 @json_ret
 def search_species(request):
+    status = request.GET.get('status', '')
+    rank = request.GET.get('rank', '')
 
-    '''abel':x['data_license'],
-        'count': x['count']
-    } for x in rights_query]
-    country_query = Dataset.objects\
-                           .values('country')\
-                           .exclude(country__exact='')\
-                           .annotate(count=Count('country'))\
-                           .order_by('-count')
-    country_rows = [{
-        'key':x['country'],
-        'label':DATA_MAPPING['country'][x['country']],
-        'count': x['count']
-    } for x in country_query]
-
-    menu_list = [
+    menus = [
         {
-            'key':'publisher',
-            'label': '發布者',
-            'rows': publisher_rows
+            'key': 'rank',
+            'label': '分類位階',
+            'rows': [{
+                'key': x['key'],
+                'label': x['label'],
+                'count': x['count']
+            } for x in Taxon.get_tree(rank=rank, status=status)]
         },
         {
-            'key': 'country',
-            'label': '分布地區/國家',
-            'rows': country_rows
+            'key': 'status',
+            'label': '狀態',
+            'rows': [
+                {'label': '有效的', 'key': 'accepted'},
+                {'label': '同物異名', 'key': 'synonym'}
+            ]
         },
-        {
-            'key': 'rights',
-            'label': '授權狀態',
-            'rows': rights_rows
-        }
     ]
 
+    query = Taxon.objects
     page = 1
-    query = Dataset.objects.exclude(status='Private')
     if request.GET:
         for menu_key, item_keys in request.GET.items():
             if menu_key == 'q':
-                query = query.filter(Q(title__icontains=item_keys) | Q(description__icontains=item_keys))
-            if menu_key == 'core':
-                print (item_keys,'--')
-                d = DATA_MAPPING['core'][item_keys]
-                query = query.filter(dwc_core_type__exact=d)
-            if menu_key == 'publisher':
-                for key in item_keys.split(','):
-                    query = query.filter(organization__exact=key)
-            if menu_key == 'rights':
-                rights_reverse_map = {v: k for k,v in DATA_MAPPING['rights'].items()}
-                for key in item_keys.split(','):
-                    query = query.filter(data_license__exact=rights_reverse_map[key])
-            if menu_key == 'country':
-                for key in item_keys.split(','):
-                    query = query.filter(country__exact=key)
+                query = query.filter(Q(name__icontains=item_keys) | Q(name_zh__icontains=item_keys))
+            if menu_key == 'rank':
+                query = query.filter(rank=item_keys)
+            if menu_key == 'status':
+                if item_keys == 'accepted':
+                    query = query.filter(is_accepted_name=True)
+                elif item_keys == 'synonym':
+                    query = query.filter(is_accepted_name=False)
             if menu_key == 'page':
                 page = int(item_keys)
 
@@ -338,19 +334,18 @@ def search_species(request):
     query_fin = query.all()[offset:limit]
 
     results = [{
-        'title': x.title,
-        'description': x.description,
         'id': x.id,
         'name': x.name,
-        'num_record': x.num_record,
-        'dwc_type': x.dwc_core_type_for_human_simple,
+        'name_zh': x.name_zh,
+        'count': x.count,
+        'rank': x.get_rank_display(),
+        'is_accepted_name': x.is_accepted_name,
     } for x in query_fin]
     data = {
-        'menus': menu_list,
+        'menus': menus,
         'results': results,
         'offset': offset,
         'limit': limit,
         'count': query.count()
-    }'''
-
-    return {'data': {} }
+    }
+    return {'data': data }

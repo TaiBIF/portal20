@@ -81,7 +81,7 @@
               {% csrf_token %}
               <ul class="row head-carousel-search-cate">
                 <li class="col-xs-3"><a href="{% url 'search-occurrence' %}" class="search-type-btn" data-type="occurrence">出現紀錄</a></li>
-                <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="species">物種</a></li>
+                <li class="col-xs-3"><a href="{% url 'search-species' %}" class="search-type-btn" data-type="species">物種</a></li>
                 <li class="col-xs-3"><a href="{% url 'search-dataset' %}" class="search-type-btn" data-type="dataset">資料集</a></li>
                 <li class="col-xs-3"><a href="{% url 'search-publisher' %}" class="search-type-btn" data-type="publisher">發布者</a></li>
               </ul>
