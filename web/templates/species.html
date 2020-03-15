@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block head %}
+<link href="{% static 'css/taibif.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block main %}
+{# include "inc_breadcrumb.html" with tab="03" active_label="" #}
+
+<!-- container begin -->
+<div class="container">
+  <h2>{{ taxon.name_zh }} {{ taxon.name }}</h2>
+    <p>
+    來源: <a href="http://taicol.tw">臺灣物種名錄 (TaiCoL)</a> | 搜尋 TaiCol: <a href="{{ taxon.taicol_search_link }}" target/"_blank">{{ taxon.name }}</a>
+    </p>
+  <div class="article-head-wrapper">
+    <h1 class="heading-lg-ul">
+      分類
+    </h1>
+    <ul class="species-ranklist__container">
+      {% for i in taxon.rank_list %}
+      <li class="species-ranklist__item">
+        <div class="species-ranklist__item-name">
+          <a href="{{ i.get_absolute_url }}">{{ i.name }}</a>
+        </div>
+        <div class="species-ranklist__item-name-zh">
+          {{ i.name_zh }}
+        </div>
+      </li>
+      <li><div>→</div></li>
+      {% endfor %}
+      <span>{{ taxon.get_name }}</span>
+    </ul>
+    {% if taxon.children %}
+    <div>
+      <h4>{{ taxon.children.0.get_rank_display }} {{ taxon.children.0.rank }}</h4>
+      <ul class="species-taxon-children__container">
+      {% for i in taxon.children %}
+      <li class="species-taxon-children__item"><a href="{{ i.get_absolute_url }}">{{ i.get_name }}</a></li>
+      {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+    <p>物種數: </p>
+  </div>
+
+  <div class="article-head-wrapper">
+    <h1 class="heading-lg-ul">
+      出現記錄
+    </h1>
+    <ul>
+      {% for i in occurrence_list %}
+      <li>{{ i.scientificname }} - {{ i.taibif_dataset_name}}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  出現資料集
+
+</div>
+  <!-- container end -->
+{% endblock %}

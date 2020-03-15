@@ -1,0 +1,46 @@
+.species-ranklist__container{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin: 0 20px;
+    padding: 10px 0;
+    list-style: none;
+}
+
+.species-ranklist__item{
+    flex-direction: column;
+    flex-flow: row wrap;
+    border: 1px solid #a7a7a7;
+    padding: 0 10px;
+    margin: 0 10px;
+    background-color: #d0e0b1
+}
+.species-ranklist__item-name{
+    flex: none;
+    font-size: 1.1em;
+}
+.species-ranklist__item-name-zh{
+    flex: none;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.species-taxon-children__container{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 10px;
+    list-style: none;
+    border: 3px dashed #d4d4d4;
+    background-color: #efefef;
+    border-radius: 5px;
+}
+.species-taxon-children__item{
+    margin: 0 3px;
+}
+.species-taxon-children__item::after{
+    content: " • ";
+}
+.species-taxon-children__item:last-child:after{
+    content: " ";
+}
