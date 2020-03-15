@@ -142,26 +142,78 @@ class TaxonTree(models.Model):
         return r
 
 class Taxon(models.Model):
-    TAXON_RANK_LIST = ['kingdom', 'phylum', 'class', 'order', 'family', 'genus', 'species']
+    RANK_LIST = [
+        ('kingdom', '界'),
+        ('phylum', '門'),
+        ('class', '綱'),
+        ('order', '目'),
+        ('family', '科'),
+        ('genus', '屬'),
+        ('species', '種'),
+    ]
 
-    rank = models.CharField('rank', max_length=32)
+    rank = models.CharField('rank', max_length=32, choices=RANK_LIST)
     name = models.CharField('name', max_length=128)
     name_zh = models.CharField('name_zh', max_length=128)
     count = models.PositiveIntegerField('count', default=0)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
     tree = models.ForeignKey(TaxonTree, on_delete=models.CASCADE, null=True)
     is_accepted_name = models.BooleanField('is accepted name', default=True)
+    source_id = models.CharField('name_code', max_length=1000, null=True, blank=True)
     verbose = models.CharField('verbose', max_length=1000, default='')
 
     def __str__(self):
         r = '{}: {}'.format(self.rank, self.get_name())
         return r
 
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('species-detail', args=[str(self.id)])
+
     def get_name(self):
         if self.name_zh:
             return '{} {}'.format(self.name_zh, self.name)
         else:
             return '{}'.format(self.name)
+
+    @property
+    def taicol_search_link(self):
+        url = 'http://taibnet.sinica.edu.tw/chi/taibnet_species_list.php?T2={}&T2_new_value=true&fr=y'.format(self.name)
+        return url
+
+    @property
+    def rank_list(self):
+        def get_rank_tree(x, a=[]):
+            if x.parent:
+                a.append(x.parent)
+                return get_rank_tree(x.parent, a)
+            return list(reversed(a))
+        return get_rank_tree(self)
+
+    @property
+    def children(self):
+        return Taxon.objects.filter(parent=self).all()
+
+    @staticmethod
+    def get_tree(rank='', status=''):
+        rows = []
+        for i in Taxon.RANK_LIST:
+            q = Taxon.objects.filter(rank=i[0])
+            if status and i[0] == 'species': # only count on species
+                if status == 'accepted':
+                    q = q.filter(is_accepted_name=True)
+                elif status == 'synonym':
+                    q = q.filter(is_accepted_name=False)
+            rows.append({
+                'count': q.count(),
+                'key': i[0],
+                'label': '{} {}'.format(i[1], i[0].capitalize())
+            })
+        #taxon_list = Taxon.objects.\
+        #    filter(tree_id=1,
+        #           rank=rank).\
+        #    order_by('-count').all()
+        return rows
 
     @property
     def data(self):
@@ -479,3 +531,12 @@ class RawDataOccurrence(models.Model):
     class Meta:
         managed = False
         db_table = 'raw_data_occurrence'
+
+        indexes = [
+            models.Index(fields=['year']),
+            models.Index(fields=['scientificname']),
+            models.Index(fields=['kingdom']),
+            models.Index(fields=['phylum']),
+            models.Index(fields=['class_field']),
+            models.Index(fields=['order']),
+        ]

@@ -19,7 +19,13 @@ from django.conf.urls import url
 from django.views.static import serve
 
 from conf import settings
-from apps.data.views import occurrence_view, dataset_view, search_view, publisher_view
+from apps.data.views import (
+    occurrence_view,
+    dataset_view,
+    search_view,
+    publisher_view,
+    species_view
+)
 
 urlpatterns = [
     url('^media/(?P<path>.*)$', serve, {
@@ -30,9 +36,11 @@ urlpatterns = [
     path('occurrence/search/', search_view, name='search-occurrence'),
     path('dataset/search/', search_view, name='search-dataset'),
     path('publisher/search/', search_view, name='search-publisher'),
-    path('occurrence/<int:taibif_id>', occurrence_view, name='occurrence'),
+    path('species/search/', search_view, name='search-species'),
+    path('occurrence/<int:taibif_id>', occurrence_view, name='occurrence-detail'),
     path('dataset/<name>/', dataset_view, name='dataset-detail'),
-    path('publisher/<int:pk>/', publisher_view, name='search-publisher'),
+    path('publisher/<int:pk>/', publisher_view, name='publisher-detail'),
+    path('species/<int:pk>/', species_view, name='species-detail'),
     path('article/', include('apps.article.urls')),
     path('',  include('apps.page.urls')),
     path('admin/', admin.site.urls),

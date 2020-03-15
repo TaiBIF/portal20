@@ -53,12 +53,10 @@
           <!-- hidden xs begin -->
           <div class="hidden-xs col-xs-6 navbar-hidden-xs">
             <div class="navbar-search-wrapper">
-              {% comment %}
-              <input type="text" class="navbar-search-input" placeholder="全站搜尋...">
-              <button class="navbar-search-btn" type="button">
+              <input type="text" class="navbar-search-input" id="navbar-search-input" placeholder="全站搜尋...">
+              <button class="navbar-search-btn" type="button" id="navbar-search-btn">
                 <span class="myicon icon-search"></span>
               </button>
-              {% endcomment %}
             </div>
             <a href="https://www.facebook.com/TaiBIF.tw/" target="_blank" class="navbar-oval-btn"><span class="myicon icon-social-fb"></span></a>
             {#<a href="#" target="_blank" class="navbar-oval-btn"><span class="myicon icon-social-yt"></span></a>#}
@@ -182,6 +180,13 @@ on icon-social-fb"></span></a>
 <!-- script 4 owl carousel begin -->
 <script>
   $(document).ready(function() {
+    //navbar-search
+    //const v \ $('#navbar-search-input').val();
+    $('#navbar-search-btn').click(function(){
+      const q =$('#navbar-search-input').val();
+      window.location.href = `/search/?q=${q}`;
+    });
+
     var owl_topic = $('#topic-board');
     owl_topic.owlCarousel({
       margin: 20,

@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchSidebar from './SearchSidebar.js';
-import {SearchMainDataset, SearchMainOccurrence, SearchMainPublisher} from './SearchMain.js';
+import {SearchMainDataset, SearchMainOccurrence, SearchMainPublisher, SearchMainSpecies} from './SearchMain.js';
 import './SearchStyles.css';
 
 
@@ -8,23 +8,44 @@ function Pagination (props) {
   const hasCount = parseInt(props.count) ? true : false;
   const numPerPage = props.limit - props.offset;
   const lastPage = hasCount ? Math.ceil(props.count / numPerPage) : parseInt(props.current)+1;
-  const pages = [];
-  for (let i=1; i<=lastPage; i++)  {
+
+  function getPageUrl(p) {
     let url = window.location.href;
     if (url.indexOf('page=') >=0) {
-      url = url.replace(/page=([0-9]+)/, `page=${i}`);
+      url = url.replace(/page=([0-9]+)/, `page=${p}`);
     }
     else {
       if (window.location.search) {
-        url = `${url}&page=${i}`;
+        url = `${url}&page=${p}`;
       }
       else {
-        url = `${url}?page=${i}`;
+        url = `${url}?page=${p}`;
       }
     }
-    const activeClass = (parseInt(props.current, 10) === i) ? 'active' : '';
-    if (hasCount) {
-      pages.push(<li className={activeClass} key={i}><a href={url}> {i} </a></li>);
+    return url;
+  }
+
+  const pages = [];
+  if (lastPage > 10) {
+    // ignore if page num too long
+    const current = parseInt(props.current);
+    if (current > 1) {
+      const urlPrev = getPageUrl(current-1);
+      pages.push(<li key='1'><a href={urlPrev}>上一頁</a></li>)
+    }
+    pages.push(<li key='2'><a href="" className="active">{current}</a></li>)
+    if (current < lastPage) {
+      const urlNext = getPageUrl(current+1)
+      pages.push(<li key='3'><a href={urlNext}>下一頁</a></li>);
+    }
+  }
+  else {
+    for (let i=1; i<=lastPage; i++)  {
+      const url = getPageUrl(i)
+      const activeClass = (parseInt(props.current, 10) === i) ? 'active' : '';
+      if (hasCount) {
+        pages.push(<li className={activeClass} key={i}><a href={url}> {i} </a></li>);
+      }
     }
   }
   return (
@@ -52,6 +73,9 @@ class TaibifSearch extends React.Component {
     }
     else if (window.location.pathname === '/publisher/search/') {
       searchType = 'publisher';
+    }
+    else if (window.location.pathname === '/species/search/') {
+      searchType = 'species';
     }
 
     if (window.location.search.indexOf('page=')) {
@@ -168,7 +192,7 @@ class TaibifSearch extends React.Component {
     }
     else {
       //有 page 的話, 會rudirect 變成拿掉 page
-      //window.history.pushState("object or string", "taibif-search", url);
+      window.history.pushState({stateObj:url}, "", url);
     }
     ///apiUrl = '';
     console.log('fetch:', apiUrl)
@@ -252,6 +276,9 @@ class TaibifSearch extends React.Component {
       }
       else if (searchType === 'publisher') {
         searchMainContainer = <SearchMainPublisher data={mainData} searchType={searchType} filters={filters} menus={menus} />
+      }
+      else if (searchType === 'species') {
+        searchMainContainer = <SearchMainSpecies data={mainData} searchType={searchType} filters={filters} menus={menus} />
       }
 
       const defaultPage = (this.state.page) ? this.state.page : '1';

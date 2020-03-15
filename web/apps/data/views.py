@@ -136,6 +136,36 @@ def publisher_view(request, pk):
     context['publisher'] = get_object_or_404(DatasetOrganization, pk=pk)
     return render(request, 'publisher.html', context)
 
+def species_view(request, pk):
+    context = {}
+    taxon = get_object_or_404(Taxon, pk=pk)
+    q = RawDataOccurrence.objects.values('scientificname', 'taibif_dataset_name')
+    if taxon.rank == 'kingdom':
+        q = q.filter(Q(kingdom=taxon.name)|Q(kingdom=taxon.name_zh))
+    elif taxon.rank == 'phylum':
+        q = q.filter(Q(phylum=taxon.name)|Q(phylum=taxon.name_zh))
+    elif taxon.rank == 'class':
+        q = q.filter(Q(class_field=taxon.name)|Q(class_field=taxon.name_zh))
+    elif taxon.rank == 'order':
+        q = q.filter(Q(order=taxon.name)|Q(order=taxon.name_zh))
+    elif taxon.rank == 'family':
+        q = q.filter(Q(family=taxon.name)|Q(family=taxon.name_zh))
+    elif taxon.rank == 'genus':
+        q = q.filter(Q(genus=taxon.name)|Q(genus=taxon.name_zh))
+    elif taxon.rank == 'species':
+        q = q.filter(Q(scinetificname__icontains=taxon.name)|Q(scinetificname__icontains=taxon.name_zh))
+
+    #q.count()
+    occurrence_list = list(q.all()[:20])
+    #dataset_list = q.annotate(dataset=Count('id')).all()
+    context = {
+        'taxon': taxon,
+        'occurrence_list': occurrence_list,
+        #'dataset_list': dataset_list
+    }
+    #n =
+    return render(request, 'species.html', context)
+
 def search_view(request):
     context = {'env': settings.ENV}
     return render(request, 'search.html', context)
