@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /taibif-code/web
+cd /taibif-code
 
 python manage.py migrate --no-input
 python manage.py collectstatic --no-input
