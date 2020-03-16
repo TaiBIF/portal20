@@ -5,8 +5,9 @@ import json
 
 from django.utils.dateparse import parse_date
 
-BUCKET_PATH = '/taibif-bucket/'
-DATASET_CSV = '0-dataset-list_20200106-164549.csv'
+BUCKET_PATH = '/taibif-volumes/bucket/'
+#DATASET_CSV = '0-dataset-list_20200106-164549.csv'
+DATASET_CSV = '0-dataset-list_20200316-175142.csv'
 
 from apps.data.models import Dataset
 
@@ -49,29 +50,56 @@ d = MgCsv(os.path.join(BUCKET_PATH, DATASET_CSV))
 for i in d.rows:
     #print (i['title'], i['name'])
     d = json.loads(i['stats'])
-    ds = Dataset(
-        title = i['title'],
-        name = i['name'],
-        description = i['descr'],
-        organization_verbatim = i['org'],
-        dwc_core_type = i['core'],
-        pub_date = parse_date(i['pub_date']),
-        mod_date = parse_date(i['mod_date']),
-        status = i['status'],
-        cite = i['cite'],
-        guid = i['guid'],
-        version = i['version'],
-        country = i['country'],
-        gbif_cite = i['cite_gbif'],
-        gbif_doi = i['doi_gbif'],
-        gbif_mod_date = parse_date(i['mod_date_gbif']),
-        author = i['author'],
-        num_record = int(float(i['stats_num_record'])),
-        num_occurrence = int(float(i['stats_num_occurrence'])),
-        data_license = d['license'],
-        quality = d['quality']
-    )
-    #print (ds.pub_date)
-    ds.save()
 
-
+    exist = Dataset.objects.get(name=i['name'])
+    if not exist:
+        # create
+        ds = Dataset(
+            title = i['title'],
+            name = i['name'],
+            description = i['descr'],
+            organization_verbatim = i['org'],
+            dwc_core_type = i['core'],
+            pub_date = parse_date(i['pub_date']),
+            mod_date = parse_date(i['mod_date']),
+            status = i['status'],
+            cite = i['cite'],
+            guid = i['guid'],
+            version = i['version'],
+            country = i['country'],
+            gbif_cite = i['cite_gbif'],
+            gbif_doi = i['doi_gbif'],
+            gbif_mod_date = parse_date(i['mod_date_gbif']),
+            author = i['author'],
+            num_record = int(float(i['stats_num_record'])),
+            num_occurrence = int(float(i['stats_num_occurrence'])),
+            data_license = d['license'],
+            quality = d['quality']
+        )
+        ds.save()
+        print ('create', ds)
+    else:
+        # update
+        exist.title = i['title']
+        exist.name = i['name']
+        exist.description = i['descr']
+        exist.organization_verbatim = i['org']
+        exist.dwc_core_type = i['core']
+        exist.pub_date = parse_date(i['pub_date'])
+        exist.mod_date = parse_date(i['mod_date'])
+        exist.status = i['status']
+        exist.cite = i['cite']
+        exist.guid = i['guid']
+        exist.version = i['version']
+        exist.country = i['country']
+        exist.gbif_cite = i['cite_gbif']
+        exist.gbif_doi = i['doi_gbif']
+        exist.gbif_mod_date = parse_date(i['mod_date_gbif'])
+        exist.author = i['author']
+        exist.num_record = int(float(i['stats_num_record']))
+        exist.num_occurrence = int(float(i['stats_num_occurrence']))
+        exist.data_license = d['license']
+        exist.quality = d['quality']
+        exist.save()
+        #print (exist)
+        print ('update', exist)

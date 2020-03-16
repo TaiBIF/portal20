@@ -8,4 +8,5 @@ urlpatterns = [
     path('publisher/search/', views.search_publisher, name='search-publisher'),
     path('species/search/', views.search_species, name='search-species'),
     path('taxon/tree/', views.taxon_tree, name='taxon-tree'),
+    path('data/stats/', views.data_stats, name='data-stats'),
 ]

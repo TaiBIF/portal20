@@ -48,13 +48,13 @@ function renderBarChart(selector, dataset) {
     .attr("class", "label");
 }
 
-const dataURL = '/static/stats.json';
+const dataURL = (location.search.indexOf('most=') >= 0) ? '/api/data/stats?most=1': '/api/data/stats';
 d3.json(dataURL).then( data => {
   //console.log(data);
-  renderBarChart('#taibif-stats__this_year_occurrence', data['this_year_occurrence']);
-  renderBarChart('#taibif-stats__this_year_dataset', data['this_year_dataset']);
-  renderLineChart("#taibif-stats__trend_occurrence", data['trend_occurrence']);
-  renderLineChart("#taibif-stats__trend_dataset", data['trend_dataset']);
+  renderBarChart('#taibif-stats__this_year_occurrence', data['current_year']['occurrence']);
+  renderBarChart('#taibif-stats__this_year_dataset', data['current_year']['dataset']);
+  renderLineChart("#taibif-stats__trend_occurrence", data['history']['occurrence']);
+  renderLineChart("#taibif-stats__trend_dataset", data['history']['dataset']);
 })
 
 
@@ -119,7 +119,7 @@ function renderLineChart(selector, dataset) {
     .data(dataset)
     .enter()
     .append("text")
-    .attr("x", function(d) { console.log(d);return xScale(d.year)+24; })
+    .attr("x", function(d) {return xScale(d.year)+24; })
     .attr("y", function(d) {return yScale(d.y1)-3; })
     .text(function(d) {return d.y1.toLocaleString()})
     .attr("class", "label");

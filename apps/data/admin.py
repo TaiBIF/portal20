@@ -8,6 +8,7 @@ class DatasetAdmin(admin.ModelAdmin):
     list_filter = ('is_most_project', 'dwc_core_type')
     fields = ('title', 'name', 'description','author', 'pub_date', 'guid', 'dwc_core_type', 'num_record', 'num_occurrence', 'extension_data', 'is_most_project')
     readonly_fields = ('title', 'name', 'description','author', 'pub_date', 'guid', 'dwc_core_type', 'num_record', 'num_occurrence', 'extension_data')
+    search_fields = ('title',)
 
 
 class TaxonAdmin(admin.ModelAdmin):
