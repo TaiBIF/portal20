@@ -80,7 +80,7 @@ class Dataset(models.Model):
     @property
     def dwc_core_type_for_human(self):
         if 'Occurrence' in self.dwc_core_type:
-            return '出現記錄 (Occurrence)'
+            return '出現紀錄 (Occurrence)'
         elif 'Taxon' in self.dwc_core_type:
             return '物種名錄 (Checklist)'
         elif 'Sampling event' in self.dwc_core_type:
@@ -89,7 +89,7 @@ class Dataset(models.Model):
     @property
     def dwc_core_type_for_human_simple(self):
         if 'Occurrence' in self.dwc_core_type:
-            return '出現記錄'
+            return '出現紀錄'
         elif 'Taxon' in self.dwc_core_type:
             return '物種名錄'
         elif 'Sampling event' in self.dwc_core_type:

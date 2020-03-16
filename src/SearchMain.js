@@ -41,7 +41,7 @@ function SearchMainOccurrence(props) {
             <th>#</th>
             <th>學名</th>
             <th>俗名</th>
-            <th>記錄依據</th>
+            <th>紀錄依據</th>
             <th>國家/地區</th>
             <th>資料集</th>
           </tr>
