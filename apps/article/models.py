@@ -52,7 +52,7 @@ class Article(models.Model):
     title = models.CharField('標題', max_length=500)
     content = models.TextField('內文', blank=True)
     slug = models.SlugField(unique=True, blank=True, max_length=500)
-    created = models.DateTimeField('發佈時間', default=timezone.now)
+    created = models.DateTimeField('發布時間', default=timezone.now)
     changed = models.DateTimeField('修改時間', default=timezone.now)
     category = models.CharField(u"分類", max_length=50, choices=CATEGORY_CHOICE, default='NEWS')
     is_pinned = models.CharField(u"置頂", max_length=2, default='N', choices=PINNED_CHOICE)

@@ -62,7 +62,7 @@ def search_all(request):
                 },
                 {
                     'cat': 'occurrence',
-                    'label': '出現記錄',
+                    'label': '出現紀錄',
                     'rows': occur_rows
                 },
                 {

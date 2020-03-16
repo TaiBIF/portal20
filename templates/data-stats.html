@@ -41,19 +41,19 @@ svg text.label {
 {% endblock %}
 
 {% block main %}
-{% include "inc_breadcrumb.html" with tab="01" active_label="資料發佈狀況" %}
+{% include "inc_breadcrumb.html" with tab="01" active_label="資料發布狀況" %}
 
 <div class="container">
   <div class="row">
     <h1 class="heading-lg-ul">
-      資料發佈狀況
+      資料發布狀況
       <span class="heading-footnote">全部</span>
     </h1>
     <div class="heading-sort-ctn">
       <label class="custom-input-ctn">
         <input type="checkbox" class="check-most"{% if request.GET.most %} checked{% endif %}>
         <span class="checkmark"></span>
-        僅檢視科技部發佈狀況
+        僅檢視科技部發布狀況
       </label>
     </div>
 
@@ -88,10 +88,10 @@ svg text.label {
       </div>
     </div>
 
-    <h3>已發佈資料列表</h3>
+    <h3>已發布資料列表</h3>
     <table class="table table-bordered">
       <thead>
-        <tr><th width="50%">資料集名稱</th><th width="%10">執行單位</th><th width="10%">資料類型</th><th width="5%">資料筆數</th><th width="10%">發佈時間</th><th width="5%">公開狀態</th></tr>
+        <tr><th width="50%">資料集名稱</th><th width="%10">執行單位</th><th width="10%">資料類型</th><th width="5%">資料筆數</th><th width="10%">發布時間</th><th width="5%">公開狀態</th></tr>
       </thead>
       {% for i in dataset_list %}
       <tr><td>{{ i.title }}</td><td>{{ i.author }}</td><td>{{ i.dwc_core_type_human }}</td><td>{{ i.stats_num_record }}</td><td>{{ i.pub_date|date:'Y/m/d' }}</td><td>公開</td></tr>
