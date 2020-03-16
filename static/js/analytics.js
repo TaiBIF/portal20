@@ -13,7 +13,7 @@ function renderBarChart(selector, dataset) {
     .domain(dataset.map(function(d) { return d.x; }));
 
   var yScale = d3.scaleLinear()
-    .domain([0, d3.max(dataset, function(d) { return d.y; })])
+    .domain([0, d3.max(dataset, function(d) { return d.y; })|| 1])
     .range([height - padding, padding]);
 
   svg.append("g")
