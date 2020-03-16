@@ -1,7 +1,11 @@
 import timeit
+import json
+import datetime
 
 from django.shortcuts import render
 from django.db.models import Count, Q
+from django.http import HttpResponse
+
 from apps.data.models import Dataset, DATA_MAPPING, DatasetOrganization, Taxon
 from apps.data.models import RawDataOccurrence
 from utils.decorators import json_ret
@@ -349,3 +353,66 @@ def search_species(request):
         'count': query.count()
     }
     return {'data': data }
+
+
+def data_stats(request):
+    '''for D3 charts'''
+    is_most = request.GET.get('most', '')
+    current_year = datetime.datetime.now().year
+
+    query = Dataset.objects
+    if is_most:
+        query = query.filter(is_most_project=True)
+    rows = query.all()
+
+    hdata = {}
+    current_year_data = {
+        'dataset': [{'x': '{}月'.format(x), 'y': 0} for x in range(1, 13)],
+        'occurrence': [{'x': '{}月'.format(x), 'y': 0} for x in range(1, 13)]
+    }
+    history_data = {
+        'dataset': [],
+        'occurrence': []
+    }
+    for i in rows:
+        if not i.pub_date:
+            continue
+
+        y = str(i.pub_date.year)
+        if str(current_year) == y:
+            m = i.pub_date.month
+            current_year_data['dataset'][m-1]['y'] += 1
+            current_year_data['occurrence'][m-1]['y'] += i.num_occurrence
+        if y not in hdata:
+            hdata[y] = {
+                'dataset': 0,
+                'occurrence': 0
+            }
+        else:
+            hdata[y]['dataset'] += 1
+            hdata[y]['occurrence'] += i.num_occurrence
+
+
+    print (hdata)
+    sorted_year = sorted(hdata)
+    accu_ds = 0
+    accu_occur = 0
+    for y in sorted_year:
+        accu_occur += hdata[y]['occurrence']
+        accu_ds += hdata[y]['dataset']
+        history_data['dataset'].append({
+            'year': int(y),
+            'y1': hdata[y]['dataset'],
+            'y2': accu_ds
+        })
+        history_data['occurrence'].append({
+            'year': int(y),
+            'y1': hdata[y]['occurrence'],
+            'y2': accu_occur
+        })
+    data = {
+        'current_year': current_year_data,
+        'history': history_data,
+    }
+
+    return HttpResponse(json.dumps(data), content_type="application/json")
