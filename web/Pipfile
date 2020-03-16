@@ -12,6 +12,7 @@ psycopg2-binary = "*"
 pillow = "*"
 django-environ = "*"
 django-debug-toolbar = "*"
+markdown = "*"
 
 [requires]
 python_version = "3.7"

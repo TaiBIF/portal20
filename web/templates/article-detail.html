@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load static %}
+{% load helper_tags %}
 
 {% block main %}
 {% include "inc_breadcrumb.html" with tab="04" active_label="" %}
@@ -40,7 +41,7 @@
         {% if article.memo|slice:"0:4" == "nid:" %}
         {{ article.content|safe }}
         {% else %}
-        {{ article.content|linebreaksbr }}
+        {{ article.content | markdown | safe }}
         {% endif %}
       </p>
     <!-- article content begin -->
