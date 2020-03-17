@@ -76,3 +76,17 @@ def article_detail(request, **kwargs):
         'article': article,
         'recommended': recommended
     })
+
+
+def article_tag_list(request, tag_name):
+    page = request.GET.get('page', '')
+
+
+    rows = Article.objects.filter(tags__name=tag_name).all()
+    paginator = Paginator(rows, 20)
+    article_list = paginator.get_page(page)
+
+
+    return render(request, 'article-tag-list.html', {
+        'article_list': article_list,
+    })
