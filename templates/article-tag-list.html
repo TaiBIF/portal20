@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load helper_tags %}
+
+{% block head %}
+    <!-- date range picker CSS -->
+    <link rel="stylesheet" href="{% static 'css/daterangepicker.css' %}">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static 'css/dataTables.bootstrap.min.css' %}">
+{% endblock %}
+
+{% block script %}
+  <!-- date range picker -->
+  <script src="{% static 'js/daterangepicker/moment.min.js' %}"></script>
+  <script src="{% static 'js/daterangepicker/daterangepicker.js' %}"></script>
+  <script>
+    $(function () {
+      //Date range picker
+      $('#newsFilter').daterangepicker({
+        locale: {
+          format: 'YYYY-MM-DD'
+        },
+      }, function(start, end, label) {
+        const start_date = start.format('YYYY-MM-DD');
+        const end_date = end.format('YYYY-MM-DD');
+        window.location = `?start=${start_date}&end=${end_date}`;
+      });
+
+      // topic type select
+      // 用 API 處理 !
+      $('.select-category-sci').click(function(e){
+        const selectedType = e.target.dataset.type;
+        window.location = `${window.location.origin}/article/category/${selectedType}`;
+      });
+    });
+  </script>
+{#<script src="{% static 'js/article.js' %}"></script>#}
+{% endblock %}
+
+{% block main %}
+
+  {% include "inc_breadcrumb.html" with tab="04" active_label="" %}
+
+  <!-- container begin -->
+  <div class="container">
+    {% for article in article_list %}
+    <div class="row listbox-img-right-wrapper">
+      <div class="col-xs-8">
+        <span class="listbox-inner-date">{{ article.created|date:'Y/m/d' }}</span>
+        <h3 class="listbox-inner-title"><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h3>
+        <p class="listbox-inner-summary hidden-xs">
+          {{ article.content | linebreaks | truncatechars:150}}
+            <p><a href="{% url 'article-detail' slug=article.slug %}">閱讀更多</a></p>
+        </p>
+      </div>
+      {% comment %}
+      <div class="col-xs-4">
+        <a href=""><img src="/media/{{ article.cover }}" class="img-responsive"></a>
+      </div>
+      {% endcomment %}
+    </div>
+    {% endfor %}
+
+    {% include "inc_pagination.html" with object_list=article_list %}
+
+  </div>
+   <!-- container end -->
+{% endblock %}

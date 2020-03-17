@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load static %}
+{% load helper_tags %}
 
 {% block head %}
     <!-- date range picker CSS -->
@@ -145,9 +146,8 @@
             <p><a href="{% url 'article-detail' slug=article.slug %}">閱讀更多</a></p>
             {% endif %}
             {% else %}
-            <a href="{% url 'article-detail' slug=article.slug %}">
-              {{ article.content|linebreaksbr }}
-              </a>
+            {{ article.content | linebreaks | truncatechars:150}}
+            <p><a href="{% url 'article-detail' slug=article.slug %}">閱讀更多</a></p>
             {% endif %}
         </p>
       </div>

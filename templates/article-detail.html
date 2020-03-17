@@ -14,8 +14,9 @@
         {{ article.title }}
       </h1>
       <ul class="article-tag-ctn">
-        <li class="listbox-inner-tag"><a href="#">標籤</a></li>
-        <li class="listbox-inner-tag"><a href="#">標籤</a></li>
+        {% for i in  article.tags.all %}
+        <li class="listbox-inner-tag"><a href="{% url 'article-tag-list' tag_name=i.name %}">{{ i.name}}</a></li>
+        {% endfor %}
       </ul>
       {% comment %}
       <div class="article-share-btn-wrapper">
