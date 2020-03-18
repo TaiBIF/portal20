@@ -17,3 +17,5 @@ node_modules
 # docker volume
 taibif_volumes
 
+.idea
+
