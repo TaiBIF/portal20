@@ -2010,7 +2010,11 @@ a.navbar-icon-btn:last-child {
 
 .article-content-wrapper {
   margin: 10px 0;
+<<<<<<< HEAD
+  line-height: 1.8;
+=======
 
+>>>>>>> upstream/master
 }
 
 .article-content-wrapper h1, .article-content-wrapper h2, .article-content-wrapper h3, .article-content-wrapper h4, .article-content-wrapper h5, .article-content-wrapper h6 {
