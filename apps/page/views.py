@@ -3,6 +3,7 @@ from django.http import HttpResponse
 
 from apps.data.models import Dataset
 from apps.article.models import Article
+from .models import Post, Journal
 
 def index(request):
 
@@ -23,7 +24,9 @@ def publishing_data(request):
     return render(request, 'publishing-data.html')
 
 def journals(request):
-    return render(request, 'journals.html')
+    Journal_url = Journal.objects.all()
+    return render(request, 'journals.html', {'Journal_url': Journal_url})
+
 
 def cookbook(request):
     return render(request, 'cookbook.html')
@@ -47,7 +50,8 @@ def plans(request):
     return render(request, 'plans.html')
 
 def links(request):
-    return render(request, 'links.html')
+    Post_url = Post.objects.all()
+    return render(request, 'links.html', {'Post_url':Post_url})
 
 def about_taibif(request):
     return render(request, 'about-taibif.html')
@@ -67,3 +71,5 @@ def data_stats(request):
         'dataset_list': query.all()
     }
     return render(request, 'data-stats.html', context)
+
+
