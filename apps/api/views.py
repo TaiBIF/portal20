@@ -392,8 +392,7 @@ def data_stats(request):
             hdata[y]['dataset'] += 1
             hdata[y]['occurrence'] += i.num_occurrence
 
-
-    print (hdata)
+    #print (hdata)
     sorted_year = sorted(hdata)
     accu_ds = 0
     accu_occur = 0
@@ -416,3 +415,6 @@ def data_stats(request):
     }
 
     return HttpResponse(json.dumps(data), content_type="application/json")
+
+
+#def dataset(request):
