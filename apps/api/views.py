@@ -417,4 +417,12 @@ def data_stats(request):
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 
-#def dataset(request):
+@json_ret
+def species_detail(request, pk):
+    taxon = Taxon.objects.get(pk=pk)
+    rows = RawDataOccurrence.objects.values('taibif_dataset_name', 'decimallatitude', 'decimallongitude').filter(scientificname=taxon.name).all()
+    data = {
+        'rows': list(rows),
+        'count': len(rows)
+    }
+    return {'data': data }
