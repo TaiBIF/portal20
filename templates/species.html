@@ -4,11 +4,43 @@
 
 {% block head %}
 <link href="{% static 'css/taibif.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/leaflet.css' %}">
+<script src="{% static 'js/leaflet.js' %}"></script>
+<script src="{% static 'js/leaflet-heat.js' %}"></script>
+    <style>
+        #map { width: 800px; height: 600px; }
+        body { font: 16px/1.4 "Helvetica Neue", Arial, sans-serif; }
+        .ghbtns { position: relative; top: 4px; margin-left: 5px; }
+        a { color: #0077ff; }
+    </style>
 {% endblock %}
 
+{% block script %}
+{% if map_view %}
+{{ occurrence_list|json_script:"occurrence-points" }}
+
+<script>
+
+  const map = L.map('map').setView([{{ map_view.0 }}, {{ map_view.1 }}], 10);
+
+  const tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+}).addTo(map);
+
+  //addressPoints = addressPoints.map(function (p) { return [p[0], p[1]]; });
+  const points = JSON.parse(document.getElementById('occurrence-points').textContent);
+  const occurrencePoints = points.map(function (p) {
+    return [p['decimallatitude'], p['decimallongitude']]
+  });
+  console.log(occurrencePoints);
+
+const heat = L.heatLayer(occurrencePoints).addTo(map);
+
+</script>
+{% endif %}
+{% endblock %}
 {% block main %}
 {# include "inc_breadcrumb.html" with tab="03" active_label="" #}
-
 <!-- container begin -->
 <div class="container">
   <h2>{{ taxon.name_zh }} {{ taxon.name }}</h2>
@@ -50,6 +82,7 @@
     <h1 class="heading-lg-ul">
       出現紀錄
     </h1>
+    <div id="map"></div>
     <ul>
       {% for i in occurrence_list %}
       <li>{{ i.scientificname }} - {{ i.taibif_dataset_name}}</li>

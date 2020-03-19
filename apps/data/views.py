@@ -139,7 +139,7 @@ def publisher_view(request, pk):
 def species_view(request, pk):
     context = {}
     taxon = get_object_or_404(Taxon, pk=pk)
-    q = RawDataOccurrence.objects.values('scientificname', 'taibif_dataset_name', 'decimallatitude', 'decimallongitude')
+    '''q = RawDataOccurrence.objects.values('scientificname', 'taibif_dataset_name', 'decimallatitude', 'decimallongitude')
     if taxon.rank == 'kingdom':
         q = q.filter(Q(kingdom=taxon.name)|Q(kingdom=taxon.name_zh))
     elif taxon.rank == 'phylum':
@@ -153,16 +153,38 @@ def species_view(request, pk):
     elif taxon.rank == 'genus':
         q = q.filter(Q(genus=taxon.name)|Q(genus=taxon.name_zh))
     elif taxon.rank == 'species':
-        q = q.filter(Q(scientificname__icontains=taxon.name)|Q(scientificname__icontains=taxon.name_zh))
-
+        q = q.filter(Q(scientificname__icontains=taxon.name)|Q(scientificname__icontains=taxon.name_zh))'''
+    q = RawDataOccurrence.objects.values('taibif_dataset_name', 'decimallatitude', 'decimallongitude').filter(scientificname=taxon.name).all()
     #q.count()
-    occurrence_list = list(q.all()[:20])
+    occurrence_list = []
+    rows = None
+    lat = 0
+    lng = 0
+    if taxon.rank == 'species':
+        # HACK species 先全抓, 高層的資料多, 效能差
+        rows = q.all()
+    else:
+        rows = q.all()[:20]
+
+    for r in rows:
+        lat += float(r['decimallatitude'])
+        lng += float(r['decimallongitude'])
+        occurrence_list.append({
+            'taibif_dataset_name': r['taibif_dataset_name'],
+            'decimallatitude': float(r['decimallatitude']),
+            'decimallongitude': float(r['decimallongitude']),
+        })
+
     #dataset_list = q.annotate(dataset=Count('id')).all()
+    n = len(occurrence_list)
+
     context = {
         'taxon': taxon,
         'occurrence_list': occurrence_list,
         #'dataset_list': dataset_list
     }
+    if n:
+        context['map_view'] = [lat/n, lng/n]
     #n =
     return render(request, 'species.html', context)
 
