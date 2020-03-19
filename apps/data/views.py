@@ -139,7 +139,7 @@ def publisher_view(request, pk):
 def species_view(request, pk):
     context = {}
     taxon = get_object_or_404(Taxon, pk=pk)
-    q = RawDataOccurrence.objects.values('scientificname', 'taibif_dataset_name')
+    q = RawDataOccurrence.objects.values('scientificname', 'taibif_dataset_name', 'decimallatitude', 'decimallongitude')
     if taxon.rank == 'kingdom':
         q = q.filter(Q(kingdom=taxon.name)|Q(kingdom=taxon.name_zh))
     elif taxon.rank == 'phylum':
@@ -153,7 +153,7 @@ def species_view(request, pk):
     elif taxon.rank == 'genus':
         q = q.filter(Q(genus=taxon.name)|Q(genus=taxon.name_zh))
     elif taxon.rank == 'species':
-        q = q.filter(Q(scinetificname__icontains=taxon.name)|Q(scinetificname__icontains=taxon.name_zh))
+        q = q.filter(Q(scientificname__icontains=taxon.name)|Q(scientificname__icontains=taxon.name_zh))
 
     #q.count()
     occurrence_list = list(q.all()[:20])
