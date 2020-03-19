@@ -28,9 +28,9 @@
 {#<script src="{% static 'js/search.js' %}"></script>#}
 
 {% if env == "dev" %}
-<script src="{% static 'js/bundle.js' %}"></script>
+<script src="{% static 'js/search.js' %}"></script>
 {% elif env == "prod" %}
-<script src="{% static 'js/bundle.min.js' %}"></script>
+<script src="{% static 'js/search.min.js' %}"></script>
 {% endif %}
 {% endblock %}
 

@@ -42,8 +42,8 @@ class Dataset(models.Model):
 
     NUM_PER_PAGE = 20
     STATUS_CHOICE = (
-        ('Public', 'Public'),
-        ('Private', 'Private'),
+        ('Public', '公開'),
+        ('Private', '非公開'),
     )
 
     title = models.CharField('title', max_length=300)
@@ -76,6 +76,10 @@ class Dataset(models.Model):
     quality = models.CharField('資料集品質', max_length=4, default='')
     #is_about_taiwan = models.BooleanField('是否 about Taiwan', default=True)
     #is_from_taiwan = models.BooleanField('是否 from Taiwan', default=True)
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('dataset-detail', args=[self.name])
 
     @property
     def dwc_core_type_for_human(self):

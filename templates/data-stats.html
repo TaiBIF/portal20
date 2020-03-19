@@ -26,6 +26,13 @@ svg text.label {
 {#<script src="https://d3js.org/d3.v3.min.js"></script>#}
 <script src="{% static 'js/d3.min.js' %}"></script>
 <script src="{% static 'js/analytics.js' %}"></script>
+
+{% if env == "dev" %}
+<script src="{% static 'js/dataset-table.js' %}"></script>
+{% elif env == "prod" %}
+<script src="{% static 'js/dataset-table.min.js' %}"></script>
+{% endif %}
+
 <script>
   const checkboxMOST = document.querySelector('.check-most');
   checkboxMOST.onclick = function(e){
@@ -88,13 +95,16 @@ svg text.label {
       </div>
     </div>
 
+    {#<div id="dataset-table-container"></div>#}
+
     <h3>已發布資料列表</h3>
     <table class="table table-bordered">
       <thead>
-        <tr><th width="50%">資料集名稱</th><th width="%10">執行單位</th><th width="10%">資料類型</th><th width="5%">資料筆數</th><th width="10%">發佈時間</th><th width="5%">公開狀態</th></tr>
+        {#<tr><th width="50%">資料集名稱</th><th width="%10"><a href="{% url 'data_stats' %}?publisher=1">發布者</a></th><th width="10%">資料類型</th><th width="5%"><a href="">資料筆數</a></th><th width="10%"><a href="">發佈時間</a></th><th width="5%"><a href="">公開狀態</a></th></tr>#}
+        <tr><th width="50%">資料集名稱</th><th width="%10">發布者</th><th width="10%">資料類型</th><th width="5%">資料筆數</th><th width="10%">發佈時間</th><th width="5%">公開狀態</th></tr>
       </thead>
       {% for i in dataset_list %}
-      <tr><td>{{ i.title }}</td><td>{{ i.author }}</td><td>{{ i.dwc_core_type_human }}</td><td>{{ i.stats_num_record }}</td><td>{{ i.pub_date|date:'Y/m/d' }}</td><td>公開</td></tr>
+      <tr><td><a href="{{ i.get_absolute_url }}">{{ i.title }}</a></td><td>{{ i.organization.name }}</td><td>{{ i.dwc_core_type_human }}</td><td>{{ i.num_occurrence }}</td><td>{{ i.pub_date|date:'Y/m/d' }}</td><td>{{ i.get_status_display }}</td></tr>
       {% endfor %}
     </table>
   </div>

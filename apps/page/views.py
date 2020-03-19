@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.conf import settings
+from django.db.models import F
 
 from apps.data.models import Dataset
 from apps.article.models import Article
@@ -64,11 +66,14 @@ def open_data(request):
 
 def data_stats(request):
     is_most = request.GET.get('most', '')
-    query = Dataset.objects.exclude(status='Private')
+
+    query = Dataset.objects #.exclude(status='Private')
     if is_most:
         query = query.filter(is_most_project=True)
+
     context = {
-        'dataset_list': query.all()
+        'dataset_list': query.order_by(F('pub_date').desc(nulls_last=True)).all(),
+        'env': settings.ENV
     }
     return render(request, 'data-stats.html', context)
 

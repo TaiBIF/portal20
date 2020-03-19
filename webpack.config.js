@@ -1,12 +1,15 @@
 const path = require('path');
 
 module.exports = (env) => {
-  const output_name = (env === 'dev') ? 'bundle.js' : 'bundle.min.js';
+  const env_name = (env === 'dev') ? '.js' : '.min.js';
   return {
-    entry: './src/app.js',
+    entry: {
+      'search': './src/search.js',
+      'dataset-table': './src/dataset-table.js'
+    },
     output: {
       path: path.join(__dirname, 'static/js'),
-      filename: output_name
+      filename: `[name]${env_name}`,
     },
     module: {
       rules: [
