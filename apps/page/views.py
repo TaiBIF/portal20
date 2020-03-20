@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+
 from apps.data.models import Dataset
 from apps.article.models import Article
 from .models import Post, Journal
@@ -25,7 +26,8 @@ def publishing_data(request):
 
 def journals(request):
     Journal_url = Journal.objects.all()
-    return render(request, 'journals.html', {'Journal_url': Journal_url})
+
+    return render(None,'journals.html', locals())
 
 
 def cookbook(request):
@@ -51,7 +53,7 @@ def plans(request):
 
 def links(request):
     Post_url = Post.objects.all()
-    return render(request, 'links.html', {'Post_url':Post_url})
+    return render(None,'links.html', locals())
 
 def about_taibif(request):
     return render(request, 'about-taibif.html')

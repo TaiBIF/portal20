@@ -23,15 +23,25 @@ def page_image_path(instance, filename):
 
 
 class Post(models.Model):
+    CATEGORY_CHOICE = (
+        ('web', '網站'),
+        ('data', '資料庫'),
+    )
+
     title = models.CharField(u"網站名稱", max_length=200, default="")
     upload = models.ImageField(upload_to= page_image_path, blank=True)
     url = models.URLField(u"網站", max_length = 200, default="")
     content = models.CharField(u"內容", max_length=200, default="",blank=True)
     sort = models.PositiveIntegerField(u"排序", default=0)
-    cat = models.CharField(u"網站類型", max_length=200, default="", blank=True)
+    cat = models.CharField(u"網站類型", max_length=200, choices=CATEGORY_CHOICE, default="", blank=True)
 
     def __str__(self):
         return self.title
+    
+    class Meta:
+        ordering =  ['sort',]
+        verbose_name = u'相關連結'
+        verbose_name_plural = u'相關連結'
 
 
 class Journal(models.Model):
@@ -44,6 +54,12 @@ class Journal(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        verbose_name = u'資料論文/期刊'
+        verbose_name_plural = u'資料論文/期刊'
+        ordering = ['sort',]
+
 
 
    
