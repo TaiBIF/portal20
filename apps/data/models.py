@@ -181,6 +181,11 @@ class Taxon(models.Model):
             return '{}'.format(self.name)
 
     @property
+    def scientific_name(self):
+        if self.rank == 'species':
+            return '{} {}'.format(self.parent.name, self.name)
+
+    @property
     def taicol_search_link(self):
         url = 'http://taibnet.sinica.edu.tw/chi/taibnet_species_list.php?T2={}&T2_new_value=true&fr=y'.format(self.name)
         return url

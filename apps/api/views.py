@@ -2,6 +2,8 @@
 import timeit
 import json
 import datetime
+import re
+import random
 
 from django.shortcuts import render
 from django.db.models import Count, Q
@@ -12,7 +14,6 @@ from apps.data.models import RawDataOccurrence
 from utils.decorators import json_ret
 
 from .cached import COUNTRY_ROWS, YEAR_ROWS
-
 
 
 @json_ret
@@ -421,9 +422,31 @@ def data_stats(request):
 @json_ret
 def species_detail(request, pk):
     taxon = Taxon.objects.get(pk=pk)
-    rows = RawDataOccurrence.objects.values('taibif_dataset_name', 'decimallatitude', 'decimallongitude').filter(scientificname=taxon.name).all()
+    #rows = RawDataOccurrence.objects.values('taibif_dataset_name', 'decimallatitude', 'decimallongitude').filter(scientificname=taxon.name).all()
+    scname = '{} {}'.format(taxon.parent.name, taxon.name)
+    '''
+    url = 'https://taieol.tw/tree/autocomplete/1/{}'.format(scname)
+    r = requests.get(url)
+    #if r.content:
+    resp = json.loads(r.text)
+
+    taieol_taxon_id = ''
+    for x in resp:
+        m = re.search(r'\[tid\:([0-9]+)\]', x)
+        if m:
+            taieol_taxon_id = m[1]
+        break
+
+    media_list = _get_taieol_media(taieol_taxon_id)
+    if media_list:
+        media_list = random.sample(media_list, 8)
+
     data = {
-        'rows': list(rows),
-        'count': len(rows)
-    }
-    return {'data': data }
+        #'rows': list(rows),
+        #'count': len(rows)
+        'content': resp,
+        'scname': scname,
+        'taieol_taxon_id': taieol_taxon_id,
+        'taieol_media': media_list
+    }'''
+    return {'data': {} }
