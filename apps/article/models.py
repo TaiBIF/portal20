@@ -4,6 +4,7 @@ from datetime import datetime
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
+from django.urls import reverse
 
 from conf import settings
 
@@ -73,7 +74,7 @@ class Article(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return '/article/%s/' % self.slug
+        return reverse('article-detail', args=[self.slug])
 
     def get_legacy_info(self):
         if 'nid:' in self.memo:

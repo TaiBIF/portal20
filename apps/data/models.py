@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.postgres.fields import JSONField
 from django.shortcuts import get_object_or_404
+from django.urls import reverse
 
 DATA_MAPPING = {
     'country': {
@@ -78,7 +79,6 @@ class Dataset(models.Model):
     #is_from_taiwan = models.BooleanField('是否 from Taiwan', default=True)
 
     def get_absolute_url(self):
-        from django.urls import reverse
         return reverse('dataset-detail', args=[self.name])
 
     @property
