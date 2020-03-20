@@ -17,7 +17,6 @@ def _get_taieol_media(taxon_id, page=''):
         fotos = soup.select('.views-view-grid .views-field-phpcode a')
         for x in fotos:
             rel_concat = ''.join(x['rel'])
-            print (rel_concat)
             foto = {'author': '','thumb':'', 'cc': '', 'src': x['href']}
             m = re.search(r'<p>作者:(.+)</p><p>', rel_concat)
             if m:
