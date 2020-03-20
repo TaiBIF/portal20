@@ -40,7 +40,11 @@
       {% endif %}
       <p>
         {% if article.memo|slice:"0:4" == "nid:" %}
-        {{ article.content|safe }}
+          {% if article.is_content_markdown %}
+            {{ article.content | markdown | safe }}
+          {% else %}
+            {{ article.content|safe }}
+          {% endif %}
         {% else %}
         {{ article.content | markdown | safe }}
         {% endif %}

@@ -7,7 +7,20 @@ class ArticleAdmin(admin.ModelAdmin):
     list_filter = ('category',)
     list_display = ('title','category', 'created', 'is_pinned')
     filter_horizontal = ('tags',)
-    fields = ('is_pinned', 'cover', 'cover_license_text', 'title', 'category', 'content', 'tags', 'memo', 'memo_text', 'is_homepage', 'created', 'changed')
+    fields = (
+        'is_pinned',
+        'cover',
+        'cover_license_text',
+        'title', 'category',
+        'content',
+        'is_content_markdown',
+        'tags',
+        'memo',
+        'memo_text',
+        'is_homepage',
+        'created',
+        'changed'
+    )
 
 class TagAdmin(admin.ModelAdmin):
     model = Tag
