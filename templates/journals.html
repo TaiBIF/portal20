@@ -12,6 +12,13 @@
   hr {
   border-top: 1px solid;
     }
+
+  .col-md-10, .col-xs-8,{
+  position:relative;min-height:1px;padding-right:15px;padding-left:15px;
+  float:left;
+  }
+
+
 </style>
 
   <!-- container begin -->
@@ -29,61 +36,23 @@
     </div>
 
     <!-- list begin -->
+
+    {% for jo in Journal_url%}
     <div class="row relateed-datasabe-wrapper">
-      {% for jo in Journal_url%}
-      {% if jo.sort == 0 %}
-      <div class="col-md-2 col-xs-4">
-        <a href="{{jo.url}}" target="_blank"><img src="{{jo.upload.url}}"></a>
-      </div>
-      <div class="col-md-10 col-xs-8">
-        <a href="{{jo.url}}" target="_blank"><span class="myicon icon-link"></span> {{jo.title}}</a>
-        <p>{{jo.content}}</p>
-      </div>
-      {% endif %}
-      {% endfor %}
-    </div>
 
-    <div class="row relateed-datasabe-wrapper">
-      {% for jo in Journal_url%}
-      {% if jo.sort == 1 %}
       <div class="col-md-2 col-xs-4">
         <a href="{{jo.url}}" target="_blank"><img src="{{jo.upload.url}}"></a>
       </div>
       <div class="col-md-10 col-xs-8">
-        <a href="{{jo.url}}" target="_blank"><span class="myicon icon-link"></span> {{jo.title}}</a>
+        <a href="{{jo.url}}"target="_blank"><span class="myicon icon-link"></span> {{jo.title}}</a>
         <p>{{jo.content}}</p>
       </div>
-      {% endif %}
-      {% endfor %}
-    </div>
 
-        <div class="row relateed-datasabe-wrapper">
-      {% for jo in Journal_url%}
-      {% if jo.sort == 2 %}
-      <div class="col-md-2 col-xs-4">
-        <a href="{{jo.url}}" target="_blank"><img src="{{jo.upload.url}}"></a>
-      </div>
-      <div class="col-md-10 col-xs-8">
-        <a href="{{jo.url}}" target="_blank"><span class="myicon icon-link"></span> {{jo.title}}</a>
-        <p>{{jo.content}}</p>
-      </div>
-      {% endif %}
-      {% endfor %}
     </div>
+    {% endfor %}
 
-        <div class="row relateed-datasabe-wrapper">
-      {% for jo in Journal_url%}
-      {% if jo.sort == 3 %}
-      <div class="col-md-2 col-xs-4">
-        <a href="{{jo.url}}" target="_blank"><img src="{{jo.upload.url}}"></a>
-      </div>
-      <div class="col-md-10 col-xs-8">
-        <a href="{{jo.url}}" target="_blank"><span class="myicon icon-link"></span> {{jo.title}}</a>
-        <p>{{jo.content}}</p>
-      </div>
-      {% endif %}
-      {% endfor %}
-    </div>
+
+
 
     <!-- list end -->
   </div>
