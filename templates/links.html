@@ -41,12 +41,10 @@
 
     <!-- database begin -->
     <h2 class="heading-md-bg">資料庫</h2>
-    
+    {% for post in Post_url%}
+    {% if post.cat == "data" %}
     <div class="row relateed-datasabe-wrapper">
       <div class="col-md-2 col-xs-4">
-        {% for post in Post_url%}
-        {% if post.cat == "data" %}
-        {% if post.sort == 1 %}
         <a href="{{post.url}}" target="_blank"><img src="{{post.upload.url}}"></a>
       </div>
 
@@ -54,27 +52,11 @@
         <a href="{{post.url}}" target="_blank"><span class="myicon icon-link"></span> {{post.title}} </a>
         <p>{{post.content}}</p>
       </div>
-        {% endif %}
-        {% endif %}
-        {% endfor %}
     </div>
+     {% endif %}
+     {% endfor %}
 
-    <div class="row relateed-datasabe-wrapper">
-      <div class="col-md-2 col-xs-4">
-        {% for post in Post_url%}
-        {% if post.cat == "data" %}
-        {% if post.sort == 0 %}
-        <a href="{{post.url}}" target="_blank"><img src="{{post.upload.url}}"></a>
-      </div>
 
-      <div class="col-md-10 col-xs-8">
-        <a href="{{post.url}}" target="_blank"><span class="myicon icon-link"></span> {{post.title}} </a>
-        <p>{{post.content}}</p>
-      </div>
-        {% endif %}
-        {% endif %}
-        {% endfor %}
-    </div>
 
     <!-- database end -->
   </div>
