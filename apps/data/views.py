@@ -12,7 +12,7 @@ from django.conf import settings
 
 from apps.article.models import Article
 from .models import Taxon, Occurrence, Dataset, RawDataOccurrence, DatasetOrganization
-
+from .helpers.species import get_species_info
 
 def search_all(request):
     if request.method == 'POST':
@@ -161,6 +161,7 @@ def species_view(request, pk):
     lat = 0
     lng = 0
     if taxon.rank == 'species':
+        sp_info = get_species_info(taxon)
         # HACK species 先全抓, 高層的資料多, 效能差
         rows = q.all()
     else:
@@ -181,6 +182,7 @@ def species_view(request, pk):
     context = {
         'taxon': taxon,
         'occurrence_list': occurrence_list,
+        'species_info': sp_info,
         #'dataset_list': dataset_list
     }
     if n:

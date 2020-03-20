@@ -13,6 +13,9 @@ pillow = "*"
 django-environ = "*"
 django-debug-toolbar = "*"
 markdown = "*"
+requests = "*"
+beautifulsoup4 = "*"
+lxml = "*"
 
 [requires]
 python_version = "3.8"

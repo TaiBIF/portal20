@@ -75,9 +75,31 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       </ul>
     </div>
     {% endif %}
-    <p>物種數: </p>
+    {#<p>物種數: </p>#}
   </div>
 
+  <div class="article-head-wrapper">
+    <h1 class="heading-lg-ul">
+      照片
+    </h1>
+    <div>來源: <a href="https://taieol.tw/pages/{{ species_info.taieol_taxon_id }}/media" target="_blank">臺灣生命大百科</a></div>
+    {% for i in species_info.taieol_media %}
+    {% if  forloop.counter0|divisibleby:4 %}
+    <div class="row">
+    {% endif %}
+    <div class="col-md-3 col-xs-6">
+      <div class="thumbnail">
+        <img src="{{ i.src}}">
+        <div class="caption">
+          <p> {{ i.author }}, {{ i.cc }}</p>
+        </div>
+      </div>
+    </div>
+    {% if forloop.counter|divisibleby:4 %}
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
   <div class="article-head-wrapper">
     <h1 class="heading-lg-ul">
       出現紀錄
