@@ -238,7 +238,7 @@
             <a class="topic-inner-cate" href="{% url 'article-list' category=i.category|lower  %}">{{ i.get_category_display }}</a>
           </span>
           <p class="topic-inner-ctn">
-            <a class="topic-inner-title" href="{{ article.get_absolute_url }}">{{ i.title }}</a>
+            <a class="topic-inner-title" href="{{ i.get_absolute_url }}">{{ i.title }}</a>
           </p>
           {% comment %}{# TODO #}
           <img src="{% static 'images/photo-1.jpg' %}">
