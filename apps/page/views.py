@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.conf import settings
 from django.db.models import F
-
+from django.conf import settings
 
 from apps.data.models import Dataset
 from apps.article.models import Article
 from .models import Post, Journal
+from utils.mail import taibif_mail_contact_us
 
 def index(request):
 
@@ -48,7 +48,19 @@ def tools(request):
     return render(request, 'tools.html')
 
 def contact_us(request):
-    return render(request, 'contact-us.html')
+    if request.method == 'GET':
+        return render(request, 'contact-us.html')
+    elif request.method == 'POST':
+        data = {
+            'name':  request.POST.get('name', ''),
+            'cat': request.POST.get('cat', ''),
+            'email': request.POST.get('email', ''),
+            'content': request.POST.get('content', ''),
+        }
+        context = taibif_mail_contact_us(data)
+        #context = taibif_send_mail(subject, content, settings.SERVICE_EMAIL, to_list)
+
+        return render(request, 'contact-us.html', context)
 
 def plans(request):
     return render(request, 'plans.html')

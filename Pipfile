@@ -16,6 +16,8 @@ markdown = "*"
 requests = "*"
 beautifulsoup4 = "*"
 lxml = "*"
+boto3 = "*"
+django-ses = "*"
 
 [requires]
 python_version = "3.8"

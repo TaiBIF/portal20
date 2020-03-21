@@ -44,7 +44,10 @@ urlpatterns = [
     path('article/', include('apps.article.urls')),
     path('',  include('apps.page.urls')),
     path('admin/', admin.site.urls),
-]
+    ]
+
+# AWS SES
+#urlpatterns += (path(r'^admin/django-ses/', include('django_ses.urls')),)
 
 if settings.DEBUG:
     import debug_toolbar
