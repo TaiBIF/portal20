@@ -15,7 +15,13 @@
 
 
   <!-- container begin -->
-  <div class="container">
+<div class="container">
+  {% if message %}
+  <div class="alert alert-warning alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>{{ message.head }}</strong> {{ message.content }}
+  </div>
+  {% endif %}
     <h2 class="h2">
       聯絡我們
       <span class="heading-footnote">以下皆為必填</span>
@@ -24,13 +30,17 @@
     <!-- contact form begin -->
     <div class="contact-form-wrapper clearfix">
 
-      <form>
+      <form method="post" action="{% url 'contact_us' %}">
+        {% csrf_token %}
         <div class="form-group clearfix">
           <div class="col-sm-4 col-xs-12">
             <div class="custom-select">
-              <select>
+              <select name="cat">
                 <option>請選擇問題分類...</option>
-                <option>問題分類一二三</option>
+                <option value="物種資料相關諮詢">物種資料相關諮詢</option>
+                <option value="操作問題詢問">操作問題詢問</option>
+                <option value="錯誤回報">錯誤回報</option>
+                <option value="其他">其他</option>
               </select>
             </div>
           </div>
@@ -38,23 +48,23 @@
           <div class="col-sm-4 col-xs-12">
             <div class="input-group">
               <div class="input-group-addon"><i class="myicon icon-user"></i></div>
-              <input type="text" class="form-control" placeholder="姓名">
+              <input type="text" class="form-control" placeholder="姓名" name="name">
             </div>
           </div>
 
           <div class="col-sm-4 col-xs-12">
             <div class="input-group">
               <div class="input-group-addon"><i class="myicon icon-mail"></i></div>
-              <input type="text" class="form-control" placeholder="Email">
+              <input type="text" class="form-control" placeholder="Email" name="email">
             </div>
           </div>
 
           <div class="col-xs-12">
             <div class="input-group">
               <div class="input-group-addon"><i class="myicon icon-write"></i></div>
-              <textarea class="form-control textarea" placeholder="留言內容" rows="3"></textarea>
+              <textarea class="form-control textarea" placeholder="留言內容" rows="3" name="content"></textarea>
             </div>
-          </div>          
+          </div>
 
           <div class="col-xs-12 contact-btn-wrapper">
             <button type="submit" class="btn btn-sunset">送出</button>
