@@ -46,3 +46,8 @@ services:
       - ../taibif-volumes/logs/nginx:/var/log/nginx
     links:
       - web:web
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
+        max-file: 3
