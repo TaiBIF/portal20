@@ -16,6 +16,7 @@ services:
       - ../taibif-volumes/static:/taibif-volumes/static
       - ../taibif-volumes/media:/taibif-volumes/media
       - ../taibif-volumes/bucket:/taibif-bucket
+      - ../taibif-volumes/logs/web:/taibif-code/logs
     command: "./scripts/wait-for-it.sh db:5432 -t 30 -- ./scripts/docker-web-entry.sh"
     #command: ./docker-web-entry.sh
     restart: always
@@ -42,5 +43,6 @@ services:
       - ./nginx:/etc/nginx/conf.d
       - ../taibif-volumes/static:/taibif-volumes/static
       - ../taibif-volumes/media:/taibif-volumes/media
+      - ../taibif-volumes/logs/nginx:/var/log/nginx
     links:
       - web:web
