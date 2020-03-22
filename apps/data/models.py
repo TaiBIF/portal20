@@ -191,6 +191,14 @@ class Taxon(models.Model):
         return url
 
     @property
+    def taicol_namecode_link(self):
+        url =''
+        if self.rank == 'species':
+            if self.rank == 'species' and self.source_id:
+                url = 'https://taibnet.sinica.edu.tw/chi/taibnet_species_detail.php?name_code={}'.format(self.source_id)
+        return url
+
+    @property
     def rank_list(self):
         def get_rank_tree(x, a=[]):
             if x.parent:
@@ -201,7 +209,7 @@ class Taxon(models.Model):
 
     @property
     def children(self):
-        return Taxon.objects.filter(parent=self).all()
+        return Taxon.objects.filter(parent=self, is_accepted_name=True).all()
 
     @staticmethod
     def get_tree(rank='', status=''):

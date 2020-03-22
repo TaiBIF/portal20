@@ -45,7 +45,7 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
 <div class="container">
   <h2>{{ taxon.name_zh }} {{ taxon.name }}</h2>
     <p>
-    來源: <a href="http://taicol.tw">臺灣物種名錄 (TaiCoL)</a> | 搜尋 TaiCol: <a href="{{ taxon.taicol_search_link }}" target/"_blank">{{ taxon.name }}</a>
+    來源: <a href="http://taicol.tw">臺灣物種名錄 (TaiCoL)</a> | 搜尋 TaiCol: <a href="{{ taxon.taicol_search_link }}" target/"_blank">{{ taxon.name }}</a>{% if taxon.taicol_namecode_link%} | name_code: <a href="{{ taxon.taicol_namecode_link}}">{{ taxon.source_id }}</a>{% endif %}
     </p>
   <div class="article-head-wrapper">
     <h1 class="heading-lg-ul">
