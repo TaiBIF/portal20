@@ -26,7 +26,6 @@ class ArticleDetailView(generic.DetailView):
 
 def article_list(request, category):
     page = request.GET.get('page', '')
-
     valid_category = [x for x in Article.CATEGORY_CHOICE \
                       if x[0].lower() == category]
 

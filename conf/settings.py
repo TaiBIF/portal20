@@ -161,6 +161,53 @@ if DEBUG:
     hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
     INTERNAL_IPS = [ip[:-1] + '1' for ip in ips] + ['127.0.0.1', '10.0.2.2']
 
+# logs
+LOGS_ROOT = env('LOGS_ROOT', default=root_path('logs'))
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'console_format': {
+            'format': '%(name)-12s %(levelname)-8s %(message)s %(module)s.%(funcName)s#%(lineno)d %(process)d %(thread)d'
+        },
+        'file_format': {
+            'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s %(module)s.%(funcName)s#%(lineno)d %(process)d %(thread)d'
+        },
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s.%(funcName)s#%(lineno)d %(process)d %(thread)d %(message)s'
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'console_format'
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOGS_ROOT, 'django.log'),
+            'maxBytes': 1024 * 1024 * 15,  # 15MB
+            'backupCount': 10,
+            'formatter': 'file_format',
+        },
+    },
+    'loggers': {
+        'django': {
+            'level': 'INFO',
+            'handlers': ['console', 'file'],
+            'propagate': False,
+        },
+        'apps': {
+            'level': 'DEBUG',
+            'handlers': ['console', 'file'],
+            'propagate': False,
+        }
+    }
+}
+#USE_SENTRY=on
+#SENTRY_DSN=https://<project-key>@sentry.io/<project-id>
+
 
 # email
 EMAIL_BACKEND = 'django_ses.SESBackend'
