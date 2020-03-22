@@ -47,7 +47,7 @@ services:
     links:
       - web:web
     logging:
-      driver: json-file
+      driver: "json-file"
       options:
-        max-size: 1m
-        max-file: 3
+        max-size: "1m"
+        max-file: "3"

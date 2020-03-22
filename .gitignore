@@ -18,4 +18,5 @@ node_modules
 taibif_volumes
 
 .idea
+/tmp
 
