@@ -168,13 +168,14 @@ def species_view(request, pk):
         rows = q.all()[:20]
 
     for r in rows:
-        lat += float(r['decimallatitude'])
-        lng += float(r['decimallongitude'])
-        occurrence_list.append({
-            'taibif_dataset_name': r['taibif_dataset_name'],
-            'decimallatitude': float(r['decimallatitude']),
-            'decimallongitude': float(r['decimallongitude']),
-        })
+        if r['decimallatitude'] and r['decimallongitude']:
+            lat += float(r['decimallatitude'])
+            lng += float(r['decimallongitude'])
+            occurrence_list.append({
+                'taibif_dataset_name': r['taibif_dataset_name'],
+                'decimallatitude': float(r['decimallatitude']),
+                'decimallongitude': float(r['decimallongitude']),
+            })
 
     #dataset_list = q.annotate(dataset=Count('id')).all()
     n = len(occurrence_list)
@@ -182,9 +183,11 @@ def species_view(request, pk):
     context = {
         'taxon': taxon,
         'occurrence_list': occurrence_list,
-        'species_info': sp_info,
         #'dataset_list': dataset_list
     }
+    if taxon.rank == 'species':
+        context['species_info'] = sp_info
+
     if n:
         context['map_view'] = [lat/n, lng/n]
     #n =
