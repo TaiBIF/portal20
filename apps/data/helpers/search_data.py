@@ -1,4 +1,4 @@
-from apps.data.models import (
+from apps.sdata.models import (
     Dataset,
     DatasetOrganization,
     Taxon,
