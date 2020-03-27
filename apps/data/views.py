@@ -138,24 +138,32 @@ def search_old(request):
 def occurrence_view(request, taibif_id):
     occurrence = get_object_or_404(RawDataOccurrence, taibif_id=taibif_id)
 
+    lat = 0
+    lon = 0
+    if occurrence.simple_data.latitude:
+        lat = occurrence.simple_data.latitude
+    elif occurrence.decimallatitude:
+        lat = occurrence.decimallatitude
+
+    if occurrence.simple_data.longitude:
+        lon = occurrence.simple_data.longitude
+    elif occurrence.decimallatitude:
+        lon = occurrence.decimallongitude
+
+    terms = {}
+    for i in occurrence._meta.get_fields():
+        if not i.is_relation and\
+           i.column not in ['taibif_id', 'taibif_dataset_name']:
+            x = getattr(occurrence, i.name, '')
+            if x:
+                terms[i.column] = x
+
     context = {
-        'occurrence': occurrence
+        'occurrence': occurrence,
+        'terms': terms,
     }
-    '''context['fields'] = RawDataOccurrence._meta.get_fields()
-    context['occur'] = obj
-    data = {}
-    for i in RawDataOccurrence._meta.get_fields():
-        if not i.is_relation:
-            data[i.column] = getattr(obj, i.name, '')
-    context['columns'] = data
-    n = RawDataOccurrence.objects.values('scientificname','taibif_dataset_name','eventdate', 'decimallongitude', 'decimallatitude').filter(scientificname__exact=obj.scientificname).all()
-    context['n'] = n
-    dataset = {}
-    for i in n:
-        if i['taibif_dataset_name'] not in dataset:
-            dataset[i['taibif_dataset_name']] = 0
-        dataset[i['taibif_dataset_name']] += 1
-    context['in_dataset'] = dataset'''
+    if lat and lon:
+        context['map_view'] = [lat, lon]
     return render(request, 'occurrence.html', context)
 
 def dataset_view(request, name):

@@ -186,7 +186,7 @@ class Taxon(models.Model):
     count = models.PositiveIntegerField('count', default=0)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
     tree = models.ForeignKey(TaxonTree, on_delete=models.CASCADE, null=True)
-    is_accepted_name = models.BooleanField('is accepted name', default=True)
+    is_accepted_name = models.BooleanField('is accepted nam', default=True)
     source_id = models.CharField('name_code', max_length=1000, null=True, blank=True)
     verbose = models.CharField('verbose', max_length=1000, default='')
 
@@ -204,6 +204,14 @@ class Taxon(models.Model):
         else:
             return '{}'.format(self.name)
 
+    @property
+    def accepted_species(self):
+        if not self.is_accepted_name:
+            vlist = self.verbose.split('|')
+            t = Taxon.objects.get(source_id=vlist[2])
+            if t:
+                return t
+        return None
     @property
     def scientific_name(self):
         if self.rank == 'species':
@@ -464,6 +472,21 @@ class SimpleData(models.Model):
     latitude = models.DecimalField('coordinates_latitude_decimal', decimal_places=8, max_digits=10, null=True, blank=True)
     country = models.CharField('country', max_length=1000, null=True)
     taibif_dataset_name = models.TextField(blank=True, null=True)
+
+    @property
+    def date_display(self):
+        s = ''
+        s += '{}年'.format(self.year)
+        s += '{}月'.format(self.month)
+        if self.day:
+            s += '{}日'.format(self.day)
+        return '{}年{}月{}日'.format(
+            self.year if self.year else '--',
+            self.month if self.month else '--',
+            self.day if self.day else '--',
+        )
+
+
 # This is an auto-generated Django model module.
 # You'll have to do the following manually to clean this up:
 #   * Rearrange models' order
@@ -610,6 +633,7 @@ class RawDataOccurrence(models.Model):
     def taibif_dataset(self):
         d = Dataset.objects.values('title', 'id', 'name').filter(name__exact=self.taibif_dataset_name).first()
         return d
+
 
     class Meta:
         managed = False
