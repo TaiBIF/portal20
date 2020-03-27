@@ -52,6 +52,24 @@ def search_all(request):
             })
         count += len(dataset_rows)
 
+        species_rows = []
+        for x in Taxon.objects.filter(Q(name__icontains=q) | Q(name_zh__icontains=q)).all():
+            species_rows.append({
+                'title': '[{}] {}'.format(x.get_rank_display(), x.get_name()),
+                'content': '物種數: {}'.format(x.count),
+                'url': '/species/{}'.format(x.id),
+            })
+        count += len(species_rows)
+
+        publisher_rows = []
+        for x in DatasetOrganization.objects.filter(name__icontains=q).all():
+            publisher_rows.append({
+                'title': x.name,
+                'content': x.description,
+                'url': '/publisher/{}'.format(x.id)
+            })
+        count += len(publisher_rows)
+
         context = {
             'count': count,
             'results': [
@@ -66,10 +84,20 @@ def search_all(request):
                     'rows': occur_rows
                 },
                 {
+                    'cat': 'species',
+                    'label': '物種',
+                    'rows': species_rows
+                },
+                {
                     'cat': 'dataset',
                     'label': '資料集',
                     'rows': dataset_rows
-                }
+                },
+                {
+                    'cat': 'publisher',
+                    'label': '發布者',
+                    'rows': publisher_rows
+                },
             ]
         }
         return render(request, 'search_all.html', context)
@@ -108,22 +136,34 @@ def search_old(request):
 
 
 def occurrence_view(request, taibif_id):
-    context = {}
-    obj = get_object_or_404(RawDataOccurrence, taibif_id=taibif_id)
-    context['fields'] = RawDataOccurrence._meta.get_fields()
-    context['occur'] = obj
-    data = {}
-    for i in RawDataOccurrence._meta.get_fields():
-        data[i.column] = getattr(obj, i.name, '')
-    context['columns'] = data
-    n = RawDataOccurrence.objects.values('scientificname','taibif_dataset_name','eventdate', 'decimallongitude', 'decimallatitude').filter(scientificname__exact=obj.scientificname).all()
-    context['n'] = n
-    dataset = {}
-    for i in n:
-        if i['taibif_dataset_name'] not in dataset:
-            dataset[i['taibif_dataset_name']] = 0
-        dataset[i['taibif_dataset_name']] += 1
-    context['in_dataset'] = dataset
+    occurrence = get_object_or_404(RawDataOccurrence, taibif_id=taibif_id)
+
+    lat = 0
+    lon = 0
+    if occurrence.simple_data.latitude:
+        lat = occurrence.simple_data.latitude
+    elif occurrence.decimallatitude:
+        lat = occurrence.decimallatitude
+
+    if occurrence.simple_data.longitude:
+        lon = occurrence.simple_data.longitude
+    elif occurrence.decimallatitude:
+        lon = occurrence.decimallongitude
+
+    terms = {}
+    for i in occurrence._meta.get_fields():
+        if not i.is_relation and\
+           i.column not in ['taibif_id', 'taibif_dataset_name']:
+            x = getattr(occurrence, i.name, '')
+            if x:
+                terms[i.column] = x
+
+    context = {
+        'occurrence': occurrence,
+        'terms': terms,
+    }
+    if lat and lon:
+        context['map_view'] = [lat, lon]
     return render(request, 'occurrence.html', context)
 
 def dataset_view(request, name):
@@ -168,13 +208,14 @@ def species_view(request, pk):
         rows = q.all()[:20]
 
     for r in rows:
-        lat += float(r['decimallatitude'])
-        lng += float(r['decimallongitude'])
-        occurrence_list.append({
-            'taibif_dataset_name': r['taibif_dataset_name'],
-            'decimallatitude': float(r['decimallatitude']),
-            'decimallongitude': float(r['decimallongitude']),
-        })
+        if r['decimallatitude'] and r['decimallongitude']:
+            lat += float(r['decimallatitude'])
+            lng += float(r['decimallongitude'])
+            occurrence_list.append({
+                'taibif_dataset_name': r['taibif_dataset_name'],
+                'decimallatitude': float(r['decimallatitude']),
+                'decimallongitude': float(r['decimallongitude']),
+            })
 
     #dataset_list = q.annotate(dataset=Count('id')).all()
     n = len(occurrence_list)
@@ -182,9 +223,11 @@ def species_view(request, pk):
     context = {
         'taxon': taxon,
         'occurrence_list': occurrence_list,
-        'species_info': sp_info,
         #'dataset_list': dataset_list
     }
+    if taxon.rank == 'species':
+        context['species_info'] = sp_info
+
     if n:
         context['map_view'] = [lat/n, lng/n]
     #n =
