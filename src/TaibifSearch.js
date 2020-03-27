@@ -264,7 +264,8 @@ class TaibifSearch extends React.Component {
         'results': this.state.data.results,
         'count':  this.state.data.count,
         'limit':  this.state.data.limit,
-        'offset':  this.state.data.offset
+        'offset':  this.state.data.offset,
+        'elapsed': this.state.data.elapsed,
       };
       const queryKeyword = this.state.queryKeyword;
       let searchMainContainer = '';
