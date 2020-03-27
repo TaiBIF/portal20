@@ -141,6 +141,30 @@ class TaxonTree(models.Model):
     name = models.CharField('name', max_length=64)
     rank_map = models.CharField('rank map', max_length=256)
 
+    def full_taxa_map(self):
+        taxa = {}
+        for rank in self.rank_map.split('|')[:-2]: # skip genus & species
+            taxa[rank] = {}
+            tlist = Taxon.objects.filter(rank=rank).all()
+            for t in tlist:
+                if taxa[rank].get(t.name, '--') != '--' and t.rank not in ['species','genus']:
+                    print ('duplicate', t.rank, t.name, t.id)
+                taxa[rank][t.name] = t.id
+        # append genus+species
+        # for gen-sample-data use
+        taxa['sci_name'] = {}
+        counter = 0
+        for t in Taxon.objects.filter(rank='species').all():
+            counter += 1
+            if counter % 10000 == 0:
+                print (counter)
+            key = t.scientific_name_infraspecific
+            tlist = [t.id]
+            if t.parent:
+                tlist.append(t.parent_id)
+            taxa['sci_name'][key] = tlist
+        return taxa
+
     def __str__(self):
         r = '{}'.format(self.name)
         return r
@@ -183,7 +207,26 @@ class Taxon(models.Model):
     @property
     def scientific_name(self):
         if self.rank == 'species':
-            return '{} {}'.format(self.parent.name, self.name)
+            slist = []
+            if self.parent:
+                slist.append(self.parent.name)
+            slist.append(self.name)
+            return ' '.join(slist)
+
+    @property
+    def scientific_name_infraspecific(self):
+        if self.rank == 'species':
+            vlist = self.verbose.split('|')
+            slist = [self.parent.name if self.parent else '', self.name]
+            if vlist[4] and vlist[4] != '--':
+                slist.append(vlist[4])
+            if vlist[3] and vlist[3] != '--':
+                slist.append(vlist[3])
+            if vlist[6] and vlist[6] != '--':
+                slist.append(vlist[6])
+            if vlist[5] and vlist[5] != '--':
+                slist.append(vlist[5])
+            return ' '.join(slist)
 
     @property
     def taicol_search_link(self):
@@ -398,6 +441,29 @@ class Occurrence(models.Model):
     #    db_table = 'data_occurrence'
 
 
+
+class SimpleData(models.Model):
+
+    NUM_PER_PAGE = 50
+
+    taibif = models.OneToOneField('RawDataOccurrence', on_delete=models.CASCADE, primary_key=True, related_name='simple_data')
+    taxon_kingdom = models.ForeignKey(Taxon, on_delete=models.CASCADE, null=True, related_name='kingdom_data')
+    taxon_phylum = models.ForeignKey(Taxon, on_delete=models.CASCADE, null=True, related_name='phylum_data')
+    taxon_class = models.ForeignKey(Taxon, on_delete=models.CASCADE, null=True, related_name='class_data')
+    taxon_order = models.ForeignKey(Taxon, on_delete=models.CASCADE, null=True, related_name='order_data')
+    taxon_family = models.ForeignKey(Taxon, on_delete=models.CASCADE, null=True, related_name='family_data')
+    taxon_genus = models.ForeignKey(Taxon, on_delete=models.CASCADE, null=True, related_name='genus_data')
+    taxon_species = models.ForeignKey(Taxon, on_delete=models.CASCADE, null=True, related_name='species_data')
+    scientific_name = models.CharField('scientific_name', max_length=1000, null=True)
+    vernacular_name = models.CharField('vernacular_name', max_length=1000, null=True)
+    year = models.PositiveSmallIntegerField(null=True)
+    month = models.PositiveSmallIntegerField(null=True)
+    day = models.PositiveSmallIntegerField(null=True)
+    #epithnet
+    longitude = models.DecimalField('coordinates_longitude_decimal', decimal_places=8, max_digits=11, null=True, blank=True)
+    latitude = models.DecimalField('coordinates_latitude_decimal', decimal_places=8, max_digits=10, null=True, blank=True)
+    country = models.CharField('country', max_length=1000, null=True)
+    taibif_dataset_name = models.TextField(blank=True, null=True)
 # This is an auto-generated Django model module.
 # You'll have to do the following manually to clean this up:
 #   * Rearrange models' order

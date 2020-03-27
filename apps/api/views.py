@@ -1,5 +1,4 @@
-
-import timeit
+import time
 import json
 import datetime
 import re
@@ -11,6 +10,8 @@ from django.http import HttpResponse
 
 from apps.data.models import Dataset, DATA_MAPPING, DatasetOrganization, Taxon
 from apps.data.models import RawDataOccurrence
+from apps.data.models import SimpleData
+
 from utils.decorators import json_ret
 
 from .cached import COUNTRY_ROWS, YEAR_ROWS
@@ -94,11 +95,12 @@ def search_occurrence(request):
         }
     ]
 
-    query_start = timeit.timeit()
+    query_start = time.time()
     #query = RawDataOccurrence.objects.values('basisofrecord', 'vernacularname', 'countrycode', 'scientificname', 'taibif_id', 'taibif_dataset_name', 'taibif_dataset_name__title')
     #query_rows = RawDataOccurrence.objects.all()[:50]
 
     page = 1
+    '''
     query = RawDataOccurrence.objects.values('basisofrecord', 'vernacularname', 'countrycode', 'scientificname', 'taibif_id', 'taibif_dataset_name')
     if request.GET:
         for menu_key, item_keys in request.GET.items():
@@ -128,7 +130,9 @@ def search_occurrence(request):
     query_fin = query.all()[offset:limit]
     #count = query.count()
     count = '--'
-    results = [{
+
+    results = [
+    {
         'taibif_id': x['taibif_id'],
         'basis_of_record': x['basisofrecord'],
         'vernacular_name': x['vernacularname'],
@@ -136,9 +140,102 @@ def search_occurrence(request):
         'scientific_name': x['scientificname'],
         'dataset':  x['taibif_dataset_name']
     } for x in query_fin]
-    query_elapsed = timeit.timeit() - query_start
+    '''
 
+    from django.core.paginator import Paginator
+
+    # find species first
+    q = request.GET.get('q', '')
+    tids = []
+    if q:
+        tlist = Taxon.objects.filter(rank='species', name__icontains=q).all()
+        tids = [x.id for x in tlist]
+
+    query = SimpleData.objects
+    if request.GET:
+        for menu_key, item_keys in request.GET.items():
+            if menu_key == 'q':
+                if tids:
+                    query = query.filter(taxon_species_id__in=tids)
+                else:
+                    query = query.filter(Q(vernacular_name__icontains=item_keys) | Q(scientific_name__icontains=item_keys))
+            #if menu_key == 'core':
+            #    d = DATA_MAPPING['core'][item_keys]
+            #    query = query.filter(dwc_core_type__exact=d)
+            if menu_key == 'year':
+                for key in item_keys.split(','):
+                    query = query.filter(year__exact=key)
+            if menu_key == 'month':
+                for key in item_keys.split(','):
+                    query = query.filter(month__exact=key)
+            #if menu_key == 'countrycode':
+            #    for key in item_keys.split(','):
+            #        query = query.filter(countrycode__exact=key)
+            if menu_key == 'dataset':
+                for key in item_keys.split(','):
+                    query = query.filter(taibif_dataset_name__exact=key)
+            if menu_key == 'page':
+                page = int(item_keys)
+
+    #print (len(query), 'ooo')
+    offset = (page-1) * SimpleData.NUM_PER_PAGE
+    limit = page * SimpleData.NUM_PER_PAGE
+    query_fin = query.all()[offset:limit]
+
+
+    #count = query.count()
+    #print (count, '---')
+    count = '--'
+    '''from django.db import connections
+
+
+    qs = query.model._base_manager.all()
+    #https://blog.ionelmc.ro/2020/02/02/speeding-up-django-pagination/
+    compiler = query.query.get_compiler('default')
+    #print (qs, compiler)
+    where, params = compiler.compile(query.query.where)
+    qs = qs.extra(where=[where] if where else None, params=params)
+
+    cursor = connections[query.db].cursor()
+    que = qs.query.clone()
+    que.add_annotation(Count('*'), alias='__count', is_summary=True)
+    que.clear_ordering(True)
+    que.select_for_update = False
+    que.select_related = False
+    que.select = []
+    que.default_cols = False
+    sql, params = que.sql_with_params()
+    #logger.info('Running EXPLAIN %s', sql)
+    print (sql)
+    cursor.execute("EXPLAIN %s" % sql, params)
+    lines = cursor.fetchall()
+    #logger.info('Got EXPLAIN result:\n> %s',
+    #            '\n>   '.join(line for line, in lines))
+    marker = ' on %s ' % query.model._meta.db_table
+    print (lines)
+    print ('---')
+    print (marker)'''
+
+    #cursor = connections[query.db].cursor()
+    #sql = "SELECT reltuples FROM pg_class WHERE relname = '%s';" % query.model._meta.db_table
+    #sql += ' AND scientific_name'
+    #cursor.execute()
+    #print(query.query.where.count())
+    #print (cursor.fetchone()[0],'xxxxxxx' )
+
+
+    results = [{
+        'taibif_id': x.taibif_id,
+        #'basis_of_record': x.basisofrecord'],
+        'vernacular_name': x.vernacular_name,
+        #'country_code': x.countrycode,
+        'scientific_name': x.scientific_name,
+        'dataset':  x.taibif_dataset_name,
+    } for x in query_fin]
+
+    query_elapsed = round(time.time() - query_start, 2)
     data = {
+        'query': str(query.query),
         'menus': menu_list,
         'results': results,
         'offset': 0,
@@ -424,29 +521,4 @@ def species_detail(request, pk):
     taxon = Taxon.objects.get(pk=pk)
     #rows = RawDataOccurrence.objects.values('taibif_dataset_name', 'decimallatitude', 'decimallongitude').filter(scientificname=taxon.name).all()
     scname = '{} {}'.format(taxon.parent.name, taxon.name)
-    '''
-    url = 'https://taieol.tw/tree/autocomplete/1/{}'.format(scname)
-    r = requests.get(url)
-    #if r.content:
-    resp = json.loads(r.text)
-
-    taieol_taxon_id = ''
-    for x in resp:
-        m = re.search(r'\[tid\:([0-9]+)\]', x)
-        if m:
-            taieol_taxon_id = m[1]
-        break
-
-    media_list = _get_taieol_media(taieol_taxon_id)
-    if media_list:
-        media_list = random.sample(media_list, 8)
-
-    data = {
-        #'rows': list(rows),
-        #'count': len(rows)
-        'content': resp,
-        'scname': scname,
-        'taieol_taxon_id': taieol_taxon_id,
-        'taieol_media': media_list
-    }'''
     return {'data': {} }

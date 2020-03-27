@@ -38,7 +38,7 @@ def _get_taieol_media(taxon_id, page=''):
 
 def get_species_info(taxon):
     scname = taxon.scientific_name
-
+    print (scname)
     # get info from taieol
     url = 'https://taieol.tw/tree/autocomplete/1/{}'.format(scname)
     r = requests.get(url)
@@ -53,7 +53,9 @@ def get_species_info(taxon):
 
     media_list = _get_taieol_media(taieol_taxon_id)
     if media_list:
-        media_list = random.sample(media_list, 8)
+        if len(media_list) > 8:
+            media_list = random.sample(media_list, 8)
+
     data = {
         #'rows': list(rows),
         #'count': len(rows)

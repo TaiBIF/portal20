@@ -52,6 +52,24 @@ def search_all(request):
             })
         count += len(dataset_rows)
 
+        species_rows = []
+        for x in Taxon.objects.filter(Q(name__icontains=q) | Q(name_zh__icontains=q)).all():
+            species_rows.append({
+                'title': '[{}] {}'.format(x.get_rank_display(), x.get_name()),
+                'content': '物種數: {}'.format(x.count),
+                'url': '/species/{}'.format(x.id),
+            })
+        count += len(species_rows)
+
+        publisher_rows = []
+        for x in DatasetOrganization.objects.filter(name__icontains=q).all():
+            publisher_rows.append({
+                'title': x.name,
+                'content': x.description,
+                'url': '/publisher/{}'.format(x.id)
+            })
+        count += len(publisher_rows)
+
         context = {
             'count': count,
             'results': [
@@ -66,10 +84,20 @@ def search_all(request):
                     'rows': occur_rows
                 },
                 {
+                    'cat': 'species',
+                    'label': '物種',
+                    'rows': species_rows
+                },
+                {
                     'cat': 'dataset',
                     'label': '資料集',
                     'rows': dataset_rows
-                }
+                },
+                {
+                    'cat': 'publisher',
+                    'label': '發布者',
+                    'rows': publisher_rows
+                },
             ]
         }
         return render(request, 'search_all.html', context)
@@ -108,13 +136,17 @@ def search_old(request):
 
 
 def occurrence_view(request, taibif_id):
-    context = {}
-    obj = get_object_or_404(RawDataOccurrence, taibif_id=taibif_id)
-    context['fields'] = RawDataOccurrence._meta.get_fields()
+    occurrence = get_object_or_404(RawDataOccurrence, taibif_id=taibif_id)
+
+    context = {
+        'occurrence': occurrence
+    }
+    '''context['fields'] = RawDataOccurrence._meta.get_fields()
     context['occur'] = obj
     data = {}
     for i in RawDataOccurrence._meta.get_fields():
-        data[i.column] = getattr(obj, i.name, '')
+        if not i.is_relation:
+            data[i.column] = getattr(obj, i.name, '')
     context['columns'] = data
     n = RawDataOccurrence.objects.values('scientificname','taibif_dataset_name','eventdate', 'decimallongitude', 'decimallatitude').filter(scientificname__exact=obj.scientificname).all()
     context['n'] = n
@@ -123,7 +155,7 @@ def occurrence_view(request, taibif_id):
         if i['taibif_dataset_name'] not in dataset:
             dataset[i['taibif_dataset_name']] = 0
         dataset[i['taibif_dataset_name']] += 1
-    context['in_dataset'] = dataset
+    context['in_dataset'] = dataset'''
     return render(request, 'occurrence.html', context)
 
 def dataset_view(request, name):

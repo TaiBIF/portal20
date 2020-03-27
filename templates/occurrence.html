@@ -6,17 +6,16 @@
 <!-- container begin -->
 <div class="container">
   <div class="article-head-wrapper">
-    <span class="article-post-date">{{ occur.eventdate|date:'Y-m-d' }}</span>
+    <span class="article-post-date">{# occur.eventdate|date:'Y-m-d' #}occur-date</span>
     <h1>
-      {{ occur.scientificname }}{% if occur.vernacularname %}, {{ occur.vernacularname }}{% endif %}
+      {# occurrence.simple_data.taxon_species.scientific_name_infraspecific #}
+      {{ occurrence }}
     </h1>
   </div>
 
   {% comment %}
-photo
-
-map
-    {% endcomment %}
+  map
+  {% endcomment %}
   <div class="article-head-wrapper">
     <h1 class="heading-lg-ul">資料集出現紀錄</h1>
   </div>
