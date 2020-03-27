@@ -11,7 +11,7 @@ from django.urls import reverse
 from django.conf import settings
 
 from apps.article.models import Article
-from .models import Taxon, Occurrence, Dataset, RawDataOccurrence, DatasetOrganization
+from .models import Taxon, Occurrence, Dataset, RawDataOccurrence, DatasetOrganization, SimpleData
 from .helpers.species import get_species_info
 
 def search_all(request):
@@ -179,22 +179,9 @@ def publisher_view(request, pk):
 def species_view(request, pk):
     context = {}
     taxon = get_object_or_404(Taxon, pk=pk)
-    '''q = RawDataOccurrence.objects.values('scientificname', 'taibif_dataset_name', 'decimallatitude', 'decimallongitude')
-    if taxon.rank == 'kingdom':
-        q = q.filter(Q(kingdom=taxon.name)|Q(kingdom=taxon.name_zh))
-    elif taxon.rank == 'phylum':
-        q = q.filter(Q(phylum=taxon.name)|Q(phylum=taxon.name_zh))
-    elif taxon.rank == 'class':
-        q = q.filter(Q(class_field=taxon.name)|Q(class_field=taxon.name_zh))
-    elif taxon.rank == 'order':
-        q = q.filter(Q(order=taxon.name)|Q(order=taxon.name_zh))
-    elif taxon.rank == 'family':
-        q = q.filter(Q(family=taxon.name)|Q(family=taxon.name_zh))
-    elif taxon.rank == 'genus':
-        q = q.filter(Q(genus=taxon.name)|Q(genus=taxon.name_zh))
-    elif taxon.rank == 'species':
-        q = q.filter(Q(scientificname__icontains=taxon.name)|Q(scientificname__icontains=taxon.name_zh))'''
-    q = RawDataOccurrence.objects.values('taibif_dataset_name', 'decimallatitude', 'decimallongitude').filter(scientificname=taxon.name).all()
+
+    #q = RawDataOccurrence.objects.values('taibif_dataset_name', 'decimallatitude', 'decimallongitude').filter(scientificname=taxon.name).all()
+    q = SimpleData.objects.values('latitude', 'longitude').filter(taxon_species_id=pk).all()
     #q.count()
     occurrence_list = []
     rows = None
@@ -208,11 +195,11 @@ def species_view(request, pk):
         rows = q.all()[:20]
 
     for r in rows:
-        if r['decimallatitude'] and r['decimallongitude']:
-            lat += float(r['decimallatitude'])
-            lng += float(r['decimallongitude'])
+        if r['latitude'] and r['longitude']:
+            lat += float(r['latitude'])
+            lng += float(r['longitude'])
             occurrence_list.append({
-                'taibif_dataset_name': r['taibif_dataset_name'],
+                #'taibif_dataset_name': r['taibif_dataset_name'],
                 'decimallatitude': float(r['decimallatitude']),
                 'decimallongitude': float(r['decimallongitude']),
             })
