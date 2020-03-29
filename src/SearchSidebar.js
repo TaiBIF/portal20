@@ -5,7 +5,7 @@ function SearchSidebar(props) {
   //console.log(props);
   const menuList = props.menus.map(function(m) {
     const menu_items = m.rows.map(function(x) {
-      const itemChecked = props.filters.has(`${m.key}.${x.key}`);
+      const itemChecked = props.filters.has(`${m.key}=${x.key}`);
       return (<div key={x.key} className="menu-item">
               <div className="menu-item__title">
               <input type="checkbox" onChange={(e)=> {e.persist(); props.onClick(e, m.key, x.key)}} checked={itemChecked} /> {x.label}

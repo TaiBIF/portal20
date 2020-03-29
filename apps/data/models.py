@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from django.utils import timezone
 from django.contrib.postgres.fields import JSONField
 from django.shortcuts import get_object_or_404
@@ -203,6 +204,19 @@ class Taxon(models.Model):
             return '{} {}'.format(self.name_zh, self.name)
         else:
             return '{}'.format(self.name)
+
+    @staticmethod
+    def find_name(name, rank='', using=''):
+        query = Taxon.objects
+        if rank:
+            query = Taxon.objects.filter(rank=rank)
+        if using == '':
+            query = query.filter(Q(name__icontains=name) | Q(name_zh__icontains=name))
+        elif using == 'latin':
+            query = query.filter(name__icontains=name)
+        elif using == 'zh':
+            query = query.filter(name_zh__icontains=name)
+        return list(query.all())
 
     @property
     def accepted_species(self):
