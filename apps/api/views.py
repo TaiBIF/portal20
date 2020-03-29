@@ -11,6 +11,12 @@ from django.http import HttpResponse
 from apps.data.models import Dataset, DATA_MAPPING, DatasetOrganization, Taxon
 from apps.data.models import RawDataOccurrence
 from apps.data.models import SimpleData
+from apps.data.helpers.mod_search import (
+    OccurrenceSearch,
+    DatasetSearch,
+    PublisherSearch,
+    SpeciesSearch,
+)
 
 from utils.decorators import json_ret
 
@@ -30,16 +36,19 @@ def taxon_tree(request):
     }
 
 
-@json_ret
+#@json_ret
 def search_occurrence(request):
-    # cache
-    '''query = RawDataOccurrence.objects\
+    has_menu = True if request.GET.get('menu', '') else False
+    menu_list = []
+    if has_menu:
+        # cache
+        '''query = RawDataOccurrence.objects\
                              .values('countrycode')\
                              .exclude(countrycode__isnull=True)\
                              .annotate(count=Count('countrycode'))\
                              .order_by('-count')'''
 
-    '''year_rows = [
+        '''year_rows = [
         {
             'label': str(year),
             'key': str(year),
@@ -53,406 +62,200 @@ def search_occurrence(request):
             year_rows_update.append({'label': i['key'], 'key': i['key'], 'count': r[0]['count']})
             print (i, r)
     import json
-    s = json.dumps(year_rows_update)
-    '''
-    dataset_query = Dataset.objects.exclude(status='Private').values('name', 'title')
-    publisher_query = Dataset.objects\
-                             .values('organization','organization_verbatim')\
-                             .exclude(organization__isnull=True)\
-                             .annotate(count=Count('organization'))\
-                             .order_by('-count')
-    publisher_rows = [{
-        'key':x['organization'],
-        'label':x['organization_verbatim'],
-        'count': x['count']
-    } for x in publisher_query]
+        s = json.dumps(year_rows_update)'''
+        dataset_query = Dataset.objects.exclude(status='Private').values('name', 'title')
+        publisher_query = Dataset.objects\
+                                 .values('organization','organization_verbatim')\
+                                 .exclude(organization__isnull=True)\
+                                 .annotate(count=Count('organization'))\
+                                 .order_by('-count')
+        publisher_rows = [{
+            'key':x['organization'],
+            'label':x['organization_verbatim'],
+            'count': x['count']
+        } for x in publisher_query]
 
-    menu_list = [
-        {
+        menu_list = [
+            {
             'key': 'countrycode',
-            'label': '國家/區域',
-            'rows': [{'label': x['label'], 'count': x['count'], 'key': x['label'] } for x in COUNTRY_ROWS]
-        },
-        {
-            'key': 'year',
-            'label': '年份',
-            'rows': YEAR_ROWS
-        },
-        {
-            'key': 'month',
-            'label': '月份',
-            'rows': [{'label': '{}月'.format(x),'key': x} for x in range(1, 13)]
-        },
-        {
-            'key': 'dataset',
-            'label': '資料集',
-            'rows': [{'label': x['title'], 'key': x['name']} for x in dataset_query]
-        },
-        {
-            'key':'publisher',
-            'label': '發布者',
-            'rows': publisher_rows
-        }
-    ]
+                'label': '國家/區域',
+                'rows': [{'label': x['label'], 'count': x['count'], 'key': x['label'] } for x in COUNTRY_ROWS]
+            },
+            {
+                'key': 'year',
+                'label': '年份',
+                'rows': YEAR_ROWS
+            },
+            {
+                'key': 'month',
+                'label': '月份',
+                'rows': [{'label': '{}月'.format(x),'key': x} for x in range(1, 13)]
+            },
+            {
+                'key': 'dataset',
+                'label': '資料集',
+                'rows': [{'label': x['title'], 'key': x['name']} for x in dataset_query]
+            },
+            {
+                'key':'publisher',
+                'label': '發布者',
+                'rows': publisher_rows
+            }
+        ]
 
-    query_start = time.time()
-    #query = RawDataOccurrence.objects.values('basisofrecord', 'vernacularname', 'countrycode', 'scientificname', 'taibif_id', 'taibif_dataset_name', 'taibif_dataset_name__title')
-    #query_rows = RawDataOccurrence.objects.all()[:50]
+    # search
+    occur_search = OccurrenceSearch(request.GET, using='')
+    res = occur_search.get_results()
 
-    page = 1
-    '''
-    query = RawDataOccurrence.objects.values('basisofrecord', 'vernacularname', 'countrycode', 'scientificname', 'taibif_id', 'taibif_dataset_name')
-    if request.GET:
-        for menu_key, item_keys in request.GET.items():
-            if menu_key == 'q':
-                query = query.filter(Q(vernacularname__icontains=item_keys) | Q(scientificname__icontains=item_keys))
-            if menu_key == 'core':
-                #print (item_keys,'--')
-                d = DATA_MAPPING['core'][item_keys]
-                query = query.filter(dwc_core_type__exact=d)
-            if menu_key == 'year':
-                for key in item_keys.split(','):
-                    query = query.filter(year__exact=key)
-            if menu_key == 'month':
-                for key in item_keys.split(','):
-                    query = query.filter(month__exact=key)
-            if menu_key == 'countrycode':
-                for key in item_keys.split(','):
-                    query = query.filter(countrycode__exact=key)
-            if menu_key == 'dataset':
-                for key in item_keys.split(','):
-                    query = query.filter(taibif_dataset_name__exact=key)
-            if menu_key == 'page':
-                page = int(item_keys)
-
-    offset = (page-1) * RawDataOccurrence.NUM_PER_PAGE
-    limit = page * RawDataOccurrence.NUM_PER_PAGE
-    query_fin = query.all()[offset:limit]
-    #count = query.count()
-    count = '--'
-
-    results = [
-    {
-        'taibif_id': x['taibif_id'],
-        'basis_of_record': x['basisofrecord'],
-        'vernacular_name': x['vernacularname'],
-        'country_code': x['countrycode'],
-        'scientific_name': x['scientificname'],
-        'dataset':  x['taibif_dataset_name']
-    } for x in query_fin]
-    '''
-
-    from django.core.paginator import Paginator
-
-    # find species first
-    q = request.GET.get('q', '')
-    tids = []
-    if q:
-        tlist = Taxon.objects.filter(rank='species', name__icontains=q).all()
-        tids = [x.id for x in tlist]
-
-    query = SimpleData.objects
-    if request.GET:
-        for menu_key, item_keys in request.GET.items():
-            if menu_key == 'q':
-                if tids:
-                    query = query.filter(taxon_species_id__in=tids)
-                else:
-                    query = query.filter(Q(vernacular_name__icontains=item_keys) | Q(scientific_name__icontains=item_keys))
-            #if menu_key == 'core':
-            #    d = DATA_MAPPING['core'][item_keys]
-            #    query = query.filter(dwc_core_type__exact=d)
-            if menu_key == 'year':
-                for key in item_keys.split(','):
-                    query = query.filter(year__exact=key)
-            if menu_key == 'month':
-                for key in item_keys.split(','):
-                    query = query.filter(month__exact=key)
-            #if menu_key == 'countrycode':
-            #    for key in item_keys.split(','):
-            #        query = query.filter(countrycode__exact=key)
-            if menu_key == 'dataset':
-                for key in item_keys.split(','):
-                    query = query.filter(taibif_dataset_name__exact=key)
-            if menu_key == 'page':
-                page = int(item_keys)
-
-    #print (len(query), 'ooo')
-    offset = (page-1) * SimpleData.NUM_PER_PAGE
-    limit = page * SimpleData.NUM_PER_PAGE
-    query_fin = query.all()[offset:limit]
-
-
-    #count = query.count()
-    #print (count, '---')
-    count = '--'
-    '''from django.db import connections
-
-
-    qs = query.model._base_manager.all()
-    #https://blog.ionelmc.ro/2020/02/02/speeding-up-django-pagination/
-    compiler = query.query.get_compiler('default')
-    #print (qs, compiler)
-    where, params = compiler.compile(query.query.where)
-    qs = qs.extra(where=[where] if where else None, params=params)
-
-    cursor = connections[query.db].cursor()
-    que = qs.query.clone()
-    que.add_annotation(Count('*'), alias='__count', is_summary=True)
-    que.clear_ordering(True)
-    que.select_for_update = False
-    que.select_related = False
-    que.select = []
-    que.default_cols = False
-    sql, params = que.sql_with_params()
-    #logger.info('Running EXPLAIN %s', sql)
-    print (sql)
-    cursor.execute("EXPLAIN %s" % sql, params)
-    lines = cursor.fetchall()
-    #logger.info('Got EXPLAIN result:\n> %s',
-    #            '\n>   '.join(line for line, in lines))
-    marker = ' on %s ' % query.model._meta.db_table
-    print (lines)
-    print ('---')
-    print (marker)'''
-
-    #cursor = connections[query.db].cursor()
-    #sql = "SELECT reltuples FROM pg_class WHERE relname = '%s';" % query.model._meta.db_table
-    #sql += ' AND scientific_name'
-    #cursor.execute()
-    #print(query.query.where.count())
-    #print (cursor.fetchone()[0],'xxxxxxx' )
-
-
-    results = [{
-        'taibif_id': x.taibif_id,
-        #'basis_of_record': x.basisofrecord'],
-        'vernacular_name': x.vernacular_name,
-        #'country_code': x.countrycode,
-        'scientific_name': x.scientific_name,
-        'dataset':  x.taibif_dataset_name,
-    } for x in query_fin]
-
-    query_elapsed = round(time.time() - query_start, 2)
     data = {
-        'query': str(query.query),
-        'menus': menu_list,
-        'results': results,
-        'offset': 0,
-        'limit': 0,
-        'count': count,
-        'elapsed': query_elapsed
+        'search': res,
     }
-    return {'data': data}
+    if has_menu:
+        data['menus'] = menu_list
+    #return {'data': data}
+    return HttpResponse(json.dumps(data), content_type="application/json")
 
-@json_ret
+#@json_ret
 def search_dataset(request):
+    has_menu = True if request.GET.get('menu', '') else False
+    menu_list = []
 
-    publisher_query = Dataset.objects\
-                             .values('organization','organization_verbatim')\
-                             .exclude(organization__isnull=True)\
-                             .annotate(count=Count('organization'))\
-                             .order_by('-count')
-    publisher_rows = [{
-        'key':x['organization'],
-        'label':x['organization_verbatim'],
-        'count': x['count']
-    } for x in publisher_query]
-    rights_query = Dataset.objects\
-                          .values('data_license')\
-                          .exclude(data_license__exact='')\
-                          .annotate(count=Count('data_license'))\
-                          .order_by('-count')
-    rights_rows = [{
-        'key': DATA_MAPPING['rights'][x['data_license']],
-        'label':x['data_license'],
-        'count': x['count']
-    } for x in rights_query]
-    country_query = Dataset.objects\
-                           .values('country')\
-                           .exclude(country__exact='')\
-                           .annotate(count=Count('country'))\
-                           .order_by('-count')
-    country_rows = [{
-        'key':x['country'],
-        'label':DATA_MAPPING['country'][x['country']],
-        'count': x['count']
-    } for x in country_query]
+    if has_menu:
+        publisher_query = Dataset.objects\
+                                 .values('organization','organization_verbatim')\
+                                 .exclude(organization__isnull=True)\
+                                 .annotate(count=Count('organization'))\
+                                 .order_by('-count')
+        publisher_rows = [{
+            'key':x['organization'],
+            'label':x['organization_verbatim'],
+            'count': x['count']
+        } for x in publisher_query]
+        rights_query = Dataset.objects\
+                              .values('data_license')\
+                              .exclude(data_license__exact='')\
+                              .annotate(count=Count('data_license'))\
+                              .order_by('-count')
+        rights_rows = [{
+            'key': DATA_MAPPING['rights'][x['data_license']],
+            'label':x['data_license'],
+            'count': x['count']
+        } for x in rights_query]
+        country_query = Dataset.objects\
+                               .values('country')\
+                               .exclude(country__exact='')\
+                               .annotate(count=Count('country'))\
+                               .order_by('-count')
+        country_rows = [{
+            'key':x['country'],
+            'label':DATA_MAPPING['country'][x['country']],
+            'count': x['count']
+        } for x in country_query]
 
-    menu_list = [
-        {
-            'key':'publisher',
-            'label': '發布者',
-            'rows': publisher_rows
-        },
-        {
-            'key': 'country',
-            'label': '分布地區/國家',
-            'rows': country_rows
-        },
-        {
-            'key': 'rights',
-            'label': '授權狀態',
+        menu_list = [
+            {
+                'key':'publisher',
+                'label': '發布者',
+                'rows': publisher_rows
+            },
+            {
+                'key': 'country',
+                'label': '分布地區/國家',
+                'rows': country_rows
+            },
+            {
+                'key': 'rights',
+                'label': '授權狀態',
             'rows': rights_rows
-        }
-    ]
+            }
+        ]
 
-    page = 1
-    query = Dataset.objects.exclude(status='Private')
-    if request.GET:
-        for menu_key, item_keys in request.GET.items():
-            if menu_key == 'q':
-                query = query.filter(Q(title__icontains=item_keys) | Q(description__icontains=item_keys))
-            if menu_key == 'core':
-                print (item_keys,'--')
-                d = DATA_MAPPING['core'][item_keys]
-                query = query.filter(dwc_core_type__exact=d)
-            if menu_key == 'publisher':
-                for key in item_keys.split(','):
-                    query = query.filter(organization__exact=key)
-            if menu_key == 'rights':
-                rights_reverse_map = {v: k for k,v in DATA_MAPPING['rights'].items()}
-                for key in item_keys.split(','):
-                    query = query.filter(data_license__exact=rights_reverse_map[key])
-            if menu_key == 'country':
-                for key in item_keys.split(','):
-                    query = query.filter(country__exact=key)
-            if menu_key == 'page':
-                page = int(item_keys)
+    # search
+    ds_search = DatasetSearch(request.GET)
+    res = ds_search.get_results()
 
-    offset = (page-1) * Dataset.NUM_PER_PAGE
-    limit = page * Dataset.NUM_PER_PAGE
-    query_fin = query.all()[offset:limit]
-
-    results = [{
-        'title': x.title,
-        'description': x.description,
-        'id': x.id,
-        'name': x.name,
-        'num_record': x.num_record,
-        'dwc_type': x.dwc_core_type_for_human_simple,
-    } for x in query_fin]
     data = {
-        'menus': menu_list,
-        'results': results,
-        'offset': offset,
-        'limit': limit,
-        'count': query.count()
+        'search': res,
     }
+    if has_menu:
+        data['menus'] = menu_list
+    #return {'data': data}
+    return HttpResponse(json.dumps(data), content_type="application/json")
 
-    return {'data': data }
-
-@json_ret
+#@json_ret
 def search_publisher(request):
-    country_list = DatasetOrganization.objects\
-                               .values('country_code')\
-                               .exclude(country_code__isnull=True)\
-                               .annotate(count=Count('country_code'))\
-                               .order_by('-count').all()
-    #print (country_list)
-    menus = [
-        {
-            'key': 'country_code',
-            'label': '國家/區域',
-            'rows': [{'label': DATA_MAPPING['country'][x['country_code']], 'key': x['country_code'], 'count': x['count']} for x in country_list]
-        },
-    ]
-    query = DatasetOrganization.objects
-    page = 1
-    if request.GET:
-        for menu_key, item_keys in request.GET.items():
-            if menu_key == 'q':
-                query = query.filter(name__icontains=item_keys)
-            if menu_key == 'country_code':
-                query = query.filter(country_code=item_keys)
-            if menu_key == 'page':
-                page = int(item_keys)
+    has_menu = True if request.GET.get('menu', '') else False
+    menu_list = []
 
-    offset = (page-1) * DatasetOrganization.NUM_PER_PAGE
-    limit = page * DatasetOrganization.NUM_PER_PAGE
-    query_fin = query.all()[offset:limit]
+    if has_menu:
+        country_list = DatasetOrganization.objects\
+                                          .values('country_code')\
+                                          .exclude(country_code__isnull=True)\
+                                          .annotate(count=Count('country_code'))\
+                                          .order_by('-count').all()
+        #print (country_list)
+        menus = [
+            {
+                'key': 'country_code',
+                'label': '國家/區域',
+                'rows': [{'label': DATA_MAPPING['country'][x['country_code']], 'key': x['country_code'], 'count': x['count']} for x in country_list]
+            },
+        ]
 
-    results = []
-    for x in query_fin:
-        results.append({
-            'id': x.id,
-            'name': x.name,
-            'description': x.description,
-            'num_dataset': x.datasets.count(),
-            'num_occurrence': x.sum_occurrence
-        })
+    # search
+    publisher_search = PublisherSearch(request.GET)
+    res = publisher_search.get_results()
+
     data = {
-        'menus': menus,
-        'results': results,
-        'offset': offset,
-        'limit': limit,
-        'count': query.count()
+        'search': res,
     }
 
-    return {'data': data }
+    if has_menu:
+        data['menus'] = menu_list
 
-@json_ret
+    #return {'data': data }
+    return HttpResponse(json.dumps(data), content_type="application/json")
+
+#@json_ret
 def search_species(request):
     status = request.GET.get('status', '')
     rank = request.GET.get('rank', '')
 
-    menus = [
-        {
-            'key': 'rank',
-            'label': '分類位階',
-            'rows': [{
-                'key': x['key'],
-                'label': x['label'],
-                'count': x['count']
-            } for x in Taxon.get_tree(rank=rank, status=status)]
-        },
-        {
-            'key': 'status',
-            'label': '狀態',
-            'rows': [
-                {'label': '有效的', 'key': 'accepted'},
-                {'label': '同物異名', 'key': 'synonym'}
-            ]
-        },
-    ]
+    has_menu = True if request.GET.get('menu', '') else False
+    menu_list = []
+    if has_menu:
+        menus = [
+            {
+                'key': 'rank',
+                'label': '分類位階',
+                'rows': [{
+                    'key': x['key'],
+                    'label': x['label'],
+                    'count': x['count']
+                } for x in Taxon.get_tree(rank=rank, status=status)]
+            },
+            {
+                'key': 'status',
+                'label': '狀態',
+                'rows': [
+                    {'label': '有效的', 'key': 'accepted'},
+                    {'label': '同物異名', 'key': 'synonym'}
+                ]
+            },
+        ]
 
-    query = Taxon.objects
-    page = 1
-    if request.GET:
-        for menu_key, item_keys in request.GET.items():
-            if menu_key == 'q':
-                query = query.filter(Q(name__icontains=item_keys) | Q(name_zh__icontains=item_keys))
-            if menu_key == 'rank':
-                query = query.filter(rank=item_keys)
-            if menu_key == 'status':
-                if item_keys == 'accepted':
-                    query = query.filter(is_accepted_name=True)
-                elif item_keys == 'synonym':
-                    query = query.filter(is_accepted_name=False)
-            if menu_key == 'page':
-                page = int(item_keys)
+    # search
+    species_search = SpeciesSearch(request.GET)
+    res = species_search.get_results()
 
-    offset = (page-1) * Dataset.NUM_PER_PAGE
-    limit = page * Dataset.NUM_PER_PAGE
-    query_fin = query.all()[offset:limit]
-
-    results = [{
-        'id': x.id,
-        'name': x.name,
-        'name_zh': x.name_zh,
-        'count': x.count,
-        'rank': x.get_rank_display(),
-        'is_accepted_name': x.is_accepted_name,
-    } for x in query_fin]
     data = {
-        'menus': menus,
-        'results': results,
-        'offset': offset,
-        'limit': limit,
-        'count': query.count()
+        'search': res,
     }
-    return {'data': data }
+    if has_menu:
+        data['menus'] = menu_list
 
+    #return {'data': data }
+    return HttpResponse(json.dumps(data), content_type="application/json")
 
 def data_stats(request):
     '''for D3 charts'''

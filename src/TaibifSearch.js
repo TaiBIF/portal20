@@ -4,57 +4,25 @@ import {SearchMainDataset, SearchMainOccurrence, SearchMainPublisher, SearchMain
 import './SearchStyles.css';
 
 
+function filtersToQuerystring (filters) {
+  const qsArr = [];
+  filters.forEach((item)=> {
+    qsArr.push(item);
+  });
+  return qsArr.join('&');
+}
+
 function Pagination (props) {
   const hasCount = parseInt(props.count) ? true : false;
   const numPerPage = props.limit - props.offset;
   const lastPage = hasCount ? Math.ceil(props.count / numPerPage) : parseInt(props.current)+1;
 
-  function getPageUrl(p) {
-    let url = window.location.href;
-    if (url.indexOf('page=') >=0) {
-      url = url.replace(/page=([0-9]+)/, `page=${p}`);
-    }
-    else {
-      if (window.location.search) {
-        url = `${url}&page=${p}`;
-      }
-      else {
-        url = `${url}?page=${p}`;
-      }
-    }
-    return url;
-  }
-
-  const pages = [];
-  if (lastPage > 10) {
-    // ignore if page num too long
-    const current = parseInt(props.current);
-    if (current > 1) {
-      const urlPrev = getPageUrl(current-1);
-      pages.push(<li key='1'><a href={urlPrev}>上一頁</a></li>)
-    }
-    pages.push(<li key='2'><a href="" className="active">{current}</a></li>)
-    if (current < lastPage) {
-      const urlNext = getPageUrl(current+1)
-      pages.push(<li key='3'><a href={urlNext}>下一頁</a></li>);
-    }
-  }
-  else {
-    for (let i=1; i<=lastPage; i++)  {
-      const url = getPageUrl(i)
-      const activeClass = (parseInt(props.current, 10) === i) ? 'active' : '';
-      if (hasCount) {
-        pages.push(<li className={activeClass} key={i}><a href={url}> {i} </a></li>);
-      }
-    }
-  }
   return (
       <div className="center-block text-center">
-      <ul className="pagination">
-      <li><a href="?page=1" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-      {pages}
-      <li><a href={"?page="+lastPage} aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
-      </ul>
+      <div className="btn-group" role="group" aria-label="...">
+      <button type="button" className="btn btn-default" onClick={(e)=>props.onClick(e, 'prev')}>上一頁</button>
+      <button type="button" className="btn btn-default" onClick={(e)=>props.onClick(e, 'next')}>下一頁</button>
+      </div>
       </div>
   )
 }
@@ -64,7 +32,6 @@ class TaibifSearch extends React.Component {
     super(props);
 
     let searchType = '';
-    let page = 0;
     if (window.location.pathname === '/dataset/search/') {
       searchType = 'dataset';
     }
@@ -78,23 +45,20 @@ class TaibifSearch extends React.Component {
       searchType = 'species';
     }
 
-    if (window.location.search.indexOf('page=')) {
-      let found = window.location.search.split('&').find((x)=>x.indexOf('page=') >=0)
-      if (found) {
-        page = found.split('=')[1]
-      }
-    }
     this.state = {
       isLoaded: false,
-      data: {},
+      isLoadedMain: true,
+      search: {},
+      menus: {},
       filters: new Set(),
       searchType: searchType,
       queryKeyword: '',
-      page: page
+      pagination: {},
     }
     this.handleMenuClick = this.handleMenuClick.bind(this);
     this.handleKeywordChange = this.handleKeywordChange.bind(this);
     this.getSearch = this.getSearch.bind(this);
+    this.handlePaginationClick = this.handlePaginationClick.bind(this);
     this.applyFilters = this.applyFilters.bind(this);
     this.handleSubmitKeywordClick = this.handleSubmitKeywordClick.bind(this);
     this.handleTabClick = this.handleTabClick.bind(this);
@@ -120,11 +84,11 @@ class TaibifSearch extends React.Component {
     const q = this.state.queryKeyword;
     // only one queryKeyword
     filters.forEach(function(x){
-      if (x.indexOf('q.') === 0) {
+      if (x.indexOf('q=') === 0) {
         filters.delete(x);
       }
     });
-    filters.add(`q.${q}`);
+    filters.add(`q=${q}`);
     this.applyFilters(filters);
   }
 
@@ -148,53 +112,74 @@ class TaibifSearch extends React.Component {
   }
 
   handleMenuClick(event, menuKey, itemKey) {
+    this.setState({
+      isLoadedMain: false,
+    });
     const filters = this.state.filters;
     if (event.target.checked) {
-      filters.add(`${menuKey}.${itemKey}`);
+      filters.add(`${menuKey}=${itemKey}`);
     }
     else {
-      filters.delete(`${menuKey}.${itemKey}`);
+      filters.delete(`${menuKey}=${itemKey}`);
     }
     this.applyFilters(filters);
+  }
+
+  handlePaginationClick(e, cat) {
+    let offset = this.state.search.offset;
+    let limit = this.state.search.limit;
+    const filters = this.state.filters;
+    offset = (cat === 'next') ? offset + limit : offset - limit;
+    offset = Math.max(0, offset);
+    const pageParam = `offset=${offset}&limit=${limit}`;
+    let pageApiUrl = `${window.location.origin}/api${window.location.pathname}`;
+    if (filters) {
+      let queryString = filtersToQuerystring(filters);
+      pageApiUrl = `${pageApiUrl}?${queryString}&${pageParam}`;
+    }
+    else {
+      pageApiUrl = `${apiUrl}?${pageParam}`;
+    }
+    this.setState({
+      isLoadedMain: false,
+    });
+    console.log('fetch (page):', pageApiUrl);
+    fetch(pageApiUrl)
+      .then(res => res.json())
+      .then(
+        (json) => {
+          console.log('resp (page): ', json);
+          this.setState({
+            isLoadedMain: true,
+              search: json.search,
+              serverError: json.error
+          });
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        });
   }
 
   getSearch(filters) {
     /* filters: Set() will affect API url and change current URL but not redirect */
     let apiUrl = `${window.location.origin}/api${window.location.pathname}`;
+    // for window.history.pushState
     let url = `${window.location.origin}${window.location.pathname}`;
 
-    // convert Set to object
     if (filters) {
-      const obj = {};
-      filters.forEach((item)=> {
-        const k = item.split('.');
-        if (obj.hasOwnProperty(k[0])) {
-          obj[k[0]].push(k[1]);
-        }
-        else {
-          obj[k[0]] = [k[1]];
-        }
-      });
-      let queryString = new URLSearchParams(obj).toString();
-      queryString = decodeURIComponent(queryString);
-      apiUrl = `${apiUrl}?${queryString}`;
+      let queryString = filtersToQuerystring(filters);
+      apiUrl = `${apiUrl}?${queryString}&menu=1`;
       url = `${url}?${queryString}`;
     }
-
-    // if has page, redirect occur ?
-    if (this.state.page) {
-      if (filters) {
-        apiUrl = `${apiUrl}&page=${this.state.page}`;
-      }
-      else {
-        apiUrl = `${apiUrl}?page=${this.state.page}`;
-      }
-    }
     else {
-      //有 page 的話, 會rudirect 變成拿掉 page
-      window.history.pushState({stateObj:url}, "", url);
+      apiUrl = `${apiUrl}?menu=1`;
     }
-    ///apiUrl = '';
+
+    window.history.pushState({stateObj:url}, "", url);
+
     console.log('fetch:', apiUrl)
     //const resp = await fetch(url);
     // const json = await resp.json();
@@ -205,10 +190,13 @@ class TaibifSearch extends React.Component {
       .then(
         (json) => {
           console.log('resp: ', json);
+          const data = json.data;
           this.setState({
             isLoaded: true,
-            data: json.data,
-            serverError: json.error
+            isLoadedMain: true,
+            search: json.search,
+            menus: json.menus,
+            serverError: json.error,
           });
         },
         (error) => {
@@ -227,27 +215,24 @@ class TaibifSearch extends React.Component {
       let mkeys = window.location.search.replace(/%2C/g,',').replace('?', '').split('&');
       let q = '';
       mkeys.forEach((m)=>{
-        if (m.indexOf('page=') < 0) {
-          const mArr = m.split('=');
-          if (mArr[0] === 'q') {
-            console.log(mArr[1]);
-            this.setState({queryKeyword:decodeURIComponent(mArr[1])});
-          }
-          mArr[1].split(',').forEach((x) => {
-            filters.add(`${mArr[0]}.${x}`);
-          })
+        const mArr = m.split('=');
+        if (mArr[0] === 'q') {
+          //console.log(mArr[1]);
+          this.setState({queryKeyword:decodeURIComponent(mArr[1])});
         }
+        mArr[1].split(',').forEach((x) => {
+          filters.add(`${mArr[0]}=${x}`);
+        })
       });
       this.applyFilters(filters);
     }
     else {
       this.getSearch();
     }
-
   }
 
   render() {
-    const { error, isLoaded, data, serverError } = this.state;
+    const { error, isLoaded, search, menus, serverError, isLoadedMain } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
@@ -257,23 +242,30 @@ class TaibifSearch extends React.Component {
     }
     else {
       //console.log('state: ', this.state);
-      const menus = this.state.data.menus;
+      const menus = this.state.menus;
       const filters = this.state.filters;
       const searchType = this.state.searchType;
-      const mainData = {
-        'results': this.state.data.results,
-        'count':  this.state.data.count,
-        'limit':  this.state.data.limit,
-        'offset':  this.state.data.offset,
-        'elapsed': this.state.data.elapsed,
-      };
+      const mainData = this.state.search;
       const queryKeyword = this.state.queryKeyword;
       let searchMainContainer = '';
-      if (searchType === 'dataset') {
+      if (!isLoadedMain) {
+        // via: https://codepen.io/kingfisher13/pen/vKXwNN
+        searchMainContainer = (
+            <div className="col-xs-12 col-md-9">
+            <div className="container">
+            <div className="loader">
+            <div className="loader-wheel"></div>
+            <div className="loader-text"></div>
+            </div>
+            </div>
+            </div>
+        );
+      }
+      else if (searchType === 'dataset') {
         searchMainContainer = <SearchMainDataset data={mainData} searchType={searchType} filters={filters} menus={menus} onClickTab={this.handleTabClick}/>
       }
       else if (searchType === 'occurrence') {
-        searchMainContainer = <SearchMainOccurrence data={mainData} searchType={searchType} filters={filters} menus={menus} />
+          searchMainContainer = <SearchMainOccurrence data={mainData} searchType={searchType} filters={filters} menus={menus} />
       }
       else if (searchType === 'publisher') {
         searchMainContainer = <SearchMainPublisher data={mainData} searchType={searchType} filters={filters} menus={menus} />
@@ -287,7 +279,7 @@ class TaibifSearch extends React.Component {
           <div className="row">
           <SearchSidebar menus={menus} onClick={this.handleMenuClick} filters={filters} onClickClear={(e)=>this.applyFilters()} queryKeyword={queryKeyword} onChangeKeyword={(e)=>{this.handleKeywordChange(e)}} onClickSubmitKeyword={this.handleSubmitKeywordClick} searchType={searchType} />
           {searchMainContainer}
-          <Pagination limit={mainData.limit} offset={mainData.offset} count={mainData.count} current={defaultPage } />
+          <Pagination onClick={this.handlePaginationClick} />
           </div>
       );
     }

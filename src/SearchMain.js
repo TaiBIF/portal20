@@ -3,9 +3,10 @@ import React from 'react';
 function SearchMainOccurrence(props) {
   //console.log(props);
   const rows = props.data.results.map((row, index) => {
+    const sn = props.data.offset + index + 1;
     return (
         <tr key={row.taibif_id}>
-        <td><a href={"/occurrence/"+row.taibif_id}>{ index+1 }</a></td>
+        <td><a href={"/occurrence/"+row.taibif_id}>{ sn }</a></td>
         <td>{/*http://taibif.tw/zh/namecode/{{ i.name_code */}{ row.scientific_name }</td>
         <td>{ row.vernacular_name }</td>
         <td>{ row.basis_of_record }</td>
@@ -29,11 +30,11 @@ function SearchMainOccurrence(props) {
     }
   }
 
+  const elapsed = props.data.elapsed.toFixed(2);
   return (
       <div className="col-xs-12 col-md-9">
       <div className="container">
-        <h2>出現紀錄<small>{/* / 共 occurrence_list.paginator.count  筆資料 */} 搜尋時間: { props.data.elapsed }秒</small></h2>
-        <div className="loading-overlay"></div>
+      <h2>出現紀錄<small>  &#8778;{props.data.count}  筆資料 / 搜尋時間: { elapsed } 秒</small></h2>
         <div className="search-main-tag-wrapper">篩選條件: <div className="search-main-tag-item">{ filterTags }</div></div>
       <table className="table table-hover">
         <thead>
