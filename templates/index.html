@@ -22,7 +22,7 @@
   function changeQueryKeyword(q) {
     const a = document.querySelectorAll('.search-type-btn');
     a.forEach((x)=> {
-      if (x.dataset.type === 'occurrence' || x.dataset.type === 'dataset') {
+      if (x.dataset.type === 'occurrence' || x.dataset.type === 'dataset' || x.dataset.type === 'species' || x.dataset.type === 'publisher') {
         x.href = `/${x.dataset.type}/search/?q=${q}`;
       }
     });
@@ -86,7 +86,7 @@
                 <li class="col-xs-3"><a href="{% url 'search-publisher' %}" class="search-type-btn" data-type="publisher">發布者</a></li>
               </ul>
               <div class="head-carousel-search-form-wrapper">
-              <input type="text" class="head-carousel-search-input search-q" placeholder="全站搜尋..." name="q" onchange="changeQueryKeyword(this.value);">
+              <input type="text" class="head-carousel-search-input search-q" placeholder="全站搜尋..." name="q" onkeydown="changeQueryKeyword(this.value);">
               <button class="head-carousel-search-btn" type="submit">
                 <span class="myicon icon-search"></span>
               </button>
