@@ -1,9 +1,15 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import (
+    HttpResponse,
+    HttpResponseNotFound,
+)
 from django.db.models import F
 from django.conf import settings
 
-from apps.data.models import Dataset
+from apps.data.models import (
+    Dataset,
+    Taxon,
+)
 from apps.article.models import Article
 from .models import Post, Journal
 from utils.mail import taibif_mail_contact_us
@@ -91,4 +97,44 @@ def data_stats(request):
     }
     return render(request, 'data-stats.html', context)
 
+def common_name_checker(request):
+    if request.method == 'GET':
+        q = request.GET.get('q', '')
+        sep = request.GET.get('sep', '')
+        context = {
+            'q': q,
+            'sep': sep,
+        }
+        return render(request, 'tools-common_name_checker.html', context)
+    elif request.method == 'POST':
+        q = request.POST.get('q', '')
+        sep = request.POST.get('sep', 'n')
+        results = []
+        if sep not in [',', 'n']:
+            return HttpResponseNotFound('err input')
 
+        sep_real = '\n' if sep == 'n' else sep
+        cname_list = q.split(sep_real)
+        cname_list = list(set(cname_list))
+        for cn in cname_list:
+            cn = cn.strip()
+            row = {
+                'common_name': cn,
+                'match_type': 'no match',
+                'match_list': []
+            }
+
+            taxa = Taxon.objects.filter(rank='species', name_zh__icontains=cn).all()
+            if taxa:
+                row['match_type'] = 'match'
+
+            for t in taxa:
+                row['match_list'].append(t)
+            results.append(row)
+
+        context = {
+            'results': results,
+            'q': q,
+            'sep': sep,
+        }
+    return render(request, 'tools-common_name_checker.html', context)
