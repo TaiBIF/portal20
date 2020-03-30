@@ -106,7 +106,6 @@ class SuperSearch(object):
         self.timed.append(time.time())
 
         count = 0
-        print ()
         if len(self.req) == 0:
             count = self._estimate_count_all()
         elif self.is_estimate_count and not self.force_accurate_count:
@@ -116,7 +115,7 @@ class SuperSearch(object):
 
         ret = {
             'elapsed': self.timed[1] - self.timed[0],
-            'count': count,
+            'count': int(count),
             'limit': limit,
             'offset': offset,
             'has_more': True if count > 0 and offset + limit <= count else False,

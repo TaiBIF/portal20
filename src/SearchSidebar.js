@@ -27,6 +27,9 @@ function SearchSidebar(props) {
   else if (props.searchType === 'occurrence') {
     searchTypeLabel = '出現紀錄';
   }
+  else if (props.searchType === 'species') {
+    searchTypeLabel = '物種';
+  }
   else if (props.searchType === 'publisher') {
     searchTypeLabel = '發布者';
   }
