@@ -7,6 +7,7 @@ urlpatterns = [
     path('publishing-data', views.publishing_data, name='publishing_data'),
     path('journals', views.journals, name='journals'),
     path('tools', views.tools, name='tools'),
+    path('common-name-checker', views.common_name_checker, name='tools-common_name_checker'),
     path('cookbook', views.cookbook, name='cookbook'),
     path('cookbook/1', views.cookbook_detail_1, name='cookbook_detail_1'),
     path('cookbook/2', views.cookbook_detail_2, name='cookbook_detail_2'),

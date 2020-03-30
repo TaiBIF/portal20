@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+{% include "inc_breadcrumb.html" with tab="02" active_label="工具分享" %}
+
+ <style>
+   p{
+  line-height: 1.8;
+  }
+
+  hr {
+  border-top: 1px solid;
+    }
+ </style>
+
+  <!-- container begin -->
+  <div class="container">
+    <h2 class="h2">
+      物種中文名比對
+    </h2>
+
+    <div class="journals-intro-ctn">
+      <p>此工具提供使用者上傳多筆中文名稱，工具會針對所上傳的物種中文名稱比對出臺灣物種名錄中所對應的物種學名與物種代碼（name code），若比對不到中文名稱則傳回「no match」之訊息。</p>
+      <form method="POST" action="{% url 'tools-common_name_checker' %}">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="query-sep">分隔</label>
+          <div class="row">
+            <div class="col-xs-2">
+              <select name="sep" id="query-sep" class="form-control"><option value="">-- 請選擇--</option><option value="n"{% if sep and sep == "n" %} selected{% endif %}>換行符號(\n)</option><option value=","{% if sep and sep == "," %} selected{% endif %}>,</option></select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="query-cn">輸入中文名</label>
+          <textarea name="q" id="query-cn" class="form-control" rows="5">{% if q %}{{ q }}{% endif %}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">比對</button>
+      </form>
+      {% if results %}
+      <table class="table">
+        <colgroup>
+          <col span="1" style="width: 1%;">
+          <col span="1" style="width: 20%;">
+          <col span="1" style="width: 9%;">
+          <col span="1" style="width: 70%;">
+        </colgroup>
+        <thead><tr><th>#</th><th>中文名</th><th>比對</th><th>結果: 學名(中文名) [name_code]</th></tr></thead>
+        <tbody>
+          {% for i in results %}
+          <tr><td>{{ forloop.counter }}</td><td>{{ i.common_name }}</td><td>{{ i.match_type }}{% if i.match_list %}: {{ i.match_list|length }}{% endif %}</td><td><ul>{% for t in i.match_list %}<li>{{ t.scientific_name_infraspecific }} {% if t.name_zh %}({{ t.name_zh }}) [<a href="{{ t.taicol_namecode_link }}" target="_blank">{{ t.source_id}}</a>]{% endif %}</li>{% endfor%}</ul></td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
