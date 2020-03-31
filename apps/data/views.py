@@ -32,7 +32,7 @@ def search_all(request):
         ## 預設最多每組 20 筆
         count = 0
         article_rows = []
-        for x in Article.objects.filter(title__icontains=q).all()[:20]:
+        for x in Article.objects.filter(title__icontains=q).all()[:10]:
             article_rows.append({
                 'title': x.title,
                 'content': x.content,
@@ -188,10 +188,10 @@ def species_view(request, pk):
 
     #q = RawDataOccurrence.objects.values('taibif_dataset_name', 'decimallatitude', 'decimallongitude').filter(scientificname=taxon.name).all()
 
-    #rank_key = 'taxon_{}_id'.format(taxon.rank)
+    rank_key = 'taxon_{}_id'.format(taxon.rank)
     #occur_search = OccurrenceSearch([(rank_key, [taxon.id])])
     #res = occur_search.get_results()
-    #print (res)
+    #print (occur_search.filters)
 
 
     '''q = SimpleData.objects.values('latitude', 'longitude').filter(taxon_species_id=pk).all()
