@@ -193,7 +193,6 @@ def species_view(request, pk):
     #res = occur_search.get_results()
     #print (occur_search.filters)
 
-
     '''q = SimpleData.objects.values('latitude', 'longitude').filter(taxon_species_id=pk).all()
     #q.count()
     occurrence_list = []
@@ -226,7 +225,7 @@ def species_view(request, pk):
         #'dataset_list': dataset_list
     }
     if taxon.rank == 'species':
-        context['species_info'] = sp_info
+        context['species_info'] = get_species_info(taxon)
 
     #if n:
     #    context['map_view'] = [lat/n, lng/n]
