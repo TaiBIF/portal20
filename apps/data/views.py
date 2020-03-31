@@ -13,6 +13,12 @@ from django.conf import settings
 from apps.article.models import Article
 from .models import Taxon, Occurrence, Dataset, RawDataOccurrence, DatasetOrganization, SimpleData
 from .helpers.species import get_species_info
+from .helpers.mod_search import (
+    OccurrenceSearch,
+    DatasetSearch,
+    PublisherSearch,
+    SpeciesSearch,
+)
 
 def search_all(request):
     if request.method == 'POST':
@@ -181,7 +187,14 @@ def species_view(request, pk):
     taxon = get_object_or_404(Taxon, pk=pk)
 
     #q = RawDataOccurrence.objects.values('taibif_dataset_name', 'decimallatitude', 'decimallongitude').filter(scientificname=taxon.name).all()
-    q = SimpleData.objects.values('latitude', 'longitude').filter(taxon_species_id=pk).all()
+
+    #rank_key = 'taxon_{}_id'.format(taxon.rank)
+    #occur_search = OccurrenceSearch([(rank_key, [taxon.id])])
+    #res = occur_search.get_results()
+    #print (res)
+
+
+    '''q = SimpleData.objects.values('latitude', 'longitude').filter(taxon_species_id=pk).all()
     #q.count()
     occurrence_list = []
     rows = None
@@ -205,18 +218,18 @@ def species_view(request, pk):
             })
 
     #dataset_list = q.annotate(dataset=Count('id')).all()
-    n = len(occurrence_list)
+    n = len(occurrence_list)'''
 
     context = {
         'taxon': taxon,
-        'occurrence_list': occurrence_list,
+        'occurrence_list': [],
         #'dataset_list': dataset_list
     }
     if taxon.rank == 'species':
         context['species_info'] = sp_info
 
-    if n:
-        context['map_view'] = [lat/n, lng/n]
+    #if n:
+    #    context['map_view'] = [lat/n, lng/n]
     #n =
     return render(request, 'species.html', context)
 

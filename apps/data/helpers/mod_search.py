@@ -183,9 +183,11 @@ class OccurrenceSearch(SuperSearch):
                 query = query.filter(country__exact=values)
             if key == 'dataset':
                 query = query.filter(taibif_dataset_name__in=values)
-            ## TODO limit & offset
-            #if menu_key == 'page':
-            #    page = int(item_keys)
+
+            # for species-detail page
+            if 'taxon_' in key:
+                query = query.filter(**{key:values[0]})
+
 
             self.query = query
 
@@ -196,6 +198,8 @@ class OccurrenceSearch(SuperSearch):
             'vernacular_name': x.vernacular_name,
             #'country_code': x.countrycode,
             'scientific_name': x.scientific_name,
+            'latitude': x.latitude,
+            'longitude': x.longitude,
             'dataset':  x.taibif_dataset_name,
         }
 
