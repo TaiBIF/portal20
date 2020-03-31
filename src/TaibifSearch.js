@@ -57,6 +57,7 @@ class TaibifSearch extends React.Component {
     }
     this.handleMenuClick = this.handleMenuClick.bind(this);
     this.handleKeywordChange = this.handleKeywordChange.bind(this);
+    this.handleKeywordEnter = this.handleKeywordEnter.bind(this);
     this.getSearch = this.getSearch.bind(this);
     this.handlePaginationClick = this.handlePaginationClick.bind(this);
     this.applyFilters = this.applyFilters.bind(this);
@@ -95,6 +96,13 @@ class TaibifSearch extends React.Component {
   handleKeywordChange(e) {
     const v = e.target.value;
     this.setState({queryKeyword:v});
+  }
+
+  handleKeywordEnter(e) {
+    if (e.charCode === 13){
+      const v = e.target.value;
+      this.handleSubmitKeywordClick();
+    }
   }
 
   applyFilters(newFilters) {
@@ -277,7 +285,7 @@ class TaibifSearch extends React.Component {
       const defaultPage = (this.state.page) ? this.state.page : '1';
       return (
           <div className="row">
-          <SearchSidebar menus={menus} onClick={this.handleMenuClick} filters={filters} onClickClear={(e)=>this.applyFilters()} queryKeyword={queryKeyword} onChangeKeyword={(e)=>{this.handleKeywordChange(e)}} onClickSubmitKeyword={this.handleSubmitKeywordClick} searchType={searchType} />
+          <SearchSidebar menus={menus} onClick={this.handleMenuClick} filters={filters} onClickClear={(e)=>this.applyFilters()} queryKeyword={queryKeyword} onChangeKeyword={(e)=>{this.handleKeywordChange(e)}} onKeyPressKeyword={(e)=>{this.handleKeywordEnter(e)}}onClickSubmitKeyword={this.handleSubmitKeywordClick} searchType={searchType} />
           {searchMainContainer}
           <Pagination onClick={this.handlePaginationClick} />
           </div>
