@@ -44,11 +44,11 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
 {# include "inc_breadcrumb.html" with tab="03" active_label="" #}
 <!-- container begin -->
 <div class="container">
-  <h2>{{ taxon.scientific_name_infraspecific }} {% if not taxon.is_accepted_name %}<small><span class="label label-warning">同物異名</span></small>{% endif %}</h2>
+  <h2>{{ taxon.scientific_name_full }} {% if taxon.name_zh %} {{ taxon.name_zh }}{% endif %} {% if not taxon.is_accepted_name %}<small><span class="label label-warning">同物異名</span></small>{% endif %}</h2>
     <p>
-    來源: <a href="http://taicol.tw">臺灣物種名錄 (TaiCoL)</a> | 搜尋 TaiCoL: <a href="{{ taxon.taicol_search_link }}" target/"_blank">{{ taxon.name }}</a>{% if taxon.taicol_namecode_link%} | name_code: <a href="{{ taxon.taicol_namecode_link}}">{{ taxon.source_id }}</a>{% endif %}
+    來源: <a href="http://taicol.tw">臺灣物種名錄 (TaiCoL)</a> | 搜尋 TaiCoL: <a href="{{ taxon.taicol_search_link }}" target="_blank">{{ taxon.scientific_name_full }}</a>{% if taxon.taicol_namecode_link %} | name_code: <a href="{{ taxon.taicol_namecode_link }}">{{ taxon.source_id }}</a>{% endif %}
     </p>
-    <div>{% if not taxon.is_accepted_name and taxon.accepted_species%}Accepted name: <a href="/species/{{taxon.accepted_species.id }}">{{ taxon.accepted_species.scientific_name_infraspecific }}</a>{% endif %}</div>
+    <div>{% if not taxon.is_accepted_name and taxon.accepted_species%}Accepted name: <a href="/species/{{taxon.accepted_species.id }}">{{ taxon.accepted_species.scientific_name_full }}</a>{% endif %}</div>
   <div class="article-head-wrapper">
     <h1 class="heading-lg-ul">
       分類
@@ -57,7 +57,7 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       {% for i in taxon.rank_list %}
       <li class="species-ranklist__item">
         <div class="species-ranklist__item-name">
-          <a href="{{ i.get_absolute_url }}">{{ i.name }}</a>
+          <a href="{{ i.get_absolute_url }}">{{ i.scientific_name_full }}</a>
         </div>
         <div class="species-ranklist__item-name-zh">
           {{ i.name_zh }}
@@ -65,7 +65,7 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       </li>
       <li><div>→</div></li>
       {% endfor %}
-      <span>{{ taxon.get_name }}</span>
+      <span>{{ taxon.scientific_name_full }}{% if taxon.name_zh %} {{ taxon.name_zh }}{% endif %}</span>
     </ul>
     {% if taxon.children %}
     <div>
@@ -79,13 +79,12 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
     {% endif %}
     {#<p>物種數: </p>#}
   </div>
-
-  {% if taxon.rank == "species" %}
+  {% if taxon.rank == "species" and species_info.taieol_taxon_id %}
   <div class="article-head-wrapper">
     <h1 class="heading-lg-ul">
-      照片
+      物種解說
     </h1>
-    <div>來源: <a href="https://taieol.tw/pages/{{ species_info.taieol_taxon_id }}/media" target="_blank">臺灣生命大百科</a></div>
+    <p><a href="https://taieol.tw/pages/{{ species_info.taieol_taxon_id }}" target="_blank"><button type="button" class="btn btn-success">臺灣生命大百科 TaiEOL</button></a></p>
     {% for i in species_info.taieol_media %}
     {% if forloop.counter0|divisibleby:4 %}
     <div class="row">
@@ -98,10 +97,11 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
         </div>
       </div>
     </div>
-    {% if forloop.counter|divisibleby:4 %}
+    {% if forloop.counter|divisibleby:4 or forloop.last%}
     </div>
     {% endif %}
     {% endfor %}
+    <div><small>照片來源: <a href="https://taieol.tw/pages/{{ species_info.taieol_taxon_id }}/media" target="_blank">臺灣生命大百科</a></small></div>
   </div>
   {% endif %}
   {% comment %}
