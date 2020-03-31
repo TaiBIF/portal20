@@ -19,13 +19,14 @@
 {% block main %}
 <!-- xs-search-modal begin -->
 <script>
-  function changeQueryKeyword(q) {
-    const a = document.querySelectorAll('.search-type-btn');
-    a.forEach((x)=> {
-      if (x.dataset.type === 'occurrence' || x.dataset.type === 'dataset' || x.dataset.type === 'species' || x.dataset.type === 'publisher') {
-        x.href = `/${x.dataset.type}/search/?q=${q}`;
-      }
-    });
+  function goSearch(cat) {
+    const q = document.querySelector('#taibif-search-keyword');
+    if (q.value) {
+      window.location.href= `/${cat}/search/?q=${q.value}`;
+    }
+    else {
+      window.location.href= `/${cat}/search/`;
+    }
   }
 </script>
   <div class="modal fade xs-modal-wrapper xs-search-modal-pos" data-backdrop="false">
@@ -80,13 +81,13 @@
             <form action="/search/" method="post">
               {% csrf_token %}
               <ul class="row head-carousel-search-cate">
-                <li class="col-xs-3"><a href="{% url 'search-occurrence' %}" class="search-type-btn" data-type="occurrence">出現紀錄</a></li>
-                <li class="col-xs-3"><a href="{% url 'search-species' %}" class="search-type-btn" data-type="species">物種</a></li>
-                <li class="col-xs-3"><a href="{% url 'search-dataset' %}" class="search-type-btn" data-type="dataset">資料集</a></li>
-                <li class="col-xs-3"><a href="{% url 'search-publisher' %}" class="search-type-btn" data-type="publisher">發布者</a></li>
+                <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="occurrence" onclick="goSearch('occurrence');">出現紀錄</a></li>
+                <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="species" onclick="goSearch('species');">物種</a></li>
+                <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="dataset" onclick="goSearch('dataset');">資料集</a></li>
+                <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="publisher" onclick="goSearch('publisher');">發布者</a></li>
               </ul>
               <div class="head-carousel-search-form-wrapper">
-              <input type="text" class="head-carousel-search-input search-q" placeholder="全站搜尋..." name="q" onkeydown="changeQueryKeyword(this.value);">
+              <input type="text" class="head-carousel-search-input search-q" placeholder="全站搜尋..." name="q" id="taibif-search-keyword">
               <button class="head-carousel-search-btn" type="submit">
                 <span class="myicon icon-search"></span>
               </button>

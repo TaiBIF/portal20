@@ -104,7 +104,7 @@ def search_occurrence(request):
         ]
 
     # search
-    occur_search = OccurrenceSearch(request.GET, using='')
+    occur_search = OccurrenceSearch(list(request.GET.lists()), using='')
     res = occur_search.get_results()
 
     data = {
@@ -171,7 +171,7 @@ def search_dataset(request):
         ]
 
     # search
-    ds_search = DatasetSearch(request.GET)
+    ds_search = DatasetSearch(list(request.GET.lists()))
     res = ds_search.get_results()
 
     data = {
@@ -203,7 +203,7 @@ def search_publisher(request):
         ]
 
     # search
-    publisher_search = PublisherSearch(request.GET)
+    publisher_search = PublisherSearch(list(request.GET.lists()))
     res = publisher_search.get_results()
 
     data = {
@@ -245,7 +245,7 @@ def search_species(request):
         ]
 
     # search
-    species_search = SpeciesSearch(request.GET)
+    species_search = SpeciesSearch(list(request.GET.lists()))
     res = species_search.get_results()
 
     data = {

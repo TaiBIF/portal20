@@ -251,6 +251,19 @@ class Taxon(models.Model):
             return ' '.join(slist)
 
     @property
+    def scientific_name_full(self):
+        if self.rank == 'species':
+            slist = [self.scientific_name_infraspecific]
+            vlist = self.verbose.split('|')
+            if vlist[7] and vlist[7] != '--':
+                slist.append(vlist[7])
+            if vlist[8] and vlist[8] != '--':
+                slist.append(vlist[8])
+            return ' '.join(slist)
+        else:
+            return self.name
+
+    @property
     def taicol_search_link(self):
         url = 'http://taibnet.sinica.edu.tw/chi/taibnet_species_list.php?T2={}&T2_new_value=true&fr=y'.format(self.name)
         return url
