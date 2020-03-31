@@ -9,9 +9,9 @@ function SearchMainOccurrence(props) {
         <td><a href={"/occurrence/"+row.taibif_id}>{ sn }</a></td>
         <td>{/*http://taibif.tw/zh/namecode/{{ i.name_code */}{ row.scientific_name }</td>
         <td>{ row.vernacular_name }</td>
-        <td>{ row.basis_of_record }</td>
+        <td>{ row.date }</td>
         <td>{ row.country }{/*/ i.locality */}</td>
-        <td><a href={"/dataset/"+row.dataset.name+"/"}>{ row.dataset.title }</a></td>
+        <td><a href={"/dataset/"+row.dataset+"/"}>{ row.dataset }</a></td>
         </tr>
     )
   });
@@ -42,7 +42,7 @@ function SearchMainOccurrence(props) {
             <th>#</th>
             <th>學名</th>
             <th>俗名</th>
-            <th>紀錄依據</th>
+            <th>時間</th>
             <th>國家/地區</th>
             <th>資料集</th>
           </tr>

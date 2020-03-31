@@ -192,15 +192,19 @@ class OccurrenceSearch(SuperSearch):
             self.query = query
 
     def result_map(self, x):
+        date = '{}-{}-{}'.format(x.year if x.year else '',
+                                 x.month if x.month else '',
+                                 x.day if x.day else '')
         return {
             'taibif_id': x.taibif_id,
             #'basis_of_record': x.basisofrecord'],
             'vernacular_name': x.vernacular_name,
-            #'country_code': x.countrycode,
+            'country': x.country,
             'scientific_name': x.scientific_name,
-            'latitude': x.latitude,
-            'longitude': x.longitude,
+            'latitude': float(x.latitude) if x.latitude else None,
+            'longitude': float(x.longitude) if x.longitude else None,
             'dataset':  x.taibif_dataset_name,
+            'date': date,
         }
 
 
