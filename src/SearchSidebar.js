@@ -43,7 +43,7 @@ function SearchSidebar(props) {
       </div>
       </div>
       <div className="input-group">
-      <input className="form-control search-keyword" placeholder="搜尋關鍵字" name="srch-term" id="srch-term" type="text" value={props.queryKeyword} onChange={props.onChangeKeyword}/>
+      <input className="form-control search-keyword" placeholder="搜尋關鍵字" name="srch-term" id="srch-term" type="text" value={props.queryKeyword} onChange={props.onChangeKeyword} onKeyPress={props.onKeyPressKeyword}/>
       <div className="input-group-btn">
       <button className="btn btn-default search-keyword-sign" type="submit" onClick={props.onClickSubmitKeyword}><i className="glyphicon glyphicon-search"></i></button>
       </div>
