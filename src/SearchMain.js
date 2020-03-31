@@ -157,12 +157,12 @@ function SearchMainPublisher(props) {
 }
 
 function SearchMainSpecies(props) {
-  //console.log(props);
+  console.log(props);
   const rows = props.data.results.map((row) => {
     return (
         <div className="row listbox-img-right-wrapper" key={row.id}>
         <div className="col-xs-8">
-        <h3 className="listbox-inner-title"><a href={"/species/"+row.id} className="">{row.name_zh} { row.name }</a></h3>
+        <h3 className="listbox-inner-title"><a href={"/species/"+row.id} className="">{row.name_zh} { row.name_full }</a></h3>
         <p className="listbox-inner-summary hidden-xs">
         {row.description}
         </p>

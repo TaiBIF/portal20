@@ -26,18 +26,33 @@ class SuperSearch(object):
     estimate_threshold = 100
     estimate_bias = 1.2
 
-    def __init__(self, req):
-        self.req = req
+    def __init__(self, filters):
+        '''
+        firters: [('q', ['begonia']), ('year', ['1990', '1983']), ('menu', ['1'])]
+        '''
+        self.filters = filters
+
+        # default values
         self.offset = 0
-        self.limit = -1
+        self.limit = self.DEFAULT_LIMIT
+        self.is_debug = False
+        self.force_accurate_count = False
+
         self.timed = [time.time()]
         self.query = self.model.objects.filter()
-        qdict = req.dict()
-        self.limit = int(qdict['limit']) if 'limit' in qdict else self.DEFAULT_LIMIT
-        self.limit = min(self.LIMIT_THRESHOLD, self.limit)
-        self.offset = int(qdict['offset']) if 'offset' in qdict else 0
-        self.is_debug = True if 'debug' in qdict else False
-        self.force_accurate_count = True  if 'force_accurate_count' in qdict else False
+
+        # parsing filters
+        #print (filters)
+        for i in filters:
+            if i[0] == 'limit':
+                self.limit = min(self.LIMIT_THRESHOLD, int(i[1][0]))
+            if i[0] == 'offset':
+                self.offset = int(i[1][0])
+            if i[0] == 'debug':
+                self.debug = True
+            if i[0] == 'force_accurate_count':
+                self.force_accurate_count = True
+
         self.timed = [time.time()]
 
     def _estimate_count(self):
@@ -106,7 +121,7 @@ class SuperSearch(object):
         self.timed.append(time.time())
 
         count = 0
-        if len(self.req) == 0:
+        if len(self.filters) == 0:
             count = self._estimate_count_all()
         elif self.is_estimate_count and not self.force_accurate_count:
             count = self._estimate_count()
@@ -130,16 +145,14 @@ class OccurrenceSearch(SuperSearch):
 
     is_estimate_count = True
 
-    def __init__(self, req, using=''):
+    def __init__(self, filters, using=''):
         self.model = SimpleData
-        super().__init__(req)
-        self.filters = req.lists()
+        super().__init__(filters)
         self.using = using
 
         # filter query
         query = self.query
         for key, values in self.filters:
-            #print (key, values)
             if key == 'q':
                 v = values[0] # only get one
                 if not v:
@@ -189,11 +202,10 @@ class OccurrenceSearch(SuperSearch):
 
 class DatasetSearch(SuperSearch):
 
-    def __init__(self, req):
+    def __init__(self, filters):
         self.model = Dataset
-        super().__init__(req)
+        super().__init__(filters)
         self.query = self.model.objects.filter()
-        self.filters = req.lists()
 
         # filter query
         query = self.query.exclude(status='Private')
@@ -231,10 +243,9 @@ class DatasetSearch(SuperSearch):
 
 class PublisherSearch(SuperSearch):
 
-    def __init__(self, req):
+    def __init__(self, filters):
         self.model = DatasetOrganization
-        super().__init__(req)
-        self.filters = req.lists()
+        super().__init__(filters)
 
         # filter query
         query = self.query
@@ -262,10 +273,9 @@ class SpeciesSearch(SuperSearch):
 
     is_estimate_count = True
 
-    def __init__(self, req):
+    def __init__(self, filters):
         self.model = Taxon
-        super().__init__(req)
-        self.filters = req.lists()
+        super().__init__(filters)
 
 
         # filter query
@@ -291,7 +301,9 @@ class SpeciesSearch(SuperSearch):
             'id': x.id,
             'name': x.name,
             'name_zh': x.name_zh,
+            'name_full': x.scientific_name_full,
             'count': x.count,
-            'rank': x.get_rank_display(),
+            'rank': x.rank,
+            'rank_display': x.get_rank_display(),
             'is_accepted_name': x.is_accepted_name,
         }
