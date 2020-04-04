@@ -183,6 +183,10 @@ class OccurrenceSearch(SuperSearch):
                 query = query.filter(country__exact=values)
             if key == 'dataset':
                 query = query.filter(taibif_dataset_name__in=values)
+            if key == 'publisher':
+                datasets = Dataset.objects.filter(organization__in=values)
+                dataset_names = [x.name for x in datasets]
+                query = query.filter(taibif_dataset_name__in=dataset_names)
 
             # for species-detail page
             if 'taxon_' in key:
