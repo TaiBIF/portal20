@@ -15,7 +15,14 @@
  </style>
 
   <!-- container begin -->
-  <div class="container">
+ <div class="container">
+   {% if message %}
+  <div class="alert alert-warning alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>{{ message.head }}</strong> {{ message.content }}
+  </div>
+  {% endif %}
+
     <h2 class="h2">
       物種中文名比對
     </h2>
@@ -42,14 +49,15 @@
       <table class="table">
         <colgroup>
           <col span="1" style="width: 1%;">
-          <col span="1" style="width: 20%;">
+          <col span="1" style="width: 10%;">
           <col span="1" style="width: 9%;">
           <col span="1" style="width: 70%;">
+          <col span="1" style="width: 10%;">
         </colgroup>
-        <thead><tr><th>#</th><th>中文名</th><th>比對</th><th>結果: 學名(中文名) [name_code]</th></tr></thead>
+        <thead><tr><th>#</th><th>輸入中文名</th><th>比對</th><th>結果: 學名(中文名) [name_code]</th><th>搜尋替換</th></tr></thead>
         <tbody>
           {% for i in results %}
-          <tr><td>{{ forloop.counter }}</td><td>{{ i.common_name }}</td><td>{{ i.match_type }}{% if i.match_list %}: {{ i.match_list|length }}{% endif %}</td><td><ul>{% for t in i.match_list %}<li>{{ t.scientific_name_infraspecific }} {% if t.name_zh %}({{ t.name_zh }}) [<a href="{{ t.taicol_namecode_link }}" target="_blank">{{ t.source_id}}</a>]{% endif %}</li>{% endfor%}</ul></td></tr>
+          <tr><td>{{ forloop.counter }}</td><td>{{ i.common_name }}</td><td>{{ i.match_type }}{% if i.match_list %}: {{ i.match_list|length }}{% endif %}</td><td><ul>{% for t in i.match_list %}<li>{{ t.scientific_name_infraspecific }} {% if t.name_zh %}({{ t.name_zh }}) [<a href="{{ t.taicol_namecode_link }}" target="_blank">{{ t.source_id}}</a>]{% endif %}</li>{% endfor%}</ul></td><td>{{ i.q_replace }}</td></tr>
           {% endfor %}
         </tbody>
       </table>

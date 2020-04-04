@@ -1,9 +1,14 @@
+import re
+
 from django.shortcuts import render
 from django.http import (
     HttpResponse,
     HttpResponseNotFound,
 )
-from django.db.models import F
+from django.db.models import (
+    Q,
+    F,
+)
 from django.conf import settings
 
 from apps.data.models import (
@@ -109,6 +114,29 @@ def common_name_checker(request):
     elif request.method == 'POST':
         q = request.POST.get('q', '')
         sep = request.POST.get('sep', 'n')
+
+        if not q:
+            context = {
+                'message': {
+                    'head': '輸入錯誤',
+                    'content': '請輸入中文名',
+                }
+            }
+            return render(request, 'tools-common_name_checker.html', context)
+
+        if q in ['台灣', '臺灣']:
+            context = {
+                'message': {
+                    'head': '結果太多',
+                    'content': '請輸入更完整中文名',
+                },
+                'sep': sep,
+                'q': q,
+            }
+            return render(request, 'tools-common_name_checker.html', context)
+
+        if not sep:
+            sep = 'n'
         results = []
         if sep not in [',', 'n']:
             return HttpResponseNotFound('err input')
@@ -116,15 +144,30 @@ def common_name_checker(request):
         sep_real = '\n' if sep == 'n' else sep
         cname_list = q.split(sep_real)
         cname_list = list(set(cname_list))
+
+        #taiwan_char_check_exclude = ['台灣留鳥', '台灣過境', '台灣亞種', '台灣特有亞種']
         for cn in cname_list:
             cn = cn.strip()
+
+            q_replace = ''
+            if '台灣' in cn:
+                q_replace = cn.replace('台灣', '臺灣')
+
+            if '臺灣' in cn:
+                q_replace = cn.replace('臺灣', '台灣')
+
             row = {
                 'common_name': cn,
                 'match_type': 'no match',
                 'match_list': []
             }
+            taxa = Taxon.objects.filter(rank='species')
+            if q_replace:
+                row['q_replace'] = q_replace
+                taxa = Taxon.objects.filter(Q(name_zh__icontains=cn) | Q(name_zh__icontains=q_replace)).all()
+            else:
+                taxa = Taxon.objects.filter(name_zh__icontains=cn).all()
 
-            taxa = Taxon.objects.filter(rank='species', name_zh__icontains=cn).all()
             if taxa:
                 row['match_type'] = 'match'
 
