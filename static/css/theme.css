@@ -411,9 +411,9 @@ a.navbar-oval-btn {
   border-radius: 50%;
   display: inline-block;
   text-align: center;
-  font-size: 22px;
+  font-size: 25px;
   margin: 0 4px;
-  padding: 6px 8px 1px 7px;
+  padding: 1px 10px;
 }
 
 a.navbar-oval-btn:hover {
@@ -1524,13 +1524,14 @@ a.navbar-icon-btn:last-child {
   margin-bottom:-10px;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
   color: #777777;
+  line-height: 18px;
 }
 
 .news-card-title-ctn .img-title {
   font-size: 16px;
-  margin: 0;
+  margin: 2px 0 2px 0;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
-  max-height: 3em;
+  max-height: 3.5em;
   overflow: hidden;
 }
 
@@ -1715,7 +1716,7 @@ a.navbar-icon-btn:last-child {
 .topic-inner-title {
   display: block;
   color: #4A3E3A !important;
-  height: 3em;
+  height: 3.5em;
   overflow: hidden;
 }
 
