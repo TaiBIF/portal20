@@ -15,8 +15,8 @@ services:
       - .:/taibif-code
       - ../taibif-volumes/bucket:/taibif-volumes/bucket
       - ../taibif-volumes/media:/taibif-volumes/media
-    command: "./scripts/wait-for-it.sh postgres:5432 -t 5 -- python manage.py runserver 0.0.0.0:8000"
-
+    command: "./scripts/wait-for-it.sh db:5432 -t 5 -- ./scripts/docker-web-dev-entry.sh"
+    #command: "./scripts/wait-for-it.sh db:5432 -t 5 -- ./scripts/docker-web-entry.sh"
     restart: always
     env_file:
       - .env
