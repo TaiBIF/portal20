@@ -53,6 +53,10 @@ class TaibifSearch extends React.Component {
       filters: new Set(),
       searchType: searchType,
       queryKeyword: '',
+      taxonData: {
+        suggestList: [],
+        checked: [],
+      },
       pagination: {},
     }
     this.handleMenuClick = this.handleMenuClick.bind(this);
@@ -62,7 +66,9 @@ class TaibifSearch extends React.Component {
     this.handlePaginationClick = this.handlePaginationClick.bind(this);
     this.applyFilters = this.applyFilters.bind(this);
     this.handleSubmitKeywordClick = this.handleSubmitKeywordClick.bind(this);
+    this.handleAutocompleteItemClick = this.handleAutocompleteItemClick.bind(this);
     this.handleTabClick = this.handleTabClick.bind(this);
+
   }
 
   handleTabClick(e, core){
@@ -93,9 +99,48 @@ class TaibifSearch extends React.Component {
     this.applyFilters(filters);
   }
 
+  handleAutocompleteItemClick(e, speciesId, speciesNameFull) {
+    const ele = document.querySelector('.search-keyword__autocomplete-list');
+    ele.style.display = 'none';
+
+    const filters = this.state.filters;
+    this.setState(prevState => {
+      const slist = prevState.queryKeywordSelectionList;
+      slist.push([speciesId, speciesNameFull]);
+
+      filters.add(`speciesId=${speciesId}`);
+      return {
+        qeuryKeywordSelectionList: slist,
+        queryKeyword: '', // reset search keyword
+      }
+    });
+    this.applyFilters(filters);
+  }
   handleKeywordChange(e) {
     const v = e.target.value;
     this.setState({queryKeyword:v});
+    if (v === '') {
+      const ele = document.querySelector('.search-keyword__autocomplete-list');
+      ele.style.display = 'none';
+      this.setState({
+        queryAutocompleteList: [],
+      });
+      return false;
+    }
+    fetch(`/api/species/search/?q=${v}&status=accepted&rank=species`)
+      .then(res => res.json())
+      .then(
+        (json) => {
+          console.log('resp (autocemp): ', json.search.results);
+          const ele = document.querySelector('.search-keyword__autocomplete-list');
+          ele.style.display = 'block';
+          this.setState({
+            queryAutocompleteList: json.search.results,
+          });
+        },
+        (error) => {
+
+        });
   }
 
   handleKeywordEnter(e) {
@@ -113,8 +158,13 @@ class TaibifSearch extends React.Component {
       }
       else {
         this.getSearch();
-        return {filters: new Set(),
-                queryKeyword:''}
+        console.log(state);
+        return {
+          queryKeyword: '',
+          qeuryKeywordSelectionList: [],
+          queryAutocompleteList: [],
+          filters: new Set(),
+        }
       }
     })
   }
@@ -249,12 +299,15 @@ class TaibifSearch extends React.Component {
       return `[server]: ${serverError}`; // should not shou this on production
     }
     else {
-      //console.log('state: ', this.state);
+      console.log('state: ', this.state);
       const menus = this.state.menus;
       const filters = this.state.filters;
       const searchType = this.state.searchType;
       const mainData = this.state.search;
       const queryKeyword = this.state.queryKeyword;
+      //const queryAutocompleteList = this.state.queryAutocompleteList;
+      //const queryKeywordSelectionList = this.state.queryKeywordSelectionList;
+
       let searchMainContainer = '';
       if (!isLoadedMain) {
         // via: https://codepen.io/kingfisher13/pen/vKXwNN
@@ -285,7 +338,7 @@ class TaibifSearch extends React.Component {
       const defaultPage = (this.state.page) ? this.state.page : '1';
       return (
           <div className="row">
-          <SearchSidebar menus={menus} onClick={this.handleMenuClick} filters={filters} onClickClear={(e)=>this.applyFilters()} queryKeyword={queryKeyword} onChangeKeyword={(e)=>{this.handleKeywordChange(e)}} onKeyPressKeyword={(e)=>{this.handleKeywordEnter(e)}}onClickSubmitKeyword={this.handleSubmitKeywordClick} searchType={searchType} />
+          <SearchSidebar menus={menus} onClick={this.handleMenuClick} filters={filters} onClickClear={(e)=>this.applyFilters()} queryKeyword={queryKeyword} onChangeKeyword={(e)=>{this.handleKeywordChange(e)}} onKeyPressKeyword={(e)=>{this.handleKeywordEnter(e)}} onClickSubmitKeyword={this.handleSubmitKeywordClick} searchType={searchType} taxonData={this.state.taxonData} />
           {searchMainContainer}
           <Pagination onClick={this.handlePaginationClick} />
           </div>

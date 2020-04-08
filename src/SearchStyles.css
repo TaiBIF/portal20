@@ -63,7 +63,29 @@
     border-color: unset;
     border-bottom: unset;
 }
-
+.search-keyword__autocomplete-selection {
+    display: flex;
+    flex-wrap: wrap;
+}
+.search-keyword__autocomplete-selection-item {
+    padding: 0 8px;
+    margin-right: 6px;
+    border: 1px solid #adadad;
+    background-color: #fff2c0;
+}
+.search-keyword__autocomplete-list {
+    float: left;
+    position: absolute;
+    top: 42px;
+    border: 1px solid gray;
+    left: 0px;
+    z-index: 100;
+    background-color:#def;
+    list-style: none;
+    display: none;
+}
+.search-keyword__autocomplete-list {
+}
 .search-tag {
     margin: 10px 6px;
     padding: 4px 12px;
