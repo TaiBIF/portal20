@@ -21,6 +21,7 @@ services:
     env_file:
       - .env
   db:
+    build: ./postgres
     container_name: taibif-db-container
     image: postgres:12-alpine
     restart: always
