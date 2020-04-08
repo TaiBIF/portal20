@@ -110,8 +110,18 @@ def search_occurrence(request):
     data = {
         'search': res,
     }
+
     if has_menu:
         data['menus'] = menu_list
+        # tree
+        treeRoot = Taxon.objects.filter(rank='kingdom').all()
+        tree = [{
+            'id': x.id,
+            'name': x.name,
+            'name_zh': x.name_zh
+        } for x in treeRoot]
+        data['tree'] = tree
+
     #return {'data': data}
     return HttpResponse(json.dumps(data), content_type="application/json")
 
