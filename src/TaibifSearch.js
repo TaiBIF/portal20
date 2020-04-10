@@ -55,9 +55,12 @@ class TaibifSearch extends React.Component {
       queryKeyword: '',
       taxonData: {
         suggestList: [],
-        checked: [],
+        checked: {},
+        tree: [],
+        queryKeyword: '',
       },
       pagination: {},
+      debounceTimeout: null,
     }
     this.handleMenuClick = this.handleMenuClick.bind(this);
     this.handleKeywordChange = this.handleKeywordChange.bind(this);
@@ -66,9 +69,88 @@ class TaibifSearch extends React.Component {
     this.handlePaginationClick = this.handlePaginationClick.bind(this);
     this.applyFilters = this.applyFilters.bind(this);
     this.handleSubmitKeywordClick = this.handleSubmitKeywordClick.bind(this);
-    this.handleAutocompleteItemClick = this.handleAutocompleteItemClick.bind(this);
     this.handleTabClick = this.handleTabClick.bind(this);
 
+    this.handleTreeSpeciesClick = this.handleTreeSpeciesClick.bind(this);
+    this.handleTaxonRemove = this.handleTaxonRemove.bind(this);
+    this.handleTaxonKeywordChange = this.handleTaxonKeywordChange.bind(this);
+    this.handleSuggestClick = this.handleSuggestClick.bind(this);
+
+    this.debounce = this.debounce.bind(this);
+  }
+
+
+  debounce(func, delay) {
+    this.setState((prevState) => {
+      let timeout = prevState.debounceTimeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(func, delay);
+      return {
+        debounceTimeout: timeout,
+      }
+    });
+  };
+
+  handleTaxonKeywordChange(e) {
+    const v = e.target.value;
+    // TODO: debouncing
+    const ele = document.querySelector('.search-taxon__suggest-list');
+    if (v && ele) {
+      ele.style.display = 'display';
+    }
+
+    this.setState((prevState) => {
+      let taxonData = prevState.taxonData;
+      taxonData.queryKeyword = v;
+      return {
+        taxonData: taxonData,
+      }
+    });
+
+    const apiUrl = `/api/species/search/?q=${v}&rank=species`;
+    fetch(apiUrl)
+      .then(res => res.json())
+      .then(
+        (json) => {
+          console.log('resp (key): ', json);
+          this.setState((prevState) => {
+            let taxonData = prevState.taxonData;
+            if (json.search.results.length > 0) {
+              taxonData.suggestList = json.search.results;
+              return {
+                taxonData: taxonData,
+              }
+            }
+          });
+        },
+        (error) => {
+        });
+  }
+
+  handleTreeSpeciesClick(e, tid, name) {
+    const filters = this.state.filters;
+    this.setState((prevState) => {
+      const taxonData = prevState.taxonData;
+      taxonData.checked[tid] = name;
+      filters.add(`speciesId=${tid}`);
+      return {
+        taxonData: taxonData,
+      }
+    });
+    this.applyFilters(filters);
+  }
+
+  handleTaxonRemove(e, tid) {
+    const filters = this.state.filters;
+    this.setState((prevState) => {
+      const taxonData = prevState.taxonData;
+      delete taxonData.checked[tid];
+      filters.delete(`speciesId=${tid}`);
+      return {
+        taxonData: taxonData,
+      }
+    });
+    this.applyFilters(filters);
   }
 
   handleTabClick(e, core){
@@ -99,48 +181,28 @@ class TaibifSearch extends React.Component {
     this.applyFilters(filters);
   }
 
-  handleAutocompleteItemClick(e, speciesId, speciesNameFull) {
-    const ele = document.querySelector('.search-keyword__autocomplete-list');
+  handleSuggestClick(e, speciesId, speciesName) {
+    const ele = document.querySelector('.search-taxon__suggest-list');
     ele.style.display = 'none';
 
     const filters = this.state.filters;
     this.setState(prevState => {
-      const slist = prevState.queryKeywordSelectionList;
-      slist.push([speciesId, speciesNameFull]);
-
+      let taxonData = prevState.taxonData;
+      taxonData.checked[speciesId] = speciesName;
+      taxonData.queryKeyword = '';
+      taxonData.suggestList = [];
       filters.add(`speciesId=${speciesId}`);
       return {
-        qeuryKeywordSelectionList: slist,
-        queryKeyword: '', // reset search keyword
+        taxonData: taxonData,
       }
     });
     this.applyFilters(filters);
   }
+
+
   handleKeywordChange(e) {
     const v = e.target.value;
     this.setState({queryKeyword:v});
-    if (v === '') {
-      const ele = document.querySelector('.search-keyword__autocomplete-list');
-      ele.style.display = 'none';
-      this.setState({
-        queryAutocompleteList: [],
-      });
-      return false;
-    }
-    fetch(`/api/species/search/?q=${v}&status=accepted&rank=species`)
-      .then(res => res.json())
-      .then(
-        (json) => {
-          console.log('resp (autocemp): ', json.search.results);
-          const ele = document.querySelector('.search-keyword__autocomplete-list');
-          ele.style.display = 'block';
-          this.setState({
-            queryAutocompleteList: json.search.results,
-          });
-        },
-        (error) => {
-
-        });
   }
 
   handleKeywordEnter(e) {
@@ -161,8 +223,6 @@ class TaibifSearch extends React.Component {
         console.log(state);
         return {
           queryKeyword: '',
-          qeuryKeywordSelectionList: [],
-          queryAutocompleteList: [],
           filters: new Set(),
         }
       }
@@ -246,15 +306,17 @@ class TaibifSearch extends React.Component {
     fetch(apiUrl)
       .then(res => res.json())
       .then(
-        (json) => {
-          console.log('resp: ', json);
-          const data = json.data;
+        (jsonData) => {
+          console.log('resp: ', jsonData);
+          const taxonData = this.state.taxonData;
+          taxonData.tree = jsonData.tree;
           this.setState({
             isLoaded: true,
             isLoadedMain: true,
-            search: json.search,
-            menus: json.menus,
-            serverError: json.error,
+            search: jsonData.search,
+            menus: jsonData.menus,
+            taxonData:taxonData,
+            serverError: jsonData.error,
           });
         },
         (error) => {
@@ -299,14 +361,12 @@ class TaibifSearch extends React.Component {
       return `[server]: ${serverError}`; // should not shou this on production
     }
     else {
-      console.log('state: ', this.state);
+      //console.log('state: ', this.state);
       const menus = this.state.menus;
       const filters = this.state.filters;
       const searchType = this.state.searchType;
       const mainData = this.state.search;
       const queryKeyword = this.state.queryKeyword;
-      //const queryAutocompleteList = this.state.queryAutocompleteList;
-      //const queryKeywordSelectionList = this.state.queryKeywordSelectionList;
 
       let searchMainContainer = '';
       if (!isLoadedMain) {
@@ -336,9 +396,16 @@ class TaibifSearch extends React.Component {
       }
 
       const defaultPage = (this.state.page) ? this.state.page : '1';
+      const taxonProps = {
+        taxonData: this.state.taxonData,
+        onTreeSpeciesClick: this.handleTreeSpeciesClick,
+        onTaxonRemoveClick: this.handleTaxonRemove,
+        onTaxonKeywordChange: this.handleTaxonKeywordChange,
+        onSuggestClick: this.handleSuggestClick,
+      };
       return (
           <div className="row">
-          <SearchSidebar menus={menus} onClick={this.handleMenuClick} filters={filters} onClickClear={(e)=>this.applyFilters()} queryKeyword={queryKeyword} onChangeKeyword={(e)=>{this.handleKeywordChange(e)}} onKeyPressKeyword={(e)=>{this.handleKeywordEnter(e)}} onClickSubmitKeyword={this.handleSubmitKeywordClick} searchType={searchType} taxonData={this.state.taxonData} />
+          <SearchSidebar menus={menus} onClick={this.handleMenuClick} filters={filters} onClickClear={(e)=>this.applyFilters()} queryKeyword={queryKeyword} onChangeKeyword={(e)=>{this.handleKeywordChange(e)}} onKeyPressKeyword={(e)=>{this.handleKeywordEnter(e)}} onClickSubmitKeyword={this.handleSubmitKeywordClick} searchType={searchType} taxonProps={taxonProps} />
           {searchMainContainer}
           <Pagination onClick={this.handlePaginationClick} />
           </div>

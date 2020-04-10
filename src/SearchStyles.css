@@ -63,28 +63,28 @@
     border-color: unset;
     border-bottom: unset;
 }
-.search-keyword__autocomplete-selection {
-    display: flex;
-    flex-wrap: wrap;
+.search-taxon__checked {
+    border: 2px dashed #a9a9a9;
+    display: block;
+    padding: 4px;
 }
-.search-keyword__autocomplete-selection-item {
-    padding: 0 8px;
-    margin-right: 6px;
-    border: 1px solid #adadad;
-    background-color: #fff2c0;
-}
-.search-keyword__autocomplete-list {
+
+.search-taxon__suggest-list {
     float: left;
-    position: absolute;
-    top: 42px;
-    border: 1px solid gray;
-    left: 0px;
+    border: 2px dashed #a9a9a9;
     z-index: 100;
     background-color:#def;
-    list-style: none;
-    display: none;
+    margin: 10px 0;
+    padding: 4px;
 }
-.search-keyword__autocomplete-list {
+
+.search-taxon__suggest-item {
+    border: 1px solid gray;
+    padding: 2px;
+    margin: 4px 2px;
+}
+.search-taxon__suggest-item:hover {
+    background-color: #fff8d5
 }
 .search-tag {
     margin: 10px 6px;
@@ -146,3 +146,60 @@
     content: 'Loading...';
   }
 }
+
+.taxon-tree-container {
+    margin: 14px 0 0 -30px;
+}
+
+.taxon-tree-node-wrapper{
+    margin-left: 20px;
+    border-left: unset;
+}
+.taxon-tree-node-wrapper .taxon-tree-node-wrapper {
+    position: relative;
+    border-left: 1px solid #a9a9a9;
+    margin-left: 20px;
+}
+
+.taxon-tree-node-item {
+    border: 1px solid #a9a9a9;
+    padding: 0 8px;
+    display: inline;
+    background-color: #efefef;
+    border-left: 4px solid #836c5a;
+    margin: -3px 0 0 10px;
+}
+.taxon-tree-node-item:before {
+    position: absolute;
+    left: 0px;
+    top: -2px;
+    content: '';
+    display: block;
+    height: 20px;
+    border-bottom: 1px solid #a9a9a9;
+    width: 10px;
+}
+/*
+.taxon-tree-node-item
+  &:before {
+            position: absolute;
+            left: -15px;
+            top: 0px;
+            content: '';
+            display: block;
+            border-left: 1px solid #ddd;
+            height: 1em;
+            border-bottom: 1px solid #ddd;
+            width: 10px;
+        }
+
+        &:after {
+            position: absolute;
+            left: -15px;
+            bottom: -7px;
+            content: '';
+            display: block;
+            border-left: 1px solid #ddd;
+            height: 100%;
+        }
+*/

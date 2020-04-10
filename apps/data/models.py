@@ -199,11 +199,17 @@ class Taxon(models.Model):
         from django.urls import reverse
         return reverse('species-detail', args=[str(self.id)])
 
-    def get_name(self):
-        if self.name_zh:
-            return '{} {}'.format(self.name_zh, self.name)
+    def get_name(self, cat=''):
+        if cat == 'list':
+            nlist = [self.name]
+            if self.name_zh:
+                nlist.append(self.name_zh)
+            return nlist
         else:
-            return '{}'.format(self.name)
+            if self.name_zh:
+                return '{} {}'.format(self.name_zh, self.name)
+            else:
+                return '{}'.format(self.name)
 
     @staticmethod
     def find_name(name, rank='', using=''):
