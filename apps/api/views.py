@@ -23,18 +23,28 @@ from utils.decorators import json_ret
 from .cached import COUNTRY_ROWS, YEAR_ROWS
 
 
-@json_ret
-def taxon_tree(request):
-    rank = request.GET.get('rank', '')
-    result = Taxon.get_tree(rank)
-
-    return {
+def taxon_tree_node(request, pk):
+    taxon = Taxon.objects.get(pk=pk)
+    children = [{
+        'id':x.id,
         'data': {
-            'rank': result['rank'],
-            'result': [x.get_name() for x in result['taxon_list']]
+            'name': x.get_name(),
+            'count': x.count,
+            'rank': x.rank,
         }
-    }
+    } for x in taxon.children]
 
+    data = {
+        'rank': taxon.rank,
+        'id': taxon.id,
+        'data': {
+            'name': taxon.get_name(),
+            'count': taxon.count,
+            'rank': taxon.rank,
+        },
+        'children': children,
+    }
+    return HttpResponse(json.dumps(data), content_type="application/json")
 
 #@json_ret
 def search_occurrence(request):
@@ -110,8 +120,20 @@ def search_occurrence(request):
     data = {
         'search': res,
     }
+
     if has_menu:
         data['menus'] = menu_list
+        # tree
+        treeRoot = Taxon.objects.filter(rank='kingdom').all()
+        treeData = [{
+            'id': x.id,
+            'data': {
+                'name': x.get_name(),
+                'count': x.count,
+            },
+        } for x in treeRoot]
+        data['tree'] = treeData
+
     #return {'data': data}
     return HttpResponse(json.dumps(data), content_type="application/json")
 

@@ -192,6 +192,8 @@ class OccurrenceSearch(SuperSearch):
             if 'taxon_' in key:
                 query = query.filter(**{key:values[0]})
 
+            if key == 'speciesId': #TODO for occurence autocomplete, merge with taxon_...
+                query = query.filter(taxon_species_id__in=values)
 
             self.query = query
 
@@ -289,7 +291,6 @@ class SpeciesSearch(SuperSearch):
         self.model = Taxon
         super().__init__(filters)
 
-
         # filter query
         query = self.query
         for key, values in self.filters:
@@ -301,9 +302,9 @@ class SpeciesSearch(SuperSearch):
             if key == 'rank':
                 query = query.filter(rank__in=values)
             if key == 'status':
-                if keys == 'accepted':
+                if key == 'accepted':
                     query = query.filter(is_accepted_name=True)
-                elif keys == 'synonym':
+                elif key == 'synonym':
                     query = query.filter(is_accepted_name=False)
 
             self.query = query
