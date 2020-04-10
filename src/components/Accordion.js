@@ -14,6 +14,8 @@ function Accordion(props) {
 
   const content = useRef(null);
 
+  const appendClass = (props.appendClass) ? ` ${props.appendClass}` : '';
+
   function toggleAccordion() {
     setActiveState(setActive === "" ? "active" : "");
     setHeightState(
@@ -24,6 +26,13 @@ function Accordion(props) {
     );
   }
 
+  const style = {
+    maxHeight: `${setHeight}`,
+  }
+  if (appendClass) {
+    style.overflow = 'scroll';
+  }
+
   return (
     <div className="accordion__section">
       <button className={`accordion ${setActive}`} onClick={toggleAccordion}>
@@ -32,8 +41,8 @@ function Accordion(props) {
       </button>
       <div
         ref={content}
-        style={{ maxHeight: `${setHeight}` }}
-        className="accordion__content"
+        style={style}
+        className={"accordion__content"+appendClass}
       >
         <div className="accordion__text">{props.content}</div>
       </div>
