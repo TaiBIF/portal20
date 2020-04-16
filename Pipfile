@@ -18,6 +18,7 @@ beautifulsoup4 = "*"
 lxml = "*"
 boto3 = "*"
 django-ses = "*"
+django-redis = "*"
 
 [requires]
 python_version = "3.8"
