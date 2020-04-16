@@ -115,7 +115,7 @@ class Dataset(models.Model):
         return 'http://ipt.taibif.tw/eml.do?r={}'.format(self.name)
 
     @property
-    def dwca(self):
+    def dwca_link(self):
         return 'http://ipt.taibif.tw/archive.do?r={}'.format(self.name)
 
     def __str__(self):
