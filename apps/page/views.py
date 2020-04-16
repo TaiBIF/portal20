@@ -19,6 +19,8 @@ from apps.article.models import Article
 from .models import Post, Journal
 from utils.mail import taibif_mail_contact_us
 
+from apps.data.helpers.stats import get_home_stats
+
 def index(request):
 
     news_list = Article.objects.filter(category='NEWS').all()[0:4]
@@ -26,12 +28,15 @@ def index(request):
     update_list = Article.objects.filter(category='UPDATE').all()[0:4]
     #topic_list = Article.objects.filter(category__in=['SCI', 'TECH', 'PUB']).order_by('?').all()[0:10]
     topic_list = Article.objects.filter(is_homepage=True).order_by('?').all()[0:10]
+
     context = {
         'news_list': news_list,
         'event_list': event_list,
         'update_list': update_list,
-        'topic_list': topic_list
+        'topic_list': topic_list,
+        'stats': get_home_stats(),
     }
+
     return render(request, 'index.html', context)
 
 def publishing_data(request):

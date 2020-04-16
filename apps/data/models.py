@@ -40,6 +40,10 @@ class Organization(models.Model):
     description = models.TextField('Description')
     author = models.CharField('author', max_length=128)
 
+class PublicDatasetManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(status='Public')
+
 class Dataset(models.Model):
 
     NUM_PER_PAGE = 20
@@ -78,6 +82,9 @@ class Dataset(models.Model):
     quality = models.CharField('資料集品質', max_length=4, default='')
     #is_about_taiwan = models.BooleanField('是否 about Taiwan', default=True)
     #is_from_taiwan = models.BooleanField('是否 from Taiwan', default=True)
+
+    objects = models.Manager()
+    public_objects = PublicDatasetManager()
 
     def get_absolute_url(self):
         return reverse('dataset-detail', args=[self.name])
@@ -481,7 +488,10 @@ class Occurrence(models.Model):
     #    managed = False
     #    db_table = 'data_occurrence'
 
-
+class PublicDataManager(models.Manager):
+    def get_queryset(self):
+        public_dataset_names = [x['name'] for x in Dataset.public_objects.values('name').all()]
+        return super().get_queryset().filter(taibif_dataset_name__in=public_dataset_names)
 
 class SimpleData(models.Model):
 
@@ -505,6 +515,9 @@ class SimpleData(models.Model):
     latitude = models.DecimalField('coordinates_latitude_decimal', decimal_places=8, max_digits=10, null=True, blank=True)
     country = models.CharField('country', max_length=1000, null=True)
     taibif_dataset_name = models.TextField(blank=True, null=True)
+
+    objects = models.Manager()
+    public_objects = PublicDataManager()
 
     @property
     def date_display(self):

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load static %}
+{% load humanize %}
 
 {% block script %}
 <script>
@@ -108,22 +109,22 @@
       <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-3">
           <div class="data-wall-ctn">
-            <span class="dtat-wall-name">資料筆數</span>
-            <span class="data-wall-numbers">4,995,798</span>
+            <span class="dtat-wall-name">出現紀錄</span>
+            <span class="data-wall-numbers">{{ stats.num_occurrence|intcomma }}</span>
             <span class="data-wall-icon myicon icon-data-stats"></span>
           </div>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-3">
           <div class="data-wall-ctn">
             <span class="dtat-wall-name">資料集</span>
-            <span class="data-wall-numbers">105</span>
+            <span class="data-wall-numbers">{{ stats.num_dataset|intcomma }}</span>
             <span class="data-wall-icon myicon icon-data-folder"></span>
           </div>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-3">
           <div class="data-wall-ctn">
             <span class="dtat-wall-name">涵蓋物種數</span>
-            <span class="data-wall-numbers">70,006</span>
+            <span class="data-wall-numbers">{{ stats.num_species|intcomma }}</span>
             <span class="data-wall-icon myicon icon-data-tw"></span>
           </div>
         </div>
