@@ -47,9 +47,17 @@ class PublicDatasetManager(models.Manager):
 class Dataset(models.Model):
 
     NUM_PER_PAGE = 20
+
     STATUS_CHOICE = (
         ('Public', '公開'),
         ('Private', '非公開'),
+    )
+
+    DWC_CORE_TYPE_CHOICE = (
+        ('Occurrence', '出現紀錄'),
+        ('Checklist', '物種名錄'),
+        ('Sampling event', '調查活動'),
+        # Meta
     )
 
     title = models.CharField('title', max_length=300)
@@ -61,7 +69,7 @@ class Dataset(models.Model):
     guid = models.CharField('GUID', max_length=40)
     status = models.CharField('status', max_length=10, choices=STATUS_CHOICE)
     guid_verbatim = models.CharField('GUID', max_length=100)
-    dwc_core_type = models.CharField('Dw-C Core Type', max_length=128)
+    dwc_core_type = models.CharField('Dw-C Core Type', max_length=128, choices=DWC_CORE_TYPE_CHOICE)
     data_license = models.CharField('Data License', max_length=128)
     cite = models.TextField(blank=True, null=True)
     version = models.TextField(blank=True, null=True)
@@ -88,24 +96,6 @@ class Dataset(models.Model):
 
     def get_absolute_url(self):
         return reverse('dataset-detail', args=[self.name])
-
-    @property
-    def dwc_core_type_for_human(self):
-        if 'Occurrence' in self.dwc_core_type:
-            return '出現紀錄 (Occurrence)'
-        elif 'Taxon' in self.dwc_core_type:
-            return '物種名錄 (Checklist)'
-        elif 'Sampling event' in self.dwc_core_type:
-            return '調查活動 (Sampling event)'
-
-    @property
-    def dwc_core_type_for_human_simple(self):
-        if 'Occurrence' in self.dwc_core_type:
-            return '出現紀錄'
-        elif 'Taxon' in self.dwc_core_type:
-            return '物種名錄'
-        elif 'Sampling event' in self.dwc_core_type:
-            return '調查活動'
 
     @property
     def country_for_human(self):

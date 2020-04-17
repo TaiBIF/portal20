@@ -252,7 +252,7 @@ class DatasetSearch(SuperSearch):
             'id': x.id,
             'name': x.name,
             'num_record': x.num_record,
-            'dwc_type': x.dwc_core_type_for_human_simple,
+            'dwc_type': x.get_dwc_core_type_display(),
         }
 
 class PublisherSearch(SuperSearch):
