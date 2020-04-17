@@ -2,6 +2,10 @@
 {% load static %}
 {% load humanize %}
 
+{% block title %}
+Dataset::{{ dataset.title }}
+{% endblock %}
+
 {% block main %}
 {# include "inc_breadcrumb.html" with tab="03" active_label="" #}
 

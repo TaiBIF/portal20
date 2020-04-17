@@ -339,7 +339,7 @@ a:active {
 
 .navbar-brand {
   height: auto;
-  padding: 15px 0;
+  padding: 18px 0;
 }
 
 @media (max-width: 767px) {
@@ -350,7 +350,7 @@ a:active {
   }
 }
 img.navbar-brand-l {
-  height: 44px;
+  height: 46px;
   width: auto;
 }
 
