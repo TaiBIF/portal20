@@ -35,7 +35,7 @@
 
       gtag('config', 'UA-159438257-1');
     </script>
-    <title>{% block title%}{% endblock %}</title>
+    <title>TaiBIF ::{% block title%}{% endblock %}</title>
   </head>
   <body>
   <button onclick="topFunction()" id="top" title="Return to top" class="btn-2top myicon icon-arrow-up"></button>
@@ -48,7 +48,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="{% url "index" %}"><img src="{% static 'images/taibif-logo-rgb-l.jpg' %}" class="hidden-xs navbar-brand-l"><img src="{% static 'images/taibif-logo-rgb-s.jpg' %}" class="visible-xs navbar-brand-s"></a>
+        <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'images/taibif-logo.png' %}" class="hidden-xs navbar-brand-l"><img src="{% static 'images/taibif-logo-rgb-s.jpg' %}" class="visible-xs navbar-brand-s"></a>
         <div class="row">
           <!-- hidden xs begin -->
           <div class="hidden-xs col-xs-6 navbar-hidden-xs">
