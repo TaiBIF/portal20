@@ -6,7 +6,11 @@ from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from django.db.models import Count
 from django.db.models import Q
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import (
+    JsonResponse,
+    HttpResponseRedirect,
+    Http404
+)
 from django.urls import reverse
 from django.conf import settings
 
@@ -173,9 +177,12 @@ def occurrence_view(request, taibif_id):
     return render(request, 'occurrence.html', context)
 
 def dataset_view(request, name):
-    context = {}
-    context['dataset'] = get_object_or_404(Dataset, name=name)
-    return render(request, 'dataset.html', context)
+    try:
+        dataset = Dataset.public_objects.get(name=name)
+    except Dataset.DoesNotExist:
+        raise Http404("Dataset does not exist")
+
+    return render(request, 'dataset.html', {'dataset': dataset})
 
 def publisher_view(request, pk):
     context = {}
