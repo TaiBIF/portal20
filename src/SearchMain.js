@@ -157,7 +157,7 @@ function SearchMainPublisher(props) {
 }
 
 function SearchMainSpecies(props) {
-  console.log(props);
+  //console.log(props);
   const rows = props.data.results.map((row) => {
     return (
         <div className="row listbox-img-right-wrapper" key={row.id}>

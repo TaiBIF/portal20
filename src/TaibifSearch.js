@@ -158,12 +158,12 @@ class TaibifSearch extends React.Component {
     const filters = this.state.filters;
     // only one core (tab)
     filters.forEach(function(x){
-      if (x.indexOf('core.') === 0) {
+      if (x.indexOf('core=') >= 0) {
         filters.delete(x);
       }
     });
     if (core !== 'all') {
-      filters.add(`core.${core}`);
+      filters.add(`core=${core}`);
 
     this.applyFilters(filters);
     }
