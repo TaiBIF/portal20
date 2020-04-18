@@ -5,6 +5,7 @@ import './SearchStyles.css';
 
 
 function filtersToQuerystring (filters) {
+  //TODO: Array.from(filters).join('&');
   const qsArr = [];
   filters.forEach((item)=> {
     qsArr.push(item);
@@ -220,7 +221,6 @@ class TaibifSearch extends React.Component {
       }
       else {
         this.getSearch();
-        console.log(state);
         return {
           queryKeyword: '',
           filters: new Set(),

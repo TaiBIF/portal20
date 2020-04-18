@@ -40,9 +40,7 @@ class SuperSearch(object):
 
         self.timed = [time.time()]
         self.query = self.model.objects.filter()
-
         # parsing filters
-        #print (filters)
         for i in filters:
             if i[0] == 'limit':
                 self.limit = min(self.LIMIT_THRESHOLD, int(i[1][0]))
@@ -121,12 +119,13 @@ class SuperSearch(object):
         self.timed.append(time.time())
 
         count = 0
-        if len(self.filters) == 0:
-            count = self._estimate_count_all()
-        elif self.is_estimate_count and not self.force_accurate_count:
-            count = self._estimate_count()
-        else:
-            count = query.count()
+        # TODO need refine
+        #if len(self.filters) == 0:
+        #    count = self._estimate_count_all()
+        #elif self.is_estimate_count and not self.force_accurate_count:
+        #    count = self._estimate_count()
+        #else:
+        count = query.count()
 
         ret = {
             'elapsed': self.timed[1] - self.timed[0],
@@ -149,6 +148,8 @@ class OccurrenceSearch(SuperSearch):
         self.model = SimpleData
         super().__init__(filters)
         self.using = using
+
+        self.query = self.model.public_objects.filter()
 
         # filter query
         query = self.query
@@ -219,10 +220,10 @@ class DatasetSearch(SuperSearch):
     def __init__(self, filters):
         self.model = Dataset
         super().__init__(filters)
-        self.query = self.model.objects.filter()
 
         # filter query
-        query = self.query.exclude(status='Private')
+        #self.query = self.model.public_objects.filter()
+        query = self.query
         for key, values in self.filters:
             if key == 'q':
                 v = values[0] # only get one
@@ -243,7 +244,10 @@ class DatasetSearch(SuperSearch):
             if key == 'country':
                 query = query.filter(country__in=values)
 
-            self.query = query
+            if key == 'order_by':
+                query = query.order_by(*values)
+
+        self.query = query
 
     def result_map(self, x):
         return {
@@ -251,8 +255,15 @@ class DatasetSearch(SuperSearch):
             'description': x.description,
             'id': x.id,
             'name': x.name,
-            'num_record': x.num_record,
             'dwc_type': x.get_dwc_core_type_display(),
+            'publisher': x.organization.name if x.organization else '',
+            'num_occurrence': x.num_occurrence,
+            'num_record': x.num_record,
+            'pub_date': x.pub_date.strftime('%Y-%m-%d') if x.pub_date else '',
+            'country': x.country_for_human,
+            'status_display': x.get_status_display(),
+            'status': x.status,
+            'guid': x.guid,
         }
 
 class PublisherSearch(SuperSearch):
