@@ -97,8 +97,17 @@ class DatasetTable extends React.Component {
           });
         });
   }
+
   componentDidMount() {
-    this.applyFilters()
+    const qs = window.location.search;
+    let filters = this.state.filters;
+    if (qs.indexOf('most=1')>=0) {
+      filters.add('is_most_project=1');
+      this.applyFilters(filters);
+    }
+    else {
+      this.applyFilters();
+    }
   }
 
   render() {

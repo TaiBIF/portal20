@@ -243,6 +243,8 @@ class DatasetSearch(SuperSearch):
                 query = query.filter(data_license__in=rights_reverse_map[key])
             if key == 'country':
                 query = query.filter(country__in=values)
+            if key == 'is_most_project':
+                query = query.filter(is_most_project=True)
 
             if key == 'order_by':
                 query = query.order_by(*values)
