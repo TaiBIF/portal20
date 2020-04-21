@@ -135,6 +135,7 @@ class TaibifSearch extends React.Component {
       taxonData.checked[tid] = name;
       filters.add(`taxon_key=${tid}`);
       return {
+        isLoadedMain: false,
         taxonData: taxonData,
       }
     });
@@ -146,8 +147,9 @@ class TaibifSearch extends React.Component {
     this.setState((prevState) => {
       const taxonData = prevState.taxonData;
       delete taxonData.checked[tid];
-      filters.delete(`speciesId=${tid}`);
+      filters.delete(`taxon_key=${tid}`);
       return {
+        isLoadedMain: false,
         taxonData: taxonData,
       }
     });
