@@ -195,21 +195,24 @@ class OccurrenceSearch(SuperSearch):
                 # not explict like: taxon_phylum_id=xxx, taxon_specied_id=yyy...
 
                 taxa = Taxon.objects.filter(id__in=values).all()
+                or_cond = Q()
                 for t in taxa:
                     if t.rank == 'kingdom':
-                        query = query.filter(taxon_kingdom_id=t.id)
+                        or_cond.add(Q(taxon_kingdom_id=t.id), Q.OR)
                     elif t.rank == 'phylum':
-                        query = query.filter(taxon_phylum_id=t.id)
+                        or_cond.add(Q(taxon_phylum_id=t.id), Q.OR)
                     elif t.rank == 'class':
-                        query = query.filter(taxon_class_id=t.id)
-                    elif t.rank == 'order':
-                        query = query.filter(taxon_orders_id=t.id)
+                        or_cond.add(Q(taxon_class_id=t.id), Q.OR)
+                    if t.rank == 'order':
+                        or_cond.add(Q(taxon_order_id=t.id), Q.OR)
                     elif t.rank == 'family':
-                        query = query.filter(taxon_family_id=t.id)
-                    elif t.rank == 'genus':
-                        query = query.filter(taxon_genus_id=t.id)
+                        or_cond.add(Q(taxon_family_id=t.id), Q.OR)
+                    if t.rank == 'genus':
+                        or_cond.add(Q(taxon_genus_id=t.id), Q.OR)
                     elif t.rank == 'species':
-                        query = query.filter(taxon_species_id=t.id)
+                        or_cond.add(Q(taxon_species_id=t.id), Q.OR)
+
+                query = query.filter(or_cond)
             else:
                 # for species-detail page
                 if 'taxon_' in key:
