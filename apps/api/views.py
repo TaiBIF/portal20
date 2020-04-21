@@ -3,14 +3,20 @@ import json
 import datetime
 import re
 import random
+import csv
 
 from django.shortcuts import render
 from django.db.models import Count, Q
 from django.http import HttpResponse
 
-from apps.data.models import Dataset, DATA_MAPPING, DatasetOrganization, Taxon
-from apps.data.models import RawDataOccurrence
-from apps.data.models import SimpleData
+from apps.data.models import (
+    Dataset,
+    DATA_MAPPING,
+    DatasetOrganization,
+    Taxon,
+    RawDataOccurrence,
+    SimpleData,
+)
 from apps.data.helpers.mod_search import (
     OccurrenceSearch,
     DatasetSearch,

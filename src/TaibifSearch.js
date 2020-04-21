@@ -388,7 +388,16 @@ class TaibifSearch extends React.Component {
         searchMainContainer = <SearchMainDataset data={mainData} searchType={searchType} filters={filters} menus={menus} onClickTab={this.handleTabClick}/>
       }
       else if (searchType === 'occurrence') {
-          searchMainContainer = <SearchMainOccurrence data={mainData} searchType={searchType} filters={filters} menus={menus} />
+        let downloadUrl = '';
+        if (mainData.count <= 10000) {
+          // download count limit
+          downloadUrl = '/occurrence/search/download';
+          let queryString = filtersToQuerystring(filters);
+          // 處理 offset, limit, page
+          downloadUrl = `${downloadUrl}?${queryString}`;
+        }
+
+        searchMainContainer = <SearchMainOccurrence data={mainData} searchType={searchType} filters={filters} menus={menus} downloadUrl={downloadUrl} />
       }
       else if (searchType === 'publisher') {
         searchMainContainer = <SearchMainPublisher data={mainData} searchType={searchType} filters={filters} menus={menus} />
