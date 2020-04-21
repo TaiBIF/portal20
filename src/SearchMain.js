@@ -31,11 +31,16 @@ function SearchMainOccurrence(props) {
   }
 
   const elapsed = props.data.elapsed.toFixed(2);
+
+  const downloadLink = (props.downloadUrl !== '') ?
+        <a href={props.downloadUrl} className="btn btn-primary" target="_blank">下載篩選結果 (CSV)</a> :
+        <button className="btn btn-primary disabled">資料量太大，無法下載，請縮小搜尋範圍</button>;
   return (
       <div className="col-xs-12 col-md-9">
       <div className="container">
       <h2>出現紀錄<small> {props.data.count}  筆資料 / 搜尋時間: { elapsed } 秒</small></h2>
-        <div className="search-main-tag-wrapper">篩選條件: <div className="search-main-tag-item">{ filterTags }</div></div>
+      <div className="search-main-tag-wrapper">篩選條件: <div className="search-main-tag-item">{ filterTags }</div></div>
+
       <table className="table table-hover">
         <thead>
           <tr>
@@ -51,6 +56,7 @@ function SearchMainOccurrence(props) {
       {rows}
         </tbody>
       </table>
+      {downloadLink}
       </div>
       </div>
   )

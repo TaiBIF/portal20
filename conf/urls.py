@@ -24,7 +24,8 @@ from apps.data.views import (
     dataset_view,
     search_view,
     publisher_view,
-    species_view
+    species_view,
+    search_occurrence_download_view,
 )
 
 urlpatterns = [
@@ -34,6 +35,7 @@ urlpatterns = [
     path('api/', include('apps.api.urls')),
     path('search/', include('apps.data.urls')),
     path('occurrence/search/', search_view, name='search-occurrence'),
+    path('occurrence/search/download', search_occurrence_download_view, name='search-occurrence-download'),
     path('dataset/search/', search_view, name='search-dataset'),
     path('publisher/search/', search_view, name='search-publisher'),
     path('species/search/', search_view, name='search-species'),

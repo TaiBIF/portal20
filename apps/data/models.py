@@ -523,6 +523,11 @@ class SimpleData(models.Model):
         )
 
 
+class PublicRawOccurrenceDataManager(models.Manager):
+    def get_queryset(self):
+        public_dataset_names = [x['name'] for x in Dataset.public_objects.values('name').all()]
+        return super().get_queryset().filter(taibif_dataset_name__in=public_dataset_names)
+
 # This is an auto-generated Django model module.
 # You'll have to do the following manually to clean this up:
 #   * Rearrange models' order
@@ -670,6 +675,8 @@ class RawDataOccurrence(models.Model):
         d = Dataset.objects.values('title', 'id', 'name').filter(name__exact=self.taibif_dataset_name).first()
         return d
 
+    objects = models.Manager()
+    public_objects = PublicRawOccurrenceDataManager()
 
     class Meta:
         managed = False

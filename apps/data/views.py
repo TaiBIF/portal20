@@ -1,6 +1,8 @@
 import time
 from urllib.parse import urlencode
 import re
+import datetime
+import csv
 
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
@@ -9,13 +11,21 @@ from django.db.models import Q
 from django.http import (
     JsonResponse,
     HttpResponseRedirect,
-    Http404
+    Http404,
+    HttpResponse,
 )
 from django.urls import reverse
 from django.conf import settings
 
 from apps.article.models import Article
-from .models import Taxon, Occurrence, Dataset, RawDataOccurrence, DatasetOrganization, SimpleData
+from .models import (
+    Taxon,
+    Occurrence,
+    Dataset,
+    RawDataOccurrence,
+    DatasetOrganization,
+    SimpleData,
+)
 from .helpers.species import get_species_info
 from .helpers.mod_search import (
     OccurrenceSearch,
@@ -112,37 +122,6 @@ def search_all(request):
         }
         return render(request, 'search_all.html', context)
 
-def search_old(request):
-    page = 0
-    q = ''
-    if request.method == 'POST':
-        page = request.POST.get('page', 0)
-        q = request.POST.get('q', '')
-        url = request.path
-        qs = {}
-        if page:
-            qs['page'] = page
-        if q:
-            qs['q'] = q
-
-        if qs:
-            url += '?' + urlencode(qs)
-        return HttpResponseRedirect(url)
-    else:
-        page = request.GET.get('page', '')
-        q = request.GET.get('q', '')
-
-    #kingdom = request.GET.get('kingdom', '')
-
-    result = do_search(q, page)
-    result['search_tags'] = []
-    for i in request.GET:
-        if i != 'page':
-            if i == 'q':
-                result['search_tags'].append(request.GET[i])
-            else:
-                result['search_tags'].append('{}:{}'.format(i, request.GET[i]))
-    return render(request, 'search.html', result)
 
 
 def occurrence_view(request, taibif_id):
@@ -242,3 +221,67 @@ def species_view(request, pk):
 def search_view(request):
     context = {'env': settings.ENV}
     return render(request, 'search.html', context)
+
+def search_occurrence_download_view(request):
+    date_str = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+
+    # for dropna
+    column_map = {}
+    rows = []
+    for i in RawDataOccurrence._meta.get_fields():
+        if not i.many_to_many \
+           and not i.one_to_one \
+           and not i.one_to_many \
+           and not i.many_to_one:
+            column_map[i.name] = {
+                'title': i.db_column or i.verbose_name,
+                'is_na': True,
+            }
+    occur_search = OccurrenceSearch(list(request.GET.lists()))
+
+    ## very slow!
+    #def raw_data_map(x):
+        #d = {}
+        #for col, col_data in column_map.items():
+        #    if v := getattr(x.taibif, col):
+        #        column_map[col]['na'] = False
+        #        d[col] = v
+     #   return x
+
+    # override mod_search
+    #occur_search.result_map = raw_data_map
+    occur_search.limit = -1
+
+    res = occur_search.get_results()
+    taibif_ids = [x['taibif_id'] for x in res['results']]
+    raw_data_list = RawDataOccurrence.objects.filter(taibif_id__in=taibif_ids).all()
+
+    rows = []
+    for d in raw_data_list:
+        r = {}
+        for col, col_data in column_map.items():
+            if v := getattr(d, col):
+                column_map[col]['is_na'] = False
+                r[col] = v
+        rows.append(r)
+
+    # prepare to csv
+    csv_headers = []
+    columns = []
+
+    # get valid column and (not null)
+    for col, col_data in column_map.items():
+        if col_data['is_na'] == False and 'taibif_' not in col :
+            csv_headers.append(col_data['title'])
+            columns.append(col)
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="taibif-occurrence-{}.csv"'.format(date_str)
+
+    writer = csv.writer(response)
+    writer.writerow(csv_headers)
+
+    for d in raw_data_list:
+            writer.writerow([getattr(d, col) for col in columns])
+
+    return response

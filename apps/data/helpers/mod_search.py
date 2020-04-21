@@ -19,7 +19,7 @@ class SuperSearch(object):
 
     #__metaclass__ = ABCMeta
     DEFAULT_LIMIT = 20
-    LIMIT_THRESHOLD = 200
+    LIMIT_THRESHOLD = 10000
 
     # for _setimate_count
     is_estimate_count = False
@@ -109,13 +109,14 @@ class SuperSearch(object):
 
 
     def get_results(self):
-        if self.limit <= 0:
-            self.limit = None
-
         query = self.query
         offset = max(0, self.offset)
-        limit = self.limit
-        results = [self.result_map(x) for x in query.all()[offset:offset+limit]]
+        limit = min(self.LIMIT_THRESHOLD, self.limit)
+        if limit > 0:
+            results = [self.result_map(x) for x in query.all()[offset:offset+limit]]
+        else:
+            results = [self.result_map(x) for x in query.all()]
+
         self.timed.append(time.time())
 
         count = 0
@@ -146,8 +147,11 @@ class OccurrenceSearch(SuperSearch):
 
     is_estimate_count = True
 
-    def __init__(self, filters, using=''):
-        self.model = SimpleData
+    def __init__(self, filters, using='', model=None):
+        if model:
+            self.model = model
+        else:
+            self.model = SimpleData
         super().__init__(filters)
         self.using = using
 
