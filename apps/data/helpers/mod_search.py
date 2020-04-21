@@ -130,6 +130,8 @@ class SuperSearch(object):
         ret = {
             'elapsed': self.timed[1] - self.timed[0],
             'count': int(count),
+            'count_estimate1':self._estimate_count_all(),
+            'count_estimate2': self._estimate_count(),
             'limit': limit,
             'offset': offset,
             'has_more': True if count > 0 and offset + limit <= count else False,
@@ -189,12 +191,29 @@ class OccurrenceSearch(SuperSearch):
                 dataset_names = [x.name for x in datasets]
                 query = query.filter(taibif_dataset_name__in=dataset_names)
 
-            # for species-detail page
-            if 'taxon_' in key:
-                query = query.filter(**{key:values[0]})
+            if key == 'taxon_key':
+                # not explict like: taxon_phylum_id=xxx, taxon_specied_id=yyy...
 
-            if key == 'speciesId': #TODO for occurence autocomplete, merge with taxon_...
-                query = query.filter(taxon_species_id__in=values)
+                taxa = Taxon.objects.filter(id__in=values).all()
+                for t in taxa:
+                    if t.rank == 'kingdom':
+                        query = query.filter(taxon_kingdom_id=t.id)
+                    elif t.rank == 'phylum':
+                        query = query.filter(taxon_phylum_id=t.id)
+                    elif t.rank == 'class':
+                        query = query.filter(taxon_class_id=t.id)
+                    elif t.rank == 'order':
+                        query = query.filter(taxon_orders_id=t.id)
+                    elif t.rank == 'family':
+                        query = query.filter(taxon_family_id=t.id)
+                    elif t.rank == 'genus':
+                        query = query.filter(taxon_genus_id=t.id)
+                    elif t.rank == 'species':
+                        query = query.filter(taxon_species_id=t.id)
+            else:
+                # for species-detail page
+                if 'taxon_' in key:
+                    query = query.filter(**{key:values[0]})
 
             self.query = query
 
@@ -315,9 +334,13 @@ class SpeciesSearch(SuperSearch):
             if key == 'rank':
                 query = query.filter(rank__in=values)
             if key == 'status':
-                if key == 'accepted':
+                v = values[0] # only get one
+                if not v:
+                    continue
+                if v == 'accepted':
                     query = query.filter(is_accepted_name=True)
-                elif key == 'synonym':
+                elif v == 'synonym':
+                    print ('sshere')
                     query = query.filter(is_accepted_name=False)
 
             self.query = query

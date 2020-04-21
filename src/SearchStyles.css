@@ -162,11 +162,12 @@
 }
 
 .taxon-tree-node-item {
-    border: 1px solid #a9a9a9;
-    padding: 0 8px;
+    /*border: 1px solid #a9a9a9;*/
+    /*padding: 0 8px;*/
+    padding: 0 6px;
     display: inline;
-    background-color: #efefef;
-    border-left: 4px solid #836c5a;
+    /*background-color: #efefef;*/
+    /*border-left: 4px solid #836c5a;*/
     margin: -3px 0 0 10px;
 }
 .taxon-tree-node-item:before {
