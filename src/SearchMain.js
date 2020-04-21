@@ -34,7 +34,7 @@ function SearchMainOccurrence(props) {
   return (
       <div className="col-xs-12 col-md-9">
       <div className="container">
-      <h2>出現紀錄<small>  &#8778;{props.data.count}  筆資料 / 搜尋時間: { elapsed } 秒</small></h2>
+      <h2>出現紀錄<small> {props.data.count}  筆資料 / 搜尋時間: { elapsed } 秒</small></h2>
         <div className="search-main-tag-wrapper">篩選條件: <div className="search-main-tag-item">{ filterTags }</div></div>
       <table className="table table-hover">
         <thead>
@@ -166,9 +166,9 @@ function SearchMainSpecies(props) {
         <p className="listbox-inner-summary hidden-xs">
         {row.description}
         </p>
-        <span className="badge"> {row.rank} </span>
-        {(row.is_accepted_name) ? <span className="badge">有效的</span> : ''}
-        <span className="badge">物種數: {row.count} </span>
+        <span className="label label-primary" style={{'margin': '0 2px'}}> {row.rank} </span>
+        {(row.is_accepted_name) ? <span className="label label-success" style={{'margin': '0 2px'}}>有效的</span> : ''}
+        <span className="label label-default" style={{'margin': '0 2px'}}>物種數: {row.count} </span>
         </div>
         </div>
     )

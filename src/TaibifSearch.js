@@ -133,7 +133,7 @@ class TaibifSearch extends React.Component {
     this.setState((prevState) => {
       const taxonData = prevState.taxonData;
       taxonData.checked[tid] = name;
-      filters.add(`speciesId=${tid}`);
+      filters.add(`taxon_key=${tid}`);
       return {
         taxonData: taxonData,
       }

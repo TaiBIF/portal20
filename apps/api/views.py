@@ -274,7 +274,7 @@ def search_species(request):
         'search': res,
     }
     if has_menu:
-        data['menus'] = menu_list
+        data['menus'] = menus
 
     #return {'data': data }
     return HttpResponse(json.dumps(data), content_type="application/json")

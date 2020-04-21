@@ -41,13 +41,14 @@ function TreeNode({nodeData, onClickSpecies}) {
     return <TreeNode key={child.id} nodeData={child} onClickSpecies={onClickSpecies} />
   });
 
-  const node = (nodeData.data.rank === 'species') ?
-        <div onClick={(e)=>onClickSpecies(e, nodeData.id, nodeData.data.name)} className="taxon-tree-node-item">{nodeData.data.name}</div> :
-        <div onClick={toggleTreeNode} className="taxon-tree-node-item">{nodeData.data.name}</div> ;
+  const icon = (isToggled) ? '📂': '📁';
+  /*const node = (nodeData.data.rank === 'species') ?
+        <div onClick={(e)=>onClickSpecies(e, nodeData.id, nodeData.data.name)} className="taxon-tree-node-item">{nodeData.data.name} </div> :
+        <div onClick={toggleTreeNode} className="taxon-tree-node-item">{icon} {nodeData.data.name}👉</div> ;*/
 
   return (
       <div className="taxon-tree-node-wrapper">
-      {node}
+      <div><span onClick={toggleTreeNode} className="taxon-tree-node-item">{icon}</span> {nodeData.data.name} <span onClick={(e)=>onClickSpecies(e, nodeData.id, nodeData.data.name)}>👉 </span></div>
       {childrenNodes}
       </div>
   )
@@ -66,8 +67,7 @@ function Tree(props) {
   );
 }
 const SearchTaxon = (props) => {
-  console.log('<SearchTaxon>', props);
-  //const autocompleteItems = [];
+  //console.log('<SearchTaxon>', props);
   let suggestContainer = null;
   if (props.taxonData.suggestList.length > 0) {
     const autocompleteItems = props.taxonData.suggestList.map((t)=>{
