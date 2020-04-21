@@ -3,6 +3,8 @@
 {% load static %}
 {% load helper_tags %}
 
+{% block title %}{{ article_cat_label }}{% endblock %}
+
 {% block head %}
     <!-- date range picker CSS -->
     <link rel="stylesheet" href="{% static 'css/daterangepicker.css' %}">
