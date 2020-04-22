@@ -145,11 +145,11 @@
             {% if article.category == "UPDATE" %}
             {% else %}
             {{ article.content|striptags|truncatechars:150 }}
-            <p><a href="{% url 'article-detail' slug=article.slug %}">閱讀更多</a></p>
+            <p><a href="{% url 'article-detail-id' pk=article.id %}">閱讀更多</a></p>
             {% endif %}
             {% else %}
             {{ article.content | linebreaks | truncatechars:150}}
-            <p><a href="{% url 'article-detail' slug=article.slug %}">閱讀更多</a></p>
+            <p><a href="{% url 'article-detail-id' pk=article.id %}">閱讀更多</a></p>
             {% endif %}
         </p>
       </div>

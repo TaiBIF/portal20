@@ -74,7 +74,12 @@ class Article(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('article-detail', args=[self.slug])
+        kwargs = {'pk': self.id}
+        #if self.slug:
+        #    kwargs['slug'] = self.slug
+        #    return reverse('article-detail-slug', kwargs=kwargs)
+        #else:
+        return reverse('article-detail-id', kwargs=kwargs)
 
     def get_legacy_info(self):
         if 'nid:' in self.memo:

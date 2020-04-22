@@ -5,6 +5,7 @@ from .models import Article, Tag
 class ArticleAdmin(admin.ModelAdmin):
     model = Article
     list_filter = ('category',)
+    search_fields = ['title']
     list_display = ('title','category', 'created', 'is_pinned')
     filter_horizontal = ('tags',)
     fields = (
@@ -19,7 +20,7 @@ class ArticleAdmin(admin.ModelAdmin):
         'memo_text',
         'is_homepage',
         'created',
-        'changed'
+        'changed',
     )
 
 class TagAdmin(admin.ModelAdmin):
