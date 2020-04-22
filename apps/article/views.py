@@ -63,13 +63,8 @@ def article_list(request, category):
     })
 
 
-def article_detail(request, **kwargs):
-    #print (kwargs)
-    article = None
-    if kwargs.get('slug', ''):
-        article = get_object_or_404(Article, slug=kwargs['slug'])
-    elif kwargs.get('pk', 0):
-        article = get_object_or_404(Article, pk=kwargs['pk'])
+def article_detail(request, pk):
+    article = get_object_or_404(Article, pk=pk)
     recommended = Article.objects.filter(category=article.category).order_by('?')[0:5]
     return render(request, 'article-detail.html', {
         'article': article,

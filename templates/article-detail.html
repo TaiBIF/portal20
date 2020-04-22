@@ -5,6 +5,18 @@
 
 {% block title %}更多資訊 :: {{ article.title }}{% endblock %}
 
+{% block meta %}
+<meta property="og:title" content="Taibif | 臺灣生物多樣性資訊機構 | {{ article.title }} "/>
+{% if article.cover %}
+<meta property="og:image" content="http://portal.taibif.tw/media/{{ article.cover }}"/>
+{% else %}
+<meta property="og:image" content="{% static 'images/taibif-logo-white-bg.png' %}"/>
+{% endif %}
+<meta property="og:description" content="{{ article.content }}"/>
+<meta property="og:url" content="http://portal.taibif.tw{{article.get_absolute_url}}" />
+<meta property="og:type" content="website" />
+{% endblock %}
+
 {% block main %}
 {% include "inc_breadcrumb.html" with tab="04" active_label="" %}
   <!-- container begin -->
@@ -16,7 +28,7 @@
         {{ article.title }}
       </h1>
       <ul class="article-tag-ctn">
-        {% for i in  article.tags.all %}
+        {% for i in article.tags.all %}
         <li class="listbox-inner-tag"><a href="{% url 'article-tag-list' tag_name=i.name %}">{{ i.name}}</a></li>
         {% endfor %}
       </ul>
