@@ -88,6 +88,8 @@ class Dataset(models.Model):
     extension_data = JSONField(null=True)
     is_most_project = models.BooleanField('是否為科技部計畫', default=False)
     quality = models.CharField('資料集品質', max_length=4, default='')
+    has_publish_problem = models.BooleanField('是否有發布問題 (IPT 裡黃色的區塊)', default=False, help_text='有可能 IPT 授權沒填?')
+    admin_memo = models.TextField('後台管理註記', blank=True, null=True, help_text='不會在前台出現')
     #is_about_taiwan = models.BooleanField('是否 about Taiwan', default=True)
     #is_from_taiwan = models.BooleanField('是否 from Taiwan', default=True)
 
