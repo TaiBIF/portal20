@@ -6,6 +6,41 @@ import requests
 from bs4 import BeautifulSoup
 
 
+def _get_taieol_desc(taxon_id, page=''):
+    rows = []
+    url = 'https://taieol.tw/pages/{}'.format(taxon_id)
+    
+    r = requests.get(url)
+    if r:
+        soup = BeautifulSoup(r.text, 'lxml')
+        
+       
+
+        newlist = soup.select('.taxa-page-chapter-title')
+        newlist1 = soup.select('.taxon-desc-content p')
+
+
+
+        for i in range(len(soup.select('.taxa-page-chapter-title'))):       
+            for x,y in zip(newlist1[i], newlist[i]):
+                foto = {'title':y, 'src': x}
+            
+                rows.append(foto)
+
+       
+
+ 
+       
+        if page == '':
+            pager = soup.select('.pager-item a')
+            if len(pager) > 0:
+                for p in pager:
+                    rows += _get_taieol_desc(taxon_id, int(p.text)-1)
+
+    return rows
+
+
+
 def _get_taieol_media(taxon_id, page=''):
     rows = []
     url = 'https://taieol.tw/pages/{}/media'.format(taxon_id)
@@ -52,6 +87,9 @@ def get_species_info(taxon):
         break
 
     media_list = _get_taieol_media(taieol_taxon_id)
+    desc_list = _get_taieol_desc(taieol_taxon_id)
+
+
     if media_list:
         if len(media_list) > 8:
             media_list = random.sample(media_list, 8)
@@ -60,6 +98,7 @@ def get_species_info(taxon):
         #'rows': list(rows),
         #'count': len(rows)
         'taieol_taxon_id': taieol_taxon_id,
-        'taieol_media': media_list
+        'taieol_media': media_list,
+        'taieol_desc': desc_list
     }
     return data
