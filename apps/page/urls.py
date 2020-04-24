@@ -18,5 +18,6 @@ urlpatterns = [
     path('about-tibif', views.about_taibif, name='about_taibif'),
     path('about-gbif', views.about_gbif, name='about_gbif'),
     path('open-data', views.open_data, name='open_data'),
-    path('data-stats', views.data_stats, name='data_stats')
+    path('data-stats', views.data_stats, name='data_stats'),
+    path('export_csv',views.export_csv, name='export_csv')
 ]

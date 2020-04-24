@@ -1,4 +1,6 @@
 import re
+import csv
+import codecs
 
 from django.shortcuts import render
 from django.http import (
@@ -108,6 +110,7 @@ def data_stats(request):
     return render(request, 'data-stats.html', context)
 
 def common_name_checker(request):
+    global results
     if request.method == 'GET':
         q = request.GET.get('q', '')
         sep = request.GET.get('sep', '')
@@ -186,3 +189,20 @@ def common_name_checker(request):
             'sep': sep,
         }
     return render(request, 'tools-common_name_checker.html', context)
+
+
+
+def export_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="users.csv"'
+    response.write(codecs.BOM_UTF8)
+
+    writer = csv.writer(response)
+    
+    
+
+    for row in results: 
+        writer.writerow(row['match_list'])
+
+    return response
+

@@ -4,6 +4,7 @@ import re
 import datetime
 import csv
 
+
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from django.db.models import Count
@@ -156,12 +157,46 @@ def occurrence_view(request, taibif_id):
     return render(request, 'occurrence.html', context)
 
 def dataset_view(request, name):
+
     try:
         dataset = Dataset.public_objects.get(name=name)
+
+
+        #Count the number of longitude and latitude
+        dataset_s = SimpleData.objects.filter(taibif_dataset_name = name).values_list('longitude','latitude','year','taxon_family_id',
+                                                                                      'taxon_family_id')
+
+        count_long = [item[0] for item in dataset_s]
+        LonNum =  "{:.0%}".format(sum(1 for _ in filter(None.__ne__, count_long))/len(dataset_s))
+
+        count_lat = [item[1] for item in dataset_s]
+        LatNum = "{:.0%}".format(sum(1 for _ in filter(None.__ne__, count_lat))/len(dataset_s))
+
+        count_yr = [item[2] for item in dataset_s]
+        YrNum = "{:.0%}".format(sum(1 for _ in filter(None.__ne__, count_yr)) / len(dataset_s))
+
+        count_fam = [item[3] for item in dataset_s]
+        TaxNum = "{:.0%}".format(sum(1 for _ in filter(None.__ne__, count_fam)) / len(dataset_s))
+        FamNum = len(set(count_fam))
+
+        count_sp = [item[4] for item in dataset_s]
+        SpNum = len(set(count_sp))
+
+        #dataset_o = RawDataOccurrence.objects.filter(taibif_dataset_name=name).values_list('family')
+
+
+        
+
     except Dataset.DoesNotExist:
         raise Http404("Dataset does not exist")
 
-    return render(request, 'dataset.html', {'dataset': dataset})
+    return render(request, 'dataset.html', {'dataset': dataset, 'LonNum':LonNum, 'LatNum':LatNum,'YrNum':YrNum, 'TaxNum':TaxNum,
+                                            'FamNum':FamNum, 'SpNum':SpNum})
+
+
+
+
+
 
 def publisher_view(request, pk):
     context = {}
