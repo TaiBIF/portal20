@@ -113,6 +113,7 @@
           <div class="data-wall-ctn">
             <span class="dtat-wall-name">出現紀錄</span>
             <span class="data-wall-numbers">{{ stats.num_occurrence|intcomma }}</span>
+            <span class="dtat-wall-name">於 TaiBIF 公開之資料</span>
             <span class="data-wall-icon myicon icon-data-stats"></span>
           </div>
         </div>
@@ -120,6 +121,7 @@
           <div class="data-wall-ctn">
             <span class="dtat-wall-name">資料集</span>
             <span class="data-wall-numbers">{{ stats.num_dataset|intcomma }}</span>
+            <span class="dtat-wall-name">於 TaiBIF 公開之資料集（含部分資訊缺漏之資料集）</span>
             <span class="data-wall-icon myicon icon-data-folder"></span>
           </div>
         </div>
@@ -127,6 +129,7 @@
           <div class="data-wall-ctn">
             <span class="dtat-wall-name">涵蓋物種數</span>
             <span class="data-wall-numbers">{{ stats.num_species|intcomma }}</span>
+            <span class="dtat-wall-name">出現紀錄涵蓋物種數（包含部分國外資料及同物異名）</span>
             <span class="data-wall-icon myicon icon-data-tw"></span>
           </div>
         </div>
@@ -135,6 +138,7 @@
             <a href="{% url 'data_stats' %}?most=1">
             <span class="dtat-wall-name">看更多</span>
             <span class="data-wall-numbers"><small>科技部資料</small></span>
+            <span class="dtat-wall-name"><br/></span>
             <span class="data-wall-icon myicon icon-arrow-right"></span>
             </a>
           </div>
