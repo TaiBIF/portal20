@@ -85,6 +85,23 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       物種解說
     </h1>
     <p><a href="https://taieol.tw/pages/{{ species_info.taieol_taxon_id }}" target="_blank"><button type="button" class="btn btn-success">臺灣生命大百科 TaiEOL</button></a></p>
+
+
+
+
+    {% for i in species_info.taieol_desc %}
+    <div class="tools-intro-wrapper">
+      <div class="tools-title">{{i.title}}</div>
+      <div class="tools-content">
+        <p>{{i.src}}</p>
+      </div>
+    </div>
+    {% endfor %}
+
+
+
+
+
     {% for i in species_info.taieol_media %}
     {% if forloop.counter0|divisibleby:4 %}
     <div class="row">
@@ -102,7 +119,12 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
     {% endif %}
     {% endfor %}
     <div><small>照片來源: <a href="https://taieol.tw/pages/{{ species_info.taieol_taxon_id }}/media" target="_blank">臺灣生命大百科</a></small></div>
+
+
+
+
   </div>
+
   {% endif %}
   {% comment %}
   <div class="article-head-wrapper">
