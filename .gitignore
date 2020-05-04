@@ -20,3 +20,5 @@ taibif_volumes
 .idea
 /tmp
 
+static/js/search.*
+static/js/dataset-table.*
