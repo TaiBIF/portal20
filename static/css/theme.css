@@ -1431,8 +1431,8 @@ a.navbar-icon-btn:last-child {
 .data-wall-numbers small {
   display: block;
   padding-right: 64px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  /*white-space: nowrap;*/
+  /*text-overflow: ellipsis;*/
   overflow: hidden;
 }
 
