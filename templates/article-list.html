@@ -54,7 +54,7 @@
     <div class="carousel-inner" role="listbox">
       {% for i in cover_list %}
       <div class="head-carousel-wrapper item{% if forloop.counter == 1 %} active{% endif %}" style="background-image: url('{% if i.cover %}{{ i.cover.url}}{% endif %}');">
-        <a href="04-topicStory.html" class="head-carousel-btn"></a>
+        <a href="{{ i.get_absolute_url }}" class="head-carousel-btn"></a>
         <div class="carousel-caption">
           <span class="head-carousel-cate">{{ i.get_category_display }}</span>
           <h3 class="head-carousel-title">{{ i.title }}</h3>
