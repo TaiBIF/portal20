@@ -10,15 +10,16 @@ from conf import settings
 
 
 def article_cover_path(instance, filename):
-    ext = filename.split('.')[-1].lower()
-    cover_path = 'article/{}/cover_{}.{}'.format(instance.pk, instance.pk, ext)
+    if instance.pk:
+        ext = filename.split('.')[-1].lower()
+        cover_path = 'article/{}/cover_{}.{}'.format(instance.pk, instance.pk, ext)
 
-    # delete if image name exist; or django will create a new hashed filename
-    exist_path = os.path.join(settings.MEDIA_ROOT, cover_path)
-    if os.path.exists(exist_path):
-        os.remove(exist_path)
-    return cover_path
-
+        # delete if image name exist; or django will create a new hashed filename
+        exist_path = os.path.join(settings.MEDIA_ROOT, cover_path)
+        if os.path.exists(exist_path):
+            os.remove(exist_path)
+        return cover_path
+    return ''
 
 class Tag(models.Model):
 
@@ -66,8 +67,18 @@ class Article(models.Model):
     memo_text = models.TextField('備註(多字)', blank=True)
 
     def save(self, *args, **kwargs):
-        if not self.id and not self.slug:
-            self.slug = slugify(self.title, allow_unicode=True)
+        if not self.id:
+            if not self.slug:
+                self.slug = slugify(self.title, allow_unicode=True)
+
+            # prevent image save no instance.id
+            saved_image = self.cover
+            self.cover = None
+            super(Article, self).save(*args, **kwargs)
+            self.cover = saved_image
+            if 'force_insert' in kwargs:
+                kwargs.pop('force_insert')
+
         super(Article, self).save(*args, **kwargs)
 
     def __str__(self):
