@@ -1,6 +1,6 @@
-
 {% load static %}
 {% load helper_tags %}
+
 
 <!doctype html>
 <html>
@@ -9,29 +9,26 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="臺灣生物多樣性資訊機構 (Taiwan Biodiversity Information Facility, TaiBIF) 是全球生物多樣性資訊機構 (GBIF) 在臺灣的國家節點，也是臺灣生物多樣性資訊與國際平台接軌之窗口。在 GBIF.org 國際平台上，所有授權條件明確之公開生物多樣性資料，均提供全球科學研究、政策制定以及公共建設使用。TaiBIF 於 2004 年由科技部委託中央研究院生物多樣性研究中心成立及運作，主要任務為推動、建置臺灣生物多樣性資訊相關基礎建設，包含生物多樣性資訊的開放分享、研究資料管理流程的建置與交流，以及資訊服務的設計與開發。2008 年 3 月，TaiBIF 於中央研究院成立全球生物多樣性資訊機構中華民國委員會 (GBIF-ROC)，促進跨部會在生物多樣性資訊議題上的對話，以推動資訊的流通與整合。">
+    <meta name="description" content="">
+    <link href="favicon.ico" rel="icon" type="image/x-icon" />
 
     {% block meta %}
-    <meta property="og:title" content="臺灣生物多樣性資訊機構 (Taiwan Biodiversity Information Facility, TaiBIF) "/>
-    {#<meta property="og:image" content="{% static 'images/taibif-logo-white-bg.png' %}"/>#}
-    <meta property="og:image" content="{% static 'images/TaiBIF.jpg' %}"/>
-    <meta property="og:description" content="臺灣生物多樣性資訊機構 (Taiwan Biodiversity Information Facility, TaiBIF) 是全球生物多樣性資訊機構 (GBIF) 在臺灣的國家節點，也是臺灣生物多樣性資訊與國際平台接軌之窗口。在 GBIF.org 國際平台上，所有授權條件明確之公開生物多樣性資料，均提供全球科學研究、政策制定以及公共建設使用。TaiBIF 於 2004 年由科技部委託中央研究院生物多樣性研究中心成立及運作，主要任務為推動、建置臺灣生物多樣性資訊相關基礎建設，包含生物多樣性資訊的開放分享、研究資料管理流程的建置與交流，以及資訊服務的設計與開發。2008 年 3 月，TaiBIF 於中央研究院成立全球生物多樣性資訊機構中華民國委員會 (GBIF-ROC)，促進跨部會在生物多樣性資訊議題上的對話，以推動資訊的流通與整合。"/>
-    <meta property="og:url" content="http://portal.taibif.tw" />
-    <meta property="og:type" content="website" />
     {% endblock %}
-
-    <link rel='shortcut icon' type='image/x-icon' href='/static/favicon.ico' />
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-
     <!-- Owl Stylesheets -->
     <link href="{% static 'css/owl.carousel.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/owl.theme.default.min.css' %}" rel="stylesheet">
 
     {% comment %}
     <!-- Full Calendar Stylesheets -->
-    <link rel="stylesheet" href="css/fullcalendar-core-main.min.css">
+    <link rel="stylesheet" href="{% static 'css/fullcalendar-core-main.min.css' %}">
     {% endcomment %}
+
+    <!-- date range picker CSS -->
+    <link rel="stylesheet" href="{% static 'css/daterangepicker.css' %}">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static 'css/dataTables.bootstrap.min.css' %}">
 
     {% block head %}
     {% endblock %}
@@ -47,6 +44,7 @@
     </script>
     <title>TaiBIF :: {% block title%}{% endblock %}</title>
   </head>
+
   <body>
   <button onclick="topFunction()" id="top" title="Return to top" class="btn-2top myicon icon-arrow-up"></button>
   <!-- Header begin -->
@@ -58,19 +56,19 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'images/taibif-logo.png' %}" class="hidden-xs navbar-brand-l"><img src="{% static 'images/taibif-logo-rgb-s.jpg' %}" class="visible-xs navbar-brand-s"></a>
+        <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'images/taibif-logo-rgb-l.jpg' %}" class="hidden-xs navbar-brand-l"><img src= {% static "images/taibif-logo-rgb-s.jpg" %} class="visible-xs navbar-brand-s"></a>
         <div class="row">
           <!-- hidden xs begin -->
           <div class="hidden-xs col-xs-6 navbar-hidden-xs">
             <div class="navbar-search-wrapper">
-              <input type="text" class="navbar-search-input" id="navbar-search-input" placeholder="全站搜尋...">
-              <button class="navbar-search-btn" type="button" id="navbar-search-btn">
+              <input type="text" class="navbar-search-input" placeholder="全站搜尋...">
+              <button class="navbar-search-btn" type="button">
                 <span class="myicon icon-search"></span>
               </button>
             </div>
             <a href="https://www.facebook.com/TaiBIF.tw/" target="_blank" class="navbar-oval-btn"><span class="myicon icon-social-fb"></span></a>
-            {#<a href="#" target="_blank" class="navbar-oval-btn"><span class="myicon icon-social-yt"></span></a>#}
-            {#<a href="#" class="navbar-language-btn"><span class="myicon icon-language"></span>English</a>#}
+            <a href="#" target="_blank" class="navbar-oval-btn"><span class="myicon icon-social-yt"></span></a>
+            <a href="#" class="navbar-language-btn"><span class="myicon icon-language"></span>English</a>
           </div>
           <!-- hidden xs end -->
           <!-- visible xs begin -->
@@ -85,7 +83,7 @@
           <!-- visible xs end -->
         </div>
       </div>
-      <!-- navbar -->
+
       <div class="navbar-collapse-wrapper">
         <div class="container">
           <div class="navbar-collapse collapse" id="navbar">
@@ -97,8 +95,8 @@
                 <ul class="dropdown-menu" aria-labelledby="DropdownMenu-data">
                   <li><a href="{% url 'open_data' %}">Open Data 概述</a></li>
                   <li><a href="{% url 'data_stats' %}">資料發布狀況</a></li>
-                  <li><a href="{% url 'publishing_data' %}">資料上傳</a></li>
-                  <li><a href="{% url 'journals' %}">資料論文/期刊</a></li>
+                  <li><a href="01-schedule.html">資料上傳</a></li>
+                  <li><a href="01-journals.html">資料論文/期刊</a></li>
                 </ul>
               </li>
               <li class="dropdown">
@@ -106,9 +104,9 @@
                   工具與文件
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="DropdownMenu-tool">
-                  <li><a href="{% url 'tools' %}">工具分享</a></li>
-                  {#<li><a href="#">檔案下載</a></li>#}
-                  <li><a href="{% url 'cookbook' %}">Cookbook</a></li>
+                  <li><a href="02-tools.html">工具分享</a></li>
+                  <li><a href="#">檔案下載</a></li>
+                  <li><a href="02-cookbookList.html">Cookbook</a></li>
                 </ul>
               </li>
               <li class="dropdown">
@@ -117,10 +115,10 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="DropdownMenu-about">
                   <li><a href="{% url 'about_taibif' %}">TaiBIF 簡介</a></li>
-                  {#<li><a href="{% url 'plans' %}">TaiBIF 年度計畫成果</a></li>#}
+                  <li><a href="03-planList.html">TaiBIF 年度計畫成果</a></li>
                   <li><a href="{% url 'about_gbif' %}">GBIF 介紹</a></li>
-                  <li><a href="{% url 'contact_us' %}">聯絡我們</a></li>
-                  <li><a href="{% url 'links' %}">相關連結</a></li>
+                  <li><a href="03-contact.html">聯絡我們</a></li>
+                  <li><a href="03-sites.html">相關連結</a></li>
                 </ul>
               </li>
 
@@ -132,33 +130,72 @@
                   <li class="dropdown-group-wrapper clearfix">
                     <ul class="dropdown-group-ctn">
                       <li class="dropdown-group-cate hidden-xs">最新消息</li>
-                      <li><a href="{% url 'article-list' category='news' %}">新聞</a></li>
+                      <li><a href="04-newsList.html">新聞</a></li>
                       <li><a href="{% url 'article-list' category='event' %}">活動</a></li>
                       <li><a href="{% url 'article-list' category='update' %}">更新</a></li>
                     </ul>
                     <ul class="dropdown-group-ctn">
                       <li class="dropdown-group-cate hidden-xs">專題文章</li>
-                      <li><a href="{% url 'article-list' category='sci' %}">科普文章</a></li>
+                      <li><a href="04-topicList.html">科普文章</a></li>
                       <li><a href="{% url 'article-list' category='tech' %}">技術專欄</a></li>
                       <li><a href="{% url 'article-list' category='pub' %}">出版品資料</a></li>
-                      <li><a href="{% url 'article-list' category='pos' %}">TaiBIF發表文章/海報</a></li>
                     </ul>
                   </li>
                 </ul>
               </li>
               <li class="visible-xs navbar-collapse-xs">
                 追蹤：
-                <a href="https://www.facebook.com/TaiBIF.tw/" target="_blank"><span class="myic
-on icon-social-fb"></span></a>
+                <a href="https://www.facebook.com/TaiBIF.tw/" target="_blank"><span class="myicon icon-social-fb"></span></a>
                 <a href="#" target="_blank"><span class="myicon icon-social-yt"></span></a>
               </li>
             </ul>
           </div>
         </div>
-      </div><!-- end of navbar -->
+      </div>
     </nav>
   </div>
+
+  <!-- xs-search-modal begin -->
+  <div class="modal fade xs-modal-wrapper xs-search-modal-pos" data-backdrop="false">
+    <div class="xs-modal-content">
+      <div class="xs-modal-header">
+        <span class="xs-search-modal-close myicon icon-close" data-dismiss="modal" aria-label="Close"></span>
+        <p class="text-center xs-modal-title">搜尋</p>
+      </div>
+      <div class="xs-modal-body">
+        <div class="xs-search-modal-input-group">
+          <input type="text" class="navbar-search-input" placeholder="請輸入關鍵字...">
+          <button class="navbar-search-btn" type="button">
+            <span class="myicon icon-search"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- xs-search-modal end -->
+
+  <!-- xs-lang-modal begin -->
+  <div class="modal fade xs-modal-wrapper xs-lang-modal-pos" role="dialog" data-backdrop="false">
+    <div class="xs-modal-content">
+      <div class="xs-modal-header">
+        <span class="xs-search-modal-close myicon icon-close" data-dismiss="modal" aria-label="Close"></span>
+        <p class="text-center xs-modal-title">Change Lamguage</p>
+      </div>
+      <div class="xs-modal-body">
+        <label class="custom-input-ctn">
+          <input type="radio" name="radio">
+          <span class="radiomark"></span>
+          English
+        </label>
+      </div>
+    </div>
+  </div>
+  <!-- xs-lang-modal end -->
+
+  <!-- Header end -->
+
   {% block main %}{% endblock %}
+
   <!-- footer begin -->
   <div class="container-fluid footer-wrapper">
     <div class="container">
@@ -173,56 +210,22 @@ on icon-social-fb"></span></a>
   </div>
   <!-- footer end -->
 
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  {% get_taibif_env as taibif_env %}
-  {% if taibif_env == "local" %}
-  <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
-  {% else %}
+ <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
-  {% endif %}
-
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
   <script src="{% static 'js/page.js' %}"></script>
- 
   <!-- owl carousel -->
   <script src="{% static 'js/OwlCarousel/owl.carousel.min.js' %}"></script>
   <script src="{% static 'js/OwlCarousel/owl.carousel2.thumbs.min.js' %}"></script>
-<!-- script 4 owl carousel begin -->
-<script>
-  $(document).ready(function() {
-    //navbar-search
-    //const v \ $('#navbar-search-input').val();
-    $('#navbar-search-btn').click(function(){
-      const q =$('#navbar-search-input').val();
-      window.location.href = `/search/?q=${q}`;
-    });
+  <!-- DataTables -->
+  <script src="{% static 'js/datatable/jquery.dataTables.js' %}"></script>
+  <script src="{% static 'js/datatable/dataTables.bootstrap.min.js' %}"></script>
 
-    var owl_topic = $('#topic-board');
-    owl_topic.owlCarousel({
-      margin: 20,
-      nav: false,
-      dots: true,
-      loop: false,
-      autoplay: true,
-      autoplayTimeout: 3000,
-      autoplayHoverPause: true,
-      thumbs: false,
-      responsive:{
-          0:{
-              items:1
-          },
-          650:{
-              items:2
-          },
-          1000:{
-              items:4
-          }
-      }      
-    })
-  })
-</script>
-<!-- script 4 owl carousel end -->
-{% block script %}
-{% endblock %}
   </body>
 </html>
+
+
+
+
+
+
