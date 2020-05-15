@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import Accordion from "./components/Accordion";
+//import Accordion from "./components/Accordion";
 //import Tree from "./components/Tree";
 
 
@@ -106,25 +106,52 @@ const SearchTaxon = (props) => {
   );
 }
 
+function Accordion(props) {
+  const [isOpen, setOpenState] = useState(false);
+
+  const {content, onClick, filters} = props;
+
+  const appendClass = (props.appendClass) ? ` ${props.appendClass}` : '';
+  function toggleAccordion() {
+    setOpenState(isOpen === false ? true : false);
+  }
+
+  const menuItems = content.rows.map((x) => {
+    const count = (x.count) ? x.count.toLocaleString() : null;
+    const itemChecked = filters.has(`${content.key}=${x.key}`);
+    return (
+        <div className="search-sidebar-checkbox-wrapper" key={x.key}>
+          <label className="custom-input-ctn">
+          <input type="checkbox" onChange={(e)=> {e.persist(); onClick(e, content.key, x.key)}} checked={itemChecked} />
+          <span className="checkmark"></span>
+          <span className="search-sidebar-count-group">
+            <span className="name">{x.label}</span>
+            <span className="count">{count}</span>
+          </span>
+          </label>
+        </div>
+    );
+  });
+  return (
+    <React.Fragment>
+    <div className="search-sidebar-accordion-wrapper">
+      <div className="search-sidebar-accordion-title">
+        <a href="#" aria-expanded={isOpen ? "true": "false"} onClick={toggleAccordion}>
+        {content.label}
+        </a>
+      </div>
+      { isOpen ?
+      <div className="search-sidebar-accordion-content collapse in">
+        {menuItems}
+      </div>
+    : null}
+    </div>
+    </React.Fragment>);
+}
+
 function SearchSidebar(props) {
   //console.log(props);
-  const menuList = props.menus.map(function(m) {
-    const menu_items = m.rows.map(function(x) {
-      const itemChecked = props.filters.has(`${m.key}=${x.key}`);
-      return (<div key={x.key} className="menu-item">
-              <div className="menu-item__title">
-              <input type="checkbox" onChange={(e)=> {e.persist(); props.onClick(e, m.key, x.key)}} checked={itemChecked} /> {x.label}
-              </div>
-              <div className="menu-item__count">
-              {x.count}
-              </div>
-              </div>);
-    });
-    return (
-        <Accordion key={m.key} title={m.label} content={menu_items} />
-    )
-  });
-  const numFilters = props.filters.size === 0 ? '' : <span className="num-filters badge">{props.filters.size}</span>;
+
   let searchTypeLabel = '';
   let searchTaxonContainer = null;
   if (props.searchType === 'dataset') {
@@ -142,6 +169,7 @@ function SearchSidebar(props) {
     searchTypeLabel = '發布者';
   }
 
+  /*
   return (
       <div className="col-xs-6 col-md-3 search-sidebar">
       <div className="search-sidebar__title search-sidebar__title--head">
@@ -159,7 +187,35 @@ function SearchSidebar(props) {
       </div>
       {searchTaxonContainer}
       {menuList}
-      </div>)
+      </div>)*/
+  return (
+      <div className="search-sidebar">
+        <div className="modal right fade modal-search-side-wrapper" id="flowBtnModal" tabIndex="-1" role="dialog">
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="search-sidebar-header">
+                <span>{searchTypeLabel}</span>
+                <div className="search-sidebar-header-del" data-toggle="tooltip" data-placement="left" title="清除" onClick={props.onClickClear}>
+                  {props.filters.size > 0 ? <span className="badge">{props.filters.size}</span> : null}
+                  <span className="glyphicon glyphicon-trash"></span>
+                </div>
+              </div>
+              <div className="input-group search-sidebar-header-kw">
+                <input className="form-control" placeholder="搜尋關鍵字" name="search-term" id="search-term" type="text" value="" value={props.queryKeyword} onChange={props.onChangeKeyword} onKeyPress={props.onKeyPressKeyword} />
+                <div className="input-group-btn">
+                  <button className="btn" type="submit" onClick={props.onClickSubmitKeyword}>
+                    <i className="glyphicon glyphicon-search"></i>
+                  </button>
+                </div>
+              </div>
+              {props.menus.map((m) => 
+                (<Accordion key={m.key} content={m} onClick={props.onClick} filters={props.filters}/>)
+               )}
+            </div>
+          </div>
+        </div>
+      </div>
+  )
 }
 
 export default SearchSidebar;
