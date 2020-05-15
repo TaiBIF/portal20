@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchSidebar from './SearchSidebar.js';
 import {SearchMainDataset, SearchMainOccurrence, SearchMainPublisher, SearchMainSpecies} from './SearchMain.js';
-import './SearchStyles.css';
+import './SearchStyles2.css';
 
 
 function filtersToQuerystring (filters) {
@@ -414,11 +414,18 @@ class TaibifSearch extends React.Component {
         onTaxonKeywordChange: this.handleTaxonKeywordChange,
         onSuggestClick: this.handleSuggestClick,
       };
-      return (
-          <div className="row">
-          <SearchSidebar menus={menus} onClick={this.handleMenuClick} filters={filters} onClickClear={(e)=>this.applyFilters()} queryKeyword={queryKeyword} onChangeKeyword={(e)=>{this.handleKeywordChange(e)}} onKeyPressKeyword={(e)=>{this.handleKeywordEnter(e)}} onClickSubmitKeyword={this.handleSubmitKeywordClick} searchType={searchType} taxonProps={taxonProps} />
+        /*<SearchSidebar menus={menus} onClick={this.handleMenuClick} filters={filters} onClickClear={(e)=>this.applyFilters()} queryKeyword={queryKeyword} onChangeKeyword={(e)=>{this.handleKeywordChange(e)}} onKeyPressKeyword={(e)=>{this.handleKeywordEnter(e)}} onClickSubmitKeyword={this.handleSubmitKeywordClick} searchType={searchType} taxonProps={taxonProps} />
           {searchMainContainer}
           <Pagination onClick={this.handlePaginationClick} />
+          */
+      return (
+          <div className="row">
+            <div className="visible-xs">
+              <a href="#" className="xs-schedule-flow-btn myicon icon-filter" data-toggle="modal" data-target="#flowBtnModal">
+                進階篩選
+              </a>
+            </div>
+            <SearchSidebar menus={menus} onClick={this.handleMenuClick} filters={filters} onClickClear={(e)=>this.applyFilters()} queryKeyword={queryKeyword} onChangeKeyword={(e)=>{this.handleKeywordChange(e)}} onKeyPressKeyword={(e)=>{this.handleKeywordEnter(e)}} onClickSubmitKeyword={this.handleSubmitKeywordClick} searchType={searchType} taxonProps={taxonProps} />
           </div>
       );
     }
