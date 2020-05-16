@@ -1,8 +1,102 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
+
+{% block head %}
+<link href="{% static 'css/taibif.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/leaflet.css' %}">
+<script src="{% static 'js/species-detail.js' %}"></script>
+<script src="{% static 'js/leaflet.js' %}"></script>
+<script src="{% static 'js/leaflet-heat.js' %}"></script>
+    <style>
+        #map { width: 800px; height: 600px; }
+        body { font: 16px/1.4 "Helvetica Neue", Arial, sans-serif; }
+        .ghbtns { position: relative; top: 4px; margin-left: 5px; }
+        a { color: #0077ff; }
+    </style>
+{% endblock %}
+
+{% block script %}
+{% if map_view %}
+{{ test|json_script:"occurrence-points" }}
+
+<script>
+  var map = L.map('map').setView([{{ map_view.0 }}, {{ map_view.1}} ], 13);
+
+  const tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+  }).addTo(map);
+  L.marker([{{ map_view.0 }}, {{ map_view.1}}]).addTo(map);
+
+
+</script>
+{% endif %}
+ <!-- script 4 owl carousel begin -->
+  <script>
+    $(document).ready(function() {
+      var owl = $('#speciesGallery');
+      owl.owlCarousel({
+        nav: false,
+        dots: false,
+        loop: true,
+        autoplay: true,
+        autoplayTimeout: 3000,
+        autoplayHoverPause: true,
+        items : 1,
+        animateOut: 'fadeOut',
+        thumbs: true,
+        thumbImage: true,
+      })
+    })
+  </script>
+  <!-- script 4 owl carousel end -->
+
+  <!-- script 4 data table begin -->
+  <script>
+    $(function () {
+      $('#dataset-table').DataTable({
+        'paging'      : true,
+        'lengthChange': false,
+        'searching'   : false,
+        'ordering'    : false,
+        'info'        : false,
+        'autoWidth'   : false
+      })
+
+
+      $('#occurrence-table').DataTable({
+        'paging'      : true,
+        'lengthChange': false,
+        'searching'   : false,
+        'ordering'    : false,
+        'info'        : true,
+        'autoWidth'   : false
+      })
+    })
+  </script>
+  <!-- script 4 data table end -->
+
+  <!-- script 4 adjust Anchor begin -->
+  <script type="text/javascript">
+    function adjustAnchor() {
+      const $anchor = $(':target');
+      const fixedElementHeight = $('.navbar-fixed-top').outerHeight() + 30;
+      if ($anchor.length > 0)
+        window.scrollTo(0, $anchor.offset().top - fixedElementHeight);
+    }
+    $(window).on('hashchange load', adjustAnchor);
+    $('body').on('click', "a[href^='#']", function (ev) {
+      if (window.location.hash === $(this).attr('href')) {
+        ev.preventDefault();
+        adjustAnchor();
+      }
+    });
+  </script>
+  <!-- script 4 adjust Anchor end -->
+{% endblock %}
+
 {% block main %}
-{# include "inc_breadcrumb.html" with tab="03" active_label="" #}
+{% include "inc_breadcrumb.html" with tab="05" active_label="" %}
 
 <!-- container begin -->
   <div class="container">
@@ -62,7 +156,6 @@
 
         <div class="owl-carousel owl-theme" id="speciesGallery">
         {% for i in species_info.taieol_media %}
-
           <div>
             <img src="{{ i.src}}">
           </div>
@@ -77,13 +170,10 @@
       <!-- 地理分佈 begin -->
       <div id="section4">
         <h4 class="heading-md-ul">地理分佈</h4>
-        <p>特有種。台東大漢山，新化農場至屏東茶茶牙賴一帶山區之闊葉林中。</p>
-        <p>
-          資料來源：
-          <a href="#"><span class="myicon icon-link"></span> 臺灣維管束植物簡誌 (楊遠波, 劉和義, 呂勝由)</a>
-          <a href="#"><img src="images/bynchorizontal.png"></a>
-        </p>
-        <img src="https://fakeimg.pl/600x300/?text=map" alt="" class="img-responsive">
+        {% if map_view %}<div id="map"></div>
+        {% else %}
+        No data available
+        {% endif %}
       </div>
       <!-- 地理分佈 end -->
 
@@ -99,51 +189,17 @@
             </tr>
           </thead>
           <tbody>
+            {% for set in dataset_list %}
             <tr>
-              <td>Lycopodium veitchii Christ, GBIF Backbone Taxonomy</td>
-              <td>67</td>
+              <td>{{ set.taibif_dataset_name }}</td>
+              <td>{{ set.dataset }}</td>
               <td>
                 <div class="chart-bar-h-bg">
                   <span class="chart-value-bg" style="width: 30%;"></span>
                 </div>
               </td>
             </tr>
-            <tr>
-              <td>Herbarium of Taiwan Forestry Research Institute</td>
-              <td>64</td>
-              <td>
-                <div class="chart-bar-h-bg">
-                  <span class="chart-value-bg" style="width: 28%;"></span>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>The digitization of plant specimens of NTU</td>
-              <td>21</td>
-              <td>
-                <div class="chart-bar-h-bg">
-                  <span class="chart-value-bg" style="width: 15%;"></span>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Database of Native Plants in Taiwan</td>
-              <td>19</td>
-              <td>
-                <div class="chart-bar-h-bg">
-                  <span class="chart-value-bg" style="width: 12%;"></span>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td> The vascular plants collection (P) at the Herbarium</td>
-              <td>12</td>
-              <td>
-                <div class="chart-bar-h-bg">
-                  <span class="chart-value-bg" style="width: 10%;"></span>
-                </div>
-              </td>
-            </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
@@ -215,9 +271,24 @@
       {% for i in species_info.taieol_desc %}
        <div id="section9">
          <h4 class="heading-md-ul">{{i.title}}</h4>
-         <p>{{i.src}}</p>
+         {{i.src}}
        </div>
       {% endfor %}
+
+      {% comment %}
+      <div class="article-head-wrapper">
+        <h1 class="heading-lg-ul">
+          出現紀錄
+        </h1>
+        <ul>
+          {% for i in occurrence_list %}
+          <li>{{ i.scientificname }} - {{ i.taibif_dataset_name}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endcomment %}
+
+
 
        <!-- 文獻 begin -->
       <div id="section7">
@@ -257,30 +328,5 @@
       </div>
       <!-- 引用格式 end -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 {% endblock %}
+

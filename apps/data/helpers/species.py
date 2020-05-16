@@ -13,17 +13,35 @@ def _get_taieol_desc(taxon_id, page=''):
     r = requests.get(url)
     if r:
         soup = BeautifulSoup(r.text, 'lxml')
+
+        table = soup.findAll('div', attrs={"class": "taxon-desc-content"})
+        for x in table:
+            check = x.find('p')
+
+        print(check)
+
+        if check != None:
+            newlist = soup.select('.taxa-page-chapter-title')
+            newlist1 = soup.select('.taxon-desc-content p')
+        else:
+            newlist = soup.select('.taxa-page-chapter-title')
+            newlist1 = soup.select('.taxon-desc-content')
         
        
 
-        newlist = soup.select('.taxa-page-chapter-title')
-        newlist1 = soup.select('.taxon-desc-content p')
+       # newlist = soup.select('.taxa-page-chapter-title')
+        #newlist1 = soup.select('.taxon-desc-content')
+        #newlist2 = soup.select('.taxon-desc-content p')
+
+
+
 
 
 
         for i in range(len(soup.select('.taxa-page-chapter-title'))):       
-            for x,y in zip(newlist1[i], newlist[i]):
-                foto = {'title':y, 'src': x}
+            for x,y in zip(newlist[i], newlist1[i]):
+                foto = {'title':x, 'src': y}
+
             
                 rows.append(foto)
 
