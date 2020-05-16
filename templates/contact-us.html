@@ -5,15 +5,6 @@
 {% block main %}
 {% include "inc_breadcrumb.html" with tab="03" active_label="聯絡我們" %}
 
-<style>
-  p {
-  line-height: 1.8;
-  }
-
-  hr {
-  border-top: 1px solid;
-    }
-</style>
 
 
   <!-- container begin -->
@@ -24,11 +15,10 @@
     <strong>{{ message.head }}</strong> {{ message.content }}
   </div>
   {% endif %}
-    <h2 class="h2">
+    <h1 class="heading-lg-ul">
       聯絡我們
       <span class="heading-footnote">以下皆為必填</span>
-    </h2>
-    <hr>
+    </h1>
     <!-- contact form begin -->
     <div class="contact-form-wrapper clearfix">
 

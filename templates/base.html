@@ -56,7 +56,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'images/taibif-logo-rgb-l.jpg' %}" class="hidden-xs navbar-brand-l"><img src= {% static "images/taibif-logo-rgb-s.jpg" %} class="visible-xs navbar-brand-s"></a>
+        <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'images/taibif-logo-rgb-l.jpg' %}" class="hidden-xs navbar-brand-l"><img src= "{% static 'images/taibif-logo-rgb-s.jpg' %}" class="visible-xs navbar-brand-s"></a>
         <div class="row">
           <!-- hidden xs begin -->
           <div class="hidden-xs col-xs-6 navbar-hidden-xs">
@@ -95,8 +95,8 @@
                 <ul class="dropdown-menu" aria-labelledby="DropdownMenu-data">
                   <li><a href="{% url 'open_data' %}">Open Data 概述</a></li>
                   <li><a href="{% url 'data_stats' %}">資料發布狀況</a></li>
-                  <li><a href="01-schedule.html">資料上傳</a></li>
-                  <li><a href="01-journals.html">資料論文/期刊</a></li>
+                  <li><a href="{% url 'publishing_data' %}">資料上傳</a></li>
+                  <li><a href="{% url 'journals' %}">資料論文/期刊</a></li>
                 </ul>
               </li>
               <li class="dropdown">
@@ -104,9 +104,9 @@
                   工具與文件
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="DropdownMenu-tool">
-                  <li><a href="02-tools.html">工具分享</a></li>
+                  <li><a href="{% url 'tools' %}">工具分享</a></li>
                   <li><a href="#">檔案下載</a></li>
-                  <li><a href="02-cookbookList.html">Cookbook</a></li>
+                  <li><a href="{% url 'cookbook' %}">Cookbook</a></li>
                 </ul>
               </li>
               <li class="dropdown">
@@ -115,10 +115,10 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="DropdownMenu-about">
                   <li><a href="{% url 'about_taibif' %}">TaiBIF 簡介</a></li>
-                  <li><a href="03-planList.html">TaiBIF 年度計畫成果</a></li>
+                  <li><a href="{% url 'plans' %}">TaiBIF 年度計畫成果</a></li>
                   <li><a href="{% url 'about_gbif' %}">GBIF 介紹</a></li>
-                  <li><a href="03-contact.html">聯絡我們</a></li>
-                  <li><a href="03-sites.html">相關連結</a></li>
+                  <li><a href="{% url 'contact_us' %}">聯絡我們</a></li>
+                  <li><a href="{% url 'links' %}">相關連結</a></li>
                 </ul>
               </li>
 
@@ -130,13 +130,13 @@
                   <li class="dropdown-group-wrapper clearfix">
                     <ul class="dropdown-group-ctn">
                       <li class="dropdown-group-cate hidden-xs">最新消息</li>
-                      <li><a href="04-newsList.html">新聞</a></li>
+                      <li><a href="{% url 'article-list' category='news' %}">新聞</a></li>
                       <li><a href="{% url 'article-list' category='event' %}">活動</a></li>
                       <li><a href="{% url 'article-list' category='update' %}">更新</a></li>
                     </ul>
                     <ul class="dropdown-group-ctn">
                       <li class="dropdown-group-cate hidden-xs">專題文章</li>
-                      <li><a href="04-topicList.html">科普文章</a></li>
+                      <li><a href="{% url 'article-list' category='sci' %}">科普文章</a></li>
                       <li><a href="{% url 'article-list' category='tech' %}">技術專欄</a></li>
                       <li><a href="{% url 'article-list' category='pub' %}">出版品資料</a></li>
                     </ul>
@@ -194,7 +194,8 @@
 
   <!-- Header end -->
 
-  {% block main %}{% endblock %}
+  {% block main %}
+  {% endblock %}
 
   <!-- footer begin -->
   <div class="container-fluid footer-wrapper">
@@ -210,16 +211,30 @@
   </div>
   <!-- footer end -->
 
- <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  {% get_taibif_env as taibif_env %}
+  {% if taibif_env == "local" %}
+  <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+  {% else %}
   <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+  {% endif %}
+
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
   <script src="{% static 'js/page.js' %}"></script>
+
   <!-- owl carousel -->
   <script src="{% static 'js/OwlCarousel/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'js/OwlCarousel/owl.carousel2.thumbs.min.js' %}"></script>
+
+
   <script src="{% static 'js/OwlCarousel/owl.carousel2.thumbs.min.js' %}"></script>
   <!-- DataTables -->
   <script src="{% static 'js/datatable/jquery.dataTables.js' %}"></script>
   <script src="{% static 'js/datatable/dataTables.bootstrap.min.js' %}"></script>
+
+  {% block script %}
+  {% endblock %}
 
   </body>
 </html>
