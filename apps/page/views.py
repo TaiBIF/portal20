@@ -22,6 +22,8 @@ from .models import Post, Journal
 from utils.mail import taibif_mail_contact_us
 
 from apps.data.helpers.stats import get_home_stats
+from django.utils.translation import ugettext as _
+
 
 def index(request):
 
@@ -205,4 +207,9 @@ def export_csv(request):
         writer.writerow(row['match_list'])
 
     return response
+
+def trans(request):
+    translate_str = _("這裡放需要翻譯的文字")
+    context = {"translate_str": translate_str}
+    return render(request, 'index.html', context)
 

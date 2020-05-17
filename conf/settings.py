@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 import environ
 import socket # djdt for docker
+from django.utils.translation import gettext_lazy as _
 
 env = environ.Env()
 root_path = environ.Path(__file__) - 2 # web
@@ -63,6 +64,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -79,6 +81,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+		'django.template.context_processors.i18n',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -116,9 +119,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
+LANGUAGE_CODE = 'zh-Hant'
 
-#LANGUAGE_CODE = 'zh-hant'
-LANGUAGE_CODE = 'en-us'
+LANGUAGES = (
+    ('en', ('English')),
+    ('zh-hant', _('Traditional Chinese')),
+)
+
 
 TIME_ZONE = 'Asia/Taipei'
 
@@ -227,3 +234,8 @@ AWS_SES_REGION_ENDPOINT = env('AWS_SES_REGION_ENDPOINT')
 
 TAIBIF_SERVICE_EMAIL = env('TAIBIF_SERVICE_EMAIL')
 TAIBIF_BCC_EMAIL_LIST = env('TAIBIF_BCC_EMAIL_LIST')
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
+

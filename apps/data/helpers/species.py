@@ -14,38 +14,38 @@ def _get_taieol_desc(taxon_id, page=''):
     if r:
         soup = BeautifulSoup(r.text, 'lxml')
 
-        table = soup.findAll('div', attrs={"class": "taxon-desc-content"})
-        for x in table:
+        table = soup.findAll('h2', attrs={"class": "taxa-page-chapter-title"})
+        table1 = soup.findAll('div', attrs={"class": "taxon-desc-content"})
+
+        TableCount = []
+        Table1Count = []
+        for x in table1:
             check = x.find('p')
 
-        print(check)
+            AllTag1 = x.find_all('p')
+            Table1Count.append(len(AllTag1))
 
-        if check != None:
-            newlist = soup.select('.taxa-page-chapter-title')
-            newlist1 = soup.select('.taxon-desc-content p')
-        else:
-            newlist = soup.select('.taxa-page-chapter-title')
-            newlist1 = soup.select('.taxon-desc-content')
-        
-       
-
-       # newlist = soup.select('.taxa-page-chapter-title')
-        #newlist1 = soup.select('.taxon-desc-content')
-        #newlist2 = soup.select('.taxon-desc-content p')
+            if check != None:
+                newlist = soup.select('.taxa-page-chapter-title')
+                newlist1 = soup.select('.taxon-desc-content p')
 
 
+            else:
+                if sum(Table1Count) == 0:
+                    newlist = soup.select('.taxa-page-chapter-title')
+                    newlist1 = soup.select('.taxon-desc-content')
+                else:
+                    newlist = soup.select('.taxa-page-chapter-title')[:sum(Table1Count)]
+                    newlist1 = soup.select('.taxon-desc-content p')
+                    print(len(newlist))
 
 
-
-
-        for i in range(len(soup.select('.taxa-page-chapter-title'))):       
+        for i in range(len(newlist)):
             for x,y in zip(newlist[i], newlist1[i]):
                 foto = {'title':x, 'src': y}
 
-            
-                rows.append(foto)
 
-       
+                rows.append(foto)
 
  
        

@@ -1,6 +1,6 @@
 {% load static %}
 {% load helper_tags %}
-
+{% load i18n %}
 
 <!doctype html>
 <html>
@@ -68,7 +68,29 @@
             </div>
             <a href="https://www.facebook.com/TaiBIF.tw/" target="_blank" class="navbar-oval-btn"><span class="myicon icon-social-fb"></span></a>
             <a href="#" target="_blank" class="navbar-oval-btn"><span class="myicon icon-social-yt"></span></a>
-            <a href="#" class="navbar-language-btn"><span class="myicon icon-language"></span>English</a>
+            <a class="navbar-language-btn" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              <span class="myicon icon-language"></span>
+              {% get_current_language as LANGUAGE_CODE %}
+              {% get_language_info for LANGUAGE_CODE as lang %}
+              {% get_available_languages as LANGUAGES %}
+              {% get_language_info_list for LANGUAGES as languages %}
+              {{ lang.name_local }}
+            <span class="caret"></span>
+            </a>
+            <form name="ui" action="{% url 'set_language' %}" method="post">{% csrf_token %}
+              <input name="next" type="hidden" value="{{ redirect_to }}" />
+              <input name="language" type="hidden"/>
+
+            </form>
+            <ul class="dropdown-menu">
+              {% for language in languages %}
+              <li><a href="#" onclick="document.ui.language.value='{{ language.code}}'; document.ui.submit();">{{ language.name_local }}</a></li>
+              {% endfor %}
+            </ul>
+
+
+
+
           </div>
           <!-- hidden xs end -->
           <!-- visible xs begin -->
@@ -84,61 +106,65 @@
         </div>
       </div>
 
+
+
+      <!-- navbar -->
       <div class="navbar-collapse-wrapper">
         <div class="container">
           <div class="navbar-collapse collapse" id="navbar">
             <ul class="nav navbar-nav">
               <li class="dropdown">
                 <a class="dropdown-toggle" href="#" id="DropdownMenu-data" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  資料開放
+                  {% trans "資料開放" %}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="DropdownMenu-data">
-                  <li><a href="{% url 'open_data' %}">Open Data 概述</a></li>
-                  <li><a href="{% url 'data_stats' %}">資料發布狀況</a></li>
-                  <li><a href="{% url 'publishing_data' %}">資料上傳</a></li>
-                  <li><a href="{% url 'journals' %}">資料論文/期刊</a></li>
+                  <li><a href="{% url 'open_data' %}">{% trans "Open Data 概述" %}</a></li>
+                  <li><a href="{% url 'data_stats' %}">{% trans "資料發布狀況" %}</a></li>
+                  <li><a href="{% url 'publishing_data' %}">{% trans "資料上傳" %}</a></li>
+                  <li><a href="{% url 'journals' %}">{% trans "資料論文/期刊" %}</a></li>
                 </ul>
               </li>
               <li class="dropdown">
                 <a class="dropdown-toggle" href="#" id="DropdownMenu-tool" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  工具與文件
+                  {% trans "工具與文件" %}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="DropdownMenu-tool">
-                  <li><a href="{% url 'tools' %}">工具分享</a></li>
+                  <li><a href="{% url 'tools' %}">{% trans "工具分享" %}</a></li>
                   <li><a href="#">檔案下載</a></li>
-                  <li><a href="{% url 'cookbook' %}">Cookbook</a></li>
+                  <li><a href="{% url 'cookbook' %}">{% trans "Cookbook" %}</a></li>
                 </ul>
               </li>
               <li class="dropdown">
                 <a class="dropdown-toggle" href="#" id="DropdownMenu-about" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  關於 TaiBIF
+                  {% trans "關於 TaiBIF" %}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="DropdownMenu-about">
-                  <li><a href="{% url 'about_taibif' %}">TaiBIF 簡介</a></li>
-                  <li><a href="{% url 'plans' %}">TaiBIF 年度計畫成果</a></li>
-                  <li><a href="{% url 'about_gbif' %}">GBIF 介紹</a></li>
-                  <li><a href="{% url 'contact_us' %}">聯絡我們</a></li>
-                  <li><a href="{% url 'links' %}">相關連結</a></li>
+                  <li><a href="{% url 'about_taibif' %}">{% trans "TaiBIF 簡介" %}</a></li>
+                  {#<li><a href="{% url 'plans' %}">TaiBIF 年度計畫成果</a></li>#}
+                  <li><a href="{% url 'about_gbif' %}">{% trans "GBIF 介紹" %}</a></li>
+                  <li><a href="{% url 'contact_us' %}">{% trans "聯絡我們" %}</a></li>
+                  <li><a href="{% url 'links' %}">{% trans "相關連結" %}</a></li>
                 </ul>
               </li>
 
               <li class="dropdown">
                 <a class="dropdown-toggle" href="#" id="DropdownMenu-more" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  更多資訊
+                  {% trans "更多資訊" %}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="DropdownMenu-more">
                   <li class="dropdown-group-wrapper clearfix">
                     <ul class="dropdown-group-ctn">
-                      <li class="dropdown-group-cate hidden-xs">最新消息</li>
-                      <li><a href="{% url 'article-list' category='news' %}">新聞</a></li>
-                      <li><a href="{% url 'article-list' category='event' %}">活動</a></li>
-                      <li><a href="{% url 'article-list' category='update' %}">更新</a></li>
+                      <li class="dropdown-group-cate hidden-xs">{% trans "最新消息" %}</li>
+                      <li><a href="{% url 'article-list' category='news' %}">{% trans "新聞" %}</a></li>
+                      <li><a href="{% url 'article-list' category='event' %}">{% trans "活動" %}</a></li>
+                      <li><a href="{% url 'article-list' category='update' %}">{% trans "更新" %}</a></li>
                     </ul>
                     <ul class="dropdown-group-ctn">
-                      <li class="dropdown-group-cate hidden-xs">專題文章</li>
-                      <li><a href="{% url 'article-list' category='sci' %}">科普文章</a></li>
-                      <li><a href="{% url 'article-list' category='tech' %}">技術專欄</a></li>
-                      <li><a href="{% url 'article-list' category='pub' %}">出版品資料</a></li>
+                      <li class="dropdown-group-cate hidden-xs">{% trans "專題文章" %}</li>
+                      <li><a href="{% url 'article-list' category='sci' %}">{% trans "科普文章" %}</a></li>
+                      <li><a href="{% url 'article-list' category='tech' %}">{% trans "技術專欄" %}</a></li>
+                      <li><a href="{% url 'article-list' category='pub' %}">{% trans "出版品資料" %}</a></li>
+                      <li><a href="{% url 'article-list' category='pos' %}">{% trans "TaiBIF發表文章/海報" %}</a></li>
                     </ul>
                   </li>
                 </ul>
