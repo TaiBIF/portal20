@@ -2,6 +2,8 @@
 
 {% load static %}
 {% load humanize %}
+{% load i18n %}
+
 
 {% block title %}首頁{% endblock %}
 
@@ -79,18 +81,18 @@
     <div class="carousel-inner" role="listbox">
       <div class="head-carousel-wrapper item active" style="background-image: url('{% static 'images/banner/003.jpg' %}');">
         <div class="head-carousel-search-wrapper">
-          <h1 class="head-carousel-tagline">TaiBIF-生物多樣性資料開放的推手</h1>
+          <h1 class="head-carousel-tagline">{% trans "TaiBIF-生物多樣性資料開放的推手" %}</h1>
           <div class="head-carousel-search-ctn">
             <form action="/search/" method="post">
               {% csrf_token %}
               <ul class="row head-carousel-search-cate">
-                <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="occurrence" onclick="goSearch('occurrence');">出現紀錄</a></li>
-                <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="species" onclick="goSearch('species');">物種</a></li>
-                <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="dataset" onclick="goSearch('dataset');">資料集</a></li>
-                <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="publisher" onclick="goSearch('publisher');">發布者</a></li>
+                <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="occurrence" onclick="goSearch('occurrence');">{% trans "出現紀錄" %}</a></li>
+                <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="species" onclick="goSearch('species');">{% trans "物種" %}</a></li>
+                <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="dataset" onclick="goSearch('dataset');">{% trans "資料集" %}</a></li>
+                <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="publisher" onclick="goSearch('publisher');">{% trans "發布者" %}</a></li>
               </ul>
               <div class="head-carousel-search-form-wrapper">
-              <input type="text" class="head-carousel-search-input search-q" placeholder="全站搜尋..." name="q" id="taibif-search-keyword">
+              <input type="text" class="head-carousel-search-input search-q" placeholder="{% trans "全站搜尋..." %}" name="q" id="taibif-search-keyword">
               <button class="head-carousel-search-btn" type="submit">
                 <span class="myicon icon-search"></span>
               </button>
