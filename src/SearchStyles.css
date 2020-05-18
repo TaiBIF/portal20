@@ -1,102 +1,8 @@
-.search-container {
-    width: 100%;
-    margin: unset;
-    padding: unset;
-}
-
-.search-main {
-    padding-left: 40px;
-    border: 1px solid green;
-}
-
-.search-sidebar {
-    border-right: 1px #e5e5e5 solid;
-    padding-right: unset;
-    margin-top: 10px;
-    /*overflow: auto;*/
-}
-
-.search-sidebar__title {
-     margin: auto;
-     padding: 12px;
-     border-bottom: 1px solid #e5e5e5;
-     height: 48px;
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
-}
-.search-sidebar__title--head {
-    background-color: #4A3E3A;
-    color: #fff;
-}
-
-.clear-filters {
-    padding: 10px;
-}
-.num-filters {
-    font-size: 10px;
-    right: 10px;
-    top: 20px;
-    position: absolute;
-    z-index: 99;
-}
 .search-loading {
     text-align: center;
     padding: 60px;
 }
 
-.search-keyword {
-    height: 42px;
-    border-radius: 0;
-    border-top: unset;
-}
-
-.search-keyword-sign {
-    height: 42px;
-    border-radius: 0;
-    border-top: unset;
-    border-left: unset;
-    border-right: unset;
-}
-.search-keyword-sign:hover {
-    background-color: unset;
-    border-color: unset;
-    border-bottom: unset;
-}
-.search-taxon__checked {
-    border: 2px dashed #a9a9a9;
-    display: block;
-    padding: 4px;
-}
-
-.search-taxon__suggest-list {
-    float: left;
-    border: 2px dashed #a9a9a9;
-    z-index: 100;
-    background-color:#def;
-    margin: 10px 0;
-    padding: 4px;
-}
-
-.search-taxon__suggest-item {
-    border: 1px solid gray;
-    padding: 2px;
-    margin: 4px 2px;
-}
-.search-taxon__suggest-item:hover {
-    background-color: #fff8d5
-}
-.search-tag {
-    margin: 10px 6px;
-    padding: 4px 12px;
-}
-
-.search-menu-tabs>li.active>a, .search-menu-tabs>li.active>a:focus, .search-menu-tabs>li.active>a:hover {
-    cursor: default;
-    background-color: #fff;
-    border: 1px solid #fff;
-    border-bottom: 3px solid #7b2626;
-}
 
 .loader {
     width: 60px;
@@ -134,16 +40,16 @@
 
 @keyframes load {
   0% {
-    content: 'Loading';
+    content: 'Searching';
   }
   33% {
-    content: 'Loading.';
+    content: 'Searching.';
   }
   67% {
-    content: 'Loading..';
+    content: 'Searching..';
   }
   100% {
-    content: 'Loading...';
+    content: 'Searching...';
   }
 }
 
@@ -180,27 +86,4 @@
     border-bottom: 1px solid #a9a9a9;
     width: 10px;
 }
-/*
-.taxon-tree-node-item
-  &:before {
-            position: absolute;
-            left: -15px;
-            top: 0px;
-            content: '';
-            display: block;
-            border-left: 1px solid #ddd;
-            height: 1em;
-            border-bottom: 1px solid #ddd;
-            width: 10px;
-        }
 
-        &:after {
-            position: absolute;
-            left: -15px;
-            bottom: -7px;
-            content: '';
-            display: block;
-            border-left: 1px solid #ddd;
-            height: 100%;
-        }
-*/

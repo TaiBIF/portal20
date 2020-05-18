@@ -112,7 +112,8 @@ function Accordion(props) {
   const {content, onClick, filters} = props;
 
   const appendClass = (props.appendClass) ? ` ${props.appendClass}` : '';
-  function toggleAccordion() {
+  function toggleAccordion(e) {
+    e.preventDefault()
     setOpenState(isOpen === false ? true : false);
   }
 

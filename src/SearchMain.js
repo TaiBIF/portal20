@@ -1,5 +1,139 @@
 import React from 'react';
 
+function DatasetResult(props) {
+  const rows = props.data.results.map((row, index) => {
+    const num_record = row.num_record.toLocaleString('en');
+    const link = `/dataset/${row.name}/`;
+    // TODO
+    // before <span> 紀錄數量
+    //  <span className="listbox-inner-tag"><a href="#">引用次數：48</a></span>
+    return (
+        <div className="row listbox-img-right-wrapper" key={index}>
+          <div className="col-xs-12">
+            <span className="search-content-list-tag">{row.dwc_type}</span>
+            <h3 className="listbox-inner-title"><a href={link}>{row.title}</a></h3>
+            <span className="listbox-inner-date">{row.publisher}</span>
+            <div className="listbox-inner-summary hidden-xs">
+            <a href={link}>{row.description}</a>
+            </div>
+            <span className="listbox-inner-tag"><a href="#">記錄數量：{num_record} </a></span>
+          </div>
+        </div>
+    )
+  });
+  return (
+      <div className="container-fluid search-content-grid-wrapper">
+      {rows}
+      </div>
+  );
+}
+
+function OccurrenceResult(props) {
+  //console.log(props);
+  const rows = props.data.results.map((row, index) => {
+    const sn = props.data.offset + index + 1;
+    return (
+        <tr key={index}>
+        <td><a href={"/occurrence/"+row.taibif_id}>{ sn }</a></td>
+        <td>{/*http://taibif.tw/zh/namecode/{{ i.name_code */}{ row.scientific_name }</td>
+        <td>{ row.vernacular_name }</td>
+        <td>{ row.date }</td>
+        <td>{ row.country }{/*/ i.locality */}</td>
+        <td><a href={"/dataset/"+row.dataset+"/"}>{ row.dataset }</a></td>
+        </tr>
+    )
+  });
+
+  return (
+      <div className="table-responsive">
+        <table className="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>學名</th>
+            <th>俗名</th>
+            <th>時間</th>
+            <th>國家/地區</th>
+            <th>資料集</th>
+          </tr>
+        </thead>
+        <tbody>
+        {rows}
+        </tbody>
+        </table>
+      </div>
+  );
+}
+const SEARCH_TYPE_LABEL_MAP = {
+  'occurrence': '出現紀錄',
+  'dataset': '資料集',
+  'publisher': '發布者',
+  'species': '物種',
+}
+
+function SearchMain(props) {
+  //console.log(props, 'main');
+  const count = props.data.count.toLocaleString('en');
+  const typeLabel = SEARCH_TYPE_LABEL_MAP[props.searchType];
+
+  const filterTags = [];
+  for (let f of props.filters) {
+    const menuKey = f.split('=');
+    const found = props.menus.find((x) => x['key'] === menuKey[0]);
+    if (found) {
+      const tagLabel = `${found['label']}: ${menuKey[1]}`;
+      filterTags.push((<span key={tagLabel} className="search-content-sort-tag">{ tagLabel }</span>));
+    }
+    else if (menuKey[0] === 'q') {
+      const q = decodeURIComponent(menuKey[1]);
+      filterTags.push((<span key="q" className="search-content-sort-tag">關鍵字:{ q }</span>));
+    }
+  }
+
+
+  let tabNavs = null;
+  if (props.searchType === 'dataset') {
+    let act = '';
+    for (let f of props.filters) {
+      if (f.indexOf('core=') >= 0) {
+        act = f.split('=')[1];
+      }
+    }
+    tabNavs = (
+        <div className="table-responsive">
+          <ul className="nav nav-tabs nav-justified search-content-tab">
+            <li className={act=="all" ? "active": null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'all')}>全部</a></li>
+            <li className={act=="occurrence" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'occurrence')}>出現紀錄</a></li>
+            <li className={act=="taxon" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'taxon')}>物種名錄</a></li>
+            <li className={act=="event" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'event')}>調查活動</a></li>
+            <li className={act=="meta" ? "active": null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'meta')}>詮釋資料</a></li>
+          </ul>
+        </div>)
+  }
+  return (
+      <div className="search-content">
+        <ol className="breadcrumb">
+          <li><a href="/">首頁</a></li>
+          <li className="active">搜尋{typeLabel}</li>
+        </ol>
+        <div className="search-content-heading-wrapper">
+          <h1 className="heading-lg">{typeLabel} <span className="heading-footnote">共 {count} 筆資料</span></h1>
+          <span>篩選條件：</span>
+          {filterTags}
+        </div>
+        {tabNavs}
+        <div className="tab-content">
+          <div id="menu1" className="tab-pane fade in active">
+          {props.searchType === 'occurrence'
+           ? <OccurrenceResult data={props.data} /> : null}
+          {props.searchType === 'dataset'
+           ? <DatasetResult data={props.data} /> : null}
+          {props.data.count > 0 ? props.pagination: null}
+          </div>
+        </div>
+      </div>
+  );
+}
 function SearchMainOccurrence(props) {
   //console.log(props);
   const rows = props.data.results.map((row, index) => {
@@ -200,4 +334,4 @@ function SearchMainSpecies(props) {
       </div>
   )
 }
-export {SearchMainDataset, SearchMainOccurrence, SearchMainPublisher, SearchMainSpecies};
+export {SearchMainDataset, SearchMainOccurrence, SearchMainPublisher, SearchMainSpecies, SearchMain, OccurrenceResult};
