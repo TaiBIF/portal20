@@ -5,7 +5,7 @@
 import React, { useState, useRef } from "react";
 import Chevron from "./Chevron";
 
-import "./Accordion.css";
+//import "./Accordion.css";
 
 function Accordion(props) {
   const [setActive, setActiveState] = useState("");
@@ -33,7 +33,7 @@ function Accordion(props) {
     style.overflow = 'scroll';
   }
 
-  return (
+  /*return (
     <div className="accordion__section">
       <button className={`accordion ${setActive}`} onClick={toggleAccordion}>
         <p className="accordion__title">{props.title}</p>
@@ -45,6 +45,16 @@ function Accordion(props) {
         className={"accordion__content"+appendClass}
       >
         <div className="accordion__text">{props.content}</div>
+      </div>
+    </div>
+  );*/
+
+  return (
+    <div className="search-sidebar-accordion-wrapper">
+      <div className="search-sidebar-accordion-title">
+      <a href="#" aria-expanded="false" onClick={toggleAccordion}>
+      {props.title}
+      </a>
       </div>
     </div>
   );
