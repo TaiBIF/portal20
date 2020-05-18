@@ -183,6 +183,14 @@ class Taxon(models.Model):
     rank = models.CharField('rank', max_length=32, choices=RANK_LIST)
     name = models.CharField('name', max_length=128)
     name_zh = models.CharField('name_zh', max_length=128)
+    kingdom = models.CharField('kingdom', max_length=128, default='')
+    #phylum = models.CharField('phylum', max_length=128, default='')
+    #class_field = models.CharField('class_field', max_length=128, default='')
+    #order_field = models.CharField('order_field', max_length=128, default='')
+    #family = models.CharField('family', max_length=128, default='')
+    #genus = models.CharField('genus', max_length=128, default='')
+    #species = models.CharField('species', max_length=128, default='')
+    specific_epithet = models.CharField('specific epithet', max_length=128, null=True)
     count = models.PositiveIntegerField('count', default=0)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
     tree = models.ForeignKey(TaxonTree, on_delete=models.CASCADE, null=True)
@@ -244,7 +252,7 @@ class Taxon(models.Model):
     def scientific_name_infraspecific(self):
         if self.rank == 'species':
             vlist = self.verbose.split('|')
-            slist = [self.parent.name if self.parent else '', self.name]
+            slist = [self.name]
             if vlist[4] and vlist[4] != '--':
                 slist.append(vlist[4])
             if vlist[3] and vlist[3] != '--':
