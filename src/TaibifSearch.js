@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchSidebar from './SearchSidebar.js';
-import {SearchMainDataset, SearchMainOccurrence, SearchMainPublisher, SearchMainSpecies, SearchMain} from './SearchMain.js';
+import SearchMain from './SearchMain.js';
 import './SearchStyles.css';
 
 
@@ -201,9 +201,8 @@ class TaibifSearch extends React.Component {
     });
     if (core !== 'all') {
       filters.add(`core=${core}`);
-
-    this.applyFilters(filters);
     }
+    this.applyFilters(filters);
   }
 
   handleSubmitKeywordClick(){
@@ -423,27 +422,6 @@ class TaibifSearch extends React.Component {
         const pagination = <Pagination onClick={this.handlePaginationClick} data={mainData}/>;
         searchMainContainer = <SearchMain data={mainData} searchType={searchType} filters={filters} menus={menus} onClickTab={this.handleTabClick} pagination={pagination} />;
       }
-      /*else if (searchType === 'dataset') {
-        searchMainContainer = <SearchMainDataset data={mainData} searchType={searchType} filters={filters} menus={menus} onClickTab={this.handleTabClick}/>
-      }
-      else if (searchType === 'occurrence') {
-        let downloadUrl = '';
-        if (mainData.count <= 10000) {
-          // download count limit
-          downloadUrl = '/occurrence/search/download';
-          let queryString = filtersToQuerystring(filters);
-          // 處理 offset, limit, page
-          downloadUrl = `${downloadUrl}?${queryString}`;
-        }
-
-        searchMainContainer = <SearchMainOccurrence data={mainData} searchType={searchType} filters={filters} menus={menus} downloadUrl={downloadUrl} />
-      }
-      else if (searchType === 'publisher') {
-        searchMainContainer = <SearchMainPublisher data={mainData} searchType={searchType} filters={filters} menus={menus} />
-      }
-      else if (searchType === 'species') {
-        searchMainContainer = <SearchMainSpecies data={mainData} searchType={searchType} filters={filters} menus={menus} />
-      }*/
 
       const defaultPage = (this.state.page) ? this.state.page : '1';
       const taxonProps = {
@@ -454,8 +432,7 @@ class TaibifSearch extends React.Component {
         onSuggestClick: this.handleSuggestClick,
       };
         /*<SearchSidebar menus={menus} onClick={this.handleMenuClick} filters={filters} onClickClear={(e)=>this.applyFilters()} queryKeyword={queryKeyword} onChangeKeyword={(e)=>{this.handleKeywordChange(e)}} onKeyPressKeyword={(e)=>{this.handleKeywordEnter(e)}} onClickSubmitKeyword={this.handleSubmitKeywordClick} searchType={searchType} taxonProps={taxonProps} />
-          {searchMainContainer}
-          <Pagination onClick={this.handlePaginationClick} />
+
           */
       return (
           <div className="row">

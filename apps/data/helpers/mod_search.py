@@ -248,8 +248,8 @@ class DatasetSearch(SuperSearch):
         super().__init__(filters)
 
         # filter query
-        #self.query = self.model.public_objects.filter()
-        query = self.query
+        query = self.model.public_objects.filter()
+        #query = self.query
         for key, values in self.filters:
             if key == 'q':
                 v = values[0] # only get one
@@ -266,7 +266,7 @@ class DatasetSearch(SuperSearch):
                 query = query.filter(organization__in=values)
             if key == 'rights':
                 rights_reverse_map = {v: k for k,v in DATA_MAPPING['rights'].items()}
-                query = query.filter(data_license__in=rights_reverse_map[key])
+                query = query.filter(data_license=rights_reverse_map[values[0]])
             if key == 'country':
                 query = query.filter(country__in=values)
             if key == 'is_most_project':
@@ -308,7 +308,7 @@ class PublisherSearch(SuperSearch):
                 if not v:
                     continue
                 query = query.filter(name__icontains=v)
-            if key == 'country_code':
+            if key == 'countrycode':
                 query = query.filter(country_code__in=values)
 
         self.query = query
@@ -349,7 +349,8 @@ class SpeciesSearch(SuperSearch):
                 elif v == 'synonym':
                     print ('sshere')
                     query = query.filter(is_accepted_name=False)
-
+            #if key == 'highertaxon':
+            #    query = query.filter(rank__in=values)
             self.query = query
 
     def result_map(self, x):
@@ -358,8 +359,10 @@ class SpeciesSearch(SuperSearch):
             'name': x.name,
             'name_zh': x.name_zh,
             'name_full': x.scientific_name_full,
+            #'name_list': x.
             'count': x.count,
             'rank': x.rank,
             'rank_display': x.get_rank_display(),
+            'rank_list': [{'name': t.name, 'rank': t.rank, 'name_zh': t.name_zh, 'id': t.id} for t in x.rank_list],
             'is_accepted_name': x.is_accepted_name,
         }

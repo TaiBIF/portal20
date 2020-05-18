@@ -221,7 +221,14 @@ def search_publisher(request):
                                           .exclude(country_code__isnull=True)\
                                           .annotate(count=Count('country_code'))\
                                           .order_by('-count').all()
-        #print (country_list)
+        menu_list = [
+            {
+                'key': 'countrycode',
+                'label': '國家/區域',
+                'rows': [{'label': DATA_MAPPING['country'][x['country_code']], 'count': x['count'], 'key': x['country_code'] } for x in country_list]
+            },
+        ]
+
         menus = [
             {
                 'key': 'country_code',
@@ -269,6 +276,14 @@ def search_species(request):
                     {'label': '有效的', 'key': 'accepted'},
                     {'label': '同物異名', 'key': 'synonym'}
                 ]
+            },
+            {
+                'key': 'highertaxon',
+                'label': '高階分類群',
+                'rows': [{
+                    'key': x.id,
+                    'label': x.get_name(),
+                } for x in Taxon.objects.filter(rank='kingdom')],
             },
         ]
 
