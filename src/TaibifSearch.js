@@ -71,7 +71,11 @@ class TaibifSearch extends React.Component {
     if (window.location.pathname === '/dataset/search/') {
       searchType = 'dataset';
     }
-    else if (window.location.pathname === '/occurrence/search/') {
+    else if (window.location.pathname === '/occurrence/search/' ||
+             window.location.pathname === '/occurrence/taxonomy/' ||
+             window.location.pathname === '/occurrence/map/' ||
+             window.location.pathname === '/occurrence/gallery/' ||
+             window.location.pathname === '/occurrence/charts/') {
       searchType = 'occurrence';
     }
     else if (window.location.pathname === '/publisher/search/') {
@@ -431,9 +435,7 @@ class TaibifSearch extends React.Component {
         onTaxonKeywordChange: this.handleTaxonKeywordChange,
         onSuggestClick: this.handleSuggestClick,
       };
-        /*<SearchSidebar menus={menus} onClick={this.handleMenuClick} filters={filters} onClickClear={(e)=>this.applyFilters()} queryKeyword={queryKeyword} onChangeKeyword={(e)=>{this.handleKeywordChange(e)}} onKeyPressKeyword={(e)=>{this.handleKeywordEnter(e)}} onClickSubmitKeyword={this.handleSubmitKeywordClick} searchType={searchType} taxonProps={taxonProps} />
 
-          */
       return (
           <div className="row">
             <div className="visible-xs">

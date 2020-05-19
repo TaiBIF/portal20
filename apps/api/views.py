@@ -53,7 +53,8 @@ def taxon_tree_node(request, pk):
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 #@json_ret
-def search_occurrence(request):
+def search_occurrence(request, cat=''):
+    print (cat, 'cat')
     has_menu = True if request.GET.get('menu', '') else False
     menu_list = []
     if has_menu:
@@ -120,9 +121,23 @@ def search_occurrence(request):
         ]
 
     # search
-    occur_search = OccurrenceSearch(list(request.GET.lists()), using='')
-    res = occur_search.get_results()
-
+    res = None
+    if cat == 'search':
+        occur_search = OccurrenceSearch(list(request.GET.lists()), using='')
+        res = occur_search.get_results()
+    else:
+        occur_search = OccurrenceSearch(list(request.GET.lists()), using='')
+        occur_search.limit = 1 # 
+        res = occur_search.get_results()
+    #elif cat == 'taxonomy':
+    #    occur_taxonomy = OccurrenceSearch(list(request.GET.lists()), using='')
+        #occur_taxonomy.limit = 200
+        #q = occur_taxonomy.query
+        #q = q.values('year').annotate(count=Count('year')).order_by('year')
+        #print (len(q.all()))
+        #q = q.values('month').annotate(count=Count('month')).order_by('month')
+        #print (q.all())
+        #res = occur_taxonomy.get_results()
     data = {
         'search': res,
     }
