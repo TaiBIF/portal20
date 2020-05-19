@@ -1,4 +1,21 @@
 import React from 'react';
+import {OccurrenceCharts} from './OccurrenceTabs.js';
+
+function SpeciesOther(props) {
+  const {q} = props;
+  return (
+      <React.Fragment>
+      <h3>相關資料庫列表</h3>
+      <ul>
+      <li><a href={"https://www.tbn.org.tw/taxa?name="+q} target="_blank">TBN 台灣生物多樣性網絡</a></li>
+      <li><a href={"https://taieol.tw/search_list/name/"+q} target="_blank">TaiEOL 臺灣生命大百科</a></li>
+      <li><a href={"https://www.inaturalist.org/search?q="+q} target="_blank">iNaturalist</a></li>
+      <li><a href={"https://www.gbif.org/species/search?q="+q} target="_blank">GBIF</a></li>
+      <li><a href={"https://www.ipni.org/?q="+q} target="_blank">IPNI</a></li>
+      </ul>
+      </React.Fragment>
+  )
+}
 
 function StyledScientificName(props) {
   const {data} = props;
@@ -26,20 +43,19 @@ function SpeciesResult(props) {
     return (
         <div className="row listbox-img-right-wrapper" key={index}>
           <div className="col-xs-8">
-        <h3 className="listbox-inner-title"><a href={link}><StyledScientificName data={row} /></a></h3>
-                  <div className="listbox-inner-summary hidden-xs">
-                  <ul className="scientific-name-wrapper">
-        { row.rank_list.map((t)=> 
-                            <li key={t.id}><a href={"/species/"+t.id}>{t.name} {t.name_zh}</a></li>
-        )
-        }
-        <li><a href={link}><StyledScientificName data={row} /></a></li>
-                    </ul>
-        </div>
-        {row.is_accepted_name
-         ? <span className="listbox-inner-tag"><a href="">有效的</a></span>
-         : null}
-                </div>
+            <h3 className="listbox-inner-title"><a href={link}><StyledScientificName data={row} /></a></h3>
+            <div className="listbox-inner-summary hidden-xs">
+              <ul className="scientific-name-wrapper">
+              { row.rank_list.map((t)=>
+                <li key={t.id}><a href={"/species/"+t.id}>{t.name} {t.name_zh}</a></li>
+              )}
+                <li><a href={link}><StyledScientificName data={row} /></a></li>
+              </ul>
+            </div>
+            {row.is_accepted_name
+             ? <span className="listbox-inner-tag"><a href="">有效的</a></span>
+             : null}
+          </div>
           <div className="col-xs-4">
             {imgLink}
           </div>
@@ -120,6 +136,34 @@ function OccurrenceResult(props) {
       </div>
   );
 }
+
+function PublisherResult(props) {
+  const rows = props.data.results.map((row, index) => {
+    const link = `/publisher/${row.name}/`;
+    const publisherImage = null;
+    // TODO
+    //<a href={link}><img src="images/logo-sinica.jpg" class="img-responsive"></a>
+    return (
+        <div className="row listbox-img-right-wrapper" key={index}>
+          <div className="col-lg-10 col-md-9 col-xs-8">
+            <h3 className="listbox-inner-title"><a href={link}>{row.name}</a></h3>
+            <div className="listbox-inner-summary">
+            <a href={link}>{row.description}</a>
+            </div>
+          </div>
+          <div className="col-lg-2 col-md-3 col-xs-4">
+         {publisherImage}
+          </div>
+        </div>
+    )
+  });
+  return (
+      <div className="container-fluid search-content-grid-wrapper">
+      {rows}
+      </div>
+  );
+}
+
 const SEARCH_TYPE_LABEL_MAP = {
   'occurrence': '出現紀錄',
   'dataset': '資料集',
@@ -129,9 +173,15 @@ const SEARCH_TYPE_LABEL_MAP = {
 
 function SearchMain(props) {
   //console.log(props, 'main');
+  let initActiveTab = 'menu1';
+  if (window.location.pathname === '/occurrence/taxonomy/') {
+    initActiveTab = 'menu5';
+  }
+  const [tabActive, setTabActive] = React.useState(initActiveTab);
   const count = props.data.count.toLocaleString('en');
   const typeLabel = SEARCH_TYPE_LABEL_MAP[props.searchType];
 
+  let q = null;
   const filterTags = [];
   for (let f of props.filters) {
     const menuKey = f.split('=');
@@ -141,14 +191,33 @@ function SearchMain(props) {
       filterTags.push((<span key={tagLabel} className="search-content-sort-tag">{ tagLabel }</span>));
     }
     else if (menuKey[0] === 'q') {
-      const q = decodeURIComponent(menuKey[1]);
+      q = decodeURIComponent(menuKey[1]);
       filterTags.push((<span key="q" className="search-content-sort-tag">關鍵字:{ q }</span>));
     }
   }
 
+  function toggleTab(e, menu) {
+    e.preventDefault()
+    setTabActive(menu);
+  }
 
   let tabNavs = null;
-  if (props.searchType === 'dataset') {
+  if (props.searchType === 'occurrence') {
+    //// TODO
+    /*<li><a data-toggle="tab" href="#menu2">影像集</a></li>
+            <li className={tabActive == "menu3" ? "active": null}><a href="/occurrence/map" onClick={(e)=>toggleTab(e, 'menu3')}>分布地圖</a></li>
+            <li className={tabActive == "menu4" ? "active": null}><a href="/occurrence/taxonomy" onClick={(e)=>toggleTab(e, 'menu4')}>分類系統</a></li>
+            <li className={tabActive == "menu5" ? "active": null}><a href="/occurrence/charts" onClick={(e)=>toggleTab(e, 'menu5')}>指標</a></li>
+            <li className={tabActive == "menu6" ? "active": null}><a href="/occurrence/download" onClick={(e)=>toggleTab(e, 'menu6')}>資料下載</a></li>
+    */
+    tabNavs = (
+        <div className="table-responsive">
+          <ul className="nav nav-tabs nav-justified search-content-tab">
+            <li className={tabActive == "menu1" ? "active": null}><a href="/occurrence/search" onClick={(e)=>toggleTab(e, 'menu1')}>資料列表</a></li>
+          </ul>
+        </div>
+    );
+  } else if (props.searchType === 'dataset') {
     let act = 'all';
     for (let f of props.filters) {
       if (f.indexOf('core=') >= 0) {
@@ -165,7 +234,26 @@ function SearchMain(props) {
             <li className={act=="meta" ? "active": null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'meta')}>詮釋資料</a></li>
           </ul>
         </div>)
+  } else if (props.searchType == 'species') {
+    tabNavs = (
+        <div className="table-responsive">
+          <ul className="nav nav-tabs search-content-tab">
+            <li className={tabActive == "menu1" ? "active": null}><a data-toggle="tab" onClick={(e)=>toggleTab(e, 'menu1')}>資料列表</a></li>
+            {q
+             ? <li className={tabActive == "menu2" ? "active" : null}><a data-toggle="tab" onClick={(e)=>toggleTab(e, 'menu2')}>瀏覽其他資料庫</a></li>
+             : null
+            }
+          </ul>
+        </div>)
+  } else if (props.searchType === 'publisher') {
+    tabNavs = (
+        <div className="table-responsive">
+          <ul className="nav nav-tabs search-content-tab">
+            <li className="active"><a data-toggle="tab">全部</a></li>
+          </ul>
+        </div>);
   }
+
   return (
       <div className="search-content">
         <ol className="breadcrumb">
@@ -180,12 +268,16 @@ function SearchMain(props) {
         {tabNavs}
         <div className="tab-content">
           <div id="menu1" className="tab-pane fade in active">
-          {props.searchType === 'occurrence'
+          {(props.searchType === 'occurrence' && tabActive === 'menu1')
            ? <OccurrenceResult data={props.data} /> : null}
+          {(props.searchType === 'occurrence' && tabActive === 'menu5')
+           ? <OccurrenceCharts data={props.data} /> : null}
           {props.searchType === 'dataset'
            ? <DatasetResult data={props.data} /> : null}
-          {props.searchType === 'species'
+          {(props.searchType === 'species' && tabActive === 'menu1')
            ? <SpeciesResult data={props.data} /> : null}
+          {(props.searchType === 'species' && tabActive === 'menu2' && q)
+           ? <SpeciesOther q={q}/> : null}
           {props.searchType === 'publisher'
            ? <PublisherResult data={props.data} /> : null}
           {props.data.count > 0 ? props.pagination: null}

@@ -183,7 +183,7 @@ class Taxon(models.Model):
     rank = models.CharField('rank', max_length=32, choices=RANK_LIST)
     name = models.CharField('name', max_length=128)
     name_zh = models.CharField('name_zh', max_length=128)
-    kingdom = models.CharField('kingdom', max_length=128, default='')
+    hierarchy_string = models.CharField('hierarchy string', max_length=512, default='')
     #phylum = models.CharField('phylum', max_length=128, default='')
     #class_field = models.CharField('class_field', max_length=128, default='')
     #order_field = models.CharField('order_field', max_length=128, default='')
