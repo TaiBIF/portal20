@@ -27,34 +27,35 @@
         <div class="form-group clearfix">
           <div class="col-sm-4 col-xs-12">
             <div class="custom-select">
-              <select name="cat">
+              <select name="cat" required>
                 <option>請選擇問題分類...</option>
                 <option value="物種資料相關諮詢">物種資料相關諮詢</option>
                 <option value="操作問題詢問">操作問題詢問</option>
                 <option value="錯誤回報">錯誤回報</option>
                 <option value="其他">其他</option>
               </select>
+
             </div>
           </div>
 
           <div class="col-sm-4 col-xs-12">
             <div class="input-group">
               <div class="input-group-addon"><i class="myicon icon-user"></i></div>
-              <input type="text" class="form-control" placeholder="姓名" name="name">
+              <input type="text" class="form-control" placeholder="姓名" name="name" required>
             </div>
           </div>
 
           <div class="col-sm-4 col-xs-12">
             <div class="input-group">
               <div class="input-group-addon"><i class="myicon icon-mail"></i></div>
-              <input type="text" class="form-control" placeholder="Email" name="email">
+              <input type="text" class="form-control" placeholder="Email" name="email" required>
             </div>
           </div>
 
           <div class="col-xs-12">
             <div class="input-group">
               <div class="input-group-addon"><i class="myicon icon-write"></i></div>
-              <textarea class="form-control textarea" placeholder="留言內容" rows="3" name="content"></textarea>
+              <textarea class="form-control textarea" placeholder="留言內容" rows="3" name="content" required></textarea>
             </div>
           </div>
 
