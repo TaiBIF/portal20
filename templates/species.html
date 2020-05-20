@@ -20,16 +20,27 @@
 {% if map_view %}
 {{ test|json_script:"occurrence-points" }}
 
+
 <script>
-  var map = L.map('map').setView([{{ map_view.0 }}, {{ map_view.1}} ], 13);
+
+  const map = L.map('map').setView([{{ map_view.0 }}, {{ map_view.1 }}], 10);
 
   const tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-  }).addTo(map);
-  L.marker([{{ map_view.0 }}, {{ map_view.1}}]).addTo(map);
+}).addTo(map);
 
+  //addressPoints = addressPoints.map(function (p) { return [p[0], p[1]]; });
+  const points = JSON.parse(document.getElementById('occurrence-points').textContent);
+  const occurrencePoints = points.map(function (p) {
+    return [p['decimallatitude'], p['decimallongitude']]
+  });
+  console.log(occurrencePoints);
+
+const heat = L.heatLayer(occurrencePoints).addTo(map);
 
 </script>
+
+
 {% endif %}
  <!-- script 4 owl carousel begin -->
   <script>

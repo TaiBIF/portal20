@@ -267,7 +267,7 @@ def species_view(request, pk):
             lon = float(m['decimallongitude'])
 
             test.append([lat,lon])
-    #print(test[0])
+    print(test)
 
 
     context = {
