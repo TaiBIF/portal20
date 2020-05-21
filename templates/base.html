@@ -68,26 +68,13 @@
             </div>
             <a href="https://www.facebook.com/TaiBIF.tw/" target="_blank" class="navbar-oval-btn"><span class="myicon icon-social-fb"></span></a>
             <a href="#" target="_blank" class="navbar-oval-btn"><span class="myicon icon-social-yt"></span></a>
-            <a class="navbar-language-btn" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-              <span class="myicon icon-language"></span>
-              {% get_current_language as LANGUAGE_CODE %}
-              {% get_language_info for LANGUAGE_CODE as lang %}
-              {% get_available_languages as LANGUAGES %}
-              {% get_language_info_list for LANGUAGES as languages %}
-              {{ lang.name_local }}
-            <span class="caret"></span>
-            </a>
-            <form name="ui" action="{% url 'set_language' %}" method="post">{% csrf_token %}
-              <input name="next" type="hidden" value="{{ redirect_to }}" />
-              <input name="language" type="hidden"/>
-
-            </form>
-            <ul class="dropdown-menu">
-              {% for language in languages %}
-              <li><a href="#" onclick="document.ui.language.value='{{ language.code}}'; document.ui.submit();">{{ language.name_local }}</a></li>
-              {% endfor %}
-            </ul>
-
+            <a href="#" class="navbar-language-btn" data-toggle="modal" data-target=".xs-lang-modal-pos"><span class="myicon icon-language"></span>
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_language_info for LANGUAGE_CODE as lang %}
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}
+            {{ lang.name_local }}
+             </a>
 
 
 
@@ -201,17 +188,25 @@
   <!-- xs-search-modal end -->
 
   <!-- xs-lang-modal begin -->
-  <div class="modal fade xs-modal-wrapper xs-lang-modal-pos" role="dialog" data-backdrop="false">
+  <div class="modal fade lang-modal-wrapper xs-lang-modal-pos" role="dialog" data-backdrop="false">
     <div class="xs-modal-content">
       <div class="xs-modal-header">
         <span class="xs-search-modal-close myicon icon-close" data-dismiss="modal" aria-label="Close"></span>
-        <p class="text-center xs-modal-title">Change Lamguage</p>
+        <p class="text-center xs-modal-title">Change Language</p>
       </div>
+
       <div class="xs-modal-body">
         <label class="custom-input-ctn">
           <input type="radio" name="radio">
-          <span class="radiomark"></span>
-          English
+          <form name="ui" action="{% url 'set_language' %}" method="post">{% csrf_token %}
+              <input name="next" type="hidden" value="{{ redirect_to }}" />
+              <input name="language" type="hidden"/>
+
+            </form>
+          {% for language in languages %}
+              <a href="#" onclick="document.ui.language.value='{{ language.code}}'; document.ui.submit();">{{ language.name_local }}</a><br>
+          {% endfor %}
+
         </label>
       </div>
     </div>
@@ -253,11 +248,41 @@
   <script src="{% static 'js/OwlCarousel/owl.carousel.min.js' %}"></script>
   <script src="{% static 'js/OwlCarousel/owl.carousel2.thumbs.min.js' %}"></script>
 
-
-  <script src="{% static 'js/OwlCarousel/owl.carousel2.thumbs.min.js' %}"></script>
   <!-- DataTables -->
   <script src="{% static 'js/datatable/jquery.dataTables.js' %}"></script>
   <script src="{% static 'js/datatable/dataTables.bootstrap.min.js' %}"></script>
+
+
+  <!-- script 4 owl carousel begin -->
+<script>
+  $(document).ready(function() {
+    var owl_topic = $('#topic-board');
+    owl_topic.owlCarousel({
+      margin: 20,
+      nav: true,
+      dots: true,
+      loop: true,
+      autoplay: true,
+      autoplayTimeout: 3000,
+      autoplayHoverPause: true,
+      thumbs: false,
+      responsive:{
+          0:{
+              items:1
+          },
+          650:{
+              items:2
+          },
+          1000:{
+              items:4
+          }
+      }
+    })
+  })
+</script>
+<!-- script 4 owl carousel end -->
+
+
 
   {% block script %}
   {% endblock %}
