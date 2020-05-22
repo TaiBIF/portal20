@@ -7,16 +7,22 @@ from django.urls import path
 
 ## Kuan Yu added for sitemap
 from django.contrib.sitemaps.views import sitemap
-from apps.data.models import SimpleData
+from django.contrib.sitemaps import GenericSitemap
+from apps.data.models import Dataset
 from .sitemaps import DatasetSitemap
 from .sitemaps import StaticSitemap
 
 
 
 # Dictionary containing your sitemap classes
-sitemaps = {
+'''sitemaps = {
     'dataset': DatasetSitemap(),
     'static': StaticSitemap(),
+}'''
+
+info_dict = {
+    'queryset': Dataset.objects.all(),
+    'date_field': 'pub_date',
 }
 
 urlpatterns = [
@@ -39,8 +45,11 @@ urlpatterns = [
     path('export_csv',views.export_csv, name='export_csv'),
     path('i18n/', include('django.conf.urls.i18n')),
     ## Kuan Yu added for sitemap
-    path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
-     name='django.contrib.sitemaps.views.sitemap'),
+    #path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
+     #name='django.contrib.sitemaps.views.sitemap'),
+    path('sitemap.xml', sitemap,
+         {'sitemaps': {'blog': GenericSitemap(info_dict, priority=0.6)}},
+         name='django.contrib.sitemaps.views.sitemap'),
 
 ]
 
