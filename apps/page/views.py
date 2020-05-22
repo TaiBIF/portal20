@@ -213,3 +213,4 @@ def trans(request):
     context = {"translate_str": translate_str}
     return render(request, 'index.html', context)
 
+

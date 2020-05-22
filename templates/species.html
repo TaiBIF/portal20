@@ -205,9 +205,11 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
               <td>{{ set.taibif_dataset_name }}</td>
               <td>{{ set.dataset }}</td>
               <td>
+                {% for t in total %}
                 <div class="chart-bar-h-bg">
-                  <span class="chart-value-bg" style="width: 30%;"></span>
+                  <span class="chart-value-bg" style="width: {{ t.ratio }}%"></span>
                 </div>
+                {% endfor %}
               </td>
             </tr>
             {% endfor %}
