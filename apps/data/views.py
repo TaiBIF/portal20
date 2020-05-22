@@ -7,7 +7,7 @@ import csv
 
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
-from django.db.models import Count
+from django.db.models import Count, Sum
 from django.db.models import Q
 from django.http import (
     JsonResponse,
@@ -217,7 +217,7 @@ def species_view(request, pk):
     rank_key = 'taxon_{}_id'.format(taxon.rank)
     occur_search = OccurrenceSearch([(rank_key, [taxon.id])])
     res = occur_search.get_results()
-    #print (occur_search.filters)
+
     
 
     '''q = SimpleData.objects.values('latitude', 'longitude').filter(taxon_species_id=pk).all()
@@ -253,6 +253,23 @@ def species_view(request, pk):
     SetNum = SimpleData.objects.values('taibif_dataset_name').filter(taxon_species_id=pk).all()
     dataset_list = SetNum.annotate(dataset=Count('taibif_dataset_name'))
 
+    total = []
+    for d in range(dataset_list.count()):
+        num = dataset_list[d]['dataset']
+        total.append({
+            'ratio':(num/res['count'])*100
+        })
+
+
+    print(total)
+
+
+
+    #totals = dataset_list.aggregate(Sum('dataset')).get('dataset__sum')
+
+
+
+
     ## For map
     MapList = RawDataOccurrence.objects.values('taibif_dataset_name', 'decimallatitude', 'decimallongitude').filter(scientificname=taxon.name).all()
 
@@ -273,7 +290,8 @@ def species_view(request, pk):
     context = {
         'taxon': taxon,
         'occurrence_list': [],
-        'dataset_list': dataset_list
+        'dataset_list': dataset_list,
+        'total':total
 
     }
     if taxon.rank == 'species':

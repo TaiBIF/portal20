@@ -59,7 +59,12 @@ INSTALLED_APPS = [
     'apps.page.apps.PageConfig',
     # third party
     'django_ses',
+    # Kuan Yu added for sitemap
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
