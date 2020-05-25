@@ -75,7 +75,7 @@ def search_occurrence(request, cat=''):
         dataset_menu = []
         dataset_name_list = []
         ds_list = list(q.all())
-        print (q.query)
+        #print (q.query)
         ds_name_list = [x['taibif_dataset_name'] for x in ds_list]
         #ds = Dataset.public_objects.values('name', 'title').filter(name__in=ds_name_list).all()
         #print (ds_name_list)
@@ -86,7 +86,7 @@ def search_occurrence(request, cat=''):
                 'count': i['count'],
             })
         #for i in ds_list.items():
-        
+
         #dataset_query = Dataset.objects.exclude(status='Private').values('name', 'title')
         publisher_query = Dataset.objects\
                                  .values('organization','organization_verbatim')\
