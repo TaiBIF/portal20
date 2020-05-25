@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block main %}
+{# include "inc_breadcrumb.html" with tab="03" active_label="" #}
+
+<!-- container begin -->
+  <div class="container">
+
+    <!-- story title begin -->
+    <div class="article-head-wrapper">
+      <h1 class="heading-lg">
+        臺灣生物多樣性資訊機構（TaiBIF）
+      </h1>
+    </div>
+    <!-- story title end -->
+
+    <!-- article content begin -->
+    <div class="article-content-wrapper">
+
+      <!-- 簡介 begin -->
+      <h4 class="heading-md-ul">簡介</h4>
+      <p>
+      臺灣生物多樣性資訊機構 TaiBIF 是臺灣數據發布活動的協調單位和技術支持團隊。由於各種原因缺乏組織支持的大多數台灣資料集都是通過TaiBIF 發布的，而其他資料集是通過 TaiBIF 認可的組織發布的。TaiBIF 由科技部資助，也是 GBIF 的臺灣代表處。TaiBIF 和 TaiBIF IPT 由中央研究院生物多樣性研究中心主辦。</p>
+
+      <p><a href="#"><span class="myicon icon-document"></span> 發布 {{ publisher.datasets.count }} 篇資料集</a>
+      </p>
+      <p><a href="#"><span class="myicon icon-document"></span> 主持 ?? 篇資料集</a>
+      </p>
+      <p><a href="#"><span class="myicon icon-document"></span> {{ publisher.sum_occurrence|intcomma }} 筆出現紀錄</a>
+      </p>
+      <!-- 簡介 end -->
+
+      <!-- 聯絡資訊 begin -->
+      <h4 class="heading-md-ul">聯絡資訊</h4>
+      <!-- row contact-info begin -->
+      <div class="row">
+
+        <div class="col-md-6 col-xs-12">
+          <div class="contact-info-wrapper">
+            <p class="heading-md-ul">
+              柯智仁
+              <span class="heading-footnote">節點經理</span>
+            </p>
+            <ul>
+              <li><span class="myicon icon-pin"></span> 11529 台北市南港區研究院路二段 128 號<br>跨領域科技研究大樓 C301室</li>
+              <li><a href="#"><span class="myicon icon-mail"></span> cjk@sinica.edu.tw</a></li>
+              <li><a href="#"><span class="myicon icon-link"></span> http://taibif.tw/</a></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+      <!-- row contact-info end -->
+      <!-- 聯絡資訊 end -->
+
+      <!-- 物種資料地理分布 begin -->
+      <h4 class="heading-md-ul">物種資料地理分布</h4>
+      <img src="https://fakeimg.pl/600x300/?text=map" alt="" class="img-responsive">
+      <!-- 物種資料地理分布 end -->
+
+
+
+    </div>
+    <!-- article content begin -->
+
+
+  </div>
+   <!-- container end -->
+
+
+{% endblock %}
+

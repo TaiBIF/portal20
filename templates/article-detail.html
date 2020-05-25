@@ -32,7 +32,7 @@
         <li class="listbox-inner-tag"><a href="{% url 'article-tag-list' tag_name=i.name %}">{{ i.name}}</a></li>
         {% endfor %}
       </ul>
-      {% comment %}
+      
       <div class="article-share-btn-wrapper">
         分享文章
         <a href="#" class="navbar-oval-btn"><span class="myicon icon-social-fb"></span></a>
@@ -40,10 +40,10 @@
         <a href="#" class="navbar-oval-btn"><span class="myicon icon-social-line"></span></a>
         <a href="#" class="navbar-oval-btn"><span class="myicon icon-mail"></span></a>
       </div>
-      {% endcomment %}
+      
     </div>
     <!-- story title & share btns end -->
-    <div class="mg-todox">
+    
     <!-- article content begin -->
     <div class="article-content-wrapper">
       {% if article.cover %}
@@ -65,16 +65,16 @@
       </p>
     <!-- article content begin -->
 
-    {% comment %}
+    
     <!-- attachment info begin -->
     <ul class="article-attachment-wrapper">
       <li>資料來源：GBIF</li>
       <li>原文連結：Tracing the migration of flowering plants from continents to islands</li>
       <li>附件下載：<a href="#" class="myicon icon-download-document">Species count for specimen records</a></li>
     </ul>
-    {% endcomment %}
+    
     <!-- attachment info end -->
-    </div>
+    
 
     {% if article.category == "PUB" and article.memo_text|slice:"0:9" == "__files__" %}
     <ul class="article-attachment-wrapper">

@@ -1,50 +1,52 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
-
-{% block title %}
-Dataset::{{ dataset.title }}
-{% endblock %}
-
 {% block main %}
 {# include "inc_breadcrumb.html" with tab="03" active_label="" #}
 
+
 <!-- container begin -->
-<div class="container">
-  <h2>{{ dataset.title }}</h2>
-  <div class="article-head-wrapper">
-    <h1 class="heading-lg-ul">
-      簡介
-    </h1>
-  </div>
-  <p>{{ dataset.description }}
-  </p>
+  <div class="container">
 
-  <br>
-  <div>
-    發布單位: {{ dataset.organization }}<br>
-    國家及地區: {{ dataset.country_for_human }}<br>
-    DwC type: {{ dataset.dwc_core_type_for_human}}<br>
-    詮釋資料最後修改日: {{ dataset.mod_date|date:'Y/m/d' }}<br>
-    資料最後上傳日: {{ dataset.pub_date|date:'Y/m/d'}}<br>
-    引用格式: {{ dataset.data_license }}<br>
-    {% if dataset.gbif_doi %} DOI: {{ dataset.gbif_doi }}<br>{% endif %}
-    </p>
-  </div>
+    <!-- story title begin -->
+    <div class="article-head-wrapper">
+      <h1 class="heading-lg">
+        {{ dataset.title }}
+      </h1>
+    </div>
+    <!-- story title end -->
 
-  {% if dataset.status == "Public" %}<div>資料集下載: <a href="{{ dataset.dwca_link }}">DwC-A</a></div>{% endif %}
-  {% if dataset.status == "Public" and not dataset.guid %}<div class="alert alert-warning" role="alert">This resource has not been registered with GBIF</div>{% endif %}
-  <!-- data wall begin -->
-  <div class="data-wall-wrapper">
-    <div class="container">
+    <!-- article content begin -->
+    <div class="article-content-wrapper">
+
+      <!-- 簡介 begin -->
+      <h4 class="heading-md-ul">簡介</h4>
+      <p>
+          {{ dataset.description }}
+      </p>
+
+      <p>詮釋資料最後修改日：{{ dataset.mod_date|date:'Y/m/d' }}<br>
+        資料最後上傳日：{{ dataset.pub_date|date:'Y/m/d'}}<br>
+        引用格式：{{ dataset.data_license }}<br>
+        {% if dataset.gbif_doi %} DOI: {{ dataset.gbif_doi }}<br>{% endif %}
+      </p>
+
+      {% if dataset.status == "Public" %}<div>資料集下載: <a href="{{ dataset.dwca_link }}">DwC-A</a></div>{% endif %}
+      {% if dataset.status == "Public" and not dataset.guid %}<div class="alert alert-warning" role="alert">This resource has not been registered with GBIF</div>{% endif %}
+
+      <!-- row begin -->
       <div class="row">
+
         <div class="col-xs-12 col-sm-6 col-md-3">
           <div class="data-wall-ctn">
             <span class="dtat-wall-name">出現紀錄筆數</span>
             <span class="data-wall-numbers">{{ dataset.num_occurrence|intcomma }}</span>
-            <span class="data-wall-icon myicon icon-data-stats"></span>
+            <span class="data-wall-chart">
+              <img src="https://fakeimg.pl/70x70/846C5B/FAF9F9/?text=Chart">
+            </span>
           </div>
         </div>
+
         <div class="col-xs-12 col-sm-6 col-md-3">
           <div class="data-wall-ctn">
             <span class="dtat-wall-name">有對應的分類群</span>
@@ -53,51 +55,106 @@ Dataset::{{ dataset.title }}
             <span class="data-wall-numbers">{{ FamNum }}</span>
             <span class="dtat-wall-name">分類群（種）數</span>
             <span class="data-wall-numbers">{{ SpNum }}</span>
-            <span class="data-wall-icon myicon icon-data-folder"></span>
+            <span class="data-wall-chart">
+              <img src="https://fakeimg.pl/70x70/846C5B/FAF9F9/?text=Chart">
+            </span>
           </div>
         </div>
+
         <div class="col-xs-12 col-sm-6 col-md-3">
           <div class="data-wall-ctn">
             <span class="dtat-wall-name">含經度</span>
-            <span class="data-wall-numbers">{{ LonNum }} </span>
+            <span class="data-wall-numbers">{{ LonNum }}</span>
             <span class="dtat-wall-name">含緯度</span>
             <span class="data-wall-numbers">{{ LatNum }} </span>
-            <span class="data-wall-icon myicon icon-data-tw"></span>
+            <span class="data-wall-chart">
+              <img src="https://fakeimg.pl/70x70/846C5B/FAF9F9/?text=Chart">
+            </span>
           </div>
         </div>
+
         <div class="col-xs-12 col-sm-6 col-md-3">
           <div class="data-wall-ctn">
             <span class="dtat-wall-name">含年份</span>
             <span class="data-wall-numbers">{{ YrNum }}</span>
+            <span class="data-wall-chart">
+              <img src="https://fakeimg.pl/70x70/846C5B/FAF9F9/?text=Chart">
+            </span>
           </div>
         </div>
+
+    </div>
+
+     <!-- row end -->
+      <!-- 簡介 end -->
+
+      <!-- 地理分佈 begin -->
+      <h4 class="heading-md-ul">地理分佈</h4>
+      <p>特有種。台東大漢山，新化農場至屏東茶茶牙賴一帶山區之闊葉林中。</p>
+      <p>
+        資料來源：
+        <a href="#"><span class="myicon icon-link"></span> 臺灣維管束植物簡誌 (楊遠波, 劉和義, 呂勝由)</a>
+        <a href="#"><img src="images/bynchorizontal.png"></a>
+      </p>
+      <img src="https://fakeimg.pl/600x300/?text=map" alt="" class="img-responsive">
+      <!-- 地理分佈 end -->
+
+      <!-- 資料集說明 begin -->
+      <h4 class="heading-md-ul">資料集說明</h4>
+      <p>台灣是在地質活動頻繁的大陸島，於 200-300 萬年前形成於四塊板塊所組成的聚合板塊邊緣之上。在這篇台灣植物相的研究中，研究者運用了 GBIF 整合之東亞與南亞開花植物類群分布的點位資料，再區分特有種與非特有種後，推測出後者潛在的播遷來源。許多豆科植物的生長與繁殖需仰賴與固氮菌(根瘤菌)的共生，這共生關係由六千萬年前的單一起源逐步演化而來。然而，此與微生物的共生關係會促進或減少植物分布範圍仍屬未知。</p>
+      <p><a href="#"><span class="myicon icon-link"></span>http://collections.nmnh.si.edu/search/botany/</a></p>
+      <!-- 資料集說明 end -->
+
+      <!-- 聯絡資訊 begin -->
+      <h4 class="heading-md-ul">聯絡資訊</h4>
+      <!-- row contact-info begin -->
+      <div class="row">
+
+        <div class="col-md-6 col-xs-12">
+          <div class="contact-info-wrapper">
+            <p class="heading-md-ul">
+              柯智仁
+              <span class="heading-footnote">節點經理</span>
+            </p>
+            <ul>
+              <li><span class="myicon icon-pin"></span> 11529 台北市南港區研究院路二段 128 號<br>跨領域科技研究大樓 C301室</li>
+              <li><a href="#"><span class="myicon icon-mail"></span> cjk@sinica.edu.tw</a></li>
+              <li><a href="#"><span class="myicon icon-link"></span> http://taibif.tw/</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-xs-12">
+          <div class="contact-info-wrapper">
+            <p class="heading-md-ul">
+              劉璟儀
+              <span class="heading-footnote">內容經理</span>
+            </p>
+            <ul>
+              <li><span class="myicon icon-pin"></span> 11529 台北市南港區研究院路二段 128 號<br>跨領域科技研究大樓 C301室</li>
+              <li><a href="#"><span class="myicon icon-mail"></span> cjk@sinica.edu.tw</a></li>
+              <li><a href="#"><span class="myicon icon-link"></span> http://taibif.tw/</a></li>
+            </ul>
+          </div>
+        </div>
+
       </div>
+      <!-- row contact-info end -->
+      <!-- 聯絡資訊 end -->
+
+      <!-- 引用格式 begin -->
+      <h4 class="heading-md-ul">引用格式</h4>
+      <p>{{ dataset.gbif_cite }}</p>
+      <!-- 引用格式 end -->
+
     </div>
+    <!-- article content begin -->
+
+
   </div>
-  <!-- data wall end -->
+   <!-- container end -->
 
-  {% comment %}
-  <div class="article-head-wrapper">
-    <h1 class="heading-lg-ul">
-      地理分佈
-    </h1>
-  </div>
-  {% endcomment %}
-
-    <div class="article-head-wrapper">
-    <h1 class="heading-lg-ul">
-      聯絡資訊
-    </h1>
-    <p>
-      {{ dataset.author }}
-    </p>
-    </div>
-
-    <div class="article-head-wrapper">
-    <h1 class="heading-lg-ul">
-      引用格式    </h1>
-    </div>
-  <p>{{ dataset.gbif_cite }}</p>
-</div>
-  <!-- container end -->
 {% endblock %}
+
+
+

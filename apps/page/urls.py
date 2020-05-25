@@ -1,6 +1,8 @@
 from django.urls import path
 
 from . import views
+from django.conf.urls.i18n import i18n_patterns
+from django.conf.urls import include
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -19,5 +21,6 @@ urlpatterns = [
     path('about-gbif', views.about_gbif, name='about_gbif'),
     path('open-data', views.open_data, name='open_data'),
     path('data-stats', views.data_stats, name='data_stats'),
-    path('export_csv',views.export_csv, name='export_csv')
+    path('export_csv',views.export_csv, name='export_csv'),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
