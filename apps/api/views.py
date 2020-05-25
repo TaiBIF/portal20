@@ -22,6 +22,7 @@ from apps.data.helpers.mod_search import (
     DatasetSearch,
     PublisherSearch,
     SpeciesSearch,
+    filter_occurrence,
 )
 
 from utils.decorators import json_ret
@@ -54,33 +55,39 @@ def taxon_tree_node(request, pk):
 
 #@json_ret
 def search_occurrence(request, cat=''):
-    print (cat, 'cat')
     has_menu = True if request.GET.get('menu', '') else False
     menu_list = []
     if has_menu:
-        # cache
-        '''query = RawDataOccurrence.objects\
-                             .values('countrycode')\
-                             .exclude(countrycode__isnull=True)\
-                             .annotate(count=Count('countrycode'))\
-                             .order_by('-count')'''
+        #q = occur_search.query.values('taibif_dataset_name', 'year', 'month', 'country')
 
-        '''year_rows = [
-        {
-            'label': str(year),
-            'key': str(year),
-            'count': 0,
-        } for year in range(1909, 2021)
-    ]
-    year_rows_update = []
-    for i in year_rows:
-        r = RawDataOccurrence.objects .values('year').exclude(year__isnull=True).filter(year__icontains=i['key']).annotate(count=Count('year'))
-        if len(r):
-            year_rows_update.append({'label': i['key'], 'key': i['key'], 'count': r[0]['count']})
-            print (i, r)
-    import json
-        s = json.dumps(year_rows_update)'''
-        dataset_query = Dataset.objects.exclude(status='Private').values('name', 'title')
+        # TODO, normalize country data?
+        #country_code_list = [x['country'] for x in q.exclude(country__isnull=True).annotate(count=Count('country')).order_by('-count')]
+        #year_list = [x['year'] for x in q.exclude(year__isnull=True).annotate(count=Count('year')).all()]
+        #print (country_code_list)
+        #print (year_list)
+        #print (q.exclude(year__isnull=True).annotate(count=Count('year')).query)
+        ## year
+        #q = SimpleData.objects.values('year').exclude(year__isnull=True).annotate(count=Count('year')).order_by('-count')
+
+
+
+        q = SimpleData.public_objects.filter_group_by_dataset(list(request.GET.lists()))
+        dataset_menu = []
+        dataset_name_list = []
+        ds_list = list(q.all())
+        print (q.query)
+        ds_name_list = [x['taibif_dataset_name'] for x in ds_list]
+        #ds = Dataset.public_objects.values('name', 'title').filter(name__in=ds_name_list).all()
+        #print (ds_name_list)
+        for i in ds_list:
+            dataset_menu.append({
+                'label': i['taibif_dataset_name'],
+                'key': i['taibif_dataset_name'],
+                'count': i['count'],
+            })
+        #for i in ds_list.items():
+        
+        #dataset_query = Dataset.objects.exclude(status='Private').values('name', 'title')
         publisher_query = Dataset.objects\
                                  .values('organization','organization_verbatim')\
                                  .exclude(organization__isnull=True)\
@@ -111,7 +118,7 @@ def search_occurrence(request, cat=''):
             {
                 'key': 'dataset',
                 'label': '資料集',
-                'rows': [{'label': x['title'], 'key': x['name']} for x in dataset_query]
+                'rows': dataset_menu,
             },
             {
                 'key':'publisher',
@@ -121,12 +128,11 @@ def search_occurrence(request, cat=''):
         ]
 
     # search
+    occur_search = OccurrenceSearch(list(request.GET.lists()), using='')
     res = None
     if cat == 'search':
-        occur_search = OccurrenceSearch(list(request.GET.lists()), using='')
         res = occur_search.get_results()
     else:
-        occur_search = OccurrenceSearch(list(request.GET.lists()), using='')
         occur_search.limit = 1 # 
         res = occur_search.get_results()
     #elif cat == 'taxonomy':
@@ -163,32 +169,39 @@ def search_dataset(request):
     has_menu = True if request.GET.get('menu', '') else False
     menu_list = []
 
+    ds_search = DatasetSearch(list(request.GET.lists()))
     if has_menu:
-        publisher_query = Dataset.objects\
-                                 .values('organization','organization_verbatim')\
-                                 .exclude(organization__isnull=True)\
-                                 .annotate(count=Count('organization'))\
-                                 .order_by('-count')
+        #publisher_query = Dataset.objects\
+        publisher_query = ds_search.query\
+            .values('organization','organization_verbatim')\
+            .exclude(organization__isnull=True)\
+            .annotate(count=Count('organization'))\
+            .order_by('-count')
+        #publisher_query = publisher_query.filter()
+        #publisher_query = ds_search.query.values('organization','organization_verbatim')\
+        #                                 .exclude(organization__isnull=True)\
+        #                                 .annotate(count=Count('organization'))\
+        #                                 .order_by('-count')
         publisher_rows = [{
             'key':x['organization'],
             'label':x['organization_verbatim'],
             'count': x['count']
         } for x in publisher_query]
-        rights_query = Dataset.objects\
-                              .values('data_license')\
-                              .exclude(data_license__exact='')\
-                              .annotate(count=Count('data_license'))\
-                              .order_by('-count')
+        rights_query = ds_search.query\
+            .values('data_license')\
+            .exclude(data_license__exact='')\
+            .annotate(count=Count('data_license'))\
+            .order_by('-count')
         rights_rows = [{
             'key': DATA_MAPPING['rights'][x['data_license']],
             'label':x['data_license'],
             'count': x['count']
         } for x in rights_query]
-        country_query = Dataset.objects\
-                               .values('country')\
-                               .exclude(country__exact='')\
-                               .annotate(count=Count('country'))\
-                               .order_by('-count')
+        country_query = ds_search.query\
+            .values('country')\
+            .exclude(country__exact='')\
+            .annotate(count=Count('country'))\
+            .order_by('-count')
         country_rows = [{
             'key':x['country'],
             'label':DATA_MAPPING['country'][x['country']],
@@ -214,7 +227,6 @@ def search_dataset(request):
         ]
 
     # search
-    ds_search = DatasetSearch(list(request.GET.lists()))
     res = ds_search.get_results()
 
     data = {
@@ -271,6 +283,9 @@ def search_species(request):
     status = request.GET.get('status', '')
     rank = request.GET.get('rank', '')
 
+    species_search = SpeciesSearch(list(request.GET.lists()))
+    #species_ids = list(species_search.query.values('id').all())
+    #print (species_ids, len(species_ids))
     has_menu = True if request.GET.get('menu', '') else False
     menu_list = []
     if has_menu:
@@ -281,7 +296,7 @@ def search_species(request):
                 'rows': [{
                     'key': x['key'],
                     'label': x['label'],
-                    'count': x['count']
+                    #'count': x['count']
                 } for x in Taxon.get_tree(rank=rank, status=status)]
             },
             {
@@ -303,7 +318,6 @@ def search_species(request):
         ]
 
     # search
-    species_search = SpeciesSearch(list(request.GET.lists()))
     res = species_search.get_results()
 
     data = {

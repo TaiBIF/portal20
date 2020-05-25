@@ -373,3 +373,69 @@ class SpeciesSearch(SuperSearch):
             'rank_list': [{'name': t.name, 'rank': t.rank, 'name_zh': t.name_zh, 'id': t.id} for t in x.rank_list],
             'is_accepted_name': x.is_accepted_name,
         }
+
+def filter_occurrence(queryset, filters):
+    query = queryset
+    for key, values in self.filters:
+        if key == 'q':
+            v = values[0] # only get one
+            if not v:
+                continue
+            # find has species_id first
+            species_list = Taxon.find_name(v, 'species', self.using)
+            species_ids = [x.id for x in species_list]
+            if species_ids:
+                #query = query.filter(Q(taxon_species_id__in=species_ids) |
+                #                     Q(taxon_genus_id__in=species_ids))
+                query = query.filter(taxon_species_id__in=species_ids)
+            else:
+                if self.using == '':
+                    query = query.filter(Q(vernacular_name__icontains=v) | Q(scientific_name__icontains=v))
+                elif self.using == 'latin':
+                    query = query.filter(scientific_name__icontains=v)
+                elif self.using == 'zh':
+                    query = query.filter(vernacular_name__icontains=v)
+        #if menu_key == 'core':
+        #    d = DATA_MAPPING['core'][item_keys]
+        #    query = query.filter(dwc_core_type__exact=d)
+        if key == 'year':
+            query = query.filter(year__in=values)
+        if key == 'month':
+            query = query.filter(month__in=values)
+        # TODO: change simpledata.country to country_code
+        if key == 'countrycode':
+            query = query.filter(country__exact=values)
+        if key == 'dataset':
+            query = query.filter(taibif_dataset_name__in=values)
+        if key == 'publisher':
+            datasets = Dataset.objects.filter(organization__in=values)
+            dataset_names = [x.name for x in datasets]
+            query = query.filter(taibif_dataset_name__in=dataset_names)
+
+        if key == 'taxon_key':
+            # not explict like: taxon_phylum_id=xxx, taxon_specied_id=yyy...
+
+            taxa = Taxon.objects.filter(id__in=values).all()
+            or_cond = Q()
+            for t in taxa:
+                if t.rank == 'kingdom':
+                    or_cond.add(Q(taxon_kingdom_id=t.id), Q.OR)
+                elif t.rank == 'phylum':
+                    or_cond.add(Q(taxon_phylum_id=t.id), Q.OR)
+                elif t.rank == 'class':
+                    or_cond.add(Q(taxon_class_id=t.id), Q.OR)
+                if t.rank == 'order':
+                    or_cond.add(Q(taxon_order_id=t.id), Q.OR)
+                elif t.rank == 'family':
+                    or_cond.add(Q(taxon_family_id=t.id), Q.OR)
+                if t.rank == 'genus':
+                    or_cond.add(Q(taxon_genus_id=t.id), Q.OR)
+                elif t.rank == 'species':
+                    or_cond.add(Q(taxon_species_id=t.id), Q.OR)
+
+            query = query.filter(or_cond)
+        else:
+            # for species-detail page
+            if 'taxon_' in key:
+                query = query.filter(**{key:values[0]})
+    return query
