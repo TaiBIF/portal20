@@ -254,7 +254,7 @@ def species_view(request, pk):
     return render(request, 'species.html', context)
 
 def search_view(request, cat=''):
-    print (cat, 'cat')
+
     context = {'env': settings.ENV}
     return render(request, 'search.html', context)
 
