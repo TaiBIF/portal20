@@ -200,19 +200,22 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
             </tr>
           </thead>
           <tbody>
-            {% for set in dataset_list %}
+            {% for set in total %}
+
             <tr>
-              <td>{{ set.taibif_dataset_name }}</td>
-              <td>{{ set.dataset }}</td>
+              <td>{{ set.dataset_count.taibif_dataset_name }}</td>
+              <td>{{ set.dataset_count.dataset }}</td>
               <td>
-                {% for t in total %}
+
                 <div class="chart-bar-h-bg">
-                  <span class="chart-value-bg" style="width: {{ t.ratio }}%"></span>
+                  <span class="chart-value-bg" style="width: {{ set.ratio }}%"></span>
                 </div>
-                {% endfor %}
+
               </td>
             </tr>
+
             {% endfor %}
+
           </tbody>
         </table>
       </div>
@@ -280,7 +283,7 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       </div>
       <!-- 出現紀錄 end -->
 
-      <!-- Kuan Yu add -->
+      <!-- Kuan Yu added for taieol discription -->
       {% for i in species_info.taieol_desc %}
        <div id="section9">
          <h4 class="heading-md-ul">{{i.title}}</h4>
