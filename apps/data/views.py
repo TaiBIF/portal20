@@ -253,10 +253,12 @@ def species_view(request, pk):
     SetNum = SimpleData.objects.values('taibif_dataset_name').filter(taxon_species_id=pk).all()
     dataset_list = SetNum.annotate(dataset=Count('taibif_dataset_name'))
 
+
     total = []
     for d in range(dataset_list.count()):
         num = dataset_list[d]['dataset']
         total.append({
+            'dataset_count':dataset_list[d],
             'ratio':(num/res['count'])*100
         })
 
@@ -290,7 +292,7 @@ def species_view(request, pk):
     context = {
         'taxon': taxon,
         'occurrence_list': [],
-        'dataset_list': dataset_list,
+        #'dataset_list': dataset_list,
         'total':total
 
     }
