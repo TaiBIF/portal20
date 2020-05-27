@@ -19,7 +19,7 @@ env = environ.Env()
 root_path = environ.Path(__file__) - 2 # web
 
 ENV = env('ENV', default='prod')
-assert ENV in ['dev', 'test', 'prod', 'qa']
+assert ENV in ['dev', 'test', 'prod', 'stag']
 
 ROOT_URLCONF = 'conf.urls'
 WSGI_APPLICATION = 'conf.wsgi.application'
@@ -227,13 +227,13 @@ CACHES = {
 }
 # email
 EMAIL_BACKEND = 'django_ses.SESBackend'
-AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
-AWS_SES_REGION_NAME = env('AWS_SES_REGION_NAME')
-AWS_SES_REGION_ENDPOINT = env('AWS_SES_REGION_ENDPOINT')
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID', default='')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY', default='')
+AWS_SES_REGION_NAME = env('AWS_SES_REGION_NAME', default='')
+AWS_SES_REGION_ENDPOINT = env('AWS_SES_REGION_ENDPOINT', default='')
 
-TAIBIF_SERVICE_EMAIL = env('TAIBIF_SERVICE_EMAIL')
-TAIBIF_BCC_EMAIL_LIST = env('TAIBIF_BCC_EMAIL_LIST')
+TAIBIF_SERVICE_EMAIL = env('TAIBIF_SERVICE_EMAIL', default='')
+TAIBIF_BCC_EMAIL_LIST = env('TAIBIF_BCC_EMAIL_LIST', default='')
 
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
