@@ -13,6 +13,14 @@ docker-compose -f docker-compose.yml up -d
 ```
 
 
+## make translate (english)
+
+```
+$ docker-compose exec web bash
+$ python manage.py makemessages -l en
+$ python manage.py comilemessage -l en
+```
+
 <!--
 ## Contributing to <project_name>
 
