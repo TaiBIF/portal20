@@ -33,14 +33,6 @@ services:
     volumes:
       - ../taibif-volumes/pgdata:/var/lib/postgresql/data/pgdata
       - ../taibif-volumes/bucket:/taibif-volumes/bucket
-  adminer:
-    image: adminer
-    restart: always
-    links:
-      - db:db
-    ports:
-      - 8080:8080
-
   redis:
     image: redis:5-alpine
     restart: always
