@@ -8,9 +8,9 @@ ENV PYTHONUNBUFFERED 1
 #ENV INCLUDE=/usr/include
 #ENV LIBRARY_PATH=/lib:/usr/lib
 
-# for debian
-#RUN apt-get update && \
-#    apt-get install -y postgresql-client && \
+# update & install system package
+RUN apt-get update && apt-get install -y \
+    gettext
 #    rm -rf /var/lib/apt/lists/*
 
 # timezone to Asia/Taipei

@@ -56,7 +56,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'images/taibif-logo-rgb-l.jpg' %}" class="hidden-xs navbar-brand-l"><img src= "{% static 'images/taibif-logo-rgb-s.jpg' %}" class="visible-xs navbar-brand-s"></a>
+        <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'images/taibif-logo.png' %}" class="hidden-xs navbar-brand-l" style="margin-top:8px"><img src= "{% static 'images/taibif-logo-rgb-s.jpg' %}" class="visible-xs navbar-brand-s"></a>
         <div class="row">
           <!-- hidden xs begin -->
           <div class="hidden-xs col-xs-6 navbar-hidden-xs">
@@ -102,12 +102,13 @@
             <ul class="nav navbar-nav">
               <li class="dropdown">
                 <a class="dropdown-toggle" href="#" id="DropdownMenu-search" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  找資料
+                  {% trans "找資料" %}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="DropdownMenu-data">
-                  <li><a href="{% url 'search-occurrence' cat='search' %}">物種出現紀錄</a></li>
-                  <li><a href="{% url 'search-species' %}">物種</a></li>
-                  <li><a href="{% url 'search-dataset' %}">資料集</a></li>
+                  <li><a href="{% url 'search-occurrence' cat='search' %}">{% trans "物種出現紀錄" %}</a></li>
+                  <li><a href="{% url 'search-species' %}">{% trans "物種" %}</a></li>
+                  <li><a href="{% url 'search-dataset' %}">{% trans "資料集" %}</a></li>
+                  <li><a href="{% url 'search-publisher' %}">{% trans "發布者" %}</a></li>
                 </ul>
               </li>
               <li class="dropdown">
