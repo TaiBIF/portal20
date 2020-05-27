@@ -15,11 +15,14 @@ class DatasetSitemap(Sitemap):
     changefreq = "weekly"
     priority = 0.7
 
+
     def items(self):
         return Dataset.objects.all()
 
+
     def lastmod(self, obj):
         return obj.pub_date
+
 
 
 class StaticSitemap(sitemaps.Sitemap):
