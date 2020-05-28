@@ -1,6 +1,7 @@
 import re
 import csv
 import codecs
+import json
 
 import os
 import environ
@@ -12,12 +13,15 @@ from django.http import (
 from django.db.models import (
     Q,
     F,
+    Count,
+    Sum
 )
 from django.conf import settings
 
 from apps.data.models import (
     Dataset,
     Taxon,
+    SimpleData,
 )
 from apps.article.models import Article
 from .models import Post, Journal
@@ -26,6 +30,7 @@ from utils.mail import taibif_mail_contact_us
 from apps.data.helpers.stats import get_home_stats
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_GET
+
 
 def index(request):
 
@@ -237,6 +242,69 @@ def robots_txt(request):
 
 
 
+## Kuan-Yu added for API occurence record
+def test(request):
+    Yearquery = SimpleData.objects \
+        .filter(scientific_name='Rana latouchii') \
+        .values('scientific_name', 'vernacular_name', 'year') \
+        .exclude(year__isnull=True) \
+        .annotate(count=Count('year')) \
+        .order_by('-count')
+
+    year_rows = [{
+        'key': x['scientific_name'],
+        'label': x['vernacular_name'],
+        'year': x['year'],
+        'count': x['count']
+    } for x in Yearquery]
+
+
+
+    context = {
+            'occurrence_list': year_rows,
+        }
+    return render(request, 'test.html', context)
+
+def KY_occurrence(request):
+    #SimpledataQuery = SimpleData.objects.values('scientific_name')
+    Yearquery = SimpleData.objects \
+        .filter(scientific_name='Rana latouchii')\
+        .values('scientific_name', 'vernacular_name','year') \
+        .exclude(year__isnull=True)\
+        .annotate(count=Count('year')) \
+        .order_by('-count')
+
+    year_rows = [{
+        'key': x['scientific_name'],
+        'label': x['vernacular_name'],
+        'year':x['year'],
+        'count': x['count']
+    } for x in Yearquery]
+
+    print(year_rows)
+
+
+
+    data = [
+        {
+            "page": 1,
+            "pages": 1,
+            "per_page": "50",
+            "total": 1
+        },
+        [
+            {
+                'key': x['scientific_name'],
+                'label': x['vernacular_name'],
+                'year': x['year'],
+                'count': x['count']
+            } for x in Yearquery
+        ]
+    ]
+
+
+
+    return HttpResponse(json.dumps(data), content_type="application/json")
 
 
 
