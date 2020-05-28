@@ -51,7 +51,7 @@ jobs: # A basic unit of work in a run
           fingerprints: "bf:51:c5:ef:ca:95:ab:ca:3a:9c:7d:fd:eb:01:e3:ef"
       - run:
           command: |
-            ssh $SSH_USER@$SSH_HOST "cd serv/portal20; git pull;docker-compose -f docker-compose.yml -f docker-compose-staging.yml up -d"
+            ssh -vvv $SSH_USER@$SSH_HOST "cd serv/portal20; git pull;docker-compose -f docker-compose.yml -f docker-compose-staging.yml up -d"
 workflows:
   version: 2
   build-and-deploy:
