@@ -51,7 +51,7 @@
         <h3 class="listbox-inner-title"><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h3>
         <p class="listbox-inner-summary hidden-xs">
           {{ article.content | linebreaks | truncatechars:150}}
-            <p><a href="{% url 'article-detail' slug=article.slug %}">閱讀更多</a></p>
+            <p><a href="{% url 'article-detail-id' pk=article.id %}">閱讀更多</a></p>
         </p>
       </div>
       {% comment %}
