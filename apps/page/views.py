@@ -2,6 +2,8 @@ import re
 import csv
 import codecs
 
+import os
+import environ
 from django.shortcuts import render
 from django.http import (
     HttpResponse,
@@ -23,7 +25,7 @@ from utils.mail import taibif_mail_contact_us
 
 from apps.data.helpers.stats import get_home_stats
 from django.utils.translation import ugettext as _
-
+from django.views.decorators.http import require_GET
 
 def index(request):
 
@@ -212,4 +214,30 @@ def trans(request):
     translate_str = _("這裡放需要翻譯的文字")
     context = {"translate_str": translate_str}
     return render(request, 'index.html', context)
+
+@require_GET
+def robots_txt(request):
+
+    if os.environ.get('ENV')=='prod':
+        lines = [
+            "User-Agent: *",
+            "Disallow: /admin/",
+        ]
+
+        return HttpResponse("\n".join(lines), content_type="text/plain")
+
+    else:
+        lines = [
+            "User-Agent: *",
+            "Disallow: /",
+        ]
+
+        return HttpResponse("\n".join(lines), content_type="text/plain")
+
+
+
+
+
+
+
 
