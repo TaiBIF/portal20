@@ -5,7 +5,7 @@ import json
 
 import os
 import environ
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import (
     HttpResponse,
     HttpResponseNotFound,
@@ -30,6 +30,8 @@ from utils.mail import taibif_mail_contact_us
 from apps.data.helpers.stats import get_home_stats
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_GET
+
+
 
 
 def index(request):
@@ -243,6 +245,8 @@ def robots_txt(request):
 
 
 ## Kuan-Yu added for API occurence record
+
+
 def test(request):
     Yearquery = SimpleData.objects \
         .filter(scientific_name='Rana latouchii') \
@@ -265,46 +269,175 @@ def test(request):
         }
     return render(request, 'test.html', context)
 
-def KY_occurrence(request):
-    #SimpledataQuery = SimpleData.objects.values('scientific_name')
-    Yearquery = SimpleData.objects \
-        .filter(scientific_name='Rana latouchii')\
-        .values('scientific_name', 'vernacular_name','year') \
-        .exclude(year__isnull=True)\
-        .annotate(count=Count('year')) \
-        .order_by('-count')
 
-    year_rows = [{
-        'key': x['scientific_name'],
-        'label': x['vernacular_name'],
-        'year':x['year'],
-        'count': x['count']
-    } for x in Yearquery]
 
-    print(year_rows)
+###example
+filt1 = 'speices'
+filt2 = 'database'
+pk1 = 'Rana latouchii'
+pk2 = 'manager_17_15'
+pk3 = 'Rana longicrus'
+pk4 = 'e10100001_4_10'
 
 
 
-    data = [
-        {
-            "page": 1,
-            "pages": 1,
-            "per_page": "50",
-            "total": 1
-        },
-        [
+def ChartYear(request):
+
+    if filt1 == 'hi':
+        species = SimpleData.objects.filter(Q(scientific_name=pk1) | Q(scientific_name=pk3))
+        sp_year = species.values('year') \
+            .exclude(year__isnull=True) \
+            .annotate(count=Count('year')) \
+            .order_by('-year')
+
+        chart_year = [
             {
-                'key': x['scientific_name'],
-                'label': x['vernacular_name'],
-                'year': x['year'],
-                'count': x['count']
-            } for x in Yearquery
+                "page": 1,
+                "pages": 1,
+                "per_page": "50",
+                "total": 1
+            },
+            [
+                {
+                    'year': x['year'],
+                    'count': x['count']
+                } for x in sp_year
+            ]
         ]
-    ]
+
+    if filt2 == 'you':
+
+        dataset = SimpleData.objects.filter(Q(taibif_dataset_name=pk2) | Q(taibif_dataset_name=pk4))
+        data_year = dataset.values( 'year') \
+            .exclude(year__isnull=True) \
+            .annotate(count=Count('year')) \
+            .order_by('-year')
+        chart_year = [
+            {
+                "page": 1,
+                "pages": 1,
+                "per_page": "50",
+                "total": 1
+            },
+            [
+                {
+                    'year': x['year'],
+                    'count': x['count']
+                } for x in data_year
+            ]
+        ]
+
+    if (filt2 == filt2 and filt1 == filt1):
+
+        data_sp = SimpleData.objects.filter(Q(scientific_name=pk1) | Q(scientific_name=pk3)) \
+            .filter(Q(taibif_dataset_name=pk2) | Q(taibif_dataset_name=pk4))
+
+        data_sp_month = data_sp.values('year') \
+            .exclude(year__isnull=True) \
+            .annotate(count=Count('year')) \
+            .order_by('-year')
+
+        chart_year = [
+            {
+                "page": 1,
+                "pages": 1,
+                "per_page": "50",
+                "total": 1
+            },
+            [
+                {
+                    'year': x['year'],
+                    'count': x['count']
+                } for x in data_sp_month
+            ]
+        ]
+
+
+    return HttpResponse(json.dumps(chart_year), content_type="application/json")
+
+
+def ChartMonth(request):
+
+    if filt1 == 'hi':
+
+        species = SimpleData.objects.filter(Q(scientific_name=pk1) | Q(scientific_name=pk3))
+        sp_month = species.values( 'month') \
+            .exclude(month__isnull=True) \
+            .annotate(count=Count('month')) \
+            .order_by('-month')
+
+
+        chart_month = [
+            {
+                "page": 1,
+                "pages": 1,
+                "per_page": "50",
+                "total": 1
+            },
+            [
+                {
+                    'month': x['month'],
+                    'count': x['count']
+                } for x in sp_month
+            ]
+        ]
 
 
 
-    return HttpResponse(json.dumps(data), content_type="application/json")
+    if filt2 == 'you':
+
+        dataset = SimpleData.objects.filter(Q(taibif_dataset_name=pk2) | Q(taibif_dataset_name=pk4))
+
+        data_month = dataset.values('month') \
+            .exclude(month__isnull=True) \
+            .annotate(count=Count('month')) \
+            .order_by('-month')
+
+        chart_month = [
+            {
+                "page": 1,
+                "pages": 1,
+                "per_page": "50",
+                "total": 1
+            },
+            [
+                {
+                    'month': x['month'],
+                    'count': x['count']
+                } for x in data_month
+            ]
+        ]
+
+    if (filt2 == filt2 and filt1 == filt1):
+
+        data_sp = SimpleData.objects.filter(Q(scientific_name=pk1) | Q(scientific_name=pk3)) \
+            .filter(Q(taibif_dataset_name=pk2) | Q(taibif_dataset_name=pk4))
+
+        data_sp_month = data_sp.values('month') \
+            .exclude(month__isnull=True) \
+            .annotate(count=Count('month')) \
+            .order_by('-month')
+
+        chart_month = [
+            {
+                "page": 1,
+                "pages": 1,
+                "per_page": "50",
+                "total": 1
+            },
+            [
+                {
+                    'month': x['month'],
+                    'count': x['count']
+                } for x in data_sp_month
+            ]
+        ]
+
+
+
+    return HttpResponse(json.dumps(chart_month), content_type="application/json")
+
+
 
 
 
