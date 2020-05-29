@@ -1,7 +1,7 @@
 
 $(function() {
   $.ajax({
-    url: 'http://127.0.0.1:8000/test2',
+    url: 'http://127.0.0.1:8000/test3',
     complete: function(json) {
       data = JSON.parse(json.responseText);
       // set some variable to host data
@@ -10,8 +10,9 @@ $(function() {
         array_final = []
 
       $.each(data[1], function(i, data) {
+
         // fill the date array
-        year_list.push(data.year);
+        year_list.push(data.month);
         // fill the string data array
         arrayString.push(data.count);
       });
@@ -28,7 +29,7 @@ $(function() {
       var chart = new Highcharts.Chart({
         chart: {
           type: 'spline',
-          renderTo: 'container'
+          renderTo: 'container2'
         },
         title: {
           text: 'Occurrence data'
@@ -44,6 +45,7 @@ $(function() {
             }
           }
         },
+
         xAxis: {
           categories: year_list.reverse() //.reverse() to have the min year on the left
         },
