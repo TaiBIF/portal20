@@ -11,5 +11,9 @@ urlpatterns = [
     path('species/<int:pk>/', views.species_detail, name='species-detail'),
     path('taxon/tree/node/<int:pk>', views.taxon_tree_node, name='taxon-tree-branch'),
     path('data/stats/', views.data_stats, name='data-stats'),
+    path('test_m/', views.ChartMonth, name='ChartMonth'),
+    path('test_y/', views.ChartYear, name='ChartYear'),
+    path('taxon_bar/', views.taxon_bar, name='bar_chart'),
+
 
 ]
