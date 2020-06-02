@@ -1,7 +1,7 @@
 
 $(function() {
   $.ajax({
-    url: 'http://127.0.0.1:8000/test2',
+    url: 'http://127.0.0.1:8000/test_y/',
     complete: function(json) {
       data = JSON.parse(json.responseText);
       // set some variable to host data
@@ -34,8 +34,8 @@ $(function() {
           text: 'Occurrence data'
         },
         tooltip: {
-          valueDecimals: 2,
-          pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y}%</b><br/>'
+          valueDecimals: 1,
+          pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y}</b><br/>'
         },
         plotOptions: {
           series: {

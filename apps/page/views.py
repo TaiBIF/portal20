@@ -243,7 +243,6 @@ def robots_txt(request):
 
 
 
-
 ## Kuan-Yu added for API occurence record
 
 
@@ -271,171 +270,15 @@ def test(request):
 
 
 
-###example
-filt1 = 'speices'
-filt2 = 'database'
-pk1 = 'Rana latouchii'
-pk2 = 'manager_17_15'
-pk3 = 'Rana longicrus'
-pk4 = 'e10100001_4_10'
+def bar_chart(request):
+    return render(request, 'bar_chart.html')
 
 
 
-def ChartYear(request):
-
-    if filt1 == 'hi':
-        species = SimpleData.objects.filter(Q(scientific_name=pk1) | Q(scientific_name=pk3))
-        sp_year = species.values('year') \
-            .exclude(year__isnull=True) \
-            .annotate(count=Count('year')) \
-            .order_by('-year')
-
-        chart_year = [
-            {
-                "page": 1,
-                "pages": 1,
-                "per_page": "50",
-                "total": 1
-            },
-            [
-                {
-                    'year': x['year'],
-                    'count': x['count']
-                } for x in sp_year
-            ]
-        ]
-
-    if filt2 == 'you':
-
-        dataset = SimpleData.objects.filter(Q(taibif_dataset_name=pk2) | Q(taibif_dataset_name=pk4))
-        data_year = dataset.values( 'year') \
-            .exclude(year__isnull=True) \
-            .annotate(count=Count('year')) \
-            .order_by('-year')
-        chart_year = [
-            {
-                "page": 1,
-                "pages": 1,
-                "per_page": "50",
-                "total": 1
-            },
-            [
-                {
-                    'year': x['year'],
-                    'count': x['count']
-                } for x in data_year
-            ]
-        ]
-
-    if (filt2 == filt2 and filt1 == filt1):
-
-        data_sp = SimpleData.objects.filter(Q(scientific_name=pk1) | Q(scientific_name=pk3)) \
-            .filter(Q(taibif_dataset_name=pk2) | Q(taibif_dataset_name=pk4))
-
-        data_sp_month = data_sp.values('year') \
-            .exclude(year__isnull=True) \
-            .annotate(count=Count('year')) \
-            .order_by('-year')
-
-        chart_year = [
-            {
-                "page": 1,
-                "pages": 1,
-                "per_page": "50",
-                "total": 1
-            },
-            [
-                {
-                    'year': x['year'],
-                    'count': x['count']
-                } for x in data_sp_month
-            ]
-        ]
-
-
-    return HttpResponse(json.dumps(chart_year), content_type="application/json")
-
-
-def ChartMonth(request):
-
-    if filt1 == 'hi':
-
-        species = SimpleData.objects.filter(Q(scientific_name=pk1) | Q(scientific_name=pk3))
-        sp_month = species.values( 'month') \
-            .exclude(month__isnull=True) \
-            .annotate(count=Count('month')) \
-            .order_by('-month')
-
-
-        chart_month = [
-            {
-                "page": 1,
-                "pages": 1,
-                "per_page": "50",
-                "total": 1
-            },
-            [
-                {
-                    'month': x['month'],
-                    'count': x['count']
-                } for x in sp_month
-            ]
-        ]
 
 
 
-    if filt2 == 'you':
 
-        dataset = SimpleData.objects.filter(Q(taibif_dataset_name=pk2) | Q(taibif_dataset_name=pk4))
-
-        data_month = dataset.values('month') \
-            .exclude(month__isnull=True) \
-            .annotate(count=Count('month')) \
-            .order_by('-month')
-
-        chart_month = [
-            {
-                "page": 1,
-                "pages": 1,
-                "per_page": "50",
-                "total": 1
-            },
-            [
-                {
-                    'month': x['month'],
-                    'count': x['count']
-                } for x in data_month
-            ]
-        ]
-
-    if (filt2 == filt2 and filt1 == filt1):
-
-        data_sp = SimpleData.objects.filter(Q(scientific_name=pk1) | Q(scientific_name=pk3)) \
-            .filter(Q(taibif_dataset_name=pk2) | Q(taibif_dataset_name=pk4))
-
-        data_sp_month = data_sp.values('month') \
-            .exclude(month__isnull=True) \
-            .annotate(count=Count('month')) \
-            .order_by('-month')
-
-        chart_month = [
-            {
-                "page": 1,
-                "pages": 1,
-                "per_page": "50",
-                "total": 1
-            },
-            [
-                {
-                    'month': x['month'],
-                    'count': x['count']
-                } for x in data_sp_month
-            ]
-        ]
-
-
-
-    return HttpResponse(json.dumps(chart_month), content_type="application/json")
 
 
 

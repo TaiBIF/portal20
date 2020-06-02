@@ -44,9 +44,7 @@ urlpatterns = [
      name='django.contrib.sitemaps.views.sitemap'),
     path("robots.txt", robots_txt),
     path('test', views.test, name='test'),
-    path('test2', views.ChartYear, name='test2'),
-    path('test3', views.ChartMonth, name='test3'),
-
+    path('bar_chart', views.bar_chart, name='bar_chart'),
 
 ]
 
