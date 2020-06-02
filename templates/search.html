@@ -31,10 +31,10 @@ Search
 {#<script src="{% static 'js/tree.js' %}"></script>#}
 {#<script src="{% static 'js/search.js' %}"></script>#}
 
-{% if env == "dev" %}
-<script src="{% static 'js/search.js' %}"></script>
-{% elif env == "prod" %}
+{% if env == "prod" %}
 <script src="{% static 'js/search.min.js' %}"></script>
+{% else %}
+<script src="{% static 'js/search.js' %}"></script>
 {% endif %}
 {% endblock %}
 
