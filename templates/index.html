@@ -113,34 +113,37 @@
       <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-3">
           <div class="data-wall-ctn">
-            <span class="dtat-wall-name">出現紀錄</span>
+            <span class="dtat-wall-name">{% trans "出現紀錄" %}</span>
             <span class="data-wall-numbers">{{ stats.num_occurrence|intcomma }}</span>
-            <span class="dtat-wall-name">於 TaiBIF 公開之資料</span>
+            {#<span class="dtat-wall-name">於 TaiBIF 公開之資料</span>#}
             <span class="data-wall-icon myicon icon-data-stats"></span>
           </div>
+          <div style="font-size: 14px;color: #888; margin-top:10px;">於 TaiBIF 公開之資料集（含部分資訊缺漏之資料集</div>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-3">
           <div class="data-wall-ctn">
-            <span class="dtat-wall-name">資料集</span>
+            <span class="dtat-wall-name">{% trans "資料集" %}</span>
             <span class="data-wall-numbers">{{ stats.num_dataset|intcomma }}</span>
-            <span class="dtat-wall-name">於 TaiBIF 公開之資料集（含部分資訊缺漏之資料集）</span>
+            {#<span class="dtat-wall-name">於 TaiBIF 公開之資料集（含部分資訊缺漏之資料集）</span>#}
             <span class="data-wall-icon myicon icon-data-folder"></span>
           </div>
+          <div style="font-size: 14px;color: #888; margin-top:10px;">於 TaiBIF 公開之資料集（含部分資訊缺漏之資料集</div>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-3">
           <div class="data-wall-ctn">
-            <span class="dtat-wall-name">涵蓋物種數</span>
+            <span class="dtat-wall-name">{% trans "涵蓋物種數" %}</span>
             <span class="data-wall-numbers">{{ stats.num_species|intcomma }}</span>
-            <span class="dtat-wall-name">出現紀錄涵蓋物種數（包含部分國外資料及同物異名）</span>
+            {#<span class="dtat-wall-name">出現紀錄涵蓋物種數（包含部分國外資料及同物異名）</span>#}
             <span class="data-wall-icon myicon icon-data-tw"></span>
           </div>
+          <div style="font-size: 14px;color: #888; margin-top:10px;">出現紀錄涵蓋物種數（包含部分國外資料及同物異名）</div>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-3">
           <div class="data-wall-ctn">
             <a href="{% url 'data_stats' %}?most=1">
-            <span class="dtat-wall-name">看更多</span>
+            <span class="dtat-wall-name">{% trans "看更多" %}</span>
             <span class="data-wall-numbers"><small>科技部資料</small></span>
-            <span class="dtat-wall-name"><br/></span>
+            {#<span class="dtat-wall-name"><br/></span>#}
             <span class="data-wall-icon myicon icon-arrow-right"></span>
             </a>
           </div>
@@ -152,12 +155,12 @@
 
   <!-- News board begin -->
   <div class="container">
-    <h1 class="heading-xlg-center">最新消息</h1>
+    <h1 class="heading-xlg-center">{% trans "最新消息" %} </h1>
     <div class="row">
       <!-- news list begin -->
       <div class="col-sm-12 col-md-4">
         <div class="news-card-wrapper">
-          <a href="{% url 'article-list' category='news' %}" class="news-card-cate"><span class="myicon icon-news"></span>新聞</a>
+          <a href="{% url 'article-list' category='news' %}" class="news-card-cate"><span class="myicon icon-news"></span>{% trans "新聞" %}</a>
           <div class="news-card-img-wrapper">
             <a href="{{ news_list.first.get_absolute_url }}">
             <div class="news-card-title-ctn">
@@ -184,7 +187,7 @@
       <!-- event list begin -->
       <div class="col-sm-12 col-md-4">
         <div class="news-card-wrapper">
-          <a href="{% url 'article-list' category='event' %}" class="news-card-cate"><span class="myicon icon-event"></span>活動</a>
+          <a href="{% url 'article-list' category='event' %}" class="news-card-cate"><span class="myicon icon-event"></span>{% trans "活動" %}</a>
           <div class="news-card-img-wrapper">
             <a href="{{ event_list.first.get_absolute_url }}">
             <div class="news-card-title-ctn">
@@ -210,7 +213,7 @@
       <!-- update list begin -->
       <div class="col-sm-12 col-md-4">
         <div class="news-card-wrapper">
-          <a href="{% url 'article-list' category='update' %}" class="news-card-cate"><span class="myicon icon-update"></span>更新</a>
+          <a href="{% url 'article-list' category='update' %}" class="news-card-cate"><span class="myicon icon-update"></span>{% trans "更新" %}</a>
           <div class="news-card-img-wrapper">
             <a href="{{ update_list.first.get_absolute_url }}">
             <div class="news-card-title-ctn">

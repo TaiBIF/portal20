@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-27 11:46+0800\n"
+"POT-Creation-Date: 2020-06-03 16:31+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: apps/page/views.py:212
+#: apps/page/views.py:214
 msgid "這裡放需要翻譯的文字"
 msgstr ""
 
-#: conf/settings.py:126
+#: conf/settings.py:131
 msgid "Traditional Chinese"
 msgstr ""
 
@@ -38,7 +38,7 @@ msgstr "Occurrences"
 msgid "物種"
 msgstr "Species"
 
-#: templates/base.html:111 templates/index.html:91
+#: templates/base.html:111 templates/index.html:91 templates/index.html:124
 msgid "資料集"
 msgstr "Datasets"
 
@@ -102,21 +102,21 @@ msgstr "Databases & Links"
 msgid "更多資訊"
 msgstr "More Info"
 
-#: templates/base.html:156
+#: templates/base.html:156 templates/index.html:155
 msgid "最新消息"
 msgstr "Latest news"
 
-#: templates/base.html:157
+#: templates/base.html:157 templates/index.html:160
 msgid "新聞"
 msgstr "News"
 
-#: templates/base.html:158
+#: templates/base.html:158 templates/index.html:187
 msgid "活動"
 msgstr "Activities & events"
 
-#: templates/base.html:159
+#: templates/base.html:159 templates/index.html:213
 msgid "更新"
-msgstr "aiCoL checklist updates"
+msgstr "Updates"
 
 #: templates/base.html:162
 msgid "專題文章"
@@ -142,10 +142,18 @@ msgstr "TaiBIF academic publications"
 msgid "TaiBIF-生物多樣性資料開放的推手"
 msgstr "TaiBIF- The facilitator of biodiversity open data"
 
-#: templates/index.html:89
+#: templates/index.html:89 templates/index.html:116
 msgid "出現紀錄"
 msgstr "Occurrences"
 
 #: templates/index.html:95
 msgid "全站搜尋..."
 msgstr "Site search"
+
+#: templates/index.html:132
+msgid "涵蓋物種數"
+msgstr "Species"
+
+#: templates/index.html:141
+msgid "看更多"
+msgstr "More Info"
