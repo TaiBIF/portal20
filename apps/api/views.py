@@ -6,7 +6,7 @@ import random
 import csv
 
 from django.shortcuts import render
-from django.db.models import Count, Q
+from django.db.models import Count, Q, Sum
 from django.http import HttpResponse
 
 from apps.data.models import (
@@ -571,7 +571,163 @@ def ChartMonth(request):
 
 
 def taxon_bar(request):
-    taxon = Taxon.objects.get(scientific_name="Pomatorhinus musicus")
+
+    ## Use species find
+    if filt1 == filt1:
+
+        species = SimpleData.objects.filter(Q(scientific_name=pk1)).values('taxon_genus_id','taxon_species_id')
+        sp_id = species.annotate(sp_c=Count('taxon_species_id')) \
+            .aggregate(Sum('sp_c')).get('sp_c__sum')
+
+        sp_name = Taxon.objects.get(Q(id=species[0]['taxon_species_id']))
+
+        ss = {'name': sp_name,
+              'count': sp_id}
+
+
+        for sp in species:
+            genus = SimpleData.objects.filter(Q(taxon_genus_id=sp['taxon_genus_id'])).values('taxon_family_id','taxon_genus_id')
+            ge_id = genus.annotate(genus_c=Count('taxon_genus_id')) \
+                .aggregate(Sum('genus_c')).get('genus_c__sum')
+            ge_name = Taxon.objects.filter(Q(id=genus[0]['taxon_genus_id'])).values('name','name_zh')
+            gg = {'name':ge_name[0]['name'],
+                  'name_zh':ge_name[0]['name_zh'],
+                  'count':ge_id}
+
+            for gen in genus:
+                family = SimpleData.objects.filter(Q(taxon_family_id=gen['taxon_family_id'])).values('taxon_order_id','taxon_family_id')
+                fam_id = family.annotate(fam_c=Count('taxon_family_id')) \
+                    .aggregate(Sum('fam_c')).get('fam_c__sum')
+                fam_name = Taxon.objects.get(Q(id=family[0]['taxon_family_id']))
+                ff = {'name': fam_name,
+                      'count': fam_id}
+
+                for fam in family:
+                    order = SimpleData.objects.filter(Q(taxon_order_id=fam['taxon_order_id'])).values('taxon_class_id', 'taxon_order_id')
+                    ord_id = order.annotate(ord_c=Count('taxon_order_id')) \
+                        .aggregate(Sum('ord_c')).get('ord_c__sum')
+                    ord_name = Taxon.objects.get(Q(id=order[0]['taxon_order_id']))
+                    oo = {'name': ord_name,
+                          'count': ord_id}
+
+                    for ord in order:
+                        clas = SimpleData.objects.filter(Q(taxon_class_id=ord['taxon_class_id'])).values( 'taxon_phylum_id', 'taxon_class_id')
+                        clas_id = clas.annotate(clas_c=Count('taxon_class_id')) \
+                            .aggregate(Sum('clas_c')).get('clas_c__sum')
+                        clas_name = Taxon.objects.get(Q(id=clas[0]['taxon_class_id']))
+                        cc = {'name': clas_name,
+                              'count': clas_id}
+
+                        for cla in clas:
+                            phylum = SimpleData.objects.filter(Q(taxon_phylum_id=cla['taxon_phylum_id'])).values('taxon_kingdom_id', 'taxon_phylum_id')
+                            phy_id = phylum.annotate(phyl_c=Count('taxon_phylum_id')) \
+                                .aggregate(Sum('phyl_c')).get('phyl_c__sum')
+                            phy_name = Taxon.objects.get(Q(id=phylum[0]['taxon_phylum_id']))
+                            pp = {'name': phy_name,
+                                  'count': phy_id}
+
+                            for phy in phylum:
+                                king = SimpleData.objects.filter(Q(taxon_kingdom_id=phy['taxon_kingdom_id'])).values('taxon_kingdom_id')
+                                king_id = king.annotate(king_c=Count('taxon_kingdom_id')) \
+                                    .aggregate(Sum('king_c')).get('king_c__sum')
+                                king_name = Taxon.objects.get(Q(id=king[0]['taxon_kingdom_id']))
+                                kk = {'name': king_name,
+                                      'count': king_id}
+
+
+
+        data = [
+            {
+                "page": 1,
+                "pages": 1,
+                "per_page": "50",
+                "total": 1
+            },
+            [
+                ss,gg,ff,oo,cc,pp,kk
+            ]
+        ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+        '''chart_month = [
+            {
+                "page": 1,
+                "pages": 1,
+                "per_page": "50",
+                "total": 1
+            },
+            [
+                {
+                    'month': x['month'],
+                    'count': x['count']
+                } for x in sp_month
+            ]
+        ]
+
+
+
+    if filt2 == 'you':
+
+        dataset = SimpleData.objects.filter(Q(taibif_dataset_name=pk2) | Q(taibif_dataset_name=pk4))
+
+        data_month = dataset.values('month') \
+            .exclude(month__isnull=True) \
+            .annotate(count=Count('month')) \
+            .order_by('-month')
+
+        chart_month = [
+            {
+                "page": 1,
+                "pages": 1,
+                "per_page": "50",
+                "total": 1
+            },
+            [
+                {
+                    'month': x['month'],
+                    'count': x['count']
+                } for x in data_month
+            ]
+        ]
+
+    if (filt2 == filt2 and filt1 == filt1):
+
+        data_sp = SimpleData.objects.filter(Q(scientific_name=pk1) | Q(scientific_name=pk3)) \
+            .filter(Q(taibif_dataset_name=pk2) | Q(taibif_dataset_name=pk4))
+
+        data_sp_month = data_sp.values('month') \
+            .exclude(month__isnull=True) \
+            .annotate(count=Count('month')) \
+            .order_by('-month')
+
+        chart_month = [
+            {
+                "page": 1,
+                "pages": 1,
+                "per_page": "50",
+                "total": 1
+            },
+            [
+                {
+                    'month': x['month'],
+                    'count': x['count']
+                } for x in data_sp_month
+            ]
+        ]
+
+
+
     children = [{
         'id':x.id,
         'data': {
@@ -581,16 +737,7 @@ def taxon_bar(request):
         }
     } for x in taxon.children]
 
-    print(children)
+    print(children)'''
 
-    data = {
-        'rank': taxon.rank,
-        'id': taxon.id,
-        'data': {
-            'name': taxon.get_name(),
-            'count': taxon.count,
-            'rank': taxon.rank,
-        },
-        'children': children,
-    }
+
     return HttpResponse(json.dumps(data), content_type="application/json")
