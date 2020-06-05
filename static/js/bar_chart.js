@@ -6,15 +6,15 @@ $(function() {
       data = JSON.parse(json.responseText);
       // set some variable to host data
       var arrayString = [],
-        name_list = [],
-        namezh_list = [],
+
+
         array_final = []
 
       $.each(data[1], function(i, data) {
         // fill the date array
-        name_list.push(data.name);
+
         // fill the string data array
-        namezh_list.push(data.name_zh);
+
         arrayString.push(data.count);
 
       });
@@ -35,9 +35,6 @@ $(function() {
         },
         title: {
           text: 'Occurrence data'
-        },
-        tooltip: {
-          valueSuffix: ' millions'
         },
         plotOptions: {
           bar: {
@@ -65,7 +62,7 @@ $(function() {
         yAxis: {
             min: 0,
             title: {
-                text: 'Population (millions)',
+                text: 'Occurrence',
                 align: 'high'
             },
             labels: {
@@ -73,7 +70,7 @@ $(function() {
             }
         },
         series: [{
-          name: name_list.reverse(),
+
           data: array_final.reverse() //
         }]
       });
