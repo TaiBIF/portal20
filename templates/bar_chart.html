@@ -9,7 +9,7 @@
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
-{#<script src="{% static 'js/test.js' %}"></script>#}
+<script src="{% static 'js/bar_chart.js' %}"></script>
 {#<script src="{% static 'js/test2.js' %}"></script>#}
 {% endblock %}
 
@@ -24,50 +24,48 @@
 <!-- container begin -->
 <div class="container">
     <figure class="highcharts-figure">
-    <div id="container"></div>
-    <p class="highcharts-description">
-        Chart showing how an HTML table can be used as the data source for the
-        chart using the Highcharts data module. The chart is built by
-        referencing the existing HTML data table in the page. Several common
-        data source types are available, including CSV and Google Spreadsheet.
-    </p>
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
-    <table id="datatable">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Jane</th>
-                <th>John</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th>Apples</th>
-                <td>3</td>
-                <td>4</td>
-            </tr>
-            <tr>
-                <th>Pears</th>
-                <td>2</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <th>Plums</th>
-                <td>5</td>
-                <td>11</td>
-            </tr>
-            <tr>
-                <th>Bananas</th>
-                <td>1</td>
-                <td>1</td>
-            </tr>
-            <tr>
-                <th>Oranges</th>
-                <td>2</td>
-                <td>4</td>
-            </tr>
-        </tbody>
-    </table>
+     <!-- table responsive begin -->
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>學名</th>
+                    <th>國家/地區</th>
+                    <th>座標</th>
+                    <th>年/月</th>
+                    <th>紀錄依據</th>
+                    <th>數據集</th>
+                    <th>界</th>
+                    <th>門</th>
+                    <th>綱</th>
+                    <th>目</th>
+                    <th>科</th>
+                    <th>屬</th>
+                    <th>種</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><i>Segmentina Fleming,1818</i></td>
+                    <td>台北市</td>
+                    <td>25.0N, 121.6E</td>
+                    <td>1981/4</td>
+                    <td>人類觀察</td>
+                    <td>TaiCoL</td>
+                    <td>{{ kingdom }}</td>
+                    <td>{{ phylum }}</td>
+                    <td>{{ class }}</td>
+                    <td>{{ order }}</td>
+                    <td>{{ family }}</td>
+                    <td>{{ genus }}</td>
+                    <td>{{ species }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- table responsive end -->
 </figure>
 
 

@@ -269,9 +269,40 @@ def test(request):
     return render(request, 'test.html', context)
 
 
+###example
+filt1 = 'speices'
+filt2 = 'database'
+pk1 = 'Rana latouchii'
+pk2 = 'manager_17_15'
+pk3 = 'Rana longicrus'
+pk4 = 'e10100001_4_10'
 
 def bar_chart(request):
-    return render(request, 'bar_chart.html')
+    ## Use species find
+    if filt1 == filt1:
+
+        species = SimpleData.objects.filter(Q(scientific_name=pk1)) \
+            .values('taxon_kingdom_id', 'taxon_phylum_id','taxon_class_id','taxon_order_id','taxon_family_id','taxon_genus_id', 'taxon_species_id') \
+            .exclude(
+            Q(taxon_kingdom_id__isnull=True) | Q(taxon_phylum_id__isnull=True) | Q(taxon_class_id__isnull=True) | Q(
+                taxon_order_id__isnull=True) | Q(taxon_family_id__isnull=True) | Q(taxon_genus_id__isnull=True) | Q(
+                taxon_species_id__isnull=True))[:1]
+
+    context = {
+        'kingdom': Taxon.objects.get(id=species[0]['taxon_kingdom_id']),
+        'phylum': Taxon.objects.get(id=species[0]['taxon_phylum_id']),
+        'class': Taxon.objects.get(id=species[0]['taxon_class_id']),
+        'order': Taxon.objects.get(id=species[0]['taxon_order_id']),
+        'family': Taxon.objects.get(id=species[0]['taxon_family_id']),
+        'genus': Taxon.objects.get(id=species[0]['taxon_genus_id']),
+        'species': Taxon.objects.get(id=species[0]['taxon_species_id']),
+
+    }
+
+
+
+
+    return render(request, 'bar_chart.html',context)
 
 
 
