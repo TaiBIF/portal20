@@ -4,6 +4,7 @@ import random
 
 import requests
 from bs4 import BeautifulSoup
+from django.http import HttpResponse
 
 
 def _get_taieol_desc(taxon_id, page=''):
@@ -54,6 +55,8 @@ def _get_taieol_desc(taxon_id, page=''):
             if len(pager) > 0:
                 for p in pager:
                     rows += _get_taieol_desc(taxon_id, int(p.text)-1)
+
+
 
     return rows
 
@@ -119,4 +122,7 @@ def get_species_info(taxon):
         'taieol_media': media_list,
         'taieol_desc': desc_list
     }
-    return data
+
+    print(data)
+    ## change to API
+    return HttpResponse(json.dumps(data), content_type="application/json")
