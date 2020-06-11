@@ -61,8 +61,8 @@
           <!-- hidden xs begin -->
           <div class="hidden-xs col-xs-6 navbar-hidden-xs">
             <div class="navbar-search-wrapper">
-              <input type="text" class="navbar-search-input" placeholder="全站搜尋...">
-              <button class="navbar-search-btn" type="button">
+              <input type="text" class="navbar-search-input" id="navbar-search-input" placeholder="全站搜尋...">
+              <button class="navbar-search-btn" id="navbar-search-btn" type="button">
                 <span class="myicon icon-search"></span>
               </button>
             </div>
@@ -75,8 +75,6 @@
             {% get_language_info_list for LANGUAGES as languages %}
             {{ lang.name_local }}
              </a>
-
-
 
           </div>
           <!-- hidden xs end -->
@@ -92,8 +90,6 @@
           <!-- visible xs end -->
         </div>
       </div>
-
-
 
       <!-- navbar -->
       <div class="navbar-collapse-wrapper">
@@ -267,6 +263,12 @@
   <!-- script 4 owl carousel begin -->
 <script>
   $(document).ready(function() {
+    //navbar-search
+    //const v \ $('#navbar-search-input').val();
+    $('#navbar-search-btn').click(function(){
+      const q =$('#navbar-search-input').val();
+      window.location.href = `/search/?q=${q}`;
+    });
     var owl_topic = $('#topic-board');
     owl_topic.owlCarousel({
       margin: 20,
