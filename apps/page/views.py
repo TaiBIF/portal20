@@ -1,10 +1,11 @@
 import re
 import csv
 import codecs
+import json
 
 import os
 import environ
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import (
     HttpResponse,
     HttpResponseNotFound,
@@ -12,12 +13,15 @@ from django.http import (
 from django.db.models import (
     Q,
     F,
+    Count,
+    Sum
 )
 from django.conf import settings
 
 from apps.data.models import (
     Dataset,
     Taxon,
+    SimpleData,
 )
 from apps.article.models import Article
 from .models import Post, Journal
@@ -26,6 +30,9 @@ from utils.mail import taibif_mail_contact_us
 from apps.data.helpers.stats import get_home_stats
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_GET
+
+
+
 
 def index(request):
 
@@ -233,6 +240,74 @@ def robots_txt(request):
         ]
 
         return HttpResponse("\n".join(lines), content_type="text/plain")
+
+
+
+## Kuan-Yu added for API occurence record
+
+
+def test(request):
+    Yearquery = SimpleData.objects \
+        .filter(scientific_name='Rana latouchii') \
+        .values('scientific_name', 'vernacular_name', 'year') \
+        .exclude(year__isnull=True) \
+        .annotate(count=Count('year')) \
+        .order_by('-count')
+
+    year_rows = [{
+        'key': x['scientific_name'],
+        'label': x['vernacular_name'],
+        'year': x['year'],
+        'count': x['count']
+    } for x in Yearquery]
+
+
+
+    context = {
+            'occurrence_list': year_rows,
+        }
+    return render(request, 'test.html', context)
+
+
+###example
+filt1 = 'speices'
+filt2 = 'database'
+pk1 = 'Rana latouchii'
+pk2 = 'manager_17_15'
+pk3 = 'Rana longicrus'
+pk4 = 'e10100001_4_10'
+
+def bar_chart(request):
+    ## Use species find
+    if filt1 == filt1:
+
+        species = SimpleData.objects.filter(Q(scientific_name=pk1)) \
+            .values('taxon_kingdom_id', 'taxon_phylum_id','taxon_class_id','taxon_order_id','taxon_family_id','taxon_genus_id', 'taxon_species_id') \
+            .exclude(
+            Q(taxon_kingdom_id__isnull=True) | Q(taxon_phylum_id__isnull=True) | Q(taxon_class_id__isnull=True) | Q(
+                taxon_order_id__isnull=True) | Q(taxon_family_id__isnull=True) | Q(taxon_genus_id__isnull=True) | Q(
+                taxon_species_id__isnull=True))[:1]
+
+    context = {
+        'kingdom': Taxon.objects.get(id=species[0]['taxon_kingdom_id']),
+        'phylum': Taxon.objects.get(id=species[0]['taxon_phylum_id']),
+        'class': Taxon.objects.get(id=species[0]['taxon_class_id']),
+        'order': Taxon.objects.get(id=species[0]['taxon_order_id']),
+        'family': Taxon.objects.get(id=species[0]['taxon_family_id']),
+        'genus': Taxon.objects.get(id=species[0]['taxon_genus_id']),
+        'species': Taxon.objects.get(id=species[0]['taxon_species_id']),
+
+    }
+
+
+
+
+    return render(request, 'bar_chart.html',context)
+
+
+
+
+
 
 
 

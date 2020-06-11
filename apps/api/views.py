@@ -6,7 +6,7 @@ import random
 import csv
 
 from django.shortcuts import render
-from django.db.models import Count, Q
+from django.db.models import Count, Q, Sum
 from django.http import HttpResponse
 
 from apps.data.models import (
@@ -397,3 +397,301 @@ def species_detail(request, pk):
     #rows = RawDataOccurrence.objects.values('taibif_dataset_name', 'decimallatitude', 'decimallongitude').filter(scientificname=taxon.name).all()
     scname = '{} {}'.format(taxon.parent.name, taxon.name)
     return {'data': {} }
+
+
+
+
+## Kuan-Yu added for API occurence record
+
+###example
+filt1 = 'speices'
+filt2 = 'database'
+pk1 = 'Rana latouchii'
+pk2 = 'manager_17_15'
+pk3 = 'Rana longicrus'
+pk4 = 'e10100001_4_10'
+
+
+
+def ChartYear(request):
+
+    if filt1 == 'hi':
+        species = SimpleData.objects.filter(Q(scientific_name=pk1) | Q(scientific_name=pk3))
+        sp_year = species.values('year') \
+            .exclude(year__isnull=True) \
+            .annotate(count=Count('year')) \
+            .order_by('-year')
+
+        chart_year = [
+            {
+                "page": 1,
+                "pages": 1,
+                "per_page": "50",
+                "total": 1
+            },
+            [
+                {
+                    'year': x['year'],
+                    'count': x['count']
+                } for x in sp_year
+            ]
+        ]
+
+    if filt2 == 'you':
+
+        dataset = SimpleData.objects.filter(Q(taibif_dataset_name=pk2) | Q(taibif_dataset_name=pk4))
+        data_year = dataset.values( 'year') \
+            .exclude(year__isnull=True) \
+            .annotate(count=Count('year')) \
+            .order_by('-year')
+        chart_year = [
+            {
+                "page": 1,
+                "pages": 1,
+                "per_page": "50",
+                "total": 1
+            },
+            [
+                {
+                    'year': x['year'],
+                    'count': x['count']
+                } for x in data_year
+            ]
+        ]
+
+    if (filt2 == filt2 and filt1 == filt1):
+
+        data_sp = SimpleData.objects.filter(Q(scientific_name=pk1) | Q(scientific_name=pk3)) \
+            .filter(Q(taibif_dataset_name=pk2) | Q(taibif_dataset_name=pk4))
+
+        data_sp_month = data_sp.values('year') \
+            .exclude(year__isnull=True) \
+            .annotate(count=Count('year')) \
+            .order_by('-year')
+
+        chart_year = [
+            {
+                "page": 1,
+                "pages": 1,
+                "per_page": "50",
+                "total": 1
+            },
+            [
+                {
+                    'year': x['year'],
+                    'count': x['count']
+                } for x in data_sp_month
+            ]
+        ]
+
+
+    return HttpResponse(json.dumps(chart_year), content_type="application/json")
+
+
+def ChartMonth(request):
+
+    if filt1 == 'hi':
+
+        species = SimpleData.objects.filter(Q(scientific_name=pk1) | Q(scientific_name=pk3))
+        sp_month = species.values( 'month') \
+            .exclude(month__isnull=True) \
+            .annotate(count=Count('month')) \
+            .order_by('-month')
+
+
+        chart_month = [
+            {
+                "page": 1,
+                "pages": 1,
+                "per_page": "50",
+                "total": 1
+            },
+            [
+                {
+                    'month': x['month'],
+                    'count': x['count']
+                } for x in sp_month
+            ]
+        ]
+
+
+
+    if filt2 == 'you':
+
+        dataset = SimpleData.objects.filter(Q(taibif_dataset_name=pk2) | Q(taibif_dataset_name=pk4))
+
+        data_month = dataset.values('month') \
+            .exclude(month__isnull=True) \
+            .annotate(count=Count('month')) \
+            .order_by('-month')
+
+        chart_month = [
+            {
+                "page": 1,
+                "pages": 1,
+                "per_page": "50",
+                "total": 1
+            },
+            [
+                {
+                    'month': x['month'],
+                    'count': x['count']
+                } for x in data_month
+            ]
+        ]
+
+    if (filt2 == filt2 and filt1 == filt1):
+
+        data_sp = SimpleData.objects.filter(Q(scientific_name=pk1) | Q(scientific_name=pk3)) \
+            .filter(Q(taibif_dataset_name=pk2) | Q(taibif_dataset_name=pk4))
+
+        data_sp_month = data_sp.values('month') \
+            .exclude(month__isnull=True) \
+            .annotate(count=Count('month')) \
+            .order_by('-month')
+
+        chart_month = [
+            {
+                "page": 1,
+                "pages": 1,
+                "per_page": "50",
+                "total": 1
+            },
+            [
+                {
+                    'month': x['month'],
+                    'count': x['count']
+                } for x in data_sp_month
+            ]
+        ]
+
+
+
+    return HttpResponse(json.dumps(chart_month), content_type="application/json")
+
+
+def taxon_bar(request):
+
+    ## Use species find
+    if filt1 == 'hi':
+
+        species = SimpleData.objects.filter(Q(scientific_name=pk1)).values('taxon_genus_id','taxon_species_id')
+        sp_id = species.annotate(sp_c=Count('taxon_species_id')) \
+            .aggregate(Sum('sp_c')).get('sp_c__sum')
+        sp_none = species.exclude(Q(taxon_genus_id__isnull=True) | Q(taxon_species_id__isnull=True))[:1]
+        ss = {'count': sp_id}
+
+
+
+        genus = SimpleData.objects.filter(Q(taxon_genus_id=sp_none[0]['taxon_genus_id'])).values('taxon_family_id','taxon_genus_id')
+        ge_id = genus.annotate(genus_c=Count('taxon_genus_id')) \
+            .aggregate(Sum('genus_c')).get('genus_c__sum')
+        ge_none = genus.exclude(Q(taxon_genus_id__isnull=True) | Q(taxon_family_id__isnull=True))[:1]
+        gg = {'count':ge_id}
+
+
+
+        family = SimpleData.objects.filter(Q(taxon_family_id=ge_none[0]['taxon_family_id'])).values('taxon_order_id','taxon_family_id')
+        fam_id = family.annotate(fam_c=Count('taxon_family_id')) \
+            .aggregate(Sum('fam_c')).get('fam_c__sum')
+        fam_none = family.exclude(Q(taxon_order_id__isnull=True) | Q(taxon_family_id__isnull=True))[:1]
+        ff = {'count': fam_id}
+
+
+        order = SimpleData.objects.filter(Q(taxon_order_id=fam_none[0]['taxon_order_id'])).values('taxon_class_id', 'taxon_order_id')
+        ord_id = order.annotate(ord_c=Count('taxon_order_id')) \
+            .aggregate(Sum('ord_c')).get('ord_c__sum')
+        ord_none = order.exclude(Q(taxon_order_id__isnull=True) | Q(taxon_class_id__isnull=True))[:1]
+        oo = {'count': ord_id}
+
+
+        clas = SimpleData.objects.filter(Q(taxon_class_id=ord_none[0]['taxon_class_id'])).values( 'taxon_phylum_id', 'taxon_class_id')
+        clas_id = clas.annotate(clas_c=Count('taxon_class_id')) \
+            .aggregate(Sum('clas_c')).get('clas_c__sum')
+        clas_none = clas.exclude(Q(taxon_order_id__isnull=True) | Q(taxon_phylum_id__isnull=True))[:1]
+
+        cc = {'count': clas_id}
+
+
+        phylum = SimpleData.objects.filter(Q(taxon_phylum_id=clas_none[0]['taxon_phylum_id'])).values('taxon_kingdom_id', 'taxon_phylum_id')
+        phy_id = phylum.annotate(phyl_c=Count('taxon_phylum_id')) \
+            .aggregate(Sum('phyl_c')).get('phyl_c__sum')
+        phy_none = phylum.exclude(Q(taxon_kingdom_id__isnull=True) | Q(taxon_phylum_id__isnull=True))[:1]
+
+        pp = {'count': phy_id}
+
+
+        king = SimpleData.objects.filter(Q(taxon_kingdom_id=phy_none[0]['taxon_kingdom_id'])).values('taxon_kingdom_id')
+        king_id = king.annotate(king_c=Count('taxon_kingdom_id')) \
+            .aggregate(Sum('king_c')).get('king_c__sum')
+        kk = {'count': king_id}
+
+    ## Ude dataset and species search
+    if (filt2 == filt2 and filt1 == filt1):
+
+        species = SimpleData.objects.filter(Q(scientific_name=pk1) | Q(taibif_dataset_name=pk2)).values('taxon_genus_id','taxon_species_id')
+        sp_id = species.annotate(sp_c=Count('taxon_species_id')) \
+            .aggregate(Sum('sp_c')).get('sp_c__sum')
+        sp_none = species.exclude(Q(taxon_genus_id__isnull=True) | Q(taxon_species_id__isnull=True))[:1]
+        ss = {'count': sp_id}
+
+        genus = SimpleData.objects.filter(Q(taxon_genus_id=sp_none[0]['taxon_genus_id']) | Q(taibif_dataset_name=pk2)).values('taxon_family_id',
+                                                                                                 'taxon_genus_id')
+        ge_id = genus.annotate(genus_c=Count('taxon_genus_id')) \
+            .aggregate(Sum('genus_c')).get('genus_c__sum')
+        ge_none = genus.exclude(Q(taxon_genus_id__isnull=True) | Q(taxon_family_id__isnull=True))[:1]
+        gg = {'count': ge_id}
+
+        family = SimpleData.objects.filter(Q(taxon_family_id=ge_none[0]['taxon_family_id']) | Q(taibif_dataset_name=pk2)).values('taxon_order_id',
+                                                                                                    'taxon_family_id')
+        fam_id = family.annotate(fam_c=Count('taxon_family_id')) \
+            .aggregate(Sum('fam_c')).get('fam_c__sum')
+        fam_none = family.exclude(Q(taxon_order_id__isnull=True) | Q(taxon_family_id__isnull=True))[:1]
+        ff = {'count': fam_id}
+
+        order = SimpleData.objects.filter(Q(taxon_order_id=fam_none[0]['taxon_order_id']) | Q(taibif_dataset_name=pk2)).values('taxon_class_id',
+                                                                                                  'taxon_order_id')
+        ord_id = order.annotate(ord_c=Count('taxon_order_id')) \
+            .aggregate(Sum('ord_c')).get('ord_c__sum')
+        ord_none = order.exclude(Q(taxon_order_id__isnull=True) | Q(taxon_class_id__isnull=True))[:1]
+        oo = {'count': ord_id}
+
+        clas = SimpleData.objects.filter(Q(taxon_class_id=ord_none[0]['taxon_class_id']) | Q(taibif_dataset_name=pk2)).values('taxon_phylum_id',
+                                                                                                 'taxon_class_id')
+        clas_id = clas.annotate(clas_c=Count('taxon_class_id')) \
+            .aggregate(Sum('clas_c')).get('clas_c__sum')
+        clas_none = clas.exclude(Q(taxon_order_id__isnull=True) | Q(taxon_phylum_id__isnull=True))[:1]
+
+        cc = {'count': clas_id}
+
+        phylum = SimpleData.objects.filter(Q(taxon_phylum_id=clas_none[0]['taxon_phylum_id']) | Q(taibif_dataset_name=pk2)).values(
+            'taxon_kingdom_id', 'taxon_phylum_id')
+        phy_id = phylum.annotate(phyl_c=Count('taxon_phylum_id')) \
+            .aggregate(Sum('phyl_c')).get('phyl_c__sum')
+        phy_none = phylum.exclude(Q(taxon_kingdom_id__isnull=True) | Q(taxon_phylum_id__isnull=True))[:1]
+
+        pp = {'count': phy_id}
+
+        king = SimpleData.objects.filter(Q(taxon_kingdom_id=phy_none[0]['taxon_kingdom_id']) | Q(taibif_dataset_name=pk2)).values('taxon_kingdom_id')
+        king_id = king.annotate(king_c=Count('taxon_kingdom_id')) \
+            .aggregate(Sum('king_c')).get('king_c__sum')
+        kk = {'count': king_id}
+
+
+
+
+    data = [
+            {
+                "page": 1,
+                "pages": 1,
+                "per_page": "50",
+                "total": 1
+            },
+            [
+                ss,gg,ff,oo,cc,pp,kk
+            ]
+        ]
+
+
+
+    return HttpResponse(json.dumps(data), content_type="application/json")
