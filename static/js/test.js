@@ -28,7 +28,7 @@ $(function() {
       var chart = new Highcharts.Chart({
         chart: {
           type: 'spline',
-          renderTo: 'container'
+          renderTo: 'containerx'
         },
         title: {
           text: 'Occurrence data'
