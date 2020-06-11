@@ -15,19 +15,19 @@ def _get_taieol_desc(taxon_id, page=''):
     data = r.json()
 
     if all(k in data for k in ("description", "distribution")):
-        detail1 = {'title':'Description', 'content':data['description']}
-        detail2 = {'title':'Distribution', 'content':data['distribution']}
+        detail1 = {'title':'描述', 'content':data['description']}
+        detail2 = {'title':'分佈', 'content':data['distribution']}
 
         rows.append(detail1)
         rows.append(detail2)
 
     else:
         if "description" in data:
-            detail1 = {'title': 'Description', 'content': data['description']}
+            detail1 = {'title': '描述', 'content': data['description']}
             rows.append(detail1)
         else:
             if "distribution" in data:
-                detail2 = {'title': 'Distribution', 'content': data['distribution']}
+                detail2 = {'title': '分佈', 'content': data['distribution']}
                 rows.append(detail2)
             else:
                 detail2 = {'title': 'No data', 'content': None}
