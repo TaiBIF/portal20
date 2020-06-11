@@ -209,6 +209,7 @@ def publisher_view(request, pk):
 def species_view(request, pk):
     context = {}
     taxon = get_object_or_404(Taxon, pk=pk)
+
     
 
     q = RawDataOccurrence.objects.values('taibif_dataset_name', 'decimallatitude', 'decimallongitude').filter(scientificname=taxon.name).all()
