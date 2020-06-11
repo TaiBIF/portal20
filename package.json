@@ -10,7 +10,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack --mode=development",
     "build": "webpack --mode=production --env prod",
-    "dev": "webpack --mode=development --watch --env dev"
+    "dev": "webpack --mode=development --watch --env dev",
+    "build-dev": "webpack --mode=development --env dev"
   },
   "author": "",
   "license": "ISC",
