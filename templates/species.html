@@ -287,8 +287,8 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       <!-- Kuan Yu added for taieol discription -->
       {% for i in species_info.taieol_desc %}
        <div id="section9">
-         <h4 class="heading-md-ul">{{i.title}}</h4>
-         {{i.content}}
+         <h4 class="heading-md-ul">{{ i.title }}</h4>
+         {{ i.content | striptags }}
        </div>
       {% endfor %}
 
