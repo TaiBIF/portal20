@@ -10,7 +10,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack --mode=development",
     "build": "webpack --mode=production --env prod",
-    "dev": "webpack --mode=development --watch --env dev"
+    "dev": "webpack --mode=development --watch --env dev",
+    "build-dev": "webpack --mode=development --env dev"
   },
   "author": "",
   "license": "ISC",
@@ -26,8 +27,10 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
+    "chart.js": "^2.9.3",
     "leaflet": "^1.6.0",
     "react": "^16.13.1",
+    "react-chartjs-2": "^2.9.0",
     "react-dom": "^16.13.1"
   }
 }

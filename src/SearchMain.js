@@ -214,6 +214,8 @@ function SearchMain(props) {
         <div className="table-responsive">
           <ul className="nav nav-tabs nav-justified search-content-tab">
             <li className={tabActive == "menu1" ? "active": null}><a href="/occurrence/search" onClick={(e)=>toggleTab(e, 'menu1')}>資料列表</a></li>
+            <li className={tabActive == "menu4" ? "active": null}><a href="/occurrence/taxonomy" onClick={(e)=>toggleTab(e, 'menu4')}>分類系統</a></li>
+            <li className={tabActive == "menu5" ? "active": null}><a href="/occurrence/charts" onClick={(e)=>toggleTab(e, 'menu5')}>指標</a></li>
           </ul>
         </div>
     );

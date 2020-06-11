@@ -46,12 +46,13 @@ def _get_taieol_desc(taxon_id, page=''):
 
         TableCount = []
         Table1Count = []
+        newlist = []
         for x in table1:
             check = x.find('p')
 
             AllTag1 = x.find_all('p')
             Table1Count.append(len(AllTag1))
-
+            
             if check != None:
                 newlist = soup.select('.taxa-page-chapter-title')
                 newlist1 = soup.select('.taxon-desc-content p')
@@ -64,7 +65,7 @@ def _get_taieol_desc(taxon_id, page=''):
                 else:
                     newlist = soup.select('.taxa-page-chapter-title')[:sum(Table1Count)]
                     newlist1 = soup.select('.taxon-desc-content p')
-                    print(len(newlist))
+                    #print(len(newlist))
 
 
         for i in range(len(newlist)):
