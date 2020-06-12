@@ -8,6 +8,7 @@ import csv
 from django.shortcuts import render
 from django.db.models import Count, Q, Sum
 from django.http import HttpResponse
+from django.core.cache import cache
 
 from apps.data.models import (
     Dataset,
@@ -26,6 +27,7 @@ from apps.data.helpers.mod_search import (
 )
 
 from utils.decorators import json_ret
+from utils.general import get_cache_or_set
 
 from .cached import COUNTRY_ROWS, YEAR_ROWS
 
@@ -56,10 +58,10 @@ def taxon_tree_node(request, pk):
 #@json_ret
 def search_occurrence(request, cat=''):
     has_menu = True if request.GET.get('menu', '') else False
+
+    has_filter, q = SimpleData.public_objects.filter_by_search(request.GET)
     menu_list = []
     if has_menu:
-        #q = occur_search.query.values('taibif_dataset_name', 'year', 'month', 'country')
-
         # TODO, normalize country data?
         #country_code_list = [x['country'] for x in q.exclude(country__isnull=True).annotate(count=Count('country')).order_by('-count')]
         #year_list = [x['year'] for x in q.exclude(year__isnull=True).annotate(count=Count('year')).all()]
@@ -69,25 +71,26 @@ def search_occurrence(request, cat=''):
         ## year
         #q = SimpleData.objects.values('year').exclude(year__isnull=True).annotate(count=Count('year')).order_by('-count')
 
-
-
-        q = SimpleData.public_objects.filter_group_by_dataset(list(request.GET.lists()))
         dataset_menu = []
-        dataset_name_list = []
-        ds_list = list(q.all())
-        #print (q.query)
-        ds_name_list = [x['taibif_dataset_name'] for x in ds_list]
-        #ds = Dataset.public_objects.values('name', 'title').filter(name__in=ds_name_list).all()
-        #print (ds_name_list)
-        for i in ds_list:
-            dataset_menu.append({
-                'label': i['taibif_dataset_name'],
-                'key': i['taibif_dataset_name'],
-                'count': i['count'],
-            })
-        #for i in ds_list.items():
+        if has_filter:
+            #q_by_dataset = q.group_by_dataset(request.GET)
+            q_by_dataset = q.values('taibif_dataset_name').\
+                exclude(taibif_dataset_name__isnull=True).\
+                annotate(count=Count('taibif_dataset_name')).\
+                order_by('-count')
+            dataset_menu = [{
+                'label': x['taibif_dataset_name'],
+                'key': x['taibif_dataset_name'],
+                'count': x['count']
+            } for x in q_by_dataset.all()]
+        else:
+            ds_list = Dataset.public_objects.values('name', 'title', 'num_occurrence').all()
+            dataset_menu = [{
+                'label': x['title'],
+                'key': x['name'],
+                'count': x['num_occurrence']
+            } for x in ds_list]
 
-        #dataset_query = Dataset.objects.exclude(status='Private').values('name', 'title')
         publisher_query = Dataset.objects\
                                  .values('organization','organization_verbatim')\
                                  .exclude(organization__isnull=True)\
@@ -103,7 +106,7 @@ def search_occurrence(request, cat=''):
             {
             'key': 'countrycode',
                 'label': '國家/區域',
-                'rows': [{'label': x['label'], 'count': x['count'], 'key': x['label'] } for x in COUNTRY_ROWS]
+                'rows': [{'label': x['label'], 'key': x['label'] } for x in COUNTRY_ROWS]
             },
             {
                 'key': 'year',
@@ -133,8 +136,65 @@ def search_occurrence(request, cat=''):
     if cat == 'search':
         res = occur_search.get_results()
     else:
-        occur_search.limit = 1 # 
-        res = occur_search.get_results()
+        #occur_search.limit = 1 #
+        #res = occur_search.get_results()
+        chart = request.GET.get('chart', '')
+        data = []
+        if chart == 'year':
+            def _group_by_year(q):
+                q_by_cat = q.values('year') \
+                            .exclude(year__isnull=True) \
+                            .annotate(count=Count('year')) \
+                            .order_by('-year')
+                return list(q_by_cat.all())
+
+            if not has_filter:
+                data = get_cache_or_set('occurrence_all_by_year', _group_by_year(q))
+            else:
+                data = _group_by_year(q)
+
+            res = [
+                [i['year'] for i in data],
+                [i['count'] for i in data]
+            ]
+        elif chart == 'month':
+            def _group_by_month(q):
+                q_by_cat = q.values('month') \
+                            .filter(month__in=list(range(1,13))) \
+                            .exclude(year__isnull=True) \
+                            .annotate(count=Count('month')) \
+                            .order_by('month')
+                return list(q_by_cat.all())
+
+            if not has_filter:
+                data = get_cache_or_set('occurrence_all_by_month', _group_by_month(q))
+            else:
+                data = _group_by_month(q)
+
+            res = [
+                [i['month'] for i in data],
+                [i['count'] for i in data]
+            ]
+
+        elif chart == 'dataset':
+            if not has_filter:
+                data = Dataset.public_objects.values('title', 'num_occurrence').order_by('-num_occurrence').all()[0:10]
+                res = list(data)
+            else:
+                if cached := cache.get('occurrence_all_by_dataset'):
+                    res = cached
+                else:
+                    q_by_cat = q.values('taibif_dataset_name') \
+                                .annotate(count=Count('taibif_dataset_name')) \
+                                .order_by('-count')
+                    dataset = Dataset.public_objects.values('title', 'name').all()
+                    dataset_map = {i['name']: i['title']for i in dataset}
+                    data = list(q_by_cat.all()[0:10])
+                    res = [{
+                        'title': dataset_map[i['taibif_dataset_name']],
+                        'num_occurrence': i['count']} for i in data]
+                    cache.set('occurrence_all_by_dataset', res)
+
     #elif cat == 'taxonomy':
     #    occur_taxonomy = OccurrenceSearch(list(request.GET.lists()), using='')
         #occur_taxonomy.limit = 200
