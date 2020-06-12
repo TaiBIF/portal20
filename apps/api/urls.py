@@ -5,7 +5,7 @@ from . import views
 urlpatterns = [
     path('dataset/search/', views.search_dataset, name='api-search-dataset'),
     #path('occurrence/search/', views.search_occurrence, name='api-search-occurrence'),
-    re_path('^occurrence/(?P<cat>search|taxonomy)/', views.search_occurrence, name='api-search-occurrence'),
+    re_path('^occurrence/(?P<cat>search|taxonomy|charts|gallery|map)/', views.search_occurrence, name='api-search-occurrence'),
     path('publisher/search/', views.search_publisher, name='api-search-publisher'),
     path('species/search/', views.search_species, name='api-search-species'),
     path('species/<int:pk>/', views.species_detail, name='species-detail'),
@@ -14,6 +14,4 @@ urlpatterns = [
     path('test_m/', views.ChartMonth, name='ChartMonth'),
     path('test_y/', views.ChartYear, name='ChartYear'),
     path('taxon_bar/', views.taxon_bar, name='bar_chart'),
-
-
 ]

@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-
+7
 import {Line, Bar} from 'react-chartjs-2';
 
-import {fetchData} from './Utils';
+import {fetchData} from '../Utils';
 
 const chartData = {
   year: {
@@ -51,39 +51,54 @@ function OccurrenceCharts(props) {
   //const qs = (queryList.length > 0) ? '?' + queryList.join('&') : '';
   const [yearData, setYearData] = useState([false, {}]);
   const [monthData, setMonthData] = useState([false, {}]);
+  const [datasetData, setDatasetData] = useState([false, []]);
 
   useEffect(() => {
-    /*const fetchData = async (url) => {
-      try {
-        const resp = await fetch(url);
-        let jsonData = await resp.json();
-        console.log('init:', jsonData);
-        yearChartData.labels = ['2008', '2009', '2010'];
-        yearChartData.datasets[0].data =  [815, 975, 1919];
-        setYearData(yearChartData);
-
-      } catch(error) {
-        // set err, error.toString()
-      }
-    };
-    fetchData('/test_y');*/
-    fetchData('/test_y').then((x) => {
-      console.log(x);
-      chartData.year.labels = ['2008', '2009', '2010'];
-      chartData.year.datasets[0].data =  [815, 975, 1919];
-      setYearData([true, chartData.year]);
-    });
-    fetchData('/test_m').then((x) => {
-      console.log(x);
-      const labels = [];
-      const data = [];
-      for( let i of x[1]) {
-        labels.push(i.month);
-        data.push(i.count);
-      }
-      setMonthData([true, chartData.month])
+    fetchData('/api/occurrence/charts/?chart=year').then((data) => {
+      const year = chartData.year;
+      year.labels = data.search[0];
+      year.datasets[0].data =  data.search[1];
+      setYearData([true, year]);
     });
   }, []);
+  useEffect(() => {
+    fetchData('/api/occurrence/charts/?chart=month').then((data) => {
+      const month = chartData.month;
+      month.labels = data.search[0];
+      month.datasets[0].data =  data.search[1];
+      setMonthData([true, month])
+    });
+  }, []);
+  useEffect(() => {
+    fetchData('/api/occurrence/charts/?chart=dataset').then((data) => {
+      let num_occurrence_max = 0;
+      const newData = data.search.map((x, i) => {
+        if (i === 0) {
+          num_occurrence_max = x['num_occurrence'];
+        } 
+        const p = Math.round(x['num_occurrence'] / num_occurrence_max * 100);
+        x['num_occurrence'] = x['num_occurrence'].toLocaleString('en');
+        x['percent'] = p;
+        return x;
+      });
+      setDatasetData([true, data.search])
+    });
+  }, []);
+
+  function DatasetDataBody() {
+    return datasetData[1].map((x) => {
+      return (
+        <tr key={x.title}>
+        <td>{x.title}</td>
+        <td>{x.num_occurrence}</td>
+        <td>
+        <div className="chart-bar-h-bg">
+        <span className="chart-value-bg" style={{'width': x.percent+'%'}}></span>
+        </div>
+        </td>
+        </tr>);
+    });
+  }
   return (
       <React.Fragment>
       <div className="col-xs-12">
@@ -113,6 +128,7 @@ function OccurrenceCharts(props) {
         </div>
       </div>
 
+    {/*
       <div className="col-xs-12">
         <div className="tools-intro-wrapper">
         <div className="tools-title">授權狀態</div>
@@ -121,6 +137,7 @@ function OccurrenceCharts(props) {
           </div>
         </div>
       </div>
+     */}
       <div className="col-xs-12">
       <div className="tools-intro-wrapper">
       <div className="tools-title">資料集</div>
@@ -135,51 +152,7 @@ function OccurrenceCharts(props) {
       </tr>
       </thead>
       <tbody>
-      <tr>
-      <td>Lycopodium veitchii Christ, GBIF Backbone Taxonomy</td>
-      <td>67</td>
-      <td>
-      <div className="chart-bar-h-bg">
-      <span className="chart-value-bg" style={{'width': '30%'}}></span>
-      </div>
-      </td>
-      </tr>
-      <tr>
-      <td>Herbarium of Taiwan Forestry Research Institute</td>
-      <td>64</td>
-      <td>
-      <div className="chart-bar-h-bg">
-      <span className="chart-value-bg" style={{'width': '28%'}}></span>
-      </div>
-      </td>
-      </tr>
-      <tr>
-      <td>The digitization of plant specimens of NTU</td>
-      <td>21</td>
-      <td>
-      <div className="chart-bar-h-bg">
-      <span className="chart-value-bg" style={{'width': '15%'}}></span>
-      </div>
-      </td>
-      </tr>
-      <tr>
-      <td>Database of Native Plants in Taiwan</td>
-      <td>19</td>
-      <td>
-      <div className="chart-bar-h-bg">
-      <span className="chart-value-bg" style={{'width': '12%'}}></span>
-      </div>
-      </td>
-      </tr>
-      <tr>
-      <td> The vascular plants collection (P) at the Herbarium</td>
-      <td>12</td>
-      <td>
-      <div className="chart-bar-h-bg">
-      <span className="chart-value-bg" style={{'width': '10%'}}></span>
-      </div>
-      </td>
-      </tr>
+      {datasetData[0] ? <DatasetDataBody />: null}
       </tbody>
       </table>
       </div>
