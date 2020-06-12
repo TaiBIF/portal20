@@ -5,9 +5,9 @@
 {% block head %}
 <link href="{% static 'css/taibif.css' %}" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/leaflet.css' %}">
-<script src="{% static 'js/species-detail.js' %}"></script>
 <script src="{% static 'js/leaflet.js' %}"></script>
 <script src="{% static 'js/leaflet-heat.js' %}"></script>
+
     <style>
         #map { width: 800px; height: 600px; }
         body { font: 16px/1.4 "Helvetica Neue", Arial, sans-serif; }
@@ -104,6 +104,7 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
     });
   </script>
   <!-- script 4 adjust Anchor end -->
+<script src="{% static 'js/species.js' %}" crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block main %}
@@ -286,8 +287,8 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       <!-- Kuan Yu added for taieol discription -->
       {% for i in species_info.taieol_desc %}
        <div id="section9">
-         <h4 class="heading-md-ul">{{i.title}}</h4>
-         {{i.src}}
+         <h4 class="heading-md-ul">{{ i.title }}</h4>
+         {{ i.content | striptags }}
        </div>
       {% endfor %}
 
@@ -343,6 +344,10 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
         <p>Amentotaxus formosana H.L. Li  臺灣穗花杉《臺灣生物多樣性資訊網-TaiBIF》。http://www.taibif.tw/zh/namecode/201093</p>
       </div>
       <!-- 引用格式 end -->
+
+      <ul class="charge-list"></ul>
+
+
 
 {% endblock %}
 

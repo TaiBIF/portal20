@@ -695,3 +695,7 @@ def taxon_bar(request):
 
 
     return HttpResponse(json.dumps(data), content_type="application/json")
+
+
+
+

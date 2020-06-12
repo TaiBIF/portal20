@@ -14,6 +14,8 @@ import os
 import environ
 import socket # djdt for docker
 from django.utils.translation import gettext_lazy as _
+from corsheaders.defaults import default_headers
+
 
 env = environ.Env()
 root_path = environ.Path(__file__) - 2 # web
@@ -62,11 +64,13 @@ INSTALLED_APPS = [
     # Kuan Yu added for sitemap
     'django.contrib.sites',
     'django.contrib.sitemaps',
+    'corsheaders',
 ]
 
 SITE_ID = 1
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -76,6 +80,26 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'Access-Control-Allow-Origin',
+]
+
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+CORS_SUPPORTS_CREDENTIALS = True
 
 ROOT_URLCONF = 'conf.urls'
 
