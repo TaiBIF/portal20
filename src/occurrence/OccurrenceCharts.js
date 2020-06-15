@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 7
 import {Line, Bar} from 'react-chartjs-2';
 
-import {fetchData} from '../Utils';
+import {fetchData, filtersToSearch} from '../Utils';
 
 const chartData = {
   year: {
@@ -47,14 +47,18 @@ const chartData = {
   }
 };
 
+const API_URL_PREFIX = '/api/occurrence/charts/?chart=';
 function OccurrenceCharts(props) {
-  //const qs = (queryList.length > 0) ? '?' + queryList.join('&') : '';
+  const {filters} = props;
+  const search = filtersToSearch(filters);
+
   const [yearData, setYearData] = useState([false, {}]);
   const [monthData, setMonthData] = useState([false, {}]);
   const [datasetData, setDatasetData] = useState([false, []]);
 
   useEffect(() => {
-    fetchData('/api/occurrence/charts/?chart=year').then((data) => {
+    const apiURL = `${API_URL_PREFIX}year&${search}`;
+    fetchData(apiURL).then((data) => {
       const year = chartData.year;
       year.labels = data.search[0];
       year.datasets[0].data =  data.search[1];
@@ -62,7 +66,8 @@ function OccurrenceCharts(props) {
     });
   }, []);
   useEffect(() => {
-    fetchData('/api/occurrence/charts/?chart=month').then((data) => {
+    const apiURL = `${API_URL_PREFIX}month&${search}`;
+    fetchData(apiURL).then((data) => {
       const month = chartData.month;
       month.labels = data.search[0];
       month.datasets[0].data =  data.search[1];
@@ -70,12 +75,13 @@ function OccurrenceCharts(props) {
     });
   }, []);
   useEffect(() => {
-    fetchData('/api/occurrence/charts/?chart=dataset').then((data) => {
+    const apiURL = `${API_URL_PREFIX}dataset&${search}`;
+    fetchData(apiURL).then((data) => {
       let num_occurrence_max = 0;
       const newData = data.search.map((x, i) => {
         if (i === 0) {
           num_occurrence_max = x['num_occurrence'];
-        } 
+        }
         const p = Math.round(x['num_occurrence'] / num_occurrence_max * 100);
         x['num_occurrence'] = x['num_occurrence'].toLocaleString('en');
         x['percent'] = p;

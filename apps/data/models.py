@@ -493,10 +493,12 @@ class PublicDataManager(models.Manager):
         public_dataset_names = [x['name'] for x in Dataset.public_objects.values('name').all()]
         return super().get_queryset().filter(taibif_dataset_name__in=public_dataset_names)
 
-    def filter_by_search(self, req):
+    def filter_by_key_values(self, filters):
         query = self.get_queryset()
         has_filter = False
-        for key, values in req.items():
+        #print (filters)
+        for key, values in filters:
+            #print (key, values)
             if key == 'q':
                 has_filter = True
                 v = values[0] # only get one
@@ -528,7 +530,7 @@ class PublicDataManager(models.Manager):
             # TODO: change simpledata.country to country_code
             if key == 'countrycode':
                 has_filter = True
-                query = query.filter(country__exact=values)
+                query = query.filter(country__in=values)
             if key == 'dataset':
                 has_filter = True
                 query = query.filter(taibif_dataset_name__in=values)
