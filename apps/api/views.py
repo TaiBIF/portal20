@@ -59,7 +59,7 @@ def taxon_tree_node(request, pk):
 def search_occurrence(request, cat=''):
     has_menu = True if request.GET.get('menu', '') else False
 
-    has_filter, q = SimpleData.public_objects.filter_by_search(request.GET)
+    has_filter, q = SimpleData.public_objects.filter_by_key_values(list(request.GET.lists()))
     menu_list = []
     if has_menu:
         # TODO, normalize country data?
@@ -135,7 +135,56 @@ def search_occurrence(request, cat=''):
     res = None
     if cat == 'search':
         res = occur_search.get_results()
-    else:
+    elif cat == 'taxonomy':
+        #by_sp = q.values('taxon_species_id').annotate(count=Count('taxon_species_id'))
+        #df = pd.read(data)
+        #df[]
+        #res = {}
+        #res['count'] = by_sp.count()
+        '''def _group_by_species(q):
+            q_by_species = q.values('taxon_kingdom_id','taxon_phylum_id', 'taxon_class_id', 'taxon_order_id', 'taxon_family_id', 'taxon_genus_id', 'taxon_species_id', 'scientific_name', 'vernacular_name', 'taibif_dataset_name') \
+                            .annotate(count=Count('taxon_species_id')) \
+                            .order_by('-count')
+            return list(q_by_species.all())
+
+        if not has_filter:
+            #data = get_cache_or_set('occurrence_all_by_species', _group_by_species(q))
+            pass
+        else:
+            data = []
+
+        #data = _group_by_species(q)
+        data = []
+        rank_list = ['kingdom', 'phylum', 'class', 'order', 'genus', 'species']
+        for i in rank_list:
+            print (i)
+            r = q.filter(scientific_name='Rana latouchii').values('taxon_{}_id'.format(i)).annotate(count=Count('taxon_{}_id'.format(i))) \
+                 .order_by('-count').all()
+            print (len(r), r)
+
+        res = []
+        res.append({
+            'species': len(data),
+        })
+        for i in data:
+            res.append({
+                'taxon_kingdom_id': i['taxon_kingdom_id'],
+                'taxon_phylum_id': i['taxon_phylum_id'],
+                'taxon_class_id': i['taxon_class_id'],
+                'taxon_order_id': i['taxon_order_id'],
+                'taxon_family_id': i['taxon_family_id'],
+                'taxon_genus_id': i['taxon_genus_id'],
+                'taxon_species_id:': i['taxon_species_id'],
+                'scientific_name': i['scientific_name'],
+                'vernacular_name': i['vernacular_name'],
+                'taibif_dataset_name': i['taibif_dataset_name'],
+            })'''
+
+    elif cat == 'gallery':
+        pass
+        #taibif_ids = q.values('taibif_id').all()
+        #RawOccurrenceData.public_objects.values('associatedmedia').filter(id__in=taibif_ids).all()
+    elif cat == 'chart':
         #occur_search.limit = 1 #
         #res = occur_search.get_results()
         chart = request.GET.get('chart', '')
@@ -180,20 +229,22 @@ def search_occurrence(request, cat=''):
             if not has_filter:
                 data = Dataset.public_objects.values('title', 'num_occurrence').order_by('-num_occurrence').all()[0:10]
                 res = list(data)
+
             else:
-                if cached := cache.get('occurrence_all_by_dataset'):
-                    res = cached
-                else:
-                    q_by_cat = q.values('taibif_dataset_name') \
-                                .annotate(count=Count('taibif_dataset_name')) \
-                                .order_by('-count')
-                    dataset = Dataset.public_objects.values('title', 'name').all()
-                    dataset_map = {i['name']: i['title']for i in dataset}
-                    data = list(q_by_cat.all()[0:10])
-                    res = [{
-                        'title': dataset_map[i['taibif_dataset_name']],
-                        'num_occurrence': i['count']} for i in data]
-                    cache.set('occurrence_all_by_dataset', res)
+                #if cached := cache.get('occurrence_all_by_dataset'):
+                #    res = cached
+                #else:
+                q_by_cat = q.values('taibif_dataset_name') \
+                            .annotate(count=Count('taibif_dataset_name')) \
+                            .order_by('-count')
+                dataset = Dataset.public_objects.values('title', 'name').all()
+                dataset_map = {i['name']: i['title']for i in dataset}
+                data = list(q_by_cat.all()[0:10])
+                print (q_by_cat.query)
+                res = [{
+                    'title': dataset_map[i['taibif_dataset_name']],
+                    'num_occurrence': i['count']} for i in data]
+                #cache.set('occurrence_all_by_dataset', res)
 
     #elif cat == 'taxonomy':
     #    occur_taxonomy = OccurrenceSearch(list(request.GET.lists()), using='')

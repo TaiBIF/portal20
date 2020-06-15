@@ -1,6 +1,6 @@
 import React from 'react';
 
-import OccurrenceRouter from './OccurrenceRouter';
+import OccurrenceRouter from './occurrence/OccurrenceRouter';
 
 function SpeciesOther(props) {
   const {q} = props;
@@ -139,7 +139,7 @@ function SearchMain(props) {
     initActiveTab = 'menu5';
   }
   const [tabActive, setTabActive] = React.useState(initActiveTab);
-  console.log(props);
+  //console.log(props);
   const count = props.data? props.data.count.toLocaleString('en') : 0;
   const typeLabel = SEARCH_TYPE_LABEL_MAP[props.searchType];
 
@@ -231,7 +231,7 @@ function SearchMain(props) {
            </div>
          </div>
          </React.Fragment>
-       : <OccurrenceRouter data={props.data} />
+       : <OccurrenceRouter data={props.data} filters={props.filters}/>
       }
       </div>
   );
