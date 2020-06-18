@@ -776,3 +776,74 @@ class RawDataOccurrence(models.Model):
             models.Index(fields=['class_field']),
             models.Index(fields=['order']),
         ]
+
+class Taxon20200618(models.Model):
+    index = models.BigIntegerField(blank=True, null=True)
+    id = models.TextField(primary_key=True, blank=True, null=False)
+    taxonid = models.TextField(db_column='taxonID', blank=True, null=True)  # Field name made lowercase.
+    scientificnameid = models.TextField(db_column='scientificNameID', blank=True, null=True)  # Field name made lowercase.
+    kingdom = models.TextField(blank=True, null=True)
+    phylum = models.TextField(blank=True, null=True)
+    class_field = models.TextField(db_column='class', blank=True, null=True)  # Field renamed because it was a Python reserved word.
+    order = models.TextField(blank=True, null=True)
+    family = models.TextField(blank=True, null=True)
+    genus = models.TextField(blank=True, null=True)
+    specificepithet = models.TextField(db_column='specificEpithet', blank=True, null=True)  # Field name made lowercase.
+    infraspecificepithet = models.TextField(db_column='infraspecificEpithet', blank=True, null=True)  # Field name made lowercase.
+    scientificnameauthorship = models.TextField(db_column='scientificNameAuthorship', blank=True, null=True)  # Field name made lowercase.
+    vernacularname = models.TextField(db_column='vernacularName', blank=True, null=True)  # Field name made lowercase.
+    taxonremarks = models.TextField(db_column='taxonRemarks', blank=True, null=True)  # Field name made lowercase.
+    scientificname = models.TextField(db_column='scientificName', blank=True, null=True)  # Field name made lowercase.
+    taxonrank = models.TextField(db_column='taxonRank', blank=True, null=True)  # Field name made lowercase.
+    taxonomicstatus = models.TextField(db_column='taxonomicStatus', blank=True, null=True)  # Field name made lowercase.
+    acceptednameusageid = models.TextField(db_column='acceptedNameUsageID', blank=True, null=True)  # Field name made lowercase.
+    subgenus = models.FloatField(blank=True, null=True)
+    nameaccordingto = models.TextField(db_column='nameAccordingTo', blank=True, null=True)  # Field name made lowercase.
+    nomenclaturalstatus = models.TextField(db_column='nomenclaturalStatus', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'taxon_20200618'
+
+class Event20200618(models.Model):
+    index = models.BigIntegerField(blank=True, null=True)
+    id = models.TextField(primary_key=True, blank=True, null=False)
+    eventid = models.TextField(db_column='eventID', blank=True, null=True)  # Field name made lowercase.
+    parenteventid = models.TextField(db_column='parentEventID', blank=True, null=True)  # Field name made lowercase.
+    samplingprotocol = models.TextField(db_column='samplingProtocol', blank=True, null=True)  # Field name made lowercase.
+    samplesizevalue = models.FloatField(db_column='sampleSizeValue', blank=True, null=True)  # Field name made lowercase.
+    samplesizeunit = models.TextField(db_column='sampleSizeUnit', blank=True, null=True)  # Field name made lowercase.
+    samplingeffort = models.TextField(db_column='samplingEffort', blank=True, null=True)  # Field name made lowercase.
+    eventdate = models.TextField(db_column='eventDate', blank=True, null=True)  # Field name made lowercase.
+    eventtime = models.TextField(db_column='eventTime', blank=True, null=True)  # Field name made lowercase.
+    locationid = models.TextField(db_column='locationID', blank=True, null=True)  # Field name made lowercase.
+    decimallatitude = models.TextField(db_column='decimalLatitude', blank=True, null=True)  # Field name made lowercase.
+    decimallongitude = models.TextField(db_column='decimalLongitude', blank=True, null=True)  # Field name made lowercase.
+    geodeticdatum = models.TextField(db_column='geodeticDatum', blank=True, null=True)  # Field name made lowercase.
+    coordinateuncertaintyinmeters = models.FloatField(db_column='coordinateUncertaintyInMeters', blank=True, null=True)  # Field name made lowercase.
+    coordinateprecision = models.FloatField(db_column='coordinatePrecision', blank=True, null=True)  # Field name made lowercase.
+    verbatimelevation = models.FloatField(db_column='verbatimElevation', blank=True, null=True)  # Field name made lowercase.
+    verbatimlatitude = models.FloatField(db_column='verbatimLatitude', blank=True, null=True)  # Field name made lowercase.
+    verbatimlongitude = models.FloatField(db_column='verbatimLongitude', blank=True, null=True)  # Field name made lowercase.
+    verbatimcoordinatesystem = models.TextField(db_column='verbatimCoordinateSystem', blank=True, null=True)  # Field name made lowercase.
+    year = models.FloatField(blank=True, null=True)
+    month = models.FloatField(blank=True, null=True)
+    day = models.FloatField(blank=True, null=True)
+    habitat = models.TextField(blank=True, null=True)
+    eventremarks = models.TextField(db_column='eventRemarks', blank=True, null=True)  # Field name made lowercase.
+    countrycode = models.TextField(db_column='countryCode', blank=True, null=True)  # Field name made lowercase.
+    county = models.TextField(blank=True, null=True)
+    locality = models.TextField(blank=True, null=True)
+    q_year = models.FloatField(blank=True, null=True)
+    q_month = models.FloatField(blank=True, null=True)
+    q_day = models.FloatField(blank=True, null=True)
+    municipality = models.TextField(blank=True, null=True)
+    geologicalcontextid = models.TextField(db_column='geologicalContextID', blank=True, null=True)  # Field name made lowercase.
+    country = models.TextField(blank=True, null=True)
+    stateprovince = models.TextField(db_column='stateProvince', blank=True, null=True)  # Field name made lowercase.
+    type = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'event_20200618'
+
