@@ -222,6 +222,7 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       </div>
       <!-- 資料集出現次數 end -->
 
+      {% comment %}
       <!-- 出現紀錄 begin -->
       <div id="section6">
         <h4 class="heading-md-ul">出現紀錄</h4>
@@ -283,7 +284,8 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
 
       </div>
       <!-- 出現紀錄 end -->
-
+      {% endcomment %}
+     
       <!-- Kuan Yu added for taieol discription -->
       {% for i in species_info.taieol_desc %}
        <div id="section9">
@@ -306,7 +308,7 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       {% endcomment %}
 
 
-
+      {% comment %}
        <!-- 文獻 begin -->
       <div id="section7">
         <h4 class="heading-md-ul">文獻</h4>
@@ -344,9 +346,9 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
         <p>Amentotaxus formosana H.L. Li  臺灣穗花杉《臺灣生物多樣性資訊網-TaiBIF》。http://www.taibif.tw/zh/namecode/201093</p>
       </div>
       <!-- 引用格式 end -->
-
+      
       <ul class="charge-list"></ul>
-
+      {% endcomment %}
 
 
 {% endblock %}
