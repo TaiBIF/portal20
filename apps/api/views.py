@@ -132,63 +132,46 @@ def search_occurrence(request, cat=''):
 
     # search
     occur_search = OccurrenceSearch(list(request.GET.lists()), using='')
-    res = None
+    res = {}
+
     if cat == 'search':
         res = occur_search.get_results()
     elif cat == 'taxonomy':
-        #by_sp = q.values('taxon_species_id').annotate(count=Count('taxon_species_id'))
-        #df = pd.read(data)
-        #df[]
-        #res = {}
-        #res['count'] = by_sp.count()
-        '''def _group_by_species(q):
-            q_by_species = q.values('taxon_kingdom_id','taxon_phylum_id', 'taxon_class_id', 'taxon_order_id', 'taxon_family_id', 'taxon_genus_id', 'taxon_species_id', 'scientific_name', 'vernacular_name', 'taibif_dataset_name') \
-                            .annotate(count=Count('taxon_species_id')) \
-                            .order_by('-count')
-            return list(q_by_species.all())
+        taxon_num_list = []
+        def _get_taxon_num(q):
+            rank_list = ['kingdom', 'phylum', 'class', 'order', 'family', 'genus', 'species']
+            data = []
+            for r in rank_list:
+                field_name = 'taxon_{}_id'.format(r)
+                # TODO: exclude is null
+                num = q.values(field_name).exclude().annotate(count=Count(field_name)).count()
+                #print (r, num)
+                data.append(num)
+            return data
 
         if not has_filter:
-            #data = get_cache_or_set('occurrence_all_by_species', _group_by_species(q))
-            pass
+            key = 'occurrence_all_taxonomy'
+            if value:= cache.get(key):
+                taxon_num_list = value
+            else:
+               taxon_num_list = _get_taxon_num(q)
+               cache.set(key, taxon_num_list, 2592000)
+               #taxon_num_list = get_cache_or_set(, ) # 無效 why?
         else:
-            data = []
+            taxon_num_list = _get_taxon_num(q)
 
-        #data = _group_by_species(q)
-        data = []
-        rank_list = ['kingdom', 'phylum', 'class', 'order', 'genus', 'species']
-        for i in rank_list:
-            print (i)
-            r = q.filter(scientific_name='Rana latouchii').values('taxon_{}_id'.format(i)).annotate(count=Count('taxon_{}_id'.format(i))) \
-                 .order_by('-count').all()
-            print (len(r), r)
-
-        res = []
-        res.append({
-            'species': len(data),
-        })
-        for i in data:
-            res.append({
-                'taxon_kingdom_id': i['taxon_kingdom_id'],
-                'taxon_phylum_id': i['taxon_phylum_id'],
-                'taxon_class_id': i['taxon_class_id'],
-                'taxon_order_id': i['taxon_order_id'],
-                'taxon_family_id': i['taxon_family_id'],
-                'taxon_genus_id': i['taxon_genus_id'],
-                'taxon_species_id:': i['taxon_species_id'],
-                'scientific_name': i['scientific_name'],
-                'vernacular_name': i['vernacular_name'],
-                'taibif_dataset_name': i['taibif_dataset_name'],
-            })'''
+        res['taxon_num_list'] = taxon_num_list
 
     elif cat == 'gallery':
         pass
         #taibif_ids = q.values('taibif_id').all()
         #RawOccurrenceData.public_objects.values('associatedmedia').filter(id__in=taibif_ids).all()
-    elif cat == 'chart':
+    elif cat == 'charts':
         #occur_search.limit = 1 #
         #res = occur_search.get_results()
         chart = request.GET.get('chart', '')
         data = []
+        #print (chart, has_filter)
         if chart == 'year':
             def _group_by_year(q):
                 q_by_cat = q.values('year') \
@@ -198,7 +181,13 @@ def search_occurrence(request, cat=''):
                 return list(q_by_cat.all())
 
             if not has_filter:
-                data = get_cache_or_set('occurrence_all_by_year', _group_by_year(q))
+                #data = get_cache_or_set('occurrence_all_by_year', _group_by_year(q))
+                key = 'occurrence_all_by_year'
+                if value:= cache.get(key):
+                    data = value
+                else:
+                    data = _group_by_year(q)
+                    cache.set(key, data, 2592000)
             else:
                 data = _group_by_year(q)
 
@@ -216,7 +205,13 @@ def search_occurrence(request, cat=''):
                 return list(q_by_cat.all())
 
             if not has_filter:
-                data = get_cache_or_set('occurrence_all_by_month', _group_by_month(q))
+                #data = get_cache_or_set('occurrence_all_by_month', _group_by_month(q))
+                key = 'occurrence_all_by_month'
+                if value:= cache.get(key):
+                    data = value
+                else:
+                    data = _group_by_month(q)
+                    cache.set(key, data, 2592000)
             else:
                 data = _group_by_month(q)
 
