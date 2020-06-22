@@ -264,7 +264,7 @@ def species_view(request, pk):
         })
 
 
-    print(total)
+    #print(total)
 
 
 

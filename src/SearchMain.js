@@ -1,5 +1,6 @@
 import React from 'react';
-import {OccurrenceCharts} from './OccurrenceTabs.js';
+
+import OccurrenceRouter from './occurrence/OccurrenceRouter';
 
 function SpeciesOther(props) {
   const {q} = props;
@@ -96,46 +97,6 @@ function DatasetResult(props) {
   );
 }
 
-function OccurrenceResult(props) {
-  //console.log(props);
-  const rows = props.data.results.map((row, index) => {
-    const sn = props.data.offset + index + 1;
-    return (
-        <tr key={index}>
-        <td><a href={"/occurrence/"+row.taibif_id}>{ sn }</a></td>
-        <td>{/*http://taibif.tw/zh/namecode/{{ i.name_code */}{ row.scientific_name }</td>
-        <td>{ row.vernacular_name }</td>
-        <td>{ row.date }</td>
-        <td>{ row.country }{/*/ i.locality */}</td>
-        <td><a href={"/dataset/"+row.dataset+"/"}>{ row.dataset }</a></td>
-        </tr>
-    )
-  });
-  //  download link
-  /*const downloadLink = (props.downloadUrl !== '') ?
-        <a href={props.downloadUrl} className="btn btn-primary" target="_blank">下載篩選結果 (CSV)</a> :
-        <button className="btn btn-primary disabled">資料量太大，無法下載，請縮小搜尋範圍</button>;
-  */
-  return (
-      <div className="table-responsive">
-        <table className="table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>學名</th>
-            <th>俗名</th>
-            <th>時間</th>
-            <th>國家/地區</th>
-            <th>資料集</th>
-          </tr>
-        </thead>
-        <tbody>
-        {rows}
-        </tbody>
-        </table>
-      </div>
-  );
-}
 
 function PublisherResult(props) {
   const rows = props.data.results.map((row, index) => {
@@ -178,7 +139,8 @@ function SearchMain(props) {
     initActiveTab = 'menu5';
   }
   const [tabActive, setTabActive] = React.useState(initActiveTab);
-  const count = props.data.count.toLocaleString('en');
+  //console.log(props);
+  const count = props.data? props.data.count.toLocaleString('en') : 0;
   const typeLabel = SEARCH_TYPE_LABEL_MAP[props.searchType];
 
   let q = null;
@@ -203,22 +165,7 @@ function SearchMain(props) {
 
   let tabNavs = null;
   if (props.searchType === 'occurrence') {
-    //// TODO
-    /*<li><a data-toggle="tab" href="#menu2">影像集</a></li>
-            <li className={tabActive == "menu3" ? "active": null}><a href="/occurrence/map" onClick={(e)=>toggleTab(e, 'menu3')}>分布地圖</a></li>
-            <li className={tabActive == "menu4" ? "active": null}><a href="/occurrence/taxonomy" onClick={(e)=>toggleTab(e, 'menu4')}>分類系統</a></li>
-            <li className={tabActive == "menu5" ? "active": null}><a href="/occurrence/charts" onClick={(e)=>toggleTab(e, 'menu5')}>指標</a></li>
-            <li className={tabActive == "menu6" ? "active": null}><a href="/occurrence/download" onClick={(e)=>toggleTab(e, 'menu6')}>資料下載</a></li>
-    */
-    tabNavs = (
-        <div className="table-responsive">
-          <ul className="nav nav-tabs nav-justified search-content-tab">
-            <li className={tabActive == "menu1" ? "active": null}><a href="/occurrence/search" onClick={(e)=>toggleTab(e, 'menu1')}>資料列表</a></li>
-            <li className={tabActive == "menu4" ? "active": null}><a href="/occurrence/taxonomy" onClick={(e)=>toggleTab(e, 'menu4')}>分類系統</a></li>
-            <li className={tabActive == "menu5" ? "active": null}><a href="/occurrence/charts" onClick={(e)=>toggleTab(e, 'menu5')}>指標</a></li>
-          </ul>
-        </div>
-    );
+    tabNavs = null;
   } else if (props.searchType === 'dataset') {
     let act = 'all';
     for (let f of props.filters) {
@@ -267,13 +214,11 @@ function SearchMain(props) {
           <span>篩選條件：</span>
           {filterTags}
         </div>
+      {(props.searchType !== 'occurrence') ?
+        <React.Fragment>
         {tabNavs}
         <div className="tab-content">
           <div id="menu1" className="tab-pane fade in active">
-          {(props.searchType === 'occurrence' && tabActive === 'menu1')
-           ? <OccurrenceResult data={props.data} /> : null}
-          {(props.searchType === 'occurrence' && tabActive === 'menu5')
-           ? <OccurrenceCharts data={props.data} /> : null}
           {props.searchType === 'dataset'
            ? <DatasetResult data={props.data} /> : null}
           {(props.searchType === 'species' && tabActive === 'menu1')
@@ -283,8 +228,11 @@ function SearchMain(props) {
           {props.searchType === 'publisher'
            ? <PublisherResult data={props.data} /> : null}
           {props.data.count > 0 ? props.pagination: null}
-          </div>
-        </div>
+           </div>
+         </div>
+         </React.Fragment>
+       : <OccurrenceRouter data={props.data} filters={props.filters}/>
+      }
       </div>
   );
 }
