@@ -12,3 +12,4 @@ def get_cache_or_set(key, value_or_func, timeout=2592000):
             v = value_or_func
         cache.set(key, v, timeout)
         return v
+

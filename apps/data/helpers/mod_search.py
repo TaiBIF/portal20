@@ -126,7 +126,7 @@ class SuperSearch(object):
         #elif self.is_estimate_count and not self.force_accurate_count:
         #    count = self._estimate_count()
         #else:
-        count = query.count()
+        #count = query.count()
 
         ret = {
             'elapsed': self.timed[1] - self.timed[0],

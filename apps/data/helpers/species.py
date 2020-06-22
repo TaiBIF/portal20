@@ -4,27 +4,55 @@ import random
 
 import requests
 from bs4 import BeautifulSoup
+from django.http import HttpResponse
 
 
 def _get_taieol_desc(taxon_id, page=''):
     rows = []
-    url = 'https://taieol.tw/pages/{}'.format(taxon_id)
+    url = 'https://data.taieol.tw/eol/endpoint/taxondesc/species/{}'.format(taxon_id)
     
     r = requests.get(url)
-    if r:
-        soup = BeautifulSoup(r.text, 'lxml')
+    data = r.json()
 
-        table = soup.findAll('h2', attrs={"class": "taxa-page-chapter-title"})
+    if all(k in data for k in ("description", "distribution")):
+        detail1 = {'title':'描述', 'content':data['description']}
+        detail2 = {'title':'分佈', 'content':data['distribution']}
+
+        rows.append(detail1)
+        rows.append(detail2)
+
+    else:
+        if "description" in data:
+            detail1 = {'title': '描述', 'content': data['description']}
+            rows.append(detail1)
+        else:
+            if "distribution" in data:
+                detail2 = {'title': '分佈', 'content': data['distribution']}
+                rows.append(detail2)
+            else:
+                detail2 = {'title': 'No data', 'content': None}
+                rows.append(detail2)
+
+
+
+
+
+
+
+    '''if r:
+        soup = BeautifulSoup(r.text, 'lxml')
+        table = soup.findAll('description')
         table1 = soup.findAll('div', attrs={"class": "taxon-desc-content"})
 
         TableCount = []
         Table1Count = []
+        newlist = []
         for x in table1:
             check = x.find('p')
 
             AllTag1 = x.find_all('p')
             Table1Count.append(len(AllTag1))
-
+            
             if check != None:
                 newlist = soup.select('.taxa-page-chapter-title')
                 newlist1 = soup.select('.taxon-desc-content p')
@@ -37,7 +65,7 @@ def _get_taieol_desc(taxon_id, page=''):
                 else:
                     newlist = soup.select('.taxa-page-chapter-title')[:sum(Table1Count)]
                     newlist1 = soup.select('.taxon-desc-content p')
-                    print(len(newlist))
+                    #print(len(newlist))
 
 
         for i in range(len(newlist)):
@@ -53,7 +81,9 @@ def _get_taieol_desc(taxon_id, page=''):
             pager = soup.select('.pager-item a')
             if len(pager) > 0:
                 for p in pager:
-                    rows += _get_taieol_desc(taxon_id, int(p.text)-1)
+                    rows += _get_taieol_desc(taxon_id, int(p.text)-1)'''
+
+
 
     return rows
 
@@ -61,8 +91,19 @@ def _get_taieol_desc(taxon_id, page=''):
 
 def _get_taieol_media(taxon_id, page=''):
     rows = []
-    url = 'https://taieol.tw/pages/{}/media'.format(taxon_id)
-    if page:
+    url = 'https://data.taieol.tw/eol/endpoint/image/species/{}'.format(taxon_id)
+
+    r = requests.get(url)
+    img = r.json()
+
+    for ii in img:
+        foto = {'author':ii['author'], 'src':ii['image_big']}
+        rows.append(foto)
+
+
+
+
+    '''if page:
         url = 'https://taieol.tw/pages/{}/media?page={}'.format(taxon_id, page)
     r = requests.get(url)
     if r:
@@ -84,16 +125,19 @@ def _get_taieol_media(taxon_id, page=''):
             pager = soup.select('.pager-item a')
             if len(pager) > 0:
                 for p in pager:
-                    rows += _get_taieol_media(taxon_id, int(p.text)-1)
+                    rows += _get_taieol_media(taxon_id, int(p.text)-1)'''
 
     return rows
 
 
 def get_species_info(taxon):
-    scname = taxon.scientific_name
+
+    ## Modified for catching sorce_id of taieol API
+    source_id = taxon.source_id
+
 
     # get info from taieol
-    url = 'https://taieol.tw/tree/autocomplete/1/{}'.format(scname)
+    '''url = 'https://data.taieol.tw/eol/endpoint/taxondesc/species/{}'.format(source_id)
     r = requests.get(url)
     resp = json.loads(r.text)
 
@@ -102,10 +146,10 @@ def get_species_info(taxon):
         m = re.search(r'\[tid\:([0-9]+)\]', x)
         if m:
             taieol_taxon_id = m[1]
-        break
+        break'''
 
-    media_list = _get_taieol_media(taieol_taxon_id)
-    desc_list = _get_taieol_desc(taieol_taxon_id)
+    media_list = _get_taieol_media(source_id)
+    desc_list = _get_taieol_desc(source_id)
 
 
     if media_list:
@@ -115,8 +159,11 @@ def get_species_info(taxon):
     data = {
         #'rows': list(rows),
         #'count': len(rows)
-        'taieol_taxon_id': taieol_taxon_id,
+        'taieol_taxon_id': source_id,
         'taieol_media': media_list,
         'taieol_desc': desc_list
     }
+
+
+
     return data

@@ -3,8 +3,8 @@ version: '3.7'
 services:
   web:
     build: .
-    container_name: taibif-web-container
-    image: taibif-web-image
+    container_name: taibif-web-stag-container
+    image: taibif-web-stag-image
     expose:
       - 8001
     depends_on:
@@ -23,7 +23,7 @@ services:
     env_file:
       - .env
   db:
-    container_name: taibif-db-container
+    container_name: taibif-db-stag-container
     image: postgres:12-alpine
     restart: always
     environment:
@@ -40,7 +40,7 @@ services:
     ports:
       - 80:80
     volumes:
-      - ./nginx:/etc/nginx/conf.d
+      - ./nginx/staging:/etc/nginx/conf.d
       - ../taibif-volumes/static:/taibif-volumes/static
       - ../taibif-volumes/media:/taibif-volumes/media
       - ../taibif-volumes/logs/nginx:/var/log/nginx

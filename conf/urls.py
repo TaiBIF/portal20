@@ -28,6 +28,13 @@ from apps.data.views import (
     search_occurrence_download_view,
 )
 
+from apps.api.views import (
+    ChartMonth,
+    ChartYear,
+    taxon_bar,
+
+)
+
 urlpatterns = [
     url('^media/(?P<path>.*)$', serve, {
             'document_root': settings.MEDIA_ROOT,
@@ -35,7 +42,7 @@ urlpatterns = [
     path('api/', include('apps.api.urls')),
     path('search/', include('apps.data.urls')),
     #path('occurrence/search|map/', search_view, name='search-occurrence'),
-    re_path(r'^occurrence/(?P<cat>search|map|charts|taxonomy)/$', search_view, name='search-occurrence'),
+    re_path(r'^occurrence/(?P<cat>search|gallery|download|map|charts|taxonomy)/$', search_view, name='search-occurrence'),
     path('occurrence/search/download', search_occurrence_download_view, name='search-occurrence-download'),
     path('dataset/search/', search_view, name='search-dataset'),
     path('publisher/search/', search_view, name='search-publisher'),
@@ -47,6 +54,11 @@ urlpatterns = [
     path('article/', include('apps.article.urls')),
     path('',  include('apps.page.urls')),
     path('admin/', admin.site.urls),
+    ##Kuan-Yu added for API hichart function
+    path('test_y/', ChartYear, name='ChartYear'),
+    path('test_m/', ChartMonth, name='ChartMonth'),
+    path('taxon_bar/', taxon_bar, name='taxon_bar'),
+
     ]
 
 # AWS SES

@@ -3,6 +3,22 @@ from django.urls import path
 from . import views
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls import include
+from django.urls import path
+
+## Kuan Yu added for sitemap
+from django.contrib.sitemaps.views import sitemap
+from .sitemaps import DatasetSitemap
+from .sitemaps import StaticSitemap
+from .views import robots_txt
+
+
+
+# Dictionary containing your sitemap classes
+sitemaps = {
+    'dataset': DatasetSitemap(),
+    'static': StaticSitemap(),
+}
+
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -23,4 +39,12 @@ urlpatterns = [
     path('data-stats', views.data_stats, name='data_stats'),
     path('export_csv',views.export_csv, name='export_csv'),
     path('i18n/', include('django.conf.urls.i18n')),
+    ## Kuan Yu added for sitemap
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
+     name='django.contrib.sitemaps.views.sitemap'),
+    path("robots.txt", robots_txt),
+    #path('test', views.test, name='test'),
+    path('bar_chart', views.bar_chart, name='bar_chart'),
+
 ]
+
