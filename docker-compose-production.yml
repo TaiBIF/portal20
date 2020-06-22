@@ -1,0 +1,53 @@
+version: '3.7'
+
+services:
+  web:
+    build: .
+    container_name: taibif-web-container
+    image: taibif-web-image
+    expose:
+      - 8001
+    depends_on:
+      - db
+    links:
+      - db:db
+    volumes:
+      - .:/taibif-code
+      - ../taibif-volumes/static:/taibif-volumes/static
+      - ../taibif-volumes/media:/taibif-volumes/media
+      - ../taibif-volumes/bucket:/taibif-bucket
+      - ../taibif-volumes/logs/web:/taibif-code/logs
+    command: "./scripts/wait-for-it.sh db:5432 -t 30 -- ./scripts/docker-web-entry.sh"
+    #command: ./docker-web-entry.sh
+    restart: always
+    env_file:
+      - .env
+  db:
+    container_name: taibif-db-container
+    image: postgres:12-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=
+      - POSTGRES_DB=taibif
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - ../taibif-volumes/pgdata:/var/lib/postgresql/data/pgdata
+      - ../taibif-volumes/bucket:/taibif-bucket
+  nginx:
+    image: nginx:1.17.6-alpine
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/production:/etc/nginx/conf.d
+      - ../taibif-volumes/static:/taibif-volumes/static
+      - ../taibif-volumes/media:/taibif-volumes/media
+      - ../taibif-volumes/logs/nginx:/var/log/nginx
+    links:
+      - web:web
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "3"

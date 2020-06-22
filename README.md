@@ -8,10 +8,18 @@ To install <project_, follow these steps:
 
 Development:
 ```
-docker-compose -f docker-compose.yml build
-docker-compose -f docker-compose.yml up -d
+docker-compose -f docker-compose.yml -f docker-compose-develop.yml build
+docker-compose -f docker-compose.yml  -f docker-compose-develop.yml up -d
 ```
 
+
+## make translate (english)
+
+```
+$ docker-compose exec web bash
+$ python manage.py makemessages -l en
+$ python manage.py compilemessages -l en
+```
 
 <!--
 ## Contributing to <project_name>

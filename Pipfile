@@ -19,6 +19,7 @@ lxml = "*"
 boto3 = "*"
 django-ses = "*"
 django-redis = "*"
+django-cors-headers = "*"
 
 [requires]
 python_version = "3.8"

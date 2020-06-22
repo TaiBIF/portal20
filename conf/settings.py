@@ -14,12 +14,14 @@ import os
 import environ
 import socket # djdt for docker
 from django.utils.translation import gettext_lazy as _
+from corsheaders.defaults import default_headers
+
 
 env = environ.Env()
 root_path = environ.Path(__file__) - 2 # web
 
 ENV = env('ENV', default='prod')
-assert ENV in ['dev', 'test', 'prod', 'qa']
+assert ENV in ['dev', 'test', 'prod', 'stag']
 
 ROOT_URLCONF = 'conf.urls'
 WSGI_APPLICATION = 'conf.wsgi.application'
@@ -59,9 +61,16 @@ INSTALLED_APPS = [
     'apps.page.apps.PageConfig',
     # third party
     'django_ses',
+    # Kuan Yu added for sitemap
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
+    'corsheaders',
 ]
 
+SITE_ID = 1
+
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -71,6 +80,26 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'Access-Control-Allow-Origin',
+]
+
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+CORS_SUPPORTS_CREDENTIALS = True
 
 ROOT_URLCONF = 'conf.urls'
 
@@ -227,13 +256,13 @@ CACHES = {
 }
 # email
 EMAIL_BACKEND = 'django_ses.SESBackend'
-AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
-AWS_SES_REGION_NAME = env('AWS_SES_REGION_NAME')
-AWS_SES_REGION_ENDPOINT = env('AWS_SES_REGION_ENDPOINT')
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID', default='')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY', default='')
+AWS_SES_REGION_NAME = env('AWS_SES_REGION_NAME', default='')
+AWS_SES_REGION_ENDPOINT = env('AWS_SES_REGION_ENDPOINT', default='')
 
-TAIBIF_SERVICE_EMAIL = env('TAIBIF_SERVICE_EMAIL')
-TAIBIF_BCC_EMAIL_LIST = env('TAIBIF_BCC_EMAIL_LIST')
+TAIBIF_SERVICE_EMAIL = env('TAIBIF_SERVICE_EMAIL', default='')
+TAIBIF_BCC_EMAIL_LIST = env('TAIBIF_BCC_EMAIL_LIST', default='')
 
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),

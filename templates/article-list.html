@@ -153,11 +153,11 @@
             {% endif %}
         </p>
       </div>
-      {% comment %}
+      {% if article.cover %}
       <div class="col-xs-4">
         <a href=""><img src="/media/{{ article.cover }}" class="img-responsive"></a>
       </div>
-      {% endcomment %}
+      {% endif %}
     </div>
     {% endfor %}
 
