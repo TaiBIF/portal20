@@ -3,7 +3,7 @@ import time
 import decimal
 import pickle
 
-from apps.data.models import RawDataOccurrence, SimpleData, Taxon, TaxonTree
+
 
 #rows = RawDataOccurrence.objects.order_by('taibif_id').all()[:1000000]
 #rows = RawDataOccurrence.objects.order_by('taibif_id').all()[390000:395000]
@@ -39,6 +39,7 @@ def proc_simple_data(data, sd):
     global tree, taxa
     import decimal
     from apps.data.models import Taxon
+    from bs4 import BeautifulSoup
 
     # higher taxa
     #print (tree.rank_map.split('|')[:-2])
@@ -57,7 +58,7 @@ def proc_simple_data(data, sd):
     try:
         scname = data['scientificname']
         sd.scientific_name = scname
-        species_id, genus_id = taxa['sci_name'][scname]
+        species_id, genus_id = taxa['sci_name'][scname] 
         #print (species_id, genus_id, 'xx')
         sd.taxon_genus_id = genus_id
         sd.taxon_species_id = species_id
