@@ -227,6 +227,7 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       </div>
       <!-- 資料集出現次數 end -->
 
+      {% comment %}
       <!-- 出現紀錄 begin -->
       {% comment %}
       <div id="section6">
@@ -290,7 +291,6 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       </div>
       <!-- 出現紀錄 end -->
       {% endcomment %}
-
       <!-- Kuan Yu added for taieol discription -->
       {% for i in species_info.taieol_desc %}
        <div id="section9">
@@ -313,7 +313,7 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       {% endcomment %}
 
 
-
+      {% comment %}
        <!-- 文獻 begin -->
       {% comment %}
       <div id="section7">
@@ -353,9 +353,9 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
         <p>{{ taxon.scientific_name }}  {% if taxon.name_zh %} {{ taxon.name_zh }}{% endif %}《臺灣生物多樣性資訊網-TaiBIF》。<a href="{{ taxon.taicol_namecode_link }}">http://www.taibif.tw/zh/{{ taxon.source_id }} </a></p>
       </div>
       <!-- 引用格式 end -->
-
+      
       <ul class="charge-list"></ul>
-
+      {% endcomment %}
 
 
 {% endblock %}
