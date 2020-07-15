@@ -233,21 +233,22 @@ def species_view(request, pk):
         rows = q.all()
     else:
         rows = q.all()[:20]
-    print(rows)
+    #print(rows)
 
 
     for r in rows:
-        if r['latitude'] and r['longitude']:
+        if r['latitude'] or r['longitude']:
             lat += float(r['latitude'])
             lng += float(r['longitude'])
             occurrence_list.append({
-                #'taibif_dataset_name': r['taibif_dataset_name'],
+                'taibif_dataset_name': r['taibif_dataset_name'],
                 'decimallatitude': float(r['latitude']),
                 'decimallongitude': float(r['longitude']),
             })
 
 
-    n = len(occurrence_list)'''
+    n = len(occurrence_list)
+    #print(occurrence_list)'''
 
 
     ## Kuan-Yu add : for counting dataset number
