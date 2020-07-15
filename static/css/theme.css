@@ -1596,7 +1596,15 @@ a.navbar-icon-btn:last-child {
   font-size: 12px;
   margin: 0;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
-  
+
+}
+
+.img-license {
+  font-size: 9px;
+  margin-bottom:-10px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
+  color: #777777;
+  line-height: 18px;
 }
 
 .news-card-title-ctn .img-title {

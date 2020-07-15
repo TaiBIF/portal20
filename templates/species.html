@@ -148,6 +148,7 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       <!-- 學名 end -->
 
       <!-- 同物異名 begin -->
+      {% comment %}
       <div id="section1">
         {% if not taxon.is_accepted_name %}
         <h4 class="heading-md-ul">同物異名</h4>
@@ -155,6 +156,7 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
         {% endif %}
       </div>
       <!-- 同物異名 end -->
+      {% endcomment %}
 
       <!-- TaiCoL編號 begin -->
       <div id="section2">
@@ -203,6 +205,7 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
             </tr>
           </thead>
           <tbody>
+
             {% for set in total %}
 
             <tr>
