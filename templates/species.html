@@ -344,13 +344,14 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       <!-- 文獻 end -->
       {% endcomment %}
 
+      {% comment %}
       <!-- 引用格式 begin -->
       <div id="section8">
         <h4 class="heading-md-ul">引用格式</h4>
         <p>{{ taxon.scientific_name }}  {% if taxon.name_zh %} {{ taxon.name_zh }}{% endif %}《臺灣生物多樣性資訊網-TaiBIF》。<a href="{{ taxon.taicol_namecode_link }}">http://www.taibif.tw/zh/{{ taxon.source_id }} </a></p>
       </div>
       <!-- 引用格式 end -->
-      
+
       <ul class="charge-list"></ul>
       {% endcomment %}
 
