@@ -6,5 +6,13 @@ async function fetchData(url) {
   return data;
 }
 
+function filtersToSearch (filters) {
+  //TODO: Array.from(filters).join('&');
+  const qsArr = [];
+  filters.forEach((item)=> {
+    qsArr.push(item);
+  });
+  return qsArr.join('&');
+}
 
-export {fetchData}
+export {fetchData, filtersToSearch}
