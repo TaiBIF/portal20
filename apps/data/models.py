@@ -493,20 +493,14 @@ class PublicDataManager(models.Manager):
         public_dataset_names = [x['name'] for x in Dataset.public_objects.values('name').all()]
         return super().get_queryset().filter(taibif_dataset_name__in=public_dataset_names)
 
-    def filter_group_by_dataset(self, filters):
-        q = self.filter_by_search(filters)
-        #q = self.get_queryset()
-        #v = 'begonia';
-        #q = self.get_queryset().filter(Q(vernacular_name__icontains=v) | Q(scientific_name__icontains=v))
-        return q.values('taibif_dataset_name').\
-            exclude(taibif_dataset_name__isnull=True).\
-            annotate(count=Count('taibif_dataset_name')).\
-            order_by('-count')
-
-    def filter_by_search(self, filters):
+    def filter_by_key_values(self, filters):
         query = self.get_queryset()
+        has_filter = False
+        #print (filters)
         for key, values in filters:
+            #print (key, values)
             if key == 'q':
+                has_filter = True
                 v = values[0] # only get one
                 if not v:
                     continue
@@ -528,20 +522,26 @@ class PublicDataManager(models.Manager):
             #    d = DATA_MAPPING['core'][item_keys]
             #    query = query.filter(dwc_core_type__exact=d)
             if key == 'year':
+                has_filter = True
                 query = query.filter(year__in=values)
             if key == 'month':
+                has_filter = True
                 query = query.filter(month__in=values)
             # TODO: change simpledata.country to country_code
             if key == 'countrycode':
-                query = query.filter(country__exact=values)
+                has_filter = True
+                query = query.filter(country__in=values)
             if key == 'dataset':
+                has_filter = True
                 query = query.filter(taibif_dataset_name__in=values)
             if key == 'publisher':
+                has_filter = True
                 datasets = Dataset.objects.filter(organization__in=values)
                 dataset_names = [x.name for x in datasets]
                 query = query.filter(taibif_dataset_name__in=dataset_names)
 
             if key == 'taxon_key':
+                has_filter = True
                 # not explict like: taxon_phylum_id=xxx, taxon_specied_id=yyy...
 
                 taxa = Taxon.objects.filter(id__in=values).all()
@@ -566,8 +566,9 @@ class PublicDataManager(models.Manager):
             else:
                 # for species-detail page
                 if 'taxon_' in key:
+                    has_filter = True
                     query = query.filter(**{key:values[0]})
-        return query
+        return has_filter, query
 
 class SimpleData(models.Model):
 
