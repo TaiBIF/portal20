@@ -128,7 +128,7 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
     <!-- story title begin -->
     <div class="article-head-wrapper">
       <h1 class="heading-lg">
-        <i>{{ taxon.scientific_name_full }} </i> {% if taxon.name_zh %} {{ taxon.name_zh }}{% endif %} {% if not taxon.is_accepted_name %}<small><span class="label label-warning">同物異名</span></small>{% endif %}
+        <i>{{ taxon.scientific_name }} </i> {% if taxon.name_zh %} {{ taxon.name_zh }}{% endif %} {% if not taxon.is_accepted_name %}<small><span class="label label-warning">同物異名</span></small>{% endif %}
       </h1>
     </div>
     <!-- story title end -->
@@ -149,8 +149,10 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
 
       <!-- 同物異名 begin -->
       <div id="section1">
+        {% if not taxon.is_accepted_name %}
         <h4 class="heading-md-ul">同物異名</h4>
-        <p><i>Amentotaxus yunnanensis</i> var. <i>formosana</i> (H. L. Li) Silba (synonym)</p>
+        <p><i>{{ taxon.scientific_name_full }}</i>{% if taxon.name_zh %} {{ taxon.name_zh }}{% endif %}</p>
+        {% endif %}
       </div>
       <!-- 同物異名 end -->
 
@@ -224,6 +226,7 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
 
       {% comment %}
       <!-- 出現紀錄 begin -->
+      {% comment %}
       <div id="section6">
         <h4 class="heading-md-ul">出現紀錄</h4>
         <a href="#"><span class="myicon icon-download-csv"></span> 下載出現紀錄 (CSV格式)</a>
@@ -285,7 +288,6 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       </div>
       <!-- 出現紀錄 end -->
       {% endcomment %}
-     
       <!-- Kuan Yu added for taieol discription -->
       {% for i in species_info.taieol_desc %}
        <div id="section9">
@@ -310,6 +312,7 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
 
       {% comment %}
        <!-- 文獻 begin -->
+      {% comment %}
       <div id="section7">
         <h4 class="heading-md-ul">文獻</h4>
         <!-- literature info begin -->
@@ -339,11 +342,12 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
         <!-- literature info end -->
       </div>
       <!-- 文獻 end -->
+      {% endcomment %}
 
       <!-- 引用格式 begin -->
       <div id="section8">
         <h4 class="heading-md-ul">引用格式</h4>
-        <p>Amentotaxus formosana H.L. Li  臺灣穗花杉《臺灣生物多樣性資訊網-TaiBIF》。http://www.taibif.tw/zh/namecode/201093</p>
+        <p>{{ taxon.scientific_name }}  {% if taxon.name_zh %} {{ taxon.name_zh }}{% endif %}《臺灣生物多樣性資訊網-TaiBIF》。<a href="{{ taxon.taicol_namecode_link }}">http://www.taibif.tw/zh/{{ taxon.source_id }} </a></p>
       </div>
       <!-- 引用格式 end -->
       
