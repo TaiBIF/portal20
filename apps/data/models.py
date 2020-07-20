@@ -592,6 +592,7 @@ class SimpleData(models.Model):
     latitude = models.DecimalField('coordinates_latitude_decimal', decimal_places=8, max_digits=10, null=True, blank=True)
     country = models.CharField('country', max_length=1000, null=True)
     taibif_dataset_name = models.TextField(blank=True, null=True)
+    spname = models.CharField('species_name', max_length=1000, null=True)
 
     objects = models.Manager()
     public_objects = PublicDataManager()
