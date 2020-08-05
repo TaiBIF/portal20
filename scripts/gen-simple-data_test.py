@@ -20,29 +20,17 @@ from apps.data.models import (
 
 #rows = RawDataOccurrence.objects.order_by('taibif_id').all()[:1000000]
 #rows = RawDataOccurrence.objects.order_by('taibif_id').all()[390000:395000]
-chunk_size = 100000
-chunk_num = 50
-chunk_num_begin = 0
+
 def _get_taxon(rank, name):
     from apps.data.models import Taxon
     return Taxon.objects.filter(rank=rank, name=name).first()
-
-def get_taxon_id(rank,id):
-    from apps.data.models import Taxon
-    return Taxon.objects.values('id','rank','name','parent_id').filter(rank=rank, id=id)
-
-tt = get_taxon_id('genus', 5297)
-taxon_family_id = Taxon.objects.values('id','rank','name','parent_id').filter(rank='genus', id=5297)[0]['parent_id']
-taxon_order_id = Taxon.objects.values('id','rank','name','parent_id').filter(rank='family', id=taxon_family_id)[0]['parent_id']
-#print(taxon_family_id)
-#print(taxon_order_id)
 
 
 
 start_time = time.time()
 
 all_data = RawDataOccurrence.objects.values('taibif_id', 'taibif_dataset_name','year', 'month', 'day','country', 'decimallongitude', 'decimallatitude', 'kingdom', 'phylum', 'class_field', 'order', 'family', 'genus', 'scientificname', 'specificepithet','vernacularname') \
-    .filter(taibif_dataset_name='spgrc_germplasm_collection').order_by('taibif_id').all()
+    .filter(taibif_dataset_name='taif').order_by('taibif_id').all()
 
 
 tree = TaxonTree.objects.get(pk=1)
@@ -63,34 +51,58 @@ start_time2 = time.time()
 #print ([len(v) for x,v in taxa().items()])
 
 
-for data in all_data[18:25]:
+'''for data in all_data[37:38]:
     scname_t = data['scientificname']
     count = 0
-    #print(scname_t)
+
     total_c = scname_t.count(" ")
+    gename_t = scname_t[:scname_t.find(' ')]
+    spname_t = scname_t[scname_t.find(' ') + 1:]
+    ssname_t = spname_t[:spname_t.find(' ')]
+    print(scname_t)
+    print(gename_t)
+    print(spname_t)
+    print(ssname_t)
 
 
-    if total_c == 1:
-        spname_t = scname_t[scname_t.find(' ') + 1:]
-        #print(scname_t)
-        #print(spname_t)
+    taxon_data = Taxon.objects.values('id', 'name', 'rank','parent_id') \
+        .filter(name=ssname_t)
+    print(taxon_data)
+
+    p_id = taxon_data[0]['parent_id']
+
+    print(taxon_data[0]['parent_id'])
+    print(taxon_data['id'])
+    count_id = 0
+    for dd in taxon_data:
+        if dd['parent_id'] == p_id:
+            count_id = count_id + 1
+    if count_id == len(taxon_data):
+        print('same')
     else:
-        spname_t = scname_t[scname_t.find(' ') + 1:]
-        ssname_t = spname_t[:spname_t.find(' ')]
-        #print(scname_t)
-        #print(ssname_t)
+        parent_id = [x['parent_id'] for x in taxon_data]
+
+
+        genus_list = Taxon.objects.values('id', 'name').filter(id__in =parent_id)
+        #print(genus_list)
+
+        for gg in genus_list:
+            #print(gg['name'])
+            if gg['name'] == gename_t:
+                match = gg['id']
+                print(match)
+            else:
+                pass'''
 
 
 
-    #spname_t = scname_t[scname_t.find(' ') + 1:]
-    #ssname_t = spname_t[:spname_t.find(' ')]
-    #print(spname_t)
-    #print(ssname_t)
+
+
 
 species_id, genus_id = taxa['sci_name']['auratus'] #ok
 #species_id, genus_id = taxa['sci_name'][scname_t] #not ok
-print(species_id)
-print(genus_id)
+#print(species_id)
+#print(genus_id)
 
 
 def proc_simple_data(data, sd):
@@ -101,7 +113,7 @@ def proc_simple_data(data, sd):
     # higher taxa
     #print (tree.rank_map.split('|')[:-2])
 
-    for rank in tree.rank_map.split('|')[:-2]:
+    for rank in tree.rank_map.split('|')[:-2]: #auto fill the family_id if they fill the names
         taxon_field = rank
 
         if rank == 'class':
@@ -114,41 +126,207 @@ def proc_simple_data(data, sd):
             # print ('err', e)
 
 
-    try:
+    if (sd.taxon_species_id == None and data['scientificname'] != None):
         # species
         scname = data['scientificname']  # from occurrence data get the scientificname
         sd.scientific_name = scname  # whole scientific name
         sd.vernacular_name = data['vernacularname']
 
-        count = 0
         total_c = scname.count(" ")
-        if total_c == 1:
+        if total_c == 1: #Genus+species
+            gename = scname[:scname.find(' ')]
             spname = scname[scname.find(' ') + 1:]
-            try:
+
+
+            try: #Use scientific full name find
                 species_id, genus_id = taxa['sci_name'][scname]
                 sd.taxon_genus_id = genus_id  # from taxa get genus id
                 sd.taxon_species_id = species_id  # from taxa get species id
+                sd.spname = scname
             except:
-                try:
-                    species_id, genus_id = taxa['sci_name'][spname]
-                    sd.taxon_genus_id = genus_id  # from taxa get genus id
-                    sd.taxon_species_id = species_id  # from taxa get species id
+                try:  # put this on to avoid find nothing
+                    taxon_data = Taxon.objects.values('id', 'parent_id').filter(name=spname)
+                    parent_list = []
+                    species_list = []
+
+                    for t in taxon_data:
+                        species_list.append(t['id'])  # create a list for species_id with same species name
+                        parent_list.append(t['parent_id'])  # create a list for parent_id with same species name
+
+                    if len(species_list) == 1:  # only one result in taxon
+                        try:
+                            # species_id, genus_id = taxa['sci_name'][spname]
+                            sd.taxon_genus_id = parent_list[0]  # from taxon get genus id
+                            sd.taxon_species_id = species_list[0]  # from taxon get species id
+                            sd.spname = spname + '_one'
+                        except:
+                            pass
+                    elif len(species_list) > 1:  # not only one result in taxon
+
+                        p_id = parent_list[0]  # To check whether all the parent_id are same
+                        count_id = 0
+                        for dd in taxon_data:
+                            if dd == p_id:
+                                count_id = count_id + 1
+
+                        if count_id == len(parent_list):  # Parent_id is same
+                            try:
+                                # species_id, genus_id = taxa['sci_name'][spname]
+                                sd.taxon_genus_id = parent_list[0]  # from taxon get genus id
+                                sd.taxon_species_id = species_list[0]  # from taxon get species id
+                                sd.spname = spname + '_more_p'
+                            except:
+                                pass
+
+                        else:  # Parent_id is not same
+
+                            genus_list = Taxon.objects.values('id', 'name').filter(id__in=parent_list)
+
+                            for gg, ss in zip(genus_list, species_list):
+
+                                if gg['name'] == gename:
+                                    sd.taxon_genus_id = gg['id']  # from taxon get genus id
+                                    sd.taxon_species_id = ss  # from taxon get species id
+                                    sd.spname = spname + '_match_new'
+                                else:
+                                    pass
+
+                    else:
+                        sd.spname = None
+
+
+
                 except:
                     pass
-        else:
+
+            if (sd.taxon_family_id == None and sd.taxon_species_id != None):
+                try:
+                    sd.spname = sd.spname + '_F'
+
+                    sd.taxon_family_id = \
+                        Taxon.objects.values('id', 'rank', 'parent_id').filter(rank='genus',
+                                                                                       id=sd.taxon_genus_id)[0][
+                            'parent_id']
+                    sd.taxon_order_id = \
+                        Taxon.objects.values('id', 'rank', 'parent_id').filter(rank='family',
+                                                                                       id=sd.taxon_family_id)[0][
+                            'parent_id']
+                    sd.taxon_class_id = \
+                        Taxon.objects.values('id', 'rank', 'parent_id').filter(rank='order',
+                                                                                       id=sd.taxon_order_id)[0][
+                            'parent_id']
+                    sd.taxon_phylum_id = \
+                        Taxon.objects.values('id', 'rank', 'parent_id').filter(rank='class',
+                                                                                       id=sd.taxon_class_id)[0][
+                            'parent_id']
+                    sd.taxon_kingdom_id = \
+                        Taxon.objects.values('id', 'rank', 'parent_id').filter(rank='phylum',
+                                                                                       id=sd.taxon_phylum_id)[0][
+                            'parent_id']
+                except:
+                    pass
+
+
+
+        elif total_c == 2: #Genus+species+others
+
+            gename = scname[:scname.find(' ')]
             spname = scname[scname.find(' ') + 1:]
             ssname = spname[:spname.find(' ')]
+
+
             try:
                 species_id, genus_id = taxa['sci_name'][scname]
                 sd.taxon_genus_id = genus_id  # from taxa get genus id
                 sd.taxon_species_id = species_id  # from taxa get species id
+                sd.spname = scname
             except:
-                try:
-                    species_id, genus_id = taxa['sci_name'][ssname]
-                    sd.taxon_genus_id = genus_id  # from taxa get genus id
-                    sd.taxon_species_id = species_id  # from taxa get species id
+
+                try: #put this on to avoid find nothing
+                    taxon_data = Taxon.objects.values('id','parent_id').filter(name=ssname)
+                    parent_list = []
+                    species_list = []
+
+                    for t in taxon_data:
+                        species_list.append(t['id']) #create a list for species_id with same species name
+                        parent_list.append(t['parent_id']) #create a list for parent_id with same species name
+
+                    if len(species_list) == 1:  # only one result in taxon
+                        try:
+                            #species_id, genus_id = taxa['sci_name'][spname]
+                            sd.taxon_genus_id = parent_list[0]   # from taxon get genus id
+                            sd.taxon_species_id = species_list[0]  # from taxon get species id
+                            sd.spname = ssname + '_one_3'
+                        except:
+                            pass
+                    elif len(species_list) > 1:  # not only one result in taxon
+
+                        p_id = parent_list[0]  # To check whether all the parent_id are same
+                        count_id = 0
+                        for dd in taxon_data:
+                            if dd == p_id:
+                                count_id = count_id + 1
+
+                        if count_id == len(parent_list):  # Parent_id is same
+                            try:
+                                #species_id, genus_id = taxa['sci_name'][spname]
+                                sd.taxon_genus_id = parent_list[0]  # from taxon get genus id
+                                sd.taxon_species_id = species_list[0]  # from taxon get species id
+                                sd.spname = ssname + '_more_p_3'
+                            except:
+                                pass
+
+                        else:  # Parent_id is not same
+
+                            genus_list = Taxon.objects.values('id', 'name').filter(id__in=parent_list)
+
+                            for gg, ss in zip(genus_list, species_list):
+
+                                if gg['name'] == gename:
+                                    sd.taxon_genus_id = gg['id']  # from taxon get genus id
+                                    sd.taxon_species_id = ss  # from taxon get species id
+                                    sd.spname = ssname + '_match_new_3'
+                                else:
+                                    pass
+
+                    else:
+                        sd.spname = None
+
+
+
                 except:
                     pass
+
+            if (sd.taxon_family_id == None and sd.taxon_species_id != None):
+                try:
+                    sd.spname = sd.spname + '_F'
+
+                    sd.taxon_family_id = \
+                        Taxon.objects.values('id', 'rank', 'parent_id').filter(rank='genus',
+                                                                                       id=sd.taxon_genus_id)[0][
+                            'parent_id']
+                    sd.taxon_order_id = \
+                        Taxon.objects.values('id', 'rank', 'parent_id').filter(rank='family',
+                                                                                       id=sd.taxon_family_id)[0][
+                            'parent_id']
+                    sd.taxon_class_id = \
+                        Taxon.objects.values('id', 'rank', 'parent_id').filter(rank='order',
+                                                                                       id=sd.taxon_order_id)[0][
+                            'parent_id']
+                    sd.taxon_phylum_id = \
+                        Taxon.objects.values('id', 'rank', 'parent_id').filter(rank='class',
+                                                                                       id=sd.taxon_class_id)[0][
+                            'parent_id']
+                    sd.taxon_kingdom_id = \
+                        Taxon.objects.values('id', 'rank', 'parent_id').filter(rank='phylum',
+                                                                                       id=sd.taxon_phylum_id)[0][
+                            'parent_id']
+                except:
+                    pass
+
+        else:
+            pass
+
 
 
 
@@ -175,24 +353,9 @@ def proc_simple_data(data, sd):
         sd.taxon_genus_id = genus_id #from taxa get genus id
         sd.taxon_species_id = species_id #from taxa get species id'''
 
-        if sd.taxon_family_id == " ":
-            sd.taxon_family_id = \
-                Taxon.objects.values('id', 'rank', 'name', 'parent_id').filter(rank='genus', id=sd.taxon_genus_id)[0][
-                    'parent_id']
-            sd.taxon_order_id = \
-                Taxon.objects.values('id', 'rank', 'name', 'parent_id').filter(rank='family', id=sd.taxon_family_id)[0][
-                    'parent_id']
-            sd.taxon_class_id = \
-                Taxon.objects.values('id', 'rank', 'name', 'parent_id').filter(rank='order', id=sd.taxon_order_id)[0][
-                    'parent_id']
-            sd.taxon_phylum_id = \
-                Taxon.objects.values('id', 'rank', 'name', 'parent_id').filter(rank='class', id=sd.taxon_class_id)[0][
-                    'parent_id']
-            sd.taxon_kungdom_id = \
-                Taxon.objects.values('id', 'rank', 'name', 'parent_id').filter(rank='phylum', id=sd.taxon_phylum_id)[0][
-                    'parent_id']
 
-    except:
+
+    else:
         pass
 
 
@@ -240,17 +403,20 @@ def proc_simple_data(data, sd):
 
 
 
-
-
-
+chunk_size = 10000
+chunk_num = 10
+chunk_num_begin = 4
+#print(len(all_data))
+#chunk_num = 1 #for manual setting
+#chunk_num_begin = 0
 # chunkzie or process will be killed in docker
 for i in range(chunk_num_begin, chunk_num):
     begin = 0 if i == 0 else i * chunk_size
     end = (i + 1) * chunk_size
     # print (all_data[begin:end])
 
-    #begin = 450000
-    #end = 500000
+    #begin = 35000
+    #end = 40000
     print ('begin', begin, end)
     for data in all_data[begin:end]:
         sd = SimpleData(taibif_id=data['taibif_id'], taibif_dataset_name=data['taibif_dataset_name'])
