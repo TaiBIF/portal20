@@ -88,9 +88,13 @@
       <!-- owl-carousel begin -->
       <div class="owl-carousel owl-theme" id="topic-board">
         {% for i in recommended %}
+        <div class="topic-card-wrapper item">
         <div class="item article-recommended-item">
           {#<a href="#"><img src="{% static 'images/photo-1.jpg' %}"></a>#}
-          <a class="topic-inner-title" href="{{ i.get_absolute_url }}">{{ i.title }}</a>
+          <p class="topic-inner-ctn">
+            <a class="topic-inner-title" href="{{ i.get_absolute_url }}">{{ i.title }}</a>
+          </p>
+        </div>
         </div>
         {% endfor %}
       </div>
