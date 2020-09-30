@@ -45,13 +45,18 @@
     <!-- story title & share btns end -->
     
     <!-- article content begin -->
-    <div class="article-content-wrapper">
-      {% if article.cover %}
-      <div class="article-img-wrapper" style="background">
-        <img src="/media/{{ article.cover }}" class="img-responsive">
-        <span>{{ article.cover_license_text }}</span>
+   <div class="carousel slide" data-interval="4000" data-ride="carousel">
+    <div class="carousel-inner" >
+      {% for image in imagesList %}
+      <div class="head-carousel-wrapper item {% if forloop.counter == 1 %} active{% endif %}">
+        <img src="/media/{{ image.images }}">
       </div>
-      {% endif %}
+      {% endfor %}
+
+    </div>
+    </div>
+
+    <div class="article-content-wrapper">
       <p>
         {% if article.memo|slice:"0:4" == "nid:" %}
           {% if article.is_content_markdown %}

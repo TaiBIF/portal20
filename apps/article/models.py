@@ -21,6 +21,20 @@ def article_cover_path(instance, filename):
         return cover_path
     return ''
 
+def images_path(instance, filename):
+    if instance.pk:
+        ext = filename.split('.')[-1].lower()
+        print(instance)
+        images_path = 'article/{}/images_{}.{}'.format(instance.pk, instance.pk, ext)
+
+        # delete if image name exist; or django will create a new hashed filename
+        exist_path = os.path.join(settings.MEDIA_ROOT, images_path)
+        if os.path.exists(exist_path):
+            os.remove(exist_path)
+
+        return images_path
+    return ''
+
 class Tag(models.Model):
 
     name = models.CharField(u"標籤名稱", max_length=50, blank=True)
@@ -33,6 +47,7 @@ class Tag(models.Model):
         verbose_name = u'Tag'
         verbose_name_plural = u'Tags'
         ordering = ['sort', ]
+
 
 
 class Article(models.Model):
@@ -110,3 +125,12 @@ class Article(models.Model):
         verbose_name = u'文章'
         verbose_name_plural = u'文章'
         ordering = ['-created', ]
+
+class PostImage(models.Model):
+    post = models.ForeignKey(Article, default=None, on_delete=models.CASCADE)
+    images = models.FileField(upload_to=images_path, blank=True)
+    cover_license_text = models.CharField('授權文字', max_length=100, blank=True)
+
+    def __str__(self):
+        return self.post.title
+
