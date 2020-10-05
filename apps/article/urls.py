@@ -6,5 +6,6 @@ urlpatterns = [
     path('category/<str:category>/', views.article_list, name='article-list'),
     path('tag/<str:tag_name>/', views.article_tag_list, name='article-tag-list'),
     path('<int:pk>/', views.article_detail, name='article-detail-id'),
+    #path('<int:pk>/', views.images_view, name='images-view'),
     #path('<int:pk>/<slug:slug>/', views.article_detail, name='article-detail-slug'),
 ]
