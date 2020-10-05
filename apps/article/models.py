@@ -24,7 +24,7 @@ def article_cover_path(instance, filename):
 def images_path(instance, filename):
     if instance.pk:
         ext = filename.split('.')[-1].lower()
-        print(instance)
+        #print(instance)
         images_path = 'article/{}/images_{}.{}'.format(instance.pk, instance.pk, ext)
 
         # delete if image name exist; or django will create a new hashed filename
