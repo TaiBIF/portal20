@@ -47,14 +47,22 @@
     <!-- article content begin -->
    <div class="carousel slide" data-interval="4000" data-ride="carousel">
     <div class="carousel-inner" >
-      {% for image in imagesList %}
-      <div class="head-carousel-wrapper item {% if forloop.counter == 1 %} active{% endif %}">
-        <img src="/media/{{ image.images }}">
-      </div>
-      {% endfor %}
+      {% if imagesList %}
+        {% for image in imagesList %}
+        <div class="head-carousel-wrapper item {% if forloop.counter == 1 %} active{% endif %}">
+          <img src="/media/{{ image.images }}">
+        </div>
+        {% endfor %}
+      {% else %}
+        {% if  article.cover %}
+        <div class="head-carousel-wrapper item active">
+            <img src="/media/{{ article.cover }}">
+        </div>
+        {% endif %}
+      {% endif %}
 
     </div>
-    </div>
+   </div>
 
     <div class="article-content-wrapper">
       <p>
