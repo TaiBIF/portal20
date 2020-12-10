@@ -4,6 +4,7 @@ from django.views import generic
 from django.core.paginator import Paginator
 
 from .models import Article, PostImage
+from itertools import chain
 
 #DEPRICATED 不合用
 class ArticleListView(generic.ListView):
@@ -67,22 +68,14 @@ def article_detail(request, pk):
     article = get_object_or_404(Article, pk=pk)
     imagesList = PostImage.objects.filter(post=article)
     recommended = Article.objects.filter(category=article.category).order_by('?')[0:5]
-    print(imagesList)
+    
     return render(request, 'article-detail.html', {
         'article': article,
         'recommended': recommended,
         'imagesList': imagesList
     })
 
-# Kuan-Yu add for multiple photo function
-'''def images_view(request, pk):
-    post = get_object_or_404(Article, pk=pk)
-    imagesList = PostImage.objects.filter(post=post)
 
-    return render(request, 'article-detail.html', {
-        'post':post,
-        'imagesList':imagesList
-    })'''
 
 
 def article_tag_list(request, tag_name):
