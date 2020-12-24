@@ -34,6 +34,17 @@ services:
     volumes:
       - ../taibif-volumes/pgdata:/var/lib/postgresql/data/pgdata
       - ../taibif-volumes/bucket:/taibif-bucket
+  php:
+    #image: php:5.6-zts-jessie
+    image: php:5.6.40-fpm-alpine
+    #build: .
+    tty: true
+    #ports:
+    #  - 8000:80
+    volumes:
+      - ./php_build/src:/php_code
+      #- ./php.ini:/usr/local/etc/php/php.ini
+
   nginx:
     image: nginx:1.17.6-alpine
     restart: always

@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>無標題文件</title>
+<script type="text/javascript" src="http://taibif.org.tw/taibif_search/js/proj4js.js"></script>
+	  <script src="http://taibif.org.tw/taibif_search/js/proj4js-combined.js"></script>
+      <script type="text/javascript">
+      <!--
+	    Proj4js.defs["EPSG:4326"] = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
+		var EPSG4326 = new Proj4js.Proj('EPSG:4326');
+
+		Proj4js.defs["EPSG:3826"] = "+proj=tmerc  +lat_0=0 +lon_0=121 +k=0.9999 +x_0=250000 +y_0=0 +ellps=GRS80 +units=公尺 +no_defs"; 
+		var EPSG3826 = new Proj4js.Proj('EPSG:3826');
+		
+		function TransCoord() {
+
+		var xx= parseFloat(document.getElementById('tm2x').value);
+		var yy= parseFloat(document.getElementById('tm2y').value);
+
+		//Define the source Coord Sys 
+		var src = new Proj4js.Proj("EPSG:3826");
+		var dst = new Proj4js.Proj("EPSG:4326"); 
+
+		var point = new Proj4js.Point(xx, yy);  //Create a point object 
+		Proj4js.transform(src, dst, point) //Do your conversion 
+		//alert(point.y + "," + point.x); 
+		//document.write('<p>x: ' + point.x + '<br>y: ' + point.y  + '</p>');
+		document.getElementById('longitude').value=point.x;
+		document.getElementById('latitude').value=point.y;
+		
+		var x=document.getElementById('longitude').value;
+		var y=document.getElementById('latitude').value;
+		
+		document.myform.submit();
+		}
+		-->
+		</script>
+<style type="text/css">
+<!--
+.style1 {
+	font-family: "新細明體";
+	font-weight: bold;
+	color: #ffffff;
+	font-size: 16px;
+}
+.style2 {
+	color: #333333
+}
+-->
+</style>
+
+</head>
+
+<body>
+<table width="366" border="0" cellspacing="0" cellpadding="0" class="style2" align="center">
+  <tr>
+    <td height="38" style="background:url(images/topbg.gif) no-repeat"><div align="center"><span class="style1">地理分布線上座標轉換 (javascript 版本)</span></div></td>
+  </tr>
+  <tr>
+    <td align="center" style="background:url(images/contentbg.gif) repeat-y"><form id="myform" action="" ><table width="98%" border="0" cellspacing="0" cellpadding="5">
+      <tr>
+        <td colspan="2" bgcolor="#eeeeee"><div align="left" class="style2"><img src="images/dot.gif" width="13" height="13" align="baseline"/>&nbsp;原始座標</div></td>
+        </tr>
+      <tr>
+        <td width="101" bgcolor="#fafae0"><div align="right">投影座標：</div></td>
+        <td width="240">
+        	<div align="left">
+        	  <select name="crsSource" id="crsSource">
+        	    <option value="1">WGS 84 經緯度</option>
+        	    <option value="2">TWD 67 經緯度</option>
+        	    <option value="3">TWD 97 經緯度</option>
+        	    <option value="4">TWD97/ 澎湖地區</option>
+        	    <option value="5">TWD97/ 臺灣地區</option>
+        	    <option value="6">TWD67/ 澎湖地區</option>
+                <option value="7">TWD67/ 臺灣地區</option>
+      	      </select>
+      	  </div></td>
+      </tr>
+      <tr>
+        <td bgcolor="#fafae0"><div align="right">X：</div></td>
+        <td><div align="left">
+          <input type="text" name="tm2x" id="tm2x" size="20"/>
+        </div></td>
+      </tr>
+      <tr>
+        <td bgcolor="#fafae0"><div align="right">Y：</div></td>
+        <td><div align="left">
+          <input type="text" name="tm2y" id="tm2y" size="20"/>
+        </div></td>
+      </tr>
+      
+      <tr> 
+        <td colspan="2" bgcolor="#eeeeee"><div align="left"><span class="style2"><img src="images/dot.gif" width="13" height="13" align="baseline"/>&nbsp;轉換座標</span></div></td>
+        </tr>
+      <tr>
+        <td bgcolor="#fafae0"><div align="right">投影座標：</div></td>
+        <td><div align="left">
+          <select name="crsDest" id="crsDest">
+            <option value="1">WGS 84 經緯度</option>
+        	    <option value="2">TWD 67 經緯度</option>
+        	    <option value="3">TWD 97 經緯度</option>
+        	    <option value="4">TWD97/ 澎湖地區</option>
+        	    <option value="5">TWD97/ 臺灣地區</option>
+        	    <option value="6">TWD67/ 澎湖地區</option>
+                <option value="7">TWD67/ 臺灣地區</option>
+          </select>
+        </div></td>
+      </tr>
+      <tr>
+        <td bgcolor="#fafae0"><div align="right">X：</div></td>
+        <td><div align="left">
+          <input type="text" name="longitude" id="longitude" size="20" value="" style="color:#FF0000"/>
+        </div></td>
+      </tr>
+      <tr>
+        <td bgcolor="#fafae0"><div align="right">Y：</div></td>
+        <td><div align="left">
+          <input type="text" name="latitude" id="latitude" size="20" value="" style="color:#FF0000"/>
+        </div></td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center"><img src="images/line.gif" width="345" height="1" /></td>
+        </tr>
+      <tr>
+    	<td align="center" colspan="2">
+    	  <input type="button" name="button" id="button" value="轉換" onclick="TransCoord();"/>&nbsp;<input type="reset" name="reset" id="reset" value="清除" /></td>
+ 	 </tr>
+      
+    </table>
+    </form></td>
+  </tr>
+  
+  <tr>
+    <td height="14" style="background:url(images/buttombg.gif) no-repeat">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>
