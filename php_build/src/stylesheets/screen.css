@@ -1,0 +1,127 @@
+@charset "UTF-8";
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+/*@import "compass/reset";*/
+/* line 13, ../_sass/screen.scss */
+body {
+  padding-top: 70px;
+  font-family: "微軟正黑體", "Microsoft JhengHei", "Droid Sans", sans-serif;
+}
+
+/* line 18, ../_sass/screen.scss */
+nav.navbar {
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fdc644), color-stop(100%, #da9902));
+  background-image: -webkit-linear-gradient(#fdc644, #da9902);
+  background-image: -moz-linear-gradient(#fdc644, #da9902);
+  background-image: -o-linear-gradient(#fdc644, #da9902);
+  background-image: linear-gradient(#fdc644, #da9902);
+  text-shadow: #333333 0px 1px 1px;
+  border-bottom: 1px solid #c08702;
+}
+/* line 23, ../_sass/screen.scss */
+nav.navbar a {
+  color: white !important;
+}
+/* line 26, ../_sass/screen.scss */
+nav.navbar a:hover {
+  text-decoration: underline;
+}
+
+/* line 33, ../_sass/screen.scss */
+div.description h2 {
+  margin-top: 0;
+}
+/* line 37, ../_sass/screen.scss */
+div.description p {
+  color: #333;
+}
+/* line 41, ../_sass/screen.scss */
+div.description ul {
+  margin: 0;
+  padding: 0;
+}
+/* line 44, ../_sass/screen.scss */
+div.description ul li {
+  list-style-type: none;
+  margin-bottom: 0.7em;
+}
+/* line 50, ../_sass/screen.scss */
+div.description a {
+  font-size: 1.2em;
+}
+
+/* line 59, ../_sass/screen.scss */
+section.content div.page-header h1 {
+  color: #663300;
+}
+/* line 61, ../_sass/screen.scss */
+section.content div.page-header h1 small {
+  display: inline-block;
+}
+/* line 67, ../_sass/screen.scss */
+section.content div.jumbotron {
+  /*@include box-shadow($yellow 0px 2px 2px);*/
+  background-color: #fff5da;
+  /*border-left: 4px solid #996633;*/
+}
+/* line 71, ../_sass/screen.scss */
+section.content div.jumbotron p {
+  color: #666666;
+}
+/* line 76, ../_sass/screen.scss */
+section.content div.row.result {
+  margin-bottom: 1.5em;
+}
+
+/* line 83, ../_sass/screen.scss */
+footer {
+  background-color: #363636;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5c5c5c), color-stop(100%, #363636));
+  background-image: -webkit-linear-gradient(#5c5c5c, #363636);
+  background-image: -moz-linear-gradient(#5c5c5c, #363636);
+  background-image: -o-linear-gradient(#5c5c5c, #363636);
+  background-image: linear-gradient(#5c5c5c, #363636);
+  color: #ccc;
+  border-top: 1px solid #454545;
+  margin-top: 60px;
+  padding: 2em 0 3.5em 0;
+}
+/* line 91, ../_sass/screen.scss */
+footer h2 {
+  font-size: 2em;
+  font-size: 2rem;
+}
+/* line 99, ../_sass/screen.scss */
+footer a {
+  color: #ccc;
+}
+/* line 101, ../_sass/screen.scss */
+footer a:hover {
+  color: #fff;
+}
+
+/* line 107, ../_sass/screen.scss */
+span.glyphicon {
+  margin-right: 4px;
+}
+
+/* line 111, ../_sass/screen.scss */
+span.name {
+  /*font-family: 'Playfair Display', serif;*/
+}
+/* line 113, ../_sass/screen.scss */
+span.name.diff {
+  color: #f00;
+  font-weight: bold;
+}
+/* line 118, ../_sass/screen.scss */
+span.name.italic {
+  font-style: italic;
+}
+
+/* line 123, ../_sass/screen.scss */
+form {
+  padding-bottom: 1.5em;
+}
