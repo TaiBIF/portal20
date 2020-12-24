@@ -1,0 +1,150 @@
+diff --git a/apps/page/views.py b/apps/page/views.py
+index a7fa8d5..80ba766 100644
+--- a/apps/page/views.py
++++ b/apps/page/views.py
+@@ -2,10 +2,11 @@ import re
+ import csv
+ import codecs
+ import json
++import requests
+ 
+ import os
+ import environ
+-from django.shortcuts import render, get_object_or_404
++from django.shortcuts import render, get_object_or_404, redirect
+ from django.http import (
+     HttpResponse,
+     HttpResponseNotFound,
+@@ -17,7 +18,7 @@ from django.db.models import (
+     Sum
+ )
+ from django.conf import settings
+-
++from django.contrib import messages
+ from apps.data.models import (
+     Dataset,
+     Taxon,
+@@ -80,6 +81,20 @@ def contact_us(request):
+     if request.method == 'GET':
+         return render(request, 'contact-us.html')
+     elif request.method == 'POST':
++        ''' Begin reCAPTCHA validation '''
++        recaptcha_response = request.POST.get('g-recaptcha-response')
++        data = {
++            'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
++            'response': recaptcha_response
++        }
++        r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
++        result = r.json()
++        ''' End reCAPTCHA validation '''
++        print(result)
++        if result['success'] == False:
++            messages.error(request, '請進行驗證，謝謝')
++            return redirect('contact_us')
++
+         data = {
+             'name':  request.POST.get('name', ''),
+             'cat': request.POST.get('cat', ''),
+diff --git a/conf/settings.py b/conf/settings.py
+index ad9f717..7de1804 100644
+--- a/conf/settings.py
++++ b/conf/settings.py
+@@ -34,7 +34,7 @@ BASE_DIR = root_path()
+ # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
+ 
+ SECRET_KEY = env('SECRET_KEY')
+-
++GOOGLE_RECAPTCHA_SECRET_KEY = env('GOOGLE_RECAPTCHA_SECRET_KEY')
+ DEBUG = env.bool('DEBUG', default=False)
+ 
+ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
+diff --git a/nginx/production/taibif.conf b/nginx/production/taibif.conf
+index 5fa5274..0b031d5 100644
+--- a/nginx/production/taibif.conf
++++ b/nginx/production/taibif.conf
+@@ -2,6 +2,12 @@ upstream taibif_instance {
+   server web:8001;
+ }
+ 
++server {
++  listen 80;
++  server_name taibif.tw;
++  return 301 $scheme://portal.taibif.tw;
++}
++
+ server {
+     listen 80;
+     charset utf-8;
+@@ -19,7 +25,7 @@ server {
+ server {
+     listen 443 ssl;
+     charset utf-8;
+-    server_name portal.taibif.tw;
++    server_name portal.taibif.tw, taibif.tw;
+     server_tokens off;
+ 
+     ssl_certificate /etc/letsencrypt/live/portal.taibif.tw/fullchain.pem;
+@@ -27,6 +33,10 @@ server {
+     include /etc/letsencrypt/options-ssl-nginx.conf;
+     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+ 
++    if ($host = taibif.tw) {
++      rewrite ^ https://portal.taibif.tw redirect;
++      break;
++    }
+     location /static {
+         root /taibif-volumes/;
+         expires 7d;
+@@ -50,4 +60,4 @@ server {
+                 proxy_connect_timeout   60;
+                 proxy_read_timeout      60;
+     }
+-}
+\ No newline at end of file
++}
+diff --git a/templates/contact-us.html b/templates/contact-us.html
+index 759a9ab..fd8726c 100644
+--- a/templates/contact-us.html
++++ b/templates/contact-us.html
+@@ -4,7 +4,9 @@
+ 
+ {% block main %}
+ {% include "inc_breadcrumb.html" with tab="03" active_label="聯絡我們" %}
+-
++{% block script %}
++<script src='https://www.google.com/recaptcha/api.js'></script>
++{% endblock %}
+ 
+ 
+   <!-- container begin -->
+@@ -14,6 +16,14 @@
+     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+     <strong>{{ message.head }}</strong> {{ message.content }}
+   </div>
++  {% endif %}
++  {% if messages %}
++  <div class="alert alert-warning alert-dismissible" role="alert">
++    {% for message in messages %}
++    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
++    <strong>{{ message }}</strong>
++    {% endfor %}
++  </div>
+   {% endif %}
+     <h1 class="heading-lg-ul">
+       聯絡我們
+@@ -58,14 +68,13 @@
+               <textarea class="form-control textarea" placeholder="留言內容" rows="3" name="content" required></textarea>
+             </div>
+           </div>
+-
+           <div class="col-xs-12 contact-btn-wrapper">
++	    <div class="g-recaptcha" data-sitekey="6LdbnAkaAAAAAALw87ZC4v5NFkkBrjDESgmyv5Kj"></div>		
+             <button type="submit" class="btn btn-sunset">送出</button>
+           </div>
+ 
+         </div>
+       </form>
+-
+     </div>
+     <!-- contact form end -->
+   </div>
