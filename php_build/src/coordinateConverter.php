@@ -29,7 +29,7 @@ else {
 	$sourceXY = (isset($_REQUEST['sourceXY']))?$_REQUEST['sourceXY']:"";
 }
 
-$ep = "http://nginx/BDTools/proj4/convert.php";
+$ep = "https://portal.taibif.tw/BDTools/proj4/convert.php";
 
 $sourceXY = trim($sourceXY, " \r\n");
 $resultXY = $sourceXY;
@@ -54,24 +54,7 @@ if (!empty($sourceXY)) {
 		);
 		$qparams = http_build_query($data);
 		$url = $ep . "?" . $qparams;
-		//$url = "http://nginx/info.php";
-        //$runfile = "http://localhost:8000/BDTools/proj4/convert.php" . "?" . $qparams;
-        $runfile ="http://linux.vbird.org/new_linux.php";
-        function curl_get_contents($runfile)
-        {
-            $ch = curl_init();
-
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_URL, $url);
-
-            $data = curl_exec($ch);
-            curl_close($ch);
-
-            return $data_n;
-        }
-        //var_dump($data);
-
+		
 		$res = file_get_contents($url);
 		// do whatever needed to be done to $res
 		$res_res = explode("<br>", end(explode("Conversion : ", $res)));
@@ -109,12 +92,12 @@ if (!empty($sourceXY)) {
     <meta name="description" content="生物多樣性資料校對轉換工具 Biodiversity Data Check Tools">
     <meta name="author" content="TaiBIF">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="stylesheets/screen.css" media="screen">
-    <link rel="stylesheet" href="stylesheets/print.css" media="print">
-        <script src="/taibif_search/js/proj4js.js"></script>
-<script src="/taibif_search/js/proj4js-combined.js"></script>
-<script src="/BDTools/taibif_convers/converter.js"></script>
+    <link rel="stylesheet" href="/php_code/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/php_code/stylesheets/screen.css" media="screen">
+    <link rel="stylesheet" href="/php_code/stylesheets/print.css" media="print">
+        <script src="/php_code/taibif_search/js/proj4js.js"></script>
+<script src="/php_code/taibif_search/js/proj4js-combined.js"></script>
+<script src="/php_code/BDTools/taibif_convers/converter.js"></script>
     <!--[if lt IE 9]>           
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -155,7 +138,7 @@ if (!empty($sourceXY)) {
 
 
 <form name='batchCoordCnvrtForm' method='post'>
-      <h2>原始坐標</h2><?php echo $runfile;?><?php echo '<pre>'; print_r($res); echo '</pre>';?>
+      <h2>原始坐標</h2>
       <div class="form-group">
         <label for="sourceSystem" class="col-sm-2 control-label">投影座標系統</label>
         <div class="col-sm-10">
@@ -244,7 +227,7 @@ if (!empty($sourceXY)) {
               <div class="container">
   <div class="row">
     <div class="col-md-3">
-      <a href="http://taibif.tw/"><img src="images/taibif-logo-mono.png" alt="TaiBIF"></a>
+      <a href="http://taibif.tw/"><img src="/php_code/images/taibif-logo-mono.png" alt="TaiBIF"></a>
     </div>
     <div class="col-md-9">
       <h2>技術提供：</h2>
@@ -254,7 +237,7 @@ if (!empty($sourceXY)) {
 </div>
           </footer>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/php_code/bootstrap/dist/js/bootstrap.min.js"></script>
   </body>
 </html>
 
