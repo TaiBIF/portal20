@@ -52,6 +52,7 @@ services:
       - 80:80
       - 443:443
     volumes:
+      - ./php_build/src:/php_code      
       - ./nginx/production:/etc/nginx/conf.d
       - ../taibif-volumes/static:/taibif-volumes/static
       - ../taibif-volumes/media:/taibif-volumes/media
