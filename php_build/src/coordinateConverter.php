@@ -125,7 +125,7 @@ if (!empty($sourceXY)) {
       <!--<span class="icon-bar"></span>-->
       <!--<span class="icon-bar"></span>-->
     <!--</button>-->
-    <a href="http://taibif.org.tw/BDTools/" class="site-title navbar-brand"><span class="glyphicon glyphicon-home"></span>生物多樣性資料校對轉換工具</a>
+    <a href="https://portal.taibif.tw/tools" class="site-title navbar-brand"><span class="glyphicon glyphicon-home"></span>工具分享</a>
   </div>
   <!--<div class="collapse navbar-collapse">-->
   <!--</div>-->

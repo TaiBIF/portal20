@@ -43,7 +43,7 @@ urlpatterns = [
     path('search/', include('apps.data.urls')),
     #path('occurrence/search|map/', search_view, name='search-occurrence'),
     re_path(r'^occurrence/(?P<cat>search|gallery|download|map|charts|taxonomy)/$', search_view, name='search-occurrence'),
-    path('occurrence/search/download', search_occurrence_download_view, name='search-occurrence-download'),
+    #path('occurrence/downloadlink', search_occurrence_download_view, name='search-occurrence-download'),
     path('dataset/search/', search_view, name='search-dataset'),
     path('publisher/search/', search_view, name='search-publisher'),
     path('species/search/', search_view, name='search-species'),

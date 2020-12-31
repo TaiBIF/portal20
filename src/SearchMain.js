@@ -100,7 +100,7 @@ function DatasetResult(props) {
 
 function PublisherResult(props) {
   const rows = props.data.results.map((row, index) => {
-    const link = `/publisher/${row.name}/`;
+    const link = `/publisher/${row.id}/`;
     const publisherImage = null;
     // TODO
     //<a href={link}><img src="images/logo-sinica.jpg" class="img-responsive"></a>
@@ -139,8 +139,9 @@ function SearchMain(props) {
     initActiveTab = 'menu5';
   }
   const [tabActive, setTabActive] = React.useState(initActiveTab);
-  //console.log(props);
+  console.log(props);
   const count = props.data? props.data.count.toLocaleString('en') : 0;
+  //const count = 0;
   const typeLabel = SEARCH_TYPE_LABEL_MAP[props.searchType];
 
   let q = null;
