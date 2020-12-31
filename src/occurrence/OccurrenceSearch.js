@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default function OccurrenceSearch(props) {
-
   const rows = props.data.results.map((row, index) => {
     const sn = props.data.offset + index + 1;
     return (
@@ -18,8 +17,7 @@ export default function OccurrenceSearch(props) {
   //  download link
   /*const downloadLink = (props.downloadUrl !== '') ?
         <a href={props.downloadUrl} className="btn btn-primary" target="_blank">下載篩選結果 (CSV)</a> :
-        <button className="btn btn-primary disabled">資料量太大，無法下載，請縮小搜尋範圍</button>;
-  */
+        <button className="btn btn-primary disabled">資料量太大，無法下載，請縮小搜尋範圍</button>; */
   return (
       <div className="table-responsive">
         <table className="table">
