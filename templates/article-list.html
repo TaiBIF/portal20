@@ -57,8 +57,10 @@
         <a href="{{ i.get_absolute_url }}" class="head-carousel-btn"></a>
         <div class="carousel-caption">
           <span class="head-carousel-cate">{{ i.get_category_display }}</span>
-          <h3 class="head-carousel-title">{{ i.title }}</h3>
+          <h3 class="head-carousel-title"><a href="{{ i.get_absolute_url }}" style = "color:white">{{ i.title }}</a></h3>
+          <div class="home-banner-cover-license">{{ i.cover_license_text }}</div>
         </div>
+
       </div>
       {% endfor %}
     </div>
