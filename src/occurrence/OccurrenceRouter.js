@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import OccurrenceSearch from './OccurrenceSearch';
 import {OccurrenceCharts} from './OccurrenceCharts';
 import {OccurrenceTaxonomy} from './OccurrenceTaxonomy';
+import {OccurrenceDownload} from './OccurrenceDownload';
 
 import {
   BrowserRouter as Router,
@@ -66,10 +67,13 @@ const OccurrenceRouter = ({data, filters}) =>  {
           <OccurrenceSearch data={data} />
         </Route>
         <Route path={navTabsData[4].path}>
-      {/*<OccurrenceCharts filters={filters} />*/}
+      <OccurrenceCharts filters={filters} />
         </Route>
         <Route path={navTabsData[3].path}>
-      {/*   <OccurrenceTaxonomy filters={filters} />*/}
+      <OccurrenceTaxonomy filters={filters} />
+        </Route>
+        <Route path={navTabsData[5].path}>
+      <OccurrenceDownload data={data} />
         </Route>
       </Switch>
       </Router>
