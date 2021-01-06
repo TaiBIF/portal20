@@ -23,11 +23,13 @@ const navTabsData = [
     'key': 'gallery',
     'label': '影像集',
     'path': '/occurrence/gallery/',
+    'disable': true,
   },
   {
     'key': 'map',
     'label': '分佈地圖',
     'path': '/occurrence/map/',
+    'disable': true,
   },
   {
     'key': 'taxonomy',
@@ -51,15 +53,28 @@ const OccurrenceRouter = ({data, filters}) =>  {
   const path = window.location.pathname;
   const m = path.match(/\/occurrence\/(search|map|gallery|taxonomy|charts|download)/);
   const initTab = (m[1]) ? m[1] : 'search';
+  console.log(initTab);
   const [activeTab, setActiveTab] = useState(initTab);
+  const navTabs = [];
+  for (let i in navTabsData) {
+    const key = navTabsData[i].key;
+    if (!navTabsData[i].disable) {
+      navTabs.push(
+          <li key={key} className={activeTab === key ? "active" : null} onClick={(e)=>setActiveTab(key)}>
+          <Link to={navTabsData[i].path}>{navTabsData[i].label}</Link>
+          </li>
+      );
+    }
+  }
+  /*{navTabsData.map((x) => (
+      <li key={x.key} className={activeTab === x.key ? "active" : null} onClick={(e)=>setActiveTab(x.key)}>
+      <Link to={x.path}>{x.label}</Link>
+      </li>))}*/
   return (
       <Router>
       <div className="table-responsive">
       <ul className="nav nav-tabs nav-justified search-content-tab">
-        {navTabsData.map((x) => (
-            <li key={x.key} className={activeTab === x.key ? "active" : null} onClick={(e)=>setActiveTab(x.key)}>
-            <Link to={x.path}>{x.label}</Link>
-          </li>))}
+      {navTabs.map((x) => x)}
       </ul>
       </div>
       <Switch>
