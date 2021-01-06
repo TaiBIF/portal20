@@ -134,7 +134,7 @@ def search_occurrence(request, cat=''):
     occur_search = OccurrenceSearch(list(request.GET.lists()), using='')
     res = {}
 
-    if cat == 'search':
+    if cat in ['search', 'download']:
         res = occur_search.get_results()
     elif cat == 'taxonomy':
         taxon_num_list = []
