@@ -53,7 +53,7 @@ const OccurrenceRouter = ({data, filters}) =>  {
   const path = window.location.pathname;
   const m = path.match(/\/occurrence\/(search|map|gallery|taxonomy|charts|download)/);
   const initTab = (m[1]) ? m[1] : 'search';
-  console.log(initTab);
+
   const [activeTab, setActiveTab] = useState(initTab);
   const navTabs = [];
   for (let i in navTabsData) {
@@ -88,7 +88,7 @@ const OccurrenceRouter = ({data, filters}) =>  {
       <OccurrenceTaxonomy filters={filters} />
         </Route>
         <Route path={navTabsData[5].path}>
-      <OccurrenceDownload data={data} />
+      <OccurrenceDownload filters={filters} data={data} />
         </Route>
       </Switch>
       </Router>
