@@ -140,7 +140,7 @@ function SearchMain(props) {
   }
   const [tabActive, setTabActive] = React.useState(initActiveTab);
   console.log(props);
-  const count = props.data? props.data.count.toLocaleString('en') : 0;
+  const count = (props.data && props.data.count ) ? props.data.count.toLocaleString('en') : 0;
   //const count = 0;
   const typeLabel = SEARCH_TYPE_LABEL_MAP[props.searchType];
 

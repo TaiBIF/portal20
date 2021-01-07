@@ -343,6 +343,7 @@ def search_occurrence_download_view(request):
     occur_search.limit = -1
 
     res = occur_search.get_results()
+
     taibif_ids = [x['taibif_id'] for x in res['results']]
     raw_data_list = RawDataOccurrence.objects.filter(taibif_id__in=taibif_ids).all()
 
