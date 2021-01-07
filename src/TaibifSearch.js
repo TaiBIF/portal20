@@ -75,7 +75,8 @@ class TaibifSearch extends React.Component {
              window.location.pathname === '/occurrence/taxonomy/' ||
              window.location.pathname === '/occurrence/map/' ||
              window.location.pathname === '/occurrence/gallery/' ||
-             window.location.pathname === '/occurrence/charts/') {
+             window.location.pathname === '/occurrence/charts/' ||
+             window.location.pathname === '/occurrence/download/') {
       searchType = 'occurrence';
     }
     else if (window.location.pathname === '/publisher/search/') {

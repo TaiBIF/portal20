@@ -218,7 +218,7 @@ if (!empty($sourceXY)) {
       <li><strong>y:</strong> Y 坐標</li>
     </ul>
     <p>範例：</p>
-    <pre>http://taibif.org.tw/BDTools/proj4/convert.php?<strong>source</strong>=5&amp;<strong>destination</strong>=1&amp;<strong>x</strong>=123456&amp;<strong>y</strong>=2234567</pre>
+    <pre>https://portal.taibif.tw/BDTools/proj4/convert.php?<strong>source</strong>=5&amp;<strong>destination</strong>=1&amp;<strong>x</strong>=123456&amp;<strong>y</strong>=2234567</pre>
   </div>
 
 
