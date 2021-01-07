@@ -302,10 +302,6 @@ def species_view(request, pk):
     if test:
        context['map_view'] = test[0]
 
-
-
-
-
     #if n:
     #   context['map_view'] = [lat/n, lng/n]
     #n =
