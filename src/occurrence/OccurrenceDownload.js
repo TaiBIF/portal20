@@ -9,7 +9,6 @@ function OccurrenceDownload(props) {
   
   //const Occur = props.data.results;
   //const length = Occur.length;
-
   //console.log(queryString);
   //if (length < 5000) {
   //} else {
