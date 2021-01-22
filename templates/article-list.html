@@ -142,17 +142,17 @@
         <span class="listbox-inner-date">{{ article.created|date:'Y/m/d' }}</span>
         <h3 class="listbox-inner-title"><a href="{{ article.get_absolute_url }}" target="_blank" rel="noreferrer noopener">{{ article.title }}</a></h3>
         <p class="listbox-inner-summary hidden-xs">
-            {% if article.memo|slice:"0:4" == "nid:" %}
+          {% if article.memo|slice:"0:4" == "nid:" %}
             {# old article content #}
             {% if article.category == "UPDATE" %}
             {% else %}
-            {{ article.content|striptags|truncatechars:150 }}
+            {{ article.content | markdown  | striptags | truncatechars:150 }}
             <p><a href="{% url 'article-detail-id' pk=article.id %}" target="_blank" rel="noreferrer noopener">閱讀更多</a></p>
             {% endif %}
-            {% else %}
-            {{ article.content | linebreaks | truncatechars:150}}
-            <p><a href="{% url 'article-detail-id' pk=article.id %}" target="_blank" rel="noreferrer noopener">閱讀更多</a></p>
-            {% endif %}
+          {% else %}
+          {{ article.content | markdown | safe | linebreaks | truncatechars:150 }}
+          <p><a href="{% url 'article-detail-id' pk=article.id %}" target="_blank" rel="noreferrer noopener">閱讀更多</a></p>
+          {% endif %}
         </p>
       </div>
       {% if article.cover %}
