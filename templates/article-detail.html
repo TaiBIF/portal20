@@ -52,11 +52,17 @@
         <div class="head-carousel-wrapper item {% if forloop.counter == 1 %} active{% endif %}">
           <img src="/media/{{ image.images }}">
         </div>
+        <div class="home-banner-cover-license">
+          {{image.cover_license_text}}
+        </div>
         {% endfor %}
       {% else %}
         {% if  article.cover %}
         <div class="head-carousel-wrapper item active">
             <img src="/media/{{ article.cover }}">
+        </div>
+        <div class="home-banner-cover-license">
+          {{article.cover_license_text}}
         </div>
         {% endif %}
       {% endif %}
