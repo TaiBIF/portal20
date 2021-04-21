@@ -47,26 +47,14 @@
     <!-- article content begin -->
    <div class="carousel slide" data-interval="4000" data-ride="carousel">
     <div class="carousel-inner" >
-      {% if imagesList %}
-        {% for image in imagesList %}
-        <div class="head-carousel-wrapper item {% if forloop.counter == 1 %} active{% endif %}">
-          <img src="/media/{{ image.images }}">
-        </div>
-        <div class="home-banner-cover-license">
-          {{image.cover_license_text}}
-        </div>
-        {% endfor %}
-      {% else %}
-        {% if  article.cover %}
+      {% if  article.cover %}
         <div class="head-carousel-wrapper item active">
             <img src="/media/{{ article.cover }}">
         </div>
         <div class="home-banner-cover-license">
           {{article.cover_license_text}}
         </div>
-        {% endif %}
       {% endif %}
-
     </div>
    </div>
 
@@ -83,6 +71,35 @@
         {% endif %}
       </p>
     <!-- article content begin -->
+
+
+    <!--Post images 位置-->
+      <div id="carousel-postImages" class="carousel slide" data-ride="carousel">
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+          {% if imagesList %}
+            {% for image in imagesList %}
+              <div class="head-carousel-wrapper item {% if forloop.counter == 1 %} active{% endif %}">
+                <img src="/media/{{ image.images }}">
+                <div class="carousel-caption">
+                  <p>{{image.cover_license_text}}</p> 
+                </div>
+              </div>
+            {% endfor %}
+          {% endif %}
+        </div>
+        
+        <!-- Controls -->
+        <a class="left carousel-control" href="#carousel-postImages" role="button" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+    
+        <a class="right carousel-control" href="#carousel-postImages" role="button" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+    </div>
 
     {% comment %}
     <!-- attachment info begin -->
