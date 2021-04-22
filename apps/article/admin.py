@@ -1,6 +1,10 @@
 from django.contrib import admin
 
-from .models import Article, Tag
+from .models import Article, Tag, PostImage
+
+class PostImageAdmin(admin.StackedInline):
+    model = PostImage
+    fields = ('post', 'images', 'cover_license_text')
 
 class ArticleAdmin(admin.ModelAdmin):
     model = Article
@@ -22,6 +26,7 @@ class ArticleAdmin(admin.ModelAdmin):
         'created',
         'changed',
     )
+    inlines = [PostImageAdmin]
 
 class TagAdmin(admin.ModelAdmin):
     model = Tag
@@ -31,3 +36,5 @@ class TagAdmin(admin.ModelAdmin):
 
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Tag, TagAdmin)
+
+

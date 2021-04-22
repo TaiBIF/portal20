@@ -29,7 +29,7 @@ class Post(models.Model):
     )
 
     title = models.CharField(u"網站名稱", max_length=200, default="")
-    upload = models.ImageField(upload_to= page_image_path, blank=True)
+    Upload = models.ImageField(upload_to= page_image_path, blank=True)
     url = models.URLField(u"網站", max_length = 200, default="")
     content = models.CharField(u"內容", max_length=200, default="",blank=True)
     sort = models.PositiveIntegerField(u"排序", default=0)

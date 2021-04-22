@@ -5,7 +5,9 @@
 {% block main %}
 {% include "inc_breadcrumb.html" with tab="03" active_label="聯絡我們" %}
 
-
+{% block script %}
+<script src='https://www.google.com/recaptcha/api.js'></script>
+{% endblock %}
 
   <!-- container begin -->
 <div class="container">
@@ -13,6 +15,14 @@
   <div class="alert alert-warning alert-dismissible" role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <strong>{{ message.head }}</strong> {{ message.content }}
+  </div>
+  {% endif %}
+  {% if messages %}
+  <div class="alert alert-warning alert-dismissible" role="alert">
+    {% for message in messages %}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>{{ message }}</strong>
+    {% endfor %}
   </div>
   {% endif %}
     <h1 class="heading-lg-ul">
@@ -60,6 +70,7 @@
           </div>
 
           <div class="col-xs-12 contact-btn-wrapper">
+            <div class="g-recaptcha" data-sitekey="6LdbnAkaAAAAAALw87ZC4v5NFkkBrjDESgmyv5Kj"></div>
             <button type="submit" class="btn btn-sunset">送出</button>
           </div>
 
