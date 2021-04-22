@@ -34,16 +34,31 @@ services:
     volumes:
       - ../taibif-volumes/pgdata:/var/lib/postgresql/data/pgdata
       - ../taibif-volumes/bucket:/taibif-bucket
+  php:
+    #image: php:5.6-zts-jessie
+    image: php:5.6.40-fpm-alpine
+    #build: .
+    tty: true
+    #ports:
+    #  - 8000:80
+    volumes:
+      - ./php_build/src:/php_code
+      #- ./php.ini:/usr/local/etc/php/php.ini
+
   nginx:
     image: nginx:1.17.6-alpine
     restart: always
     ports:
       - 80:80
+      - 443:443
     volumes:
+      - ./php_build/src:/php_code      
       - ./nginx/production:/etc/nginx/conf.d
       - ../taibif-volumes/static:/taibif-volumes/static
       - ../taibif-volumes/media:/taibif-volumes/media
       - ../taibif-volumes/logs/nginx:/var/log/nginx
+      - ../taibif-volumes/certbot/conf:/etc/letsencrypt
+      - ../taibif-volumes/certbot/www:/var/www/certbot
     links:
       - web:web
     logging:
@@ -51,3 +66,11 @@ services:
       options:
         max-size: "1m"
         max-file: "3"
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+  certbot:
+    image: certbot/certbot
+    restart: unless-stopped
+    volumes:
+      - ../taibif-volumes/certbot/conf:/etc/letsencrypt
+      - ../taibif-volumes/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"

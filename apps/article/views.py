@@ -3,7 +3,8 @@ from django.http import HttpResponse, Http404
 from django.views import generic
 from django.core.paginator import Paginator
 
-from .models import Article
+from .models import Article, PostImage
+from itertools import chain
 
 #DEPRICATED 不合用
 class ArticleListView(generic.ListView):
@@ -65,17 +66,20 @@ def article_list(request, category):
 
 def article_detail(request, pk):
     article = get_object_or_404(Article, pk=pk)
+    imagesList = PostImage.objects.filter(post=article)
     recommended = Article.objects.filter(category=article.category).order_by('?')[0:5]
+    
     return render(request, 'article-detail.html', {
         'article': article,
-        'recommended': recommended
+        'recommended': recommended,
+        'imagesList': imagesList
     })
+
+
 
 
 def article_tag_list(request, tag_name):
     page = request.GET.get('page', '')
-
-
     rows = Article.objects.filter(tags__name=tag_name).all()
     paginator = Paginator(rows, 20)
     article_list = paginator.get_page(page)

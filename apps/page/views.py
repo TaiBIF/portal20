@@ -2,10 +2,11 @@ import re
 import csv
 import codecs
 import json
+import requests
 
 import os
 import environ
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import (
     HttpResponse,
     HttpResponseNotFound,
@@ -17,7 +18,7 @@ from django.db.models import (
     Sum
 )
 from django.conf import settings
-
+from django.contrib import messages
 from apps.data.models import (
     Dataset,
     Taxon,
@@ -80,6 +81,22 @@ def contact_us(request):
     if request.method == 'GET':
         return render(request, 'contact-us.html')
     elif request.method == 'POST':
+        ''' Begin reCAPTCHA validation '''
+        recaptcha_response = request.POST.get('g-recaptcha-response')
+        #print(recaptcha_response)
+        data = {
+            'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+            'response': recaptcha_response
+        }
+        r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+        result = r.json()
+        ''' End reCAPTCHA validation '''
+
+        if result['success'] == False:
+            messages.error(request, '請進行驗證，謝謝')
+        return redirect('contact_us')
+
+
         data = {
             'name':  request.POST.get('name', ''),
             'cat': request.POST.get('cat', ''),

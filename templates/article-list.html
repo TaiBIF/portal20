@@ -57,8 +57,10 @@
         <a href="{{ i.get_absolute_url }}" class="head-carousel-btn"></a>
         <div class="carousel-caption">
           <span class="head-carousel-cate">{{ i.get_category_display }}</span>
-          <h3 class="head-carousel-title">{{ i.title }}</h3>
+          <h3 class="head-carousel-title"><a href="{{ i.get_absolute_url }}" style = "color:white">{{ i.title }}</a></h3>
+          <div class="home-banner-cover-license">{{ i.cover_license_text }}</div>
         </div>
+
       </div>
       {% endfor %}
     </div>
@@ -138,18 +140,18 @@
     <div class="row listbox-img-right-wrapper">
       <div class="col-xs-8">
         <span class="listbox-inner-date">{{ article.created|date:'Y/m/d' }}</span>
-        <h3 class="listbox-inner-title"><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h3>
+        <h3 class="listbox-inner-title"><a href="{{ article.get_absolute_url }}" target="_blank" rel="noreferrer noopener">{{ article.title }}</a></h3>
         <p class="listbox-inner-summary hidden-xs">
             {% if article.memo|slice:"0:4" == "nid:" %}
             {# old article content #}
             {% if article.category == "UPDATE" %}
             {% else %}
             {{ article.content|striptags|truncatechars:150 }}
-            <p><a href="{% url 'article-detail-id' pk=article.id %}">閱讀更多</a></p>
+            <p><a href="{% url 'article-detail-id' pk=article.id %}" target="_blank" rel="noreferrer noopener">閱讀更多</a></p>
             {% endif %}
             {% else %}
             {{ article.content | linebreaks | truncatechars:150}}
-            <p><a href="{% url 'article-detail-id' pk=article.id %}">閱讀更多</a></p>
+            <p><a href="{% url 'article-detail-id' pk=article.id %}" target="_blank" rel="noreferrer noopener">閱讀更多</a></p>
             {% endif %}
         </p>
       </div>
