@@ -22,6 +22,7 @@ Dataset::search
               <ul class="row head-carousel-search-cate search-all-wrapper">
                 {#<li class="col-xs-12"><a href="#" class="search-type-btn active">搜尋全部</a></li>#}
                 <li class="col-xs-3"><a href="{% url 'search-occurrence' cat='search'  %}?q={{ request.GET.q }}" class="search-type-btn" data-type="occurrence">{% trans "出現紀錄" %}</a></li>
+                <!-- <li class="col-xs-3"><a href="{% url 'search-species' %}?q={{ request.GET.q }}" class="search-type-btn" data-type="species">{% trans "物種" %}</a></li> -->
                 <li class="col-xs-3"><a href="{% url 'search-species' %}?q={{ request.GET.q }}" class="search-type-btn" data-type="species">{% trans "物種" %}</a></li>
                 <li class="col-xs-3"><a href="{% url 'search-dataset' %}?q={{ request.GET.q }}" class="search-type-btn" data-type="dataset">{% trans "資料集" %}</a></li>
                 <li class="col-xs-3"><a href="{% url 'search-publisher' %}?q={{ request.GET.q }}" class="search-type-btn" data-type="publisher">{% trans "發布者" %}</a></li>
