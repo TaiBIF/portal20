@@ -312,6 +312,12 @@ def search_view(request, cat=''):
     context = {'env': settings.ENV}
     return render(request, 'search.html', context)
 
+
+def search_view_species(request, cat=''):
+
+    context = {'env': settings.ENV}
+    return render(request, 'search_species.html', context)
+
 def search_occurrence_download_view(request):
     date_str = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
 
