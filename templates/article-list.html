@@ -157,7 +157,7 @@
       </div>
       {% if article.cover %}
       <div class="col-xs-4">
-        <a href=""><img src="/media/{{ article.cover }}" class="img-responsive"></a>
+        <a href="{% url 'article-detail-id' pk=article.id %}"><img src="/media/{{ article.cover }}" class="img-responsive"></a>
       </div>
       {% endif %}
     </div>
