@@ -397,6 +397,14 @@ def search_species(request):
     if has_menu:
         menus = [
             {
+                'key': 'highertaxon',
+                'label': '高階分類群',
+                'rows': [{
+                    'key': x.id,
+                    'label': x.get_name(),
+                } for x in Taxon.objects.filter(rank='kingdom')],
+            },
+            {
                 'key': 'rank',
                 'label': '分類位階',
                 'rows': [{
@@ -413,14 +421,7 @@ def search_species(request):
                     {'label': '同物異名', 'key': 'synonym'}
                 ]
             },
-            {
-                'key': 'highertaxon',
-                'label': '高階分類群',
-                'rows': [{
-                    'key': x.id,
-                    'label': x.get_name(),
-                } for x in Taxon.objects.filter(rank='kingdom')],
-            },
+            
         ]
 
     # search
