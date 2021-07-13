@@ -7,8 +7,9 @@ import csv
 
 from django.shortcuts import render
 from django.db.models import Count, Q, Sum
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.core.cache import cache
+import requests
 
 from apps.data.models import (
     Dataset,
@@ -31,6 +32,101 @@ from utils.general import get_cache_or_set
 
 from .cached import COUNTRY_ROWS, YEAR_ROWS
 
+def search_occurrence_v1(request):
+    solr_q_list = []
+    solr_q = '*.*'
+    for term, values in list(request.GET.lists()):
+        if term != 'menu':
+            solr_q_list.append('{}={}'.format(term, ' OR '.join(values)))
+    if len(solr_q_list) > 0:
+        solr_q = ', '.join(solr_q_list)
+
+    menu_year = []
+    menu_month = []
+    menu_dataset = []
+    menu_country = []
+    menu_publisher = []
+
+    search_count = 0
+    search_limit = 20
+    search_offset = 0
+    search_results = []
+    #publisher_query = Dataset.objects\
+    #                         .values('organization','organization_verbatim')\
+    #                         .exclude(organization__isnull=True)\
+    #                         .annotate(count=Count('organization'))\
+    #                         .order_by('-count')
+    #menu_publisher = [{
+    #    'key':x['organization'],
+    #    'label':x['organization_verbatim'],
+    #    'count': x['count']
+    #} for x in publisher_query]
+
+    time_start = time.time()
+    facet_json = 'json.facet={dataset:{type:terms,field:taibif_dataset_name},year:{type:terms,field:year},month:{type:terms,field:month},country:{type:terms,field:country}}'
+    r = requests.get(f'http://solr:8983/solr/taibif/select?facet=true&q.op=OR&rows={search_limit}&q={solr_q}&{facet_json}')
+    if r.status_code == 200:
+        data = r.json()
+
+        search_count = data['response']['numFound']
+        search_offset = data['response']['start']
+        search_results = data['response']['docs']
+
+        for i, v in enumerate(search_results):
+            ## copy fields
+            date = '{}-{}-{}'.format(v['year'] if v.get('year', '') else '',
+                                     v['month'] if v.get('month', '') else '',
+                                     v['day'] if v.get('day', '') else '')
+            search_results[i]['vernacular_name'] = v.get('vernacularName', '')
+            search_results[i]['scientific_name'] = v.get('scientificName', '')
+            search_results[i]['dataset'] = v['taibif_dataset_name'][0]
+            search_results[i]['date'] = date
+            search_results[i]['taibif_id'] = '{}__{}'.format(v['taibif_dataset_name'][0], v['_version_'])
+
+        #search_limit = 20
+        menu_year = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['year']['buckets']]
+        menu_month = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['month']['buckets']]
+        menu_dataset = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['dataset']['buckets']]
+        menu_country = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['country']['buckets']]
+
+    ret = {
+        'menus': [
+            {
+                'key': 'country', #'countrycode',
+                'label': '國家/區域',
+                'rows': menu_country,
+            },
+            {
+                'key': 'year',
+                'label': '年份',
+                'rows': menu_year,
+            },
+            {
+                'key': 'month',
+                'label': '月份',
+                'rows': menu_month,
+            },
+            {
+                'key': 'dataset',
+                'label': '資料集',
+                'rows': menu_dataset,
+            },
+            {
+                'key':'publisher',
+                'label': '發布者',
+                'rows': menu_publisher,
+            }
+        ],
+        'search': {
+            'elapsed': time.time() - time_start,
+            'results': search_results,
+            'offset': search_offset,
+            'limit': search_limit,
+            'count': search_count,
+            'has_more': True
+        },
+    }
+    return JsonResponse(ret)
 
 def taxon_tree_node(request, pk):
     taxon = Taxon.objects.get(pk=pk)
