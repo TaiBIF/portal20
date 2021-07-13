@@ -36,3 +36,13 @@ services:
   redis:
     image: redis:5-alpine
     restart: always
+  solr:
+    image: solr:8
+    container_name: taibif-solr
+    ports:
+      - "8983:8983"
+    volumes:
+      - ./data:/var/solr
+    command:
+      - solr-precreate
+      - gettingstarted
