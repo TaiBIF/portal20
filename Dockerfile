@@ -1,4 +1,4 @@
-FROM python:3.8.2-slim
+FROM python:3.8.11-slim
 
 # set environment varibles
 ENV PYTHONDONTWRITEBYTECODE 1
