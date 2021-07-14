@@ -64,7 +64,7 @@ def search_occurrence_v1(request):
 
     time_start = time.time()
     facet_json = 'json.facet={dataset:{type:terms,field:taibif_dataset_name},year:{type:terms,field:year},month:{type:terms,field:month},country:{type:terms,field:country}}'
-    r = requests.get(f'http://solr:8983/solr/taibif/select?facet=true&q.op=OR&rows={search_limit}&q={solr_q}&{facet_json}')
+    r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q={solr_q}&{facet_json}')
     if r.status_code == 200:
         data = r.json()
 
@@ -79,9 +79,9 @@ def search_occurrence_v1(request):
                                      v['day'] if v.get('day', '') else '')
             search_results[i]['vernacular_name'] = v.get('vernacularName', '')
             search_results[i]['scientific_name'] = v.get('scientificName', '')
-            search_results[i]['dataset'] = v['taibif_dataset_name'][0]
+            search_results[i]['dataset'] = v['taibif_dataset_name']
             search_results[i]['date'] = date
-            search_results[i]['taibif_id'] = '{}__{}'.format(v['taibif_dataset_name'][0], v['_version_'])
+            search_results[i]['taibif_id'] = '{}__{}'.format(v['taibif_dataset_name'], v['_version_'])
 
         #search_limit = 20
         menu_year = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['year']['buckets']]

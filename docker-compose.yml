@@ -42,7 +42,8 @@ services:
     ports:
       - "8983:8983"
     volumes:
-      - ./solr-data:/var/solr
+      - ../taibif-volumes/solr:/var/solr
+      - ./solr-workspace/:/workspace
     command:
       - solr-precreate
       - gettingstarted
