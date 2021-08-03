@@ -12,4 +12,5 @@ urlpatterns = [
     path('taxon/tree/node/<int:pk>', views.taxon_tree_node, name='taxon-tree-branch'),
     path('data/stats/', views.data_stats, name='data-stats'),
     path('taxon_bar/', views.taxon_bar, name='bar_chart'), ## TODO
+    path('v1/occurrence', views.search_occurrence_v1, name='search-occurrence-v1')
 ]

@@ -139,10 +139,12 @@ function SearchMain(props) {
     initActiveTab = 'menu5';
   }
   const [tabActive, setTabActive] = React.useState(initActiveTab);
-  console.log(props);
+  //console.log(props);
   const count = (props.data && props.data.count ) ? props.data.count.toLocaleString('en') : 0;
+  const elapsed = (props.data && props.data.elapsed ) ? props.data.elapsed.toFixed(2) : '';
   //const count = 0;
-  const typeLabel = SEARCH_TYPE_LABEL_MAP[props.searchType];
+  const typeLabel
+        = SEARCH_TYPE_LABEL_MAP[props.searchType];
 
   let q = null;
   const filterTags = [];
@@ -211,7 +213,7 @@ function SearchMain(props) {
           <li className="active">搜尋{typeLabel}</li>
         </ol>
         <div className="search-content-heading-wrapper">
-          <h1 className="heading-lg">{typeLabel} <span className="heading-footnote">共 {count} 筆資料</span></h1>
+      <h1 className="heading-lg">{typeLabel} <span className="heading-footnote">共 {count} 筆資料 ({elapsed} 秒)</span></h1>
           <span>篩選條件：</span>
           {filterTags}
         </div>

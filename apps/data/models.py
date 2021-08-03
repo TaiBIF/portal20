@@ -1,7 +1,6 @@
 from django.db import models
 from django.db.models import Q, Count
 from django.utils import timezone
-from django.contrib.postgres.fields import JSONField
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 
@@ -85,7 +84,7 @@ class Dataset(models.Model):
     num_occurrence = models.PositiveIntegerField(default=0)
     #stats_num_year_column = models.PositiveIntegerField(default=0)
     #stats_num_coordinates = models.PositiveIntegerField(default=0)
-    extension_data = JSONField(null=True)
+    extension_data = models.JSONField(null=True)
     is_most_project = models.BooleanField('是否為科技部計畫', default=False)
     quality = models.CharField('資料集品質', max_length=4, default='')
     has_publish_problem = models.BooleanField('是否有發布問題 (IPT 裡黃色的區塊)', default=False, help_text='有可能 IPT 授權沒填?')
