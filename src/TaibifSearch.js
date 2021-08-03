@@ -325,7 +325,7 @@ class TaibifSearch extends React.Component {
 
   getSearch(filters) {
     /* filters: Set() will affect API url and change current URL but not redirect */
-    let apiUrl = `${window.location.origin}/api${window.location.pathname}`;
+    let apiUrl = `${window.location.origin}/api/v1/occurrence`;
     // for window.history.pushState
     let url = `${window.location.origin}${window.location.pathname}`;
 
