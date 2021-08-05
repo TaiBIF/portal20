@@ -104,11 +104,11 @@ def search_all(request):
                     'label': '出現紀錄',
                     'rows': occur_rows
                 },
-                {
-                    'cat': 'species',
-                    'label': '物種',
-                    'rows': species_rows
-                },
+                # {
+                #     'cat': 'species',
+                #     'label': '物種',
+                #     'rows': species_rows
+                # },
                 {
                     'cat': 'dataset',
                     'label': '資料集',
