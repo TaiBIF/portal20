@@ -447,150 +447,40 @@
       <tokenizer class="solr.WhitespaceTokenizerFactory"/>
     </analyzer>
   </fieldType>
-
   <field name="_nest_path_" type="_nest_path_"/>
   <field name="_root_" type="string" docValues="false" indexed="true" stored="false"/>
   <field name="_text_" type="text_general" multiValued="true" indexed="true" stored="false"/>
   <field name="_version_" type="plong" indexed="false" stored="false"/>
-  <!-- begin DwC terms -->
-  <field name="taibif_dataset_name" type="string"/>
-  <field name="taibif_uuid" type="string"/>
-  <field name="coreid" type="string"/>
-  <field name="basisOfRecord" type="string"/>
-  <field name="occurrenceID" type="string"/>
-  <field name="organismQuantity" type="string"/>
-  <field name="organismQuantityType" type="string"/>
-  <field name="lifeStage" type="string"/>
-  <field name="eventID" type="string"/>
-  <field name="identificationVerificationStatus" type="string"/>
-  <field name="vernacularName" type="string"/>
-  <field name="id" type="string"/>
-  <field name="rightsHolder" type="string"/>
-  <field name="institutionCode" type="string"/>
-  <field name="catalogNumber" type="string"/>
-  <field name="occurrenceRemarks" type="string"/>
-  <field name="recordedBy" type="string"/>
-  <field name="individualCount" type="string"/>
-  <field name="establishmentMeans" type="string"/>
-  <field name="preparations" type="string"/>
-  <field name="disposition" type="string"/>
-  <field name="associatedReferences" type="string"/>
-  <field name="eventDate" type="string"/>
-  <field name="higherGeography" type="string"/>
-  <field name="waterBody" type="string"/>
-  <field name="country" type="string"/>
-  <field name="countryCode" type="string"/>
-  <field name="stateProvince" type="string"/>
-  <field name="locality" type="string"/>
-  <field name="minimumDepthInMeters" type="string"/>
-  <field name="maximumDepthInMeters" type="string"/>
-  <field name="verbatimLatitude" type="string"/>
-  <field name="verbatimLongitude" type="string"/>
-  <field name="verbatimCoordinateSystem" type="string"/>
-  <field name="identifiedBy" type="string"/>
-  <field name="scientificName" type="string"/>
-  <field name="modified" type="string"/>
-  <field name="language" type="string"/>
-  <field name="rights" type="string"/>
-  <field name="collectionCode" type="string"/>
-  <field name="decimalLatitude" type="string"/>
-  <field name="decimalLongitude" type="string"/>
-  <field name="coordinatePrecision" type="string"/>
-  <field name="kingdom" type="string"/>
-  <field name="phylum" type="string"/>
+
+
+  <field name="accepted_name_code" type="string"/>
+  <field name="author" type="string"/>
+  <field name="author2" type="string"/>
   <field name="class" type="string"/>
-  <field name="order" type="string"/>
+  <field name="class_c" type="string"/>
+  <field name="common_name_c" type="string"/>
+  <field name="datelastmodified" type="pdates"/>
   <field name="family" type="string"/>
-  <field name="taxonRemarks" type="string"/>
-  <field name="samplingProtocol" type="string"/>
-  <field name="eventTime" type="string"/>
-  <field name="geodeticDatum" type="string"/>
-  <field name="verbatimTaxonRank" type="string"/>
-  <field name="references" type="string"/>
-  <field name="otherCatalogNumbers" type="string"/>
-  <field name="associatedMedia" type="string"/>
-  <field name="associatedSequences" type="string"/>
-  <field name="associatedTaxa" type="string"/>
-  <field name="county" type="string"/>
-  <field name="scientificNameID" type="string"/>
-  <field name="datasetID" type="string"/>
-  <field name="acceptedNameUsageID" type="string"/>
-  <field name="acceptedNameUsage" type="string"/>
+  <field name="family_c" type="string"/>
   <field name="genus" type="string"/>
-  <field name="specificEpithet" type="string"/>
-  <field name="infraspecificEpithet" type="string"/>
-  <field name="scientificNameAuthorship" type="string"/>
-  <field name="type" type="string"/>
-  <field name="collectionID" type="string"/>
-  <field name="sex" type="string"/>
-  <field name="year" type="string"/>
-  <field name="month" type="string"/>
-  <field name="day" type="string"/>
-  <field name="habitat" type="string"/>
-  <field name="fieldNumber" type="string"/>
-  <field name="eventRemarks" type="string"/>
-  <field name="continent" type="string"/>
-  <field name="minimumElevationInMeters" type="string"/>
-  <field name="maximumElevationInMeters" type="string"/>
-  <field name="dateIdentified" type="string"/>
-  <field name="typeStatus" type="string"/>
-  <field name="subgenus" type="string"/>
-  <field name="taxonRank" type="string"/>
-  <field name="informationWithheld" type="string"/>
-  <field name="verbatimElevation" type="string"/>
-  <field name="behavior" type="string"/>
-  <field name="municipality" type="string"/>
-  <field name="coordinateUncertaintyInMeters" type="string"/>
-  <field name="identificationRemarks" type="string"/>
-  <field name="taxonID" type="string"/>
-  <field name="ownerInstitutionCode" type="string"/>
-  <field name="occurrenceStatus" type="string"/>
-  <field name="institutionID" type="string"/>
-  <field name="verbatimDepth" type="string"/>
-  <field name="parentEventID" type="string"/>
-  <field name="verbatimLocality" type="string"/>
-  <field name="datasetName" type="string"/>
-  <field name="license" type="string"/>
-  <field name="recordNumber" type="string"/>
-  <field name="organismID" type="string"/>
-  <field name="previousIdentifications" type="string"/>
-  <field name="endDayOfYear" type="string"/>
-  <field name="verbatimEventDate" type="string"/>
-  <field name="islandGroup" type="string"/>
-  <field name="island" type="string"/>
-  <field name="locationAccordingTo" type="string"/>
-  <field name="verbatimCoordinates" type="string"/>
-  <field name="georeferencedBy" type="string"/>
-  <field name="georeferencedDate" type="string"/>
-  <field name="georeferenceProtocol" type="string"/>
-  <field name="georeferenceSources" type="string"/>
-  <field name="georeferenceVerificationStatus" type="string"/>
-  <field name="higherClassification" type="string"/>
-  <field name="nomenclaturalCode" type="string"/>
-  <field name="georeferenceRemarks" type="string"/>
-  <field name="reproductiveCondition" type="string"/>
-  <field name="namePublishedIn" type="string"/>
-  <field name="organismName" type="string"/>
-  <field name="startDayOfYear" type="string"/>
-  <field name="fieldNotes" type="string"/>
-  <field name="pointRadiusSpatialFit" type="string"/>
-  <field name="footprintWKT" type="string"/>
-  <field name="footprintSpatialFit" type="string"/>
-  <field name="dataGeneralizations" type="string"/>
-  <field name="originalNameUsage" type="string"/>
-  <field name="nameAccordingTo" type="string"/>
-  <field name="locationRemarks" type="string"/>
-  <field name="locationID" type="string"/>
-  <field name="samplingEffort" type="string"/>
-  <field name="materialSampleID" type="string"/>
-  <!-- end -->
-
-
-
-
-
-
-
+  <field name="genus_c" type="string"/>
+  <field name="id" type="string"/>
+  <field name="infraspecies" type="string"/>
+  <field name="infraspecies2" type="string"/>
+  <field name="infraspecies2_marker" type="string"/>
+  <field name="infraspecies_marker" type="string"/>
+  <field name="is_accepted_name" type="string"/>
+  <field name="is_fossil" type="string"/>
+  <field name="kingdom" type="string"/>
+  <field name="kingdom_c" type="string"/>
+  <field name="name" type="string"/>
+  <field name="name_code" type="string"/>
+  <field name="order" type="string"/>
+  <field name="order_c" type="string"/>
+  <field name="phylum" type="string"/>
+  <field name="phylum_c" type="string"/>
+  <field name="species" type="string"/>
+  <field name="status_id" type="string"/>
   <dynamicField name="*_txt_en_split_tight" type="text_en_splitting_tight" indexed="true" stored="true"/>
   <dynamicField name="*_descendent_path" type="descendent_path" indexed="true" stored="true"/>
   <dynamicField name="*_ancestor_path" type="ancestor_path" indexed="true" stored="true"/>
