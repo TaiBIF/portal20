@@ -61,10 +61,17 @@ def search_occurrence_v1(request):
     #    'label':x['organization_verbatim'],
     #    'count': x['count']
     #} for x in publisher_query]
+    
+    
 
     time_start = time.time()
-    facet_json = 'json.facet={dataset:{type:terms,field:taibif_dataset_name},year:{type:terms,field:year},month:{type:terms,field:month},country:{type:terms,field:country}}'
+    facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name}'
+    facet_year = 'year:{type:terms,field:year}'
+    facet_month = 'month:{type:range,field:month,start:1,end:13,gap:1}'
+    facet_country = 'country:{type:terms,field:country}'
+    facet_json = 'json.facet={'+facet_dataset + ',' +facet_year+ ',' +facet_month+ ',' +facet_country+'}'
     r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q={solr_q}&{facet_json}')
+
     if r.status_code == 200:
         data = r.json()
 
