@@ -524,7 +524,7 @@
   <field name="collectionID" type="string"/>
   <field name="sex" type="string"/>
   <field name="year" type="string"/>
-  <field name="month" type="string"/>
+  <field name="month" type="pint"/>
   <field name="day" type="string"/>
   <field name="habitat" type="string"/>
   <field name="fieldNumber" type="string"/>
@@ -584,7 +584,7 @@
   <field name="samplingEffort" type="string"/>
   <field name="materialSampleID" type="string"/>
   <!-- end -->
-  <field name="itude" type="location_rpt"/>
+  <field name="location_rpt" type="location_rpt"/>
 
 
 
