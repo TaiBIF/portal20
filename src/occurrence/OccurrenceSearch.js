@@ -12,6 +12,13 @@ export default function OccurrenceSearch(props) {
         <td>{ row.date }</td>
         <td>{ row.country }{/*/ i.locality */}</td>
         <td><a href={"/dataset/"+row.dataset+"/"}>{ row.dataset }</a></td>
+        <td>{ row.kingdom }</td>
+        <td>{ row.phylum }</td>
+        <td>{ row.class }</td>
+        <td>{ row.order }</td>
+        <td>{ row.family }</td>
+        <td>{ row.genus }</td>
+        <td>{ row.species }</td>
         </tr>
     )
   });
@@ -30,6 +37,13 @@ export default function OccurrenceSearch(props) {
             <th>時間</th>
             <th>國家/地區</th>
             <th>資料集</th>
+            <th>界</th>
+            <th>門</th>
+            <th>綱</th>
+            <th>目</th>
+            <th>科</th>
+            <th>屬</th>
+            <th>種</th>
           </tr>
         </thead>
         <tbody>
