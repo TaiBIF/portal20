@@ -1,6 +1,7 @@
 import React, {useState, useRef} from 'react';
 //import Accordion from "./components/Accordion";
 //import Tree from "./components/Tree";
+import Slider from '@material-ui/core/Slider';
 
 
 function TreeNode({nodeData, onClickSpecies}) {
@@ -118,20 +119,43 @@ function Accordion(props) {
   }
 
   const menuItems = content.rows.map((x) => {
-    const count = (x.count) ? x.count.toLocaleString() : null;
-    const itemChecked = filters.has(`${content.key}=${x.key}`);
-    return (
-        <div className="search-sidebar-checkbox-wrapper" key={x.key}>
-          <label className="custom-input-ctn">
-          <input type="checkbox" onChange={(e)=> {e.persist(); onClick(e, content.key, x.key)}} checked={itemChecked} />
-          <span className="checkmark"></span>
-          <span className="search-sidebar-count-group">
-            <span className="name">{x.label}</span>
-            <span className="count">{count}</span>
-          </span>
-          </label>
-        </div>
-    );
+    if(content.label=="年份"){
+      
+        const [value, setValue] = useState([x.year_start, x.year_end]);
+        const handleChange = (event, newValue) => {
+          setValue(newValue);
+          onClick(event, content.key, newValue);
+          
+        };
+        // console.log(content.key, handleChange)
+        return (
+          <div className="year_test" key={x.key}>
+            <Slider
+              value={value}
+              onChange={handleChange}
+              max={2021}
+              min={1000}
+              valueLabelDisplay="auto"
+              aria-labelledby="range-slider"
+            />
+          </div>
+        );
+    }else{
+      const count = (x.count) ? x.count.toLocaleString() : null;
+      const itemChecked = filters.has(`${content.key}=${x.key}`);
+      return (
+          <div className="search-sidebar-checkbox-wrapper" key={x.key}>
+            <label className="custom-input-ctn">
+            <input type="checkbox" onChange={(e)=> {e.persist(); onClick(e, content.key, x.key)}} checked={itemChecked} />
+            <span className="checkmark"></span>
+            <span className="search-sidebar-count-group">
+              <span className="name">{x.label}</span>
+              <span className="count">{count}</span>
+            </span>
+            </label>
+          </div>
+      );
+    }
   });
   return (
     <React.Fragment>

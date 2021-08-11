@@ -37,7 +37,12 @@ def search_occurrence_v1(request):
     solr_q = '*.*'
     for term, values in list(request.GET.lists()):
         if term != 'menu':
-            solr_q_list.append('{}={}'.format(term, ' OR '.join(values)))
+            if term =='year':
+                val = values[0].replace(",", " TO ")
+                solr_q_list.append('{}= {}'.format(term,val))
+                # solr_q_list.append('year= 1745 TO 2021')
+            else :
+                solr_q_list.append('{}={}'.format(term, ' OR '.join(values)))
     if len(solr_q_list) > 0:
         solr_q = ', '.join(solr_q_list)
 
@@ -64,12 +69,11 @@ def search_occurrence_v1(request):
     
     
 
-    time_start = time.time()
+    time_start = time.time()  
     facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name}'
-    facet_year = 'year:{type:terms,field:year}'
     facet_month = 'month:{type:range,field:month,start:1,end:13,gap:1}'
     facet_country = 'country:{type:terms,field:country}'
-    facet_json = 'json.facet={'+facet_dataset + ',' +facet_year+ ',' +facet_month+ ',' +facet_country+'}'
+    facet_json = 'json.facet={'+facet_dataset + ',' +facet_month+ ',' +facet_country+'}'
     r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q={solr_q}&{facet_json}')
 
     if r.status_code == 200:
@@ -89,9 +93,16 @@ def search_occurrence_v1(request):
             search_results[i]['dataset'] = v['taibif_dataset_name']
             search_results[i]['date'] = date
             search_results[i]['taibif_id'] = '{}__{}'.format(v['taibif_dataset_name'], v['_version_'])
+            search_results[i]['kingdom'] = v.get('kingdom', '')
+            search_results[i]['phylum'] = v.get('phylum', '')
+            search_results[i]['class'] = v.get('class', '')
+            search_results[i]['order'] = v.get('order', '')
+            search_results[i]['family'] = v.get('family', '')
+            search_results[i]['genus'] = v.get('genus', '')
+            search_results[i]['species'] = v.get('species', '')
 
         #search_limit = 20
-        menu_year = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['year']['buckets']]
+        menu_year = [{'key': 0, 'label': 0, 'count': 0,'year_start':1000,'year_end':2021}]
         menu_month = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['month']['buckets']]
         menu_dataset = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['dataset']['buckets']]
         menu_country = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['country']['buckets']]

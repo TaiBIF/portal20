@@ -45,21 +45,21 @@ function Pagination (props) {
   }
 
   return (
-      <div className="center-block text-center">
-        <ul className="pagination">
-          <li>
-            <a href="#" aria-label="Previous" onClick={(e)=>props.onClick(e, 1)}>
+    <div className="center-block text-center">
+      <ul className="pagination">
+        <li>
+        <a href="#" aria-label="Previous" onClick={(e)=>props.onClick(e, 1)}>
             <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          {pageElements}
-          <li>
-            <a href="#" aria-label="Next" onClick={(e)=>props.onClick(e, lastPage)}>
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-         </ul>
-      </div>
+          </a>
+        </li>
+        {pageElements}
+        <li>
+        <a href="#" aria-label="Next" onClick={(e)=>props.onClick(e, lastPage)}>
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </div>
   );
 }
 
@@ -72,11 +72,11 @@ class TaibifSearch extends React.Component {
       searchType = 'dataset';
     }
     else if (window.location.pathname === '/occurrence/search/' ||
-             window.location.pathname === '/occurrence/taxonomy/' ||
-             window.location.pathname === '/occurrence/map/' ||
-             window.location.pathname === '/occurrence/gallery/' ||
-             window.location.pathname === '/occurrence/charts/' ||
-             window.location.pathname === '/occurrence/download/') {
+      window.location.pathname === '/occurrence/taxonomy/' ||
+      window.location.pathname === '/occurrence/map/' ||
+      window.location.pathname === '/occurrence/gallery/' ||
+      window.location.pathname === '/occurrence/charts/' ||
+      window.location.pathname === '/occurrence/download/') {
       searchType = 'occurrence';
     }
     else if (window.location.pathname === '/publisher/search/') {
@@ -147,7 +147,6 @@ class TaibifSearch extends React.Component {
         taxonData: taxonData,
       }
     });
-
     const apiUrl = `/api/species/search/?q=${v}&rank=species`;
     fetch(apiUrl)
       .then(res => res.json())
@@ -258,7 +257,7 @@ class TaibifSearch extends React.Component {
     this.setState((state) => {
       if (newFilters) {
         this.getSearch(newFilters);
-        return {filters: newFilters};
+        return { filters: newFilters };
       }
       else {
         this.getSearch();
@@ -275,11 +274,16 @@ class TaibifSearch extends React.Component {
       isLoadedMain: false,
     });
     const filters = this.state.filters;
-    if (event.target.checked) {
-      filters.add(`${menuKey}=${itemKey}`);
-    }
-    else {
-      filters.delete(`${menuKey}=${itemKey}`);
+    if(menuKey=="year"){
+      filters.delete(`${menuKey}=year`);
+      filters.add(`${menuKey}=${itemKey}`)
+    }else{
+      if (event.target.checked) {
+        filters.add(`${menuKey}=${itemKey}`);
+      }
+      else {
+        filters.delete(`${menuKey}=${itemKey}`);
+      }
     }
     this.applyFilters(filters);
   }
@@ -311,8 +315,8 @@ class TaibifSearch extends React.Component {
           console.log('resp (page): ', json);
           this.setState({
             isLoadedMain: true,
-              search: json.search,
-              serverError: json.error
+            search: json.search,
+            serverError: json.error
           });
         },
         (error) => {
@@ -414,14 +418,14 @@ class TaibifSearch extends React.Component {
       if (!isLoadedMain) {
         // via: https://codepen.io/kingfisher13/pen/vKXwNN
         searchMainContainer = (
-            <div className="col-xs-12 col-md-9">
+          <div className="col-xs-12 col-md-9">
             <div className="container">
-            <div className="loader">
-            <div className="loader-wheel"></div>
-            <div className="loader-text"></div>
+              <div className="loader">
+                <div className="loader-wheel"></div>
+                <div className="loader-text"></div>
+              </div>
             </div>
-            </div>
-            </div>
+          </div>
         );
       } else {
         const pagination = <Pagination onClick={this.handlePaginationClick} data={mainData}/>;
@@ -438,13 +442,13 @@ class TaibifSearch extends React.Component {
       };
 
       return (
-          <div className="row">
-            <div className="visible-xs">
-              <a href="#" className="xs-schedule-flow-btn myicon icon-filter" data-toggle="modal" data-target="#flowBtnModal">進階篩選</a>
-            </div>
-            <SearchSidebar menus={menus} onClick={this.handleMenuClick} filters={filters} onClickClear={(e)=>this.applyFilters()} queryKeyword={queryKeyword} onChangeKeyword={(e)=>{this.handleKeywordChange(e)}} onKeyPressKeyword={(e)=>{this.handleKeywordEnter(e)}} onClickSubmitKeyword={this.handleSubmitKeywordClick} searchType={searchType} taxonProps={taxonProps} />
-          {searchMainContainer}
+        <div className="row">
+          <div className="visible-xs">
+            <a href="#" className="xs-schedule-flow-btn myicon icon-filter" data-toggle="modal" data-target="#flowBtnModal">進階篩選</a>
           </div>
+          <SearchSidebar menus={menus} onClick={this.handleMenuClick} filters={filters} onClickClear={(e)=>this.applyFilters()} queryKeyword={queryKeyword} onChangeKeyword={(e)=>{this.handleKeywordChange(e)}} onKeyPressKeyword={(e)=>{this.handleKeywordEnter(e)}} onClickSubmitKeyword={this.handleSubmitKeywordClick} searchType={searchType} taxonProps={taxonProps} />
+          {searchMainContainer}
+        </div>
       );
     }
   }
