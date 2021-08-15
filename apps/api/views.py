@@ -73,7 +73,8 @@ def search_occurrence_v1(request):
     facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name}'
     facet_month = 'month:{type:range,field:month,start:1,end:13,gap:1}'
     facet_country = 'country:{type:terms,field:country}'
-    facet_json = 'json.facet={'+facet_dataset + ',' +facet_month+ ',' +facet_country+'}'
+    facet_publisher = 'publisher:{type:terms,field:publisher}'
+    facet_json = 'json.facet={'+facet_dataset + ',' +facet_month+ ',' +facet_country+','+facet_publisher+'}'
     r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q={solr_q}&{facet_json}')
 
     if r.status_code == 200:
@@ -89,23 +90,24 @@ def search_occurrence_v1(request):
                                      v['month'] if v.get('month', '') else '',
                                      v['day'] if v.get('day', '') else '')
             search_results[i]['vernacular_name'] = v.get('vernacularName', '')
-            search_results[i]['scientific_name'] = v.get('scientificName', '')
+            search_results[i]['scientific_name'] = v.get('scientficName', '')
             search_results[i]['dataset'] = v['taibif_dataset_name']
             search_results[i]['date'] = date
             search_results[i]['taibif_id'] = '{}__{}'.format(v['taibif_dataset_name'], v['_version_'])
-            search_results[i]['kingdom'] = v.get('kingdom', '')
-            search_results[i]['phylum'] = v.get('phylum', '')
-            search_results[i]['class'] = v.get('class', '')
-            search_results[i]['order'] = v.get('order', '')
-            search_results[i]['family'] = v.get('family', '')
-            search_results[i]['genus'] = v.get('genus', '')
-            search_results[i]['species'] = v.get('species', '')
+            search_results[i]['kingdom'] = v.get('kingdom_taicol', '')
+            search_results[i]['phylum'] = v.get('phylum_taicol', '')
+            search_results[i]['class'] = v.get('class_taicol', '')
+            search_results[i]['order'] = v.get('order_taicol', '')
+            search_results[i]['family'] = v.get('family_taicol', '')
+            search_results[i]['genus'] = v.get('genus_taicol', '')
+            search_results[i]['species'] = v.get('species_taicol', '')
 
         #search_limit = 20
         menu_year = [{'key': 0, 'label': 0, 'count': 0,'year_start':1000,'year_end':2021}]
         menu_month = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['month']['buckets']]
         menu_dataset = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['dataset']['buckets']]
         menu_country = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['country']['buckets']]
+        menu_publisher = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['publisher']['buckets']]
 
     ret = {
         'menus': [
