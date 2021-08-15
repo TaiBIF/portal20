@@ -120,21 +120,19 @@ function Accordion(props) {
 
   const menuItems = content.rows.map((x) => {
     if(content.label=="年份"){
-      
         const [value, setValue] = useState([x.year_start, x.year_end]);
         const handleChange = (event, newValue) => {
           setValue(newValue);
           onClick(event, content.key, newValue);
-          
         };
         // console.log(content.key, handleChange)
         return (
           <div className="year_test" key={x.key}>
             <Slider
               value={value}
-              onChange={handleChange}
+              onChangeCommitted={handleChange}
               max={2021}
-              min={1000}
+              min={1900}
               valueLabelDisplay="auto"
               aria-labelledby="range-slider"
             />
