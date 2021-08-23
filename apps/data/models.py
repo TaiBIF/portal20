@@ -181,8 +181,8 @@ class Taxon(models.Model):
 
     rank = models.CharField('rank', max_length=32, choices=RANK_LIST)
     name = models.CharField('name', max_length=128)
-    name_zh = models.CharField('name_zh', max_length=128)
-    hierarchy_string = models.CharField('hierarchy string', max_length=512, default='')
+    name_zh = models.CharField('name_zh', max_length=128,null=True)
+    hierarchy_string = models.CharField('hierarchy string', max_length=512, default='',null=True)
     #phylum = models.CharField('phylum', max_length=128, default='')
     #class_field = models.CharField('class_field', max_length=128, default='')
     #order_field = models.CharField('order_field', max_length=128, default='')
@@ -190,12 +190,12 @@ class Taxon(models.Model):
     #genus = models.CharField('genus', max_length=128, default='')
     #species = models.CharField('species', max_length=128, default='')
     specific_epithet = models.CharField('specific epithet', max_length=128, null=True)
-    count = models.PositiveIntegerField('count', default=0)
+    count = models.PositiveIntegerField('count', default=0,null=True)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
     tree = models.ForeignKey(TaxonTree, on_delete=models.CASCADE, null=True)
     is_accepted_name = models.BooleanField('is accepted nam', default=True)
     source_id = models.CharField('name_code', max_length=1000, null=True, blank=True)
-    verbose = models.CharField('verbose', max_length=1000, default='')
+    verbose = models.CharField('verbose', max_length=1000, default='',null=True)
 
     def __str__(self):
         r = '{}: {}'.format(self.rank, self.get_name())
