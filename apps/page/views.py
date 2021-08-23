@@ -22,7 +22,7 @@ from django.contrib import messages
 from apps.data.models import (
     Dataset,
     Taxon,
-    SimpleData,
+    #SimpleData,
 )
 from apps.article.models import Article
 from .models import Post, Journal
