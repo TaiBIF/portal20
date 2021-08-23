@@ -16,8 +16,8 @@ from apps.data.models import (
     DATA_MAPPING,
     DatasetOrganization,
     Taxon,
-    RawDataOccurrence,
-    SimpleData,
+    #RawDataOccurrence,
+    #SimpleData,
 )
 from apps.data.helpers.mod_search import (
     OccurrenceSearch,
@@ -146,6 +146,17 @@ def search_occurrence_v1(request):
             'has_more': True
         },
     }
+
+    # tree
+    treeRoot = Taxon.objects.filter(rank='kingdom').all()
+    treeData = [{
+        'id': x.id,
+        'data': {
+            'name': x.get_name(),
+            'count': x.count,
+        },
+    } for x in treeRoot]
+    ret['tree'] = treeData
     return JsonResponse(ret)
 
 def taxon_tree_node(request, pk):
@@ -171,6 +182,7 @@ def taxon_tree_node(request, pk):
     }
     return HttpResponse(json.dumps(data), content_type="application/json")
 
+# DEPRICATED
 #@json_ret
 def search_occurrence(request, cat=''):
     has_menu = True if request.GET.get('menu', '') else False

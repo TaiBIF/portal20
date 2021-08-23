@@ -182,8 +182,9 @@ function SearchSidebar(props) {
   }
   else if (props.searchType === 'occurrence') {
     searchTypeLabel = '出現紀錄';
-    const scientificNameContent = <SearchTaxon {...props.taxonProps} />;
-    searchTaxonContainer = <Accordion key="taxon" title="學名" content={scientificNameContent} appendClass="accordion-content-taxon" />;
+    //const scientificNameContent = <SearchTaxon {...props.taxonProps} />;
+    //searchTaxonContainer = <Accordion key="taxon" title="學名" content={scientificNameContent} appendClass="accordion-content-taxon" />;
+    searchTaxonContainer = <SearchTaxon {...props.taxonProps} />;
   }
   else if (props.searchType === 'species') {
     searchTypeLabel = '物種';
@@ -231,6 +232,7 @@ function SearchSidebar(props) {
                   </button>
                 </div>
               </div>
+              {searchTaxonContainer}
               {props.menus.map((m) => 
                 (<Accordion key={m.key} content={m} onClick={props.onClick} filters={props.filters}/>)
                )}

@@ -569,6 +569,8 @@ class PublicDataManager(models.Manager):
                     query = query.filter(**{key:values[0]})
         return has_filter, query
 
+
+'''
 class SimpleData(models.Model):
 
     NUM_PER_PAGE = 50
@@ -588,7 +590,7 @@ class SimpleData(models.Model):
     day = models.PositiveSmallIntegerField(null=True)
     #epithnet
     longitude = models.DecimalField('coordinates_longitude_decimal', decimal_places=8, max_digits=11, null=True, blank=True)
-    latitude = models.DecimalField('coordinates_latitude_decimal', decimal_places=8, max_digits=10, null=True, blank=True)
+    Latitude = models.DecimalField('coordinates_latitude_decimal', decimal_places=8, max_digits=10, null=True, blank=True)
     country = models.CharField('country', max_length=1000, null=True)
     taibif_dataset_name = models.TextField(blank=True, null=True)
     spname = models.CharField('species_name', max_length=1000, null=True)
@@ -608,7 +610,6 @@ class SimpleData(models.Model):
             self.month if self.month else '--',
             self.day if self.day else '--',
         )
-
 
 class PublicRawOccurrenceDataManager(models.Manager):
     def get_queryset(self):
@@ -777,6 +778,7 @@ class RawDataOccurrence(models.Model):
             models.Index(fields=['class_field']),
             models.Index(fields=['order']),
         ]
+'''
 
 class Taxon20200619(models.Model):
     index = models.BigIntegerField(blank=True, null=True)
