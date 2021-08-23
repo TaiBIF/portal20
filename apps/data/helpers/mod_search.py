@@ -7,8 +7,8 @@ from django.db import connections
 
 from apps.data.models import (
     DATA_MAPPING,
-    SimpleData,
-    RawDataOccurrence,
+    #SimpleData,
+    #RawDataOccurrence,
     Taxon,
     Dataset,
     DatasetOrganization,

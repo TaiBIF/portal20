@@ -3,9 +3,9 @@ from apps.data.models import (
     Taxon,
     Occurrence,
     Dataset,
-    RawDataOccurrence,
+    #RawDataOccurrence,
     DatasetOrganization,
-    SimpleData,
+    #SimpleData,
 )
 from django.contrib import sitemaps
 from django.urls import reverse
