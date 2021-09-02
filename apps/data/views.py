@@ -3,6 +3,7 @@ from urllib.parse import urlencode
 import re
 import datetime
 import csv
+import requests
 
 
 from django.shortcuts import render, get_object_or_404
@@ -206,101 +207,76 @@ def publisher_view(request, pk):
     context['publisher'] = get_object_or_404(DatasetOrganization, pk=pk)
     return render(request, 'publisher.html', context)
 
+
+# 地理分佈|資料集出現次數|物種描述|文獻
 def species_view(request, pk):
     context = {}
     taxon = get_object_or_404(Taxon, pk=pk)
-
-    
-
-    q = RawDataOccurrence.objects.values('taibif_dataset_name', 'decimallatitude', 'decimallongitude').filter(scientificname=taxon.name).all()
-    
-
-    rank_key = 'taxon_{}_id'.format(taxon.rank)
-    occur_search = OccurrenceSearch([(rank_key, [taxon.id])])
-    res = occur_search.get_results()
-
-    
-
-    '''q = SimpleData.objects.values('latitude', 'longitude').filter(taxon_species_id=pk).all()
-    # q.count()
-    occurrence_list = []
-    rows = None
-    lat = 0
-    lng = 0
-    if taxon.rank == 'species':
-        sp_info = get_species_info(taxon)
-        # HACK species 先全抓, 高層的資料多, 效能差
-        rows = q.all()
-    else:
-        rows = q.all()[:20]
-    #print(rows)
-
-
-    for r in rows:
-        if r['latitude'] or r['longitude']:
-            lat += float(r['latitude'])
-            lng += float(r['longitude'])
-            occurrence_list.append({
-                'taibif_dataset_name': r['taibif_dataset_name'],
-                'decimallatitude': float(r['latitude']),
-                'decimallongitude': float(r['longitude']),
-            })
-
-
-    n = len(occurrence_list)
-    #print(occurrence_list)'''
-
-
-    ## Kuan-Yu add : for counting dataset number
-    SetNum = SimpleData.objects.values('taibif_dataset_name').filter(taxon_species_id=pk).all()
-    dataset_list = SetNum.annotate(dataset=Count('taibif_dataset_name'))
-
+    switch = {
+            'kingdom':'kingdomKey',
+            'phylum':'phylumKey',
+            'class':'classKey',
+            'order':'orderKey',
+            'family':'familyKey',
+            'genus':'genusKey',
+            'species':'scientficName',
+        }
     total = []
-    for d in range(dataset_list.count()):
-        num = dataset_list[d]['dataset']
-        print(res['count'])
-        total.append({
-            'dataset_count': dataset_list[d],
-            'ratio': (num / res['count']) * 100
-        })
+    dataset_list = []
+    if taxon.rank != 'species':
+        solr_q = switch.get(taxon.rank) + '=' + str(pk)
+    else :
+        solr_q = switch.get(taxon.rank) + '=' + taxon.name
 
 
+    search_limit = 20
+    facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name}'
+    facet_json = 'json.facet={'+facet_dataset + '}'
+    r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q={solr_q}&{facet_json}')
+    if r.status_code == 200:
 
+        data = r.json()
+        print("------------this is data = ", data)
+        search_count = data['response']['numFound']
+        search_offset = data['response']['start']
+        search_results = data['response']['docs']
 
-    
-    #totals = dataset_list.aggregate(Sum('dataset')).get('dataset__sum')
+        for i, v in enumerate(search_results):
+            ## copy fields
+            date = '{}-{}-{}'.format(v['year'] if v.get('year', '') else '',
+                                        v['month'] if v.get('month', '') else '',
+                                        v['day'] if v.get('day', '') else '')
+            search_results[i]['vernacular_name'] = v.get('vernacularName', '')
+            search_results[i]['scientific_name'] = v.get('scientficName', '')
+            search_results[i]['dataset'] = v['taibif_dataset_name']
+            search_results[i]['date'] = date
+            search_results[i]['taibif_id'] = '{}__{}'.format(v['taibif_dataset_name'], v['_version_'])
+            search_results[i]['kingdom'] = v.get('kingdom_taicol', '')
+            search_results[i]['phylum'] = v.get('phylum_taicol', '')
+            search_results[i]['class'] = v.get('class_taicol', '')
+            search_results[i]['order'] = v.get('order_taicol', '')
+            search_results[i]['family'] = v.get('family_taicol', '')
+            search_results[i]['genus'] = v.get('genus_taicol', '')
+            search_results[i]['species'] = v.get('species_taicol', '')
+        print("------------this is dataset_list = ", search_results)
 
+        if search_count != 0 :
+            dataset_list = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['dataset']['buckets']]
+            print("------------this is dataset_list = ", dataset_list)
 
-
-
-    ## For map
-    MapList = RawDataOccurrence.objects.values('taibif_dataset_name', 'decimallatitude', 'decimallongitude').filter(scientificname=taxon.name).all()
-
-    lat = 0
-    lon = 0
-
-    test = []
-    for m in MapList:
-        if m['decimallatitude'] and m['decimallatitude']:
-
-            lat = float(m['decimallatitude'])
-            lon = float(m['decimallongitude'])
-
-            test.append([lat,lon])
-    #print(test)
-
-
+    # print("------------this is images = ", taxon.taieol_pic)
     context = {
         'taxon': taxon,
-        'occurrence_list': [],
-        #'dataset_list': dataset_list,
+        # 'occurrence_list': dataset,
+        'dataset_list': dataset_list,
         'total':total
 
     }
-    if taxon.rank == 'species':
-        context['species_info'] = get_species_info(taxon)
-    if test:
-       context['map_view'] = test[0]
+    # if taxon.rank == 'species':
+    #     #去生命大百科拿資料
+    #     context['species_info'] = get_species_info(taxon)
+    # if test:
+    #    context['map_view'] = test[0]
 
     #if n:
     #   context['map_view'] = [lat/n, lng/n]
