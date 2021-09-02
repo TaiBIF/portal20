@@ -112,6 +112,8 @@ class SuperSearch(object):
         query = self.query
         offset = max(0, self.offset)
         limit = min(self.LIMIT_THRESHOLD, self.limit)
+
+        print("get_results---------", query,offset,limit)
         if limit > 0:
             results = [self.result_map(x) for x in query.all()[offset:offset+limit]]
         else:
@@ -329,7 +331,7 @@ class SpeciesSearch(SuperSearch):
     def __init__(self, filters):
         self.model = Taxon
         super().__init__(filters)
-
+        print ('this is filters = ',self.filters)
         # filter query
         query = self.query
         for key, values in self.filters:
@@ -365,9 +367,9 @@ class SpeciesSearch(SuperSearch):
             'id': x.id,
             'name': x.name,
             'name_zh': x.name_zh,
-            'name_full': x.scientific_name_full,
+            # 'name_full': x.scientific_name_full,
             #'name_list': x.
-            'count': x.count,
+            # 'count': x.count,
             'rank': x.rank,
             'rank_display': x.get_rank_display(),
             'rank_list': [{'name': t.name, 'rank': t.rank, 'name_zh': t.name_zh, 'id': t.id} for t in x.rank_list],
