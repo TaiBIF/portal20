@@ -196,7 +196,10 @@ class Taxon(models.Model):
     is_accepted_name = models.BooleanField('is accepted nam', default=True)
     source_id = models.CharField('name_code', max_length=1000, null=True, blank=True)
     verbose = models.CharField('verbose', max_length=1000, default='',null=True)
-
+    reference = models.CharField('reference',max_length=5000,null=True)
+    taieol_desc = models.TextField('taieol_desc', null=True)
+    taieol_pic = models.CharField('taieol_pic',max_length=1000,null=True)
+    
     def __str__(self):
         r = '{}: {}'.format(self.rank, self.get_name())
         return r
@@ -246,6 +249,12 @@ class Taxon(models.Model):
                 slist.append(self.parent.name)
             slist.append(self.name)
             return ' '.join(slist)
+        else:
+            slist = []
+            if self.parent:
+                slist.append(self.parent.name)
+            slist.append(self.name)
+            return ' '.join(slist)
 
     @property
     def scientific_name_infraspecific(self):
@@ -264,15 +273,15 @@ class Taxon(models.Model):
 
     @property
     def scientific_name_full(self):
-        if self.rank == 'species':
-            slist = [self.scientific_name_infraspecific]
-            vlist = self.verbose.split('|')
-            if vlist[7] and vlist[7] != '--':
-                slist.append(vlist[7])
-            if vlist[8] and vlist[8] != '--':
-                slist.append(vlist[8])
-            return ' '.join(slist)
-        else:
+        # if self.rank == 'species':
+        #     slist = [self.scientific_name_infraspecific]
+        #     vlist = self.verbose.split('|')
+        #     if vlist[7] and vlist[7] != '--':
+        #         slist.append(vlist[7])
+        #     if vlist[8] and vlist[8] != '--':
+        #         slist.append(vlist[8])
+        #     return ' '.join(slist)
+        # else:
             return self.name
 
     @property
