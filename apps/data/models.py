@@ -230,8 +230,9 @@ class Taxon(models.Model):
         name = Taxon.objects.get(id=self.accepted_name_id)
         return name
     
+
     def synonyms(self):
-        sys_name = Taxon.objects.filter(accepted_name_id=self.accepted_name_id).exclude(id=self.id)
+        sys_name = Taxon.objects.filter(accepted_name_id=self.accepted_name_id,is_accepted_name=False).exclude(id=self.id)
         return list(sys_name.all())
 
     @staticmethod
