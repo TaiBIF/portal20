@@ -183,17 +183,22 @@ class Taxon(models.Model):
     name = models.CharField('name', max_length=128)
     name_zh = models.CharField('name_zh', max_length=128,null=True)
     hierarchy_string = models.CharField('hierarchy string', max_length=512, default='',null=True)
-    #phylum = models.CharField('phylum', max_length=128, default='')
-    #class_field = models.CharField('class_field', max_length=128, default='')
-    #order_field = models.CharField('order_field', max_length=128, default='')
-    #family = models.CharField('family', max_length=128, default='')
-    #genus = models.CharField('genus', max_length=128, default='')
-    #species = models.CharField('species', max_length=128, default='')
+    
+    kingdom_id = models.IntegerField('kingdom_id',default=0,null=True)
+    phylum_id = models.IntegerField('phylum_id',default=0,null=True)
+    class_id = models.IntegerField('class_id',default=0,null=True)
+    order_id = models.IntegerField('order_id',default=0,null=True)
+    family_id = models.IntegerField('family_id',default=0,null=True)
+    genus_id = models.IntegerField('genus_id',default=0,null=True)
+    
+    
     specific_epithet = models.CharField('specific epithet', max_length=128, null=True)
     count = models.PositiveIntegerField('count', default=0,null=True)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
     tree = models.ForeignKey(TaxonTree, on_delete=models.CASCADE, null=True)
     is_accepted_name = models.BooleanField('is accepted nam', default=True)
+    accepted_name_id = models.IntegerField('accepted_name_id',default=0,null=True)
+
     source_id = models.CharField('name_code', max_length=1000, null=True, blank=True)
     verbose = models.CharField('verbose', max_length=1000, default='',null=True)
     reference = models.CharField('reference',max_length=5000,null=True)
@@ -220,6 +225,15 @@ class Taxon(models.Model):
             else:
                 return '{}'.format(self.name)
 
+
+    def accepted_name(self):
+        name = Taxon.objects.get(id=self.accepted_name_id)
+        return name
+    
+    def synonyms(self):
+        sys_name = Taxon.objects.filter(accepted_name_id=self.accepted_name_id).exclude(id=self.id)
+        return list(sys_name.all())
+
     @staticmethod
     def find_name(name, rank='', using=''):
         query = Taxon.objects
@@ -243,18 +257,12 @@ class Taxon(models.Model):
         return None
     @property
     def scientific_name(self):
-        if self.rank == 'species':
             slist = []
             if self.parent:
                 slist.append(self.parent.name)
             slist.append(self.name)
             return ' '.join(slist)
-        else:
-            slist = []
-            if self.parent:
-                slist.append(self.parent.name)
-            slist.append(self.name)
-            return ' '.join(slist)
+       
 
     @property
     def scientific_name_infraspecific(self):
@@ -305,6 +313,28 @@ class Taxon(models.Model):
                 return get_rank_tree(x.parent, a)
             return list(reversed(a))
         return get_rank_tree(self)
+
+    @property
+    def species_pic(self):
+        query = Taxon.objects
+        if self.rank != 'species':
+            if self.rank == 'kingdom':
+                query = query.filter(kingdom_id=self.id,taieol_pic__isnull=False).order_by('taieol_pic').distinct('taieol_pic')
+            elif self.rank == 'phylum':
+                query = query.filter(phylum_id=self.id,taieol_pic__isnull=False).order_by('taieol_pic').distinct('taieol_pic')
+            elif self.rank == 'class':
+                query = query.filter(class_id=self.id,taieol_pic__isnull=False).order_by('taieol_pic').distinct('taieol_pic')
+            elif self.rank == 'order':
+                query = query.filter(order_id=self.id,taieol_pic__isnull=False).order_by('taieol_pic').distinct('taieol_pic')
+            elif self.rank == 'family':
+                query = query.filter(family_id=self.id,taieol_pic__isnull=False).order_by('taieol_pic').distinct('taieol_pic')
+            elif self.rank == 'genus':
+                query = query.filter(genus_id=self.id,taieol_pic__isnull=False).order_by('taieol_pic').distinct('taieol_pic')
+        
+            return list(query.all())
+        else:
+            query = query.filter(id = self.id)
+            return list(query.all())
 
     @property
     def children(self):

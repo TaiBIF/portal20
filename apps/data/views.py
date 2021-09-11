@@ -236,7 +236,6 @@ def species_view(request, pk):
     if r.status_code == 200:
 
         data = r.json()
-        print("------------this is data = ", data)
         search_count = data['response']['numFound']
         search_offset = data['response']['start']
         search_results = data['response']['docs']
@@ -258,13 +257,11 @@ def species_view(request, pk):
             search_results[i]['family'] = v.get('family_taicol', '')
             search_results[i]['genus'] = v.get('genus_taicol', '')
             search_results[i]['species'] = v.get('species_taicol', '')
-        print("------------this is dataset_list = ", search_results)
 
+# dataset_occ_count
         if search_count != 0 :
             dataset_list = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['dataset']['buckets']]
-            print("------------this is dataset_list = ", dataset_list)
 
-    # print("------------this is images = ", taxon.taieol_pic)
     context = {
         'taxon': taxon,
         # 'occurrence_list': dataset,
