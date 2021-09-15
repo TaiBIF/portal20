@@ -147,6 +147,7 @@ class TaibifSearch extends React.Component {
         taxonData: taxonData,
       }
     });
+    //to do物種樹查詢要修改
     const apiUrl = `/api/species/search/?q=${v}&rank=species`;
     fetch(apiUrl)
       .then(res => res.json())
@@ -329,7 +330,17 @@ class TaibifSearch extends React.Component {
 
   getSearch(filters) {
     /* filters: Set() will affect API url and change current URL but not redirect */
-    let apiUrl = `${window.location.origin}/api/v1/occurrence`;
+  
+    let pathname = window.location.pathname
+    let apiUrl = null;
+    let myRe = /\/occurrence\/.*/g;
+    if (myRe.exec(pathname)){
+      apiUrl = `${window.location.origin}/api/v1/occurrence`;
+    }else{
+      apiUrl = `${window.location.origin}/api${window.location.pathname}`;
+    }
+    
+
     // for window.history.pushState
     let url = `${window.location.origin}${window.location.pathname}`;
 
