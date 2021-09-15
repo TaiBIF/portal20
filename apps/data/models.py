@@ -13,9 +13,9 @@ DATA_MAPPING = {
         'BI': '蒲隆地'
     },
     'rights': {
-        'Creative Commons Attribution Non Commercial (CC-BY-NC) 4.0 License': 'cc-by-nc',
-        'Creative Commons Attribution (CC-BY) 4.0 License': 'cc-by',
-        'Public Domain (CC0 1.0)': 'cc0'
+        'CC-BY-NC': 'cc-by-nc',
+        'CC-BY': 'cc-by',
+        'CC0': 'cc0'
     },
     'core': {
         'occurrence': 'Occurrence',
@@ -41,7 +41,7 @@ class Organization(models.Model):
 
 class PublicDatasetManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(status='Public')
+        return super().get_queryset().filter(status='PUBLIC')
 
 class Dataset(models.Model):
 
@@ -65,11 +65,11 @@ class Dataset(models.Model):
     author = models.CharField('author', max_length=128)
     pub_date = models.DateTimeField('Publish Date', null=True)
     mod_date = models.DateTimeField('Modified Date', null=True)
-    guid = models.CharField('GUID', max_length=40)
+    guid = models.CharField('GUID', max_length=40,null=True)
     status = models.CharField('status', max_length=10, choices=STATUS_CHOICE)
     guid_verbatim = models.CharField('GUID', max_length=100)
-    dwc_core_type = models.CharField('Dw-C Core Type', max_length=128, choices=DWC_CORE_TYPE_CHOICE)
-    data_license = models.CharField('Data License', max_length=128)
+    dwc_core_type = models.CharField('Dw-C Core Type', max_length=128, choices=DWC_CORE_TYPE_CHOICE, null=True)
+    data_license = models.CharField('Data License', max_length=128,null=True)
     cite = models.TextField(blank=True, null=True)
     version = models.TextField(blank=True, null=True)
     country = models.TextField(blank=True, null=True)
@@ -91,6 +91,7 @@ class Dataset(models.Model):
     admin_memo = models.TextField('後台管理註記', blank=True, null=True, help_text='不會在前台出現')
     #is_about_taiwan = models.BooleanField('是否 about Taiwan', default=True)
     #is_from_taiwan = models.BooleanField('是否 from Taiwan', default=True)
+    keyword = models.TextField(blank=True, null=True)
 
     objects = models.Manager()
     public_objects = PublicDatasetManager()
@@ -119,6 +120,34 @@ class Dataset(models.Model):
     def __str__(self):
         r = '<Dataset {}>'.format(self.name)
         return r
+
+
+class Book_citation(models.Model):
+
+    dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE, null=True)
+    identifier = models.TextField(null=True,blank=True)
+    citation = models.TextField(null=True,blank=True)
+    seq = models.TextField(null=True,blank=True)
+
+class Dataset_Contact(models.Model):
+    dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE, null=True)
+    givenname =  models.CharField(max_length=128,null=True,blank=True)
+    surname  =  models.CharField(max_length=128,null=True,blank=True)
+    organizationname =  models.CharField(max_length=128,null=True,blank=True)
+    positionname =  models.CharField(max_length=1024,null=True,blank=True)
+    deliverypoint =  models.CharField(max_length=2048,null=True,blank=True)
+    city =  models.CharField(max_length=128,null=True,blank=True)
+    administrativearea =  models.CharField(max_length=128,null=True,blank=True)
+    postalcode =  models.CharField(max_length=128,null=True,blank=True)
+    country =  models.CharField(max_length=256,null=True,blank=True)
+    phone =  models.CharField(max_length=128,null=True,blank=True)
+    electronicmailaddress =  models.CharField(max_length=512,null=True,blank=True)
+    onlineurl =  models.CharField(max_length=256,null=True,blank=True)
+    role =  models.CharField(max_length=128,null=True,blank=True)
+    creator =  models.BooleanField(default=False,null=True,blank=True)
+
+
+
 
 class DatasetOrganization(models.Model):
     '''publisher'''
