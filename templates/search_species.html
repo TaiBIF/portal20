@@ -37,17 +37,17 @@ Search
 {#<script src="https://code.highcharts.com/highcharts.js"></script>#}
 {#<script src="https://code.highcharts.com/modules/exporting.js"></script>#}
 {#<script src="{% static 'js/test.js' %}"></script>#}
-<!-- {% if env == "prod" or env == "stag" %}
+{% if env == "prod" or env == "stag" %}
 <script src="{% static 'js/search.min.js' %}"></script>
 {% else %}
 <script src="{% static 'js/search.dev.js' %}"></script>
-{% endif %} -->
+{% endif %}
 {% endblock %}
 
 {% block main %}
 <!--div class="container search-container" id="taibif-search-container" data-q="{{ request.GET.q }}"></div-->
 <!-- <div class="container-fluid search-container-fluid" id="taibif-search-container" data-q="{{ request.GET.q }}"></div> -->
-<div class="shape-ex5">
+<!-- <div class="shape-ex5">
     <img src="{% static 'images/maintain.png' %}" style="max-width:40%">
-</div>
+</div> -->
 {% endblock %}

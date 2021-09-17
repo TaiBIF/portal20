@@ -13,9 +13,9 @@ DATA_MAPPING = {
         'BI': '蒲隆地'
     },
     'rights': {
-        'Creative Commons Attribution Non Commercial (CC-BY-NC) 4.0 License': 'cc-by-nc',
-        'Creative Commons Attribution (CC-BY) 4.0 License': 'cc-by',
-        'Public Domain (CC0 1.0)': 'cc0'
+        'CC-BY-NC': 'cc-by-nc',
+        'CC-BY': 'cc-by',
+        'CC0': 'cc0'
     },
     'core': {
         'occurrence': 'Occurrence',
@@ -41,7 +41,7 @@ class Organization(models.Model):
 
 class PublicDatasetManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(status='Public')
+        return super().get_queryset().filter(status='PUBLIC')
 
 class Dataset(models.Model):
 
@@ -65,11 +65,11 @@ class Dataset(models.Model):
     author = models.CharField('author', max_length=128)
     pub_date = models.DateTimeField('Publish Date', null=True)
     mod_date = models.DateTimeField('Modified Date', null=True)
-    guid = models.CharField('GUID', max_length=40)
+    guid = models.CharField('GUID', max_length=40,null=True)
     status = models.CharField('status', max_length=10, choices=STATUS_CHOICE)
     guid_verbatim = models.CharField('GUID', max_length=100)
-    dwc_core_type = models.CharField('Dw-C Core Type', max_length=128, choices=DWC_CORE_TYPE_CHOICE)
-    data_license = models.CharField('Data License', max_length=128)
+    dwc_core_type = models.CharField('Dw-C Core Type', max_length=128, choices=DWC_CORE_TYPE_CHOICE, null=True)
+    data_license = models.CharField('Data License', max_length=128,null=True)
     cite = models.TextField(blank=True, null=True)
     version = models.TextField(blank=True, null=True)
     country = models.TextField(blank=True, null=True)
@@ -91,6 +91,7 @@ class Dataset(models.Model):
     admin_memo = models.TextField('後台管理註記', blank=True, null=True, help_text='不會在前台出現')
     #is_about_taiwan = models.BooleanField('是否 about Taiwan', default=True)
     #is_from_taiwan = models.BooleanField('是否 from Taiwan', default=True)
+    keyword = models.TextField(blank=True, null=True)
 
     objects = models.Manager()
     public_objects = PublicDatasetManager()
@@ -119,6 +120,34 @@ class Dataset(models.Model):
     def __str__(self):
         r = '<Dataset {}>'.format(self.name)
         return r
+
+
+class Book_citation(models.Model):
+
+    dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE, null=True)
+    identifier = models.TextField(null=True,blank=True)
+    citation = models.TextField(null=True,blank=True)
+    seq = models.TextField(null=True,blank=True)
+
+class Dataset_Contact(models.Model):
+    dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE, null=True)
+    givenname =  models.CharField(max_length=128,null=True,blank=True)
+    surname  =  models.CharField(max_length=128,null=True,blank=True)
+    organizationname =  models.CharField(max_length=128,null=True,blank=True)
+    positionname =  models.CharField(max_length=1024,null=True,blank=True)
+    deliverypoint =  models.CharField(max_length=2048,null=True,blank=True)
+    city =  models.CharField(max_length=128,null=True,blank=True)
+    administrativearea =  models.CharField(max_length=128,null=True,blank=True)
+    postalcode =  models.CharField(max_length=128,null=True,blank=True)
+    country =  models.CharField(max_length=256,null=True,blank=True)
+    phone =  models.CharField(max_length=128,null=True,blank=True)
+    electronicmailaddress =  models.CharField(max_length=512,null=True,blank=True)
+    onlineurl =  models.CharField(max_length=256,null=True,blank=True)
+    role =  models.CharField(max_length=128,null=True,blank=True)
+    creator =  models.BooleanField(default=False,null=True,blank=True)
+
+
+
 
 class DatasetOrganization(models.Model):
     '''publisher'''
@@ -183,17 +212,22 @@ class Taxon(models.Model):
     name = models.CharField('name', max_length=128)
     name_zh = models.CharField('name_zh', max_length=128,null=True)
     hierarchy_string = models.CharField('hierarchy string', max_length=512, default='',null=True)
-    #phylum = models.CharField('phylum', max_length=128, default='')
-    #class_field = models.CharField('class_field', max_length=128, default='')
-    #order_field = models.CharField('order_field', max_length=128, default='')
-    #family = models.CharField('family', max_length=128, default='')
-    #genus = models.CharField('genus', max_length=128, default='')
-    #species = models.CharField('species', max_length=128, default='')
+    
+    kingdom_id = models.IntegerField('kingdom_id',default=0,null=True)
+    phylum_id = models.IntegerField('phylum_id',default=0,null=True)
+    class_id = models.IntegerField('class_id',default=0,null=True)
+    order_id = models.IntegerField('order_id',default=0,null=True)
+    family_id = models.IntegerField('family_id',default=0,null=True)
+    genus_id = models.IntegerField('genus_id',default=0,null=True)
+    
+    
     specific_epithet = models.CharField('specific epithet', max_length=128, null=True)
     count = models.PositiveIntegerField('count', default=0,null=True)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
     tree = models.ForeignKey(TaxonTree, on_delete=models.CASCADE, null=True)
     is_accepted_name = models.BooleanField('is accepted nam', default=True)
+    accepted_name_id = models.IntegerField('accepted_name_id',default=0,null=True)
+
     source_id = models.CharField('name_code', max_length=1000, null=True, blank=True)
     verbose = models.CharField('verbose', max_length=1000, default='',null=True)
     reference = models.CharField('reference',max_length=5000,null=True)
@@ -220,6 +254,16 @@ class Taxon(models.Model):
             else:
                 return '{}'.format(self.name)
 
+
+    def accepted_name(self):
+        name = Taxon.objects.get(id=self.accepted_name_id)
+        return name
+    
+
+    def synonyms(self):
+        sys_name = Taxon.objects.filter(accepted_name_id=self.accepted_name_id,is_accepted_name=False).exclude(id=self.id)
+        return list(sys_name.all())
+
     @staticmethod
     def find_name(name, rank='', using=''):
         query = Taxon.objects
@@ -243,18 +287,12 @@ class Taxon(models.Model):
         return None
     @property
     def scientific_name(self):
-        if self.rank == 'species':
             slist = []
             if self.parent:
                 slist.append(self.parent.name)
             slist.append(self.name)
             return ' '.join(slist)
-        else:
-            slist = []
-            if self.parent:
-                slist.append(self.parent.name)
-            slist.append(self.name)
-            return ' '.join(slist)
+       
 
     @property
     def scientific_name_infraspecific(self):
@@ -305,6 +343,28 @@ class Taxon(models.Model):
                 return get_rank_tree(x.parent, a)
             return list(reversed(a))
         return get_rank_tree(self)
+
+    @property
+    def species_pic(self):
+        query = Taxon.objects
+        if self.rank != 'species':
+            if self.rank == 'kingdom':
+                query = query.filter(kingdom_id=self.id,taieol_pic__isnull=False).order_by('taieol_pic').distinct('taieol_pic')
+            elif self.rank == 'phylum':
+                query = query.filter(phylum_id=self.id,taieol_pic__isnull=False).order_by('taieol_pic').distinct('taieol_pic')
+            elif self.rank == 'class':
+                query = query.filter(class_id=self.id,taieol_pic__isnull=False).order_by('taieol_pic').distinct('taieol_pic')
+            elif self.rank == 'order':
+                query = query.filter(order_id=self.id,taieol_pic__isnull=False).order_by('taieol_pic').distinct('taieol_pic')
+            elif self.rank == 'family':
+                query = query.filter(family_id=self.id,taieol_pic__isnull=False).order_by('taieol_pic').distinct('taieol_pic')
+            elif self.rank == 'genus':
+                query = query.filter(genus_id=self.id,taieol_pic__isnull=False).order_by('taieol_pic').distinct('taieol_pic')
+        
+            return list(query.all())
+        else:
+            query = query.filter(id = self.id)
+            return list(query.all())
 
     @property
     def children(self):
