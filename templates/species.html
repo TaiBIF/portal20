@@ -74,15 +74,6 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
         'autoWidth'   : false
       })
 
-
-      $('#occurrence-table').DataTable({
-        'paging'      : true,
-        'lengthChange': false,
-        'searching'   : false,
-        'ordering'    : false,
-        'info'        : true,
-        'autoWidth'   : false
-      })
     })
   </script>
   <!-- script 4 data table end -->
@@ -115,20 +106,19 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
     <!-- amchor btns begin -->
     <ul class="article-scroll-nav-wrapper">
       <li><a href="#section1">同物異名</a></li>
-      <li><a href="#section2">臺灣物種名錄 (TaiCoL) 編號</a></li>
-      <li><a href="#section3">物種照片</a></li>
-      <li><a href="#section4">地理分佈</a></li>
-      <li><a href="#section5">資料集出現次數</a></li>
-      <li><a href="#section6">出現紀錄</a></li>
-      <li><a href="#section7">文獻</a></li>
-      <li><a href="#section8">引用格式</a></li>
+      <li><a href="#section2">地理分佈</a></li>
+      <li><a href="#section3">資料集出現次數</a></li>
+      <li><a href="#section4">物種描述</a></li>
+      {% if taxon.reference %}
+      <li><a href="#section5">文獻</a></li>
+      {% endif %}
     </ul>
     <!-- amchor btns begin -->
 
     <!-- story title begin -->
     <div class="article-head-wrapper">
       <h1 class="heading-lg">
-        <i>{{ taxon.scientific_name }} </i> {% if taxon.name_zh %} {{ taxon.name_zh }}{% endif %} {% if not taxon.is_accepted_name %}<small><span class="label label-warning">同物異名</span></small>{% endif %}
+        <i>{{ taxon.name }} </i> {% if taxon.name_zh %} {{ taxon.name_zh }}{% endif %} {% if not taxon.is_accepted_name %}<small><span class="label label-warning">同物異名</span></small>{% endif %}
       </h1>
     </div>
     <!-- story title end -->
@@ -138,7 +128,7 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
     <div class="article-content-wrapper">
 
       <!-- 學名 begin -->
-      <h4 class="heading-md-ul">學名</h4>
+      <!-- <h4 class="heading-md-ul">學名</h4> -->
       <ul class="scientific-name-wrapper">
         {% for i in taxon.rank_list %}
         <li>{{ i.scientific_name_full }} {{ i.name_zh }}</li>
@@ -148,43 +138,25 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       <!-- 學名 end -->
 
       <!-- 同物異名 begin -->
-      {% comment %}
       <div id="section1">
         {% if not taxon.is_accepted_name %}
-        <h4 class="heading-md-ul">同物異名</h4>
-        <p><i>{{ taxon.scientific_name_full }}</i>{% if taxon.name_zh %} {{ taxon.name_zh }}{% endif %}</p>
+        <h4 class="heading-md-ul">有效學名</h4>
+        <p><i>{{ taxon.accepted_name.name }}</i>{% if taxon.accepted_name.name_zh %} {{ taxon.accepted_name.name_zh }}{% endif %}</p>
         {% endif %}
+
+        <h4 class="heading-md-ul">同物異名</h4>
+        {% for i in taxon.synonyms %}
+        <p><i>{{ i.name }}</i>{% if i.name_zh %} {{ i.name_zh }}{% endif %}</p>
+        {% endfor %}
       </div>
       <!-- 同物異名 end -->
-      {% endcomment %}
 
       <!-- TaiCoL編號 begin -->
-      <div id="section2">
-        <h4 class="heading-md-ul">臺灣物種名錄 (TaiCoL) 編號：</h4>
-        <p><a href="{{ taxon.taicol_namecode_link }}"><span class="myicon icon-link"></span>{{ taxon.source_id }}物種名稱</a></p>
-      </div>
+        <p><a href="{{ taxon.taicol_namecode_link }}"><span class="myicon icon-link"></span>來源：TaiCoL</a></p>
       <!-- TaiCoL編號 end -->
 
-      <!-- 物種照片 begin -->
-      <div id="section3">
-        <h4 class="heading-md-ul">物種照片</h4>
-        <!-- carousel photos begin -->
-
-        <div class="owl-carousel owl-theme" id="speciesGallery">
-        {% for i in species_info.taieol_media %}
-          <div>
-            <img src="{{ i.src}}">
-          </div>
-        {% endfor %}
-        </div>
-        <!-- carousel photos begin -->
-
-      </div>
-
-      <!-- 物種照片 end -->
-
       <!-- 地理分佈 begin -->
-      <div id="section4">
+      <div id="section2">
         <h4 class="heading-md-ul">地理分佈</h4>
         {% if map_view %}<div id="map"></div>
         {% else %}
@@ -193,8 +165,9 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       </div>
       <!-- 地理分佈 end -->
 
+
       <!-- 資料集出現次數 begin -->
-      <div id="section5">
+      <div id="section3">
         <h4 class="heading-md-ul">資料集出現次數</h4>
         <table id="dataset-table" class="table table-bordered">
           <thead>
@@ -206,13 +179,13 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
           </thead>
           <tbody>
 
-            {% for set in total %}
+            {% for set in dataset_list %}
 
             <tr>
-              <td>{{ set.dataset_count.taibif_dataset_name }}</td>
-              <td>{{ set.dataset_count.dataset }}</td>
+              <td>{{ set.key }}</td>
+              <td>{{ set.count }}</td>
               <td>
-
+<!-- 占比 -->
                 <div class="chart-bar-h-bg">
                   <span class="chart-value-bg" style="width: {{ set.ratio }}%"></span>
                 </div>
@@ -227,70 +200,26 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       </div>
       <!-- 資料集出現次數 end -->
 
-      {% comment %}
-      <!-- 出現紀錄 begin -->
-      {% comment %}
-      <div id="section6">
-        <h4 class="heading-md-ul">出現紀錄</h4>
-        <a href="#"><span class="myicon icon-download-csv"></span> 下載出現紀錄 (CSV格式)</a>
+      <!-- TaiCol物種描述 begin -->
+      <div id="section4">
+        <h4 class="heading-md-ul">物種描述</h4>
+        
+        {{taxon.taieol_desc}}
 
-        <div class="table-responsive">
-          <table id="occurrence-table" class="table table-bordered">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Plot</th>
-                <th>Zone</th>
-                <th>Common Name</th>
-                <th>SP</th>
-                <th>X</th>
-                <th>Y</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>4094</td>
-                <td>北部</td>
-                <td>大花咸豐草</td>
-                <td>Bidens pilosa L. var. radiata (Sch. Bip.) J. A. Schmidt</td>
-                <td>120.9785</td>
-                <td>24.68604</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>4614</td>
-                <td>西部</td>
-                <td>野茼蒿</td>
-                <td>Conyza sumatrensis (Retz.) E. Walker</td>
-                <td>179.0285</td>
-                <td>42.66068</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>4852</td>
-                <td>南部</td>
-                <td>粗毛小米菊</td>
-                <td>Galinsoga quadriradiata Ruiz & Pav.</td>
-                <td>582.0197</td>
-                <td>867.9165</td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>3916</td>
-                <td>北部</td>
-                <td>藿香薊</td>
-                <td>Ageratum conyzoides L.</td>
-                <td>719.2865</td>
-                <td>582.0197</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
 
-      </div>
-      <!-- 出現紀錄 end -->
-      {% endcomment %}
+        <!-- carousel photos begin -->
+          <div class="owl-carousel owl-theme" id="speciesGallery">
+            {% for i in taxon.species_pic %}
+              {% if i.taieol_pic %}
+                <div>
+                  <img src="{{i.taieol_pic}}">
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+      <!-- TaiCol物種描述 end -->
+
+
       <!-- Kuan Yu added for taieol discription -->
       {% for i in species_info.taieol_desc %}
        <div id="section9">
@@ -298,63 +227,44 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
          {{ i.content | striptags }}
        </div>
       {% endfor %}
+      <!-- <p><a href="{{ taxon. }}"><span class="myicon icon-link"></span>來源：生命大百科</a></p> -->
 
-      {% comment %}
-      <div class="article-head-wrapper">
-        <h1 class="heading-lg-ul">
-          出現紀錄
-        </h1>
-        <ul>
-          {% for i in occurrence_list %}
-          <li>{{ i.scientificname }} - {{ i.taibif_dataset_name}}</li>
-          {% endfor %}
-        </ul>
-      </div>
-      {% endcomment %}
-
-
-      {% comment %}
        <!-- 文獻 begin -->
-      {% comment %}
-      <div id="section7">
-        <h4 class="heading-md-ul">文獻</h4>
-        <!-- literature info begin >
-        <div class="ref-literature-wrapper">
-          <p><a href="#"><span class="myicon icon-link"></span> 臺灣維管束植物簡誌 (楊遠波, 劉和義, 呂勝由)</a></p>
-          <dl class="ref-literature-dl">
-            <dt>出版年</dt>
-            <dd>1980</dd>
-            <dt>作者</dt>
-            <dd>劉培槐、張惠珠、呂勝由、楊遠波等</dd>
-            <dt>出版者</dt>
-            <dd>臺灣省政府教育廳</dd>
-          </dl>
-        </div>
+       {% if  taxon.reference %}
+        <div id="section5">
+          <h4 class="heading-md-ul">文獻</h4>
+          {{taxon.reference}}
+          <!-- literature info begin >
+          <div class="ref-literature-wrapper">
+            <p><a href="#"><span class="myicon icon-link"></span> 臺灣維管束植物簡誌 (楊遠波, 劉和義, 呂勝由)</a></p>
+            <dl class="ref-literature-dl">
+              <dt>出版年</dt>
+              <dd>1980</dd>
+              <dt>作者</dt>
+              <dd>劉培槐、張惠珠、呂勝由、楊遠波等</dd>
+              <dt>出版者</dt>
+              <dd>臺灣省政府教育廳</dd>
+            </dl>
+          </div>
 
-        <div class="ref-literature-wrapper">
-          <p><a href="#"><span class="myicon icon-link"></span> 臺灣維管束植物簡誌 (楊遠波, 劉和義, 呂勝由)</a></p>
-          <dl class="ref-literature-dl">
-            <dt>出版年</dt>
-            <dd>1980</dd>
-            <dt>作者</dt>
-            <dd>劉培槐、張惠珠、呂勝由、楊遠波等</dd>
-            <dt>出版者</dt>
-            <dd>臺灣省政府教育廳</dd>
-          </dl>
+          <div class="ref-literature-wrapper">
+            <p><a href="#"><span class="myicon icon-link"></span> 臺灣維管束植物簡誌 (楊遠波, 劉和義, 呂勝由)</a></p>
+            <dl class="ref-literature-dl">
+              <dt>出版年</dt>
+              <dd>1980</dd>
+              <dt>作者</dt>
+              <dd>劉培槐、張惠珠、呂勝由、楊遠波等</dd>
+              <dt>出版者</dt>
+              <dd>臺灣省政府教育廳</dd>
+            </dl>
+          </div>
+          < literature info end -->
         </div>
-        < literature info end -->
-      </div>
+      {% endif %}
       <!-- 文獻 end -->
-      {% endcomment %}
 
       {% comment %}
-      <!-- 引用格式 begin -->
-      <div id="section8">
-        <h4 class="heading-md-ul">引用格式</h4>
-        <p>{{ taxon.scientific_name }}  {% if taxon.name_zh %} {{ taxon.name_zh }}{% endif %}《臺灣生物多樣性資訊網-TaiBIF》。<a href="{{ taxon.taicol_namecode_link }}">http://www.taibif.tw/zh/{{ taxon.source_id }} </a></p>
-      </div>
-      <!-- 引用格式 end -->
-
+     
       <ul class="charge-list"></ul>
       {% endcomment %}
 
