@@ -210,7 +210,7 @@ class Taxon(models.Model):
 
     rank = models.CharField('rank', max_length=32, choices=RANK_LIST)
     name = models.CharField('name', max_length=128)
-    name_zh = models.CharField('name_zh', max_length=128,null=True)
+    name_zh = models.CharField('name_zh', max_length=2000,null=True)
     hierarchy_string = models.CharField('hierarchy string', max_length=512, default='',null=True)
     
     kingdom_id = models.IntegerField('kingdom_id',default=0,null=True)
