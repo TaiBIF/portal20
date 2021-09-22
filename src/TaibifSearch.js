@@ -335,11 +335,10 @@ class TaibifSearch extends React.Component {
     let apiUrl = null;
     let myRe = /\/occurrence\/.*/g;
     if (myRe.exec(pathname)){
-      apiUrl = `${window.location.origin}/api/v1/occurrence`;
+      apiUrl = `${window.location.origin}/api/v2/occurrence/search`;
     }else{
       apiUrl = `${window.location.origin}/api${window.location.pathname}`;
     }
-    
 
     // for window.history.pushState
     let url = `${window.location.origin}${window.location.pathname}`;
