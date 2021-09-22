@@ -73,9 +73,9 @@ def search_occurrence_v1_charts(request):
     
 
     time_start = time.time()  
-    facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name}'
+    facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name_zh,limit:-1,mincount:1}'
     facet_month = 'month:{type:range,field:month,start:1,end:13,gap:1}'
-    facet_year = 'year:{type:terms,field:year}'
+    facet_year = 'year:{type:terms,field:year,limit:-1,mincount:1}'
     facet_json = 'json.facet={'+facet_dataset + ',' +facet_month+ ',' +facet_year+'}'
     r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&q={solr_q}&{facet_json}')
 
@@ -86,7 +86,6 @@ def search_occurrence_v1_charts(request):
         search_offset = data['response']['start']
         search_results = data['response']['docs']
 
-        #search_limit = 20
         charts_year =[{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['year']['buckets']]
         charts_month = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['month']['buckets']]
         charts_dataset = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['dataset']['buckets']]
@@ -118,21 +117,32 @@ def search_occurrence_v1(request):
     year_start = 1000
     year_end = 2021
 
+    solr_q_fq_list=[]
+    solr_fq = ''
     solr_q_list = []
-    solr_q = '*.*'
+    solr_q = '*:*'
     for term, values in list(request.GET.lists()):
-        if term != 'menu':
-            if term =='year':
-                val = values[0].replace(",", " TO ")
-                solr_q_list.append('{}= {}'.format(term,val))
-                
-                year_start =values[0].split(',',1)
-                year_end =values[0].split(',',2)
-                # solr_q_list.append('year= 1745 TO 2021')
-            else :
-                solr_q_list.append('{}={}'.format(term, ' OR '.join(values)))
+        if term !='q' :
+            if term != 'menu':
+                if term =='year':
+                    val = values[0].replace(",", " TO ")
+                    solr_q_fq_list.append('{}:{}'.format(term,val))
+                    
+                    year_start =values[0].split(',',1)
+                    year_end =values[0].split(',',2)
+                    # solr_q_list.append('year= 1745 TO 2021')
+                else :
+                    for i in values:
+                        solr_q_fq_list.append('{}:{}'.format(term, i))
+        else:
+            solr_q_list.append('{}:{}'.format('_text_', ' OR '.join(values)))
+
+
     if len(solr_q_list) > 0:
-        solr_q = ', '.join(solr_q_list)
+        solr_q = ' OR '.join(solr_q_list)
+
+    if len(solr_q_fq_list) > 0:
+        solr_fq = ' OR '.join(solr_q_fq_list)
 
     menu_year = []
     menu_month = []
@@ -158,12 +168,12 @@ def search_occurrence_v1(request):
     
 
     time_start = time.time()  
-    facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name}'
+    facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name_zh}'
     facet_month = 'month:{type:range,field:month,start:1,end:13,gap:1}'
-    facet_country = 'country:{type:terms,field:country}'
+    facet_country = 'country:{type:terms,field:country,mincount:0,limit:-1}'
     facet_publisher = 'publisher:{type:terms,field:publisher}'
     facet_json = 'json.facet={'+facet_dataset + ',' +facet_month+ ',' +facet_country+','+facet_publisher+'}'
-    r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q={solr_q}&{facet_json}')
+    r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q={solr_q}&fq={solr_fq}&{facet_json}')
 
     if r.status_code == 200:
         data = r.json()
