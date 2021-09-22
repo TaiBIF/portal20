@@ -101,5 +101,5 @@ class SolrQuery(object):
             'count': resp['numFound'],
             'results': resp['docs'],
             'endOfRecords': is_last,
-            'facets': facets,
+            'facets': facets, # TODO: redundant with menus
         }
