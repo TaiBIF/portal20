@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = (env) => {
-  const env_name = (env === 'dev') ? '.dev.js' : '.min.js';
+  const env_name = (env.dev === true) ? '.dev.js' : '.min.js';
   return {
     entry: {
       'search': './src/search.js',
@@ -24,6 +24,6 @@ module.exports = (env) => {
         }
       ],
     },
-    devtool: 'cheap-module-eval-source-map'
+    /*devtool: 'cheap-module-eval-source-map'*/
   }
 };
