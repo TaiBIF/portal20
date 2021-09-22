@@ -1023,64 +1023,6 @@ def taxon_bar(request):
             ]
         ]
 
-def export(request):
-    solr_q_list = []
-    solr_q = '*.*'
-    for term, values in list(request.GET.lists()):
-        if term != 'menu' and term != 'search_condition' and term != 'email':
-            if term =='year':
-                val = values[0].replace(",", " TO ")
-                solr_q_list.append('{}= {}'.format(term,val))
-                # solr_q_list.append('year= 1745 TO 2021')
-            else :
-                solr_q_list.append('{}={}'.format(term, ' OR '.join(values)))
-    if len(solr_q_list) > 0:
-        solr_q = ', '.join(solr_q_list)
 
-    search_count = 0
-    search_results = []
-
-    facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name}'
-    facet_month = 'month:{type:range,field:month,start:1,end:13,gap:1}'
-    facet_country = 'country:{type:terms,field:country}'
-    facet_publisher = 'publisher:{type:terms,field:publisher}'
-    facet_json = 'json.facet={'+facet_dataset + ',' +facet_month+ ',' +facet_country+','+facet_publisher+'}'
-    r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&rows=200000&q.op=OR&q={solr_q}&{facet_json}')
-
-    if r.status_code == 200:
-        data = r.json()
-
-        search_count = data['response']['numFound']
-        search_results = data['response']['docs']
-        csvData = []
-
-        directory = os.path.abspath(os.path.join(os.path.curdir))
-        csvFolder = directory+'/static/csvData/'
-
-        if not os.path.exists(csvFolder):
-            os.makedirs(csvFolder)
-
-        for i, v in enumerate(search_results):
-            data = [
-                v.get('basisOfRecord', ''),
-                v.get('eventDate', ''),
-                v.get('individualCount', ''),
-                v.get('occurrenceID', ''),
-                v.get('scientficName1', ''),
-                v.get('scientficName2', ''),
-                v.get('class', ''),
-                v.get('day', ''),
-                v.get('decimalLatitude', ''),
-                v.get('decimalLongitude', ''),
-                v.get('family', ''),
-                v.get('month', ''),
-                v.get('taibif_dataset_name', ''),
-                v.get('year', ''),
-                v.get('latitude', ''),
-                v.get('longtitude', ''),
-                v.get('location_rpt', ''),
-                v.get('scientficName', ''),
-                v.get('namecode', ''),
-         
 
     return HttpResponse(json.dumps(data), content_type="application/json")
