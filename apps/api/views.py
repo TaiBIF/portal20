@@ -29,12 +29,23 @@ from apps.data.helpers.mod_search import (
 
 from utils.decorators import json_ret
 from utils.general import get_cache_or_set
+from utils.solr_query import SolrQuery
 
 from .cached import COUNTRY_ROWS, YEAR_ROWS
 
 
+def occurrence_search_v2(request):
+    time_start = time.time()
+    solr = SolrQuery('taibif_occurrence')
+    req = solr.request(request.GET.lists())
+    #response = req['solr_response']
+    resp = solr.get_response()
+    resp['solr_qtime'] = req['solr_response']['responseHeader']['QTime']
+    resp['elapsed'] = time.time() - time_start
+    return JsonResponse(resp)
+
 def search_occurrence_v1_charts(request):
-    year_start = 1000
+    year_start = z1000
     year_end = 2021
 
     solr_q_list = []
