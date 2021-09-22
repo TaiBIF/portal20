@@ -464,6 +464,7 @@
   <field name="catalogNumber" type="string"/>
   <field name="class" type="string"/>
   <field name="class_c" type="string"/>
+  <field name="class_key" type="plongs"/>
   <field name="class_taicol" type="string"/>
   <field name="collectionCode" type="string"/>
   <field name="collectionID" type="string"/>
@@ -492,6 +493,7 @@
   <field name="eventTime" type="string"/>
   <field name="family" type="string"/>
   <field name="family_c" type="string"/>
+  <field name="family_key" type="plongs"/>
   <field name="family_taicol" type="string"/>
   <field name="fieldNotes" type="string"/>
   <field name="fieldNumber" type="string"/>
@@ -499,6 +501,7 @@
   <field name="footprintWKT" type="string"/>
   <field name="genus" type="string"/>
   <field name="genus_c" type="string"/>
+  <field name="genus_key" type="plongs"/>
   <field name="genus_taicol" type="string"/>
   <field name="geodeticDatum" type="string"/>
   <field name="georeferenceProtocol" type="string"/>
@@ -516,6 +519,7 @@
   <field name="identificationVerificationStatus" type="string"/>
   <field name="identifiedBy" type="string"/>
   <field name="import_day" type="text_general"/>
+  <field name="index" type="plongs"/>
   <field name="individualCount" type="string"/>
   <field name="informationWithheld" type="string"/>
   <field name="infraspecificEpithet" type="string"/>
@@ -525,6 +529,7 @@
   <field name="islandGroup" type="string"/>
   <field name="kingdom" type="string"/>
   <field name="kingdom_c" type="string"/>
+  <field name="kingdom_key" type="plongs"/>
   <field name="kingdom_taicol" type="string"/>
   <field name="language" type="string"/>
   <field name="latitude" type="pdoubles"/>
@@ -547,6 +552,7 @@
   <field name="nameAccordingTo" type="string"/>
   <field name="namePublishedIn" type="string"/>
   <field name="name_taicol" type="string"/>
+  <field name="name_zh" type="string"/>
   <field name="namecode" type="plongs"/>
   <field name="nomenclaturalCode" type="string"/>
   <field name="occID" type="plongs"/>
@@ -555,6 +561,7 @@
   <field name="occurrenceStatus" type="string"/>
   <field name="order" type="string"/>
   <field name="order_c" type="string"/>
+  <field name="order_key" type="plongs"/>
   <field name="order_taicol" type="string"/>
   <field name="organismID" type="string"/>
   <field name="organismName" type="string"/>
@@ -566,11 +573,12 @@
   <field name="parentEventID" type="string"/>
   <field name="phylum" type="string"/>
   <field name="phylum_c" type="string"/>
+  <field name="phylum_key" type="plongs"/>
   <field name="phylum_taicol" type="string"/>
   <field name="pointRadiusSpatialFit" type="string"/>
   <field name="preparations" type="string"/>
   <field name="previousIdentifications" type="string"/>
-  <field name="publisher" type="string"/>
+  <field name="publisher" type="string" uninvertible="false" indexed="false" stored="false"/>
   <field name="recordNumber" type="string"/>
   <field name="recordedBy" type="string"/>
   <field name="references" type="string"/>
@@ -579,19 +587,17 @@
   <field name="rightsHolder" type="string"/>
   <field name="samplingEffort" type="string"/>
   <field name="samplingProtocol" type="string"/>
-  <field name="scientficName" type="string"/>
-  <field name="scientficName1" type="text_general"/>
-  <field name="scientficName2" type="text_general"/>
   <field name="scientificName" type="string"/>
   <field name="scientificNameAuthorship" type="string"/>
   <field name="scientificNameID" type="string"/>
   <field name="sex" type="string"/>
-  <field name="species_taicol" type="string"/>
+  <field name="species_key" type="plongs"/>
   <field name="specificEpithet" type="string"/>
   <field name="startDayOfYear" type="string"/>
   <field name="stateProvince" type="string"/>
   <field name="subgenus" type="string"/>
   <field name="taibif_dataset_name" type="string"/>
+  <field name="taibif_dataset_name_zh" type="string"/>
   <field name="taibif_uuid" type="string"/>
   <field name="taxonID" type="string"/>
   <field name="taxonRank" type="string"/>
@@ -608,7 +614,6 @@
   <field name="verbatimLongitude" type="string"/>
   <field name="verbatimTaxonRank" type="string"/>
   <field name="vernacularName" type="string"/>
-  <field name="waterBody" type="string"/>
   <field name="year" type="string"/>
   <dynamicField name="*_txt_en_split_tight" type="text_en_splitting_tight" indexed="true" stored="true"/>
   <dynamicField name="*_descendent_path" type="descendent_path" indexed="true" stored="true"/>
@@ -680,4 +685,6 @@
   <dynamicField name="*_d" type="pdouble" indexed="true" stored="true"/>
   <dynamicField name="*_p" type="location" indexed="true" stored="true"/>
   <copyField source="*" dest="_text_"/>
+  <copyField source="name_zh" dest="name_zh_str" maxChars="256"/>
+  <copyField source="taibif_dataset_name_zh" dest="taibif_dataset_name_zh_str" maxChars="256"/>
 </schema>
