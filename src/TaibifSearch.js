@@ -369,7 +369,13 @@ class TaibifSearch extends React.Component {
           this.setState({
             isLoaded: true,
             isLoadedMain: true,
-            search: jsonData.search,
+            search: {
+              results: jsonData.results,
+              limit: jsonData.limit,
+              offset: jsonData.offset,
+              count: jsonData.count,
+              elapsed: jsonData.elapsed, 
+            },
             menus: jsonData.menus,
             taxonData:taxonData,
             serverError: jsonData.error,
