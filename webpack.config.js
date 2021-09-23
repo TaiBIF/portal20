@@ -24,6 +24,6 @@ module.exports = (env) => {
         }
       ],
     },
-    devtool: 'eval-source-map'
+    devtool: 'source-map'
   }
 };

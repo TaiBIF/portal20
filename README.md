@@ -12,6 +12,16 @@ docker-compose -f docker-compose.yml -f docker-compose-develop.yml build
 docker-compose -f docker-compose.yml -f docker-compose-develop.yml up -d
 ```
 
+### Frontend
+
+Install [nvm](https://github.com/nvm-sh/nvm)
+
+```
+$ nvm install lts/fermium
+$ nvm use lts/fermium
+$ npm install
+$ npm run dev
+```
 
 ## make translate (english)
 
