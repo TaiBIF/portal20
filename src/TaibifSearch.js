@@ -274,10 +274,16 @@ class TaibifSearch extends React.Component {
     this.setState({
       isLoadedMain: false,
     });
+    
     const filters = this.state.filters;
     if(menuKey=="year"){
-      filters.delete(`${menuKey}=year`);
-      filters.add(`${menuKey}=${itemKey}`)
+      filters.forEach((x) => {
+        if (x.indexOf('year=') >= 0) {
+          filters.delete(x);
+        }
+      });
+      filters.add(`year=${itemKey}`)
+      console.log(filters, 'filt', itemKey);
     }else{
       if (event.target.checked) {
         filters.add(`${menuKey}=${itemKey}`);
@@ -330,7 +336,6 @@ class TaibifSearch extends React.Component {
 
   getSearch(filters) {
     /* filters: Set() will affect API url and change current URL but not redirect */
-  
     let pathname = window.location.pathname
     let apiUrl = null;
     let myRe = /\/occurrence\/.*/g;
@@ -342,16 +347,17 @@ class TaibifSearch extends React.Component {
 
     // for window.history.pushState
     let url = `${window.location.origin}${window.location.pathname}`;
-
+    /* TODO menu facet */
+    const facetQueryString = 'facet=year&facet=month&facet=dataset&facet=publisher&facet=country';
     if (filters) {
       let queryString = filtersToQuerystring(filters);
-      apiUrl = `${apiUrl}?${queryString}&menu=1`;
+      apiUrl = `${apiUrl}?${queryString}&`;
       url = `${url}?${queryString}`;
     }
     else {
-      apiUrl = `${apiUrl}?menu=1`;
+      apiUrl = `${apiUrl}?`;
     }
-
+    apiUrl = `${apiUrl}${facetQueryString}`;
     window.history.pushState({stateObj:url}, "", url);
 
     console.log('fetch:', apiUrl)

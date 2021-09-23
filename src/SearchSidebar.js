@@ -109,7 +109,11 @@ const SearchTaxon = (props) => {
 
 function Accordion(props) {
   const [isOpen, setOpenState] = useState(false);
-
+  const [yearRange, setYearRange] = useState([1900, 2021]); /* TODO */
+  const sliderMarks = [];
+  for (let i=1900; i<2022; i++) {
+    sliderMarks.push({value: i, label: i});
+  }
   const {content, onClick, filters} = props;
 
   const appendClass = (props.appendClass) ? ` ${props.appendClass}` : '';
@@ -118,19 +122,18 @@ function Accordion(props) {
     setOpenState(isOpen === false ? true : false);
   }
 
+  const handleSliderCommitted = (event) => {
+    //console.log(yearRange);
+    onClick(event, content.key, yearRange.join(','))
+  };
   const menuItems = content.rows.map((x) => {
-    if(content.label=="年份"){
-        const [value, setValue] = useState([x.year_start, x.year_end]);
-        const handleChange = (event, newValue) => {
-          setValue(newValue);
-          onClick(event, content.key, newValue);
-        };
-        // console.log(content.key, handleChange)
+    if (content.key == 'year'){
         return (
-          <div className="year_test" key={x.key}>
-            <Slider
-              value={value}
-              onChangeCommitted={handleChange}
+            <div className="year_test" key={x.key}>
+              <Slider
+              value={yearRange}
+              onChange={(e, newRange) => setYearRange(newRange)}
+              onChangeCommitted={handleSliderCommitted}
               max={2021}
               min={1900}
               valueLabelDisplay="auto"
@@ -138,7 +141,7 @@ function Accordion(props) {
             />
           </div>
         );
-    }else{
+    } else {
       const count = (x.count) ? x.count.toLocaleString() : null;
       const itemChecked = filters.has(`${content.key}=${x.key}`);
       return (
