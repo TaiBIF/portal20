@@ -7,7 +7,28 @@ import requests
 SOLR_PREFIX = 'http://solr:8983/solr/'
 
 JSON_FACET_MAP = {
-    'taibif_occurrence': '{dataset:{type:terms,field:taibif_dataset_name},month:{type:terms,field:month},year:{type:terms,field:year},country:{type:terms,field:country},publisher:{type:terms,field:publisher}}',
+    'taibif_occurrence': {
+        'dataset': {
+            'type': 'terms',
+            'field': 'taibif_dataset_name'
+        },
+        'month': {
+            'type': 'terms',
+            'field':'month',
+        },
+        'year': {
+            'type':'terms',
+            'field':'year'
+        },
+        'country': {
+            'type':'terms',
+            'field':'country'
+        },
+        'publisher': {
+            'type':'terms',
+            'field':'publisher'
+        },
+    }
 }
 
 
@@ -18,24 +39,6 @@ class SolrQuery(object):
     response = solr_ret['data']
     '''
     rows = 20
-    #query = {}
-    facet_fields = {
-        'year': {},
-        'month': {},
-        'publisher': {},
-        'dataset': {},
-    }
-    '''
-    test
-    solr_tuples = [
-        ('q', 'brueggemanni'),
-        #('rows', '*.*'),
-        ('q', '20'),
-        ('facet', 'true'),
-        ('json.facet', '{dataset:{type:terms,field:taibif_dataset_name},month:{type:terms,field:month}}'),
-        ('wt', 'json'),
-        ]
-    '''
 
     def __init__(self, core):
         self.solr_tuples = [
@@ -44,7 +47,8 @@ class SolrQuery(object):
             ('wt', 'json'),
         ]
         self.core = core
-        self.has_facet = True
+        self.has_facet = False
+        self.facet_values = []
         self.solr_error = ''
         self.solr_response = {}
 
@@ -58,24 +62,37 @@ class SolrQuery(object):
                 self.solr_tuples.append(('start', values[0]))
             elif key == 'limit':
                 self.solr_tuples.append(('offset', values[0]))
-            elif key in self.facet_fields:
+            elif key in JSON_FACET_MAP[self.core]:
                 if len(values) == 1:
                     if ',' in values[0]:
                         vlist = values[0].split(',')
                         self.solr_tuples.append(('fq', f'{key}:[{vlist[0]} TO {vlist[1]}]'))
                     else:
-                        self.solr_tuples.append(('fq', '{}:{}'.format(key, values[0])))
+                        if key in JSON_FACET_MAP[self.core]:
+                            self.solr_tuples.append(('fq', '{}:{}'.format(JSON_FACET_MAP[self.core][key]['field'], values[0])))
                 else:
                     self.solr_tuples.append(('fq', '{}:({})'.format(key, ' OR '.join(values))))
+            elif key == 'facet':
+                self.has_facet = True
+                self.facet_values = values
 
         self.solr_tuples.append(('q', solr_q))
 
         if self.has_facet:
             self.solr_tuples.append(('facet', 'true'))
-            self.solr_tuples.append(('json.facet', JSON_FACET_MAP[self.core]))
+            s = ''
+            flist = []
+            print (str(JSON_FACET_MAP[self.core]).replace("'", '',).replace(' ', ''))
+            for i in self.facet_values:
+                if i in JSON_FACET_MAP[self.core]:
+                    flist.append('{}:{}'.format(i, str(JSON_FACET_MAP[self.core][i]).replace("'", '',).replace(' ', '')))
+                    #flist.append('{}:{}'.format(i, JSON_FACET_MAP[self.core][i]))
+            s = ','.join(flist)
+            self.solr_tuples.append(('json.facet', '{'f'{s}''}'))
 
         query_string = urllib.parse.urlencode(self.solr_tuples)
         #print (query_string)
+        #print(self.solr_tuples)
         url = f'{SOLR_PREFIX}{self.core}/select?{query_string}'
         #print(url)
         try:
@@ -95,7 +112,7 @@ class SolrQuery(object):
             return
 
         resp = self.solr_response['response']
-        facets = self.solr_response['facets']
+        facets = self.solr_response.get('facets', [])
 
         is_last = False
         if resp['start'] + self.rows >= resp['numFound']:
