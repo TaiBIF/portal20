@@ -2,7 +2,7 @@
 
 cd /taibif-code
 
-npm run build-dev
+#npm run build-dev
 
 python manage.py migrate --no-input
 
