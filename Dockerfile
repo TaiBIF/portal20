@@ -10,13 +10,17 @@ ENV PYTHONUNBUFFERED 1
 
 # update & install system package
 RUN apt-get update && apt-get install -y \
-    gettext nodejs
+    gettext
+#nodejs
 #    rm -rf /var/lib/apt/lists/*
 
 # install npm from source
-RUN curl https://www.npmjs.com/install.sh -o npm-install.sh
-RUN sh npm-install.sh
-RUN rm npm-install.sh
+#curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+RUN apt-get install -y nodejs
+#RUN curl https://www.npmjs.com/install.sh -o npm-install.sh
+#RUN sh npm-install.sh
+#RUN rm npm-install.sh
 
 # timezone to Asia/Taipei
 RUN ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime
