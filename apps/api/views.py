@@ -40,24 +40,27 @@ def occurrence_search_v2(request):
     req = solr.request(request.GET.lists())
     #response = req['solr_response']
     resp = solr.get_response()
-
-    print (resp['facets'])
-    #menu_year = [{'key': 0, 'label': 0, 'count': 0,'year_start':year_start,'year_end':year_end}]
-    menu_month = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in resp['facets']['month']['buckets']]
+    if not resp:
+        return JsonResponse({
+            'results': 0,
+            'solr_error_msg': solr.solr_error,
+        })
+    menu_year = [{'key': 0, 'label': 0, 'count': 0,'year_start':1990,'year_end':2021}]
+    menu_month = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in sorted(resp['facets']['month']['buckets'], key=lambda x: x['val'])]
     menu_dataset = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in resp['facets']['dataset']['buckets']]
-    #menu_country = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['country']['buckets']]
-    #menu_publisher = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['publisher']['buckets']]
+    menu_country = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in resp['facets']['country']['buckets']]
+    menu_publisher = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in resp['facets']['publisher']['buckets']]
     menus = [
-        #{
-        #    'key': 'country', #'countrycode',
-        #    'label': '國家/區域',
-        #    'rows': menu_country,
-        #},
-        #{
-        #    'key': 'year',
-        #    'label': '年份',
-        #    'rows': menu_year,
-        #},
+        {
+            'key': 'country', #'countrycode',
+            'label': '國家/區域',
+            'rows': menu_country,
+        },
+        {
+            'key': 'year',
+            'label': '年份',
+            'rows': menu_year,
+        },
         {
             'key': 'month',
             'label': '月份',
@@ -68,14 +71,28 @@ def occurrence_search_v2(request):
             'label': '資料集',
             'rows': menu_dataset,
         },
-        #{
-        #    'key':'publisher',
-        #    'label': '發布者',
-        #        'rows': menu_publisher,
-        #}
+        {
+            'key':'publisher',
+            'label': '發布者',
+                'rows': menu_publisher,
+        }
         ]
 
     resp['menus'] = menus
+
+    # tree
+    treeRoot = Taxon.objects.filter(rank='kingdom').all()
+    treeData = [{
+        'id': x.id,
+        'data': {
+            'name': x.get_name(),
+            'count': x.count,
+        },
+    } for x in treeRoot]
+    resp['tree'] = treeData
+    if request.GET.get('debug_solr', ''):
+        resp['solr_resp'] = solr.solr_response
+
     resp['solr_qtime'] = req['solr_response']['responseHeader']['QTime']
     resp['elapsed'] = time.time() - time_start
     return JsonResponse(resp)
@@ -91,7 +108,7 @@ def search_occurrence_v1_charts(request):
             if term =='year':
                 val = values[0].replace(",", " TO ")
                 solr_q_list.append('{}= {}'.format(term,val))
-                
+
                 year_start =values[0].split(',',1)
                 year_end =values[0].split(',',2)
             else :
@@ -156,6 +173,7 @@ def search_occurrence_v1_charts(request):
             },
         ],
     }
+
     return JsonResponse(ret)
 
 
