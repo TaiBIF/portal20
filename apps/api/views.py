@@ -45,38 +45,45 @@ def occurrence_search_v2(request):
             'results': 0,
             'solr_error_msg': solr.solr_error,
         })
-    menu_year = [{'key': 0, 'label': 0, 'count': 0,'year_start':1990,'year_end':2021}]
-    menu_month = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in sorted(resp['facets']['month']['buckets'], key=lambda x: x['val'])]
-    menu_dataset = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in resp['facets']['dataset']['buckets']]
-    menu_country = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in resp['facets']['country']['buckets']]
-    menu_publisher = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in resp['facets']['publisher']['buckets']]
-    menus = [
-        {
-            'key': 'country', #'countrycode',
-            'label': '國家/區域',
-            'rows': menu_country,
-        },
-        {
-            'key': 'year',
-            'label': '年份',
-            'rows': menu_year,
-        },
-        {
-            'key': 'month',
-            'label': '月份',
-            'rows': menu_month,
-        },
-        {
-            'key': 'dataset',
-            'label': '資料集',
-            'rows': menu_dataset,
-        },
-        {
-            'key':'publisher',
-            'label': '發布者',
-                'rows': menu_publisher,
-        }
-        ]
+
+    menus = []
+    if resp['facets']:
+        if data := resp['facets'].get('country', ''):
+            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
+            menus.append({
+                'key': 'country', #'countrycode',
+                'label': '國家/區域',
+                'rows': rows,
+            })
+        if data := resp['facets'].get('year', ''):
+            #menu_year = [{'key': 0, 'label': 0, 'count': 0,'year_start':1990,'year_end':2021}]
+            # TODO
+            menus.append({
+                'key': 'year',
+                'label': '年份',
+                'rows': ['FAKE_FOR_SPACE',],
+            })
+        if data := resp['facets'].get('month', ''):
+            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in sorted(data['buckets'], key=lambda x: x['val'])]
+            menus.append({
+                'key': 'month',
+                'label': '月份',
+                'rows': rows,
+            })
+        if data := resp['facets'].get('dataset', ''):
+            rows = menu_dataset = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
+            menus.append({
+                'key': 'dataset',
+                'label': '資料集',
+                'rows': rows,
+            })
+        if data := resp['facets'].get('publisher', ''):
+            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
+            menus.append({
+                'key':'publisher',
+                'label': '發布者',
+                'rows': rows,
+            })
 
     resp['menus'] = menus
 
