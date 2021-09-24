@@ -11,10 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: SSH & Deploy
-        uses: applyboy/ssh-action@master
+        uses: actions/checkout@develop
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          port: ${{ secrets.PORT }}
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: whoami
