@@ -338,9 +338,11 @@ class TaibifSearch extends React.Component {
     /* filters: Set() will affect API url and change current URL but not redirect */
     let pathname = window.location.pathname
     let apiUrl = null;
+    let isOccurrence = false;
     let myRe = /\/occurrence\/.*/g;
     if (myRe.exec(pathname)){
       apiUrl = `${window.location.origin}/api/v2/occurrence/search`;
+      isOccurrence = true;
     }else{
       apiUrl = `${window.location.origin}/api${window.location.pathname}`;
     }
@@ -348,7 +350,7 @@ class TaibifSearch extends React.Component {
     // for window.history.pushState
     let url = `${window.location.origin}${window.location.pathname}`;
     /* TODO menu facet */
-    const facetQueryString = 'facet=year&facet=month&facet=dataset&facet=publisher&facet=country';
+    const facetQueryString = (isOccurrence === true) ? 'facet=year&facet=month&facet=dataset&facet=publisher&facet=country' : 'menu=1';
     if (filters) {
       let queryString = filtersToQuerystring(filters);
       apiUrl = `${apiUrl}?${queryString}&`;
@@ -370,13 +372,14 @@ class TaibifSearch extends React.Component {
       .then(
         (jsonData) => {
           console.log('resp: ', jsonData);
+          const results = isOccurrence ? jsonData.results : jsonData.search.results
           const taxonData = this.state.taxonData;
           taxonData.tree = jsonData.tree;
           this.setState({
             isLoaded: true,
             isLoadedMain: true,
             search: {
-              results: jsonData.results,
+              results: results,
               limit: jsonData.limit,
               offset: jsonData.offset,
               count: jsonData.count,
