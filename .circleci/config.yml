@@ -52,7 +52,7 @@ jobs: # A basic unit of work in a run
           fingerprints: "b1:ba:4e:bb:8e:b3:1a:50:8a:f7:3c:3b:7f:e5:4b:8e"
       - run:
           command: |
-            ssh $SSH_USER@$SSH_HOST "cd portal20; git pull;docker-compose -f docker-compose.yml -f docker-compose-staging.yml down; docker-compose -f docker-compose.yml -f docker-compose-staging.yml up -d"
+            ssh ec2-user@staging.taibif.tw "cd portal20; git pull;docker-compose -f docker-compose.yml -f docker-compose-staging.yml down; docker-compose -f docker-compose.yml -f docker-compose-staging.yml up -d"
 workflows:
   version: 2
   build-and-deploy:
