@@ -43,7 +43,7 @@ COPY . /taibif-code/
 COPY package.json package-lock.json ./
 RUN npm install
 
-#RUN npm run build-dev # not working?
+#RUN npm run build # build at docker-compose up
 
 # dev
 #RUN apk --update add --no-cache postgresql-client
