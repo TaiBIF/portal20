@@ -49,10 +49,10 @@ jobs: # A basic unit of work in a run
       enabled: true
     steps:
       - add_ssh_keys:
-          fingerprints: "bf:51:c5:ef:ca:95:ab:ca:3a:9c:7d:fd:eb:01:e3:ef"
+          fingerprints: "b1:ba:4e:bb:8e:b3:1a:50:8a:f7:3c:3b:7f:e5:4b:8e"
       - run:
           command: |
-            ssh $SSH_USER@$SSH_HOST "cd serv/portal20; git pull;docker-compose -f docker-compose.yml -f docker-compose-staging.yml down; docker-compose -f docker-compose.yml -f docker-compose-staging.yml up -d"
+            ssh $SSH_USER@$SSH_HOST "cd portal20; git pull;docker-compose -f docker-compose.yml -f docker-compose-staging.yml down; docker-compose -f docker-compose.yml -f docker-compose-staging.yml up -d"
 workflows:
   version: 2
   build-and-deploy:
@@ -70,3 +70,4 @@ workflows:
 # fingerprint SHA256:OkiW9csb6vcuqn2n1j5+nAZM0AglKJUKb5SWulGthqc.
 #cb:6b:2f:bb:f3:f1:c7:98:81:a1:b9:81:77:38:8d:81s github deploy
 #02:a1:0c:4a:67:8d:00:a3:ef:c6:1d:a5:76:e1:5f:fe # stag
+#bf:51:c5:ef:ca:95:ab:ca:3a:9c:7d:fd:eb:01:e3:ef
