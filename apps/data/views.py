@@ -35,6 +35,8 @@ from .helpers.mod_search import (
     PublisherSearch,
     SpeciesSearch,
 )
+from utils.solr_query import SolrQuery
+
 
 def search_all(request):
     if request.method == 'POST':
@@ -127,36 +129,193 @@ def search_all(request):
 
 
 def occurrence_view(request, taibif_id):
-    occurrence = get_object_or_404(RawDataOccurrence, taibif_id=taibif_id)
-
-
+    # occurrence = get_object_or_404(RawDataOccurrence, taibif_id=taibif_id)
+    solr = SolrQuery('taibif_occurrence')
+    req = solr.get_occurrence(taibif_id)
+    resp = solr.get_response()
+    result = req['results']
+    
+    intro = {}
+    record = {}
+    occ = {}
+    event = {}
+    taxon = {}
+    location = {}
+    other = {}
+    
     lat = 0
     lon = 0
-    if occurrence.simple_data.latitude:
-        lat = occurrence.simple_data.latitude
-    elif occurrence.decimallatitude:
-        lat = occurrence.decimallatitude
 
-    if occurrence.simple_data.longitude:
-        lon = occurrence.simple_data.longitude
-    elif occurrence.decimallatitude:
-        lon = occurrence.decimallongitude
+    # intro 
+    intro['dataset_zh']=result[0].get('taibif_dataset_name_zh')
+    intro['publisher']=result[0].get('publisher')
+    intro['basisOfRecord']=result[0].get('basisOfRecord')
+    intro['scientificName']=result[0].get('scientificName')
+    intro['species_key']=result[0].get('species_key')
+    intro['kingdom_key']=result[0].get('kingdom_key')
+    intro['phylum_key']=result[0].get('phylum_key')
+    intro['order_key']=result[0].get('order_key')
+    intro['class_key']=result[0].get('class_key')
+    intro['genus_key']=result[0].get('genus_key')
+    intro['dataset']=result[0].get('taibif_dataset_name')
+    intro['name_zh']=result[0].get('tname_zh')
+    
 
-    terms = {}
-    for i in occurrence._meta.get_fields():
-        if not i.is_relation and\
-           i.column not in ['taibif_id', 'taibif_dataset_name']:
-            x = getattr(occurrence, i.name, '')
-            if x:
-                terms[i.column] = x
+    # record
+    record['modified']=result[0].get('modified')
+    record['language']=result[0].get('language')
+    record['license']=result[0].get('license')
+    record['rightsHolder']=result[0].get('rightsHolder')
+    record['references']=result[0].get('references')
+    record['institutionID']=result[0].get('institutionID')
+    record['collectionID']=result[0].get('collectionID')
+    record['datasetID']=result[0].get('datasetID')
+    record['institutionCode']=result[0].get('institutionCode')
+    record['collectionCode']=result[0].get('collectionCode')
+    record['datasetName']=result[0].get('datasetName')
+    record['ownerInstitutionCode']=result[0].get('ownerInstitutionCode')
+    record['basisOfRecord'] =result[0].get('asisOfRecord')
+    record['informationWithheld']=result[0].get('informationWithheld')
+    record['dataGeneralizations']=result[0].get('dataGeneralizations')
+
+    # occ 
+    occ['catalogNumber']=result[0].get('catalogNumber')
+    occ['occurrenceID']=result[0].get('occurrenceID')
+    occ['recordNumber ']=result[0].get('recordNumber ')
+    occ['recordedBy']=result[0].get('recordedBy')
+    occ['individualCount']=result[0].get('individualCount')
+    occ['organismQuantity']=result[0].get('organismQuantity')
+    occ['organismQuantityType']=result[0].get('organismQuantityType')
+    occ['lifeStage']=result[0].get('lifeStage')
+    occ['ex']=result[0].get('sex')
+    occ['reproductiveCondition']=result[0].get('reproductiveCondition')
+    occ['establishmentMeans']=result[0].get('establishmentMeans')
+    occ['behavior']=result[0].get('behavior')
+    occ['georeferenceVerificationStatus']=result[0].get('georeferenceVerificationStatus')
+    occ['occurrenceStatus']=result[0].get('occurrenceStatus')
+    occ['preparations']=result[0].get('preparations')
+    occ['disposition']=result[0].get('disposition')
+    occ['associatedMedia']=result[0].get('associatedMedia')
+    occ['associatedReferences']=result[0].get('associatedReferences')
+    occ['associatedSequences']=result[0].get('associatedSequences')
+    occ['associatedTaxa']=result[0].get('associatedTaxa')
+    occ['otherCatalogNumbers']=result[0].get('otherCatalogNumbers')
+    occ['occurrenceRemarks']=result[0].get('occurrenceRemarks')
+    occ['occurrenceID']=result[0].get('occurrenceID')
+    occ['individualCount']=result[0].get('individualCount')
+
+    # event
+    event['eventID']=result[0].get('eventID')
+    event['parentEventID']=result[0].get(' parentEventID')
+    event['fieldNumber']=result[0].get('fieldNumber')
+    event['eventDate']=result[0].get('eventDate')
+    event['eventTime']=result[0].get('eventTime')
+    event['startDayOfYear']=result[0].get('startDayOfYear')
+    event['endDayOfYear']=result[0].get('endDayOfYear')
+    event['year']=result[0].get('year')
+    event['month']=result[0].get('month')
+    event['day']=result[0].get('day')
+    event['verbatimEventDate']=result[0].get('verbatimEventDate')
+    event['habitat']=result[0].get('habitat')
+    event['samplingProtocol']=result[0].get('samplingProtocol')
+    event['samplingEffort']=result[0].get('samplingEffort')
+    event['fieldNotes']=result[0].get('fieldNotes')
+    event['eventRemarks']=result[0].get('eventRemarks')    
+    
+    # taxon
+    taxon['taxonID']=result[0].get('taxonID')
+    taxon['scientificNameID']=result[0].get(' scientificNameID')
+    taxon['acceptedNameUsageID']=result[0].get('acceptedNameUsageID')
+    taxon['scientificName']=result[0].get('scientificName')
+    taxon['acceptedNameUsage']=result[0].get('acceptedNameUsage')
+    taxon['originalNameUsage']=result[0].get('originalNameUsage')
+    taxon['nameAccordingTo']=result[0].get('nameAccordingTo')
+    taxon['namePublishedIn']=result[0].get('namePublishedIn')
+    taxon['higherClassification']=result[0].get('higherClassification')
+    taxon['kingdom']=result[0].get('kingdom')
+    taxon['phylum']=result[0].get('phylum')
+    taxon['class']=result[0].get('class')
+    taxon['order']=result[0].get('order')
+    taxon['family']=result[0].get('family')
+    taxon['genus']=result[0].get('genus')
+    taxon['subgenus']=result[0].get('subgenus')
+    taxon['specificEpithet']=result[0].get('specificEpithet')
+    taxon['infraspecificEpithet']=result[0].get('infraspecificEpithet')
+    taxon['taxonRank']=result[0].get('taxonRank')
+    taxon['verbatimTaxonRank']=result[0].get('verbatimTaxonRank')
+    taxon['scientificNameAuthorship']=result[0].get('scientificNameAuthorship')
+    taxon['vernacularName']=result[0].get('vernacularName')
+    taxon['nomenclaturalCode']=result[0].get('nomenclaturalCode')
+    taxon['taxonRemarks']=result[0].get('taxonRemarks')
+
+    print('==================',taxon)
+    # location
+    location['locationID']=result[0].get('locationID')
+    location[' higherGeographyID']=result[0].get(' higherGeographyID')
+    location['higherGeography']=result[0].get('higherGeography')
+    location['continent']=result[0].get('continent')
+    location['waterBody']=result[0].get('waterBody')
+    location['islandGroup']=result[0].get('islandGroup')
+    location['island']=result[0].get('island')
+    location['country']=result[0].get('country')
+    location['countryCode']=result[0].get('countryCode')
+    location['stateProvince']=result[0].get('stateProvince')
+    location['county']=result[0].get('county')
+    location['municipality']=result[0].get('municipality')
+    location['locality']=result[0].get('locality')
+    location['verbatimLocality']=result[0].get('verbatimLocality')
+    location['minimumElevationInMeters']=result[0].get('minimumElevationInMeters')
+    location['maximumElevationInMeters']=result[0].get('maximumElevationInMeters')
+    location['verbatimElevation']=result[0].get('verbatimElevation')
+    location['minimumDepthInMeters']=result[0].get('minimumDepthInMeters')
+    location['maximumDepthInMeters']=result[0].get('maximumDepthInMeters')
+    location['verbatimDepth']=result[0].get('verbatimDepth')
+    location['locationAccordingTo']=result[0].get('locationAccordingTo')
+    location['locationRemarks']=result[0].get('locationRemarks')
+    location['decimalLatitude']=result[0].get('decimalLatitude')
+    location['decimalLongitude']=result[0].get('decimalLongitude')
+    location['geodeticDatum']=result[0].get('geodeticDatum')
+    location['coordinateUncertaintyInMeters']=result[0].get('coordinateUncertaintyInMeters')
+    location['coordinatePrecision']=result[0].get('coordinatePrecision')
+    location['pointRadiusSpatialFit']=result[0].get('pointRadiusSpatialFit')
+    location['verbatimCoordinates']=result[0].get('verbatimCoordinates')
+    location['verbatimLatitude']=result[0].get('verbatimLatitude')
+    location['verbatimLongitude']=result[0].get('verbatimLongitude')
+    location['verbatimCoordinateSystem']=result[0].get('verbatimCoordinateSystem')
+    location['verbatimSRS']=result[0].get('verbatimSRS')
+    location['footprintWKT']=result[0].get('footprintWKT')
+    location['footprintSpatialFit']=result[0].get('footprintSpatialFit')
+    location['georeferencedBy']=result[0].get('georeferencedBy')
+    location['georeferencedDate']=result[0].get('georeferencedDate')
+    location['georeferenceProtocol']=result[0].get('georeferenceProtocol')
+    location['georeferenceSources']=result[0].get('georeferenceSources')
+    location['georeferenceRemarks']=result[0].get('georeferenceRemarks')
+
+    # other
 
 
-    context = {
-        'occurrence': occurrence,
-        'terms': terms,
-    }
+    if result[0].get('latitude'):
+        lat = result[0].get('latitude')
+    elif result[0].get('decimallatitude'):
+        lat = result[0].get('decimallatitude')
+
+    if result[0].get('longitude'):
+        lon = result[0].get('longitude')
+    elif result[0].get('decimallongitude'):
+        lon = result[0].get('decimallongitude')
+
     if lat and lon:
         context['map_view'] =  [lat, lon]
+
+    context = {
+        'intro':intro,
+        'record':record,
+        'occ':occ,
+        'event':event, 
+        'taxon':taxon,
+        'location':location,
+        'other':other,
+    }
 
     return render(request, 'occurrence.html', context)
 
