@@ -119,7 +119,7 @@ class SolrQuery(object):
             is_last = True
 
         for i in resp['docs']:
-            i['taibif_occurrence_id'] = i['_version_']
+            i['taibif_occurrence_id'] = i['taibif_occ_id']
         return {
             'offset': resp['start'],
             'limit': self.rows,
@@ -127,4 +127,22 @@ class SolrQuery(object):
             'results': resp['docs'],
             'endOfRecords': is_last,
             'facets': facets, # TODO: redundant with menus
+        }
+
+
+    def get_occurrence(self,taibif_occ_id):
+        solr_q = '*:*'
+        solr_fq = 'taibif_occ_id:' + str(taibif_occ_id)
+        query_string = solr_fq
+
+        url = f'{SOLR_PREFIX}{self.core}/select?q.op=OR&q={query_string}'
+        try:
+            resp =urllib.request.urlopen(url)
+            resp_dict = resp.read().decode()
+            self.solr_response = json.loads(resp_dict)
+        except urllib.request.HTTPError as e:
+            self.solr_error = str(e)
+        return {
+            'results': self.solr_response['response']['docs'],
+            'solr_error': self.solr_error
         }
