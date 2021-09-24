@@ -148,11 +148,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
-LANGUAGE_CODE = 'zh-Hant'
+LANGUAGE_CODE = 'zh-hant'
 
 LANGUAGES = (
-    ('en', ('English')),
     ('zh-hant', _('Traditional Chinese')),
+    ('en', ('English')),
 )
 
 
@@ -183,8 +183,8 @@ if DEBUG:
         'apps.api.middleware.DebugToolbarForJsonMiddleware'
     )
     INSTALLED_APPS += ( 'debug_toolbar',)
-    #DEBUG_TOOLBAR_PANELS = (
-    #    'debug_toolbar.panels.version.VersionDebugPanel',
+    #DEBUG_TOOLBAR_debug = (
+    #    'PANELS_toolbar.panels.version.VersionDebugPanel',
     #    'debug_toolbar.panels.timer.TimerDebugPanel',
     #    'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
     #    'debug_toolbar.panels.headers.HeaderDebugPanel',
