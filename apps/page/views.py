@@ -31,12 +31,17 @@ from utils.mail import taibif_mail_contact_us
 from apps.data.helpers.stats import get_home_stats
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_GET
+from django.utils.translation import activate
 
+def act_lang(func):
+    def wrapper(*args, **kwargs):
+        activate('zh-hant') # default 中文
+        resp = func(*args, **kwargs)
+        return resp
+    return wrapper
 
-
-
+@act_lang
 def index(request):
-
     news_list = Article.objects.filter(category='NEWS').all()[0:4]
     event_list = Article.objects.filter(category='EVENT').all()[0:4]
     update_list = Article.objects.filter(category='UPDATE').all()[0:4]
@@ -53,30 +58,37 @@ def index(request):
 
     return render(request, 'index.html', context)
 
+@act_lang
 def publishing_data(request):
     return render(request, 'publishing-data.html')
 
+@act_lang
 def journals(request):
     Journal_url = Journal.objects.all()
 
     return render(None,'journals.html', locals())
 
-
+@act_lang
 def cookbook(request):
     return render(request, 'cookbook.html')
 
+@act_lang
 def cookbook_detail_1(request):
     return render(request, 'cookbook-detail-1.html')
 
+@act_lang
 def cookbook_detail_2(request):
     return render(request, 'cookbook-detail-2.html')
 
+@act_lang
 def cookbook_detail_3(request):
     return render(request, 'cookbook-detail-3.html')
 
+@act_lang
 def tools(request):
     return render(request, 'tools.html')
 
+@act_lang
 def contact_us(request):
     if request.method == 'GET':
         return render(request, 'contact-us.html')
@@ -108,22 +120,28 @@ def contact_us(request):
 
         return render(request, 'contact-us.html', context)
 
+@act_lang
 def plans(request):
     return render(request, 'plans.html')
 
+@act_lang
 def links(request):
     Post_url = Post.objects.all()
     return render(None,'links.html', locals())
 
+@act_lang
 def about_taibif(request):
     return render(request, 'about-taibif.html')
 
+@act_lang
 def about_gbif(request):
     return render(request, 'about-gbif.html')
 
+@act_lang
 def open_data(request):
     return render(request, 'open-data.html')
 
+@act_lang
 def data_stats(request):
     is_most = request.GET.get('most', '')
 
