@@ -35,18 +35,15 @@ RUN pip install --no-cache-dir pipenv
 COPY Pipfile Pipfile.lock ./
 RUN pipenv install --system
 
-
-COPY . /taibif-code/
-
-
 # install frontend packages
 COPY package.json package-lock.json ./
 RUN npm install
 
-#RUN npm run build # build at docker-compose up
+COPY . .
 
-# dev
-#RUN apk --update add --no-cache postgresql-client
+RUN npm build
+#COPY . /taibif-code/
+
 
 # remove compiling environment `build-dependencies`
 #RUN apk del build-dependencies
