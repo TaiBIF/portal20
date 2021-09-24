@@ -10,7 +10,9 @@ DATA_MAPPING = {
         'PH': '菲律賓',
         'NP': '尼泊爾',
         'ZM': '尚比亞',
-        'BI': '蒲隆地'
+        'BI': '蒲隆地',
+        'CN': '中國',
+        None:'其他'
     },
     'rights': {
         'CC-BY-NC': 'cc-by-nc',
@@ -19,7 +21,7 @@ DATA_MAPPING = {
     },
     'core': {
         'occurrence': 'Occurrence',
-        'taxon': 'Checklist',
+        'taxon': 'checklist',
         'event': 'Sampling event',
         'meta': 'Metadata-only'
     }
