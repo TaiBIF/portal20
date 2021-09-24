@@ -28,7 +28,7 @@ services:
     restart: always
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=
+      - POSTGRES_PASSWORD=example
       - POSTGRES_DB=taibif
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
