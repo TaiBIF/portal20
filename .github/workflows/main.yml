@@ -12,7 +12,7 @@ jobs:
       - name: Install SSH key
         uses: shimataro/ssh-key-action@v2
         with:
-          key: ${{ secrets.SSH_KEY }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: 'test'
       - name: rsync over ssh
         run: echo "${{ secrets.SSH_HOST}}"
