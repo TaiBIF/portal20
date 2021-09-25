@@ -15,4 +15,4 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           known_hosts: 'test'
       - name: deploy over ssh
-        run: "ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} ls -al"
+        run: "ssh ec2-user@staging.taibif.tw ls -al"
