@@ -47,6 +47,10 @@ $ docker-compose exec solr bash
 $ post -c taibif_occurrence /workspace/conf-taibif-occur/taibif_occurrence/file.csv
 ```
 ## Architecture
+
+Solr Source data fram [TaiBIF IPT](https://ipt.taibif.tw/).
+
+[gbif/ipt: GBIF Integrated Publishing Toolkit (IPT)](https://github.com/gbif/ipt): The Integrated Publishing Toolkit (IPT) is a free, open source software tool used to publish and share biodiversity datasets through the GBIF network. 
 <img width="856" alt="Screen Shot 2021-09-26 at 01 43 49" src="https://user-images.githubusercontent.com/428769/134781156-f6ecf8ab-e8f3-4113-94e6-74ddbf16c5c8.png">
 
 
