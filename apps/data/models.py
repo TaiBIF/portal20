@@ -17,7 +17,8 @@ DATA_MAPPING = {
     'rights': {
         'CC-BY-NC': 'cc-by-nc',
         'CC-BY': 'cc-by',
-        'CC0': 'cc0'
+        'CC0': 'cc0',
+        None:'其他'
     },
     'core': {
         'occurrence': 'Occurrence',
@@ -56,7 +57,7 @@ class Dataset(models.Model):
 
     DWC_CORE_TYPE_CHOICE = (
         ('Occurrence', '出現紀錄'),
-        ('Checklist', '物種名錄'),
+        ('checklist', '物種名錄'),
         ('Sampling event', '調查活動'),
         # Meta
     )
@@ -118,6 +119,12 @@ class Dataset(models.Model):
     @property
     def dwca_link(self):
         return 'https://ipt.taibif.tw/archive.do?r={}'.format(self.name)
+    
+    @property
+    def doi_link(self):
+        return 'https://doi.org/{}'.format(self.gbif_doi)
+    
+        
 
     def __str__(self):
         r = '<Dataset {}>'.format(self.name)

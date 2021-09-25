@@ -24,6 +24,8 @@ from .models import (
     Taxon,
     Occurrence,
     Dataset,
+    Book_citation,
+    Dataset_Contact,
     #RawDataOccurrence,
     DatasetOrganization,
     #SimpleData,
@@ -320,42 +322,51 @@ def occurrence_view(request, taibif_id):
     return render(request, 'occurrence.html', context)
 
 def dataset_view(request, name):
-
+    
     try:
         dataset = Dataset.public_objects.get(name=name)
 
+        contacts = []
+        citation =[]
+        for x in Dataset_Contact.objects.filter(dataset=dataset.id).values():
+            del x['id'],x['dataset_id']
+            contacts.append(x)
+            
+        for x in Book_citation.objects.filter(dataset=dataset.id).values():
+            del x['id'],x['dataset_id']
+            citation.append(x)
+
 
         #Count the number of longitude and latitude
-        dataset_s = SimpleData.objects.filter(taibif_dataset_name = name).values_list('longitude','latitude','year','taxon_family_id',
-                                                                                      'taxon_family_id')
+        # dataset_s = SimpleData.objects.filter(taibif_dataset_name = name).values_list('longitude','latitude','year','taxon_family_id',
+        #                                                                               'taxon_family_id')
 
-        count_long = [item[0] for item in dataset_s]
-        LonNum =  "{:.0%}".format(sum(1 for _ in filter(None.__ne__, count_long))/len(dataset_s))
+        # count_long = [item[0] for item in dataset_s]
+        # LonNum =  "{:.0%}".format(sum(1 for _ in filter(None.__ne__, count_long))/len(dataset_s))
 
-        count_lat = [item[1] for item in dataset_s]
-        LatNum = "{:.0%}".format(sum(1 for _ in filter(None.__ne__, count_lat))/len(dataset_s))
+        # count_lat = [item[1] for item in dataset_s]
+        # LatNum = "{:.0%}".format(sum(1 for _ in filter(None.__ne__, count_lat))/len(dataset_s))
 
-        count_yr = [item[2] for item in dataset_s]
-        YrNum = "{:.0%}".format(sum(1 for _ in filter(None.__ne__, count_yr)) / len(dataset_s))
+        # count_yr = [item[2] for item in dataset_s]
+        # YrNum = "{:.0%}".format(sum(1 for _ in filter(None.__ne__, count_yr)) / len(dataset_s))
 
-        count_fam = [item[3] for item in dataset_s]
-        TaxNum = "{:.0%}".format(sum(1 for _ in filter(None.__ne__, count_fam)) / len(dataset_s))
-        FamNum = len(set(count_fam))
+        # count_fam = [item[3] for item in dataset_s]
+        # TaxNum = "{:.0%}".format(sum(1 for _ in filter(None.__ne__, count_fam)) / len(dataset_s))
+        # FamNum = len(set(count_fam))
 
-        count_sp = [item[4] for item in dataset_s]
-        SpNum = len(set(count_sp))
+        # count_sp = [item[4] for item in dataset_s]
+        # SpNum = len(set(count_sp))
 
         #dataset_o = RawDataOccurrence.objects.filter(taibif_dataset_name=name).values_list('family')
-
 
         
 
     except Dataset.DoesNotExist:
         raise Http404("Dataset does not exist")
 
-    return render(request, 'dataset.html', {'dataset': dataset, 'LonNum':LonNum, 'LatNum':LatNum,'YrNum':YrNum, 'TaxNum':TaxNum,
-                                            'FamNum':FamNum, 'SpNum':SpNum})
-
+    # return render(request, 'dataset.html', {'dataset': dataset, 'LonNum':LonNum, 'LatNum':LatNum,'YrNum':YrNum, 'TaxNum':TaxNum,
+                                            # 'FamNum':FamNum, 'SpNum':SpNum})
+    return render(request,'dataset.html',{'dataset':dataset,'contacts':contacts,'citation':citation})
 
 
 
@@ -372,26 +383,30 @@ def species_view(request, pk):
     context = {}
     taxon = get_object_or_404(Taxon, pk=pk)
     switch = {
-            'kingdom':'kingdomKey',
-            'phylum':'phylumKey',
-            'class':'classKey',
-            'order':'orderKey',
-            'family':'familyKey',
-            'genus':'genusKey',
+            'kingdom':'kingdom_key',
+            'phylum':'phylum_key',
+            'class':'class_key',
+            'order':'order_key',
+            'family':'family_key',
+            'genus':'genus_key',
             'species':'scientficName',
         }
     total = []
     dataset_list = []
+    dataset_zh_list = []
     if taxon.rank != 'species':
-        solr_q = switch.get(taxon.rank) + '=' + str(pk)
+        solr_q = switch.get(taxon.rank) + ':' + str(pk)
     else :
-        solr_q = switch.get(taxon.rank) + '=' + taxon.name
+        solr_q = switch.get(taxon.rank) + ':' + taxon.name
 
 
     search_limit = 20
     facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name}'
-    facet_json = 'json.facet={'+facet_dataset + '}'
-    r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q={solr_q}&{facet_json}')
+    facet_dataset_zh = 'dataset_zh:{type:terms,field:taibif_dataset_name_zh}'
+    facet_json = 'json.facet={'+facet_dataset +','+facet_dataset_zh +'}'
+    # r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q={solr_q}&{facet_json}')
+    r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q=*:*&fq={solr_q}&{facet_json}')
+
     if r.status_code == 200:
 
         data = r.json()
@@ -399,33 +414,19 @@ def species_view(request, pk):
         search_offset = data['response']['start']
         search_results = data['response']['docs']
 
-        for i, v in enumerate(search_results):
-            ## copy fields
-            date = '{}-{}-{}'.format(v['year'] if v.get('year', '') else '',
-                                        v['month'] if v.get('month', '') else '',
-                                        v['day'] if v.get('day', '') else '')
-            search_results[i]['vernacular_name'] = v.get('vernacularName', '')
-            search_results[i]['scientific_name'] = v.get('scientficName', '')
-            search_results[i]['dataset'] = v['taibif_dataset_name']
-            search_results[i]['date'] = date
-            search_results[i]['taibif_id'] = '{}__{}'.format(v['taibif_dataset_name'], v['_version_'])
-            search_results[i]['kingdom'] = v.get('kingdom_taicol', '')
-            search_results[i]['phylum'] = v.get('phylum_taicol', '')
-            search_results[i]['class'] = v.get('class_taicol', '')
-            search_results[i]['order'] = v.get('order_taicol', '')
-            search_results[i]['family'] = v.get('family_taicol', '')
-            search_results[i]['genus'] = v.get('genus_taicol', '')
-            search_results[i]['species'] = v.get('species_taicol', '')
 
 # dataset_occ_count
         if search_count != 0 :
             dataset_list = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['dataset']['buckets']]
+            dataset_zh_list = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['dataset_zh']['buckets']]
 
+        
     context = {
         'taxon': taxon,
         # 'occurrence_list': dataset,
         'dataset_list': dataset_list,
-        'total':total
+        'dataset_zh_list': dataset_zh_list,
+        'total':search_count
 
     }
     # if taxon.rank == 'species':
