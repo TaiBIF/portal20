@@ -10,7 +10,8 @@
 
     <!-- story title begin -->
     <div class="article-head-wrapper">
-      <h1 class="heading-lg">
+      <!-- <h1 class="heading-lg"> -->
+      <h1>
         {{ dataset.title }}
       </h1>
     </div>
@@ -25,14 +26,17 @@
           {{ dataset.description }}
       </p>
 
-      <p>詮釋資料最後修改日：{{ dataset.mod_date|date:'Y/m/d' }}<br>
-        資料最後上傳日：{{ dataset.pub_date|date:'Y/m/d'}}<br>
-        引用格式：{{ dataset.data_license }}<br>
-        {% if dataset.gbif_doi %} DOI: {{ dataset.gbif_doi }}<br>{% endif %}
+      <p>
+        <!-- 詮釋資料最後修改於：{{ dataset.mod_date|date:'Y/m/d' }}<br> -->
+        發布者：{{ dataset.organization_verbatim }}<br>
+        發布日期：{{ dataset.mod_date|date:'Y/m/d' }}<br>
+        <!-- 資料最後上傳日：{{ dataset.pub_date|date:'Y/m/d'}}<br> -->
+        資料授權引用格式：{{ dataset.data_license }}<br>
+        {% if dataset.gbif_doi %} DOI:  <a href="{{ dataset.doi_link }}">{{ dataset.gbif_doi }}</a><br>{% endif %}
       </p>
 
-      {% if dataset.status == "Public" %}<div>資料集下載: <a href="{{ dataset.dwca_link }}">DwC-A</a></div>{% endif %}
-      {% if dataset.status == "Public" and not dataset.guid %}<div class="alert alert-warning" role="alert">This resource has not been registered with GBIF</div>{% endif %}
+      {% if dataset.status == "PUBLIC" %}<div>資料集下載: <a href="{{ dataset.dwca_link }}">DwC-A</a></div>{% endif %}
+      {% if dataset.status == "PUBLIC" and not dataset.guid %}<div class="alert alert-warning" role="alert">This resource has not been registered with GBIF</div>{% endif %}
 
       <!-- row begin -->
       <div class="row">
@@ -106,45 +110,46 @@
       <資料集說明 end -->
 
       <!-- 聯絡資訊 begin -->
-      <h4 class="heading-md-ul">TaiBIF 聯絡資訊</h4>
+      <h4 class="heading-md-ul">聯絡資訊</h4>
       <!-- row contact-info begin -->
       <div class="row">
-
-        <div class="col-md-6 col-xs-12">
-          <div class="contact-info-wrapper">
-            <p class="heading-md-ul">
-              端木茂甯
-              <span class="heading-footnote">節點經理</span>
-            </p>
-            <ul>
-              <li><span class="myicon icon-pin"></span> 11574 台北市南港區研究院路二段70巷28號<br>跨領域科技研究大樓 C301室</li>
-              <li><span class="myicon icon-mail"></span> mntuanmu@gate.sinica.edu.tw</a></li>
-              <li><a href="#"><span class="myicon icon-link"></span> https://portal.taibif.tw/</a></li>
-            </ul>
+        {% for i in contacts %}
+          <div class="col-md-6 col-xs-12">
+            <div class="contact-info-wrapper">
+              <p class="heading-md-ul">
+                {% if i.givenname %}{{i.givenname}}{% endif %}{% if i.surname %}{{i.surname}}{% endif %}
+                {% if i.creator %}
+                  <span class="heading-footnote">Creator</span>
+                {% else %}
+                  {% if i.role %}
+                    <span class="heading-footnote">{{i.role}}</span>
+                  {% endif %}
+                {% endif %}
+              </p>
+                <ul>
+                  {% if i.postalcode or i.deliverypoint %}<li><span class="myicon icon-pin"></span> {% if i.postalcode %}{{i.postalcode}}{% endif %}{% if i.deliverypoint %}{{i.deliverypoint}}{% endif %} </li>{% endif %}
+                  {% if i.electronicmailaddress %}<li><span class="myicon icon-mail"></span> {{i.electronicmailaddress}}</a></li>{% endif %}
+                  {% if i.phone %}{{i.phone}} {% endif %}
+                </ul>
+            </div>
           </div>
-        </div>
-
-        <div class="col-md-6 col-xs-12">
-          <div class="contact-info-wrapper">
-            <p class="heading-md-ul">
-              劉璟儀
-              <span class="heading-footnote">內容經理</span>
-            </p>
-            <ul>
-              <li><span class="myicon icon-pin"></span> 11574 台北市南港區研究院路二段70巷28號<br>跨領域科技研究大樓 C301室</li>
-              <li><span class="myicon icon-mail"></span> melissaliu0520@gmail.com</a></li>
-              <li><a href="#"><span class="myicon icon-link"></span> https://portal.taibif.tw/</a></li>
-            </ul>
-          </div>
-        </div>
-
+        {% endfor %}
       </div>
       <!-- row contact-info end -->
       <!-- 聯絡資訊 end -->
-
-      <!-- 引用格式 begin -->
+      {% if citation %}
+      <h4 class="heading-md-ul">參考文獻</h4>
+        {% for i in citation %}
+          {% if i.citation %}{{i.citation}}<br>
+            {% if i.identifier %}{{i.identifier}}{% endif %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+        <!-- 引用格式 begin -->
+      {% if dataset.gbif_cite %}
       <h4 class="heading-md-ul">引用格式</h4>
       <p>{{ dataset.gbif_cite }}</p>
+      {% endif %}
       <!-- 引用格式 end -->
 
     </div>
