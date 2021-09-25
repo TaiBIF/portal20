@@ -14,5 +14,5 @@ jobs:
         with:
           key: ${{ secrets.SSH_KEY }}
           known_hosts: 'test'
-      - name: rsync over ssh
-        run: echo "${{ secrets.SSH_HOST }} "
+      - name: deploy over ssh
+        run: "ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} ls -al"
