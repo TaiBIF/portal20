@@ -1,5 +1,4 @@
-name: Deploy Staging
-
+name: GitHub Actions Demo
 on:
   push:
     branches: [ develop ]
@@ -7,13 +6,13 @@ on:
     branches: [ develop ]
 
 jobs:
-  build:
+  Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - name: SSH & Deploy
-        uses: actions/checkout@develop
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: whoami
+          key: ${{ secrets.SSH_KEY }}
+          known_hosts: 'test'
+      - name: rsync over ssh
+        run: echo "${{ secrets.SSH_HOST }} "
