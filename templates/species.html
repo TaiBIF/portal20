@@ -57,6 +57,7 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
         animateOut: 'fadeOut',
         thumbs: true,
         thumbImage: true,
+        lazyLoad : true,
       })
     })
   </script>
@@ -105,7 +106,10 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
   <div class="container">
     <!-- amchor btns begin -->
     <ul class="article-scroll-nav-wrapper">
+      <li><a href="{% url 'search-species' %}">回物種</a></li>
+      {% if taxon.synonyms %}
       <li><a href="#section1">同物異名</a></li>
+      {% endif %}
       <li><a href="#section2">地理分佈</a></li>
       <li><a href="#section3">資料集出現次數</a></li>
       <li><a href="#section4">物種描述</a></li>
@@ -143,7 +147,7 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
         <h4 class="heading-md-ul">有效學名</h4>
         <p><i>{{ taxon.accepted_name.name }}</i>{% if taxon.accepted_name.name_zh %} {{ taxon.accepted_name.name_zh }}{% endif %}</p>
         {% endif %}
-
+        {% if taxon.synonyms %}
         <h4 class="heading-md-ul">同物異名</h4>
         {% for i in taxon.synonyms %}
         <p><i>{{ i.name }}</i>{% if i.name_zh %} {{ i.name_zh }}{% endif %}</p>
@@ -154,6 +158,7 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       <!-- TaiCoL編號 begin -->
         <p><a href="{{ taxon.taicol_namecode_link }}"><span class="myicon icon-link"></span>來源：TaiCoL</a></p>
       <!-- TaiCoL編號 end -->
+      {% endif %}
 
       <!-- 地理分佈 begin -->
       <div id="section2">
@@ -174,23 +179,23 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
             <tr>
               <th>資料集</th>
               <th>出現次數</th>
-              <th>&nbsp;</th>
+              <!-- <th>&nbsp;</th> -->
             </tr>
           </thead>
           <tbody>
 
-            {% for set in dataset_list %}
+            {% for set in dataset %}
 
             <tr>
-              <td>{{ set.key }}</td>
+              <td><a href="{% url 'dataset-detail'  name=set.name %}">{{ set.name_zh }}</a></td>
               <td>{{ set.count }}</td>
-              <td>
+              <!-- <td> -->
 <!-- 占比 -->
-                <div class="chart-bar-h-bg">
+                <!-- <div class="chart-bar-h-bg">
                   <span class="chart-value-bg" style="width: {{ set.ratio }}%"></span>
                 </div>
 
-              </td>
+              </td> -->
             </tr>
 
             {% endfor %}
@@ -204,15 +209,17 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       <div id="section4">
         <h4 class="heading-md-ul">物種描述</h4>
         
+        {% if taxon.taieol_desc %}
         {{taxon.taieol_desc}}
-
+        {% endif %}
 
         <!-- carousel photos begin -->
           <div class="owl-carousel owl-theme" id="speciesGallery">
             {% for i in taxon.species_pic %}
               {% if i.taieol_pic %}
                 <div>
-                  <img src="{{i.taieol_pic}}">
+                  <img  src="{{i.taieol_pic}}">
+                  <div class="home-banner-cover-license">{{i.name}} {% if i.name_zh %} {{ i.name_zh }}{% endif %}</div>
                 </div>
               {% endif %}
             {% endfor %}
