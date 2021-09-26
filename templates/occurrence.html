@@ -31,6 +31,9 @@
 {# include "inc_breadcrumb.html" with tab="03" active_label="" #}
 <!-- container begin -->
 <div class="container">
+  <ul class="article-scroll-nav-wrapper">
+    <li><a href="{% url 'search-occurrence' cat='search' %}">回出現紀錄</a></li>
+  </ul>
   <div class="article-head-wrapper">
     <span class="article-post-date">{{ event.eventDate }}</span>
     <h1>
@@ -67,7 +70,7 @@
   </div>
   
   <table class="table">
-    <thead><tr><th>Term</th><th>Value</th></tr></thead>
+    <thead><tr><th width="40%">Term</th><th>Value</th></tr></thead>
     <tbody>
       {% for k,v in record.items %}
         {% if v != None %}
@@ -81,7 +84,7 @@
       <h1 class="heading-lg-ul"> Occurrence</h1>
     </div>
     <table class="table">
-      <thead><tr><th>Term</th><th>Value</th></tr></thead>
+      <thead><tr><th width="40%">Term</th><th>Value</th></tr></thead>
       <tbody>
         {% for k,v in occ.items %}
           {% if v != None %}
@@ -92,10 +95,10 @@
       </table>
      
       <div class="article-head-wrapper">
-        <h1 class="heading-lg-ul"> Event</h1>
+        <h1 class="heading-lg-ul">Event</h1>
       </div>
       <table class="table">
-        <thead><tr><th>Term</th><th>Value</th></tr></thead>
+        <thead><tr><th width="40%">Term</th><th>Value</th></tr></thead>
         <tbody>
           {% for k,v in event.items %}
             {% if v != None %}
@@ -110,7 +113,7 @@
         <h1 class="heading-lg-ul"> Taxon</h1>
       </div>
       <table class="table">
-        <thead><tr><th>Term</th><th>Value</th></tr></thead>
+        <thead><tr><th width="40%">Term</th><th>Value</th></tr></thead>
         <tbody>
           {% for k,v in taxon.items %}
             {% if v != None %}
@@ -125,7 +128,7 @@
         <h1 class="heading-lg-ul"> Location</h1>
       </div>
       <table class="table">
-        <thead><tr><th>Term</th><th>Value</th></tr></thead>
+        <thead><tr><th width="40%">Term</th><th>Value</th></tr></thead>
         <tbody>
           {% for k,v in location.items %}
             {% if v != None %}

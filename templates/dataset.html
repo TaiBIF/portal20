@@ -59,9 +59,9 @@
             <span class="data-wall-numbers">{{ FamNum }}</span>
             <span class="dtat-wall-name">分類群（種）數</span>
             <span class="data-wall-numbers">{{ SpNum }}</span>
-            <span class="data-wall-chart">
+            <!-- <span class="data-wall-chart">
               <img src="https://fakeimg.pl/70x70/846C5B/FAF9F9/?text=Chart">
-            </span>
+            </span> -->
           </div>
         </div>
 
@@ -117,7 +117,7 @@
           <div class="col-md-6 col-xs-12">
             <div class="contact-info-wrapper">
               <p class="heading-md-ul">
-                {% if i.givenname %}{{i.givenname}}{% endif %}{% if i.surname %}{{i.surname}}{% endif %}
+                {% if i.surname %}{{i.surname}}{% endif %}    {% if i.givenname %}{{i.givenname}}{% endif %}
                 {% if i.creator %}
                   <span class="heading-footnote">Creator</span>
                 {% else %}
@@ -126,11 +126,13 @@
                   {% endif %}
                 {% endif %}
               </p>
+              {% if i.postalcode or i.deliverypoint or i.electronicmailaddress or i.phone %}
                 <ul>
                   {% if i.postalcode or i.deliverypoint %}<li><span class="myicon icon-pin"></span> {% if i.postalcode %}{{i.postalcode}}{% endif %}{% if i.deliverypoint %}{{i.deliverypoint}}{% endif %} </li>{% endif %}
                   {% if i.electronicmailaddress %}<li><span class="myicon icon-mail"></span> {{i.electronicmailaddress}}</a></li>{% endif %}
                   {% if i.phone %}{{i.phone}} {% endif %}
                 </ul>
+              {% endif %}
             </div>
           </div>
         {% endfor %}
