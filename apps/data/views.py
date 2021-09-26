@@ -381,6 +381,8 @@ def publisher_view(request, pk):
 # 地理分佈|資料集出現次數|物種描述|文獻
 def species_view(request, pk):
     context = {}
+    dataset = []
+    search_count = 0
     taxon = get_object_or_404(Taxon, pk=pk)
     switch = {
             'kingdom':'kingdom_key',
@@ -392,8 +394,7 @@ def species_view(request, pk):
             'species':'scientficName',
         }
     total = []
-    dataset_list = []
-    dataset_zh_list = []
+    
     if taxon.rank != 'species':
         solr_q = switch.get(taxon.rank) + ':' + str(pk)
     else :
@@ -401,8 +402,8 @@ def species_view(request, pk):
 
 
     search_limit = 20
-    facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name}'
-    facet_dataset_zh = 'dataset_zh:{type:terms,field:taibif_dataset_name_zh}'
+    facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name,limit:-1,mincount:1}'
+    facet_dataset_zh = 'dataset_zh:{type:terms,field:taibif_dataset_name_zh,limit:-1,mincount:1}'
     facet_json = 'json.facet={'+facet_dataset +','+facet_dataset_zh +'}'
     # r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q={solr_q}&{facet_json}')
     r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q=*:*&fq={solr_q}&{facet_json}')
@@ -417,27 +418,22 @@ def species_view(request, pk):
 
 # dataset_occ_count
         if search_count != 0 :
-            dataset_list = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['dataset']['buckets']]
-            dataset_zh_list = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['dataset_zh']['buckets']]
-
+            count = []
+            dataset_list = []
+            dataset_zh_list = []
+            count = [x['count'] for x in data['facets']['dataset']['buckets']]
+            dataset_list = [x['val'] for x in data['facets']['dataset']['buckets']]
+            dataset_zh_list = [x['val']for x in data['facets']['dataset_zh']['buckets']]
+            
+            for x,y,z in zip(count, dataset_list, dataset_zh_list):
+                dataset.append({'count':x,'name':y,'name_zh':z})                
         
     context = {
         'taxon': taxon,
-        # 'occurrence_list': dataset,
-        'dataset_list': dataset_list,
-        'dataset_zh_list': dataset_zh_list,
-        'total':search_count
-
+        'dataset':dataset,
+        'total':search_count,
     }
-    # if taxon.rank == 'species':
-    #     #去生命大百科拿資料
-    #     context['species_info'] = get_species_info(taxon)
-    # if test:
-    #    context['map_view'] = test[0]
-
-    #if n:
-    #   context['map_view'] = [lat/n, lng/n]
-    #n =
+    
     return render(request, 'species.html', context)
 
 def search_view(request, cat=''):
