@@ -7,7 +7,13 @@
 
 <!-- container begin -->
 <div class="container">
+
+  <ul class="article-scroll-nav-wrapper">
+    <li><a href="{% url 'search-publisher' %}">回發布者</a></li>
+  </ul>
+
   <h2>{{ publisher.name }}</h2>
+
   <div class="article-head-wrapper">
     <h1 class="heading-lg-ul">
       簡介
@@ -15,14 +21,35 @@
   </div>
   <p>{{ publisher.description }}
   </p>
-
+  
   <br>
   <div>
-    資料集數量: {{ publisher.datasets.count }}<br>
+    資料集數量: {{ publisher.dataset_num }}<br>
     發現紀錄數量: {{ publisher.sum_occurrence|intcomma }}<br>
+    國家或地區：{{publisher.country_or_area}}<br>
+    行政聯絡人: {{ publisher.administrative_contact }}<br>
+    技術聯絡人: {{ publisher.technical_contact }}<br>
+    
     </p>
   </div>
-
+<div>
+  <table id="dataset-table" class="table table-bordered">
+    <thead>
+      <tr>
+        <th>資料集</th>
+        <th>達爾文核心集</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for set in dataset %}
+      <tr>
+        <td><a href="{% url 'dataset-detail'  name=set.name %}">{{ set.name_zh }}</a></td>
+        <td>{{ set.count }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 </div>
   <!-- container end -->
 {% endblock %}

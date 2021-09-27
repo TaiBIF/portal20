@@ -8,8 +8,8 @@ export default function OccurrenceSearch(props) {
     return (
         <tr key={index}>
         <td><a href={"/occurrence/"+row.taibif_occ_id}>{ sn }</a></td>
-        <td>{/*http://taibif.tw/zh/namecode/{{ i.name_code */}{ row.scientific_name }</td>
-        <td>{ row.vernacularName }</td>
+        <td>{/*http://taibif.tw/zh/namecode/{{ i.name_code */}{ row.scientificName }</td>
+        <td>{ row.name_zh }</td>
         <td>{ row.eventDate }</td>
         <td>{ countryOrLocality }</td>
         <td><a href={"/dataset/"+row.taibif_dataset_name+"/"}>{ row.taibif_dataset_name_zh }</a></td>
