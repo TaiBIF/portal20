@@ -32,7 +32,7 @@ Search
 {#<script src="https://code.highcharts.com/modules/exporting.js"></script>#}
 {#<script src="{% static 'js/test.js' %}"></script>#}
 {% if env == "prod" or env == "stag" %}
-<script src="{% static 'js/search.min.js' %}"></script>
+<script src="/static/js/search{{JS_BUNDLE_VERSION}}.min.js"></script>
 {% else %}
 <script src="{% static 'js/search.dev.js' %}"></script>
 {% endif %}
