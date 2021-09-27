@@ -30,7 +30,7 @@ function TreeNode({nodeData, onClickSpecies}) {
             // adjust Accordion content height
             const h = document.querySelector('.taxon-tree-container').scrollHeight;
             const contentEle = document.querySelector('.accordion-content-taxon');
-            contentEle.style.maxHeight = `${h}px`;
+            //contentEle.style.maxHeight = `${h}px`;
           },
           (error) => {
             console.log('error tree click', error);
@@ -46,10 +46,9 @@ function TreeNode({nodeData, onClickSpecies}) {
   /*const node = (nodeData.data.rank === 'species') ?
         <div onClick={(e)=>onClickSpecies(e, nodeData.id, nodeData.data.name)} className="taxon-tree-node-item">{nodeData.data.name} </div> :
         <div onClick={toggleTreeNode} className="taxon-tree-node-item">{icon} {nodeData.data.name}👉</div> ;*/
-
   return (
       <div className="taxon-tree-node-wrapper">
-      <div><span onClick={toggleTreeNode} className="taxon-tree-node-item">{icon}</span> {nodeData.data.name} <span onClick={(e)=>onClickSpecies(e, nodeData.id, nodeData.data.name)}>👉 </span></div>
+      <div><span onClick={toggleTreeNode} className="taxon-tree-node-item">{icon}</span><span onClick={(e)=>onClickSpecies(e, nodeData.id, nodeData.data.name, nodeData.data.rank)} style={{cursor:'pointer'}}> {nodeData.data.name}</span></div>
       {childrenNodes}
       </div>
   )
