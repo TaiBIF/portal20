@@ -281,9 +281,21 @@ class TaibifSearch extends React.Component {
 
   getSearch(filters) {
     /* filters: Set() will affect API url and change current URL but not redirect */
-    let apiUrl = `${window.location.origin}/api/v1/occurrence`;
+    let pathname = window.location.pathname
+    let apiUrl = null;
+    let isOccurrence = false;
+    let myRe = /\/occurrence\/.*/g;
+    if (myRe.exec(pathname)){
+      apiUrl = `${window.location.origin}/api/v2/occurrence/search`;
+      isOccurrence = true;
+    }else{
+      apiUrl = `${window.location.origin}/api${window.location.pathname}`;
+    }
+
     // for window.history.pushState
     let url = `${window.location.origin}${window.location.pathname}`;
+    /* TODO menu facet */
+    const facetQueryString = (isOccurrence === true) ? 'facet=year&facet=month&facet=dataset&facet=publisher&facet=country' : 'menu=1';
 
     if (filters) {
       let queryString = filtersToSearch(filters);
@@ -291,8 +303,9 @@ class TaibifSearch extends React.Component {
       url = `${url}?${queryString}`;
     }
     else {
-      apiUrl = `${apiUrl}?menu=1`;
+      apiUrl = `${apiUrl}?`;
     }
+    apiUrl = `${apiUrl}${facetQueryString}`;
 
     window.history.pushState({stateObj:url}, "", url);
 
@@ -306,12 +319,19 @@ class TaibifSearch extends React.Component {
       .then(
         (jsonData) => {
           console.log('resp: ', jsonData);
+          const results = isOccurrence ? jsonData.results : jsonData.search.results;
           const taxonData = this.state.taxonData;
           taxonData.tree = jsonData.tree;
           this.setState({
             isLoaded: true,
             isLoadedMain: true,
-            search: jsonData.search,
+            search: {
+              results: results,
+              limit: jsonData.limit,
+              offset: jsonData.offset,
+              count: jsonData.count,
+              elapsed: jsonData.elapsed,
+            },
             menus: jsonData.menus,
             taxonData:taxonData,
             serverError: jsonData.error,
