@@ -1,6 +1,10 @@
 import React from 'react';
 
 import OccurrenceRouter from './occurrence/OccurrenceRouter';
+import {
+  filtersToSearch,
+  Pagination,
+} from './Utils'
 
 function SpeciesOther(props) {
   const {q} = props;
@@ -140,9 +144,9 @@ function SearchMain(props) {
   }
   const [tabActive, setTabActive] = React.useState(initActiveTab);
   //console.log(props);
-  const count = (props.data && props.data.count ) ? props.data.count.toLocaleString('en') : 0;
+  const countString = (props.data && props.data.count ) ? props.data.count.toLocaleString('en') : 0;
   const elapsed = (props.data && props.data.elapsed ) ? props.data.elapsed.toFixed(2) : '';
-  //const count = 0;
+
   const typeLabel
         = SEARCH_TYPE_LABEL_MAP[props.searchType];
 
@@ -206,6 +210,13 @@ function SearchMain(props) {
         </div>);
   }
 
+  let pageUrlPrefix = `/${props.searchType}/search/`;
+  const qs = filtersToSearch(props.filters, true);
+  if (qs.length > 0) {
+    pageUrlPrefix = `${pageUrlPrefix}?${qs}`;
+  }
+  console.log(pageUrlPrefix);
+
   return (
       <div className="search-content">
         <ol className="breadcrumb">
@@ -213,7 +224,7 @@ function SearchMain(props) {
           <li className="active">搜尋{typeLabel}</li>
         </ol>
         <div className="search-content-heading-wrapper">
-      <h1 className="heading-lg">{typeLabel} <span className="heading-footnote">共 {count} 筆資料 ({elapsed} 秒)</span></h1>
+      <h1 className="heading-lg">{typeLabel} <span className="heading-footnote">共 {countString} 筆資料 ({elapsed} 秒)</span></h1>
           <span>篩選條件：</span>
           {filterTags}
         </div>
@@ -236,6 +247,8 @@ function SearchMain(props) {
          </React.Fragment>
        : <OccurrenceRouter data={props.data} filters={props.filters}/>
       }
+      <Pagination offset={props.data.offset} total={props.data.count} urlPrefix={pageUrlPrefix} />
+      {/*<Pagination offset={100} total={121} urlPrefix={pageUrlPrefix} />*/}
       </div>
   );
 }
