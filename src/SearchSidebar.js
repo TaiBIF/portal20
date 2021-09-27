@@ -192,7 +192,6 @@ function SearchSidebar(props) {
   else if (props.searchType === 'publisher') {
     searchTypeLabel = '發布者';
   }
-
   let filterCount = 0;
   props.filters.forEach((item)=> {
     const key = item.split('=')[0];
