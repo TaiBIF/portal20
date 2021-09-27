@@ -49,6 +49,7 @@ const navTabsData = [
 ];
 
 const OccurrenceRouter = ({data, filters}) =>  {
+  //console.log(data);
   const path = window.location.pathname;
   const m = path.match(/\/occurrence\/(search|map|gallery|taxonomy|charts|download)/);
   const initTab = (m[1]) ? m[1] : 'search';
@@ -69,7 +70,6 @@ const OccurrenceRouter = ({data, filters}) =>  {
       <li key={x.key} className={activeTab === x.key ? "active" : null} onClick={(e)=>setActiveTab(x.key)}>
       <Link to={x.path}>{x.label}</Link>
       </li>))}*/
-
   return (
       <Router>
       <div className="table-responsive">

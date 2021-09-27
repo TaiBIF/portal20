@@ -17,6 +17,9 @@ node_modules
 # docker volume
 taibif_volumes
 
+# csv data
+csvData
+
 .idea
 /tmp
 

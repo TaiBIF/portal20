@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
-7
 import {Line, Bar} from 'react-chartjs-2';
-
 import {fetchData, filtersToSearch} from '../Utils';
 
 const chartData = {
@@ -12,18 +10,18 @@ const chartData = {
         label: '每年出現紀錄',
         fill: false,
         lineTension: 0.1,
-        backgroundColor: 'rgba(75,192,192,0.4)',
-        borderColor: 'rgba(75,192,192,1)',
+        backgroundColor: '#7DC49D',
+        borderColor: '#74B175',
         borderCapStyle: 'butt',
         borderDash: [],
         borderDashOffset: 0.0,
         borderJoinStyle: 'miter',
-        pointBorderColor: 'rgba(75,192,192,1)',
-        pointBackgroundColor: '#fff',
+        pointBorderColor: '#7DC49D',
+        pointBackgroundColor: '#74B175',
         pointBorderWidth: 1,
         pointHoverRadius: 5,
-        pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-        pointHoverBorderColor: 'rgba(220,220,220,1)',
+        pointHoverBackgroundColor: '#7DC49D',
+        pointHoverBorderColor: '#74B175',
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
@@ -36,18 +34,28 @@ const chartData = {
     datasets: [
       {
         label: '每月出現紀錄',
-        backgroundColor: 'rgba(255,99,132,0.2)',
-        borderColor: 'rgba(255,99,132,1)',
+        backgroundColor: '#74B175',
+        borderColor: '#7DC49D',
         borderWidth: 1,
-        hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-        hoverBorderColor: 'rgba(255,99,132,1)',
+        hoverBackgroundColor: '#7DC49D',
+        hoverBorderColor: '#74B175',
         data: []
       }
     ]
   }
 };
+const API_URL_PREFIX = `/api/v1/occurrence/charts`;
 
-const API_URL_PREFIX = '/api/occurrence/charts/?chart=';
+const sortData = (objs) => {
+  return Object.keys(objs).sort().reduce(
+    (obj, key) => { 
+      obj[key] = objs[key]; 
+      return obj;
+    }, 
+    {}
+  );
+}
+
 function OccurrenceCharts(props) {
   const {filters} = props;
   const search = filtersToSearch(filters);
@@ -57,44 +65,62 @@ function OccurrenceCharts(props) {
   const [datasetData, setDatasetData] = useState([false, []]);
 
   useEffect(() => {
-    const apiURL = `${API_URL_PREFIX}year&${search}`;
+    const apiURL = `${API_URL_PREFIX}?${search}`;
     fetchData(apiURL).then((data) => {
       const year = chartData.year;
-      year.labels = data.search[0];
-      year.datasets[0].data =  data.search[1];
-      setYearData([true, year]);
-    });
-  }, []);
-  useEffect(() => {
-    const apiURL = `${API_URL_PREFIX}month&${search}`;
-    fetchData(apiURL).then((data) => {
-      const month = chartData.month;
-      month.labels = data.search[0];
-      month.datasets[0].data =  data.search[1];
-      setMonthData([true, month])
-    });
-  }, []);
-  useEffect(() => {
-    const apiURL = `${API_URL_PREFIX}dataset&${search}`;
-    fetchData(apiURL).then((data) => {
-      let num_occurrence_max = 0;
-      const newData = data.search.map((x, i) => {
-        if (i === 0) {
-          num_occurrence_max = x['num_occurrence'];
-        }
-        const p = Math.round(x['num_occurrence'] / num_occurrence_max * 100);
-        x['num_occurrence'] = x['num_occurrence'].toLocaleString('en');
-        x['percent'] = p;
-        return x;
+      let dataCount = {}
+      let ordered = []
+      console.log('data.charts[0]',data.charts[0].rows)
+      data.charts[0].rows.forEach(row => {
+        dataCount = {...dataCount,[row.label]:row.count}
       });
-      setDatasetData([true, data.search])
+
+      ordered = sortData(dataCount)
+    
+      year.labels = Object.keys(ordered)
+      year.datasets[0].data =  Object.values(ordered);
+      setYearData([true, year]);
+
+      const month = chartData.month;
+      dataCount = {}
+      data.charts[1].rows.forEach(row => {
+        dataCount = {...dataCount,[row.label]:row.count}
+      });
+
+      ordered = sortData(dataCount)
+    
+      month.labels = Object.keys(ordered)
+      month.datasets[0].data =  Object.values(ordered);
+
+      setMonthData([true, month])
+
+      let num_occurrence_max = 0;
+      const newData = data.charts[2].rows.map((row, i) => {
+        if (i === 0) {
+          num_occurrence_max = row.count;
+        }
+        const p = Math.round(row.count / num_occurrence_max * 100);
+
+        return {title:row.label,num_occurrence:row.count,percent:p};
+      });
+      setDatasetData([true, newData])
     });
-  }, []);
+  }, [filters]);
 
   function DatasetDataBody() {
     return datasetData[1].map((x) => {
+      const q = encodeURIComponent(x.title);
+
       return (
         <tr key={x.title}>
+        <td>
+          <a href={`/occurrence/search?q=${q}`}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-link" viewBox="0 0 16 16">
+              <path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z"/>
+              <path d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z"/>
+            </svg>
+          </a>
+        </td>
         <td>{x.title}</td>
         <td>{x.num_occurrence}</td>
         <td>
@@ -113,9 +139,28 @@ function OccurrenceCharts(props) {
             <div className="tools-content">
             { monthData[0]
               ? <Bar
+                 height={400}
                  data={monthData[1]}
                  options={{
-                   maintainAspectRatio: false
+                    maintainAspectRatio: false,
+                    legend: {
+                      display: true,
+                      position: "bottom"
+                    },
+                    scales: {
+                      xAxes: [{
+                          categoryPercentage: 1.0,
+                          barPercentage: 1.0,
+                          gridLines: {
+                              drawOnChartArea: false
+                          }
+                      }],
+                      yAxes: [{
+                          gridLines: {
+                              drawOnChartArea: false
+                          }
+                      }]
+                    }
                  }}
               />
               : <img src="https://fakeimg.pl/600x120/?text=chart loading..." alt="" className="img-responsive" /> }
@@ -128,7 +173,27 @@ function OccurrenceCharts(props) {
       <div className="tools-title">年份</div>
           <div className="tools-content">
           { yearData[0]
-            ? <Line data={yearData[1]} />
+            ? <Line data={yearData[1]} options={{
+              legend: {
+                display: true,
+                position: "bottom"
+              },
+              title: {
+                position: 'bottom',
+                align: 'center',
+              },
+              scales: {
+                xAxes: [{
+                    gridLines: {
+                        drawOnChartArea: false
+                    }
+                }],
+                yAxes: [{
+                    gridLines: {
+                        drawOnChartArea: false
+                    }
+                }]
+              }}}/>
             : <img src="https://fakeimg.pl/600x120/?text=chart loading..." alt="" className="img-responsive" /> }
          </div>
         </div>
@@ -149,10 +214,11 @@ function OccurrenceCharts(props) {
       <div className="tools-title">資料集</div>
       <div className="tools-content">
       <div className="table-responsive">
-      <table className="table table-bordered">
+      <table className="table borderless" id="occurence-charts-dataset-table">
       <thead>
       <tr>
-      <th>資料集</th>
+      <th>&nbsp;</th>
+      <th className=" bg-transparent">資料集</th>
       <th>出現次數</th>
       <th>&nbsp;</th>
       </tr>
@@ -169,3 +235,4 @@ function OccurrenceCharts(props) {
   )
 }
 export {OccurrenceCharts, }
+
