@@ -4,7 +4,7 @@ TaiBIF (Taiwan Biodiversity Information Facility)
 
 ## Installing TaiBIF portal
 
-To install project, follow these steps:
+To install project, please follow these steps:
 
 Development:
 ```
