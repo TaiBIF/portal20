@@ -25,17 +25,17 @@ function SpeciesOther(props) {
 function StyledScientificName(props) {
   const {data} = props;
   let name = data.name;
-  // if (data.rank === 'species') {
-  //   const match3 = data.name_full.match('(^[A-Z]{1}[a-z]+) ([a-z]+) ([a-z]+\.) ([a-z]+)(.*)');
-  //   if (match3) {
-  //     name = <React.Fragment><i>{match3[1]} {match3[2]} </i> {match3[3]} <i>{match3[4]}</i> {match3[5]}</React.Fragment>;
-  //   } else {
-  //     const match2 = data.name_full.match('(^[A-Z]{1}[a-z]+) ([a-z]+)(.*)');
-  //     if (match2) {
-  //       name = <React.Fragment><i>{match2[1]} {match2[2]} </i> {match2[3]}</React.Fragment>
-  //     }
-  //   }
-  // }
+  if (data.rank === 'species') {
+    const match3 = data.name_full.match('(^[A-Z]{1}[a-z]+) ([a-z]+) ([a-z]+\.) ([a-z]+)(.*)');
+    if (match3) {
+      name = <React.Fragment><i>{match3[1]} {match3[2]} </i> {match3[3]} <i>{match3[4]}</i> {match3[5]}</React.Fragment>;
+    } else {
+      const match2 = data.name_full.match('(^[A-Z]{1}[a-z]+) ([a-z]+)(.*)');
+      if (match2) {
+        name = <React.Fragment><i>{match2[1]} {match2[2]} </i> {match2[3]}</React.Fragment>
+      }
+    }
+  }
   return (<React.Fragment>{name} {data.name_zh}</React.Fragment>)
 }
 
@@ -156,7 +156,7 @@ function SearchMain(props) {
     const menuKey = f.split('=');
     const found = props.menus.find((x) => x['key'] === menuKey[0]);
     if (found) {
-      const tagLabel = `${found['label']}: ${menuKey[1]}`;
+      const tagLabel = `${found['label']}: ${decodeURIComponent(menuKey[1])}`;
       filterTags.push((<span key={tagLabel} className="search-content-sort-tag">{ tagLabel }</span>));
     }
     else if (menuKey[0] === 'q') {

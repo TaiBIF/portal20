@@ -2683,8 +2683,8 @@ div.dataTables_wrapper div.dataTables_paginate {
 
 .chart-value-bg {
   display: block;
-  height: 8px;
-  background-color: #846C5B;
+  height: 12px;
+  background-color: #74B175;
   border-radius: 2px 0 0 2px;
 }
 
@@ -3183,4 +3183,29 @@ div.dataTables_wrapper div.dataTables_paginate {
   position: absolute;
   top: 10%;
   right: 0;
+}
+
+#download-dataset-btn {
+  background-color:#74B175;
+  color:white;
+  font-weight: bold;
+}
+#occurence-charts-dataset-table {
+  border:#ddd solid 1px;
+}
+
+#occurence-charts-dataset-table th {
+  background-color:transparent;
+  font-weight: bold;
+  width:10%;
+}
+
+#occurence-charts-dataset-table .input-group-addon {
+  min-width:300px;
+  text-align:left;
+  font-weight: bold;
+}
+
+#occurence-charts-dataset-table .odd {
+  background-color:whitesmoke;
 }
