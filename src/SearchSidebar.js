@@ -19,7 +19,7 @@ function TreeNode({nodeData, onClickSpecies}) {
       setChildrenState([]);
     }
     else {
-      const apiUrl = `https://portal.taibif.tw/api/taxon/tree/node/${nodeData.id}`;
+      const apiUrl = `/api/taxon/tree/node/${nodeData.id}`;
       fetch(apiUrl)
         .then(res => res.json())
         .then(
@@ -109,6 +109,12 @@ const SearchTaxon = (props) => {
 
 function Accordion(props) {
   const [isOpen, setOpenState] = useState(false);
+  const [yearRange, setYearRange] = useState([1900, 2021]); /* TODO */
+  const sliderMarks = [];
+  for (let i=1900; i<2022; i++) {
+    sliderMarks.push({value: i, label: i});
+  }
+
 
   const {content, onClick, filters} = props;
 
@@ -118,8 +124,13 @@ function Accordion(props) {
     setOpenState(isOpen === false ? true : false);
   }
 
+  const handleSliderCommitted = (event) => {
+    //console.log(yearRange);
+    onClick(event, content.key, yearRange.join(','))
+  };
+
   const menuItems = content.rows.map((x) => {
-    if(content.label=="年份"){
+    if(content.key ===  'year'){
         const [yearValue, setYearValue] = useState([x.year_start, x.year_end]);
         const handleChange = (event, newValue) => {
           setYearValue(newValue);
@@ -129,8 +140,9 @@ function Accordion(props) {
         return (
           <div className="year_test" key={x.key}>
             <Slider
-              value={yearValue}
-              onChangeCommitted={handleChange}
+              value={yearRange}
+              onChange={(e, newRange) => setYearRange(newRange)}
+              onChangeCommitted={handleSliderCommitted}
               max={2021}
               min={1900}
               valueLabelDisplay="auto"
