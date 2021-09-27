@@ -8,6 +8,9 @@
 <!-- container begin -->
   <div class="container">
 
+    <ul class="article-scroll-nav-wrapper">
+      <li><a href="{% url 'search-dataset' %}">回資料集</a></li>
+    </ul>
     <!-- story title begin -->
     <div class="article-head-wrapper">
       <!-- <h1 class="heading-lg"> -->
@@ -32,7 +35,7 @@
         發布日期：{{ dataset.mod_date|date:'Y/m/d' }}<br>
         <!-- 資料最後上傳日：{{ dataset.pub_date|date:'Y/m/d'}}<br> -->
         資料授權引用格式：{{ dataset.data_license }}<br>
-        {% if dataset.gbif_doi %} DOI:  <a href="{{ dataset.doi_link }}">{{ dataset.gbif_doi }}</a><br>{% endif %}
+        {% if dataset.gbif_doi %} DOI:  <a href="{{ dataset.doi_link }}"  target="_blank" >{{ dataset.gbif_doi }}</a><br>{% endif %}
       </p>
 
       {% if dataset.status == "PUBLIC" %}<div>資料集下載: <a href="{{ dataset.dwca_link }}">DwC-A</a></div>{% endif %}
