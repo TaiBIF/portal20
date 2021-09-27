@@ -111,7 +111,6 @@ class TaibifSearch extends React.Component {
   }
 
   handleTreeSpeciesClick(e, tid, name, rank) {
-    console.log(tid, name, rank);
     //e.stopPropagation();
     const filters = this.state.filters;
     let rankC = (rank) ? `${rank}:` : '';
