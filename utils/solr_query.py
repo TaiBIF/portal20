@@ -10,11 +10,14 @@ JSON_FACET_MAP = {
     'taibif_occurrence': {
         'dataset': {
             'type': 'terms',
-            'field': 'taibif_dataset_name'
+            'field': 'taibif_dataset_name_zh'
         },
         'month': {
             'type': 'terms',
             'field':'month',
+            'start':'1',
+            'end':'13',
+            'gap':'1'
         },
         'year': {
             'type':'terms',
