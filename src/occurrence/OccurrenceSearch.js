@@ -4,14 +4,15 @@ export default function OccurrenceSearch(props) {
   //console.log(props);
   const rows = props.data.results.map((row, index) => {
     const sn = props.data.offset + index + 1;
+    const countryOrLocality = [row.country, row.locality].join('/');
     return (
         <tr key={index}>
-        <td><a href={"/occurrence/"+row.taibif_id}>{ sn }</a></td>
+        <td><a href={"/occurrence/"+row.taibif_occ_id}>{ sn }</a></td>
         <td>{/*http://taibif.tw/zh/namecode/{{ i.name_code */}{ row.scientific_name }</td>
-        <td>{ row.vernacular_name }</td>
-        <td>{ row.date }</td>
-        <td>{ row.country }{/*/ i.locality */}</td>
-        <td><a href={"/dataset/"+row.dataset+"/"}>{ row.dataset }</a></td>
+        <td>{ row.vernacularName }</td>
+        <td>{ row.eventDate }</td>
+        <td>{ countryOrLocality }</td>
+        <td><a href={"/dataset/"+row.dataset+"/"}>{ row.taibif_dataset_name_zh }</a></td>
         <td>{ row.kingdom }</td>
         <td>{ row.phylum }</td>
         <td>{ row.class }</td>
