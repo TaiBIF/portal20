@@ -76,7 +76,6 @@ class SolrQuery(object):
 
                 #fq=(cat1:val1 OR cat2:val2 OR (cat3:(val3 AND val4)))
                 self.solr_tuples.append(('fq', ' OR '.join(taxon_key_list)))
-
             elif key in JSON_FACET_MAP[self.core]:
                 if len(values) == 1:
                     if ',' in values[0]:
