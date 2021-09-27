@@ -164,8 +164,15 @@ class DatasetOrganization(models.Model):
     NUM_PER_PAGE = 20
 
     name = models.CharField('name', max_length=512)
-    description = models.TextField('description', default='')
-    country_code = models.CharField('country_code', max_length=8, default='TW')
+    description = models.TextField('description', default='',null=True)
+    country_code = models.CharField('country_code', max_length=8, default='TW',null=True)
+    administrative_contact = models.CharField('administrative_contact', max_length=256, default='',null=True)
+    endorsed_by = models.CharField('endorsed_by', max_length=256, default='',null=True)
+    installations = models.CharField('installations', max_length=256, default='',null=True)
+    technical_contact = models.CharField('technical_contact', max_length=256, default='',null=True)
+    country_or_area = models.CharField('country_or_area', max_length=256, default='',null=True)
+    occurences_num = models.IntegerField('country_or_area', default=0,null=True)
+    dataset_num = models.IntegerField('dataset_num',default=0,null=True)
 
     @property
     def sum_occurrence(self):
