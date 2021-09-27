@@ -25,6 +25,12 @@ DATA_MAPPING = {
         'taxon': 'checklist',
         'event': 'Sampling event',
         'meta': 'Metadata-only'
+    },
+    'publisher_dwc':{
+        'Occurrence':'出現紀錄',
+        'checklist':'物種名錄',
+        'Sampling event':'調查活動',
+        'Metadata-only':'詮釋資料',
     }
 }
 
