@@ -192,7 +192,33 @@ function SearchSidebar(props) {
   else if (props.searchType === 'publisher') {
     searchTypeLabel = '發布者';
   }
-  
+  let filterCount = 0;
+  props.filters.forEach((item)=> {
+    const key = item.split('=')[0];
+    if (key !== 'offset') {
+      filterCount++;
+    }
+  });
+  /*
+  return (
+      <div className="col-xs-6 col-md-3 search-sidebar">
+      <div className="search-sidebar__title search-sidebar__title--head">
+      <span>{searchTypeLabel}</span>
+      <div className="clear-filters" data-toggle="tooltip" data-placement="left" title="清除" onClick={props.onClickClear}>
+      {numFilters}
+      <span className="glyphicon glyphicon-trash"></span>
+      </div>
+      </div>
+      <div className="input-group">
+      <input className="form-control search-keyword" placeholder="搜尋關鍵字" name="search-term" id="search-term" type="text" value={props.queryKeyword} onChange={props.onChangeKeyword} onKeyPress={props.onKeyPressKeyword}/>
+      <div className="input-group-btn">
+      <button className="btn btn-default search-keyword-sign" type="submit" onClick={props.onClickSubmitKeyword}><i className="glyphicon glyphicon-search"></i></button>
+      </div>
+      </div>
+      {searchTaxonContainer}
+      {menuList}
+      </div>)*/
+
   return (
       <div className="search-sidebar">
         <div className="modal right fade modal-search-side-wrapper" id="flowBtnModal" tabIndex="-1" role="dialog">
@@ -201,7 +227,7 @@ function SearchSidebar(props) {
               <div className="search-sidebar-header">
                 <span>{searchTypeLabel}</span>
                 <div className="search-sidebar-header-del" data-toggle="tooltip" data-placement="left" title="清除" onClick={props.onClickClear}>
-                  {props.filters.size > 0 ? <span className="badge">{props.filters.size}</span> : null}
+                  {filterCount > 0 ? <span className="badge">{filterCount}</span> : null}
                   <span className="glyphicon glyphicon-trash"></span>
                 </div>
               </div>

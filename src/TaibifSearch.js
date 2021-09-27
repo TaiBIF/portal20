@@ -3,67 +3,9 @@ import SearchSidebar from './SearchSidebar.js';
 import SearchMain from './SearchMain.js';
 import './SearchStyles.css';
 
-
-function filtersToQuerystring (filters) {
-  //TODO: Array.from(filters).join('&');
-  const qsArr = [];
-  filters.forEach((item)=> {
-    if(/^year=/.test(item))
-      item = item.replace("-",",")
-    qsArr.push(item);
-  });
-  return qsArr.join('&');
-}
-
-function Pagination (props) {
-  const {count, limit, offset} = props.data;
-  //const lastPage = hasCount ? Math.ceil(count / numPerPage) : parseInt(current)+1;
-  //console.log(numPerPage, hasCount, 'pag');
-  const currentPage = Math.ceil(offset / limit) + 1;
-  const lastPage = Math.ceil(count / limit);
-
-  let pageElements = [];
-
-  function _createPage(i) {
-    pageElements.push(<li key={i} className={(i==currentPage) ? 'active' : null}><a href="#" onClick={(e)=>props.onClick(e, i)}>{i}</a></li>);
-  }
-
-  if (lastPage <= 10 ) {
-    for (let i=1; i<=lastPage;i++) {
-      _createPage(i);
-    }
-  } else {
-    if (currentPage >= 4 ) {
-      pageElements.push(<li key="pre-dot"><a>...</a></li>);
-    }
-    for (let i=1; i<=lastPage;i++) {
-      if ( currentPage == i || currentPage - 1 == i || currentPage + 1 == i ) {
-        _createPage(i);
-      }
-    }
-    if (currentPage <= lastPage - 2 ) {
-      pageElements.push(<li key="post-dot"><a>...</a></li>);
-    }
-  }
-
-  return (
-      <div className="center-block text-center">
-        <ul className="pagination">
-          <li>
-            <a href="#" aria-label="Previous" onClick={(e)=>props.onClick(e, 1)}>
-            <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          {pageElements}
-          <li>
-            <a href="#" aria-label="Next" onClick={(e)=>props.onClick(e, lastPage)}>
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-         </ul>
-      </div>
-  );
-}
+import {
+  filtersToSearch,
+} from './Utils'
 
 class TaibifSearch extends React.Component {
   constructor(props) {
@@ -102,7 +44,7 @@ class TaibifSearch extends React.Component {
         tree: [],
         queryKeyword: '',
       },
-      pagination: {},
+      //pagination: {},
       debounceTimeout: null,
     }
     this.handleMenuClick = this.handleMenuClick.bind(this);
@@ -301,13 +243,14 @@ class TaibifSearch extends React.Component {
     let offset = this.state.search.offset;
     let limit = this.state.search.limit;
     const filters = this.state.filters;
-
+    console.log(offset, limit, filters, 'page click');
+    /*
     offset = (page-1) * limit;
     offset = Math.max(0, offset);
     const pageParam = `offset=${offset}&limit=${limit}`;
     let pageApiUrl = `${window.location.origin}/api${window.location.pathname}`;
     if (filters) {
-      let queryString = filtersToQuerystring(filters);
+      let queryString = filtersToSearch(filters);
       pageApiUrl = `${pageApiUrl}?${queryString}&${pageParam}`;
     }
     else {
@@ -334,6 +277,7 @@ class TaibifSearch extends React.Component {
             error
           });
         });
+    */
   }
 
   getSearch(filters) {
@@ -343,8 +287,8 @@ class TaibifSearch extends React.Component {
     let url = `${window.location.origin}${window.location.pathname}`;
 
     if (filters) {
-      let queryString = filtersToQuerystring(filters);
-      apiUrl = `${apiUrl}?${queryString}&menu=1`;
+      let queryString = filtersToSearch(filters);
+      apiUrl = `${apiUrl}?${queryString}&`;
       url = `${url}?${queryString}`;
     }
     else {
@@ -437,8 +381,7 @@ class TaibifSearch extends React.Component {
             </div>
         );
       } else {
-        const pagination = <Pagination onClick={this.handlePaginationClick} data={mainData}/>;
-        searchMainContainer = <SearchMain data={mainData} searchType={searchType} filters={filters} menus={menus} onClickTab={this.handleTabClick} pagination={pagination} />;
+        searchMainContainer = <SearchMain data={mainData} searchType={searchType} filters={filters} menus={menus} onClickTab={this.handleTabClick} />;
       }
 
       const defaultPage = (this.state.page) ? this.state.page : '1';
