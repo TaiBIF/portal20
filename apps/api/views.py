@@ -263,7 +263,7 @@ def search_occurrence_v1(request):
 
     if r.status_code == 200:
         data = r.json()
-
+        search_count = data['response']['numFound']
         if search_count != 0:
             search_offset = data['response']['start']
             search_results = data['response']['docs']
@@ -296,7 +296,6 @@ def search_occurrence_v1(request):
             menu_dataset = [{'key': 0, 'label': 0, 'count': 0}]
             menu_country = [{'key': 0, 'label': 0, 'count': 0}]
             menu_publisher = [{'key': 0, 'label': 0, 'count': 0}]
-
         
 
         #search_limit = 20
