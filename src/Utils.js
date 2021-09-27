@@ -19,8 +19,10 @@ const filtersToSearch = (filters, removeOffset=false) => {
     if(/^year=/.test(item))
       item = item.replace("-",",")
 
-    if (/^offset=/.test(item) && removeOffset === false) {
-      qsArr.push(item);
+    if (/^offset=/.test(item)) {
+      if (removeOffset === false) {
+        qsArr.push(item);
+      }
     } else {
       qsArr.push(item);
     }

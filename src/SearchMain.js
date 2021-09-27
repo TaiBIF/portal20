@@ -214,8 +214,7 @@ function SearchMain(props) {
   if (qs.length > 0) {
     pageUrlPrefix = `${pageUrlPrefix}?${qs}`;
   }
-  console.log(pageUrlPrefix);
-
+  //console.log(pageUrlPrefix);
   return (
       <div className="search-content">
         <ol className="breadcrumb">
