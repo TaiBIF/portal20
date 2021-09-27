@@ -196,6 +196,13 @@ function SearchSidebar(props) {
     searchTypeLabel = '發布者';
   }
 
+  let filterCount = 0;
+  props.filters.forEach((item)=> {
+    const key = item.split('=')[0];
+    if (key !== 'offset') {
+      filterCount++;
+    }
+  });
   /*
   return (
       <div className="col-xs-6 col-md-3 search-sidebar">
@@ -223,7 +230,7 @@ function SearchSidebar(props) {
               <div className="search-sidebar-header">
                 <span>{searchTypeLabel}</span>
                 <div className="search-sidebar-header-del" data-toggle="tooltip" data-placement="left" title="清除" onClick={props.onClickClear}>
-                  {props.filters.size > 0 ? <span className="badge">{props.filters.size}</span> : null}
+                  {filterCount > 0 ? <span className="badge">{filterCount}</span> : null}
                   <span className="glyphicon glyphicon-trash"></span>
                 </div>
               </div>
