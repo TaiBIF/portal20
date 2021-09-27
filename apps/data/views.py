@@ -39,6 +39,9 @@ from .helpers.mod_search import (
 )
 from utils.solr_query import SolrQuery
 
+from apps.data.models import (
+    DATA_MAPPING,
+)
 
 def search_all(request):
     if request.method == 'POST':
@@ -374,7 +377,18 @@ def dataset_view(request, name):
 
 def publisher_view(request, pk):
     context = {}
+    dataset = []
+    
     context['publisher'] = get_object_or_404(DatasetOrganization, pk=pk)
+    for x in Dataset.objects.filter(organization=pk).all():
+        dataset.append({
+            'name': x.name,
+            'name_zh': x.title,
+            'count':  DATA_MAPPING['publisher_dwc'][x.dwc_core_type],
+        })
+    context['dataset'] = dataset
+
+
     return render(request, 'publisher.html', context)
 
 
