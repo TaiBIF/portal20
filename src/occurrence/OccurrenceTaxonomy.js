@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 7
-import {HorizontalBar} from 'react-chartjs-2';
+//import {HorizontalBar} from 'react-chartjs-2';
 import {fetchData, filtersToSearch} from '../Utils';
 import process from "process"
 
@@ -42,10 +42,12 @@ function OccurrenceTaxonomy(props) {
       <div className="col-xs-12">
         <div className="tools-intro-wrapper">
           <div className="tools-title">分類</div>
-            <div className="tools-content">
+      <div className="tools-content">
+      {/*
             { taxonChartData[0]
               ?  <HorizontalBar data={taxonChartData[1]} />
               : <img src="https://fakeimg.pl/600x120/?text=chart loading..." alt="" className="img-responsive" /> }
+       */}
           </div>
         </div>
       </div>
