@@ -12,7 +12,7 @@ export default function OccurrenceSearch(props) {
         <td>{ row.vernacularName }</td>
         <td>{ row.eventDate }</td>
         <td>{ countryOrLocality }</td>
-        <td><a href={"/dataset/"+row.dataset+"/"}>{ row.taibif_dataset_name_zh }</a></td>
+        <td><a href={"/dataset/"+row.taibif_dataset_name+"/"}>{ row.taibif_dataset_name_zh }</a></td>
         <td>{ row.kingdom }</td>
         <td>{ row.phylum }</td>
         <td>{ row.class }</td>
