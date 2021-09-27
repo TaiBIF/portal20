@@ -269,3 +269,5 @@ TAIBIF_BCC_EMAIL_LIST = env('TAIBIF_BCC_EMAIL_LIST', default='')
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
+
+JS_BUNDLE_VERSION = env('JS_BUNDLE_VERSION', default='')
