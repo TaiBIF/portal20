@@ -111,12 +111,13 @@ class TaibifSearch extends React.Component {
         });
   }
 
-  handleTreeSpeciesClick(e, tid, name) {
+  handleTreeSpeciesClick(e, tid, name, rank) {
     const filters = this.state.filters;
+    const rankC = (rank) ? `${rank}:` : '';
     this.setState((prevState) => {
       const taxonData = prevState.taxonData;
       taxonData.checked[tid] = name;
-      filters.add(`taxon_key=${tid}`);
+      filters.add(`taxon_key=${rankC}${tid}`);
       return {
         isLoadedMain: false,
         taxonData: taxonData,
@@ -238,45 +239,12 @@ class TaibifSearch extends React.Component {
     this.applyFilters(filters);
   }
 
+  /* DEPRICATED */
   handlePaginationClick(e, page) {
     let offset = this.state.search.offset;
     let limit = this.state.search.limit;
     const filters = this.state.filters;
     console.log(offset, limit, filters, 'page click');
-    /*
-    offset = (page-1) * limit;
-    offset = Math.max(0, offset);
-    const pageParam = `offset=${offset}&limit=${limit}`;
-    let pageApiUrl = `${window.location.origin}/api${window.location.pathname}`;
-    if (filters) {
-      let queryString = filtersToSearch(filters);
-      pageApiUrl = `${pageApiUrl}?${queryString}&${pageParam}`;
-    }
-    else {
-      pageApiUrl = `${apiUrl}?${pageParam}`;
-    }
-    this.setState({
-      isLoadedMain: false,
-    });
-    console.log('fetch (page):', pageApiUrl);
-    fetch(pageApiUrl)
-      .then(res => res.json())
-      .then(
-        (json) => {
-          console.log('resp (page): ', json);
-          this.setState({
-            isLoadedMain: true,
-              search: json.search,
-              serverError: json.error
-          });
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        });
-    */
   }
 
   getSearch(filters) {
