@@ -4,11 +4,15 @@ import datetime
 import re
 import random
 import csv
+import os
 
 from django.shortcuts import render
 from django.db.models import Count, Q, Sum
 from django.http import HttpResponse, JsonResponse
 from django.core.cache import cache
+from django.core.mail import send_mail
+from django.conf import settings as conf_settings
+
 import requests
 
 from apps.data.models import (
@@ -212,14 +216,14 @@ def search_occurrence_v1(request):
             if term != 'menu':
                 if term =='year':
                     val = values[0].replace(",", " TO ")
-                    solr_q_fq_list.append('{}:{}'.format(term,val))
-                    
+                    solr_q_fq_list.append('{}:[{}]'.format(term,val))
                     year_start =values[0].split(',',1)
                     year_end =values[0].split(',',2)
-                    # solr_q_list.append('year= 1745 TO 2021')
-                else :
-                    for i in values:
-                        solr_q_fq_list.append('{}:{}'.format(term, i))
+                elif term =='dataset':
+                    solr_q_fq_list.append('{}:"{}"'.format('taibif_dataset_name_zh', '" OR "'.join(values)))
+                elif term =='month':
+                    solr_q_fq_list.append('{}:{}'.format(term, ' OR '.join(values)))
+
         else:
             solr_q_list.append('{}:{}'.format('_text_', ' OR '.join(values)))
 
@@ -263,7 +267,7 @@ def search_occurrence_v1(request):
 
     if r.status_code == 200:
         data = r.json()
-
+        search_count = data['response']['numFound']
         if search_count != 0:
             search_offset = data['response']['start']
             search_results = data['response']['docs']
@@ -296,7 +300,6 @@ def search_occurrence_v1(request):
             menu_dataset = [{'key': 0, 'label': 0, 'count': 0}]
             menu_country = [{'key': 0, 'label': 0, 'count': 0}]
             menu_publisher = [{'key': 0, 'label': 0, 'count': 0}]
-
         
 
         #search_limit = 20
@@ -1120,3 +1123,178 @@ def taxon_bar(request):
 
 
     return HttpResponse(json.dumps(data), content_type="application/json")
+
+
+def export(request):
+    year_start = 1000
+    year_end = 2021
+
+    solr_q_fq_list=[]
+    solr_fq = ''
+    solr_q_list = []
+    solr_q = '*:*'
+    for term, values in list(request.GET.lists()):
+        if term !='q' :
+            if term != 'menu':
+                if term =='year':
+                    val = values[0].replace(",", " TO ")
+                    solr_q_fq_list.append('{}:[{}]'.format(term,val))
+                    year_start =values[0].split(',',1)
+                    year_end =values[0].split(',',2)
+                elif term =='dataset':
+                    solr_q_fq_list.append('{}:"{}"'.format('taibif_dataset_name_zh', '" OR "'.join(values)))
+                elif term =='month':
+                    solr_q_fq_list.append('{}:{}'.format(term, ' OR '.join(values)))
+
+        else:
+            solr_q_list.append('{}:{}'.format('_text_', ' OR '.join(values)))
+
+
+    if len(solr_q_list) > 0:
+        solr_q = ' AND '.join(solr_q_list)
+
+    if len(solr_q_fq_list) > 0:
+        solr_fq = ' AND '.join(solr_q_fq_list)
+    print(solr_fq)
+
+    search_count = 0
+    search_results = []
+ 
+    facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name_zh,limit:-1,mincount:0}'
+    facet_month = 'month:{type:range,field:month,start:1,end:13,gap:1}'
+    facet_year = 'year:{type:terms,field:year,limit:-1,mincount:0}'
+    facet_json = 'json.facet={'+facet_dataset + ',' +facet_month+ ',' +facet_year+'}'
+    r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows=1000000&q={solr_q}&fq={solr_fq}&{facet_json}')
+
+    if r.status_code == 200:
+        data = r.json()
+
+        search_count = data['response']['numFound']
+        search_results = data['response']['docs']
+        csvData = []
+
+        directory = os.path.abspath(os.path.join(os.path.curdir))
+        csvFolder = directory+'/static/csvData/'
+
+        if not os.path.exists(csvFolder):
+            os.makedirs(csvFolder)
+
+        for i, v in enumerate(search_results):
+            data = [
+                v.get('basisOfRecord', ''),
+                v.get('eventDate', ''),
+                v.get('individualCount', ''),
+                v.get('occurrenceID', ''),
+                v.get('scientficName1', ''),
+                v.get('scientficName2', ''),
+                v.get('class', ''),
+                v.get('day', ''),
+                v.get('decimalLatitude', ''),
+                v.get('decimalLongitude', ''),
+                v.get('family', ''),
+                v.get('month', ''),
+                v.get('taibif_dataset_name', ''),
+                v.get('year', ''),
+                v.get('latitude', ''),
+                v.get('longtitude', ''),
+                v.get('location_rpt', ''),
+                v.get('scientficName', ''),
+                v.get('namecode', ''),
+                v.get('kingdom_c', ''),
+                v.get('phylum_c', ''),
+                v.get('class_c', ''),
+                v.get('order_c', ''),
+                v.get('family_c', ''),
+                v.get('genus_c', ''),
+                v.get('common_name', ''),
+                v.get('kingdom_taicol', ''),
+                v.get('phylum_taicol', ''),
+                v.get('class_taicol', ''),
+                v.get('order_taicol', ''),
+                v.get('family_taicol', ''),
+                v.get('genus_taicol', ''),
+                v.get('species_taicol', ''),
+                v.get('name_taicol', ''),
+                v.get('publisher', ''),
+                v.get('occID', ''),
+                v.get('import_day', ''),
+                v.get('_version_', '')
+            ]
+
+            csvData.append(data)
+
+        timestramp = str(int(time.time()))
+        filename =timestramp +'.csv'
+
+        with open(csvFolder+filename, 'w', encoding='UTF8') as f:
+            writer = csv.writer(f,delimiter=',')
+            writer.writerows(csvData)
+
+            f.close()
+
+    subject = '出現紀錄搜尋'
+    download = '没有任何資料'
+
+    if(search_count > 0) :
+        download = request.scheme+"://"+request.META['HTTP_HOST']+'/static/csvData/'+filename
+
+    currentTime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    searchCondition = request.GET["search_condition"]
+
+    html = f"""\
+<html>
+  <head></head>
+  <body style='text-align:left'>
+您好，
+<br/><br/>
+您在TaiBIF上查詢的檔案已夾帶於附件中，
+
+<br/><br/>
+檔案相關的詳細說明為：
+
+<br/><br/>
+搜尋條件：{searchCondition}
+
+
+<br/>
+搜尋時間：{currentTime}
+
+<br/><br/>
+檔案類型：CSV
+
+<br/><br/>
+授權條款：授權條款有兩個來源<br/>
+資料集（postgre : dataset.data_license）<br/>
+資料集內部的單筆資料(solr : license)<br/>
+授權有四個要素 BY, SA, ND, DC<br/>
+因此，要確認這兩個欄位的有哪些要素，有的話就需要顯示，若都沒有先以「未明確授權」顯示<br/>
+https://zh.wikipedia.org/wiki/%E7%9F%A5%E8%AF%86%E5%85%B1%E4%BA%AB%E8%AE%B8%E5%8F%AF%E5%8D%8F%E8%AE%AE
+
+<br/><br/>
+使用條款：
+
+<br/><br/>
+下載鏈結：<a href="{download}">{download}</a>
+
+<br/><br/>
+若有問題再麻煩您回覆至
+
+<br/><br/>
+taibif.brcas@gmail.com
+
+<br/><br/>
+TaiBIF團隊 敬上
+  </body>
+</html>
+"""
+
+    print(request.GET["email"])
+    print(conf_settings.TAIBIF_SERVICE_EMAIL)
+    send_mail(
+        subject,
+        None,
+        conf_settings.TAIBIF_SERVICE_EMAIL,
+        [request.GET["email"]],
+        html_message=html)
+
+    return JsonResponse({"status":search_count}, safe=False)

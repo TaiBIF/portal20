@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 7
 //import {HorizontalBar} from 'react-chartjs-2';
 import {fetchData, filtersToSearch} from '../Utils';
+import process from "process"
 
 const taxonChartDataTmp = {
   labels: ['Kingdom', 'Phylum', 'Class', 'Order', 'Family', 'Genus', 'Species'],
@@ -19,7 +20,8 @@ const taxonChartDataTmp = {
 };
 
 
-const API_URL_PREFIX = '/api/occurrence/taxonomy';
+const API_URL_PREFIX = `/api/v1/occurrence`;
+
 function OccurrenceTaxonomy(props) {
   const {filters} = props;
   const search = filtersToSearch(filters);
@@ -27,7 +29,7 @@ function OccurrenceTaxonomy(props) {
   const [taxonChartData, setTaxonChartData] = useState([false, []]);
 
   useEffect(() => {
-    const apiURL = `${API_URL_PREFIX}/${search}`;
+    const apiURL = `${API_URL_PREFIX}?${search}`;
     fetchData(apiURL).then((data) => {
       let chartData = taxonChartDataTmp;
       chartData.datasets[0].data = data.search.taxon_num_list;

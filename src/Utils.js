@@ -1,7 +1,10 @@
 import React from 'react';
 
 async function fetchData(url) {
-  console.log('🙋', url);
+  if(/^year=/.test(url))
+    url = url.replace("-",",")
+
+  //console.log('🙋', url);
   let response = await fetch(url);
   let data = await response.json();
   console.log( '🚍', data);
@@ -13,10 +16,12 @@ const filtersToSearch = (filters, removeOffset=false) => {
   //console.log(removeOffset);
   const qsArr = [];
   filters.forEach((item)=> {
-    const key = item.split('=')[0];
-    if (removeOffset === false) {
+    if(/^year=/.test(item))
+      item = item.replace("-",",")
+
+    if (/^offset=/.test(item) && removeOffset === false) {
       qsArr.push(item);
-    } else if (key != 'offset') {
+    } else {
       qsArr.push(item);
     }
   });
