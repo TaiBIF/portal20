@@ -4,7 +4,6 @@ import React, {useState, useRef} from 'react';
 import SearchTaxon from './SearchSidebarTaxon';
 import Slider from '@material-ui/core/Slider';
 
-
 function Accordion(props) {
   const [isOpen, setOpenState] = useState(false);
   const [yearRange, setYearRange] = useState([1900, 2021]); /* TODO */
