@@ -447,11 +447,12 @@
       <tokenizer class="solr.WhitespaceTokenizerFactory"/>
     </analyzer>
   </fieldType>
+  <field name="Unnamed__0" type="plongs"/>
+  <field name="Unnamed__0.1" type="plongs"/>
   <field name="_nest_path_" type="_nest_path_"/>
   <field name="_root_" type="string" docValues="false" indexed="true" stored="false"/>
   <field name="_text_" type="text_general" multiValued="true" indexed="true" stored="false"/>
   <field name="_version_" type="plong" indexed="false" stored="false"/>
-    <!-- begin DwC terms -->
   <field name="acceptedNameUsage" type="string"/>
   <field name="acceptedNameUsageID" type="string"/>
   <field name="alternative_name_c" type="string"/>
@@ -466,6 +467,7 @@
   <field name="class_c" type="string"/>
   <field name="class_key" type="plongs"/>
   <field name="class_taicol" type="string"/>
+  <field name="class_zh" type="text_general"/>
   <field name="collectionCode" type="string"/>
   <field name="collectionID" type="string"/>
   <field name="common_name" type="string"/>
@@ -495,6 +497,7 @@
   <field name="family_c" type="string"/>
   <field name="family_key" type="plongs"/>
   <field name="family_taicol" type="string"/>
+  <field name="family_zh" type="text_general"/>
   <field name="fieldNotes" type="string"/>
   <field name="fieldNumber" type="string"/>
   <field name="footprintSpatialFit" type="string"/>
@@ -503,6 +506,7 @@
   <field name="genus_c" type="string"/>
   <field name="genus_key" type="plongs"/>
   <field name="genus_taicol" type="string"/>
+  <field name="genus_zh" type="text_general"/>
   <field name="geodeticDatum" type="string"/>
   <field name="georeferenceProtocol" type="string"/>
   <field name="georeferenceRemarks" type="string"/>
@@ -510,6 +514,8 @@
   <field name="georeferenceVerificationStatus" type="string"/>
   <field name="georeferencedBy" type="string"/>
   <field name="georeferencedDate" type="string"/>
+  <field name="grid_x" type="pint" uninvertible="false" docValues="true" indexed="true" stored="true"/>
+  <field name="grid_y" type="pint" uninvertible="false" docValues="true" indexed="true" stored="true"/>
   <field name="habitat" type="string"/>
   <field name="higherClassification" type="string"/>
   <field name="higherGeography" type="string"/>
@@ -531,6 +537,7 @@
   <field name="kingdom_c" type="string"/>
   <field name="kingdom_key" type="plongs"/>
   <field name="kingdom_taicol" type="string"/>
+  <field name="kingdom_zh" type="text_general"/>
   <field name="language" type="string"/>
   <field name="latitude" type="pdoubles"/>
   <field name="license" type="string"/>
@@ -563,6 +570,7 @@
   <field name="order_c" type="string"/>
   <field name="order_key" type="plongs"/>
   <field name="order_taicol" type="string"/>
+  <field name="order_zh" type="text_general"/>
   <field name="organismID" type="string"/>
   <field name="organismName" type="string"/>
   <field name="organismQuantity" type="string"/>
@@ -575,6 +583,7 @@
   <field name="phylum_c" type="string"/>
   <field name="phylum_key" type="plongs"/>
   <field name="phylum_taicol" type="string"/>
+  <field name="phylum_zh" type="text_general"/>
   <field name="pointRadiusSpatialFit" type="string"/>
   <field name="preparations" type="string"/>
   <field name="previousIdentifications" type="string"/>
@@ -598,10 +607,12 @@
   <field name="subgenus" type="string"/>
   <field name="taibif_dataset_name" type="string"/>
   <field name="taibif_dataset_name_zh" type="string"/>
+  <field name="taibif_occ_id" type="plongs"/>
   <field name="taibif_uuid" type="string"/>
   <field name="taxonID" type="string"/>
   <field name="taxonRank" type="string"/>
   <field name="taxonRemarks" type="string"/>
+  <field name="taxon_backbone" type="text_general"/>
   <field name="type" type="string"/>
   <field name="typeStatus" type="string"/>
   <field name="verbatimCoordinateSystem" type="string"/>
@@ -612,8 +623,10 @@
   <field name="verbatimLatitude" type="string"/>
   <field name="verbatimLocality" type="string"/>
   <field name="verbatimLongitude" type="string"/>
+  <field name="verbatimSRS" type="text_general"/>
   <field name="verbatimTaxonRank" type="string"/>
   <field name="vernacularName" type="string"/>
+  <field name="waterBody" type="text_general"/>
   <field name="year" type="string"/>
   <dynamicField name="*_txt_en_split_tight" type="text_en_splitting_tight" indexed="true" stored="true"/>
   <dynamicField name="*_descendent_path" type="descendent_path" indexed="true" stored="true"/>
@@ -687,4 +700,13 @@
   <copyField source="*" dest="_text_"/>
   <copyField source="name_zh" dest="name_zh_str" maxChars="256"/>
   <copyField source="taibif_dataset_name_zh" dest="taibif_dataset_name_zh_str" maxChars="256"/>
+  <copyField source="class_zh" dest="class_zh_str" maxChars="256"/>
+  <copyField source="phylum_zh" dest="phylum_zh_str" maxChars="256"/>
+  <copyField source="genus_zh" dest="genus_zh_str" maxChars="256"/>
+  <copyField source="kingdom_zh" dest="kingdom_zh_str" maxChars="256"/>
+  <copyField source="taxon_backbone" dest="taxon_backbone_str" maxChars="256"/>
+  <copyField source="order_zh" dest="order_zh_str" maxChars="256"/>
+  <copyField source="family_zh" dest="family_zh_str" maxChars="256"/>
+  <copyField source="waterBody" dest="waterBody_str" maxChars="256"/>
+  <copyField source="verbatimSRS" dest="verbatimSRS_str" maxChars="256"/>
 </schema>
