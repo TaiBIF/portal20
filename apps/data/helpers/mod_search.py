@@ -349,7 +349,6 @@ class SpeciesSearch(SuperSearch):
                 if v == 'accepted':
                     query = query.filter(is_accepted_name=True)
                 elif v == 'synonym':
-                    print ('sshere')
                     query = query.filter(is_accepted_name=False)
             if key == 'highertaxon':
                 or_cond = Q()
@@ -367,7 +366,7 @@ class SpeciesSearch(SuperSearch):
             'id': x.id,
             'name': x.name,
             'name_zh': x.name_zh,
-            # 'name_full': x.scientific_name_full,
+            'name_full': '',#TODO react.js
             #'name_list': x.
             # 'count': x.count,
             'rank': x.rank,
