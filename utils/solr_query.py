@@ -78,15 +78,17 @@ class SolrQuery(object):
                 #fq=(cat1:val1 OR cat2:val2 OR (cat3:(val3 AND val4)))
                 self.solr_tuples.append(('fq', ' OR '.join(taxon_key_list)))
             elif key in JSON_FACET_MAP[self.core]:
+                field = JSON_FACET_MAP[self.core][key]['field']
                 if len(values) == 1:
                     if ',' in values[0]:
                         vlist = values[0].split(',')
                         self.solr_tuples.append(('fq', f'{key}:[{vlist[0]} TO {vlist[1]}]'))
                     else:
                         if key in JSON_FACET_MAP[self.core]:
-                            self.solr_tuples.append(('fq', '{}:{}'.format(JSON_FACET_MAP[self.core][key]['field'], values[0])))
+                            self.solr_tuples.append(('fq', '{}:"{}"'.format(field, values[0])))
                 else:
-                    self.solr_tuples.append(('fq', ' OR '.join([f'{key}:{x}' for x in values])))
+
+                    self.solr_tuples.append(('fq', ' OR '.join([f'{field}:"{x}"' for x in values])))
                     #self.solr_tuples.append(('fq', 'taibif_dataset_name:A OR taibif_dataset_name:B'))
             # this get by __init__
             #elif key == 'facet':
