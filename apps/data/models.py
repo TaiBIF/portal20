@@ -58,7 +58,7 @@ class Dataset(models.Model):
 
     STATUS_CHOICE = (
         ('PUBLIC', '公開'),
-        ('Private', '非公開'),
+        ('PRIVATE', '非公開'),
     )
 
     DWC_CORE_TYPE_CHOICE = (
@@ -87,6 +87,7 @@ class Dataset(models.Model):
     gbif_doi = models.TextField(blank=True, null=True)
     gbif_mod_date = models.DateTimeField('Modified Date from gbif', null=True)
     organization_verbatim = models.TextField(blank=True, null=True)
+    organization_name = models.TextField(blank=True, null=True)
     organization = models.ForeignKey('DatasetOrganization', null=True, blank=True, on_delete=models.SET_NULL, related_name='datasets')
     #models.TextField(blank=True, null=True)
     num_record = models.PositiveIntegerField(default=0)
