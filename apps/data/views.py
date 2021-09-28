@@ -39,9 +39,11 @@ from .helpers.mod_search import (
 )
 from utils.solr_query import SolrQuery
 
-from apps.data.models import (
-    DATA_MAPPING,
-)
+from apps.data.models import DATA_MAPPING
+
+
+
+
 
 def search_all(request):
     if request.method == 'POST':
@@ -54,6 +56,9 @@ def search_all(request):
         q = request.GET.get('q', '')
         ## 預設最多每組 20 筆
         count = 0
+
+        
+        # article
         article_rows = []
         for x in Article.objects.filter(title__icontains=q).all()[:10]:
             article_rows.append({
@@ -63,15 +68,28 @@ def search_all(request):
             })
         count += len(article_rows)
 
+        # occurrence
         occur_rows = []
-        for x in RawDataOccurrence.objects.values('vernacularname', 'scientificname', 'taibif_id', 'taibif_dataset_name').filter(Q(scientificname__icontains=q)|Q(vernacularname__icontains=q)).all()[:20]:
+        solr = SolrQuery('taibif_occurrence')
+        req = solr.request(request.GET.lists())
+        resp = solr.get_response()
+        
+        for x in resp['results']:
+            name=''
+            name_zh=''
+            print ('==============',x)
+            if 'scientificName' in x.keys():
+                name = x['scientificName']
+            if  'vernacularName' in x.keys():
+                name_zh = x['vernacularName']
             occur_rows.append({
-                'title': '{} {}'.format(x['scientificname'], x['vernacularname']),
-                'content': '資料集: {}'.format(x['taibif_dataset_name']),
-                'url': '/occurrence/{}'.format(x['taibif_id']) #x.get_absolute_url()
+                'title': '{} {}'.format(name, name_zh),
+                'content': '資料集: {}'.format(x['taibif_dataset_name_zh']),
+                'url': '/occurrence/{}'.format(x['taibif_occ_id'][0]) 
             })
         count += len(occur_rows)
 
+        # dataset
         dataset_rows = []
         for x in Dataset.objects.values('title', 'description', 'name').filter(Q(title__icontains=q) | Q(description__icontains=q)).exclude(status='Private').all()[:20]:
             dataset_rows.append({
@@ -81,8 +99,9 @@ def search_all(request):
             })
         count += len(dataset_rows)
 
+        # species
         species_rows = []
-        for x in Taxon.objects.filter(Q(name__icontains=q) | Q(name_zh__icontains=q)).all():
+        for x in Taxon.objects.filter(Q(name__icontains=q) | Q(name_zh__icontains=q)).all()[:20]:
             species_rows.append({
                 'title': '[{}] {}'.format(x.get_rank_display(), x.get_name()),
                 'content': '物種數: {}'.format(x.count),
@@ -90,8 +109,9 @@ def search_all(request):
             })
         count += len(species_rows)
 
+        # publisher
         publisher_rows = []
-        for x in DatasetOrganization.objects.filter(name__icontains=q).all():
+        for x in DatasetOrganization.objects.filter(name__icontains=q).all()[:20]:
             publisher_rows.append({
                 'title': x.name,
                 'content': x.description,
@@ -112,11 +132,11 @@ def search_all(request):
                     'label': '出現紀錄',
                     'rows': occur_rows
                 },
-                # {
-                #     'cat': 'species',
-                #     'label': '物種',
-                #     'rows': species_rows
-                # },
+                {
+                    'cat': 'species',
+                    'label': '物種',
+                    'rows': species_rows
+                },
                 {
                     'cat': 'dataset',
                     'label': '資料集',
