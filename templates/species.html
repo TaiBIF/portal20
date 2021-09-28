@@ -95,6 +95,12 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       }
     });
   </script>
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+    </script>
+    
   <!-- script 4 adjust Anchor end -->
 <script src="{% static 'js/species.js' %}" crossorigin="anonymous"></script>
 {% endblock %}
@@ -106,7 +112,9 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
   <div class="container">
     <!-- amchor btns begin -->
     <ul class="article-scroll-nav-wrapper">
-      <li><a href="{% url 'search-species' %}">回物種</a></li>
+      <li onclick="goBack()"><a>回上一頁</a></li>
+    </ul>
+    <ul class="article-scroll-nav-wrapper">
       {% if taxon.synonyms %}
       <li><a href="#section1">同物異名</a></li>
       {% endif %}
