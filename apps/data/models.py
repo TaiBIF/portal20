@@ -18,7 +18,7 @@ DATA_MAPPING = {
         'CC-BY-NC': 'cc-by-nc',
         'CC-BY': 'cc-by',
         'CC0': 'cc0',
-        None:'其他'
+        None:'未明確授權'
     },
     'core': {
         'occurrence': 'Occurrence',
@@ -57,7 +57,7 @@ class Dataset(models.Model):
     NUM_PER_PAGE = 20
 
     STATUS_CHOICE = (
-        ('Public', '公開'),
+        ('PUBLIC', '公開'),
         ('Private', '非公開'),
     )
 
