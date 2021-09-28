@@ -30,7 +30,7 @@
   <br>
   <div>
     {% if publisher.dataset_num %}資料集數量: {{ publisher.dataset_num }}<br> {% endif %}
-    {% if publisher.sum_occurrence %}發現紀錄總比數: {{ publisher.sum_occurrence|intcomma }}<br>{% endif %}
+    {% if publisher.sum_occurrence %}發現紀錄總筆數: {{ publisher.sum_occurrence|intcomma }}<br>{% endif %}
     {% if publisher.country_or_area %}國家或地區：{{publisher.country_or_area}}<br>{% endif %}
     {% if publisher.administrative_contact %}行政聯絡人: {{ publisher.administrative_contact }}<br>{% endif %}
     {% if publisher.technical_contact %}技術聯絡人: {{ publisher.technical_contact }}<br>{% endif %}
