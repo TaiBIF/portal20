@@ -43,7 +43,7 @@
   </ul>
 
   <div class="article-head-wrapper">
-    <span class="article-post-date">{{ event.eventDate }}</span>
+    {% if event.eventDate.value %}<span class="article-post-date">{{ event.eventDate.value }}</span>{% endif %}
     <h1>
       {% if intro.scientificName %}
       {{ intro.scientificName }}
@@ -67,7 +67,7 @@
       <dt>資料集</dt>
       <dd><a href="/dataset/{{ intro.dataset}}">{{ intro.dataset_zh }}</a></dd>
       <dt>發布者</dt>
-      <dd><a href="/dataset/{{ intro.publisher}}">{{ intro.publisher }}</a></dd>
+      <dd>{%if intro.publisher_id%}<a href="/dataset/{{ intro.publisher}}">{% endif %}{{ intro.publisher }}</a></dd>
     </dl>
   </div>
   {% if map_view %}<div id="map"></div>{% endif %}
