@@ -20,6 +20,7 @@ boto3 = "*"
 django-ses = "*"
 django-redis = "*"
 django-cors-headers = "*"
+numpy = "*"
 
 [requires]
 python_version = "3.8"
