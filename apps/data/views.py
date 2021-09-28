@@ -167,134 +167,132 @@ def occurrence_view(request, taibif_id):
     
 
     # record
-    record['modified']=result[0].get('modified')
-    record['language']=result[0].get('language')
-    record['license']=result[0].get('license')
-    record['rightsHolder']=result[0].get('rightsHolder')
-    record['references']=result[0].get('references')
-    record['institutionID']=result[0].get('institutionID')
-    record['collectionID']=result[0].get('collectionID')
-    record['datasetID']=result[0].get('datasetID')
-    record['institutionCode']=result[0].get('institutionCode')
-    record['collectionCode']=result[0].get('collectionCode')
-    record['datasetName']=result[0].get('datasetName')
-    record['ownerInstitutionCode']=result[0].get('ownerInstitutionCode')
-    record['basisOfRecord'] =result[0].get('asisOfRecord')
-    record['informationWithheld']=result[0].get('informationWithheld')
-    record['dataGeneralizations']=result[0].get('dataGeneralizations')
+    record['modified']={'name_zh':'資料更新時間','value':result[0].get('modified')}
+    record['language']={'name_zh':'語言','value':result[0].get('language')}
+    record['license']={'name_zh':'授權標示','value':result[0].get('license')}
+    record['rightsHolder']={'name_zh':'所有權','value':result[0].get('rightsHolder')}
+    record['references']={'name_zh':'參考資料','value':result[0].get('references')}
+    record['institutionID']={'name_zh':'機構ID','value':result[0].get('institutionID')}
+    record['collectionID']={'name_zh':'典藏ID','value':result[0].get('collectionID')}
+    record['datasetID']={'name_zh':'資料集ID','value':result[0].get('datasetID')}
+    record['institutionCode']={'name_zh':'機構代號','value':result[0].get('institutionCode')}
+    record['collectionCode']={'name_zh':'典藏代號','value':result[0].get('collectionCode')}
+    record['datasetName']={'name_zh':'資料集名稱','value':result[0].get('datasetName')}
+    record['ownerInstitutionCode']={'name_zh':'所有者機構代碼','value':result[0].get('ownerInstitutionCode')}
+    record['basisOfRecord'] ={'name_zh':'資料基底','value':result[0].get('asisOfRecord')}
+    record['informationWithheld']={'name_zh':'其他隱藏資訊','value':result[0].get('informationWithheld')}
+    record['dataGeneralizations']={'name_zh':'資料模糊化','value':result[0].get('dataGeneralizations')}
 
     # occ 
-    occ['catalogNumber']=result[0].get('catalogNumber')
-    occ['occurrenceID']=result[0].get('occurrenceID')
-    occ['recordNumber ']=result[0].get('recordNumber ')
-    occ['recordedBy']=result[0].get('recordedBy')
-    occ['individualCount']=result[0].get('individualCount')
-    occ['organismQuantity']=result[0].get('organismQuantity')
-    occ['organismQuantityType']=result[0].get('organismQuantityType')
-    occ['lifeStage']=result[0].get('lifeStage')
-    occ['ex']=result[0].get('sex')
-    occ['reproductiveCondition']=result[0].get('reproductiveCondition')
-    occ['establishmentMeans']=result[0].get('establishmentMeans')
-    occ['behavior']=result[0].get('behavior')
-    occ['georeferenceVerificationStatus']=result[0].get('georeferenceVerificationStatus')
-    occ['occurrenceStatus']=result[0].get('occurrenceStatus')
-    occ['preparations']=result[0].get('preparations')
-    occ['disposition']=result[0].get('disposition')
-    occ['associatedMedia']=result[0].get('associatedMedia')
-    occ['associatedReferences']=result[0].get('associatedReferences')
-    occ['associatedSequences']=result[0].get('associatedSequences')
-    occ['associatedTaxa']=result[0].get('associatedTaxa')
-    occ['otherCatalogNumbers']=result[0].get('otherCatalogNumbers')
-    occ['occurrenceRemarks']=result[0].get('occurrenceRemarks')
-    occ['occurrenceID']=result[0].get('occurrenceID')
-    occ['individualCount']=result[0].get('individualCount')
+    occ['catalogNumber']={'name_zh':'catalogNumber','value':result[0].get('catalogNumber')}
+    occ['occurrenceID']={'name_zh':'出現紀錄ID','value':result[0].get('occurrenceID')}
+    occ['recordNumber ']={'name_zh':'採集號','value':result[0].get('recordNumber ')}
+    occ['recordedByID ']={'name_zh':'記錄者ID','value':result[0].get('occurrenceID')}
+    occ['recordedBy']={'name_zh':'記錄者','value':result[0].get('recordedBy')}
+    occ['individualCount']={'name_zh':'個體數量','value':result[0].get('individualCount')}
+    occ['organismQuantity']={'name_zh':'數量','value':result[0].get('organismQuantity')}
+    occ['organismQuantityType']={'name_zh':'數量單位','value':result[0].get('organismQuantityType')}
+    occ['lifeStage']={'name_zh':'生活史階段','value':result[0].get('lifeStage')}
+    occ['sex']={'name_zh':'性別','value':result[0].get('sex')}
+    occ['reproductiveCondition']={'name_zh':'生殖狀態','value':result[0].get('reproductiveCondition')}
+    occ['establishmentMeans']={'name_zh':'establishmentMeans','value':result[0].get('establishmentMeans')}
+    occ['behavior']={'name_zh':'行為','value':result[0].get('behavior')}
+    occ['georeferenceVerificationStatus']={'name_zh':'georeferenceVerificationStatus','value':result[0].get('georeferenceVerificationStatus')}
+    occ['occurrenceStatus']={'name_zh':'occurrenceStatus','value':result[0].get('occurrenceStatus')}
+    occ['preparations']={'name_zh':'preparations','value':result[0].get('preparations')}
+    occ['disposition']={'name_zh':'disposition','value':result[0].get('disposition')}
+    occ['associatedMedia']={'name_zh':'多媒體URL','value':result[0].get('associatedMedia')}
+    occ['associatedReferences']={'name_zh':'associatedReferences','value':result[0].get('associatedReferences')}
+    occ['associatedSequences']={'name_zh':'associatedSequences','value':result[0].get('associatedSequences')}
+    occ['associatedTaxa']={'name_zh':'associatedTaxa','value':result[0].get('associatedTaxa')}
+    occ['otherCatalogNumbers']={'name_zh':'otherCatalogNumbers','value':result[0].get('otherCatalogNumbers')}
+    occ['occurrenceRemarks']={'name_zh':'出現紀錄註記','value':result[0].get('occurrenceRemarks')}
 
     # event
-    event['eventID']=result[0].get('eventID')
-    event['parentEventID']=result[0].get(' parentEventID')
-    event['fieldNumber']=result[0].get('fieldNumber')
-    event['eventDate']=result[0].get('eventDate')
-    event['eventTime']=result[0].get('eventTime')
-    event['startDayOfYear']=result[0].get('startDayOfYear')
-    event['endDayOfYear']=result[0].get('endDayOfYear')
-    event['year']=result[0].get('year')
-    event['month']=result[0].get('month')
-    event['day']=result[0].get('day')
-    event['verbatimEventDate']=result[0].get('verbatimEventDate')
-    event['habitat']=result[0].get('habitat')
-    event['samplingProtocol']=result[0].get('samplingProtocol')
-    event['samplingEffort']=result[0].get('samplingEffort')
-    event['fieldNotes']=result[0].get('fieldNotes')
-    event['eventRemarks']=result[0].get('eventRemarks')    
+    event['eventID']={'name_zh':'調查活動ID','value':result[0].get('eventID')}
+    event['parentEventID']={'name_zh':'parentEventID','value':result[0].get(' parentEventID')}
+    event['fieldNumber']={'name_zh':'野外調查編號','value':result[0].get('fieldNumber')}
+    event['eventDate']={'name_zh':'調查活動日期','value':result[0].get('eventDate')}
+    event['eventTime']={'name_zh':'調查活動時間','value':result[0].get('eventTime')}
+    event['startDayOfYear']={'name_zh':'起始年份','value':result[0].get('startDayOfYear')}
+    event['endDayOfYear']={'name_zh':'結束年份','value':result[0].get('endDayOfYear')}
+    event['year']={'name_zh':'年','value':result[0].get('year')}
+    event['month']={'name_zh':'月','value':result[0].get('month')}
+    event['day']={'name_zh':'日','value':result[0].get('day')}
+    event['verbatimEventDate']={'name_zh':'字面上調查活動日期','value':result[0].get('verbatimEventDate')}
+    event['habitat']={'name_zh':'棲地','value':result[0].get('habitat')}
+    event['samplingProtocol']={'name_zh':'調查方法','value':result[0].get('samplingProtocol')}
+    event['samplingEffort']={'name_zh':'調查努力量','value':result[0].get('samplingEffort')}
+    event['fieldNotes']={'name_zh':'野外調查註記','value':result[0].get('fieldNotes')}
+    event['eventRemarks']={'name_zh':'調查活動註記','value':result[0].get('eventRemarks')}    
     
     # taxon
-    taxon['taxonID']=result[0].get('taxonID')
-    taxon['scientificNameID']=result[0].get(' scientificNameID')
-    taxon['acceptedNameUsageID']=result[0].get('acceptedNameUsageID')
-    taxon['scientificName']=result[0].get('scientificName')
-    taxon['acceptedNameUsage']=result[0].get('acceptedNameUsage')
-    taxon['originalNameUsage']=result[0].get('originalNameUsage')
-    taxon['nameAccordingTo']=result[0].get('nameAccordingTo')
-    taxon['namePublishedIn']=result[0].get('namePublishedIn')
-    taxon['higherClassification']=result[0].get('higherClassification')
-    taxon['kingdom']=result[0].get('kingdom')
-    taxon['phylum']=result[0].get('phylum')
-    taxon['class']=result[0].get('class')
-    taxon['order']=result[0].get('order')
-    taxon['family']=result[0].get('family')
-    taxon['genus']=result[0].get('genus')
-    taxon['subgenus']=result[0].get('subgenus')
-    taxon['specificEpithet']=result[0].get('specificEpithet')
-    taxon['infraspecificEpithet']=result[0].get('infraspecificEpithet')
-    taxon['taxonRank']=result[0].get('taxonRank')
-    taxon['verbatimTaxonRank']=result[0].get('verbatimTaxonRank')
-    taxon['scientificNameAuthorship']=result[0].get('scientificNameAuthorship')
-    taxon['vernacularName']=result[0].get('vernacularName')
-    taxon['nomenclaturalCode']=result[0].get('nomenclaturalCode')
-    taxon['taxonRemarks']=result[0].get('taxonRemarks')
+    taxon['taxonID']={'name_zh':'分類ID','value':result[0].get('taxonID')}
+    taxon['scientificNameID']={'name_zh':'學名ID','value':result[0].get(' scientificNameID')}
+    taxon['acceptedNameUsageID']={'name_zh':'有效學名ID','value':result[0].get('acceptedNameUsageID')}
+    taxon['scientificName']={'name_zh':'學名','value':result[0].get('scientificName')}
+    taxon['acceptedNameUsage']={'name_zh':'有效學名','value':result[0].get('acceptedNameUsage')}
+    taxon['originalNameUsage']={'name_zh':'originalNameUsage','value':result[0].get('originalNameUsage')}
+    taxon['nameAccordingTo']={'name_zh':'nameAccordingTo','value':result[0].get('nameAccordingTo')}
+    taxon['namePublishedIn']={'name_zh':'namePublishedIn','value':result[0].get('namePublishedIn')}
+    taxon['higherClassification']={'name_zh':'高階分類階層','value':result[0].get('higherClassification')}
+    taxon['kingdom']={'name_zh':'界','value':result[0].get('kingdom')}
+    taxon['phylum']={'name_zh':'門','value':result[0].get('phylum')}
+    taxon['class']={'name_zh':'綱','value':result[0].get('class')}
+    taxon['order']={'name_zh':'目','value':result[0].get('order')}
+    taxon['family']={'name_zh':'科','value':result[0].get('family')}
+    taxon['genus']={'name_zh':'屬','value':result[0].get('genus')}
+    taxon['subgenus']={'name_zh':'亞屬','value':result[0].get('subgenus')}
+    taxon['specificEpithet']={'name_zh':'specificEpithet','value':result[0].get('specificEpithet')}
+    taxon['infraspecificEpithet']={'name_zh':'infraspecificEpithet','value':result[0].get('infraspecificEpithet')}
+    taxon['taxonRank']={'name_zh':'分類位階','value':result[0].get('taxonRank')}
+    taxon['verbatimTaxonRank']={'name_zh':'字面上分類位階','value':result[0].get('verbatimTaxonRank')}
+    taxon['scientificNameAuthorship']={'name_zh':'scientificNameAuthorship','value':result[0].get('scientificNameAuthorship')}
+    taxon['vernacularName']={'name_zh':'俗名','value':result[0].get('vernacularName')}
+    taxon['nomenclaturalCode']={'name_zh':'nomenclaturalCode','value':result[0].get('nomenclaturalCode')}
+    taxon['taxonRemarks']={'name_zh':'分類註記','value':result[0].get('taxonRemarks')}
 
-    print('==================',taxon)
     # location
-    location['locationID']=result[0].get('locationID')
-    location[' higherGeographyID']=result[0].get(' higherGeographyID')
-    location['higherGeography']=result[0].get('higherGeography')
-    location['continent']=result[0].get('continent')
-    location['waterBody']=result[0].get('waterBody')
-    location['islandGroup']=result[0].get('islandGroup')
-    location['island']=result[0].get('island')
-    location['country']=result[0].get('country')
-    location['countryCode']=result[0].get('countryCode')
-    location['stateProvince']=result[0].get('stateProvince')
-    location['county']=result[0].get('county')
-    location['municipality']=result[0].get('municipality')
-    location['locality']=result[0].get('locality')
-    location['verbatimLocality']=result[0].get('verbatimLocality')
-    location['minimumElevationInMeters']=result[0].get('minimumElevationInMeters')
-    location['maximumElevationInMeters']=result[0].get('maximumElevationInMeters')
-    location['verbatimElevation']=result[0].get('verbatimElevation')
-    location['minimumDepthInMeters']=result[0].get('minimumDepthInMeters')
-    location['maximumDepthInMeters']=result[0].get('maximumDepthInMeters')
-    location['verbatimDepth']=result[0].get('verbatimDepth')
-    location['locationAccordingTo']=result[0].get('locationAccordingTo')
-    location['locationRemarks']=result[0].get('locationRemarks')
-    location['decimalLatitude']=result[0].get('decimalLatitude')
-    location['decimalLongitude']=result[0].get('decimalLongitude')
-    location['geodeticDatum']=result[0].get('geodeticDatum')
-    location['coordinateUncertaintyInMeters']=result[0].get('coordinateUncertaintyInMeters')
-    location['coordinatePrecision']=result[0].get('coordinatePrecision')
-    location['pointRadiusSpatialFit']=result[0].get('pointRadiusSpatialFit')
-    location['verbatimCoordinates']=result[0].get('verbatimCoordinates')
-    location['verbatimLatitude']=result[0].get('verbatimLatitude')
-    location['verbatimLongitude']=result[0].get('verbatimLongitude')
-    location['verbatimCoordinateSystem']=result[0].get('verbatimCoordinateSystem')
-    location['verbatimSRS']=result[0].get('verbatimSRS')
-    location['footprintWKT']=result[0].get('footprintWKT')
-    location['footprintSpatialFit']=result[0].get('footprintSpatialFit')
-    location['georeferencedBy']=result[0].get('georeferencedBy')
-    location['georeferencedDate']=result[0].get('georeferencedDate')
-    location['georeferenceProtocol']=result[0].get('georeferenceProtocol')
-    location['georeferenceSources']=result[0].get('georeferenceSources')
-    location['georeferenceRemarks']=result[0].get('georeferenceRemarks')
+    location['locationID']={'name_zh':'資料更新時間','value':result[0].get('locationID')}
+    location['higherGeographyID']={'name_zh':'higherGeographyID','value':result[0].get(' higherGeographyID')}
+    location['higherGeography']={'name_zh':'higherGeography','value':result[0].get('higherGeography')}
+    location['continent']={'name_zh':'洲','value':result[0].get('continent')}
+    location['waterBody']={'name_zh':'水體','value':result[0].get('waterBody')}
+    location['islandGroup']={'name_zh':'群島','value':result[0].get('islandGroup')}
+    location['island']={'name_zh':'島嶼','value':result[0].get('island')}
+    location['country']={'name_zh':'國家','value':result[0].get('country')}
+    location['countryCode']={'name_zh':'國家代碼','value':result[0].get('countryCode')}
+    location['stateProvince']={'name_zh':'省份/州','value':result[0].get('stateProvince')}
+    location['county']={'name_zh':'縣市','value':result[0].get('county')}
+    location['municipality']={'name_zh':'municipality','value':result[0].get('municipality')}
+    location['locality']={'name_zh':'地區','value':result[0].get('locality')}
+    location['verbatimLocality']={'name_zh':'字面上地區','value':result[0].get('verbatimLocality')}
+    location['minimumElevationInMeters']={'name_zh':'最低海拔(公尺)','value':result[0].get('minimumElevationInMeters')}
+    location['maximumElevationInMeters']={'name_zh':'最高海拔(公尺)','value':result[0].get('maximumElevationInMeters')}
+    location['verbatimElevation']={'name_zh':'字面上海拔','value':result[0].get('verbatimElevation')}
+    location['minimumDepthInMeters']={'name_zh':'最小深度(公尺)','value':result[0].get('minimumDepthInMeters')}
+    location['maximumDepthInMeters']={'name_zh':'最大深度(公尺)','value':result[0].get('maximumDepthInMeters')}
+    location['verbatimDepth']={'name_zh':'字面上深度','value':result[0].get('verbatimDepth')}
+    location['locationAccordingTo']={'name_zh':'locationAccordingTo','value':result[0].get('locationAccordingTo')}
+    location['locationRemarks']={'name_zh':'locationRemarks','value':result[0].get('locationRemarks')}
+    location['decimalLatitude']={'name_zh':'十進位緯度','value':result[0].get('decimalLatitude')}
+    location['decimalLongitude']={'name_zh':'十進位經度','value':result[0].get('decimalLongitude')}
+    location['geodeticDatum']={'name_zh':'geodeticDatum','value':result[0].get('geodeticDatum')}
+    location['coordinateUncertaintyInMeters']={'name_zh':'座標誤差(公尺)','value':result[0].get('coordinateUncertaintyInMeters')}
+    location['coordinatePrecision']={'name_zh':'座標精準度','value':result[0].get('coordinatePrecision')}
+    location['pointRadiusSpatialFit']={'name_zh':'pointRadiusSpatialFit','value':result[0].get('pointRadiusSpatialFit')}
+    location['verbatimCoordinates']={'name_zh':'字面上座標','value':result[0].get('verbatimCoordinates')}
+    location['verbatimLatitude']={'name_zh':'字面上緯度','value':result[0].get('verbatimLatitude')}
+    location['verbatimLongitude']={'name_zh':'字面上經度','value':result[0].get('verbatimLongitude')}
+    location['verbatimCoordinateSystem']={'name_zh':'字面上座標格式','value':result[0].get('verbatimCoordinateSystem')}
+    location['verbatimSRS']={'name_zh':'verbatimSRS','value':result[0].get('verbatimSRS')}
+    location['footprintWKT']={'name_zh':'footprintWKT','value':result[0].get('footprintWKT')}
+    location['footprintSpatialFit']={'name_zh':'footprintSpatialFit','value':result[0].get('footprintSpatialFit')}
+    location['georeferencedBy']={'name_zh':'georeferencedBy','value':result[0].get('georeferencedBy')}
+    location['georeferencedDate']={'name_zh':'georeferencedDate','value':result[0].get('georeferencedDate')}
+    location['georeferenceProtocol']={'name_zh':'georeferenceProtocol','value':result[0].get('georeferenceProtocol')}
+    location['georeferenceSources']={'name_zh':'georeferenceSources','value':result[0].get('georeferenceSources')}
+    location['georeferenceRemarks']={'name_zh':'georeferenceRemarks','value':result[0].get('georeferenceRemarks')}
 
     # other
 
@@ -339,7 +337,7 @@ def dataset_view(request, name):
             del x['id'],x['dataset_id']
             citation.append(x)
 
-
+        
         #Count the number of longitude and latitude
         # dataset_s = SimpleData.objects.filter(taibif_dataset_name = name).values_list('longitude','latitude','year','taxon_family_id',
         #                                                                               'taxon_family_id')
@@ -384,8 +382,11 @@ def publisher_view(request, pk):
         dataset.append({
             'name': x.name,
             'name_zh': x.title,
-            'count':  DATA_MAPPING['publisher_dwc'][x.dwc_core_type],
+            'core_type':  DATA_MAPPING['publisher_dwc'][x.dwc_core_type],
+            'num_record':  x.num_record,
         })
+    
+    
     context['dataset'] = dataset
 
 

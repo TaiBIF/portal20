@@ -5,11 +5,16 @@
 {% block main %}
 {# include "inc_breadcrumb.html" with tab="03" active_label="" #}
 
+<script>
+  function goBack() {
+    window.history.back();
+  }
+  </script>
 <!-- container begin -->
 <div class="container">
 
   <ul class="article-scroll-nav-wrapper">
-    <li><a href="{% url 'search-publisher' %}">回發布者</a></li>
+    <li onclick="goBack()"><a>回上一頁</a></li>
   </ul>
 
   <h2>{{ publisher.name }}</h2>
@@ -24,11 +29,11 @@
   
   <br>
   <div>
-    資料集數量: {{ publisher.dataset_num }}<br>
-    發現紀錄數量: {{ publisher.sum_occurrence|intcomma }}<br>
-    國家或地區：{{publisher.country_or_area}}<br>
-    行政聯絡人: {{ publisher.administrative_contact }}<br>
-    技術聯絡人: {{ publisher.technical_contact }}<br>
+    {% if publisher.dataset_num %}資料集數量: {{ publisher.dataset_num }}<br> {% endif %}
+    {% if publisher.sum_occurrence %}發現紀錄總比數: {{ publisher.sum_occurrence|intcomma }}<br>{% endif %}
+    {% if publisher.country_or_area %}國家或地區：{{publisher.country_or_area}}<br>{% endif %}
+    {% if publisher.administrative_contact %}行政聯絡人: {{ publisher.administrative_contact }}<br>{% endif %}
+    {% if publisher.technical_contact %}技術聯絡人: {{ publisher.technical_contact }}<br>{% endif %}
     
     </p>
   </div>
@@ -38,13 +43,15 @@
       <tr>
         <th>資料集</th>
         <th>達爾文核心集</th>
+        <th>核心集資料筆數</th>
       </tr>
     </thead>
     <tbody>
       {% for set in dataset %}
       <tr>
         <td><a href="{% url 'dataset-detail'  name=set.name %}">{{ set.name_zh }}</a></td>
-        <td>{{ set.count }}</td>
+        <td>{{ set.core_type }}</td>
+        <td>{{ set.num_record }}</td>
       </tr>
       {% endfor %}
     </tbody>
