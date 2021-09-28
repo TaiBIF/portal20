@@ -600,9 +600,10 @@ def search_dataset(request):
 
     ds_search = DatasetSearch(list(request.GET.lists()))
     if has_menu:
+
         #publisher_query = Dataset.objects\
         publisher_query = ds_search.query\
-            .values('organization','organization_verbatim')\
+            .values('organization','organization_name')\
             .exclude(organization__isnull=True)\
             .annotate(count=Count('organization'))\
             .order_by('-count')
@@ -611,11 +612,17 @@ def search_dataset(request):
         #                                 .exclude(organization__isnull=True)\
         #                                 .annotate(count=Count('organization'))\
         #                                 .order_by('-count')
+        # 
+        print (publisher_query)    
+        for x in publisher_query : 
+            print('===========',x)
         publisher_rows = [{
             'key':x['organization'],
-            'label':x['organization_verbatim'],
+            'label':x['organization_name'],
             'count': x['count']
         } for x in publisher_query]
+
+
         rights_query = ds_search.query\
             .values('data_license')\
             .exclude(data_license__exact='')\
@@ -626,6 +633,8 @@ def search_dataset(request):
             'label':DATA_MAPPING['rights'][x['data_license']],
             'count': x['count']
         } for x in rights_query]
+
+
         country_query = ds_search.query\
             .values('country')\
             .exclude(country__exact='')\
