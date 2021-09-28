@@ -66,11 +66,17 @@ class SolrQuery(object):
             elif key == 'limit':
                 self.solr_tuples.append(('offset', values[0]))
             elif key == 'taxon_key':
+                taxon_key_list = []
                 for v in values:
                     klist = v.split(':')
                     rank = klist[0]
-                    taxon_id = klist[1]
-                    self.solr_tuples.append(('fq', f'{rank}_key:{taxon_id}'))
+                    if len(klist) > 1:
+                        taxon_id = klist[1]
+                        taxon_key_list.append(f'{rank}_key:{taxon_id}')
+
+                #fq=(cat1:val1 OR cat2:val2 OR (cat3:(val3 AND val4)))
+                self.solr_tuples.append(('fq', ' OR '.join(taxon_key_list)))
+
             elif key in JSON_FACET_MAP[self.core]:
                 if len(values) == 1:
                     if ',' in values[0]:
