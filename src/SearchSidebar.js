@@ -84,13 +84,15 @@ function Accordion(props) {
 
 function SearchSidebar(props) {
   //console.log(props);
-
+  let isOccurrence = false;
   let searchTypeLabel = '';
   if (props.searchType === 'dataset') {
     searchTypeLabel = '資料集';
   }
   else if (props.searchType === 'occurrence') {
     searchTypeLabel = '出現紀錄';
+    isOccurrence = true;
+
     //const scientificNameContent = <SearchTaxon {...props.taxonProps} />;
     //searchTaxonContainer = <Accordion key="taxon" title="學名" content={scientificNameContent} appendClass="accordion-content-taxon" />;
     //searchTaxonContainer = <SearchTaxon {...props.taxonProps} />;
@@ -149,7 +151,8 @@ function SearchSidebar(props) {
                   </button>
                 </div>
               </div>
-              <SearchTaxon {...props.taxonProps} />
+              {isOccurrence === true ? <SearchTaxon {...props.taxonProps} />: null}
+
               {props.menus.map((m) => 
                 (<Accordion key={m.key} content={m} onClick={props.onClick} filters={props.filters}/>)
                )}
