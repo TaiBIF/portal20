@@ -126,11 +126,11 @@ class DatasetTable extends React.Component {
         const num_occurrence = v.num_occurrence.toLocaleString();
         //let pubMemo = '';
         let pubMemo = '';
-        if (v.status === 'Public') {
+        if (v.status === 'PUBLIC') {
           pubMemo = (v.guid) ? '已註冊至 GBIF' : '未註冊至 GBIF';
           pubMemo = <div><small>{pubMemo}</small></div>;
         }
-        const title = (v.status === 'Public') ?
+        const title = (v.status === 'PUBLIC') ?
               <a href={"/dataset/"+v.name}>{v.title}</a>:
               v.title;
 

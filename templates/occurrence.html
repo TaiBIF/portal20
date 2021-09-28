@@ -15,6 +15,7 @@
 
 {% block script %}
 {% if map_view %}
+
 <script>
 
   var map = L.map('map').setView([{{ map_view.0 }}, {{ map_view.1}} ], 13);
@@ -24,6 +25,7 @@
   }).addTo(map);
   L.marker([{{ map_view.0 }}, {{ map_view.1}}]).addTo(map);
 </script>
+
 {% endif %}
 {% endblock %}
 
@@ -31,9 +33,15 @@
 {# include "inc_breadcrumb.html" with tab="03" active_label="" #}
 <!-- container begin -->
 <div class="container">
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+  </script>
   <ul class="article-scroll-nav-wrapper">
-    <li><a href="{% url 'search-occurrence' cat='search' %}">回出現紀錄</a></li>
+    <li onclick="goBack()"><a>回上一頁</a></li>
   </ul>
+
   <div class="article-head-wrapper">
     <span class="article-post-date">{{ event.eventDate }}</span>
     <h1>
@@ -66,58 +74,58 @@
 
 
   <div class="article-head-wrapper">
-    <h1 class="heading-lg-ul"> Record</h1>
+    <h1 class="heading-lg-ul">基本資料 Record</h1>
   </div>
   
   <table class="table">
-    <thead><tr><th width="40%">Term</th><th>Value</th></tr></thead>
+    <thead><tr><th width="40%">欄位名稱</th><th>值</th></tr></thead>
     <tbody>
       {% for k,v in record.items %}
-        {% if v != None %}
-          <tr><td>{{ k }}</td><td>{{ v }}</td></tr>
-        {% endif %}      
+          {% if v.value != None %}
+            <tr><td>{{ v.name_zh }}</td><td>{{ v.value }}</td></tr>
+          {% endif %}      
       {% endfor %}
     </tbody>
     </table>
     
     <div class="article-head-wrapper">
-      <h1 class="heading-lg-ul"> Occurrence</h1>
+      <h1 class="heading-lg-ul">出現紀錄 Occurrence</h1>
     </div>
     <table class="table">
-      <thead><tr><th width="40%">Term</th><th>Value</th></tr></thead>
+      <thead><tr><th width="40%">欄位名稱</th><th>值</th></tr></thead>
       <tbody>
-        {% for k,v in occ.items %}
-          {% if v != None %}
-            <tr><td>{{ k }}</td><td>{{ v }}</td></tr>
-          {% endif %}
+        {% for k,v in record.items %}
+          {% if v.value != None %}
+            <tr><td>{{ v.name_zh }}</td><td>{{ v.value }}</td></tr>
+          {% endif %}      
         {% endfor %}
       </tbody>
       </table>
      
       <div class="article-head-wrapper">
-        <h1 class="heading-lg-ul">Event</h1>
+        <h1 class="heading-lg-ul">調查活動 Event</h1>
       </div>
       <table class="table">
-        <thead><tr><th width="40%">Term</th><th>Value</th></tr></thead>
+        <thead><tr><th width="40%">欄位名稱</th><th>值</th></tr></thead>
         <tbody>
           {% for k,v in event.items %}
-            {% if v != None %}
-              <tr><td>{{ k }}</td><td>{{ v }}</td></tr>
-            {% endif %}
+            {% if v.value != None %}
+              <tr><td>{{ v.name_zh }}</td><td>{{ v.value }}</td></tr>
+            {% endif %}  
           {% endfor %}
         </tbody>
         </table>
 
 
       <div class="article-head-wrapper">
-        <h1 class="heading-lg-ul"> Taxon</h1>
+        <h1 class="heading-lg-ul">分類 Taxon</h1>
       </div>
       <table class="table">
-        <thead><tr><th width="40%">Term</th><th>Value</th></tr></thead>
+        <thead><tr><th width="40%">欄位名稱</th><th>值</th></tr></thead>
         <tbody>
           {% for k,v in taxon.items %}
-            {% if v != None %}
-              <tr><td>{{ k }}</td><td>{{ v }}</td></tr>
+            {% if v.value != None %}
+              <tr><td>{{ v.name_zh }}</td><td>{{ v.value }}</td></tr>
             {% endif %}
           {% endfor %}
         </tbody>
@@ -125,14 +133,14 @@
 
 
       <div class="article-head-wrapper">
-        <h1 class="heading-lg-ul"> Location</h1>
+        <h1 class="heading-lg-ul">地理資訊 Location</h1>
       </div>
       <table class="table">
-        <thead><tr><th width="40%">Term</th><th>Value</th></tr></thead>
+        <thead><tr><th width="40%">欄位名稱</th><th>值</th></tr></thead>
         <tbody>
           {% for k,v in location.items %}
-            {% if v != None %}
-              <tr><td>{{ k }}</td><td>{{ v }}</td></tr>
+            {% if v.value != None %}
+              <tr><td>{{ v.name_zh }}</td><td>{{ v.value }}</td></tr>
             {% endif %}
           {% endfor %}
         </tbody>
