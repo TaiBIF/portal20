@@ -59,7 +59,6 @@ class TaibifSearch extends React.Component {
     this.handleTaxonRemove = this.handleTaxonRemove.bind(this);
     this.handleTaxonKeywordChange = this.handleTaxonKeywordChange.bind(this);
     this.handleSuggestClick = this.handleSuggestClick.bind(this);
-
     this.debounce = this.debounce.bind(this);
   }
 
@@ -112,8 +111,13 @@ class TaibifSearch extends React.Component {
   }
 
   handleTreeSpeciesClick(e, tid, name, rank) {
+    console.log(tid, name, rank);
+    //e.stopPropagation();
     const filters = this.state.filters;
-    const rankC = (rank) ? `${rank}:` : '';
+    let rankC = (rank) ? `${rank}:` : '';
+    if (parseInt(tid) <= 6 && rankC == '') {
+      rankC = 'kingdom:';
+    }
     this.setState((prevState) => {
       const taxonData = prevState.taxonData;
       taxonData.checked[tid] = name;
@@ -131,7 +135,17 @@ class TaibifSearch extends React.Component {
     this.setState((prevState) => {
       const taxonData = prevState.taxonData;
       delete taxonData.checked[tid];
-      filters.delete(`taxon_key=${tid}`);
+      const foundTaxonKeys = Array.from(filters).filter((x)=>x.indexOf('taxon_key=') >=0);
+
+      foundTaxonKeys.forEach((x)=> {
+        const klist = x.split('=');
+        if (klist[1].indexOf(':') >= 0) {
+          if (klist[1].split(':')[1] == tid) {
+            filters.delete(x);
+          }
+        }
+      });
+
       return {
         isLoadedMain: false,
         taxonData: taxonData,
@@ -158,13 +172,15 @@ class TaibifSearch extends React.Component {
     const filters = this.state.filters;
     const q = this.state.queryKeyword;
     // only one queryKeyword
-    filters.forEach(function(x){
-      if (x.indexOf('q=') === 0) {
-        filters.delete(x);
-      }
-    });
-    filters.add(`q=${q}`);
-    this.applyFilters(filters);
+    if (q != '') {
+      filters.forEach(function(x){
+        if (x.indexOf('q=') === 0) {
+          filters.delete(x);
+        }
+      });
+      filters.add(`q=${q}`);
+      this.applyFilters(filters);
+    }
   }
 
   handleSuggestClick(e, speciesId, speciesName) {
@@ -290,6 +306,10 @@ class TaibifSearch extends React.Component {
           const results = isOccurrence ? jsonData.results : jsonData.search.results;
           const taxonData = this.state.taxonData;
           taxonData.tree = jsonData.tree;
+          if (!filters) {
+            // clear checked taxon
+            taxonData.checked = [];
+          }
           this.setState({
             isLoaded: true,
             isLoadedMain: true,

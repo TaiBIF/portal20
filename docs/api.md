@@ -1,4 +1,4 @@
-/# TaiBIF API
+# TaiBIF API
 
 ## Occurrence
 
