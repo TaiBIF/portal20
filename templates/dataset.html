@@ -4,12 +4,17 @@
 {% block main %}
 {# include "inc_breadcrumb.html" with tab="03" active_label="" #}
 
+<script>
+  function goBack() {
+    window.history.back();
+  }
+  </script>
 
 <!-- container begin -->
   <div class="container">
 
     <ul class="article-scroll-nav-wrapper">
-      <li><a href="{% url 'search-dataset' %}">回資料集</a></li>
+      <li onclick="goBack()"><a>回上一頁</a></li>
     </ul>
     <!-- story title begin -->
     <div class="article-head-wrapper">
@@ -41,6 +46,7 @@
       {% if dataset.status == "PUBLIC" %}<div>資料集下載: <a href="{{ dataset.dwca_link }}">DwC-A</a></div>{% endif %}
       {% if dataset.status == "PUBLIC" and not dataset.guid %}<div class="alert alert-warning" role="alert">This resource has not been registered with GBIF</div>{% endif %}
 
+      {% if dataset.dwc_core_type == "Occurrence" %}
       <!-- row begin -->
       <div class="row">
 
@@ -48,9 +54,9 @@
           <div class="data-wall-ctn">
             <span class="dtat-wall-name">出現紀錄筆數</span>
             <span class="data-wall-numbers">{{ dataset.num_occurrence|intcomma }}</span>
-            <span class="data-wall-chart">
+            <!-- <span class="data-wall-chart">
               <img src="https://fakeimg.pl/70x70/846C5B/FAF9F9/?text=Chart">
-            </span>
+            </span> -->
           </div>
         </div>
 
@@ -74,9 +80,9 @@
             <span class="data-wall-numbers">{{ LonNum }}</span>
             <span class="dtat-wall-name">含緯度</span>
             <span class="data-wall-numbers">{{ LatNum }} </span>
-            <span class="data-wall-chart">
+            <!-- <span class="data-wall-chart">
               <img src="https://fakeimg.pl/70x70/846C5B/FAF9F9/?text=Chart">
-            </span>
+            </span> -->
           </div>
         </div>
 
@@ -84,13 +90,13 @@
           <div class="data-wall-ctn">
             <span class="dtat-wall-name">含年份</span>
             <span class="data-wall-numbers">{{ YrNum }}</span>
-            <span class="data-wall-chart">
+            <!-- <span class="data-wall-chart">
               <img src="https://fakeimg.pl/70x70/846C5B/FAF9F9/?text=Chart">
-            </span>
+            </span> -->
           </div>
         </div>
-
-    </div>
+      </div>
+      {% endif %}
 
      <!-- row end -->
       <!-- 簡介 end -->

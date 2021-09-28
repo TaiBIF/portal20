@@ -623,7 +623,7 @@ def search_dataset(request):
             .order_by('-count')
         rights_rows = [{
             'key': DATA_MAPPING['rights'][x['data_license']],
-            'label':x['data_license'],
+            'label':DATA_MAPPING['rights'][x['data_license']],
             'count': x['count']
         } for x in rights_query]
         country_query = ds_search.query\
@@ -711,6 +711,7 @@ def search_publisher(request):
 def search_species(request):
     status = request.GET.get('status', '')
     rank = request.GET.get('rank', '')
+    print (status)
 
     species_search = SpeciesSearch(list(request.GET.lists()))
     #species_ids = list(species_search.query.values('id').all())
