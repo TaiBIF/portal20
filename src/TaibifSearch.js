@@ -269,13 +269,18 @@ class TaibifSearch extends React.Component {
     let apiUrl = null;
     let isOccurrence = false;
     let myRe = /\/occurrence\/.*/g;
-    if (myRe.exec(pathname)){
+    let mapRe = /\/occurrence\/map/g; /* call map api when change to map tab */
+    if (mapRe.exec(pathname)){
+      apiUrl = `${window.location.origin}/api/v2/occurrence/map`;
+      isOccurrence = true;
+    }
+    else if (myRe.exec(pathname)){
       apiUrl = `${window.location.origin}/api/v2/occurrence/search`;
       isOccurrence = true;
     }else{
       apiUrl = `${window.location.origin}/api${window.location.pathname}`;
     }
-
+    
     // for window.history.pushState
     let url = `${window.location.origin}${window.location.pathname}`;
     /* TODO menu facet */

@@ -4,6 +4,7 @@ import OccurrenceSearch from './OccurrenceSearch';
 import {OccurrenceCharts} from './OccurrenceCharts';
 import {OccurrenceTaxonomy} from './OccurrenceTaxonomy';
 import {OccurrenceDownload} from './OccurrenceDownload';
+import {OccurrenceMap} from './OccurrenceMap';
 
 import {
   BrowserRouter as Router,
@@ -29,7 +30,7 @@ const navTabsData = [
     'key': 'map',
     'label': '分佈地圖',
     'path': '/occurrence/map/',
-    'disable': true,
+    //'disable': true,
   },
   {
     'key': 'taxonomy',
@@ -81,6 +82,9 @@ const OccurrenceRouter = ({data, filters}) =>  {
       <Switch>
         <Route path={navTabsData[0].path}>
           <OccurrenceSearch data={data} />
+        </Route>
+        <Route path={navTabsData[2].path}>
+          <OccurrenceMap data={data} filters={filters}/>
         </Route>
         <Route path={navTabsData[4].path}>
       <OccurrenceCharts filters={filters} />
