@@ -6,6 +6,7 @@ import {
   filtersToSearch,
 } from './Utils'
 
+
 class TaibifSearch extends React.Component {
   constructor(props) {
     super(props);
@@ -111,7 +112,6 @@ class TaibifSearch extends React.Component {
   }
 
   handleTreeSpeciesClick(e, tid, name, rank) {
-    console.log(tid, name, rank);
     //e.stopPropagation();
     const filters = this.state.filters;
     let rankC = (rank) ? `${rank}:` : '';
@@ -303,6 +303,10 @@ class TaibifSearch extends React.Component {
       .then(
         (jsonData) => {
           console.log('resp: ', jsonData);
+          if (jsonData.solr_error_msg) {
+            alert(jsonData.solr_error_msg); // TODO: need better UI
+            return
+          }
           const results = isOccurrence ? jsonData.results : jsonData.search.results;
           const taxonData = this.state.taxonData;
           taxonData.tree = jsonData.tree;

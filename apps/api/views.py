@@ -40,26 +40,42 @@ from .cached import COUNTRY_ROWS, YEAR_ROWS
 
 def occurrence_search_v2(request):
     time_start = time.time()
+
+    facet_values = []
+    query_list = []
+    for key, values in request.GET.lists():
+        if key == 'facet':
+            facet_values = values
+        else:
+            query_list.append((key, values))
+
     solr = SolrQuery('taibif_occurrence')
-    req = solr.request(request.GET.lists())
+    req = solr.request(query_list)
     #response = req['solr_response']
     resp = solr.get_response()
     if not resp:
         return JsonResponse({
             'results': 0,
             'solr_error_msg': solr.solr_error,
+            'solr_url': solr.solr_url,
+            'solr_tuples': solr.solr_tuples,
         })
 
+    solr_menu = SolrQuery('taibif_occurrence', facet_values)
+    solr_menu.request()
+    resp_menu = solr_menu.get_response()
+
+    # for frontend menu data sturctt
     menus = []
-    if resp['facets']:
-        if data := resp['facets'].get('country', ''):
+    if resp_menu['facets']:
+        if data := resp_menu['facets'].get('country', ''):
             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
             menus.append({
                 'key': 'country', #'countrycode',
                 'label': '國家/區域',
                 'rows': rows,
             })
-        if data := resp['facets'].get('year', ''):
+        if data := resp_menu['facets'].get('year', ''):
             #menu_year = [{'key': 0, 'label': 0, 'count': 0,'year_start':1990,'year_end':2021}]
             # TODO
             menus.append({
@@ -67,21 +83,21 @@ def occurrence_search_v2(request):
                 'label': '年份',
                 'rows': ['FAKE_FOR_SPACE',],
             })
-        if data := resp['facets'].get('month', ''):
+        if data := resp_menu['facets'].get('month', ''):
             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in sorted(data['buckets'], key=lambda x: x['val'])]
             menus.append({
                 'key': 'month',
                 'label': '月份',
                 'rows': rows,
             })
-        if data := resp['facets'].get('dataset', ''):
+        if data := resp_menu['facets'].get('dataset', ''):
             rows = menu_dataset = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
             menus.append({
                 'key': 'dataset',
                 'label': '資料集',
                 'rows': rows,
             })
-        if data := resp['facets'].get('publisher', ''):
+        if data := resp_menu['facets'].get('publisher', ''):
             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
             menus.append({
                 'key':'publisher',
@@ -103,6 +119,8 @@ def occurrence_search_v2(request):
     resp['tree'] = treeData
     if request.GET.get('debug_solr', ''):
         resp['solr_resp'] = solr.solr_response
+        resp['solr_url'] = solr.solr_url,
+        resp['solr_tuples'] =  solr.solr_tuples,
 
     resp['solr_qtime'] = req['solr_response']['responseHeader']['QTime']
     resp['elapsed'] = time.time() - time_start
@@ -729,14 +747,14 @@ def search_species(request):
     menu_list = []
     if has_menu:
         menus = [
-            {
-                'key': 'highertaxon',
-                'label': '高階分類群',
-                'rows': [{
-                    'key': x.id,
-                    'label': x.get_name(),
-                } for x in Taxon.objects.filter(rank='kingdom')],
-            },
+            # {
+            #     'key': 'highertaxon',
+            #     'label': '高階分類群',
+            #     'rows': [{
+            #         'key': x.id,
+            #         'label': x.get_name(),
+            #     } for x in Taxon.objects.filter(rank='kingdom')],
+            # },
             {
                 'key': 'rank',
                 'label': '分類位階',
