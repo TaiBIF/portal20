@@ -35,6 +35,7 @@ const navTabsData = [
     'key': 'taxonomy',
     'label': '分類系統',
     'path': '/occurrence/taxonomy/',
+    'disable': true,
   },
   {
     'key': 'charts',

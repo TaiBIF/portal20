@@ -4,7 +4,6 @@ import React, {useState, useRef} from 'react';
 import SearchTaxon from './SearchSidebarTaxon';
 import Slider from '@material-ui/core/Slider';
 
-
 function Accordion(props) {
   const [isOpen, setOpenState] = useState(false);
   const [yearRange, setYearRange] = useState([1900, 2021]); /* TODO */
@@ -34,9 +33,9 @@ function Accordion(props) {
           setYearValue(newValue);
           onClick(event, content.key, newValue);
         };
-        // console.log(content.key, handleChange)
+      // console.log(content.key, handleChange)
         return (
-          <div className="year_test" key={x.key}>
+          <div className="year_test" key={x}>
             <Slider
               value={yearRange}
               onChange={(e, newRange) => setYearRange(newRange)}
@@ -130,7 +129,12 @@ function SearchSidebar(props) {
       {searchTaxonContainer}
       {menuList}
       </div>)*/
-
+  let accordionList = [];
+  if (props.menus) {
+    props.menus.forEach((m) => {
+      accordionList.push(<Accordion key={m.key} content={m} onClick={props.onClick} filters={props.filters}/>);
+    });
+  }
   return (
       <div className="search-sidebar">
         <div className="modal right fade modal-search-side-wrapper" id="flowBtnModal" tabIndex="-1" role="dialog">
@@ -152,10 +156,7 @@ function SearchSidebar(props) {
                 </div>
               </div>
               {isOccurrence === true ? <SearchTaxon {...props.taxonProps} />: null}
-
-              {props.menus.map((m) => 
-                (<Accordion key={m.key} content={m} onClick={props.onClick} filters={props.filters}/>)
-               )}
+              {accordionList}
             </div>
           </div>
         </div>

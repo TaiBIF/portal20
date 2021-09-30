@@ -1,20 +1,23 @@
 # TaiBIF API
 
-## Occurrence
+## Occurrence search
 
 get occurrence records
 
-### Search
 
 /api/v2/occurrence/search
+
+
 
 **parameters**
 
 
-q, dataset, year, month, publisher
+q, dataset, year, month, publisher => filter
 
 
-facet=dataset,year,month,publisher,country
+facet=dataset,year,month,publisher,country => enable facet
+
+debug_solr=1 => show debug info
 
 **examples**
 
@@ -22,6 +25,9 @@ facet=dataset,year,month,publisher,country
 /api/v2/occurrence/search?q=olypedates braueri
 /api/v2/occurrence/search?year=2000,2010
 /api/v2/occurrence/search?country=Taiwan&dataset=taif&facet=year&facet=month&facet=dataset&facet=publisher&facet=country
+
+/api/v2/occurrence/search?country=Malaysia&month=2&month=9&facet=year&facet=month&facet=dataset&facet=publisher&facet=country&debug_solr=1
+results: 32 (month=2 => 30, month=9 => 2)
 
 ```
 
