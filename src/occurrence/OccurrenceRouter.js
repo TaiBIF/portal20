@@ -5,6 +5,7 @@ import {OccurrenceCharts} from './OccurrenceCharts';
 import {OccurrenceTaxonomy} from './OccurrenceTaxonomy';
 import {OccurrenceDownload} from './OccurrenceDownload';
 import {OccurrenceMap} from './OccurrenceMap';
+import {Pagination} from '../Utils'
 
 import {
   BrowserRouter as Router,
@@ -50,7 +51,7 @@ const navTabsData = [
   }
 ];
 
-const OccurrenceRouter = ({data, filters}) =>  {
+const OccurrenceRouter = ({data, filters,urlPrefix}) =>  {
   //console.log(data);
   const path = window.location.pathname;
   const m = path.match(/\/occurrence\/(search|map|gallery|taxonomy|charts|download)/);
@@ -82,6 +83,7 @@ const OccurrenceRouter = ({data, filters}) =>  {
       <Switch>
         <Route path={navTabsData[0].path}>
           <OccurrenceSearch data={data} />
+          <Pagination offset={data.offset} total={data.count} urlPrefix={urlPrefix} />
         </Route>
         <Route path={navTabsData[2].path}>
           <OccurrenceMap data={data} filters={filters}/>
