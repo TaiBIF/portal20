@@ -47,7 +47,6 @@ class SolrQuery(object):
     def __init__(self, core, facet_values=[]):
         self.solr_tuples = [
             ('q.op', 'OR'),
-            ('rows', self.rows),
             ('wt', 'json'),
         ]
         self.core = core
@@ -64,8 +63,9 @@ class SolrQuery(object):
                 self.solr_q = values[0]
             elif key == 'offset':
                 self.solr_tuples.append(('start', values[0]))
-            elif key == 'limit':
-                self.solr_tuples.append(('offset', values[0]))
+            elif key == 'rows':
+                self.rows = int(values[0])
+                self.solr_tuples.append(('rows', self.rows))
             elif key == 'taxon_key':
                 taxon_key_list = []
                 for v in values:
@@ -96,6 +96,8 @@ class SolrQuery(object):
             #    self.facet_values = values
 
         self.solr_tuples.append(('q', solr_q))
+        self.solr_tuples.append(('rows', self.rows)) #TODO remove redundant key['rows']
+        
         if len(self.facet_values):
             self.solr_tuples.append(('facet', 'true'))
             s = ''
@@ -131,7 +133,7 @@ class SolrQuery(object):
         facets = self.solr_response.get('facets', [])
 
         is_last = False
-        if resp['start'] + self.rows >= resp['numFound']:
+        if resp['start'] + int(self.rows) >= resp['numFound']:
             is_last = True
 
         for i in resp['docs']:
