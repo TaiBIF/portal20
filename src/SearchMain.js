@@ -244,9 +244,13 @@ function SearchMain(props) {
            </div>
          </div>
          </React.Fragment>
-       : <OccurrenceRouter data={props.data} filters={props.filters}/>
+       : <OccurrenceRouter data={props.data} filters={props.filters}  urlPrefix={pageUrlPrefix}/>
       }
-      <Pagination offset={props.data.offset} total={props.data.count} urlPrefix={pageUrlPrefix} />
+      {/* pagination */}
+      {/* {(props.searchType !== 'occurrence')?
+        <Pagination offset={props.search.offset} total={props.search.count} urlPrefix={pageUrlPrefix} />
+      :null       
+      } */}
       {/*<Pagination offset={100} total={121} urlPrefix={pageUrlPrefix} />*/}
       </div>
   );
