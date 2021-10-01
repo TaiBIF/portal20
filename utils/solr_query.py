@@ -6,7 +6,7 @@ import requests
 
 from conf.settings import ENV
 
-if ENV == 'dev':
+if ENV in ['dev','stag']:
     SOLR_PREFIX = 'http://54.65.81.61:8983/solr/'
 else:
     SOLR_PREFIX = 'http://solr:8983/solr/'
