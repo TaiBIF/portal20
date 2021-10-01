@@ -2,10 +2,17 @@
 
 .leaflet-container {
     width: 100%;
-    height: 65vh;
+    height: 70vh;
   }
 
 /* leaflet draw */
 .sr-only {
     display: none;
   }
+
+
+/* layout */
+
+.search-content {
+    padding-bottom: 0 !important;
+}
