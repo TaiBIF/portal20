@@ -441,7 +441,7 @@ def species_view(request, pk):
     # r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q={solr_q}&{facet_json}')
     
 
-    if ENV == 'dev':
+    if ENV in ['dev','stag']:
         r = requests.get(f'http://54.65.81.61:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q=*:*&fq={solr_q}&{facet_json}')
     else:
         r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q=*:*&fq={solr_q}&{facet_json}')
