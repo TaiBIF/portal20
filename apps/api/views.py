@@ -129,8 +129,8 @@ def search_occurrence_v2_map(request):
 
     # map
     facet_pivot_map = 'facet.pivot=grid_x,grid_y'
-    map_url = f'{solr.solr_url}&facet=true&q=grid_x:[0 TO *] AND grid_y:[0 TO *]&{facet_pivot_map}'
-    map_url = map_url.replace('rows=20','rows=0').replace('q=%2A%3A%2A','')
+    map_url = f'{solr.solr_url}&facet=true&q=grid_x:[0 TO *] AND grid_y:[0 TO *]&{facet_pivot_map}&facet.limit=-1'
+    map_url = map_url.replace('rows=20','rows=0').replace('&q=%2A%3A%2A','')
     r = requests.get(map_url)
     data_c = {}
     if r.status_code == 200:
