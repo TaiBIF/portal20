@@ -152,16 +152,32 @@ function SearchMain(props) {
 
   let q = null;
   const filterTags = [];
+  let mapTag = false;
   for (let f of props.filters) {
     const menuKey = f.split('=');
     const found = props.menus.find((x) => x['key'] === menuKey[0]);
     if (found) {
       const tagLabel = `${found['label']}: ${decodeURIComponent(menuKey[1])}`;
       filterTags.push((<span key={tagLabel} className="search-content-sort-tag">{ tagLabel }</span>));
-    }
-    else if (menuKey[0] === 'q') {
+    } else if (menuKey[0] === 'q') {
       q = decodeURIComponent(menuKey[1]);
       filterTags.push((<span key="q" className="search-content-sort-tag">關鍵字:{ q }</span>));
+    } else if ((menuKey[0] === 'lat'||menuKey[0] === 'lng') && !mapTag) {
+      console.log(props.filters)
+      let lat = []
+      let lng = []
+      props.filters.forEach(m => {
+        if (m.startsWith('lat')){
+          lat.push(m.split('=')[1])
+        }
+        if (m.startsWith('lng')){
+          lng.push(m.split('=')[1])
+        }
+      });
+      mapTag = true
+      // map=%5B%5B%7B%22lat%22%3A27.672174843840015map=%22lng%22%3A-50.27343750000001%7Dmap=%7B%22lat%22%3A51.614398182379425map=%22lng%22%3A-10.195312500000002%7Dmap=%7B%22lat%22%3A27.672174843840015map=%22lng%22%3A-10.195312500000002%7D%5D%5D
+      filterTags.push((<span key="map" className="search-content-sort-tag">經度:{lng[0]}~{lng[1]}</span>));
+      filterTags.push((<span key="map" className="search-content-sort-tag">緯度:{lat[0]}~{lat[1]}</span>));
     }
   }
 
