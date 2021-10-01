@@ -103,12 +103,20 @@ function SearchSidebar(props) {
     searchTypeLabel = '發布者';
   }
   let filterCount = 0;
+  let countMap = false;
   props.filters.forEach((item)=> {
     const key = item.split('=')[0];
-    if (key !== 'offset') {
+    if (key !== 'offset' &&  key !== 'lat' &&  key !== 'lng') {
       filterCount++;
     }
+    // map
+    if ((key == 'lat' || key == 'lng' ) && !countMap){
+      filterCount = filterCount +2;
+      countMap = true;
+    }
   });
+
+
   /*
   return (
       <div className="col-xs-6 col-md-3 search-sidebar">
