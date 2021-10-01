@@ -41,9 +41,7 @@ from utils.solr_query import SolrQuery
 
 from apps.data.models import DATA_MAPPING
 
-
-
-
+from conf.settings import ENV
 
 def search_all(request):
     if request.method == 'POST':
@@ -441,7 +439,13 @@ def species_view(request, pk):
     facet_dataset_zh = 'dataset_zh:{type:terms,field:taibif_dataset_name_zh,limit:-1,mincount:1}'
     facet_json = 'json.facet={'+facet_dataset +','+facet_dataset_zh +'}'
     # r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q={solr_q}&{facet_json}')
-    r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q=*:*&fq={solr_q}&{facet_json}')
+    
+
+    if ENV == 'dev':
+        r = requests.get(f'http://54.65.81.61:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q=*:*&fq={solr_q}&{facet_json}')
+    else:
+        r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q=*:*&fq={solr_q}&{facet_json}')
+
 
     if r.status_code == 200:
 

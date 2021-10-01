@@ -38,6 +38,7 @@ from utils.map_data import convert_grid_to_coor
 
 from .cached import COUNTRY_ROWS, YEAR_ROWS
 
+from conf.settings import ENV
 
 #----------------- MAP -----------------#
 
@@ -246,251 +247,6 @@ def occurrence_search_v2(request):
     resp['elapsed'] = time.time() - time_start
     return JsonResponse(resp)
 
-
-def search_occurrence_v1_charts(request):
-    year_start = 1000
-    year_end = 2021
-
-    solr_q_fq_list=[]
-    solr_fq = ''
-    solr_q_list = []
-    solr_q = '*:*'
-    for term, values in list(request.GET.lists()):
-        if term !='q' :
-            if term != 'menu':
-                if term =='year':
-                    val = values[0].replace(",", " TO ")
-                    solr_q_fq_list.append('{}:[{}]'.format(term,val))
-                    year_start =values[0].split(',',1)
-                    year_end =values[0].split(',',2)
-                elif term =='dataset':
-                    solr_q_fq_list.append('{}:"{}"'.format('taibif_dataset_name_zh', '" OR "'.join(values)))
-                elif term =='month':
-                    solr_q_fq_list.append('{}:{}'.format(term, ' OR '.join(values)))
-
-        else:
-            solr_q_list.append('{}:{}'.format('_text_', ' OR '.join(values)))
-
-
-    if len(solr_q_list) > 0:
-        solr_q = ' AND '.join(solr_q_list)
-
-    if len(solr_q_fq_list) > 0:
-        solr_fq = ' AND '.join(solr_q_fq_list)
-    print(solr_fq)
-
-    charts_year = []
-    charts_month = []
-    charts_dataset = []
-
-    search_count = 0
-    search_offset = 0
-    search_results = []
-    
-
-    time_start = time.time()  
-    facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name_zh,limit:-1,mincount:0}'
-    facet_month = 'month:{type:range,field:month,start:1,end:13,gap:1}'
-    facet_year = 'year:{type:terms,field:year,limit:-1,mincount:0}'
-    facet_json = 'json.facet={'+facet_dataset + ',' +facet_month+ ',' +facet_year+'}'
-    r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&q={solr_q}&fq={solr_fq}&{facet_json}')
-
-    if r.status_code == 200:
-        data = r.json()
-
-
-        search_count = data['response']['numFound']
-        
-        if search_count != 0:
-            search_offset = data['response']['start']
-            search_results = data['response']['docs']
-
-            charts_year =[{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['year']['buckets']]
-            charts_month = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['month']['buckets']]
-            charts_dataset = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['dataset']['buckets']]
-        else:
-            charts_year = [{'key': 0, 'label': 0, 'count': 0}]
-            charts_month = [{'key': 0, 'label': 0, 'count': 0}]
-            charts_dataset = [{'key': 0, 'label': 0, 'count': 0}]
-
-
-
-    ret = {
-        'charts': [
-            {
-                'key': 'year',
-                'label': '年份',
-                'rows': charts_year,
-            },
-            {
-                'key': 'month',
-                'label': '月份',
-                'rows': charts_month,
-            },
-            {
-                'key': 'dataset',
-                'label': '資料集',
-                'rows': charts_dataset,
-            },
-        ],
-    }
-    return JsonResponse(ret)
-
-
-
-
-
-
-def search_occurrence_v1(request):
-    year_start = 1000
-    year_end = 2021
-
-    solr_q_fq_list=[]
-    solr_fq = ''
-    solr_q_list = []
-    solr_q = '*:*'
-    for term, values in list(request.GET.lists()):
-        if term !='q' :
-            if term != 'menu':
-                if term =='year':
-                    val = values[0].replace(",", " TO ")
-                    solr_q_fq_list.append('{}:[{}]'.format(term,val))
-                    year_start =values[0].split(',',1)
-                    year_end =values[0].split(',',2)
-                elif term =='dataset':
-                    solr_q_fq_list.append('{}:"{}"'.format('taibif_dataset_name_zh', '" OR "'.join(values)))
-                elif term =='month':
-                    solr_q_fq_list.append('{}:{}'.format(term, ' OR '.join(values)))
-
-        else:
-            solr_q_list.append('{}:{}'.format('_text_', ' OR '.join(values)))
-
-
-    if len(solr_q_list) > 0:
-        solr_q = ' OR '.join(solr_q_list)
-
-    if len(solr_q_fq_list) > 0:
-        solr_fq = ' OR '.join(solr_q_fq_list)
-
-    menu_year = []
-    menu_month = []
-    menu_dataset = []
-    menu_country = []
-    menu_publisher = []
-
-    search_count = 0
-    search_limit = 20
-    search_offset = 0
-    search_results = []
-    #publisher_query = Dataset.objects\
-    #                         .values('organization','organization_verbatim')\
-    #                         .exclude(organization__isnull=True)\
-    #                         .annotate(count=Count('organization'))\
-    #                         .order_by('-count')
-    #menu_publisher = [{
-    #    'key':x['organization'],
-    #    'label':x['organization_verbatim'],
-    #    'count': x['count']
-    #} for x in publisher_query]
-    
-    
-
-    time_start = time.time()  
-    facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name_zh}'
-    facet_month = 'month:{type:range,field:month,start:1,end:13,gap:1}'
-    facet_country = 'country:{type:terms,field:country,mincount:0,limit:-1}'
-    facet_publisher = 'publisher:{type:terms,field:publisher}'
-    facet_json = 'json.facet={'+facet_dataset + ',' +facet_month+ ',' +facet_country+','+facet_publisher+'}'
-    r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q={solr_q}&fq={solr_fq}&{facet_json}')
-
-    if r.status_code == 200:
-        data = r.json()
-        search_count = data['response']['numFound']
-        if search_count != 0:
-            search_offset = data['response']['start']
-            search_results = data['response']['docs']
-            for i, v in enumerate(search_results):
-            ## copy fields
-                date = '{}-{}-{}'.format(v['year'] if v.get('year', '') else '',
-                                        v['month'] if v.get('month', '') else '',
-                                        v['day'] if v.get('day', '') else '')
-                search_results[i]['vernacular_name'] = v.get('vernacularName', '')
-                search_results[i]['scientific_name'] = v.get('scientificName', '')
-                search_results[i]['dataset'] = v['taibif_dataset_name']
-                search_results[i]['date'] = date
-                search_results[i]['taibif_id'] = '{}__{}'.format(v['taibif_dataset_name'], v['_version_'])
-                search_results[i]['kingdom'] = v.get('kingdom_zh', '')
-                search_results[i]['phylum'] = v.get('phylum_zh', '')
-                search_results[i]['class'] = v.get('class_zh', '')
-                search_results[i]['order'] = v.get('order_zh', '')
-                search_results[i]['family'] = v.get('family_zh', '')
-                search_results[i]['genus'] = v.get('genus_zh', '')
-                search_results[i]['species'] = v.get('species_zh', '')
-
-            menu_year = [{'key': 0, 'label': 0, 'count': 0,'year_start':year_start,'year_end':year_end}]
-            menu_month = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['month']['buckets']]
-            menu_dataset = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['dataset']['buckets']]
-            menu_country = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['country']['buckets']]
-            menu_publisher = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['publisher']['buckets']]
-        else:
-            menu_year = [{'key': 0, 'label': 0, 'count': 0,'year_start':year_start,'year_end':year_end}]
-            menu_month = [{'key': x, 'label': x, 'count': 0} for x in range(12)]
-            menu_dataset = [{'key': 0, 'label': 0, 'count': 0}]
-            menu_country = [{'key': 0, 'label': 0, 'count': 0}]
-            menu_publisher = [{'key': 0, 'label': 0, 'count': 0}]
-        
-
-        #search_limit = 20
-        
-    ret = {
-        'menus': [
-            {
-                'key': 'country', #'countrycode',
-                'label': '國家/區域',
-                'rows': menu_country,
-            },
-            {
-                'key': 'year',
-                'label': '年份',
-                'rows': menu_year,
-            },
-            {
-                'key': 'month',
-                'label': '月份',
-                'rows': menu_month,
-            },
-            {
-                'key': 'dataset',
-                'label': '資料集',
-                'rows': menu_dataset,
-            },
-            {
-                'key':'publisher',
-                'label': '發布者',
-                'rows': menu_publisher,
-            }
-        ],
-        'search': {
-            'elapsed': time.time() - time_start,
-            'results': search_results,
-            'offset': search_offset,
-            'limit': search_limit,
-            'count': search_count,
-            'has_more': True
-        },
-    }
-
-    # tree
-    treeRoot = Taxon.objects.filter(rank='kingdom').all()
-    treeData = [{
-        'id': x.id,
-        'data': {
-            'name': x.get_name(),
-            'count': x.count,
-        },
-    } for x in treeRoot]
-    ret['tree'] = treeData
-    return JsonResponse(ret)
 
 def taxon_tree_node(request, pk):
     taxon = Taxon.objects.get(pk=pk)
@@ -1312,7 +1068,10 @@ def export(request):
     facet_month = 'month:{type:range,field:month,start:1,end:13,gap:1}'
     facet_year = 'year:{type:terms,field:year,limit:-1,mincount:0}'
     facet_json = 'json.facet={'+facet_dataset + ',' +facet_month+ ',' +facet_year+'}'
-    r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows=1000000&q={solr_q}&fq={solr_fq}&{facet_json}')
+    if ENV == 'dev':
+        r = requests.get(f'http://54.65.81.61:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows=1000000&q={solr_q}&fq={solr_fq}&{facet_json}')
+    else:
+        r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows=1000000&q={solr_q}&fq={solr_fq}&{facet_json}')
 
     if r.status_code == 200:
         data = r.json()
@@ -1446,3 +1205,251 @@ TaiBIF團隊 敬上
         html_message=html)
 
     return JsonResponse({"status":search_count}, safe=False)
+
+
+#------- DEPRECATED ------#
+
+def search_occurrence_v1_charts(request):
+    year_start = 1000
+    year_end = 2021
+
+    solr_q_fq_list=[]
+    solr_fq = ''
+    solr_q_list = []
+    solr_q = '*:*'
+    for term, values in list(request.GET.lists()):
+        if term !='q' :
+            if term != 'menu':
+                if term =='year':
+                    val = values[0].replace(",", " TO ")
+                    solr_q_fq_list.append('{}:[{}]'.format(term,val))
+                    year_start =values[0].split(',',1)
+                    year_end =values[0].split(',',2)
+                elif term =='dataset':
+                    solr_q_fq_list.append('{}:"{}"'.format('taibif_dataset_name_zh', '" OR "'.join(values)))
+                elif term =='month':
+                    solr_q_fq_list.append('{}:{}'.format(term, ' OR '.join(values)))
+
+        else:
+            solr_q_list.append('{}:{}'.format('_text_', ' OR '.join(values)))
+
+
+    if len(solr_q_list) > 0:
+        solr_q = ' AND '.join(solr_q_list)
+
+    if len(solr_q_fq_list) > 0:
+        solr_fq = ' AND '.join(solr_q_fq_list)
+    print(solr_fq)
+
+    charts_year = []
+    charts_month = []
+    charts_dataset = []
+
+    search_count = 0
+    search_offset = 0
+    search_results = []
+    
+
+    time_start = time.time()  
+    facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name_zh,limit:-1,mincount:0}'
+    facet_month = 'month:{type:range,field:month,start:1,end:13,gap:1}'
+    facet_year = 'year:{type:terms,field:year,limit:-1,mincount:0}'
+    facet_json = 'json.facet={'+facet_dataset + ',' +facet_month+ ',' +facet_year+'}'
+    r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&q={solr_q}&fq={solr_fq}&{facet_json}')
+
+    if r.status_code == 200:
+        data = r.json()
+
+
+        search_count = data['response']['numFound']
+        
+        if search_count != 0:
+            search_offset = data['response']['start']
+            search_results = data['response']['docs']
+
+            charts_year =[{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['year']['buckets']]
+            charts_month = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['month']['buckets']]
+            charts_dataset = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['dataset']['buckets']]
+        else:
+            charts_year = [{'key': 0, 'label': 0, 'count': 0}]
+            charts_month = [{'key': 0, 'label': 0, 'count': 0}]
+            charts_dataset = [{'key': 0, 'label': 0, 'count': 0}]
+
+
+
+    ret = {
+        'charts': [
+            {
+                'key': 'year',
+                'label': '年份',
+                'rows': charts_year,
+            },
+            {
+                'key': 'month',
+                'label': '月份',
+                'rows': charts_month,
+            },
+            {
+                'key': 'dataset',
+                'label': '資料集',
+                'rows': charts_dataset,
+            },
+        ],
+    }
+    return JsonResponse(ret)
+
+
+
+
+
+
+def search_occurrence_v1(request):
+    year_start = 1000
+    year_end = 2021
+
+    solr_q_fq_list=[]
+    solr_fq = ''
+    solr_q_list = []
+    solr_q = '*:*'
+    for term, values in list(request.GET.lists()):
+        if term !='q' :
+            if term != 'menu':
+                if term =='year':
+                    val = values[0].replace(",", " TO ")
+                    solr_q_fq_list.append('{}:[{}]'.format(term,val))
+                    year_start =values[0].split(',',1)
+                    year_end =values[0].split(',',2)
+                elif term =='dataset':
+                    solr_q_fq_list.append('{}:"{}"'.format('taibif_dataset_name_zh', '" OR "'.join(values)))
+                elif term =='month':
+                    solr_q_fq_list.append('{}:{}'.format(term, ' OR '.join(values)))
+
+        else:
+            solr_q_list.append('{}:{}'.format('_text_', ' OR '.join(values)))
+
+
+    if len(solr_q_list) > 0:
+        solr_q = ' OR '.join(solr_q_list)
+
+    if len(solr_q_fq_list) > 0:
+        solr_fq = ' OR '.join(solr_q_fq_list)
+
+    menu_year = []
+    menu_month = []
+    menu_dataset = []
+    menu_country = []
+    menu_publisher = []
+
+    search_count = 0
+    search_limit = 20
+    search_offset = 0
+    search_results = []
+    #publisher_query = Dataset.objects\
+    #                         .values('organization','organization_verbatim')\
+    #                         .exclude(organization__isnull=True)\
+    #                         .annotate(count=Count('organization'))\
+    #                         .order_by('-count')
+    #menu_publisher = [{
+    #    'key':x['organization'],
+    #    'label':x['organization_verbatim'],
+    #    'count': x['count']
+    #} for x in publisher_query]
+    
+    
+
+    time_start = time.time()  
+    facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name_zh}'
+    facet_month = 'month:{type:range,field:month,start:1,end:13,gap:1}'
+    facet_country = 'country:{type:terms,field:country,mincount:0,limit:-1}'
+    facet_publisher = 'publisher:{type:terms,field:publisher}'
+    facet_json = 'json.facet={'+facet_dataset + ',' +facet_month+ ',' +facet_country+','+facet_publisher+'}'
+    r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q={solr_q}&fq={solr_fq}&{facet_json}')
+
+    if r.status_code == 200:
+        data = r.json()
+        search_count = data['response']['numFound']
+        if search_count != 0:
+            search_offset = data['response']['start']
+            search_results = data['response']['docs']
+            for i, v in enumerate(search_results):
+            ## copy fields
+                date = '{}-{}-{}'.format(v['year'] if v.get('year', '') else '',
+                                        v['month'] if v.get('month', '') else '',
+                                        v['day'] if v.get('day', '') else '')
+                search_results[i]['vernacular_name'] = v.get('vernacularName', '')
+                search_results[i]['scientific_name'] = v.get('scientificName', '')
+                search_results[i]['dataset'] = v['taibif_dataset_name']
+                search_results[i]['date'] = date
+                search_results[i]['taibif_id'] = '{}__{}'.format(v['taibif_dataset_name'], v['_version_'])
+                search_results[i]['kingdom'] = v.get('kingdom_zh', '')
+                search_results[i]['phylum'] = v.get('phylum_zh', '')
+                search_results[i]['class'] = v.get('class_zh', '')
+                search_results[i]['order'] = v.get('order_zh', '')
+                search_results[i]['family'] = v.get('family_zh', '')
+                search_results[i]['genus'] = v.get('genus_zh', '')
+                search_results[i]['species'] = v.get('species_zh', '')
+
+            menu_year = [{'key': 0, 'label': 0, 'count': 0,'year_start':year_start,'year_end':year_end}]
+            menu_month = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['month']['buckets']]
+            menu_dataset = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['dataset']['buckets']]
+            menu_country = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['country']['buckets']]
+            menu_publisher = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['publisher']['buckets']]
+        else:
+            menu_year = [{'key': 0, 'label': 0, 'count': 0,'year_start':year_start,'year_end':year_end}]
+            menu_month = [{'key': x, 'label': x, 'count': 0} for x in range(12)]
+            menu_dataset = [{'key': 0, 'label': 0, 'count': 0}]
+            menu_country = [{'key': 0, 'label': 0, 'count': 0}]
+            menu_publisher = [{'key': 0, 'label': 0, 'count': 0}]
+        
+
+        #search_limit = 20
+        
+    ret = {
+        'menus': [
+            {
+                'key': 'country', #'countrycode',
+                'label': '國家/區域',
+                'rows': menu_country,
+            },
+            {
+                'key': 'year',
+                'label': '年份',
+                'rows': menu_year,
+            },
+            {
+                'key': 'month',
+                'label': '月份',
+                'rows': menu_month,
+            },
+            {
+                'key': 'dataset',
+                'label': '資料集',
+                'rows': menu_dataset,
+            },
+            {
+                'key':'publisher',
+                'label': '發布者',
+                'rows': menu_publisher,
+            }
+        ],
+        'search': {
+            'elapsed': time.time() - time_start,
+            'results': search_results,
+            'offset': search_offset,
+            'limit': search_limit,
+            'count': search_count,
+            'has_more': True
+        },
+    }
+
+    # tree
+    treeRoot = Taxon.objects.filter(rank='kingdom').all()
+    treeData = [{
+        'id': x.id,
+        'data': {
+            'name': x.get_name(),
+            'count': x.count,
+        },
+    } for x in treeRoot]
+    ret['tree'] = treeData
+    return JsonResponse(ret)
