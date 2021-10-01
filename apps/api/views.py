@@ -1068,7 +1068,7 @@ def export(request):
     facet_month = 'month:{type:range,field:month,start:1,end:13,gap:1}'
     facet_year = 'year:{type:terms,field:year,limit:-1,mincount:0}'
     facet_json = 'json.facet={'+facet_dataset + ',' +facet_month+ ',' +facet_year+'}'
-    if ENV == 'dev':
+    if ENV in ['dev','stag']:
         r = requests.get(f'http://54.65.81.61:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows=1000000&q={solr_q}&fq={solr_fq}&{facet_json}')
     else:
         r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows=1000000&q={solr_q}&fq={solr_fq}&{facet_json}')
