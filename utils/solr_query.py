@@ -4,7 +4,12 @@ import json
 
 import requests
 
-SOLR_PREFIX = 'http://solr:8983/solr/'
+from conf.settings import ENV
+
+if ENV == 'dev':
+    SOLR_PREFIX = 'http://54.65.81.61:8983/solr/'
+else:
+    SOLR_PREFIX = 'http://solr:8983/solr/'
 
 JSON_FACET_MAP = {
     'taibif_occurrence': {
