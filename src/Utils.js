@@ -1,9 +1,6 @@
 import React from 'react';
 
 async function fetchData(url) {
-  if(/^year=/.test(url))
-    url = url.replace("-",",")
-
   //console.log('🙋', url);
   let response = await fetch(url);
   let data = await response.json();
@@ -16,9 +13,6 @@ const filtersToSearch = (filters, removeOffset=false) => {
   //console.log(removeOffset);
   const qsArr = [];
   filters.forEach((item)=> {
-    if(/^year=/.test(item))
-      item = item.replace("-",",")
-
     if (/^offset=/.test(item)) {
       if (removeOffset === false) {
         qsArr.push(item);
@@ -29,7 +23,6 @@ const filtersToSearch = (filters, removeOffset=false) => {
   });
   return qsArr.join('&');
 }
-
 const appendUrl = (url, queryString) => {
   if (url.indexOf('?') >= 0) {
     return `${url}&${queryString}`;
