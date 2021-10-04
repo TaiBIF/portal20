@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function OccurrenceSearch(props) {
-  console.log(props);
+  // console.log(props);
   const rows = props.data.results.map((row, index) => {
     const sn = props.data.offset + index + 1;
     const countryOrLocality = [row.country, row.locality].join('/');
