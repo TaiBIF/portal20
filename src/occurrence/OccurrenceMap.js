@@ -54,15 +54,16 @@ function OccurrenceMap(props) {
         }    
     /* marker style */
 
-    
     const {filters} = props;
     const search = filtersToSearch(filters);
     const [jsonObject, setGeoJSON] = useState([false, []]);
+    const [isLoaded, setLoading] = useState(false);
     useEffect(() => {
         const apiURL = `${API_URL_PREFIX}?${search}`;
         console.log('fetch:', apiURL)
         fetchData(apiURL).then((data) => {
             setGeoJSON([true, data.map_geojson])
+            setLoading(true)
         });
     }, [filters]);
  
@@ -70,7 +71,6 @@ function OccurrenceMap(props) {
 function App(){
         
     const onCreated = e => {
-
         // remove previous layer
         const drawnItems = featureGroupRef.current._layers;
         if (Object.keys(drawnItems).length > 1) {
@@ -80,20 +80,15 @@ function App(){
                 featureGroupRef.current.removeLayer(layer);
             });
         }
-
         // get current lat & lon
         let bounds = e.layer.getLatLngs();
-
         // popup
         e.layer.bindPopup('<a id="search-by-map">以此經緯度範圍搜尋出現紀錄➡️</a>',{closeButton: false}).openPopup();
-        
         document.querySelector(`#search-by-map`).addEventListener('click', function(){
-                            
-            let step;
+            // round coordinates to 5 digits    
             let lat = [];
             let lng = [];
-            for (step = 0; step < 4; step++) {
-            // 執行五次：從step為0到4
+            for (let step = 0; step < 4; step++) {
                 if (!lat.includes(Math.round(bounds[0][step]['lat'] * 100000) / 100000)){
                     lat.push(Math.round(bounds[0][step]['lat'] * 100000) / 100000)
                 }
@@ -101,7 +96,6 @@ function App(){
                     lng.push(Math.round(bounds[0][step]['lng'] * 100000) / 100000)
                 }
             }
-            //console.log(lat,lng);
             //redirect to OccurrenceSearch
             let current_path = window.location.href
             let new_path = current_path.replace('map','search')
@@ -114,12 +108,6 @@ function App(){
             }
             window.location = new_path
         })
-
-        // 看其他分頁的onclick
-        //https://stackoverflow.com/questions/58181405/pass-a-react-component-to-leaflet-popup
-        // e.layer.bindPopup(`<button onClick=''>使用此經緯度範圍作為查詢條件➡️</button>`).openPopup();
-        
-    // https://stackoverflow.com/questions/42894803/rendering-react-components-inside-popup-of-react-leaflet-draw-drawn-layer-on-rea
     };
     
     const featureGroupRef = useRef()
@@ -146,11 +134,9 @@ function App(){
     </MapContainer>
   </div>
     }
-    return (
+    return (  
         <React.Fragment>
-        <div>
-        <App />
-        </div>
+        {!isLoaded ? <div className="search-loading"> 🌱 Loading... ⏳ </div> : <div><App /></div>}    
         </React.Fragment>
     );
   }
