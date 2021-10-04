@@ -6,6 +6,8 @@ import requests
 
 from conf.settings import ENV
 
+from utils.map_data import convert_coor_to_grid, convert_x_coor_to_grid, convert_y_coor_to_grid
+
 if ENV in ['dev','stag']:
     SOLR_PREFIX = 'http://54.65.81.61:8983/solr/'
 else:
@@ -63,6 +65,7 @@ class SolrQuery(object):
 
     def request(self, req_lists=[]):
         solr_q = '*:*'
+        map_query = ''
         for key, values in req_lists:
             if key == 'q' and values[0] != '':
                 self.solr_q = values[0]
@@ -79,7 +82,6 @@ class SolrQuery(object):
                     if len(klist) > 1:
                         taxon_id = klist[1]
                         taxon_key_list.append(f'{rank}_key:{taxon_id}')
-
                 #fq=(cat1:val1 OR cat2:val2 OR (cat3:(val3 AND val4)))
                 self.solr_tuples.append(('fq', ' OR '.join(taxon_key_list)))
             elif key in JSON_FACET_MAP[self.core]:
@@ -92,14 +94,32 @@ class SolrQuery(object):
                         if key in JSON_FACET_MAP[self.core]:
                             self.solr_tuples.append(('fq', '{}:"{}"'.format(field, values[0])))
                 else:
-
                     self.solr_tuples.append(('fq', ' OR '.join([f'{field}:"{x}"' for x in values])))
                     #self.solr_tuples.append(('fq', 'taibif_dataset_name:A OR taibif_dataset_name:B'))
             # this get by __init__
             #elif key == 'facet':
             #    self.has_facet = True
             #    self.facet_values = values
-
+            #-----map------#
+            elif key == 'lat':
+                coor_list = [ float(c) for c in values]
+                y1 = convert_y_coor_to_grid(min(coor_list))
+                y2 = convert_y_coor_to_grid(max(coor_list))
+                if map_query:
+                    map_query += f'AND grid_y:[{y1} TO {y2}]'
+                    self.solr_tuples.append(('q', map_query))
+                else:
+                    map_query = f'grid_y:[{y1} TO {y2}]'
+            elif key == 'lng':
+                coor_list = [ float(c) for c in values]
+                x1 = convert_x_coor_to_grid(min(coor_list))
+                x2 = convert_x_coor_to_grid(max(coor_list))
+                if map_query:
+                    map_query += f'AND grid_x:[{x1} TO {x2}]'
+                    self.solr_tuples.append(('q', map_query))
+                else:
+                    map_query = f'grid_x:[{x1} TO {x2}]'
+                
         self.solr_tuples.append(('q', solr_q))
         self.solr_tuples.append(('rows', self.rows)) #TODO remove redundant key['rows']
         
@@ -117,7 +137,6 @@ class SolrQuery(object):
 
         query_string = urllib.parse.urlencode(self.solr_tuples)
         self.solr_url = f'{SOLR_PREFIX}{self.core}/select?{query_string}'
-        #print(self.solr_url)
         try:
             resp =urllib.request.urlopen(self.solr_url)
             resp_dict = resp.read().decode()
