@@ -313,21 +313,26 @@ class TaibifSearch extends React.Component {
             return
           }
           const results = isOccurrence ? jsonData.results : jsonData.search.results;
+          const limit = isOccurrence ? jsonData.limit : jsonData.search.limit;
+          const offset = isOccurrence ? jsonData.offset : jsonData.search.offset;
+          const count = isOccurrence ? jsonData.count : jsonData.search.count;
+          const elapsed = isOccurrence ? jsonData.elapsed : jsonData.search.elapsed;
           const taxonData = this.state.taxonData;
           taxonData.tree = jsonData.tree;
           if (!filters) {
             // clear checked taxon
             taxonData.checked = [];
           }
+          console.log("json:",jsonData)
           this.setState({
             isLoaded: true,
             isLoadedMain: true,
             search: {
               results: results,
-              limit: jsonData.limit,
-              offset: jsonData.offset,
-              count: jsonData.count,
-              elapsed: jsonData.elapsed,
+              limit: limit,
+              offset: offset,
+              count: count,
+              elapsed: elapsed,
             },
             menus: jsonData.menus,
             taxonData:taxonData,
