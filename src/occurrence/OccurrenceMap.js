@@ -11,7 +11,6 @@ import {fetchData, filtersToSearch} from '../Utils';
 
 const API_URL_PREFIX = `/api/v2/occurrence/map`;
 
-
 function OccurrenceMap(props) {
 
     /* marker style */
@@ -53,7 +52,6 @@ function OccurrenceMap(props) {
             }) // Change marker to circle
         }    
     /* marker style */
-
     const {filters} = props;
     const search = filtersToSearch(filters);
     const [jsonObject, setGeoJSON] = useState([false, []]);
@@ -71,6 +69,8 @@ function OccurrenceMap(props) {
 function App(){
         
     const onCreated = e => {
+        //let solr_q = filtersToSearch(search)
+        console.log('search',search)
         // remove previous layer
         const drawnItems = featureGroupRef.current._layers;
         if (Object.keys(drawnItems).length > 1) {
@@ -98,14 +98,16 @@ function App(){
             }
             //redirect to OccurrenceSearch
             let current_path = window.location.href
+            current_path = current_path.split('?')[0]
             let new_path = current_path.replace('map','search')
             let latStr = encodeURIComponent(lat);
             let lngStr = encodeURIComponent(lng);
-            if (new_path.includes('?')){
-                new_path = new_path + '&lat=' + latStr + '&lng=' + lngStr
-            } else {
-                new_path = new_path + '?lat=' + latStr + '&lng=' + lngStr
-            }
+            new_path = new_path = new_path + '?' + search + '&lat=' + latStr + '&lng=' + lngStr
+            // if (new_path.includes('?')){
+            //     new_path = new_path + '&lat=' + latStr + '&lng=' + lngStr
+            // } else {
+            //     new_path = new_path + '?' + search + '?lat=' + latStr + '&lng=' + lngStr
+            // }
             window.location = new_path
         })
     };
