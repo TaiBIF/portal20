@@ -5,6 +5,8 @@ import re
 import random
 import csv
 import os
+import subprocess
+import requests
 
 from django.shortcuts import render
 from django.db.models import Count, Q, Sum
@@ -13,7 +15,6 @@ from django.core.cache import cache
 from django.core.mail import send_mail
 from django.conf import settings as conf_settings
 
-import requests
 
 from apps.data.models import (
     Dataset,
@@ -1460,3 +1461,92 @@ def search_occurrence_v1(request):
     } for x in treeRoot]
     ret['tree'] = treeData
     return JsonResponse(ret)
+
+def export(request):
+    search_count = 0
+    solr = SolrQuery('taibif_occurrence')
+    solr_url = solr.generate_solr_url(request.GET.lists())
+    
+    if len(solr_url) > 0:
+        generateCSV(solr_url,request)
+
+    return JsonResponse({"status":search_count}, safe=False)
+
+def generateCSV(solr_url,request):
+    directory = os.path.abspath(os.path.join(os.path.curdir))
+    csvFolder = directory+'/static/csvData/'
+    timestramp = str(int(time.time()))
+    filename = timestramp +'.csv'
+    downloadURL = '没有任何資料'
+
+    if not os.path.exists(csvFolder):
+        os.makedirs(csvFolder)
+        
+    if len(solr_url) > 0:
+        downloadURL = request.scheme+"://"+request.META['HTTP_HOST']+'/static/csvData/'+filename
+        print("curl "+f'"{solr_url}"'+" > "+csvFolder+filename)
+        result = subprocess.Popen("curl "+f'"{solr_url}"'+" > "+csvFolder+filename, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+    sendMail(downloadURL,request)
+
+def sendMail(downloadURL,request):
+    subject = '出現紀錄搜尋'
+
+
+    currentTime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    searchCondition = request.GET["search_condition"]
+
+    html = f"""\
+<html>
+  <head></head>
+  <body style='text-align:left'>
+您好，
+<br/><br/>
+您在TaiBIF上查詢的檔案已夾帶於附件中，
+
+<br/><br/>
+檔案相關的詳細說明為：
+
+<br/><br/>
+搜尋條件：{searchCondition}
+
+
+<br/>
+搜尋時間：{currentTime}
+
+<br/><br/>
+檔案類型：CSV
+
+<br/><br/>
+授權條款：授權條款有兩個來源<br/>
+資料集（postgre : dataset.data_license）<br/>
+資料集內部的單筆資料(solr : license)<br/>
+授權有四個要素 BY, SA, ND, DC<br/>
+因此，要確認這兩個欄位的有哪些要素，有的話就需要顯示，若都沒有先以「未明確授權」顯示<br/>
+https://zh.wikipedia.org/wiki/%E7%9F%A5%E8%AF%86%E5%85%B1%E4%BA%AB%E8%AE%B8%E5%8F%AF%E5%8D%8F%E8%AE%AE
+
+<br/><br/>
+使用條款：
+
+<br/><br/>
+下載鏈結：<a href="{downloadURL}">{downloadURL}</a>
+
+<br/><br/>
+若有問題再麻煩您回覆至
+
+<br/><br/>
+taibif.brcas@gmail.com
+
+<br/><br/>
+TaiBIF團隊 敬上
+  </body>
+</html>
+"""
+
+    send_mail(
+        subject,
+        None,
+        conf_settings.TAIBIF_SERVICE_EMAIL,
+        [request.GET["email"]],
+        html_message=html)
+
