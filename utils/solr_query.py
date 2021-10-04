@@ -146,7 +146,7 @@ class SolrQuery(object):
         return self.solr_url
 
     def request(self, req_lists=[]):
-        self.generate_solr_url(req_lists=[])
+        self.generate_solr_url(req_lists)
         print(self.solr_url)
 
         try:
