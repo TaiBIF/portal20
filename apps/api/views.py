@@ -1217,6 +1217,7 @@ def search_occurrence_v1_charts(request):
     solr_fq = ''
     solr_q_list = []
     solr_q = '*:*'
+    # print (list(request.GET.lists()))
     for term, values in list(request.GET.lists()):
         if term !='q' :
             if term != 'menu':
@@ -1228,6 +1229,10 @@ def search_occurrence_v1_charts(request):
                 elif term =='dataset':
                     solr_q_fq_list.append('{}:"{}"'.format('taibif_dataset_name_zh', '" OR "'.join(values)))
                 elif term =='month':
+                    solr_q_fq_list.append('{}:{}'.format(term, ' OR '.join(values)))
+                elif term =='country':
+                    solr_q_fq_list.append('{}:{}'.format(term, ' OR '.join(values)))
+                elif term =='publisher':
                     solr_q_fq_list.append('{}:{}'.format(term, ' OR '.join(values)))
 
         else:
