@@ -9,7 +9,7 @@ from conf.settings import ENV
 from utils.map_data import convert_coor_to_grid, convert_x_coor_to_grid, convert_y_coor_to_grid
 
 if ENV in ['dev','stag']:
-    SOLR_PREFIX = 'http://54.65.81.61:8983/solr/'
+    SOLR_PREFIX = 'http://54.65.58.238:8983/solr/'
 else:
     SOLR_PREFIX = 'http://solr:8983/solr/'
 
@@ -63,7 +63,7 @@ class SolrQuery(object):
         self.solr_url = ''
         self.solr_q = '*.*'
 
-    def request(self, req_lists=[]):
+    def generate_solr_url(self, req_lists=[]):
         solr_q = '*:*'
         map_query = ''
         for key, values in req_lists:
@@ -74,6 +74,11 @@ class SolrQuery(object):
             elif key == 'rows':
                 self.rows = int(values[0])
                 self.solr_tuples.append(('rows', self.rows))
+            elif key == 'fl':
+                self.solr_tuples.append(('fl', values[0]))
+            elif key == 'wt':
+                self.solr_tuples.remove(('wt', 'json'))
+                self.solr_tuples.append(('wt', values[0]))
             elif key == 'taxon_key':
                 taxon_key_list = []
                 for v in values:
@@ -137,6 +142,13 @@ class SolrQuery(object):
 
         query_string = urllib.parse.urlencode(self.solr_tuples)
         self.solr_url = f'{SOLR_PREFIX}{self.core}/select?{query_string}'
+
+        return self.solr_url
+
+    def request(self, req_lists=[]):
+        self.generate_solr_url(req_lists=[])
+        print(self.solr_url)
+
         try:
             resp =urllib.request.urlopen(self.solr_url)
             resp_dict = resp.read().decode()
