@@ -11,7 +11,7 @@ import {fetchData, filtersToSearch} from '../Utils';
 
 const API_URL_PREFIX = `/api/v2/occurrence/map`;
 
-function OccurrenceMap(props) {
+export default function OccurrenceMap(props) {
 
     /* marker style */
     function getColor(d) {
@@ -64,25 +64,12 @@ function OccurrenceMap(props) {
             setLoading(true)
         });
     }, [filters]);
- 
 
-function App(){
-        
-    const onCreated = e => {
-        // remove previous layer
-        const drawnItems = featureGroupRef.current._layers;
-        if (Object.keys(drawnItems).length > 1) {
-            Object.keys(drawnItems).forEach((layerid, index) => {
-                if (index > 0) return;
-                const layer = drawnItems[layerid];
-                featureGroupRef.current.removeLayer(layer);
-            });
-        }
-        // get current lat & lon
-        let bounds = e.layer.getLatLngs();
-        // popup
-        e.layer.bindPopup('<a id="search-by-map">以此經緯度範圍搜尋出現紀錄➡️</a>',{closeButton: false}).openPopup();
-        document.querySelector(`#search-by-map`).addEventListener('click', function(){
+    function App(){
+        const onCreated = e => {
+
+            // get current lat & lon
+            let bounds = e.layer.getLatLngs();
             // round coordinates to 5 digits    
             let lat = [];
             let lng = [];
@@ -94,44 +81,94 @@ function App(){
                     lng.push(Math.round(bounds[0][step]['lng'] * 100000) / 100000)
                 }
             }
-            //redirect to OccurrenceSearch
+            let latStr = encodeURIComponent(lat);
+            let lngStr = encodeURIComponent(lng);
+
+            // get occurrence data ordered by species
+
             let current_path = window.location.href
             current_path = current_path.split('?')[0]
             let new_path = current_path.replace('map','search')
-            let latStr = encodeURIComponent(lat);
-            let lngStr = encodeURIComponent(lng);
-            if (search!==''){
-                new_path = new_path = new_path + '?' + search + '&lat=' + latStr + '&lng=' + lngStr}
-            else {
-                new_path = new_path = new_path + '?lat=' + latStr + '&lng=' + lngStr
-            }
-            window.location = new_path
-        })
-    };
-    
-    const featureGroupRef = useRef()
 
-    return <div className="App">
-    <MapContainer center={[0, 0]} zoom={2} >
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; <a href=&quot;https://www.openstreetmap.org/copyright&quot;>OpenStreetMap</a> contributors" />
-      <GeoJSON data={jsonObject} pointToLayer={pointToLayer}/>
-      <FeatureGroup ref={featureGroupRef}>
-        <EditControl
-        position="topright"
-        draw={{
-          marker: false,
-          polygon: false,
-          polyline: false,
-          rectangle: true,
-          circle: false,
-          circlemarker: false
-        }}
-        edit={{edit: false}}
-        onCreated={onCreated}
-        />
-        </FeatureGroup> 
-    </MapContainer>
-  </div>
+            let api_url;
+            if (search!==''){
+                api_url = `http://127.0.0.1:8000/api/v2/occurrence/get_map_species?${search}&lat=${lat[0]}&lat=${lat[1]}&lng=${lng[0]}&lng=${lng[1]}`
+            }else {
+                api_url = `http://127.0.0.1:8000/api/v2/occurrence/get_map_species?lat=${lat[0]}&lat=${lat[1]}&lng=${lng[0]}&lng=${lng[1]}`
+            }
+
+            $.ajax({
+                url: api_url,
+            // set other AJAX options
+            }).done((response) => {
+
+                const OccurrenceSpeciesData = () => {
+                    const rows = response.results.map((row, index) => {
+                        return (
+                            <li key={index}><a href={"/occurrence/"+row.taibif_occ_id}>{row.scientificName} {row.name_zh}</a></li>
+                        )
+                    })
+                    // http://jsfiddle.net/gq5Wf/6/
+                    return <div>
+                    <h6>在此範圍內的出現紀錄</h6>
+                    <ul style={{listStyleType: "none", padding:0}}>{rows}</ul>
+                    <p>共{response.count}筆</p>
+                    <a id="search-by-map">以此經緯度範圍作為篩選條件➡️</a>
+                    </div>
+                }
+
+            // remove previous layer
+            const drawnItems = featureGroupRef.current._layers;
+            if (Object.keys(drawnItems).length > 1) {
+                Object.keys(drawnItems).forEach((layerid, index) => {
+                    if (index > 0) return;
+                    const layer = drawnItems[layerid];
+                    featureGroupRef.current.removeLayer(layer);
+                });
+            }
+            // popup
+            e.layer.bindPopup(ReactDOMServer.renderToString(<OccurrenceSpeciesData/>),{closeButton: false}).openPopup();
+
+            document.querySelector(`#search-by-map`).addEventListener('click', function(){
+                //redirect to OccurrenceSearch
+                let current_path = window.location.href
+                current_path = current_path.split('?')[0]
+                let new_path = current_path.replace('map','search')
+                if (search!==''){
+                    new_path = new_path = new_path + '?' + search + '&lat=' + latStr + '&lng=' + lngStr}
+                else {
+                    new_path = new_path = new_path + '?lat=' + latStr + '&lng=' + lngStr
+                }
+                window.location = new_path
+                
+            })
+
+            })
+        };
+            
+            const featureGroupRef = useRef()
+
+            return <div className="App">
+            <MapContainer center={[0, 0]} zoom={2} >
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; <a href=&quot;https://www.openstreetmap.org/copyright&quot;>OpenStreetMap</a> contributors" />
+            <GeoJSON data={jsonObject} pointToLayer={pointToLayer}/>
+            <FeatureGroup ref={featureGroupRef}>
+                <EditControl
+                position="topright"
+                draw={{
+                marker: false,
+                polygon: false,
+                polyline: false,
+                rectangle: true,
+                circle: false,
+                circlemarker: false
+                }}
+                edit={{edit: false}}
+                onCreated={onCreated}
+                />
+                </FeatureGroup> 
+            </MapContainer>
+        </div>
     }
     return (  
         <React.Fragment>
@@ -141,4 +178,4 @@ function App(){
   }
 
 
-export {OccurrenceMap,}
+// export {OccurrenceMap,}
