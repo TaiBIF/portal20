@@ -528,9 +528,9 @@ def search_dataset(request):
         #                                 .annotate(count=Count('organization'))\
         #                                 .order_by('-count')
         # 
-        print (publisher_query)    
-        for x in publisher_query : 
-            print('===========',x)
+        #print (publisher_query)    
+        #for x in publisher_query : 
+        #    print('===========',x)
         publisher_rows = [{
             'key':x['organization'],
             'label':x['organization_name'],
