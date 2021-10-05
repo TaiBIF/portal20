@@ -48,8 +48,9 @@ function Accordion(props) {
           </div>
         );
     }else{
-      const count = (x.count) ? x.count.toLocaleString() : null;
+      const count = (x.count) >=0 ? x.count.toLocaleString() : null;
       const itemChecked = filters.has(`${content.key}=${x.key}`);
+
       return (
           <div className="search-sidebar-checkbox-wrapper" key={x.key}>
             <label className="custom-input-ctn">
