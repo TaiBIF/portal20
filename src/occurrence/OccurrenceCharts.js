@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Line, Bar} from 'react-chartjs-2';
 import {fetchData, filtersToSearch} from '../Utils';
+import ReactTooltip from 'react-tooltip';
+import { Pagination } from '../Utils';
 
 const chartData = {
   year: {
@@ -39,11 +41,14 @@ const chartData = {
         borderWidth: 1,
         hoverBackgroundColor: '#7DC49D',
         hoverBorderColor: '#74B175',
+        barPercentage: 1.0,
+        categoryPercentage: 1.0,
         data: []
       }
     ]
   }
 };
+
 const API_URL_PREFIX = `/api/v1/occurrence/charts`;
 
 const sortData = (objs) => {
@@ -63,6 +68,8 @@ function OccurrenceCharts(props) {
   const [yearData, setYearData] = useState([false, {}]);
   const [monthData, setMonthData] = useState([false, {}]);
   const [datasetData, setDatasetData] = useState([false, []]);
+  const [offset, setOffset] = useState(0);
+  const limit = 10;
 
   useEffect(() => {
     const apiURL = `${API_URL_PREFIX}?${search}`;
@@ -70,7 +77,7 @@ function OccurrenceCharts(props) {
       const year = chartData.year;
       let dataCount = {}
       let ordered = []
-      console.log('data.charts[0]',data.charts[0].rows)
+      
       data.charts[0].rows.forEach(row => {
         dataCount = {...dataCount,[row.label]:row.count}
       });
@@ -108,34 +115,45 @@ function OccurrenceCharts(props) {
   }, [filters]);
 
   function DatasetDataBody() {
-    return datasetData[1].map((x) => {
+    return datasetData[1].map((x,index) => {
       const q = encodeURIComponent(x.title);
-
+      console.log('index',index)
+      console.log('offset',offset)
+      console.log('offset + limit',offset+limit)
       return (
+        index >= offset && index <= offset+limit ?
         <tr key={x.title}>
-        <td>
-          <a href={`/occurrence/search?q=${q}`}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-link" viewBox="0 0 16 16">
-              <path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z"/>
-              <path d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z"/>
-            </svg>
-          </a>
-        </td>
-        <td>{x.title}</td>
-        <td>{x.num_occurrence}</td>
-        <td>
-        <div className="chart-bar-h-bg">
-        <span className="chart-value-bg" style={{'width': x.percent+'%'}}></span>
-        </div>
-        </td>
-        </tr>);
+          <td>
+            <a href={`/occurrence/search?q=${q}`}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-link" viewBox="0 0 16 16">
+                <path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z"/>
+                <path d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z"/>
+              </svg>
+            </a>
+          </td>
+          <td>{x.title}</td>
+          <td>{x.num_occurrence}</td>
+          <td>
+          <div className="chart-bar-h-bg">
+          <span className="chart-value-bg" style={{'width': x.percent+'%'}}></span>
+          </div>
+          </td>
+        </tr>
+        : "");
     });
   }
+
+  const handlePaginationOnClick = (pageOffset) => {
+    console.log('pageOffset',pageOffset)
+    setOffset(pageOffset)
+    console.log('pageOffset',pageOffset)
+  }
+
   return (
       <React.Fragment>
       <div className="col-xs-12">
         <div className="tools-intro-wrapper">
-          <div className="tools-title">月份</div>
+          <div className="tools-title" data-tip='每月出現紀錄：僅顯示有提供月份之出現紀錄筆數，為歷年月份資料筆數累計值'><span className="glyphicon glyphicon-info-sign"></span>月份</div>
             <div className="tools-content">
             { monthData[0]
               ? <Bar
@@ -148,18 +166,16 @@ function OccurrenceCharts(props) {
                       position: "bottom"
                     },
                     scales: {
-                      xAxes: [{
-                          categoryPercentage: 1.0,
-                          barPercentage: 1.0,
-                          gridLines: {
-                              drawOnChartArea: false
+                      x: {
+                          grid: {
+                            display: false
                           }
-                      }],
-                      yAxes: [{
-                          gridLines: {
-                              drawOnChartArea: false
-                          }
-                      }]
+                      },
+                      y: {
+                        grid: {
+                          display: false
+                        }
+                      }
                     }
                  }}
               />
@@ -170,7 +186,7 @@ function OccurrenceCharts(props) {
 
       <div className="col-xs-12">
         <div className="tools-intro-wrapper">
-      <div className="tools-title">年份</div>
+      <div className="tools-title" data-tip='每年出現紀錄：僅顯示有提供年份之出現紀錄筆數'><span className="glyphicon glyphicon-info-sign"></span>年份</div>
           <div className="tools-content">
           { yearData[0]
             ? <Line data={yearData[1]} options={{
@@ -183,16 +199,16 @@ function OccurrenceCharts(props) {
                 align: 'center',
               },
               scales: {
-                xAxes: [{
-                    gridLines: {
-                        drawOnChartArea: false
+                x: {
+                    grid: {
+                      display: false
                     }
-                }],
-                yAxes: [{
-                    gridLines: {
-                        drawOnChartArea: false
-                    }
-                }]
+                },
+                y: {
+                  grid: {
+                    display: false
+                  }
+                }
               }}}/>
             : <img src="https://fakeimg.pl/600x120/?text=chart loading..." alt="" className="img-responsive" /> }
          </div>
@@ -227,10 +243,12 @@ function OccurrenceCharts(props) {
       {datasetData[0] ? <DatasetDataBody />: null}
       </tbody>
       </table>
+      {datasetData[1].length ? <Pagination total={datasetData[1].length} offset={offset} urlPrefix='#occurence-charts-dataset-table' limit={limit} handleOnClick={handlePaginationOnClick}/> : ''}
       </div>
       </div>
       </div>
       </div>
+      <ReactTooltip />
       </React.Fragment>
   )
 }
