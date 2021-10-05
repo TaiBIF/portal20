@@ -45,7 +45,6 @@ from conf.settings import ENV
 
 
 def get_map_species(request):
-    print('hello')
     query_list = []
     for key, values in request.GET.lists():
         if key == 'facet':
