@@ -8,7 +8,7 @@ import os
 import subprocess
 import requests
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.db.models import Count, Q, Sum
 from django.http import HttpResponse, JsonResponse
 from django.core.cache import cache
@@ -42,6 +42,27 @@ from .cached import COUNTRY_ROWS, YEAR_ROWS
 from conf.settings import ENV
 
 #----------------- MAP -----------------#
+
+
+def get_map_species(request):
+    time_start = time.time()
+    facet_values = []
+    query_list = []
+    for key, values in request.GET.lists():
+        if key == 'facet':
+            facet_values = values
+        else:
+            query_list.append((key, values))
+    solr = SolrQuery('taibif_occurrence')
+    url = solr.generate_solr_url()
+    print(url)
+        
+    context = {
+        'test': 'test',
+    }
+    
+    return JsonResponse(context)
+
 
 def search_occurrence_v2_map(request):
     time_start = time.time()
