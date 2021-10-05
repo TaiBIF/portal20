@@ -3,7 +3,6 @@ import moment from 'moment'
 import {fetchData, filtersToSearch} from '../Utils';
 import {useWatch,useForm} from 'react-hook-form'
 import { renderToString } from 'react-dom/server'
-import process from "process"
 
 const filterLabels = {
   q:'關鍵字',
@@ -18,11 +17,11 @@ const API_URL_PREFIX = `/api/dataset/export`;
 
 function OccurrenceDownload(props) {
   const {filters,menus} = props
-  const [filterTags,setFilterTags] = useState('')
   const [searchCondition,setSearchCondition] = useState('')
   const searchDate = moment().format('YYYY-MM-DD');
   const { register, handleSubmit, watch, setValue , formState: { errors } } = useForm();
   const email = useRef({});
+  const expireDate = moment().add(1, 'Y').format('YYYY-MM-DD');
   email.current = watch("email");
 
   useEffect(() => {
@@ -37,8 +36,6 @@ function OccurrenceDownload(props) {
         const data = tags?.[menuKey[0]] || []
         tags[[menuKey[0]]] = [...data,menuKey[1]].sort()
     }
-  
-    setFilterTags(tags)
 
     if(tags) {
       setSearchCondition(Object.keys(tags).map((key) => {
@@ -52,22 +49,51 @@ function OccurrenceDownload(props) {
     }
   }
 
+  const onSubmit = (data) => {    
+    const facetQueryString = 'facet=year&facet=month&facet=dataset&facet=publisher&facet=country';
+    const flQueryString = 'fl=scientificName,vernacularName,kingdom,phylum,class,order,family,genus,species,Tota';
+    const queryString = `${facetQueryString}&${flQueryString}&rows=10000000&wt=csv&type=${data.type}&email=${data.email}&search_condition=${encodeURIComponent(renderToString(searchCondition))}`;
 
-  const onSubmit = (data) => {
     const apiURL = `${API_URL_PREFIX}`;
-    console.log('data',data)
-    filters.add(`email=${data.email}`);
-    filters.add(`search_condition=${encodeURIComponent(renderToString(searchCondition))}`);
-    const queryString = filtersToSearch(filters)
-    fetchData(`${apiURL}?${queryString}`)
-    
-    filters.delete(`email=${data.email}`);
-    filters.delete(`search_condition=${encodeURIComponent(renderToString(searchCondition))}`);
+    const filterQueryString = filtersToSearch(filters)
+    fetchData(filters ? `${apiURL}?${filterQueryString}&${queryString}` : `${apiURL}?${queryString}`)
     alert(`下載資訊巳寄到${data.email}。`)
   }
 
   return (
     <div className="col-xs-12">
+    <div className="tools-intro-wrapper">
+      <div className="tools-title">下載選項</div>
+        <div className="tools-content">
+          <div className="table-responsive">
+            <table className="table borderless text-left" id="occurence-charts-dataset-table">
+              <tbody>
+                <tr>
+                  <th></th>
+                  <th className='text-center'>Raw data<br/>(原始資料)</th>
+                  <th className='text-center'>Interpreted data<br/>（TaiBIF 轉釋資料）</th>
+                  <th className='text-center'>Coordinates<br/>（座標）</th>
+                  <th className='text-center'>Format<br/>（檔案格式）</th>
+                </tr>
+                <tr>
+                  <th>simple</th>
+                  <td className='text-center'>x</td>
+                  <td className='text-center'>o</td>
+                  <td className='text-center'>o (if available)</td>
+                  <td className='text-center'>csv</td>
+                </tr>
+                <tr>
+                  <th>species list</th>
+                  <td className='text-center'>x</td>
+                  <td className='text-center'>o</td>
+                  <td className='text-center'>x</td>
+                  <td className='text-center'>csv</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
       <div className="tools-intro-wrapper">
         <div className="tools-title">下載名錄</div>
           <div className="tools-content">
@@ -76,6 +102,15 @@ function OccurrenceDownload(props) {
                 <input type='hidden' {...register('search_date')} value={searchDate}/>
                 <table className="table borderless text-left" id="occurence-charts-dataset-table">
                   <tbody>
+                  <tr>
+                    <th>下載選項:</th>
+                    <td>
+                      <select  {...register("type",{required:true})}>
+                        <option value='simple'>Simple</option>
+                        <option value='species'>Species List</option>
+                      </select>
+                    </td>
+                  </tr>
                   <tr>
                     <th>搜尋條件:</th>
                     <td>{searchCondition}</td>
@@ -90,7 +125,7 @@ function OccurrenceDownload(props) {
                   </tr>
                   <tr className='odd'>
                     <th>保留期限:</th>
-                    <td>本站保留下載檔案連結一年 (至)。<br/>如有延長需求或因學術出版引用而有永久保留需求，請<a href='#'>聯絡我們</a></td>
+                    <td>本站保留下載檔案連結一年 (至) {expireDate}。<br/>如有延長需求或因學術出版引用而有永久保留需求，請<a href='mailto:taibif.brcas@gmail.com'>聯絡我們</a></td>
                   </tr>
                   <tr>
                     <th>檔案格式:</th>
@@ -98,7 +133,7 @@ function OccurrenceDownload(props) {
                   </tr>
                   <tr className='odd'>
                     <th>備註:</th>
-                    <td>檔案為離線產生，處理完成後，系統會寄下載資訊到您輸入的電子郵件信箱。<br/>如未收到信件，請檢查您的郵件設定，如仍未收到信件，請<a href='#'>聯絡我們</a></td>
+                    <td>檔案為離線產生，處理完成後，系統會寄下載資訊到您輸入的電子郵件信箱。<br/>如未收到信件，請檢查您的郵件設定，如仍未收到信件，請<a href='mailto:taibif.brcas@gmail.com'>聯絡我們</a></td>
                   </tr>
                   <tr>
                     <td colSpan={2}>
@@ -136,7 +171,7 @@ function OccurrenceDownload(props) {
                   </tr>
                   </tbody>
                 </table>
-                <button type='submit' className="btn text-center btn-block" id='download-dataset-btn'>下載名目</button>
+                <button type='submit' className="btn text-center btn-block" id='download-dataset-btn'>下載檔案</button>
               </form>
             </div>
           </div>
@@ -145,3 +180,4 @@ function OccurrenceDownload(props) {
   );
 }
 export {OccurrenceDownload, }
+
