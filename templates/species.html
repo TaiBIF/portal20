@@ -99,7 +99,7 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
     function goBack() {
       window.history.back();
     }
-    </script>
+  </script>
     
   <!-- script 4 adjust Anchor end -->
 <script src="{% static 'js/species.js' %}" crossorigin="anonymous"></script>
@@ -163,10 +163,10 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       </div>
       <!-- 同物異名 end -->
 
-      <!-- TaiCoL編號 begin -->
-        <p><a href="{{ taxon.taicol_namecode_link }}"><span class="myicon icon-link"></span>來源：TaiCoL</a></p>
-      <!-- TaiCoL編號 end -->
       {% endif %}
+      <!-- TaiCoL編號 begin -->
+      <p align="right"><a href="{{ taxon.taicol_namecode_link }}"><span class="myicon icon-link"></span>來源：TaiCoL</a></p>
+      <!-- TaiCoL編號 end -->
 
       <!-- 地理分佈 begin -->
       <div id="section2">
