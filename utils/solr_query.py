@@ -19,7 +19,8 @@ JSON_FACET_MAP = {
     'taibif_occurrence': {
         'dataset': {
             'type': 'terms',
-            'field': 'taibif_dataset_name_zh'
+            'field': 'taibif_dataset_name_zh',
+            'mincount': 0,
         },
         'month': {
             'type': 'terms',
@@ -28,6 +29,7 @@ JSON_FACET_MAP = {
             'end':'13',
             'gap':'1',
             'limit': 12,
+            #'mincount': 0, cause solr error?
         },
         'year': {
             'type':'terms',
@@ -35,11 +37,13 @@ JSON_FACET_MAP = {
         },
         'country': {
             'type':'terms',
-            'field':'country'
+            'field':'country',
+            'mincount': 0,
         },
         'publisher': {
             'type':'terms',
-            'field':'publisher'
+            'field':'publisher',
+            'mincount': 0,
         },
     }
 }
@@ -126,10 +130,10 @@ class SolrQuery(object):
                     self.solr_tuples.append(('q', map_query))
                 else:
                     map_query = f'grid_x:[{x1} TO {x2}]'
-                
+
         self.solr_tuples.append(('q', solr_q))
         self.solr_tuples.append(('rows', self.rows)) #TODO remove redundant key['rows']
-        
+
         if len(self.facet_values):
             self.solr_tuples.append(('facet', 'true'))
             s = ''
@@ -144,12 +148,12 @@ class SolrQuery(object):
 
         query_string = urllib.parse.urlencode(self.solr_tuples)
         self.solr_url = f'{SOLR_PREFIX}{self.core}/select?{query_string}'
-
+        #print (self.solr_tuples)
         return self.solr_url
 
     def request(self, req_lists=[]):
         self.generate_solr_url(req_lists)
-        print(self.solr_url)
+        #print(self.solr_url)
 
         try:
             resp =urllib.request.urlopen(self.solr_url)
@@ -164,6 +168,8 @@ class SolrQuery(object):
         }
 
     def get_response(self):
+        '''get solr response and convert to gbif-like response
+        '''
         if not self.solr_response:
             return
 
@@ -202,3 +208,56 @@ class SolrQuery(object):
             'results': self.solr_response['response']['docs'],
             'solr_error': self.solr_error
         }
+
+    def get_menus(self, key=''):
+        '''for frontend menus struct
+           should call get_response() before call get_menus()
+        '''
+        resp = self.solr_response
+        if not resp or not resp.get('facets', ''):
+            return []
+
+        menus = []
+        if data := resp['facets'].get('country', ''):
+            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
+            menus.append({
+                'key': 'country', #'countrycode',
+                'label': '國家/區域',
+                'rows': rows,
+            })
+        if data := resp['facets'].get('year', ''):
+            #menu_year = [{'key': 0, 'label': 0, 'count': 0,'year_start':1990,'year_end':2021}]
+            # TODO
+            menus.append({
+                'key': 'year',
+                'label': '年份',
+                'rows': ['FAKE_FOR_SPACE',],
+            })
+        if data := resp['facets'].get('month', ''):
+            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in sorted(data['buckets'], key=lambda x: x['val'])]
+            menus.append({
+                'key': 'month',
+                'label': '月份',
+                'rows': rows,
+            })
+        if data := resp['facets'].get('dataset', ''):
+            rows = menu_dataset = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
+            menus.append({
+                'key': 'dataset',
+                'label': '資料集',
+                'rows': rows,
+            })
+        if data := resp['facets'].get('publisher', ''):
+            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
+            menus.append({
+                'key':'publisher',
+                'label': '發布者',
+                'rows': rows,
+            })
+
+        if key == '':
+            return menus
+        else:
+            for menu in menus:
+                if menu['key'] == key:
+                    return menu
