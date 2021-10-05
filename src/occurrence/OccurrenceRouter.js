@@ -4,7 +4,7 @@ import OccurrenceSearch from './OccurrenceSearch';
 import {OccurrenceCharts} from './OccurrenceCharts';
 import {OccurrenceTaxonomy} from './OccurrenceTaxonomy';
 import {OccurrenceDownload} from './OccurrenceDownload';
-import {OccurrenceMap} from './OccurrenceMap';
+import OccurrenceMap from './OccurrenceMap';
 import {Pagination} from '../Utils'
 
 import {

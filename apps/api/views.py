@@ -8,7 +8,7 @@ import os
 import subprocess
 import requests
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.db.models import Count, Q, Sum
 from django.http import HttpResponse, JsonResponse
 from django.core.cache import cache
@@ -42,6 +42,33 @@ from .cached import COUNTRY_ROWS, YEAR_ROWS
 from conf.settings import ENV
 
 #----------------- MAP -----------------#
+
+
+def get_map_species(request):
+    print('hello')
+    query_list = []
+    for key, values in request.GET.lists():
+        if key == 'facet':
+            facet_values = values
+        else:
+            query_list.append((key, values))
+    solr = SolrQuery('taibif_occurrence')
+    solr_url = solr.generate_solr_url(request.GET.lists())
+    map_url = solr_url.replace('rows=20','rows=10')
+    r = requests.get(map_url)
+    resp = {
+        'count' :0
+    }
+    if r.status_code == 200:
+        data = r.json()
+        resp.update({'count':data['response']['numFound']})
+        resp['results'] = data['response']['docs']
+
+    # taibif_occurrence/select?q.op=OR&wt=json&q=grid_y%3A%5B10995+TO+12164%5DAND+grid_x%3A%5B18703+TO+20812%5D&q=%2A%3A%2A&rows=20
+
+    
+    return JsonResponse(resp)
+
 
 def search_occurrence_v2_map(request):
     time_start = time.time()
@@ -130,6 +157,7 @@ def search_occurrence_v2_map(request):
 
     # map
     facet_pivot_map = 'facet.pivot=grid_x,grid_y'
+    # print(solr.solr_url)
     if 'grid_x' in solr.solr_url:
         map_url = f'{solr.solr_url}&facet=true&{facet_pivot_map}&facet.limit=-1'
     else:
