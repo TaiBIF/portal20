@@ -65,20 +65,6 @@ export default function OccurrenceMap(props) {
         });
     }, [filters]);
 
-
-    // const GetSpecies = () => {
-    //     // console.log('hi')
-    //     // const [speciesData, setSpeciesData] = useState([false, []]);
-    //     // // useEffect(() => {
-    //     //     //const apiURL = `/api/v2/occurrence/get_map_species`;
-    //     // console.log('fetch:')
-        
-    //     fetchData('http://127.0.0.1:8000/api/v2/occurrence/get_map_species?pk=8').then((data) => {
-    //         setSpeciesData([true, data.test])
-    //         // return <a id="search-by-map">以此經緯度範圍搜尋出現紀錄➡️{data.test}</a>
-    //     });
-
-    //         };
     function App(){
         const onCreated = e => {
 
@@ -99,20 +85,37 @@ export default function OccurrenceMap(props) {
             let lngStr = encodeURIComponent(lng);
 
             // get occurrence data ordered by species
+
+            let current_path = window.location.href
+            current_path = current_path.split('?')[0]
+            let new_path = current_path.replace('map','search')
+
+            let api_url;
+            if (search!==''){
+                api_url = `http://127.0.0.1:8000/api/v2/occurrence/get_map_species?${search}&lat=${lat[0]}&lat=${lat[1]}&lng=${lng[0]}&lng=${lng[1]}`
+            }else {
+                api_url = `http://127.0.0.1:8000/api/v2/occurrence/get_map_species?lat=${lat[0]}&lat=${lat[1]}&lng=${lng[0]}&lng=${lng[1]}`
+            }
+
             $.ajax({
-                url: `http://127.0.0.1:8000/api/v2/occurrence/get_map_species?lat=${latStr}&lng=${lngStr}`,
+                url: api_url,
             // set other AJAX options
             }).done((response) => {
-                console.log('resppp', response, url)
-
 
                 const OccurrenceSpeciesData = () => {
+                    const rows = response.results.map((row, index) => {
+                        return (
+                            <li key={index}><a href={"/occurrence/"+row.taibif_occ_id}>{row.scientificName} {row.name_zh}</a></li>
+                        )
+                    })
+                    // http://jsfiddle.net/gq5Wf/6/
                     return <div>
-                    
-                    <a id="search-by-map">以此經緯度範圍搜尋出現紀錄➡️{response.taxon}</a>
+                    <h6>在此範圍內的出現紀錄</h6>
+                    <ul style={{listStyleType: "none", padding:0}}>{rows}</ul>
+                    <p>共{response.count}筆</p>
+                    <a id="search-by-map">以此經緯度範圍作為篩選條件➡️</a>
                     </div>
                 }
-
 
             // remove previous layer
             const drawnItems = featureGroupRef.current._layers;
@@ -125,6 +128,7 @@ export default function OccurrenceMap(props) {
             }
             // popup
             e.layer.bindPopup(ReactDOMServer.renderToString(<OccurrenceSpeciesData/>),{closeButton: false}).openPopup();
+
             document.querySelector(`#search-by-map`).addEventListener('click', function(){
                 //redirect to OccurrenceSearch
                 let current_path = window.location.href
@@ -136,6 +140,7 @@ export default function OccurrenceMap(props) {
                     new_path = new_path = new_path + '?lat=' + latStr + '&lng=' + lngStr
                 }
                 window.location = new_path
+                
             })
 
             })
