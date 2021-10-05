@@ -336,7 +336,7 @@ class SpeciesSearch(SuperSearch):
         query = self.query
         for key, values in self.filters:
             if key == 'q':
-                v = values[0] # only get one
+                v = values[0].strip() # only get one
                 if not v:
                     continue
                 query = query.filter(Q(name__icontains=v) | Q(name_zh__icontains=v))
