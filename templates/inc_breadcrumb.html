@@ -18,6 +18,10 @@
       <li><a href="{% url 'search-dataset' %}">資料集</a></li>
       {% elif tab  == "0504" %}
       <li><a href="{% url 'search-publisher' %}">發布者</a></li>
+      {% elif tab  == "05" %}
+      <li>搜尋</li>
+      {% elif tab  == "occurrence" %}
+      <li><a href="/occurrence/search/">搜尋出現紀錄</a></li>
       {% endif %}
       <li class="active">{{ active_label }}</li>
     </ol>
