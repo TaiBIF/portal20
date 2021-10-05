@@ -15,9 +15,9 @@ DATA_MAPPING = {
         None:'其他'
     },
     'rights': {
-        'CC-BY-NC': 'cc-by-nc',
-        'CC-BY': 'cc-by',
-        'CC0': 'cc0',
+        'CC-BY-NC': 'CC-BY-NC (4.0)',
+        'CC-BY': 'CC-BY (4.0)',
+        'CC0': 'CC0 (1.0)',
         None:'未明確授權'
     },
     'core': {
