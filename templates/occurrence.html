@@ -30,21 +30,10 @@
 {% endblock %}
 
 {% block main %}
-{% include "inc_breadcrumb.html" with tab="occurrence" active_label="出現紀錄頁面" %}
+{% include "inc_breadcrumb.html" with tab="0501" active_label="" %}
 
 <!-- container begin -->
 <div class="container">
-  <script>
-    function goBack() {
-      window.history.back();
-    }
-  </script>
-  {% comment %}
-  <ul class="article-scroll-nav-wrapper">
-    <li onclick="goBack()"><a>回上一頁</a></li>
-  </ul>
-  {% endcomment %}
-
   <div class="article-head-wrapper">
     {% if event.eventDate.value %}<span class="article-post-date">{{ event.eventDate.value }}</span>{% endif %}
     <h1>
