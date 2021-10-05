@@ -92,9 +92,9 @@ export default function OccurrenceMap(props) {
 
             let api_url;
             if (search!==''){
-                api_url = `http://127.0.0.1:8000/api/v2/occurrence/get_map_species?${search}&lat=${lat[0]}&lat=${lat[1]}&lng=${lng[0]}&lng=${lng[1]}`
+                api_url = `/api/v2/occurrence/get_map_species?${search}&lat=${lat[0]}&lat=${lat[1]}&lng=${lng[0]}&lng=${lng[1]}`
             }else {
-                api_url = `http://127.0.0.1:8000/api/v2/occurrence/get_map_species?lat=${lat[0]}&lat=${lat[1]}&lng=${lng[0]}&lng=${lng[1]}`
+                api_url = `/api/v2/occurrence/get_map_species?lat=${lat[0]}&lat=${lat[1]}&lng=${lng[0]}&lng=${lng[1]}`
             }
 
             $.ajax({
