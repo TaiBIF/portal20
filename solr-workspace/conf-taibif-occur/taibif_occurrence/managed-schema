@@ -490,6 +490,9 @@
   <field name="endDayOfYear" type="string"/>
   <field name="establishmentMeans" type="string"/>
   <field name="eventDate" type="string"/>
+  <field name="taibif_year" type="pint"/>
+  <field name="taibif_month" type="pint"/>
+  <field name="taibif_day" type="pint"/>
   <field name="eventID" type="string"/>
   <field name="eventRemarks" type="string"/>
   <field name="eventTime" type="string"/>
