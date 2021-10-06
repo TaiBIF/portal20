@@ -3,19 +3,12 @@
 {% load humanize %}
 
 {% block main %}
-{# include "inc_breadcrumb.html" with tab="03" active_label="" #}
+{% include "inc_breadcrumb.html" with tab="0504" active_label="" %}
 
-<script>
-  function goBack() {
-    window.history.back();
-  }
-  </script>
+</script>
 <!-- container begin -->
 <div class="container">
 
-  <ul class="article-scroll-nav-wrapper">
-    <li onclick="goBack()"><a>回上一頁</a></li>
-  </ul>
 
   <h2>{{ publisher.name }}</h2>
 

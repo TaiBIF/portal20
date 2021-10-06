@@ -8,7 +8,7 @@ import os
 import subprocess
 import requests
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.db.models import Count, Q, Sum
 from django.http import HttpResponse, JsonResponse
 from django.core.cache import cache
@@ -42,6 +42,32 @@ from .cached import COUNTRY_ROWS, YEAR_ROWS
 from conf.settings import ENV
 
 #----------------- MAP -----------------#
+
+
+def get_map_species(request):
+    query_list = []
+    for key, values in request.GET.lists():
+        if key == 'facet':
+            facet_values = values
+        else:
+            query_list.append((key, values))
+    solr = SolrQuery('taibif_occurrence')
+    solr_url = solr.generate_solr_url(request.GET.lists())
+    map_url = solr_url.replace('rows=20','rows=10')
+    r = requests.get(map_url)
+    resp = {
+        'count' :0
+    }
+    if r.status_code == 200:
+        data = r.json()
+        resp.update({'count':data['response']['numFound']})
+        resp['results'] = data['response']['docs']
+
+    # taibif_occurrence/select?q.op=OR&wt=json&q=grid_y%3A%5B10995+TO+12164%5DAND+grid_x%3A%5B18703+TO+20812%5D&q=%2A%3A%2A&rows=20
+
+    
+    return JsonResponse(resp)
+
 
 def search_occurrence_v2_map(request):
     time_start = time.time()
@@ -130,6 +156,7 @@ def search_occurrence_v2_map(request):
 
     # map
     facet_pivot_map = 'facet.pivot=grid_x,grid_y'
+    # print(solr.solr_url)
     if 'grid_x' in solr.solr_url:
         map_url = f'{solr.solr_url}&facet=true&{facet_pivot_map}&facet.limit=-1'
     else:
@@ -166,6 +193,7 @@ def occurrence_search_v2(request):
     time_start = time.time()
 
     facet_values = []
+    facet_selected = {}
     query_list = []
     for key, values in request.GET.lists():
         if key == 'facet':
@@ -173,7 +201,11 @@ def occurrence_search_v2(request):
         else:
             query_list.append((key, values))
 
-    solr = SolrQuery('taibif_occurrence')
+    for key, values in request.GET.lists():
+        if key in facet_values:
+            facet_selected[key] = values
+
+    solr = SolrQuery('taibif_occurrence', facet_values)
     req = solr.request(query_list)
     #response = req['solr_response']
     resp = solr.get_response()
@@ -185,51 +217,69 @@ def occurrence_search_v2(request):
             'solr_tuples': solr.solr_tuples,
         })
 
-    solr_menu = SolrQuery('taibif_occurrence', facet_values)
-    solr_menu.request()
-    resp_menu = solr_menu.get_response()
+    # for frontend menu data sturct
+    menus = solr.get_menus()
+    new_menus = []
+    selected_facet_menu = {}
+    if len(facet_selected) >= 1:
+        for key, values in facet_selected.items():
+            # get each facet, count
+            solr_menu = SolrQuery('taibif_occurrence', facet_values)
+            tmp_query_list = query_list[:]
+            tmp_query_list.remove((key, values))
+            solr_menu.request(tmp_query_list)
+            selected_facet_menu[key] = solr_menu.get_menus(key)
 
-    # for frontend menu data sturctt
-    menus = []
-    if resp_menu['facets']:
-        if data := resp_menu['facets'].get('country', ''):
-            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
-            menus.append({
-                'key': 'country', #'countrycode',
-                'label': '國家/區域',
-                'rows': rows,
-            })
-        if data := resp_menu['facets'].get('year', ''):
-            #menu_year = [{'key': 0, 'label': 0, 'count': 0,'year_start':1990,'year_end':2021}]
-            # TODO
-            menus.append({
-                'key': 'year',
-                'label': '年份',
-                'rows': ['FAKE_FOR_SPACE',],
-            })
-        if data := resp_menu['facets'].get('month', ''):
-            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in sorted(data['buckets'], key=lambda x: x['val'])]
-            menus.append({
-                'key': 'month',
-                'label': '月份',
-                'rows': rows,
-            })
-        if data := resp_menu['facets'].get('dataset', ''):
-            rows = menu_dataset = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
-            menus.append({
-                'key': 'dataset',
-                'label': '資料集',
-                'rows': rows,
-            })
-        if data := resp_menu['facets'].get('publisher', ''):
-            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
-            menus.append({
-                'key':'publisher',
-                'label': '發布者',
-                'rows': rows,
-            })
+    # reset menus (prevent too less count will filter out by solr facet default limit)
+    for i, v in enumerate(menus):
+        key = v['key']
+        if key in selected_facet_menu:
+            #print ('--------', i, facet_selected[key], selected_facet_menu[key], menus[i])
+            tmp_menu = selected_facet_menu[key].copy()
+            tmp_menu_add = []
+            for selected in facet_selected[key]:
+                filtered = list(filter(lambda x: x['key'] == selected, tmp_menu['rows']))
+                if len(filtered) == 0 and len(tmp_menu['rows']) > 0:
+                    #print(key, selected, tmp_menu)
+                    tmp_menu['rows'].pop()
+                    count = 0
+                    for item in menus[i]['rows']:
+                        #print (key, item['key'], selected, item['count'])
+                        if str(item['key']) == str(selected):
+                            count = item['count']
+                            break
+                    tmp_menu_add.append((selected, count))
+            for x in tmp_menu_add:
+                tmp_menu['rows'].append({
+                    'key': x[0],
+                    'label': x[0],
+                    'count': x[1],
+                })
+            # resort add add fixed menu back
+            tmp_menu['rows'] = sorted(tmp_menu['rows'], key=lambda x: x['count'], reverse=True)
+            new_menus.append(tmp_menu)
+        else:
+            new_menus.append(menus[i])
 
-    resp['menus'] = menus
+    # month hack
+    #print(new_menus)
+    for menu in new_menus:
+        if menu['key'] == 'month':
+            month_rows = []
+            for month in range(1, 13):
+                count = 0
+                for x in menu['rows']:
+                    if str(x['key']) == str(month):
+                        count = x['count']
+                        break
+                month_rows.append({
+                    'key': str(month),
+                    'label': str(month),
+                    'count': count
+                })
+            menu['rows'] = month_rows
+
+    resp['menus'] = new_menus
 
     # tree
     treeRoot = Taxon.objects.filter(rank='kingdom').all()
@@ -510,9 +560,9 @@ def search_dataset(request):
         #                                 .annotate(count=Count('organization'))\
         #                                 .order_by('-count')
         # 
-        print (publisher_query)    
-        for x in publisher_query : 
-            print('===========',x)
+        #print (publisher_query)    
+        #for x in publisher_query : 
+        #    print('===========',x)
         publisher_rows = [{
             'key':x['organization'],
             'label':x['organization_name'],
@@ -1294,21 +1344,26 @@ def export(request):
     return JsonResponse({"status":search_count}, safe=False)
 
 def generateCSV(solr_url,request):
-    directory = os.path.abspath(os.path.join(os.path.curdir))
-    taibifVolumesPath = '/taibif-volumes/media/'
-    downloadTaibifVolumesPath = '/taibif-code/taibif-volumes/media/'
-    csvFolder = directory+taibifVolumesPath
+
+    #directory = os.path.abspath(os.path.join(os.path.curdir))
+    #taibifVolumesPath = '/taibif-volumes/media/'
+    #csvFolder = directory+taibifVolumesPath
+    CSV_MEDIA_FOLDER = 'csv'
+    csvFolder = os.path.join(conf_settings.MEDIA_ROOT, CSV_MEDIA_FOLDER)
     timestramp = str(int(time.time()))
     filename = timestramp +'.csv'
     downloadURL = '没有任何資料'
+    csvFilePath = os.path.join(csvFolder, filename)
 
     if not os.path.exists(csvFolder):
         os.makedirs(csvFolder)
-        
+
     if len(solr_url) > 0:
-        downloadURL = request.scheme+"://"+request.META['HTTP_HOST']+downloadTaibifVolumesPath+filename
-        print("curl "+f'"{solr_url}"'+" > "+csvFolder+filename)
-        result = subprocess.Popen("curl "+f'"{solr_url}"'+" > "+csvFolder+filename, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+        downloadURL = request.scheme+"://"+request.META['HTTP_HOST']+conf_settings.MEDIA_URL+os.path.join(CSV_MEDIA_FOLDER, filename)
+        #print("curl "+f'"{solr_url}"'+" > "+csvFolder+filename)
+
+        result = subprocess.Popen("curl "+f'"{solr_url}"'+" > "+csvFilePath, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     sendMail(downloadURL,request)
 

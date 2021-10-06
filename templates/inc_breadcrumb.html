@@ -10,8 +10,18 @@
       <li>關於 TaiBIF</li>
       {% elif tab  == "04" %}
       <li>更多資訊</li>
+      {% elif tab  == "0501" %}
+      <li><a href="{% url 'search-occurrence' cat='search' %}">物種出現紀錄</a></li>
+      {% elif tab  == "0502" %}
+      <li><a href="{% url 'search-species' %}">物種</a></li>
+      {% elif tab  == "0503" %}
+      <li><a href="{% url 'search-dataset' %}">資料集</a></li>
+      {% elif tab  == "0504" %}
+      <li><a href="{% url 'search-publisher' %}">發布者</a></li>
       {% elif tab  == "05" %}
       <li>搜尋</li>
+      {% elif tab  == "occurrence" %}
+      <li><a href="/occurrence/search/">搜尋出現紀錄</a></li>
       {% endif %}
       <li class="active">{{ active_label }}</li>
     </ol>
