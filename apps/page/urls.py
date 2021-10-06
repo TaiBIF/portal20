@@ -23,6 +23,7 @@ sitemaps = {
 urlpatterns = [
     path('', views.index, name='index'),
     path('publishing-data', views.publishing_data, name='publishing_data'),
+    path('data-policy', views.data_policy, name='data_policy'),
     path('journals', views.journals, name='journals'),
     path('tools', views.tools, name='tools'),
     path('common-name-checker', views.common_name_checker, name='tools-common_name_checker'),
