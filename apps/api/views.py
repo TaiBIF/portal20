@@ -193,6 +193,7 @@ def occurrence_search_v2(request):
     time_start = time.time()
 
     facet_values = []
+    facet_selected = {}
     query_list = []
     for key, values in request.GET.lists():
         if key == 'facet':
@@ -200,7 +201,11 @@ def occurrence_search_v2(request):
         else:
             query_list.append((key, values))
 
-    solr = SolrQuery('taibif_occurrence')
+    for key, values in request.GET.lists():
+        if key in facet_values:
+            facet_selected[key] = values
+
+    solr = SolrQuery('taibif_occurrence', facet_values)
     req = solr.request(query_list)
     #response = req['solr_response']
     resp = solr.get_response()
@@ -212,51 +217,64 @@ def occurrence_search_v2(request):
             'solr_tuples': solr.solr_tuples,
         })
 
-    solr_menu = SolrQuery('taibif_occurrence', facet_values)
-    solr_menu.request()
-    resp_menu = solr_menu.get_response()
+    # for frontend menu data sturct
+    menus = solr.get_menus()
+    new_menus = []
+    selected_facet_menu = {}
+    if len(facet_selected) >= 1:
+        for key, values in facet_selected.items():
+            # get each facet, count
+            solr_menu = SolrQuery('taibif_occurrence', facet_values)
+            tmp_query_list = query_list[:]
+            tmp_query_list.remove((key, values))
+            solr_menu.request(tmp_query_list)
+            selected_facet_menu[key] = solr_menu.get_menus(key)
 
-    # for frontend menu data sturctt
-    menus = []
-    if resp_menu['facets']:
-        if data := resp_menu['facets'].get('country', ''):
-            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
-            menus.append({
-                'key': 'country', #'countrycode',
-                'label': '國家/區域',
-                'rows': rows,
-            })
-        if data := resp_menu['facets'].get('year', ''):
-            #menu_year = [{'key': 0, 'label': 0, 'count': 0,'year_start':1990,'year_end':2021}]
-            # TODO
-            menus.append({
-                'key': 'year',
-                'label': '年份',
-                'rows': ['FAKE_FOR_SPACE',],
-            })
-        if data := resp_menu['facets'].get('month', ''):
-            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in sorted(data['buckets'], key=lambda x: x['val'])]
-            menus.append({
-                'key': 'month',
-                'label': '月份',
-                'rows': rows,
-            })
-        if data := resp_menu['facets'].get('dataset', ''):
-            rows = menu_dataset = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
-            menus.append({
-                'key': 'dataset',
-                'label': '資料集',
-                'rows': rows,
-            })
-        if data := resp_menu['facets'].get('publisher', ''):
-            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
-            menus.append({
-                'key':'publisher',
-                'label': '發布者',
-                'rows': rows,
-            })
+    for i, v in enumerate(menus):
+        if v['key'] in selected_facet_menu:
+            key = v['key']
+            #print ('--------', i, facet_selected[key], selected_facet_menu[key], menus[i])
+            tmp_menu = selected_facet_menu[key].copy()
+            for selected in facet_selected[key]:
+                filtered = list(filter(lambda x: x['key'] == selected, tmp_menu['rows']))
+                if len(filtered) == 0:
+                    tmp_menu['rows'].pop()
+                    count = 0
+                    for item in menus[i]['rows']:
+                        #print (item['key'], selected, item['count'])
+                        if item['key'] == selected:
+                            count = item['count']
+                            break
+                    tmp_menu['rows'].append({
+                        'key': selected,
+                        'label': selected,
+                        'count': count,
+                    })
 
-    resp['menus'] = menus
+            tmp_menu['rows'] = sorted(tmp_menu['rows'], key=lambda x: x['count'], reverse=True)
+            new_menus.append(tmp_menu)
+        else:
+            new_menus.append(menus[i])
+
+    # month hack
+    #print(new_menus)
+    for menu in new_menus:
+        if menu['key'] == 'month':
+            month_rows = []
+            for month in range(1, 13):
+                count = 0
+                for x in menu['rows']:
+                    if str(x['key']) == str(month):
+                        count = x['count']
+                        break
+                month_rows.append({
+                    'key': str(month),
+                    'label': str(month),
+                    'count': count
+                })
+            menu['rows'] = month_rows
+
+    resp['menus'] = new_menus
 
     # tree
     treeRoot = Taxon.objects.filter(rank='kingdom').all()
@@ -537,9 +555,9 @@ def search_dataset(request):
         #                                 .annotate(count=Count('organization'))\
         #                                 .order_by('-count')
         # 
-        print (publisher_query)    
-        for x in publisher_query : 
-            print('===========',x)
+        #print (publisher_query)    
+        #for x in publisher_query : 
+        #    print('===========',x)
         publisher_rows = [{
             'key':x['organization'],
             'label':x['organization_name'],
