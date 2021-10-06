@@ -122,11 +122,11 @@ function OccurrenceDownload(props) {
                   </tr>
                   <tr>
                     <th>使用條款:</th>
-                    <td>請閱讀本站<a target='_blank' href=''>使用條款</a>，下載資料即表示您同意該條款內容。</td>
+                    <td>請閱讀本站<a target='_blank' href='/data-policy'>使用條款</a>，下載資料即表示您同意該條款內容。</td>
                   </tr>
                   <tr className='odd'>
                     <th>保留期限:</th>
-                    <td>本站保留下載檔案連結一年 (至) {expireDate}。<br/>如有延長需求或因學術出版引用而有永久保留需求，請<a href='mailto:taibif.brcas@gmail.com'>聯絡我們</a></td>
+                    <td>本站保留下載檔案連結一年 {searchDate} 至 {expireDate}。<br/>如有延長需求或因學術出版引用而有永久保留需求，請<a href='mailto:taibif.brcas@gmail.com'>聯絡我們</a></td>
                   </tr>
                   <tr>
                     <th>檔案格式:</th>
