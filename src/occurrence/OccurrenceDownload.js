@@ -51,8 +51,9 @@ function OccurrenceDownload(props) {
 
   const onSubmit = (data) => {    
     const facetQueryString = 'facet=year&facet=month&facet=dataset&facet=publisher&facet=country';
-    const flQueryString = 'fl=scientificName,vernacularName,kingdom,phylum,class,order,family,genus,species,Tota';
-    const queryString = `${facetQueryString}&${flQueryString}&rows=10000000&wt=csv&type=${data.type}&email=${data.email}&search_condition=${encodeURIComponent(renderToString(searchCondition))}`;
+
+    const flQueryString = data.type == 'species' ? '&fl=scientificName,vernacularName,kingdom,phylum,class,order,family,genus,species,Total' : '';
+    const queryString = `${facetQueryString}${flQueryString}&rows=1&wt=csv&email=${data.email}&search_condition=${encodeURIComponent(renderToString(searchCondition))}`;
 
     const apiURL = `${API_URL_PREFIX}`;
     const filterQueryString = filtersToSearch(filters)
