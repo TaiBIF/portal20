@@ -1351,10 +1351,11 @@ def generateCSV(solr_url,request):
     timestramp = str(int(time.time()))
     filename = timestramp +'.csv'
     downloadURL = '没有任何資料'
+    csvFilePath = os.path.join(csvFolder, filename)
 
     if not os.path.exists(csvFolder):
         os.makedirs(csvFolder)
-        
+
     if len(solr_url) > 0:
         downloadURL = request.scheme+"://"+request.META['HTTP_HOST']+downloadTaibifVolumesPath+filename
         print("curl "+f'"{solr_url}"'+" > "+csvFolder+filename)
