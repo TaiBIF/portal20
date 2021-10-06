@@ -47,9 +47,7 @@ from conf.settings import ENV
 def get_map_species(request):
     query_list = []
     for key, values in request.GET.lists():
-        if key == 'facet':
-            facet_values = values
-        else:
+        if key != 'facet':
             query_list.append((key, values))
     solr = SolrQuery('taibif_occurrence')
     solr_url = solr.generate_solr_url(request.GET.lists())
@@ -62,11 +60,9 @@ def get_map_species(request):
         data = r.json()
         resp.update({'count':data['response']['numFound']})
         resp['results'] = data['response']['docs']
-
-    # taibif_occurrence/select?q.op=OR&wt=json&q=grid_y%3A%5B10995+TO+12164%5DAND+grid_x%3A%5B18703+TO+20812%5D&q=%2A%3A%2A&rows=20
-
     
     return JsonResponse(resp)
+
 
 
 def search_occurrence_v2_map(request):
@@ -160,7 +156,8 @@ def search_occurrence_v2_map(request):
     if 'grid_x' in solr.solr_url:
         map_url = f'{solr.solr_url}&facet=true&{facet_pivot_map}&facet.limit=-1'
     else:
-        map_url = f'{solr.solr_url}&facet=true&q=grid_x:[0 TO *] AND grid_y:[0 TO *]&{facet_pivot_map}&facet.limit=-1'
+        map_query = "{!frange l=0 u=*}"
+        map_url = f'{solr.solr_url}&facet=true&fq=grid_x[0 TO *]&fq=fq=grid_y[0 TO *]&{facet_pivot_map}&facet.limit=-1'
     map_url = map_url.replace('rows=20','rows=0').replace('&q=%2A%3A%2A','')
     r = requests.get(map_url)
     data_c = {}
