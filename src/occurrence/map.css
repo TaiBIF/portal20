@@ -10,9 +10,15 @@
     display: none;
   }
 
+.leaflet-draw-actions a {
+  background-color: lightgray;
+  color: black;
+}
+  
 
 /* layout */
 
 .search-content {
     padding-bottom: 0 !important;
 }
+
