@@ -1,13 +1,25 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+  occurrenceRow: {
+    '&:hover': {
+      backgroundColor: '#eeeeee',
+      cursor: 'pointer',
+    }
+  },
+});
 
 export default function OccurrenceSearch(props) {
   // console.log(props);
+  const classes = useStyles();
+  
   const rows = props.data.results.map((row, index) => {
     const sn = props.data.offset + index + 1;
     const countryOrLocality = [row.country, row.locality].join('/');
     return (
-        <tr key={index}>
-        <td><a href={"/occurrence/"+row.taibif_occ_id}>{ sn }</a></td>
+        <tr key={index} onClick={(e)=>{window.location.href=`/occurrence/${row.taibif_occ_id}`}} className={classes.occurrenceRow}>
+        <td>{ sn }</td>
         <td>{/*http://taibif.tw/zh/namecode/{{ i.name_code */}{ row.scientificName }</td>
         <td>{ row.name_zh }</td>
         <td>{ row.eventDate }</td>
