@@ -63,6 +63,10 @@ def publishing_data(request):
     return render(request, 'publishing-data.html')
 
 @act_lang
+def data_policy(request):
+    return render(request, 'data-policy.html')
+
+@act_lang
 def journals(request):
     Journal_url = Journal.objects.all()
 
