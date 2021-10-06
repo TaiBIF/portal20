@@ -115,20 +115,14 @@ class SolrQuery(object):
                 coor_list = [ float(c) for c in values]
                 y1 = convert_y_coor_to_grid(min(coor_list))
                 y2 = convert_y_coor_to_grid(max(coor_list))
-                if map_query:
-                    map_query += f'AND grid_y:[{y1} TO {y2}]'
-                    self.solr_tuples.append(('q', map_query))
-                else:
-                    map_query = f'grid_y:[{y1} TO {y2}]'
+                map_query = "{!frange l=" + str(y1) + " u=" + str(y2) + "}grid_y"
+                self.solr_tuples.append(('fq', map_query))
             elif key == 'lng':
                 coor_list = [ float(c) for c in values]
                 x1 = convert_x_coor_to_grid(min(coor_list))
                 x2 = convert_x_coor_to_grid(max(coor_list))
-                if map_query:
-                    map_query += f'AND grid_x:[{x1} TO {x2}]'
-                    self.solr_tuples.append(('q', map_query))
-                else:
-                    map_query = f'grid_x:[{x1} TO {x2}]'
+                map_query = "{!frange l=" + str(x1) + " u=" + str(x2) + "}grid_x"
+                self.solr_tuples.append(('fq', map_query))
 
         self.solr_tuples.append(('q', self.solr_q))
         self.solr_tuples.append(('rows', self.rows)) #TODO remove redundant key['rows']
@@ -147,12 +141,10 @@ class SolrQuery(object):
 
         query_string = urllib.parse.urlencode(self.solr_tuples)
         self.solr_url = f'{SOLR_PREFIX}{self.core}/select?{query_string}'
-        #print (self.solr_tuples)
         return self.solr_url
 
     def request(self, req_lists=[]):
         self.generate_solr_url(req_lists)
-        #print(self.solr_url)
 
         try:
             resp =urllib.request.urlopen(self.solr_url)
