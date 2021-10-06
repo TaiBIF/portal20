@@ -42,7 +42,7 @@ class TaibifSearch extends React.Component {
         suggestList: [],
         checked: {},
         tree: [],
-        queryKeyword: '',
+        queryKeyword: '', // DEPRICATTED
       },
       //pagination: {},
       debounceTimeout: null,
@@ -168,17 +168,16 @@ class TaibifSearch extends React.Component {
     this.applyFilters(filters);
   }
 
-  handleSubmitKeywordClick(){
+  handleSubmitKeywordClick(e, queryKeyword){
     const filters = this.state.filters;
-    const q = this.state.queryKeyword;
     // only one queryKeyword
-    if (q != '') {
+    if (queryKeyword != '') {
       filters.forEach(function(x){
         if (x.indexOf('q=') === 0) {
           filters.delete(x);
         }
       });
-      filters.add(`q=${q}`);
+      filters.add(`q=${queryKeyword}`);
       this.applyFilters(filters);
     }
   }
@@ -204,13 +203,13 @@ class TaibifSearch extends React.Component {
 
   handleKeywordChange(e) {
     const v = e.target.value;
-    this.setState({queryKeyword:v});
+    //this.setState({queryKeyword:v});
   }
 
   handleKeywordEnter(e) {
     if (e.charCode === 13){
       const v = e.target.value;
-      this.handleSubmitKeywordClick();
+      this.handleSubmitKeywordClick(e, v);
     }
   }
 
@@ -386,7 +385,7 @@ class TaibifSearch extends React.Component {
       const filters = this.state.filters;
       const searchType = this.state.searchType;
       const mainData = this.state.search;
-      const queryKeyword = this.state.queryKeyword;
+      const queryKeyword = this.state.queryKeyword; // DEPRICATTED
 
       let searchMainContainer = '';
       if (!isLoadedMain) {
