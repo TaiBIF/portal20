@@ -1344,6 +1344,7 @@ def export(request):
     return JsonResponse({"status":search_count}, safe=False)
 
 def generateCSV(solr_url,request):
+
     #directory = os.path.abspath(os.path.join(os.path.curdir))
     #taibifVolumesPath = '/taibif-volumes/media/'
     #csvFolder = directory+taibifVolumesPath
@@ -1358,6 +1359,7 @@ def generateCSV(solr_url,request):
         os.makedirs(csvFolder)
 
     if len(solr_url) > 0:
+
         downloadURL = request.scheme+"://"+request.META['HTTP_HOST']+conf_settings.MEDIA_URL+os.path.join(CSV_MEDIA_FOLDER, filename)
         #print("curl "+f'"{solr_url}"'+" > "+csvFolder+filename)
 
