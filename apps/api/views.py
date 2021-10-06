@@ -230,27 +230,32 @@ def occurrence_search_v2(request):
             solr_menu.request(tmp_query_list)
             selected_facet_menu[key] = solr_menu.get_menus(key)
 
+    # reset menus (prevent too less count will filter out by solr facet default limit)
     for i, v in enumerate(menus):
-        if v['key'] in selected_facet_menu:
-            key = v['key']
+        key = v['key']
+        if key in selected_facet_menu:
             #print ('--------', i, facet_selected[key], selected_facet_menu[key], menus[i])
             tmp_menu = selected_facet_menu[key].copy()
+            tmp_menu_add = []
             for selected in facet_selected[key]:
                 filtered = list(filter(lambda x: x['key'] == selected, tmp_menu['rows']))
-                if len(filtered) == 0:
+                if len(filtered) == 0 and len(tmp_menu['rows']) > 0:
+                    #print(key, selected, tmp_menu)
                     tmp_menu['rows'].pop()
                     count = 0
                     for item in menus[i]['rows']:
-                        #print (item['key'], selected, item['count'])
-                        if item['key'] == selected:
+                        #print (key, item['key'], selected, item['count'])
+                        if str(item['key']) == str(selected):
                             count = item['count']
                             break
-                    tmp_menu['rows'].append({
-                        'key': selected,
-                        'label': selected,
-                        'count': count,
-                    })
-
+                    tmp_menu_add.append((selected, count))
+            for x in tmp_menu_add:
+                tmp_menu['rows'].append({
+                    'key': x[0],
+                    'label': x[0],
+                    'count': x[1],
+                })
+            # resort add add fixed menu back
             tmp_menu['rows'] = sorted(tmp_menu['rows'], key=lambda x: x['count'], reverse=True)
             new_menus.append(tmp_menu)
         else:
@@ -1339,20 +1344,24 @@ def export(request):
     return JsonResponse({"status":search_count}, safe=False)
 
 def generateCSV(solr_url,request):
-    directory = os.path.abspath(os.path.join(os.path.curdir))
-    taibifVolumesPath = '/taibif-volumes/media/'
-    csvFolder = directory+taibifVolumesPath
+    #directory = os.path.abspath(os.path.join(os.path.curdir))
+    #taibifVolumesPath = '/taibif-volumes/media/'
+    #csvFolder = directory+taibifVolumesPath
+    CSV_MEDIA_FOLDER = 'csv'
+    csvFolder = os.path.join(conf_settings.MEDIA_ROOT, CSV_MEDIA_FOLDER)
     timestramp = str(int(time.time()))
     filename = timestramp +'.csv'
     downloadURL = '没有任何資料'
+    csvFilePath = os.path.join(csvFolder, filename)
 
     if not os.path.exists(csvFolder):
         os.makedirs(csvFolder)
-        
+
     if len(solr_url) > 0:
-        downloadURL = request.scheme+"://"+request.META['HTTP_HOST']+taibifVolumesPath+filename
-        print("curl "+f'"{solr_url}"'+" > "+csvFolder+filename)
-        result = subprocess.Popen("curl "+f'"{solr_url}"'+" > "+csvFolder+filename, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        downloadURL = request.scheme+"://"+request.META['HTTP_HOST']+conf_settings.MEDIA_URL+os.path.join(CSV_MEDIA_FOLDER, filename)
+        #print("curl "+f'"{solr_url}"'+" > "+csvFolder+filename)
+
+        result = subprocess.Popen("curl "+f'"{solr_url}"'+" > "+csvFilePath, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     sendMail(downloadURL,request)
 
