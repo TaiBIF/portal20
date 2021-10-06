@@ -53,7 +53,7 @@ function OccurrenceDownload(props) {
     const facetQueryString = 'facet=year&facet=month&facet=dataset&facet=publisher&facet=country';
 
     const flQueryString = data.type == 'species' ? '&fl=scientificName,vernacularName,kingdom,phylum,class,order,family,genus,species,Total' : '';
-    const queryString = `${facetQueryString}${flQueryString}&rows=1&wt=csv&email=${data.email}&search_condition=${encodeURIComponent(renderToString(searchCondition))}`;
+    const queryString = `${facetQueryString}${flQueryString}&rows=1000000&wt=csv&email=${data.email}&search_condition=${encodeURIComponent(renderToString(searchCondition))}`;
 
     const apiURL = `${API_URL_PREFIX}`;
     const filterQueryString = filtersToSearch(filters)
