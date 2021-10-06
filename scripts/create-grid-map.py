@@ -15,7 +15,7 @@ def convert_grid_to_coor(grid_x, grid_y):
 
 def convert_coor_to_grid(x, y):
   grid_x = bisect.bisect(list_x, x)-1
-  grid_y = bisect.bisect_right(list_y, y)-1
+  grid_y = bisect.bisect(list_y, y)-1
   return grid_x, grid_y
 
 # update current csv
@@ -23,9 +23,10 @@ import pandas as pd
 import os
 import glob
 
-path = './solr-workspace/conf-taibif-occur/taibif_occurrence/'
+read_path = '/Users/taibif/Documents/data_file/'
+save_path = './solr-workspace/conf-taibif-occur/taibif_occurrence/'
 extension = 'csv'
-file_list = glob.glob('{}*.{}'.format(path,extension))
+file_list = glob.glob('{}*.{}'.format(read_path,extension))
 
 for j in file_list:
   print(j)
@@ -41,5 +42,5 @@ for j in file_list:
       df.iloc[i, df.columns.get_loc('grid_x')] = grid_x
       df.iloc[i, df.columns.get_loc('grid_y')] = grid_y
   df = df.drop(columns=['location_rpt'])
-  df.to_csv(f'{path}{j[-7:-4]}_grid.csv',index=False)
+  df.to_csv(f'{save_path}{j[-7:-4]}_grid.csv',index=False)
 
