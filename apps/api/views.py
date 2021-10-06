@@ -1296,6 +1296,7 @@ def export(request):
 def generateCSV(solr_url,request):
     directory = os.path.abspath(os.path.join(os.path.curdir))
     taibifVolumesPath = '/taibif-volumes/media/'
+    downloadTaibifVolumesPath = '/taibif-code/taibif-volumes/media/'
     csvFolder = directory+taibifVolumesPath
     timestramp = str(int(time.time()))
     filename = timestramp +'.csv'
@@ -1305,7 +1306,7 @@ def generateCSV(solr_url,request):
         os.makedirs(csvFolder)
         
     if len(solr_url) > 0:
-        downloadURL = request.scheme+"://"+request.META['HTTP_HOST']+taibifVolumesPath+filename
+        downloadURL = request.scheme+"://"+request.META['HTTP_HOST']+downloadTaibifVolumesPath+filename
         print("curl "+f'"{solr_url}"'+" > "+csvFolder+filename)
         result = subprocess.Popen("curl "+f'"{solr_url}"'+" > "+csvFolder+filename, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
