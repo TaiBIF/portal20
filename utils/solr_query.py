@@ -70,7 +70,6 @@ class SolrQuery(object):
         self.solr_q = '*.*'
 
     def generate_solr_url(self, req_lists=[]):
-        solr_q = '*:*'
         map_query = ''
         for key, values in req_lists:
             if key == 'q' and values[0] != '':
@@ -131,7 +130,7 @@ class SolrQuery(object):
                 else:
                     map_query = f'grid_x:[{x1} TO {x2}]'
 
-        self.solr_tuples.append(('q', solr_q))
+        self.solr_tuples.append(('q', self.solr_q))
         self.solr_tuples.append(('rows', self.rows)) #TODO remove redundant key['rows']
 
         if len(self.facet_values):
