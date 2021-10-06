@@ -156,9 +156,10 @@ def search_occurrence_v2_map(request):
     if 'grid_x' in solr.solr_url:
         map_url = f'{solr.solr_url}&facet=true&{facet_pivot_map}&facet.limit=-1'
     else:
-        map_query = "{!frange l=0 u=*}"
-        map_url = f'{solr.solr_url}&facet=true&fq=grid_x[0 TO *]&fq=fq=grid_y[0 TO *]&{facet_pivot_map}&facet.limit=-1'
-    map_url = map_url.replace('rows=20','rows=0').replace('&q=%2A%3A%2A','')
+        map_url = f'{solr.solr_url}&facet=true&fq=grid_x%3A%5B0%20TO%20*%5D&fq=grid_y%3A%5B0%20TO%20*%5D&{facet_pivot_map}&facet.limit=-1'
+
+    map_url = map_url.replace('rows=20','rows=0')
+    print(map_url)
     r = requests.get(map_url)
     data_c = {}
     if r.status_code == 200:
