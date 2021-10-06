@@ -4,8 +4,9 @@ import OccurrenceSearch from './OccurrenceSearch';
 import {OccurrenceCharts} from './OccurrenceCharts';
 import {OccurrenceTaxonomy} from './OccurrenceTaxonomy';
 import {OccurrenceDownload} from './OccurrenceDownload';
-import OccurrenceMap from './OccurrenceMap';
-import {Pagination} from '../Utils'
+import {
+  Pagination
+} from '../Utils'
 
 import {
   BrowserRouter as Router,
@@ -31,13 +32,12 @@ const navTabsData = [
     'key': 'map',
     'label': '分佈地圖',
     'path': '/occurrence/map/',
-    //'disable': true,
+    'disable': true,
   },
   {
     'key': 'taxonomy',
     'label': '分類系統',
     'path': '/occurrence/taxonomy/',
-    'disable': true,
   },
   {
     'key': 'charts',
@@ -84,9 +84,6 @@ const OccurrenceRouter = ({data, filters,urlPrefix}) =>  {
         <Route path={navTabsData[0].path}>
           <OccurrenceSearch data={data} />
           <Pagination offset={data.offset} total={data.count} urlPrefix={urlPrefix} />
-        </Route>
-        <Route path={navTabsData[2].path}>
-          <OccurrenceMap data={data} filters={filters}/>
         </Route>
         <Route path={navTabsData[4].path}>
       <OccurrenceCharts filters={filters} />
