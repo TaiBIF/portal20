@@ -14,6 +14,7 @@ from django.http import HttpResponse, JsonResponse
 from django.core.cache import cache
 from django.core.mail import send_mail
 from django.conf import settings as conf_settings
+from requests.sessions import default_headers
 
 
 from apps.data.models import (
@@ -41,8 +42,35 @@ from .cached import COUNTRY_ROWS, YEAR_ROWS
 
 from conf.settings import ENV
 
-#----------------- MAP -----------------#
+#----------------- defaul map geojson -----------------#
 
+default_solr = SolrQuery('taibif_occurrence')
+default_solr_url = default_solr.generate_solr_url()
+facet_pivot_map = 'facet.pivot=grid_x,grid_y'
+default_map_url = f'{default_solr_url}&facet=true&fq=grid_x%3A%5B0%20TO%20*%5D&fq=grid_y%3A%5B0%20TO%20*%5D&{facet_pivot_map}&facet.limit=-1'
+default_map_url = default_map_url.replace('rows=20','rows=0')
+default_r = requests.get(default_map_url)
+default_data_c = {}
+if default_r.status_code == 200:
+    data = default_r.json()
+    default_data_c = data['facet_counts']['facet_pivot']['grid_x,grid_y']
+default_map_geojson = {"type":"FeatureCollection","features":[]}
+for i in default_data_c:
+    current_grid_x = i['value']
+    for j in i['pivot']:
+        current_grid_y = j['value']
+        current_count = j['count']
+        current_center_x, current_center_y = convert_grid_to_coor(current_grid_x, current_grid_y)
+        tmp = [{
+            "type": "Feature",
+            "geometry":{"type":"Point","coordinates":[current_center_x,current_center_y]},
+            "properties": {
+                "counts": current_count
+            }
+        }]
+        default_map_geojson['features'] += tmp
+
+#----------------- defaul map geojson -----------------#
 
 def get_map_species(request):
     query_list = []
@@ -182,28 +210,33 @@ def occurrence_search_v2(request):
         map_url = f'{solr.solr_url}&facet=true&fq=grid_x%3A%5B0%20TO%20*%5D&fq=grid_y%3A%5B0%20TO%20*%5D&{facet_pivot_map}&facet.limit=-1'
 
     map_url = map_url.replace('rows=20','rows=0')
-    r = requests.get(map_url)
-    data_c = {}
-    if r.status_code == 200:
-        data = r.json()
-        data_c = data['facet_counts']['facet_pivot']['grid_x,grid_y']
+    if query_list:
+        r = requests.get(map_url)
+        data_c = {}
+        if r.status_code == 200:
+            data = r.json()
+            data_c = data['facet_counts']['facet_pivot']['grid_x,grid_y']
 
-    map_geojson = {"type":"FeatureCollection","features":[]}
-    for i in data_c:
-        current_grid_x = i['value']
-        for j in i['pivot']:
-            current_grid_y = j['value']
-            current_count = j['count']
-            current_center_x, current_center_y = convert_grid_to_coor(current_grid_x, current_grid_y)
-            tmp = [{
-                "type": "Feature",
-                "geometry":{"type":"Point","coordinates":[current_center_x,current_center_y]},
-                "properties": {
-                    "counts": current_count
-                }
-            }]
-            map_geojson['features'] += tmp
-    resp['map_geojson'] = map_geojson
+        map_geojson = {"type":"FeatureCollection","features":[]}
+        for i in data_c:
+            current_grid_x = i['value']
+            for j in i['pivot']:
+                current_grid_y = j['value']
+                current_count = j['count']
+                current_center_x, current_center_y = convert_grid_to_coor(current_grid_x, current_grid_y)
+                tmp = [{
+                    "type": "Feature",
+                    "geometry":{"type":"Point","coordinates":[current_center_x,current_center_y]},
+                    "properties": {
+                        "counts": current_count
+                    }
+                }]
+                map_geojson['features'] += tmp
+        resp['map_geojson'] = map_geojson
+    else:
+        print('yes')
+        resp['map_geojson'] = default_map_geojson
+
     resp['elapsed'] = time.time() - time_start
     return JsonResponse(resp)
 
