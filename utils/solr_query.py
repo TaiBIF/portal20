@@ -47,6 +47,11 @@ JSON_FACET_MAP = {
             'mincount': 0,
             'limit': -1,
         },
+         'license': {
+            'type':'terms',
+            'field':'license',
+            'mincount': 0,
+        },
     }
 }
 
@@ -253,6 +258,13 @@ class SolrQuery(object):
             menus.append({
                 'key':'publisher',
                 'label': '發布者',
+                'rows': rows,
+            })
+        if data := resp['facets'].get('license', ''):
+            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
+            menus.append({
+                'key':'license',
+                'label': 'CC授權',
                 'rows': rows,
             })
 
