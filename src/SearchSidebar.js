@@ -86,6 +86,8 @@ function SearchSidebar(props) {
   //console.log(props);
   let isOccurrence = false;
   let searchTypeLabel = '';
+  const [queryKeyword, setQueryKeyword] = useState('');
+  
   if (props.searchType === 'dataset') {
     searchTypeLabel = '資料集';
   }
@@ -117,7 +119,9 @@ function SearchSidebar(props) {
       countMap = true;
     }
   });
-
+  const handleChangeKeyword = (e) => {
+    setQueryKeyword(e.target.value);
+  }
 
   /*
   return (
@@ -157,9 +161,9 @@ function SearchSidebar(props) {
                 </div>
               </div>
               <div className="input-group search-sidebar-header-kw">
-                <input className="form-control" placeholder="搜尋關鍵字" name="search-term" id="search-term" type="text" value="" value={props.queryKeyword} onChange={props.onChangeKeyword} onKeyPress={props.onKeyPressKeyword} />
+      <input className="form-control" placeholder="搜尋關鍵字" name="search-term" id="search-term" type="text" value="" value={queryKeyword} onChange={handleChangeKeyword} onKeyPress={props.onKeyPressKeyword} />
                 <div className="input-group-btn">
-                  <button className="btn" type="submit" onClick={props.onClickSubmitKeyword}>
+      <button className="btn" type="submit" onClick={(e)=>props.onClickSubmitKeyword(e, queryKeyword)}>
                     <i className="glyphicon glyphicon-search"></i>
                   </button>
                 </div>
