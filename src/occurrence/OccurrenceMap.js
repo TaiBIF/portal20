@@ -52,8 +52,8 @@ const API_URL_PREFIX = `/api/v2/occurrence/map`;
 
 export default function OccurrenceMap(props) {
    
-    // const {filters} = props;
-    // const search = filtersToSearch(filters);
+    const {filters} = props;
+    const search = filtersToSearch(filters);
     // const [jsonObject, setGeoJSON] = useState([false, []]);
     // const [isLoaded, setLoading] = useState(false);
     // useEffect(() => {

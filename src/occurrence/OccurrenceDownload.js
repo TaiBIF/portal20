@@ -11,6 +11,8 @@ const filterLabels = {
   dataset:'資料集',
   publisher:'發布者',
   country:'國家',
+  lat: '緯度',
+  lng: '經度'
 }
 
 const API_URL_PREFIX = `/api/dataset/export`;
@@ -32,9 +34,8 @@ function OccurrenceDownload(props) {
     let tags = [];
     for (let f of filters) {
       const menuKey = f.split('=');
-  
-        const data = tags?.[menuKey[0]] || []
-        tags[[menuKey[0]]] = [...data,menuKey[1]].sort()
+      const data = tags?.[menuKey[0]] || []
+      tags[[menuKey[0]]] = [...data,menuKey[1]].sort()
     }
 
     if(tags) {
