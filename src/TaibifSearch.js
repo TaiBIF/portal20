@@ -268,12 +268,13 @@ class TaibifSearch extends React.Component {
     let apiUrl = null;
     let isOccurrence = false;
     let myRe = /\/occurrence\/.*/g;
-    let mapRe = /\/occurrence\/map/g; /* call map api when change to map tab */
-    if (mapRe.exec(pathname)){
-      apiUrl = `${window.location.origin}/api/v2/occurrence/map`;
-      isOccurrence = true;
-    }
-    else if (myRe.exec(pathname)){
+    // let mapRe = /\/occurrence\/map/g; /* call map api when change to map tab */
+    // if (mapRe.exec(pathname)){
+    //   apiUrl = `${window.location.origin}/api/v2/occurrence/map`;
+    //   isOccurrence = true;
+    // }
+    // else 
+    if (myRe.exec(pathname)){
       apiUrl = `${window.location.origin}/api/v2/occurrence/search`;
       isOccurrence = true;
     }else{
@@ -312,6 +313,7 @@ class TaibifSearch extends React.Component {
             return
           }
           const results = isOccurrence ? jsonData.results : jsonData.search.results;
+          const map_geojson = isOccurrence ? jsonData.map_geojson : '';
           const limit = isOccurrence ? jsonData.limit : jsonData.search.limit;
           const offset = isOccurrence ? jsonData.offset : jsonData.search.offset;
           const count = isOccurrence ? jsonData.count : jsonData.search.count;
@@ -328,6 +330,7 @@ class TaibifSearch extends React.Component {
             isLoadedMain: true,
             search: {
               results: results,
+              map_geojson: map_geojson,
               limit: limit,
               offset: offset,
               count: count,
