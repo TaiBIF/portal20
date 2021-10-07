@@ -36,42 +36,22 @@ from apps.data.helpers.mod_search import (
 from utils.decorators import json_ret
 from utils.general import get_cache_or_set
 from utils.solr_query import SolrQuery
-from utils.map_data import convert_grid_to_coor
+from utils.map_data import convert_grid_to_coor, get_geojson
 
 from .cached import COUNTRY_ROWS, YEAR_ROWS
 
 from conf.settings import ENV
 
 #----------------- defaul map geojson -----------------#
-
 default_solr = SolrQuery('taibif_occurrence')
 default_solr_url = default_solr.generate_solr_url()
-facet_pivot_map = 'facet.pivot=grid_x,grid_y'
-default_map_url = f'{default_solr_url}&facet=true&fq=grid_x%3A%5B0%20TO%20*%5D&fq=grid_y%3A%5B0%20TO%20*%5D&{facet_pivot_map}&facet.limit=-1'
-default_map_url = default_map_url.replace('rows=20','rows=0')
-default_r = requests.get(default_map_url)
-default_data_c = {}
-if default_r.status_code == 200:
-    data = default_r.json()
-    default_data_c = data['facet_counts']['facet_pivot']['grid_x,grid_y']
-default_map_geojson = {"type":"FeatureCollection","features":[]}
-for i in default_data_c:
-    current_grid_x = i['value']
-    for j in i['pivot']:
-        current_grid_y = j['value']
-        current_count = j['count']
-        current_center_x, current_center_y = convert_grid_to_coor(current_grid_x, current_grid_y)
-        tmp = [{
-            "type": "Feature",
-            "geometry":{"type":"Point","coordinates":[current_center_x,current_center_y]},
-            "properties": {
-                "counts": current_count
-            }
-        }]
-        default_map_geojson['features'] += tmp
+default_map_geojson = get_geojson(default_solr_url)
+cache.set('default_map_geojson', default_map_geojson, 2592000)
+
+resp = default_solr.get_response()
+cache.set('default_solr_count', resp['count'] if resp else 0, 2592000)
 
 #----------------- defaul map geojson -----------------#
-
 def get_map_species(request):
     query_list = []
     for key, values in request.GET.lists():
@@ -94,7 +74,6 @@ def get_map_species(request):
 
 def occurrence_search_v2(request):
     time_start = time.time()
-
     facet_values = []
     facet_selected = {}
     query_list = []
@@ -119,7 +98,6 @@ def occurrence_search_v2(request):
             'solr_url': solr.solr_url,
             'solr_tuples': solr.solr_tuples,
         })
-
     # for frontend menu data sturct
     menus = solr.get_menus()
     new_menus = []
@@ -201,41 +179,19 @@ def occurrence_search_v2(request):
 
     resp['solr_qtime'] = req['solr_response']['responseHeader']['QTime']
 
-    # map
-    facet_pivot_map = 'facet.pivot=grid_x,grid_y'
-    # print(solr.solr_url)
-    if 'grid_x' in solr.solr_url:
-        map_url = f'{solr.solr_url}&facet=true&{facet_pivot_map}&facet.limit=-1'
-    else:
-        map_url = f'{solr.solr_url}&facet=true&fq=grid_x%3A%5B0%20TO%20*%5D&fq=grid_y%3A%5B0%20TO%20*%5D&{facet_pivot_map}&facet.limit=-1'
+    #--------------- map ---------------#
+    # check if solr data has been updated
+    solr_updated = False if cache.get('default_solr_count') == resp['count'] else True
 
-    map_url = map_url.replace('rows=20','rows=0')
-    if query_list:
-        r = requests.get(map_url)
-        data_c = {}
-        if r.status_code == 200:
-            data = r.json()
-            data_c = data['facet_counts']['facet_pivot']['grid_x,grid_y']
-
-        map_geojson = {"type":"FeatureCollection","features":[]}
-        for i in data_c:
-            current_grid_x = i['value']
-            for j in i['pivot']:
-                current_grid_y = j['value']
-                current_count = j['count']
-                current_center_x, current_center_y = convert_grid_to_coor(current_grid_x, current_grid_y)
-                tmp = [{
-                    "type": "Feature",
-                    "geometry":{"type":"Point","coordinates":[current_center_x,current_center_y]},
-                    "properties": {
-                        "counts": current_count
-                    }
-                }]
-                map_geojson['features'] += tmp
-        resp['map_geojson'] = map_geojson
-    else:
-        print('yes')
-        resp['map_geojson'] = default_map_geojson
+    if query_list: # 如果有帶篩選條件
+        resp['map_geojson'] = get_geojson(solr.solr_url)
+    elif solr_updated or not cache.get('default_map_geojson'):
+        # 如果沒有篩選條件且solr資料有更新 或 如果沒有篩選條件且cache沒有default_map_geojson
+        resp['map_geojson'] = get_geojson(solr.solr_url)
+        cache.set('default_map_geojson', resp['map_geojson'])
+        cache.set('default_solr_count', resp['count'])
+    else: # 如果沒有篩選條件且solr沒更新且cache有default_map_geojson
+        resp['map_geojson'] = cache.get('default_map_geojson')
 
     resp['elapsed'] = time.time() - time_start
     return JsonResponse(resp)
