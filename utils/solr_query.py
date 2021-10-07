@@ -22,6 +22,11 @@ JSON_FACET_MAP = {
             'field': 'taibif_dataset_name_zh',
             'mincount': 0,
         },
+        'dataset_id': {
+            'type': 'terms',
+            'field': 'taibif_dataset_name',
+            'mincount': 0,
+        },
         'month': {
             'type': 'terms',
             'field':'month',
@@ -77,6 +82,7 @@ class SolrQuery(object):
     def generate_solr_url(self, req_lists=[]):
         map_query = ''
         for key, values in req_lists:
+            print(key, values)
             if key == 'q' and values[0] != '':
                 self.solr_q = values[0]
             elif key == 'offset':
@@ -101,6 +107,8 @@ class SolrQuery(object):
                 self.solr_tuples.append(('fq', ' OR '.join(taxon_key_list)))
             elif key in JSON_FACET_MAP[self.core]:
                 field = JSON_FACET_MAP[self.core][key]['field']
+                if (field == 'taibif_dataset_name_zh'):
+                    field = 'taibif_dataset_name'
                 if len(values) == 1:
                     if ',' in values[0]:
                         vlist = values[0].split(',')
@@ -237,7 +245,15 @@ class SolrQuery(object):
                 'rows': rows,
             })
         if data := resp['facets'].get('dataset', ''):
-            rows = menu_dataset = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
+            dataset_id = resp['facets'].get('dataset_id', '')
+            rows = []
+            for x in range(len(data['buckets'])):
+                rows.append({
+                    'key': dataset_id['buckets'][x]['val'],
+                    'label': data['buckets'][x]['val'], 
+                    'count': data['buckets'][x]['count']
+                })
+            # rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
             menus.append({
                 'key': 'dataset',
                 'label': '資料集',

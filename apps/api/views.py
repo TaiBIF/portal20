@@ -75,7 +75,7 @@ def search_occurrence_v1_charts(request):
                     year_start =values[0].split(',',1)
                     year_end =values[0].split(',',2)
                 elif term =='dataset':
-                    solr_q_fq_list.append('{}:"{}"'.format('taibif_dataset_name_zh', '" OR "'.join(values)))
+                    solr_q_fq_list.append('{}:"{}"'.format('taibif_dataset_name', '" OR "'.join(values)))
                 elif term =='month':
                     solr_q_fq_list.append('{}:{}'.format(term, ' OR '.join(values)))
                 elif term =='country':
