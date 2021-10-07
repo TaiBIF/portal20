@@ -36,7 +36,8 @@ from apps.data.helpers.mod_search import (
 from utils.decorators import json_ret
 from utils.general import get_cache_or_set
 from utils.solr_query import SolrQuery
-from utils.map_data import convert_grid_to_coor, get_geojson
+from utils.map_data import convert_grid_to_coor, get_geojson, convert_x_coor_to_grid, convert_y_coor_to_grid
+
 
 from .cached import COUNTRY_ROWS, YEAR_ROWS
 
@@ -52,6 +53,110 @@ resp = default_solr.get_response()
 cache.set('default_solr_count', resp['count'] if resp else 0, 2592000)
 
 #----------------- defaul map geojson -----------------#
+
+
+
+def search_occurrence_v1_charts(request):
+    year_start = 1000
+    year_end = 2021
+    lat_query, lng_query = '', ''
+
+    solr_q_fq_list=[]
+    solr_fq = ''
+    solr_q_list = []
+    solr_q = '*:*'
+    # print (list(request.GET.lists()))
+    for term, values in list(request.GET.lists()):
+        if term !='q' :
+            if term != 'menu':
+                if term =='year':
+                    val = values[0].replace(",", " TO ")
+                    solr_q_fq_list.append('{}:[{}]'.format(term,val))
+                    year_start =values[0].split(',',1)
+                    year_end =values[0].split(',',2)
+                elif term =='dataset':
+                    solr_q_fq_list.append('{}:"{}"'.format('taibif_dataset_name_zh', '" OR "'.join(values)))
+                elif term =='month':
+                    solr_q_fq_list.append('{}:{}'.format(term, ' OR '.join(values)))
+                elif term =='country':
+                    solr_q_fq_list.append('{}:{}'.format(term, ' OR '.join(values)))
+                elif term =='publisher':
+                    solr_q_fq_list.append('{}:{}'.format(term, ' OR '.join(values)))
+                #-----map------#
+                elif term == 'lat':
+                    coor_list = [ float(c) for c in values]
+                    y1 = convert_y_coor_to_grid(min(coor_list))
+                    y2 = convert_y_coor_to_grid(max(coor_list))
+                    lat_query = "&fq={!frange l=" + str(y1) + " u=" + str(y2) + "}grid_y"
+                elif term == 'lng':
+                    coor_list = [ float(c) for c in values]
+                    x1 = convert_x_coor_to_grid(min(coor_list))
+                    x2 = convert_x_coor_to_grid(max(coor_list))
+                    lng_query = "&fq={!frange l=" + str(x1) + " u=" + str(x2) + "}grid_x"
+
+        else:
+            solr_q_list.append('{}:{}'.format('_text_', ' OR '.join(values)))
+
+
+    if len(solr_q_list) > 0:
+        solr_q = ' AND '.join(solr_q_list)
+
+    if len(solr_q_fq_list) > 0:
+        solr_fq = ' AND '.join(solr_q_fq_list)
+
+    charts_year = []
+    charts_month = []
+    charts_dataset = []
+
+    search_count = 0
+    search_offset = 0
+    search_results = []
+    
+    facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name_zh,limit:-1,mincount:0}'
+    facet_month = 'month:{type:range,field:month,start:1,end:13,gap:1}'
+    facet_year = 'year:{type:terms,field:year,limit:-1,mincount:0}'
+    facet_json = 'json.facet={'+facet_dataset + ',' +facet_month+ ',' +facet_year+'}'
+
+    url = f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&q={solr_q}&fq={solr_fq}&{facet_json}{lng_query}{lat_query}'
+    r = requests.get(url)
+
+    if r.status_code == 200:
+        data = r.json()
+        search_count = data['response']['numFound']
+        if search_count != 0:
+            search_offset = data['response']['start']
+            search_results = data['response']['docs']
+            charts_year =[{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['year']['buckets']]
+            charts_month = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['month']['buckets']]
+            charts_dataset = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['dataset']['buckets']]
+        else:
+            charts_year = [{'key': 0, 'label': 0, 'count': 0}]
+            charts_month = [{'key': 0, 'label': 0, 'count': 0}]
+            charts_dataset = [{'key': 0, 'label': 0, 'count': 0}]
+
+    ret = {
+        'charts': [
+            {
+                'key': 'year',
+                'label': '年份',
+                'rows': charts_year,
+            },
+            {
+                'key': 'month',
+                'label': '月份',
+                'rows': charts_month,
+            },
+            {
+                'key': 'dataset',
+                'label': '資料集',
+                'rows': charts_dataset,
+            },
+        ],
+    }
+    return JsonResponse(ret)
+
+
+
 def get_map_species(request):
     query_list = []
     for key, values in request.GET.lists():
@@ -191,9 +296,11 @@ def occurrence_search_v2(request):
         cache.set('default_map_geojson', resp['map_geojson'])
         cache.set('default_solr_count', resp['count'])
     else: # 如果沒有篩選條件且solr沒更新且cache有default_map_geojson
+        print('hello',time.time() - time_start)
         resp['map_geojson'] = cache.get('default_map_geojson')
 
     resp['elapsed'] = time.time() - time_start
+    print('final', time.time() - time_start)
     return JsonResponse(resp)
 
 
@@ -978,105 +1085,6 @@ def taxon_bar(request):
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 #------- DEPRECATED ------#
-
-def search_occurrence_v1_charts(request):
-    year_start = 1000
-    year_end = 2021
-
-    solr_q_fq_list=[]
-    solr_fq = ''
-    solr_q_list = []
-    solr_q = '*:*'
-    # print (list(request.GET.lists()))
-    for term, values in list(request.GET.lists()):
-        if term !='q' :
-            if term != 'menu':
-                if term =='year':
-                    val = values[0].replace(",", " TO ")
-                    solr_q_fq_list.append('{}:[{}]'.format(term,val))
-                    year_start =values[0].split(',',1)
-                    year_end =values[0].split(',',2)
-                elif term =='dataset':
-                    solr_q_fq_list.append('{}:"{}"'.format('taibif_dataset_name_zh', '" OR "'.join(values)))
-                elif term =='month':
-                    solr_q_fq_list.append('{}:{}'.format(term, ' OR '.join(values)))
-                elif term =='country':
-                    solr_q_fq_list.append('{}:{}'.format(term, ' OR '.join(values)))
-                elif term =='publisher':
-                    solr_q_fq_list.append('{}:{}'.format(term, ' OR '.join(values)))
-
-        else:
-            solr_q_list.append('{}:{}'.format('_text_', ' OR '.join(values)))
-
-
-    if len(solr_q_list) > 0:
-        solr_q = ' AND '.join(solr_q_list)
-
-    if len(solr_q_fq_list) > 0:
-        solr_fq = ' AND '.join(solr_q_fq_list)
-    print(solr_fq)
-
-    charts_year = []
-    charts_month = []
-    charts_dataset = []
-
-    search_count = 0
-    search_offset = 0
-    search_results = []
-    
-
-    time_start = time.time()  
-    facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name_zh,limit:-1,mincount:0}'
-    facet_month = 'month:{type:range,field:month,start:1,end:13,gap:1}'
-    facet_year = 'year:{type:terms,field:year,limit:-1,mincount:0}'
-    facet_json = 'json.facet={'+facet_dataset + ',' +facet_month+ ',' +facet_year+'}'
-    r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&q={solr_q}&fq={solr_fq}&{facet_json}')
-
-    if r.status_code == 200:
-        data = r.json()
-
-
-        search_count = data['response']['numFound']
-        
-        if search_count != 0:
-            search_offset = data['response']['start']
-            search_results = data['response']['docs']
-
-            charts_year =[{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['year']['buckets']]
-            charts_month = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['month']['buckets']]
-            charts_dataset = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['dataset']['buckets']]
-        else:
-            charts_year = [{'key': 0, 'label': 0, 'count': 0}]
-            charts_month = [{'key': 0, 'label': 0, 'count': 0}]
-            charts_dataset = [{'key': 0, 'label': 0, 'count': 0}]
-
-
-
-    ret = {
-        'charts': [
-            {
-                'key': 'year',
-                'label': '年份',
-                'rows': charts_year,
-            },
-            {
-                'key': 'month',
-                'label': '月份',
-                'rows': charts_month,
-            },
-            {
-                'key': 'dataset',
-                'label': '資料集',
-                'rows': charts_dataset,
-            },
-        ],
-    }
-    return JsonResponse(ret)
-
-
-
-
-
 
 def search_occurrence_v1(request):
     year_start = 1000
