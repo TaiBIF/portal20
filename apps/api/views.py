@@ -46,16 +46,17 @@ from .cached import COUNTRY_ROWS, YEAR_ROWS
 
 from conf.settings import ENV
 
-# #----------------- defaul map geojson -----------------#
-# default_solr = SolrQuery('taibif_occurrence')
-# default_solr_url = default_solr.generate_solr_url()
-# default_map_geojson = get_geojson(default_solr_url)
-# cache.set('default_map_geojson', default_map_geojson, 2592000)
+#----------------- defaul map geojson -----------------#
+default_solr = SolrQuery('taibif_occurrence')
+default_solr_url = default_solr.generate_solr_url()
+default_map_geojson = get_geojson(default_solr_url)
+cache.set('default_map_geojson', default_map_geojson, 2592000)
 
-# resp = default_solr.get_response()
-# cache.set('default_solr_count', resp['count'] if resp else 0, 2592000)
+req = default_solr.request()
+resp = default_solr.get_response()
+cache.set('default_solr_count', resp['count'] if resp else 0, 2592000)
 
-# #----------------- defaul map geojson -----------------#
+#----------------- defaul map geojson -----------------#
 
 
 
@@ -186,7 +187,6 @@ def occurrence_search_v2(request):
     facet_selected = {}
     query_list = []
     for key, values in request.GET.lists():
-        print(key, values)
         if key == 'facet':
             facet_values = values
         else:
@@ -317,7 +317,6 @@ def occurrence_search_v2(request):
     #--------------- map ---------------#
     # check if solr data has been updated
     solr_updated = False if cache.get('default_solr_count') == resp['count'] else True
-
     if query_list: # 如果有帶篩選條件
         resp['map_geojson'] = get_geojson(solr.solr_url)
     elif solr_updated or not cache.get('default_map_geojson'):
@@ -326,8 +325,7 @@ def occurrence_search_v2(request):
         cache.set('default_map_geojson', resp['map_geojson'])
         cache.set('default_solr_count', resp['count'])
     else: # 如果沒有篩選條件且solr沒更新且cache有default_map_geojson
-        resp['map_geojson'] = cache.get('default_map_geojson')
-
+        resp['map_geojson'] = default_map_geojson
     resp['elapsed'] = time.time() - time_start
     #print('final', time.time() - time_start)
     return JsonResponse(resp)
