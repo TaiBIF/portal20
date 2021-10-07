@@ -11,8 +11,6 @@ import {fetchData, filtersToSearch} from '../Utils';
 
 const API_URL_PREFIX = `/api/v2/occurrence/map`;
 
-export default function OccurrenceMap(props) {
-
     /* marker style */
     function getColor(d) {
         return d > 1000 ? '#800026' :
@@ -50,20 +48,22 @@ export default function OccurrenceMap(props) {
             opacity: 1,
             fillOpacity: 0.8
             }) // Change marker to circle
-        }    
-    /* marker style */
-    const {filters} = props;
-    const search = filtersToSearch(filters);
-    const [jsonObject, setGeoJSON] = useState([false, []]);
-    const [isLoaded, setLoading] = useState(false);
-    useEffect(() => {
-        const apiURL = `${API_URL_PREFIX}?${search}`;
-        console.log('fetch:', apiURL)
-        fetchData(apiURL).then((data) => {
-            setGeoJSON([true, data.map_geojson])
-            setLoading(true)
-        });
-    }, [filters]);
+        } 
+
+export default function OccurrenceMap(props) {
+   
+    // const {filters} = props;
+    // const search = filtersToSearch(filters);
+    // const [jsonObject, setGeoJSON] = useState([false, []]);
+    // const [isLoaded, setLoading] = useState(false);
+    // useEffect(() => {
+    //     const apiURL = `${API_URL_PREFIX}?${search}`;
+    //     console.log('fetch:', apiURL)
+    //     fetchData(apiURL).then((data) => {
+    //         setGeoJSON([true, data.map_geojson])
+    //         setLoading(true)
+    //     });
+    // }, [filters]);
 
     function App(){
         const onCreated = e => {
@@ -150,7 +150,7 @@ export default function OccurrenceMap(props) {
             return <div className="App">
             <MapContainer center={[0, 0]} zoom={2}>
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; <a href=&quot;https://www.openstreetmap.org/copyright&quot;>OpenStreetMap</a> contributors" />
-            <GeoJSON data={jsonObject} pointToLayer={pointToLayer}/>
+            <GeoJSON data={props.data.map_geojson} pointToLayer={pointToLayer}/>
             <FeatureGroup ref={featureGroupRef}>
                 <EditControl
                 position="topright"
@@ -174,7 +174,8 @@ export default function OccurrenceMap(props) {
     
     return (  
         <React.Fragment>
-        {!isLoaded ? <div className="search-loading"> 🌱 Loading... ⏳ </div> : <div><App /></div>}    
+            {<App />}    
+        {/* {!isLoaded ? <div className="search-loading"> 🌱 Loading... ⏳ </div> : <div><App /></div>}     */}
         </React.Fragment>
     );
   }
