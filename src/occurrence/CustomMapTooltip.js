@@ -80,7 +80,7 @@ L.drawLocal = {
 				},
 				clearAll: {
 					title: 'Clear all layers',
-					text: '清除全部'
+					text: '清除'
 				}
 			},
 			buttons: {
