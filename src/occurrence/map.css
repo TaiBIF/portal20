@@ -14,7 +14,12 @@
   background-color: lightgray;
   color: black;
 }
-  
+
+ul.leaflet-draw-actions.leaflet-draw-actions-bottom li a[title="Save changes"],
+ul.leaflet-draw-actions.leaflet-draw-actions-bottom li a[title="Cancel editing, discards all changes"] {
+    display: none;
+}
+
 
 /* layout */
 
