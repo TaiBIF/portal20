@@ -46,16 +46,16 @@ from .cached import COUNTRY_ROWS, YEAR_ROWS
 
 from conf.settings import ENV
 
-#----------------- defaul map geojson -----------------#
-default_solr = SolrQuery('taibif_occurrence')
-default_solr_url = default_solr.generate_solr_url()
-default_map_geojson = get_geojson(default_solr_url)
-cache.set('default_map_geojson', default_map_geojson, 2592000)
+# #----------------- defaul map geojson -----------------#
+# default_solr = SolrQuery('taibif_occurrence')
+# default_solr_url = default_solr.generate_solr_url()
+# default_map_geojson = get_geojson(default_solr_url)
+# cache.set('default_map_geojson', default_map_geojson, 2592000)
 
-resp = default_solr.get_response()
-cache.set('default_solr_count', resp['count'] if resp else 0, 2592000)
+# resp = default_solr.get_response()
+# cache.set('default_solr_count', resp['count'] if resp else 0, 2592000)
 
-#----------------- defaul map geojson -----------------#
+# #----------------- defaul map geojson -----------------#
 
 
 
@@ -120,7 +120,7 @@ def search_occurrence_v1_charts(request):
     facet_year = 'year:{type:terms,field:year,limit:-1,mincount:0}'
     facet_json = 'json.facet={'+facet_dataset + ',' +facet_month+ ',' +facet_year+'}'
 
-    url = f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&q={solr_q}&fq={solr_fq}&{facet_json}{lng_query}{lat_query}'
+    url = f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&q={solr_q}&fq={solr_fq}&{facet_json}{lng_query}{lat_query}'
     r = requests.get(url)
 
     if r.status_code == 200:
@@ -186,6 +186,7 @@ def occurrence_search_v2(request):
     facet_selected = {}
     query_list = []
     for key, values in request.GET.lists():
+        print(key, values)
         if key == 'facet':
             facet_values = values
         else:
@@ -325,7 +326,6 @@ def occurrence_search_v2(request):
         cache.set('default_map_geojson', resp['map_geojson'])
         cache.set('default_solr_count', resp['count'])
     else: # 如果沒有篩選條件且solr沒更新且cache有default_map_geojson
-        print('hello',time.time() - time_start)
         resp['map_geojson'] = cache.get('default_map_geojson')
 
     resp['elapsed'] = time.time() - time_start
@@ -1175,7 +1175,7 @@ def search_occurrence_v1(request):
     facet_country = 'country:{type:terms,field:country,mincount:0,limit:-1}'
     facet_publisher = 'publisher:{type:terms,field:publisher}'
     facet_json = 'json.facet={'+facet_dataset + ',' +facet_month+ ',' +facet_country+','+facet_publisher+'}'
-    r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q={solr_q}&fq={solr_fq}&{facet_json}')
+    r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&rows={search_limit}&q={solr_q}&fq={solr_fq}&{facet_json}')
 
     if r.status_code == 200:
         data = r.json()

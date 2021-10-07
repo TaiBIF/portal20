@@ -8,10 +8,10 @@ from conf.settings import ENV
 
 from utils.map_data import convert_coor_to_grid, convert_x_coor_to_grid, convert_y_coor_to_grid
 
-# if ENV in ['dev','stag']:
-#     SOLR_PREFIX = 'http://solr:8983/solr/'
-if ENV == 'dev':
-    SOLR_PREFIX = 'http://54.65.81.61:8983/solr/'
+if ENV in ['dev','stag']:
+    SOLR_PREFIX = 'http://solr:8983/solr/'
+# if ENV == 'dev':
+#     SOLR_PREFIX = 'http://54.65.81.61:8983/solr/'
 else:
     SOLR_PREFIX = 'http://solr:8983/solr/'
 
@@ -69,7 +69,7 @@ class SolrQuery(object):
 
     def __init__(self, core, facet_values=[]):
         self.solr_tuples = [
-            ('q.op', 'OR'),
+            ('q.op', 'AND'),
             ('wt', 'json'),
         ]
         self.core = core
@@ -198,7 +198,7 @@ class SolrQuery(object):
         solr_fq = 'taibif_occ_id:' + str(taibif_occ_id)
         query_string = solr_fq
 
-        url = f'{SOLR_PREFIX}{self.core}/select?q.op=OR&q={query_string}'
+        url = f'{SOLR_PREFIX}{self.core}/select?q.op=AND&q={query_string}'
         try:
             resp =urllib.request.urlopen(url)
             resp_dict = resp.read().decode()
