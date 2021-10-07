@@ -284,7 +284,7 @@ class TaibifSearch extends React.Component {
     // for window.history.pushState
     let url = `${window.location.origin}${window.location.pathname}`;
     /* TODO menu facet */
-    const facetQueryString = (isOccurrence === true) ? 'facet=year&facet=month&facet=dataset&facet=publisher&facet=country&facet=license' : 'menu=1';
+    const facetQueryString = (isOccurrence === true) ? 'facet=year&facet=month&facet=dataset&facet=dataset_id&facet=publisher&facet=country' : 'menu=1';
     if (filters) {
       let queryString = filtersToSearch(filters);
       apiUrl = `${apiUrl}?${queryString}&`;
