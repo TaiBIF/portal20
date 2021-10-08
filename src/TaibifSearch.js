@@ -360,15 +360,16 @@ class TaibifSearch extends React.Component {
         if (mArr[0] === 'q') {
           //console.log(mArr[1]);
           this.setState({queryKeyword:decodeURIComponent(mArr[1])});
-        }
-        if (mArr[0] == 'taxon_key') {
+        } else if (mArr[0] == 'taxon_key') {
           // TODO: init taxon_key
           //console.log(mArr[1], this.state.taxonData);
           ///const taxonData = ta
-        };
-        mArr[1].split(',').forEach((x) => {
-          filters.add(`${mArr[0]}=${x}`);
-        })
+        } else {
+          filters.add(`${mArr[0]}=${mArr[1]}`);
+        }
+        //mArr[1].split(',').forEach((x) => {
+        //  filters.add(`${mArr[0]}=${x}`);
+        //})
       });
       this.applyFilters(filters);
     }
