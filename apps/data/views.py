@@ -245,9 +245,14 @@ def occurrence_view(request, taibif_id):
     event['eventRemarks']={'name_zh':'調查活動註記','value':result[0].get('eventRemarks')}    
     
     # taxon
+    try: 
+        acceptedNameUsageID = int(float(result[0].get('acceptedNameUsageID')))
+    except:
+        acceptedNameUsageID = result[0].get('acceptedNameUsageID')
+
     taxon['taxonID']={'name_zh':'分類ID','value':result[0].get('taxonID')}
     taxon['scientificNameID']={'name_zh':'學名ID','value':result[0].get(' scientificNameID')}
-    taxon['acceptedNameUsageID']={'name_zh':'有效學名ID','value':result[0].get('acceptedNameUsageID')}
+    taxon['acceptedNameUsageID']={'name_zh':'有效學名ID','value':acceptedNameUsageID}
     taxon['scientificName']={'name_zh':'學名','value':result[0].get('scientificName')}
     taxon['acceptedNameUsage']={'name_zh':'有效學名','value':result[0].get('acceptedNameUsage')}
     taxon['originalNameUsage']={'name_zh':'originalNameUsage','value':result[0].get('originalNameUsage')}
@@ -442,9 +447,9 @@ def species_view(request, pk):
     
 
     if ENV in ['dev','stag']:
-        r = requests.get(f'http://54.65.81.61:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q=*:*&fq={solr_q}&{facet_json}')
+        r = requests.get(f'http://54.65.81.61:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&rows={search_limit}&q=*:*&fq={solr_q}&{facet_json}')
     else:
-        r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q=*:*&fq={solr_q}&{facet_json}')
+        r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&rows={search_limit}&q=*:*&fq={solr_q}&{facet_json}')
 
 
     if r.status_code == 200:

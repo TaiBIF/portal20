@@ -1,17 +1,15 @@
 import React, {useEffect, useState, useRef} from 'react';
 import { Route, Link, Switch } from "react-router-dom"
 import ReactDOMServer from "react-dom/server";
-
+import L from 'leaflet';
 import { MapContainer, TileLayer, Marker, Popup, FeatureGroup, GeoJSON } from 'react-leaflet'
 import { featureGroup, Icon } from 'leaflet';
 import "./map.css";
 import { EditControl } from "react-leaflet-draw"
-import L from 'leaflet';
+import "./CustomMapTooltip"
 import {fetchData, filtersToSearch} from '../Utils';
 
 const API_URL_PREFIX = `/api/v2/occurrence/map`;
-
-export default function OccurrenceMap(props) {
 
     /* marker style */
     function getColor(d) {
@@ -50,20 +48,22 @@ export default function OccurrenceMap(props) {
             opacity: 1,
             fillOpacity: 0.8
             }) // Change marker to circle
-        }    
-    /* marker style */
+        } 
+
+export default function OccurrenceMap(props) {
+   
     const {filters} = props;
     const search = filtersToSearch(filters);
-    const [jsonObject, setGeoJSON] = useState([false, []]);
-    const [isLoaded, setLoading] = useState(false);
-    useEffect(() => {
-        const apiURL = `${API_URL_PREFIX}?${search}`;
-        console.log('fetch:', apiURL)
-        fetchData(apiURL).then((data) => {
-            setGeoJSON([true, data.map_geojson])
-            setLoading(true)
-        });
-    }, [filters]);
+    // const [jsonObject, setGeoJSON] = useState([false, []]);
+    // const [isLoaded, setLoading] = useState(false);
+    // useEffect(() => {
+    //     const apiURL = `${API_URL_PREFIX}?${search}`;
+    //     console.log('fetch:', apiURL)
+    //     fetchData(apiURL).then((data) => {
+    //         setGeoJSON([true, data.map_geojson])
+    //         setLoading(true)
+    //     });
+    // }, [filters]);
 
     function App(){
         const onCreated = e => {
@@ -88,7 +88,6 @@ export default function OccurrenceMap(props) {
 
             let current_path = window.location.href
             current_path = current_path.split('?')[0]
-            let new_path = current_path.replace('map','search')
 
             let api_url;
             if (search!==''){
@@ -149,9 +148,9 @@ export default function OccurrenceMap(props) {
             const featureGroupRef = useRef()
 
             return <div className="App">
-            <MapContainer center={[0, 0]} zoom={2} >
+            <MapContainer center={[0, 0]} zoom={2}>
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; <a href=&quot;https://www.openstreetmap.org/copyright&quot;>OpenStreetMap</a> contributors" />
-            <GeoJSON data={jsonObject} pointToLayer={pointToLayer}/>
+            <GeoJSON data={props.data.map_geojson} pointToLayer={pointToLayer}/>
             <FeatureGroup ref={featureGroupRef}>
                 <EditControl
                 position="topright"
@@ -159,20 +158,24 @@ export default function OccurrenceMap(props) {
                 marker: false,
                 polygon: false,
                 polyline: false,
-                rectangle: true,
+                rectangle: {"showArea": false},
                 circle: false,
                 circlemarker: false
                 }}
                 edit={{edit: false}}
                 onCreated={onCreated}
                 />
+                {/* {(L.drawLocal.draw.handlers.rectangle.tooltip.start = "hola")} */}
                 </FeatureGroup> 
             </MapContainer>
         </div>
     }
+
+    
     return (  
         <React.Fragment>
-        {!isLoaded ? <div className="search-loading"> 🌱 Loading... ⏳ </div> : <div><App /></div>}    
+            {<App />}    
+        {/* {!isLoaded ? <div className="search-loading"> 🌱 Loading... ⏳ </div> : <div><App /></div>}     */}
         </React.Fragment>
     );
   }

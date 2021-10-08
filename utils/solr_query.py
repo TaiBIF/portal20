@@ -8,10 +8,10 @@ from conf.settings import ENV
 
 from utils.map_data import convert_coor_to_grid, convert_x_coor_to_grid, convert_y_coor_to_grid
 
-# if ENV in ['dev','stag']:
-#     SOLR_PREFIX = 'http://solr:8983/solr/'
-if ENV == 'dev':
-    SOLR_PREFIX = 'http://54.65.81.61:8983/solr/'
+if ENV in ['dev','stag']:
+    SOLR_PREFIX = 'http://solr:8983/solr/'
+# if ENV == 'dev':
+#     SOLR_PREFIX = 'http://54.65.81.61:8983/solr/'
 else:
     SOLR_PREFIX = 'http://solr:8983/solr/'
 
@@ -21,6 +21,13 @@ JSON_FACET_MAP = {
             'type': 'terms',
             'field': 'taibif_dataset_name_zh',
             'mincount': 0,
+            'limit': -1,
+        },
+        'dataset_id': {
+            'type': 'terms',
+            'field': 'taibif_dataset_name',
+            'mincount': 0,
+            'limit': -1,
         },
         'month': {
             'type': 'terms',
@@ -44,9 +51,28 @@ JSON_FACET_MAP = {
             'type':'terms',
             'field':'publisher',
             'mincount': 0,
+            'limit': -1,
+        },
+         'license': {
+            'type':'terms',
+            'field':'license',
+            'mincount': 0,
         },
     }
 }
+
+
+def get_init_menu(facet_values=[]):
+    # TODO better to cache in redis?
+    # not cache if solr schema not steady?
+    solr_default = SolrQuery('taibif_occurrence', facet_values)
+    req_default = solr_default.request()
+    menus = solr_default.get_menus()
+    # set all count to zero
+    for i, v in enumerate(menus):
+        for x in v['rows']:
+            x['count'] = 0
+    return menus
 
 
 class SolrQuery(object):
@@ -59,7 +85,7 @@ class SolrQuery(object):
 
     def __init__(self, core, facet_values=[]):
         self.solr_tuples = [
-            ('q.op', 'OR'),
+            ('q.op', 'AND'),
             ('wt', 'json'),
         ]
         self.core = core
@@ -96,6 +122,8 @@ class SolrQuery(object):
                 self.solr_tuples.append(('fq', ' OR '.join(taxon_key_list)))
             elif key in JSON_FACET_MAP[self.core]:
                 field = JSON_FACET_MAP[self.core][key]['field']
+                if (field == 'taibif_dataset_name_zh'):
+                    field = 'taibif_dataset_name'
                 if len(values) == 1:
                     if ',' in values[0]:
                         vlist = values[0].split(',')
@@ -115,20 +143,14 @@ class SolrQuery(object):
                 coor_list = [ float(c) for c in values]
                 y1 = convert_y_coor_to_grid(min(coor_list))
                 y2 = convert_y_coor_to_grid(max(coor_list))
-                if map_query:
-                    map_query += f'AND grid_y:[{y1} TO {y2}]'
-                    self.solr_tuples.append(('q', map_query))
-                else:
-                    map_query = f'grid_y:[{y1} TO {y2}]'
+                map_query = "{!frange l=" + str(y1) + " u=" + str(y2) + "}grid_y"
+                self.solr_tuples.append(('fq', map_query))
             elif key == 'lng':
                 coor_list = [ float(c) for c in values]
                 x1 = convert_x_coor_to_grid(min(coor_list))
                 x2 = convert_x_coor_to_grid(max(coor_list))
-                if map_query:
-                    map_query += f'AND grid_x:[{x1} TO {x2}]'
-                    self.solr_tuples.append(('q', map_query))
-                else:
-                    map_query = f'grid_x:[{x1} TO {x2}]'
+                map_query = "{!frange l=" + str(x1) + " u=" + str(x2) + "}grid_x"
+                self.solr_tuples.append(('fq', map_query))
 
         self.solr_tuples.append(('q', self.solr_q))
         self.solr_tuples.append(('rows', self.rows)) #TODO remove redundant key['rows']
@@ -147,12 +169,10 @@ class SolrQuery(object):
 
         query_string = urllib.parse.urlencode(self.solr_tuples)
         self.solr_url = f'{SOLR_PREFIX}{self.core}/select?{query_string}'
-        #print (self.solr_tuples)
         return self.solr_url
 
     def request(self, req_lists=[]):
         self.generate_solr_url(req_lists)
-        #print(self.solr_url)
 
         try:
             resp =urllib.request.urlopen(self.solr_url)
@@ -196,7 +216,7 @@ class SolrQuery(object):
         solr_fq = 'taibif_occ_id:' + str(taibif_occ_id)
         query_string = solr_fq
 
-        url = f'{SOLR_PREFIX}{self.core}/select?q.op=OR&q={query_string}'
+        url = f'{SOLR_PREFIX}{self.core}/select?q.op=AND&q={query_string}'
         try:
             resp =urllib.request.urlopen(url)
             resp_dict = resp.read().decode()
@@ -230,7 +250,7 @@ class SolrQuery(object):
             menus.append({
                 'key': 'year',
                 'label': '年份',
-                'rows': ['FAKE_FOR_SPACE',],
+                'rows': [{'key': 'fake_year_range', 'label': 'fake_year_range', 'count': 0}]
             })
         if data := resp['facets'].get('month', ''):
             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in sorted(data['buckets'], key=lambda x: x['val'])]
@@ -240,7 +260,16 @@ class SolrQuery(object):
                 'rows': rows,
             })
         if data := resp['facets'].get('dataset', ''):
-            rows = menu_dataset = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
+            dataset_id = resp['facets'].get('dataset_id', '')
+            rows = []
+            for x in range(len(data['buckets'])):
+                if x < len(dataset_id['buckets']): # prevent limited dataset_id buckets cause index error
+                    rows.append({
+                        'key': dataset_id['buckets'][x]['val'],
+                        'label': data['buckets'][x]['val'],
+                        'count': data['buckets'][x]['count']
+                    })
+            # rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
             menus.append({
                 'key': 'dataset',
                 'label': '資料集',
@@ -251,6 +280,13 @@ class SolrQuery(object):
             menus.append({
                 'key':'publisher',
                 'label': '發布者',
+                'rows': rows,
+            })
+        if data := resp['facets'].get('license', ''):
+            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
+            menus.append({
+                'key':'license',
+                'label': 'CC授權',
                 'rows': rows,
             })
 

@@ -42,7 +42,7 @@ class TaibifSearch extends React.Component {
         suggestList: [],
         checked: {},
         tree: [],
-        queryKeyword: '',
+        queryKeyword: '', // DEPRICATTED
       },
       //pagination: {},
       debounceTimeout: null,
@@ -168,17 +168,16 @@ class TaibifSearch extends React.Component {
     this.applyFilters(filters);
   }
 
-  handleSubmitKeywordClick(){
+  handleSubmitKeywordClick(e, queryKeyword){
     const filters = this.state.filters;
-    const q = this.state.queryKeyword;
     // only one queryKeyword
-    if (q != '') {
+    if (queryKeyword != '') {
       filters.forEach(function(x){
         if (x.indexOf('q=') === 0) {
           filters.delete(x);
         }
       });
-      filters.add(`q=${q}`);
+      filters.add(`q=${queryKeyword}`);
       this.applyFilters(filters);
     }
   }
@@ -204,13 +203,13 @@ class TaibifSearch extends React.Component {
 
   handleKeywordChange(e) {
     const v = e.target.value;
-    this.setState({queryKeyword:v});
+    //this.setState({queryKeyword:v});
   }
 
   handleKeywordEnter(e) {
     if (e.charCode === 13){
       const v = e.target.value;
-      this.handleSubmitKeywordClick();
+      this.handleSubmitKeywordClick(e, v);
     }
   }
 
@@ -269,12 +268,13 @@ class TaibifSearch extends React.Component {
     let apiUrl = null;
     let isOccurrence = false;
     let myRe = /\/occurrence\/.*/g;
-    let mapRe = /\/occurrence\/map/g; /* call map api when change to map tab */
-    if (mapRe.exec(pathname)){
-      apiUrl = `${window.location.origin}/api/v2/occurrence/map`;
-      isOccurrence = true;
-    }
-    else if (myRe.exec(pathname)){
+    // let mapRe = /\/occurrence\/map/g; /* call map api when change to map tab */
+    // if (mapRe.exec(pathname)){
+    //   apiUrl = `${window.location.origin}/api/v2/occurrence/map`;
+    //   isOccurrence = true;
+    // }
+    // else 
+    if (myRe.exec(pathname)){
       apiUrl = `${window.location.origin}/api/v2/occurrence/search`;
       isOccurrence = true;
     }else{
@@ -284,8 +284,7 @@ class TaibifSearch extends React.Component {
     // for window.history.pushState
     let url = `${window.location.origin}${window.location.pathname}`;
     /* TODO menu facet */
-    const facetQueryString = (isOccurrence === true) ? 'facet=year&facet=month&facet=dataset&facet=publisher&facet=country' : 'menu=1';
-
+    const facetQueryString = (isOccurrence === true) ? 'facet=year&facet=month&facet=dataset&facet=dataset_id&facet=publisher&facet=country&facet=license' : 'menu=1';
     if (filters) {
       let queryString = filtersToSearch(filters);
       apiUrl = `${apiUrl}?${queryString}&`;
@@ -313,6 +312,7 @@ class TaibifSearch extends React.Component {
             return
           }
           const results = isOccurrence ? jsonData.results : jsonData.search.results;
+          const map_geojson = isOccurrence ? jsonData.map_geojson : '';
           const limit = isOccurrence ? jsonData.limit : jsonData.search.limit;
           const offset = isOccurrence ? jsonData.offset : jsonData.search.offset;
           const count = isOccurrence ? jsonData.count : jsonData.search.count;
@@ -329,6 +329,7 @@ class TaibifSearch extends React.Component {
             isLoadedMain: true,
             search: {
               results: results,
+              map_geojson: map_geojson,
               limit: limit,
               offset: offset,
               count: count,
@@ -359,10 +360,16 @@ class TaibifSearch extends React.Component {
         if (mArr[0] === 'q') {
           //console.log(mArr[1]);
           this.setState({queryKeyword:decodeURIComponent(mArr[1])});
+        } else if (mArr[0] == 'taxon_key') {
+          // TODO: init taxon_key
+          //console.log(mArr[1], this.state.taxonData);
+          ///const taxonData = ta
+        } else {
+          filters.add(`${mArr[0]}=${mArr[1]}`);
         }
-        mArr[1].split(',').forEach((x) => {
-          filters.add(`${mArr[0]}=${x}`);
-        })
+        //mArr[1].split(',').forEach((x) => {
+        //  filters.add(`${mArr[0]}=${x}`);
+        //})
       });
       this.applyFilters(filters);
     }
@@ -386,7 +393,15 @@ class TaibifSearch extends React.Component {
       const filters = this.state.filters;
       const searchType = this.state.searchType;
       const mainData = this.state.search;
-      const queryKeyword = this.state.queryKeyword;
+      const queryKeyword = this.state.queryKeyword; // DEPRICATTED
+
+      const taxonProps = {
+        taxonData: this.state.taxonData,
+        onTreeSpeciesClick: this.handleTreeSpeciesClick,
+        onTaxonRemoveClick: this.handleTaxonRemove,
+        onTaxonKeywordChange: this.handleTaxonKeywordChange,
+        onSuggestClick: this.handleSuggestClick,
+      };
 
       let searchMainContainer = '';
       if (!isLoadedMain) {
@@ -402,17 +417,10 @@ class TaibifSearch extends React.Component {
             </div>
         );
       } else {
-        searchMainContainer = <SearchMain data={mainData} searchType={searchType} filters={filters} menus={menus} onClickTab={this.handleTabClick} />;
+        searchMainContainer = <SearchMain data={mainData} searchType={searchType} filters={filters} menus={menus} onClickTab={this.handleTabClick} taxonProps={taxonProps} />;
       }
 
       const defaultPage = (this.state.page) ? this.state.page : '1';
-      const taxonProps = {
-        taxonData: this.state.taxonData,
-        onTreeSpeciesClick: this.handleTreeSpeciesClick,
-        onTaxonRemoveClick: this.handleTaxonRemove,
-        onTaxonKeywordChange: this.handleTaxonKeywordChange,
-        onSuggestClick: this.handleSuggestClick,
-      };
 
       return (
           <div className="row">

@@ -14,6 +14,7 @@ from django.http import HttpResponse, JsonResponse
 from django.core.cache import cache
 from django.core.mail import send_mail
 from django.conf import settings as conf_settings
+from requests.sessions import default_headers
 
 
 from apps.data.models import (
@@ -34,22 +35,136 @@ from apps.data.helpers.mod_search import (
 
 from utils.decorators import json_ret
 from utils.general import get_cache_or_set
-from utils.solr_query import SolrQuery
-from utils.map_data import convert_grid_to_coor
+from utils.solr_query import (
+    SolrQuery,
+    get_init_menu,
+)
+from utils.map_data import convert_grid_to_coor, get_geojson, convert_x_coor_to_grid, convert_y_coor_to_grid
+
 
 from .cached import COUNTRY_ROWS, YEAR_ROWS
 
 from conf.settings import ENV
 
-#----------------- MAP -----------------#
+#----------------- defaul map geojson -----------------#
+default_solr = SolrQuery('taibif_occurrence')
+default_solr_url = default_solr.generate_solr_url()
+default_map_geojson = get_geojson(default_solr_url)
+cache.set('default_map_geojson', default_map_geojson, 2592000)
+
+req = default_solr.request()
+resp = default_solr.get_response()
+cache.set('default_solr_count', resp['count'] if resp else 0, 2592000)
+
+#----------------- defaul map geojson -----------------#
+
+
+
+def search_occurrence_v1_charts(request):
+    year_start = 1000
+    year_end = 2021
+    lat_query, lng_query = '', ''
+
+    solr_q_fq_list=[]
+    solr_fq = ''
+    solr_q_list = []
+    solr_q = '*:*'
+    # print (list(request.GET.lists()))
+    for term, values in list(request.GET.lists()):
+        if term !='q' :
+            if term != 'menu':
+                if term =='year':
+                    val = values[0].replace(",", " TO ")
+                    solr_q_fq_list.append('{}:[{}]'.format(term,val))
+                    year_start =values[0].split(',',1)
+                    year_end =values[0].split(',',2)
+                elif term =='dataset':
+                    solr_q_fq_list.append('{}:"{}"'.format('taibif_dataset_name', '" OR "'.join(values)))
+                elif term =='month':
+                    solr_q_fq_list.append('{}:{}'.format(term, ' OR '.join(values)))
+                elif term =='country':
+                    solr_q_fq_list.append('{}:{}'.format(term, ' OR '.join(values)))
+                elif term =='publisher':
+                    solr_q_fq_list.append('{}:{}'.format(term, ' OR '.join(values)))
+                #-----map------#
+                elif term == 'lat':
+                    coor_list = [ float(c) for c in values]
+                    y1 = convert_y_coor_to_grid(min(coor_list))
+                    y2 = convert_y_coor_to_grid(max(coor_list))
+                    lat_query = "&fq={!frange l=" + str(y1) + " u=" + str(y2) + "}grid_y"
+                elif term == 'lng':
+                    coor_list = [ float(c) for c in values]
+                    x1 = convert_x_coor_to_grid(min(coor_list))
+                    x2 = convert_x_coor_to_grid(max(coor_list))
+                    lng_query = "&fq={!frange l=" + str(x1) + " u=" + str(x2) + "}grid_x"
+
+        else:
+            solr_q_list.append('{}:{}'.format('_text_', ' OR '.join(values)))
+
+
+    if len(solr_q_list) > 0:
+        solr_q = ' AND '.join(solr_q_list)
+
+    if len(solr_q_fq_list) > 0:
+        solr_fq = ' AND '.join(solr_q_fq_list)
+
+    charts_year = []
+    charts_month = []
+    charts_dataset = []
+
+    search_count = 0
+    search_offset = 0
+    search_results = []
+    
+    facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name_zh,limit:-1,mincount:0}'
+    facet_month = 'month:{type:range,field:month,start:1,end:13,gap:1}'
+    facet_year = 'year:{type:terms,field:year,limit:-1,mincount:0}'
+    facet_json = 'json.facet={'+facet_dataset + ',' +facet_month+ ',' +facet_year+'}'
+
+    url = f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&q={solr_q}&fq={solr_fq}&{facet_json}{lng_query}{lat_query}'
+    r = requests.get(url)
+
+    if r.status_code == 200:
+        data = r.json()
+        search_count = data['response']['numFound']
+        if search_count != 0:
+            search_offset = data['response']['start']
+            search_results = data['response']['docs']
+            charts_year =[{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['year']['buckets']]
+            charts_month = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['month']['buckets']]
+            charts_dataset = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['dataset']['buckets']]
+        else:
+            charts_year = [{'key': 0, 'label': 0, 'count': 0}]
+            charts_month = [{'key': 0, 'label': 0, 'count': 0}]
+            charts_dataset = [{'key': 0, 'label': 0, 'count': 0}]
+
+    ret = {
+        'charts': [
+            {
+                'key': 'year',
+                'label': '年份',
+                'rows': charts_year,
+            },
+            {
+                'key': 'month',
+                'label': '月份',
+                'rows': charts_month,
+            },
+            {
+                'key': 'dataset',
+                'label': '資料集',
+                'rows': charts_dataset,
+            },
+        ],
+    }
+    return JsonResponse(ret)
+
 
 
 def get_map_species(request):
     query_list = []
     for key, values in request.GET.lists():
-        if key == 'facet':
-            facet_values = values
-        else:
+        if key != 'facet':
             query_list.append((key, values))
     solr = SolrQuery('taibif_occurrence')
     solr_url = solr.generate_solr_url(request.GET.lists())
@@ -62,136 +177,12 @@ def get_map_species(request):
         data = r.json()
         resp.update({'count':data['response']['numFound']})
         resp['results'] = data['response']['docs']
-
-    # taibif_occurrence/select?q.op=OR&wt=json&q=grid_y%3A%5B10995+TO+12164%5DAND+grid_x%3A%5B18703+TO+20812%5D&q=%2A%3A%2A&rows=20
-
     
     return JsonResponse(resp)
 
 
-def search_occurrence_v2_map(request):
-    time_start = time.time()
-    facet_values = []
-    query_list = []
-    for key, values in request.GET.lists():
-        if key == 'facet':
-            facet_values = values
-        else:
-            query_list.append((key, values))
-    solr = SolrQuery('taibif_occurrence')
-    req = solr.request(query_list)
-    #response = req['solr_response']
-    resp = solr.get_response()
-    if not resp:
-        return JsonResponse({
-            'results': 0,
-            'solr_error_msg': solr.solr_error,
-            'solr_url': solr.solr_url,
-            'solr_tuples': solr.solr_tuples,
-        })
-
-    solr_menu = SolrQuery('taibif_occurrence', facet_values)
-    solr_menu.request()
-    resp_menu = solr_menu.get_response()
-
-    # for frontend menu data sturctt
-    menus = []
-    if resp_menu['facets']:
-        if data := resp_menu['facets'].get('country', ''):
-            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
-            menus.append({
-                'key': 'country', #'countrycode',
-                'label': '國家/區域',
-                'rows': rows,
-            })
-        if data := resp_menu['facets'].get('year', ''):
-            #menu_year = [{'key': 0, 'label': 0, 'count': 0,'year_start':1990,'year_end':2021}]
-            # TODO
-            menus.append({
-                'key': 'year',
-                'label': '年份',
-                'rows': ['FAKE_FOR_SPACE',],
-            })
-        if data := resp_menu['facets'].get('month', ''):
-            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in sorted(data['buckets'], key=lambda x: x['val'])]
-            menus.append({
-                'key': 'month',
-                'label': '月份',
-                'rows': rows,
-            })
-        if data := resp_menu['facets'].get('dataset', ''):
-            rows = menu_dataset = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
-            menus.append({
-                'key': 'dataset',
-                'label': '資料集',
-                'rows': rows,
-            })
-        if data := resp_menu['facets'].get('publisher', ''):
-            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
-            menus.append({
-                'key':'publisher',
-                'label': '發布者',
-                'rows': rows,
-            })
-
-    resp['menus'] = menus
-
-    # tree
-    treeRoot = Taxon.objects.filter(rank='kingdom').all()
-    treeData = [{
-        'id': x.id,
-        'data': {
-            'name': x.get_name(),
-            'count': x.count,
-        },
-    } for x in treeRoot]
-    resp['tree'] = treeData
-    if request.GET.get('debug_solr', ''):
-        resp['solr_resp'] = solr.solr_response
-        resp['solr_url'] = solr.solr_url,
-        resp['solr_tuples'] =  solr.solr_tuples,
-
-    resp['solr_qtime'] = req['solr_response']['responseHeader']['QTime']
-    resp['elapsed'] = time.time() - time_start
-
-    # map
-    facet_pivot_map = 'facet.pivot=grid_x,grid_y'
-    # print(solr.solr_url)
-    if 'grid_x' in solr.solr_url:
-        map_url = f'{solr.solr_url}&facet=true&{facet_pivot_map}&facet.limit=-1'
-    else:
-        map_url = f'{solr.solr_url}&facet=true&q=grid_x:[0 TO *] AND grid_y:[0 TO *]&{facet_pivot_map}&facet.limit=-1'
-    map_url = map_url.replace('rows=20','rows=0').replace('&q=%2A%3A%2A','')
-    r = requests.get(map_url)
-    data_c = {}
-    if r.status_code == 200:
-        data = r.json()
-        data_c = data['facet_counts']['facet_pivot']['grid_x,grid_y']
-
-    map_geojson = {"type":"FeatureCollection","features":[]}
-    for i in data_c:
-        current_grid_x = i['value']
-        for j in i['pivot']:
-            current_grid_y = j['value']
-            current_count = j['count']
-            current_center_x, current_center_y = convert_grid_to_coor(current_grid_x, current_grid_y)
-            tmp = [{
-                "type": "Feature",
-                "geometry":{"type":"Point","coordinates":[current_center_x,current_center_y]},
-                "properties": {
-                    "counts": current_count
-                }
-            }]
-            map_geojson['features'] += tmp
-    resp['map_geojson'] = map_geojson
-
-    return JsonResponse(resp)
-
-#-------------------------------------------------#
-
 def occurrence_search_v2(request):
     time_start = time.time()
-
     facet_values = []
     facet_selected = {}
     query_list = []
@@ -216,9 +207,13 @@ def occurrence_search_v2(request):
             'solr_url': solr.solr_url,
             'solr_tuples': solr.solr_tuples,
         })
-
     # for frontend menu data sturct
     menus = solr.get_menus()
+
+    # get full menu if no facet return
+    if len(menus) == 0:
+        menus = get_init_menu(facet_values)
+
     new_menus = []
     selected_facet_menu = {}
     if len(facet_selected) >= 1:
@@ -228,13 +223,14 @@ def occurrence_search_v2(request):
             tmp_query_list = query_list[:]
             tmp_query_list.remove((key, values))
             solr_menu.request(tmp_query_list)
-            selected_facet_menu[key] = solr_menu.get_menus(key)
-
+            if submenu := solr_menu.get_menus(key):
+                selected_facet_menu[key] = submenu
     # reset menus (prevent too less count will filter out by solr facet default limit)
     for i, v in enumerate(menus):
         key = v['key']
         if key in selected_facet_menu:
             #print ('--------', i, facet_selected[key], selected_facet_menu[key], menus[i])
+            print(i, key, selected_facet_menu,'xxxx')
             tmp_menu = selected_facet_menu[key].copy()
             tmp_menu_add = []
             for selected in facet_selected[key]:
@@ -279,8 +275,27 @@ def occurrence_search_v2(request):
                 })
             menu['rows'] = month_rows
 
+    # HACK, for menu items all zero:
+    for menu in new_menus:
+        menu_default = None
+        if menu['key'] not in['month', 'year']:
+            #print(menu['key'], sum([x.get('count', 0) for x in menu['rows']]))
+            total = sum([x.get('count', 0) for x in menu['rows']])
+            if total == 0:
+                if not menu_default:
+                    menu_default = get_init_menu(facet_values)
+                    found = filter(lambda x: x['key'] == menu['key'], menu_default)
+                    if submenu := list(found):
+                        # replace submenu !!
+                        menu['rows'] = submenu[0]['rows']
+
     resp['menus'] = new_menus
 
+    # TODO, init taxon_key
+    req_dict = dict(request.GET)
+    taxon_key = ''
+    if tkey := req_dict.get('taxon_key', ''):
+        taxon_key = tkey
     # tree
     treeRoot = Taxon.objects.filter(rank='kingdom').all()
     treeData = [{
@@ -291,13 +306,29 @@ def occurrence_search_v2(request):
         },
     } for x in treeRoot]
     resp['tree'] = treeData
+    # TODO, init taxon_key
+    #resp['taxon_checked'] = tkey
     if request.GET.get('debug_solr', ''):
         resp['solr_resp'] = solr.solr_response
-        resp['solr_url'] = solr.solr_url,
-        resp['solr_tuples'] =  solr.solr_tuples,
+        resp['solr_url'] = solr.solr_url
+        resp['solr_tuples'] =  solr.solr_tuples
 
     resp['solr_qtime'] = req['solr_response']['responseHeader']['QTime']
+
+    #--------------- map ---------------#
+    # check if solr data has been updated
+    solr_updated = False if cache.get('default_solr_count') == resp['count'] else True
+    if query_list: # 如果有帶篩選條件
+        resp['map_geojson'] = get_geojson(solr.solr_url)
+    elif solr_updated or not cache.get('default_map_geojson'):
+        # 如果沒有篩選條件且solr資料有更新 或 如果沒有篩選條件且cache沒有default_map_geojson
+        resp['map_geojson'] = get_geojson(solr.solr_url)
+        cache.set('default_map_geojson', resp['map_geojson'])
+        cache.set('default_solr_count', resp['count'])
+    else: # 如果沒有篩選條件且solr沒更新且cache有default_map_geojson
+        resp['map_geojson'] = default_map_geojson
     resp['elapsed'] = time.time() - time_start
+    #print('final', time.time() - time_start)
     return JsonResponse(resp)
 
 
@@ -1083,105 +1114,6 @@ def taxon_bar(request):
 
 #------- DEPRECATED ------#
 
-def search_occurrence_v1_charts(request):
-    year_start = 1000
-    year_end = 2021
-
-    solr_q_fq_list=[]
-    solr_fq = ''
-    solr_q_list = []
-    solr_q = '*:*'
-    # print (list(request.GET.lists()))
-    for term, values in list(request.GET.lists()):
-        if term !='q' :
-            if term != 'menu':
-                if term =='year':
-                    val = values[0].replace(",", " TO ")
-                    solr_q_fq_list.append('{}:[{}]'.format(term,val))
-                    year_start =values[0].split(',',1)
-                    year_end =values[0].split(',',2)
-                elif term =='dataset':
-                    solr_q_fq_list.append('{}:"{}"'.format('taibif_dataset_name_zh', '" OR "'.join(values)))
-                elif term =='month':
-                    solr_q_fq_list.append('{}:{}'.format(term, ' OR '.join(values)))
-                elif term =='country':
-                    solr_q_fq_list.append('{}:{}'.format(term, ' OR '.join(values)))
-                elif term =='publisher':
-                    solr_q_fq_list.append('{}:{}'.format(term, ' OR '.join(values)))
-
-        else:
-            solr_q_list.append('{}:{}'.format('_text_', ' OR '.join(values)))
-
-
-    if len(solr_q_list) > 0:
-        solr_q = ' AND '.join(solr_q_list)
-
-    if len(solr_q_fq_list) > 0:
-        solr_fq = ' AND '.join(solr_q_fq_list)
-    print(solr_fq)
-
-    charts_year = []
-    charts_month = []
-    charts_dataset = []
-
-    search_count = 0
-    search_offset = 0
-    search_results = []
-    
-
-    time_start = time.time()  
-    facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name_zh,limit:-1,mincount:0}'
-    facet_month = 'month:{type:range,field:month,start:1,end:13,gap:1}'
-    facet_year = 'year:{type:terms,field:year,limit:-1,mincount:0}'
-    facet_json = 'json.facet={'+facet_dataset + ',' +facet_month+ ',' +facet_year+'}'
-    r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&q={solr_q}&fq={solr_fq}&{facet_json}')
-
-    if r.status_code == 200:
-        data = r.json()
-
-
-        search_count = data['response']['numFound']
-        
-        if search_count != 0:
-            search_offset = data['response']['start']
-            search_results = data['response']['docs']
-
-            charts_year =[{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['year']['buckets']]
-            charts_month = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['month']['buckets']]
-            charts_dataset = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['facets']['dataset']['buckets']]
-        else:
-            charts_year = [{'key': 0, 'label': 0, 'count': 0}]
-            charts_month = [{'key': 0, 'label': 0, 'count': 0}]
-            charts_dataset = [{'key': 0, 'label': 0, 'count': 0}]
-
-
-
-    ret = {
-        'charts': [
-            {
-                'key': 'year',
-                'label': '年份',
-                'rows': charts_year,
-            },
-            {
-                'key': 'month',
-                'label': '月份',
-                'rows': charts_month,
-            },
-            {
-                'key': 'dataset',
-                'label': '資料集',
-                'rows': charts_dataset,
-            },
-        ],
-    }
-    return JsonResponse(ret)
-
-
-
-
-
-
 def search_occurrence_v1(request):
     year_start = 1000
     year_end = 2021
@@ -1242,7 +1174,7 @@ def search_occurrence_v1(request):
     facet_country = 'country:{type:terms,field:country,mincount:0,limit:-1}'
     facet_publisher = 'publisher:{type:terms,field:publisher}'
     facet_json = 'json.facet={'+facet_dataset + ',' +facet_month+ ',' +facet_country+','+facet_publisher+'}'
-    r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q={solr_q}&fq={solr_fq}&{facet_json}')
+    r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&rows={search_limit}&q={solr_q}&fq={solr_fq}&{facet_json}')
 
     if r.status_code == 200:
         data = r.json()
@@ -1354,7 +1286,7 @@ def generateCSV(solr_url,request):
     filename = timestramp +'.csv'
     downloadURL = '没有任何資料'
     csvFilePath = os.path.join(csvFolder, filename)
-
+    dataPolicyURL = request.scheme+"://"+request.META['HTTP_HOST']+'/data-policy'
     if not os.path.exists(csvFolder):
         os.makedirs(csvFolder)
 
@@ -1365,9 +1297,9 @@ def generateCSV(solr_url,request):
 
         result = subprocess.Popen("curl "+f'"{solr_url}"'+" > "+csvFilePath, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-    sendMail(downloadURL,request)
+    sendMail(downloadURL,request,dataPolicyURL)
 
-def sendMail(downloadURL,request):
+def sendMail(downloadURL,request,dataPolicyURL):
     subject = '出現紀錄搜尋'
 
 
@@ -1395,16 +1327,9 @@ def sendMail(downloadURL,request):
 <br/><br/>
 檔案類型：CSV
 
-<br/><br/>
-授權條款：授權條款有兩個來源<br/>
-資料集（postgre : dataset.data_license）<br/>
-資料集內部的單筆資料(solr : license)<br/>
-授權有四個要素 BY, SA, ND, DC<br/>
-因此，要確認這兩個欄位的有哪些要素，有的話就需要顯示，若都沒有先以「未明確授權」顯示<br/>
-https://zh.wikipedia.org/wiki/%E7%9F%A5%E8%AF%86%E5%85%B1%E4%BA%AB%E8%AE%B8%E5%8F%AF%E5%8D%8F%E8%AE%AE
 
 <br/><br/>
-使用條款：
+使用條款：<a href="{dataPolicyURL}">{dataPolicyURL}</a>
 
 <br/><br/>
 下載鏈結：<a href="{downloadURL}">{downloadURL}</a>
@@ -1428,3 +1353,122 @@ TaiBIF團隊 敬上
         [request.GET["email"]],
         html_message=html)
 
+
+# def search_occurrence_v2_map(request):
+#     time_start = time.time()
+#     facet_values = []
+#     query_list = []
+#     for key, values in request.GET.lists():
+#         if key == 'facet':
+#             facet_values = values
+#         else:
+#             query_list.append((key, values))
+#     solr = SolrQuery('taibif_occurrence')
+#     req = solr.request(query_list)
+#     #response = req['solr_response']
+#     resp = solr.get_response()
+#     if not resp:
+#         return JsonResponse({
+#             'results': 0,
+#             'solr_error_msg': solr.solr_error,
+#             'solr_url': solr.solr_url,
+#             'solr_tuples': solr.solr_tuples,
+#         })
+
+#     solr_menu = SolrQuery('taibif_occurrence', facet_values)
+#     solr_menu.request()
+#     resp_menu = solr_menu.get_response()
+
+#     # for frontend menu data sturctt
+#     menus = []
+#     if resp_menu['facets']:
+#         if data := resp_menu['facets'].get('country', ''):
+#             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
+#             menus.append({
+#                 'key': 'country', #'countrycode',
+#                 'label': '國家/區域',
+#                 'rows': rows,
+#             })
+#         if data := resp_menu['facets'].get('year', ''):
+#             #menu_year = [{'key': 0, 'label': 0, 'count': 0,'year_start':1990,'year_end':2021}]
+#             # TODO
+#             menus.append({
+#                 'key': 'year',
+#                 'label': '年份',
+#                 'rows': ['FAKE_FOR_SPACE',],
+#             })
+#         if data := resp_menu['facets'].get('month', ''):
+#             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in sorted(data['buckets'], key=lambda x: x['val'])]
+#             menus.append({
+#                 'key': 'month',
+#                 'label': '月份',
+#                 'rows': rows,
+#             })
+#         if data := resp_menu['facets'].get('dataset', ''):
+#             rows = menu_dataset = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
+#             menus.append({
+#                 'key': 'dataset',
+#                 'label': '資料集',
+#                 'rows': rows,
+#             })
+#         if data := resp_menu['facets'].get('publisher', ''):
+#             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
+#             menus.append({
+#                 'key':'publisher',
+#                 'label': '發布者',
+#                 'rows': rows,
+#             })
+
+#     resp['menus'] = menus
+
+#     # tree
+#     treeRoot = Taxon.objects.filter(rank='kingdom').all()
+#     treeData = [{
+#         'id': x.id,
+#         'data': {
+#             'name': x.get_name(),
+#             'count': x.count,
+#         },
+#     } for x in treeRoot]
+#     resp['tree'] = treeData
+#     if request.GET.get('debug_solr', ''):
+#         resp['solr_resp'] = solr.solr_response
+#         resp['solr_url'] = solr.solr_url,
+#         resp['solr_tuples'] =  solr.solr_tuples,
+
+#     resp['solr_qtime'] = req['solr_response']['responseHeader']['QTime']
+#     resp['elapsed'] = time.time() - time_start
+
+#     # map
+#     facet_pivot_map = 'facet.pivot=grid_x,grid_y'
+#     # print(solr.solr_url)
+#     if 'grid_x' in solr.solr_url:
+#         map_url = f'{solr.solr_url}&facet=true&{facet_pivot_map}&facet.limit=-1'
+#     else:
+#         map_url = f'{solr.solr_url}&facet=true&fq=grid_x%3A%5B0%20TO%20*%5D&fq=grid_y%3A%5B0%20TO%20*%5D&{facet_pivot_map}&facet.limit=-1'
+
+#     map_url = map_url.replace('rows=20','rows=0')
+#     r = requests.get(map_url)
+#     data_c = {}
+#     if r.status_code == 200:
+#         data = r.json()
+#         data_c = data['facet_counts']['facet_pivot']['grid_x,grid_y']
+
+#     map_geojson = {"type":"FeatureCollection","features":[]}
+#     for i in data_c:
+#         current_grid_x = i['value']
+#         for j in i['pivot']:
+#             current_grid_y = j['value']
+#             current_count = j['count']
+#             current_center_x, current_center_y = convert_grid_to_coor(current_grid_x, current_grid_y)
+#             tmp = [{
+#                 "type": "Feature",
+#                 "geometry":{"type":"Point","coordinates":[current_center_x,current_center_y]},
+#                 "properties": {
+#                     "counts": current_count
+#                 }
+#             }]
+#             map_geojson['features'] += tmp
+#     resp['map_geojson'] = map_geojson
+
+#     return JsonResponse(resp)

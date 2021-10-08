@@ -5,15 +5,23 @@ import SearchTaxon from './SearchSidebarTaxon';
 import Slider from '@material-ui/core/Slider';
 
 function Accordion(props) {
+  const {content, onClick, filters} = props;
   const [isOpen, setOpenState] = useState(false);
-  const [yearRange, setYearRange] = useState([1900, 2021]); /* TODO */
+  const yearRange = [1900, 2021];// TODO: hard-coded
+  let yearSelected = yearRange;
+  filters.forEach((x) => {
+    const [key, values] = x.split('=');
+    if (key == 'year') {
+      const vlist = values.split(',');
+      yearSelected = [parseInt(vlist[0]), parseInt(vlist[1])];
+    }
+  });
+  const [yearValue, setYearValue] = useState(yearSelected);
+
   const sliderMarks = [];
   for (let i=1900; i<2022; i++) {
     sliderMarks.push({value: i, label: i});
   }
-
-
-  const {content, onClick, filters} = props;
 
   const appendClass = (props.appendClass) ? ` ${props.appendClass}` : '';
   function toggleAccordion(e) {
@@ -22,32 +30,32 @@ function Accordion(props) {
   }
 
   const handleSliderCommitted = (event) => {
-    //console.log(yearRange);
-    onClick(event, content.key, yearRange.join(','))
+    onClick(event, content.key, yearValue.join(','))
   };
+
 
   const menuItems = content.rows.map((x) => {
     if(content.key ===  'year'){
-        const [yearValue, setYearValue] = useState([x.year_start, x.year_end]);
-        const handleChange = (event, newValue) => {
-          setYearValue(newValue);
-          onClick(event, content.key, newValue);
-        };
+      console.log(yearValue);
+      const handleChange = (event, newValue) => {
+        setYearValue(newValue);
+        onClick(event, content.key, newValue);
+      };
       // console.log(content.key, handleChange)
-        return (
+      return (
           <div className="year_test" key={x}>
-            <Slider
-              value={yearRange}
-              onChange={(e, newRange) => setYearRange(newRange)}
-              onChangeCommitted={handleSliderCommitted}
-              max={2021}
-              min={1900}
-              valueLabelDisplay="auto"
-              aria-labelledby="range-slider"
-            />
+          <Slider
+        value={yearValue}
+        onChange={(e, newRange) => setYearValue(newRange)}
+        onChangeCommitted={handleSliderCommitted}
+        max={yearRange[1]}
+        min={yearRange[0]}
+        valueLabelDisplay="auto"
+        aria-labelledby="range-slider"
+          />
           </div>
-        );
-    }else{
+      );
+    } else{
       const count = (x.count) >=0 ? x.count.toLocaleString() : null;
       const itemChecked = filters.has(`${content.key}=${x.key}`);
 
@@ -86,6 +94,8 @@ function SearchSidebar(props) {
   //console.log(props);
   let isOccurrence = false;
   let searchTypeLabel = '';
+  const [queryKeyword, setQueryKeyword] = useState('');
+  
   if (props.searchType === 'dataset') {
     searchTypeLabel = '資料集';
   }
@@ -117,7 +127,9 @@ function SearchSidebar(props) {
       countMap = true;
     }
   });
-
+  const handleChangeKeyword = (e) => {
+    setQueryKeyword(e.target.value);
+  }
 
   /*
   return (
@@ -157,9 +169,9 @@ function SearchSidebar(props) {
                 </div>
               </div>
               <div className="input-group search-sidebar-header-kw">
-                <input className="form-control" placeholder="搜尋關鍵字" name="search-term" id="search-term" type="text" value="" value={props.queryKeyword} onChange={props.onChangeKeyword} onKeyPress={props.onKeyPressKeyword} />
+      <input className="form-control" placeholder="搜尋關鍵字" name="search-term" id="search-term" type="text" value="" value={queryKeyword} onChange={handleChangeKeyword} onKeyPress={props.onKeyPressKeyword} />
                 <div className="input-group-btn">
-                  <button className="btn" type="submit" onClick={props.onClickSubmitKeyword}>
+      <button className="btn" type="submit" onClick={(e)=>props.onClickSubmitKeyword(e, queryKeyword)}>
                     <i className="glyphicon glyphicon-search"></i>
                   </button>
                 </div>
