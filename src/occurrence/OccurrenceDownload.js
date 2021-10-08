@@ -113,10 +113,10 @@ function OccurrenceDownload(props) {
                       </select>
                     </td>
                   </tr>
-                  <tr>
+                  {/* <tr>
                     <th>搜尋條件:</th>
                     <td>{searchCondition}</td>
-                  </tr>
+                  </tr> */}
                   <tr className='odd'>
                     <th>搜尋時間:</th>
                     <td>{searchDate}</td>
