@@ -67,7 +67,12 @@ def get_init_menu(facet_values=[]):
     # not cache if solr schema not steady?
     solr_default = SolrQuery('taibif_occurrence', facet_values)
     req_default = solr_default.request()
-    return solr_default.get_menus()
+    menus = solr_default.get_menus()
+    # set all count to zero
+    for i, v in enumerate(menus):
+        for x in v['rows']:
+            x['count'] = 0
+    return menus
 
 
 class SolrQuery(object):
@@ -93,7 +98,6 @@ class SolrQuery(object):
     def generate_solr_url(self, req_lists=[]):
         map_query = ''
         for key, values in req_lists:
-            print(key, values)
             if key == 'q' and values[0] != '':
                 self.solr_q = values[0]
             elif key == 'offset':

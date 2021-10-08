@@ -223,13 +223,14 @@ def occurrence_search_v2(request):
             tmp_query_list = query_list[:]
             tmp_query_list.remove((key, values))
             solr_menu.request(tmp_query_list)
-            selected_facet_menu[key] = solr_menu.get_menus(key)
-
+            if submenu := solr_menu.get_menus(key):
+                selected_facet_menu[key] = submenu
     # reset menus (prevent too less count will filter out by solr facet default limit)
     for i, v in enumerate(menus):
         key = v['key']
         if key in selected_facet_menu:
             #print ('--------', i, facet_selected[key], selected_facet_menu[key], menus[i])
+            print(i, key, selected_facet_menu,'xxxx')
             tmp_menu = selected_facet_menu[key].copy()
             tmp_menu_add = []
             for selected in facet_selected[key]:
