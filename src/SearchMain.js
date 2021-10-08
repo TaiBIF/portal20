@@ -190,6 +190,13 @@ function SearchMain(props) {
     }
   }
 
+  if (props.taxonProps && props.taxonProps.taxonData) {
+    for (let tid in props.taxonProps.taxonData.checked) {
+      const name = props.taxonProps.taxonData.checked[tid];
+      filterTags.push(name);
+    }
+  }
+
   function toggleTab(e, menu) {
     e.preventDefault()
     setTabActive(menu);

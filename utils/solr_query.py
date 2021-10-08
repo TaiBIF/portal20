@@ -21,6 +21,12 @@ JSON_FACET_MAP = {
             'type': 'terms',
             'field': 'taibif_dataset_name_zh',
             'mincount': 0,
+            'limit': -1,
+        },
+        'dataset_id': {
+            'type': 'terms',
+            'field': 'taibif_dataset_name',
+            'mincount': 0,
         },
         'dataset_id': {
             'type': 'terms',
@@ -49,6 +55,12 @@ JSON_FACET_MAP = {
             'type':'terms',
             'field':'publisher',
             'mincount': 0,
+            'limit': -1,
+        },
+         'license': {
+            'type':'terms',
+            'field':'license',
+            'mincount': 0,
         },
          'license': {
             'type':'terms',
@@ -57,6 +69,14 @@ JSON_FACET_MAP = {
         },
     }
 }
+
+
+def get_init_menu(facet_values=[]):
+    # TODO better to cache in redis?
+    # not cache if solr schema not steady?
+    solr_default = SolrQuery('taibif_occurrence', facet_values)
+    req_default = solr_default.request()
+    return solr_default.get_menus()
 
 
 class SolrQuery(object):
