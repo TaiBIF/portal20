@@ -249,7 +249,7 @@ class TaibifSearch extends React.Component {
         }
       });
       
-      filters.add(`year=${itemKey}`);
+      filters.add(`year=${itemKey[0]}-${itemKey[1]}`);
     }
 
     this.applyFilters(filters);

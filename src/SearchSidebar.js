@@ -48,9 +48,8 @@ function Accordion(props) {
           </div>
         );
     }else{
-      const count = (x.count) >=0 ? x.count.toLocaleString() : null;
+      const count = (x.count) ? x.count.toLocaleString() : null;
       const itemChecked = filters.has(`${content.key}=${x.key}`);
-
       return (
           <div className="search-sidebar-checkbox-wrapper" key={x.key}>
             <label className="custom-input-ctn">
@@ -103,6 +102,7 @@ function SearchSidebar(props) {
   else if (props.searchType === 'publisher') {
     searchTypeLabel = '發布者';
   }
+
   let filterCount = 0;
   let countMap = false;
   props.filters.forEach((item)=> {
@@ -137,6 +137,12 @@ function SearchSidebar(props) {
       {searchTaxonContainer}
       {menuList}
       </div>)*/
+  let accordionList = [];
+  if (props.menus) {
+    props.menus.forEach((m) => {
+      accordionList.push(<Accordion key={m.key} content={m} onClick={props.onClick} filters={props.filters}/>);
+    });
+  }
   return (
       <div className="search-sidebar">
         <div className="modal right fade modal-search-side-wrapper" id="flowBtnModal" tabIndex="-1" role="dialog">
