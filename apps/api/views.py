@@ -1285,7 +1285,7 @@ def generateCSV(solr_url,request):
     filename = timestramp +'.csv'
     downloadURL = '没有任何資料'
     csvFilePath = os.path.join(csvFolder, filename)
-
+    dataPolicyURL = request.scheme+"://"+request.META['HTTP_HOST']+'/data-policy'
     if not os.path.exists(csvFolder):
         os.makedirs(csvFolder)
 
@@ -1296,9 +1296,9 @@ def generateCSV(solr_url,request):
 
         result = subprocess.Popen("curl "+f'"{solr_url}"'+" > "+csvFilePath, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-    sendMail(downloadURL,request)
+    sendMail(downloadURL,request,dataPolicyURL)
 
-def sendMail(downloadURL,request):
+def sendMail(downloadURL,request,dataPolicyURL):
     subject = '出現紀錄搜尋'
 
 
@@ -1326,16 +1326,9 @@ def sendMail(downloadURL,request):
 <br/><br/>
 檔案類型：CSV
 
-<br/><br/>
-授權條款：授權條款有兩個來源<br/>
-資料集（postgre : dataset.data_license）<br/>
-資料集內部的單筆資料(solr : license)<br/>
-授權有四個要素 BY, SA, ND, DC<br/>
-因此，要確認這兩個欄位的有哪些要素，有的話就需要顯示，若都沒有先以「未明確授權」顯示<br/>
-https://zh.wikipedia.org/wiki/%E7%9F%A5%E8%AF%86%E5%85%B1%E4%BA%AB%E8%AE%B8%E5%8F%AF%E5%8D%8F%E8%AE%AE
 
 <br/><br/>
-使用條款：
+使用條款：<a href="{dataPolicyURL}">{dataPolicyURL}</a>
 
 <br/><br/>
 下載鏈結：<a href="{downloadURL}">{downloadURL}</a>
