@@ -27,11 +27,6 @@ JSON_FACET_MAP = {
             'type': 'terms',
             'field': 'taibif_dataset_name',
             'mincount': 0,
-        },
-        'dataset_id': {
-            'type': 'terms',
-            'field': 'taibif_dataset_name',
-            'mincount': 0,
             'limit': -1,
         },
         'month': {
@@ -57,11 +52,6 @@ JSON_FACET_MAP = {
             'field':'publisher',
             'mincount': 0,
             'limit': -1,
-        },
-         'license': {
-            'type':'terms',
-            'field':'license',
-            'mincount': 0,
         },
          'license': {
             'type':'terms',
