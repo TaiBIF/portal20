@@ -32,6 +32,7 @@ JSON_FACET_MAP = {
             'type': 'terms',
             'field': 'taibif_dataset_name',
             'mincount': 0,
+            'limit': -1,
         },
         'month': {
             'type': 'terms',
@@ -268,11 +269,12 @@ class SolrQuery(object):
             dataset_id = resp['facets'].get('dataset_id', '')
             rows = []
             for x in range(len(data['buckets'])):
-                rows.append({
-                    'key': dataset_id['buckets'][x]['val'],
-                    'label': data['buckets'][x]['val'], 
-                    'count': data['buckets'][x]['count']
-                })
+                if x < len(dataset_id['buckets']): # prevent limited dataset_id buckets cause index error
+                    rows.append({
+                        'key': dataset_id['buckets'][x]['val'],
+                        'label': data['buckets'][x]['val'],
+                        'count': data['buckets'][x]['count']
+                    })
             # rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
             menus.append({
                 'key': 'dataset',
