@@ -143,7 +143,6 @@ function SearchMain(props) {
     initActiveTab = 'menu5';
   }
   const [tabActive, setTabActive] = React.useState(initActiveTab);
-  //console.log(props);
   const countString = (props.data && props.data.count ) ? props.data.count.toLocaleString('en') : 0;
   const elapsed = (props.data && props.data.elapsed ) ? props.data.elapsed.toFixed(2) : '';
 

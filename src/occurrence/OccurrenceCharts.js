@@ -48,6 +48,17 @@ const chartData = {
     ]
   }
 };
+const API_URL_PREFIX = `/api/v1/occurrence/charts`;
+
+const sortData = (objs) => {
+  return Object.keys(objs).sort().reduce(
+    (obj, key) => { 
+      obj[key] = objs[key]; 
+      return obj;
+    }, 
+    {}
+  );
+}
 
 const API_URL_PREFIX = `/api/v1/occurrence/charts`;
 

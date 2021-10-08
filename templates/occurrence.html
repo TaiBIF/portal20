@@ -34,6 +34,15 @@
 
 <!-- container begin -->
 <div class="container">
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+  </script>
+  <ul class="article-scroll-nav-wrapper">
+    <li onclick="goBack()"><a>回上一頁</a></li>
+  </ul>
+
   <div class="article-head-wrapper">
     {% if event.eventDate.value %}<span class="article-post-date">{{ event.eventDate.value }}</span>{% endif %}
     <h1>

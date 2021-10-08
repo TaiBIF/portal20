@@ -95,18 +95,25 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       }
     });
   </script>
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+    </script>
     
   <!-- script 4 adjust Anchor end -->
 <script src="{% static 'js/species.js' %}" crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block main %}
-{% include "inc_breadcrumb.html" with tab="0502" active_label="" %}
+{% include "inc_breadcrumb.html" with tab="05" active_label="" %}
 
 <!-- container begin -->
   <div class="container">
     <!-- amchor btns begin -->
-    
+    <ul class="article-scroll-nav-wrapper">
+      <li onclick="goBack()"><a>回上一頁</a></li>
+    </ul>
     <ul class="article-scroll-nav-wrapper">
       {% if taxon.synonyms %}
       <li><a href="#section1">同物異名</a></li>
@@ -156,10 +163,10 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       </div>
       <!-- 同物異名 end -->
 
-      {% endif %}
       <!-- TaiCoL編號 begin -->
-      <p align="right"><a href="{{ taxon.taicol_namecode_link }}"><span class="myicon icon-link"></span>來源：TaiCoL</a></p>
+        <p><a href="{{ taxon.taicol_namecode_link }}"><span class="myicon icon-link"></span>來源：TaiCoL</a></p>
       <!-- TaiCoL編號 end -->
+      {% endif %}
 
       <!-- 地理分佈 begin -->
       <div id="section2">
