@@ -10,9 +10,20 @@
     display: none;
   }
 
+.leaflet-draw-actions a {
+  background-color: lightgray;
+  color: black;
+}
+
+ul.leaflet-draw-actions.leaflet-draw-actions-bottom li a[title="Save changes"],
+ul.leaflet-draw-actions.leaflet-draw-actions-bottom li a[title="Cancel editing, discards all changes"] {
+    display: none;
+}
+
 
 /* layout */
 
 .search-content {
     padding-bottom: 0 !important;
 }
+

@@ -137,7 +137,7 @@ const SEARCH_TYPE_LABEL_MAP = {
 }
 
 function SearchMain(props) {
-  //console.log(props, 'main');
+  // console.log(props, 'main');
   let initActiveTab = 'menu1';
   if (window.location.pathname === '/occurrence/taxonomy/') {
     initActiveTab = 'menu5';
@@ -156,7 +156,18 @@ function SearchMain(props) {
     const menuKey = f.split('=');
     const found = props.menus.find((x) => x['key'] === menuKey[0]);
     if (found) {
-      const tagLabel = `${found['label']}: ${decodeURIComponent(menuKey[1])}`;
+      let tagLabel;
+      if (menuKey[0]=='dataset'){
+        for (i = 0; i < found.rows.length; i++) {
+          x = found.rows[i].key.indexOf(menuKey[1]);
+            if (-1 != x) {
+                break;
+            }
+          }
+        tagLabel = found.rows[i]['label']
+      
+      } else {
+        tagLabel = `${found['label']}: ${decodeURIComponent(menuKey[1])}`;}
       filterTags.push((<span key={tagLabel} className="search-content-sort-tag">{ tagLabel }</span>));
     } else if (menuKey[0] === 'q') {
       q = decodeURIComponent(menuKey[1]);
@@ -174,9 +185,15 @@ function SearchMain(props) {
         }
       });
       mapTag = true
-      // map=%5B%5B%7B%22lat%22%3A27.672174843840015map=%22lng%22%3A-50.27343750000001%7Dmap=%7B%22lat%22%3A51.614398182379425map=%22lng%22%3A-10.195312500000002%7Dmap=%7B%22lat%22%3A27.672174843840015map=%22lng%22%3A-10.195312500000002%7D%5D%5D
       filterTags.push((<span key="map" className="search-content-sort-tag">經度:{lng[0]}~{lng[1]}</span>));
       filterTags.push((<span key="map" className="search-content-sort-tag">緯度:{lat[0]}~{lat[1]}</span>));
+    }
+  }
+
+  if (props.taxonProps && props.taxonProps.taxonData) {
+    for (let tid in props.taxonProps.taxonData.checked) {
+      const name = props.taxonProps.taxonData.checked[tid];
+      filterTags.push((<span key="taxon" className="search-content-sort-tag">{name}</span>));
     }
   }
 
