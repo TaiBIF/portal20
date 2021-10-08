@@ -256,7 +256,7 @@ class SolrQuery(object):
             menus.append({
                 'key': 'year',
                 'label': '年份',
-                'rows': ['FAKE_FOR_SPACE',],
+                'rows': [{'key': 'fake_year_range', 'label': 'fake_year_range', 'count': 0}]
             })
         if data := resp['facets'].get('month', ''):
             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in sorted(data['buckets'], key=lambda x: x['val'])]
