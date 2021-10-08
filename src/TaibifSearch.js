@@ -362,6 +362,11 @@ class TaibifSearch extends React.Component {
           //console.log(mArr[1]);
           this.setState({queryKeyword:decodeURIComponent(mArr[1])});
         }
+        if (mArr[0] == 'taxon_key') {
+          // TODO: init taxon_key
+          //console.log(mArr[1], this.state.taxonData);
+          ///const taxonData = ta
+        };
         mArr[1].split(',').forEach((x) => {
           filters.add(`${mArr[0]}=${x}`);
         })
@@ -390,6 +395,14 @@ class TaibifSearch extends React.Component {
       const mainData = this.state.search;
       const queryKeyword = this.state.queryKeyword; // DEPRICATTED
 
+      const taxonProps = {
+        taxonData: this.state.taxonData,
+        onTreeSpeciesClick: this.handleTreeSpeciesClick,
+        onTaxonRemoveClick: this.handleTaxonRemove,
+        onTaxonKeywordChange: this.handleTaxonKeywordChange,
+        onSuggestClick: this.handleSuggestClick,
+      };
+
       let searchMainContainer = '';
       if (!isLoadedMain) {
         // via: https://codepen.io/kingfisher13/pen/vKXwNN
@@ -404,17 +417,10 @@ class TaibifSearch extends React.Component {
             </div>
         );
       } else {
-        searchMainContainer = <SearchMain data={mainData} searchType={searchType} filters={filters} menus={menus} onClickTab={this.handleTabClick} />;
+        searchMainContainer = <SearchMain data={mainData} searchType={searchType} filters={filters} menus={menus} onClickTab={this.handleTabClick} taxonProps={taxonProps} />;
       }
 
       const defaultPage = (this.state.page) ? this.state.page : '1';
-      const taxonProps = {
-        taxonData: this.state.taxonData,
-        onTreeSpeciesClick: this.handleTreeSpeciesClick,
-        onTaxonRemoveClick: this.handleTaxonRemove,
-        onTaxonKeywordChange: this.handleTaxonKeywordChange,
-        onSuggestClick: this.handleSuggestClick,
-      };
 
       return (
           <div className="row">
