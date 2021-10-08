@@ -35,7 +35,10 @@ from apps.data.helpers.mod_search import (
 
 from utils.decorators import json_ret
 from utils.general import get_cache_or_set
-from utils.solr_query import SolrQuery
+from utils.solr_query import (
+    SolrQuery,
+    get_init_menu,
+)
 from utils.map_data import convert_grid_to_coor, get_geojson, convert_x_coor_to_grid, convert_y_coor_to_grid
 
 
@@ -205,6 +208,11 @@ def occurrence_search_v2(request):
         })
     # for frontend menu data sturct
     menus = solr.get_menus()
+
+    # get full menu if no facet return
+    if len(menus) == 0:
+        menus = get_init_menu(facet_values)
+
     new_menus = []
     selected_facet_menu = {}
     if len(facet_selected) >= 1:
@@ -265,8 +273,27 @@ def occurrence_search_v2(request):
                 })
             menu['rows'] = month_rows
 
+    # HACK, for menu items all zero:
+    for menu in new_menus:
+        menu_default = None
+        if menu['key'] not in['month', 'year']:
+            #print(menu['key'], sum([x.get('count', 0) for x in menu['rows']]))
+            total = sum([x.get('count', 0) for x in menu['rows']])
+            if total == 0:
+                if not menu_default:
+                    menu_default = get_init_menu(facet_values)
+                    found = filter(lambda x: x['key'] == menu['key'], menu_default)
+                    if submenu := list(found):
+                        # replace submenu !!
+                        menu['rows'] = submenu[0]['rows']
+
     resp['menus'] = new_menus
 
+    # TODO, init taxon_key
+    req_dict = dict(request.GET)
+    taxon_key = ''
+    if tkey := req_dict.get('taxon_key', ''):
+        taxon_key = tkey
     # tree
     treeRoot = Taxon.objects.filter(rank='kingdom').all()
     treeData = [{
@@ -277,10 +304,12 @@ def occurrence_search_v2(request):
         },
     } for x in treeRoot]
     resp['tree'] = treeData
+    # TODO, init taxon_key
+    #resp['taxon_checked'] = tkey
     if request.GET.get('debug_solr', ''):
         resp['solr_resp'] = solr.solr_response
-        resp['solr_url'] = solr.solr_url,
-        resp['solr_tuples'] =  solr.solr_tuples,
+        resp['solr_url'] = solr.solr_url
+        resp['solr_tuples'] =  solr.solr_tuples
 
     resp['solr_qtime'] = req['solr_response']['responseHeader']['QTime']
 
@@ -300,7 +329,7 @@ def occurrence_search_v2(request):
         resp['map_geojson'] = cache.get('default_map_geojson')
 
     resp['elapsed'] = time.time() - time_start
-    print('final', time.time() - time_start)
+    #print('final', time.time() - time_start)
     return JsonResponse(resp)
 
 
