@@ -193,7 +193,7 @@ function SearchMain(props) {
   if (props.taxonProps && props.taxonProps.taxonData) {
     for (let tid in props.taxonProps.taxonData.checked) {
       const name = props.taxonProps.taxonData.checked[tid];
-      filterTags.push(name);
+      filterTags.push((<span key="taxon" className="search-content-sort-tag">{name}</span>));
     }
   }
 
