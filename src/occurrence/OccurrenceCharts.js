@@ -48,6 +48,7 @@ const chartData = {
     ]
   }
 };
+
 const API_URL_PREFIX = `/api/v1/occurrence/charts`;
 
 const sortData = (objs) => {

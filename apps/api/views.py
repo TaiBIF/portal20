@@ -1344,10 +1344,12 @@ def export(request):
     return JsonResponse({"status":search_count}, safe=False)
 
 def generateCSV(solr_url,request):
-    directory = os.path.abspath(os.path.join(os.path.curdir))
-    taibifVolumesPath = '/taibif-volumes/media/'
-    downloadTaibifVolumesPath = '/taibif-code/taibif-volumes/media/'
-    csvFolder = directory+taibifVolumesPath
+
+    #directory = os.path.abspath(os.path.join(os.path.curdir))
+    #taibifVolumesPath = '/taibif-volumes/media/'
+    #csvFolder = directory+taibifVolumesPath
+    CSV_MEDIA_FOLDER = 'csv'
+    csvFolder = os.path.join(conf_settings.MEDIA_ROOT, CSV_MEDIA_FOLDER)
     timestramp = str(int(time.time()))
     filename = timestramp +'.csv'
     downloadURL = '没有任何資料'
@@ -1357,9 +1359,11 @@ def generateCSV(solr_url,request):
         os.makedirs(csvFolder)
 
     if len(solr_url) > 0:
-        downloadURL = request.scheme+"://"+request.META['HTTP_HOST']+downloadTaibifVolumesPath+filename
-        print("curl "+f'"{solr_url}"'+" > "+csvFolder+filename)
-        result = subprocess.Popen("curl "+f'"{solr_url}"'+" > "+csvFolder+filename, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+        downloadURL = request.scheme+"://"+request.META['HTTP_HOST']+conf_settings.MEDIA_URL+os.path.join(CSV_MEDIA_FOLDER, filename)
+        #print("curl "+f'"{solr_url}"'+" > "+csvFolder+filename)
+
+        result = subprocess.Popen("curl "+f'"{solr_url}"'+" > "+csvFilePath, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     sendMail(downloadURL,request)
 
