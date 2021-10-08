@@ -1,9 +1,6 @@
 import React from 'react';
 
 async function fetchData(url) {
-  if(/^year=/.test(url))
-    url = url.replace("-",",")
-
   //console.log('🙋', url);
   let response = await fetch(url);
   let data = await response.json();
@@ -16,9 +13,6 @@ const filtersToSearch = (filters, removeOffset=false) => {
   //console.log(removeOffset);
   const qsArr = [];
   filters.forEach((item)=> {
-    if(/^year=/.test(item))
-      item = item.replace("-",",")
-
     if (/^offset=/.test(item)) {
       if (removeOffset === false) {
         qsArr.push(item);
@@ -29,7 +23,6 @@ const filtersToSearch = (filters, removeOffset=false) => {
   });
   return qsArr.join('&');
 }
-
 const appendUrl = (url, queryString) => {
   if (url.indexOf('?') >= 0) {
     return `${url}&${queryString}`;
@@ -37,9 +30,8 @@ const appendUrl = (url, queryString) => {
     return `${url}?${queryString}`;
   }
 }
-const Pagination = ({total, offset=0, urlPrefix}) => {
+const Pagination = ({total, offset=0, urlPrefix,limit = 20,handleOnClick = null}) => {
   // fixed
-  const limit = 20;
   const numPageDisplay = 5
   const offsetLimit = limit * numPageDisplay;
   // count
@@ -54,27 +46,31 @@ const Pagination = ({total, offset=0, urlPrefix}) => {
   const pageList = [];
   while (step < stepLimit && pageOffset < total) {
     const url = appendUrl(urlPrefix, `offset=${pageOffset}`);
-    pageList.push(<li key={urlPrefix+step} className={(offset === pageOffset) ? 'active' : null}><a href={url}>{step+pageStart}</a></li>);
+    const onClickoffset = pageOffset
+    pageList.push(<li key={urlPrefix+step} onClick={() => handleOnClick(onClickoffset)} className={(offset === pageOffset) ? 'active' : null}><a href={url}>{step+pageStart}</a></li>);
     step++;
     pageOffset += limit;
   }
 
+  const prevNumPageDisplayOffset = offset*numPageDisplay-limit < 0 ? 0 : offset-(numPageDisplay*limit);
+  const nextNumPageDisplayOffset = offset*numPageDisplay+limit > lastPage*limit ? (lastPage-numPageDisplay)*limit : offset+(numPageDisplay*limit);
+
   return (
       <div className="center-block text-center">
       <ul className="pagination">
-      <li>
+      <li onClick={() => handleOnClick(0)}>
       <a href={urlPrefix} aria-label="Previous">
       <span aria-hidden="true">&laquo;</span>
       </a>
       </li>
       { (offsetStart - limit >= 0) ?
-        <li><a href={appendUrl(urlPrefix, `offset=${offsetStart-limit}`)}>...</a></li>
+        <li onClick={() => handleOnClick(prevNumPageDisplayOffset)}><a href={appendUrl(urlPrefix, `offset=${prevNumPageDisplayOffset}`)}>...</a></li>
         : null}
       {pageList}
       { (pageOffset + limit < total) ?
-        <li><a href={appendUrl(urlPrefix, `offset=${offsetStart+limit}`)}>...</a></li>
+        <li onClick={() => handleOnClick(nextNumPageDisplayOffset)}><a href={appendUrl(urlPrefix, `offset=${nextNumPageDisplayOffset}`)}>...</a></li>
         : null}
-      <li>
+      <li onClick={() => handleOnClick(pageOffset+limit)}>
       { (pageOffset + limit < total ) ?
         <a href={appendUrl(urlPrefix, `offset=${pageOffset+limit}`)}  aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
