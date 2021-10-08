@@ -259,7 +259,7 @@ class SolrQuery(object):
             rows = []
             for x in range(len(data['buckets'])):
                 rows.append({
-                    'key': data['buckets'][x]['val'],
+                    'key': dataset_id['buckets'][x]['val'],
                     'label': data['buckets'][x]['val'], 
                     'count': data['buckets'][x]['count']
                 })
