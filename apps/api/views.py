@@ -15,6 +15,7 @@ from django.core.cache import cache
 from django.core.mail import send_mail
 from django.conf import settings as conf_settings
 from requests.sessions import default_headers
+from django.utils.http import urlquote
 
 
 from apps.data.models import (
@@ -1266,16 +1267,21 @@ def search_occurrence_v1(request):
     return JsonResponse(ret)
 
 def export(request):
-    search_count = 0
     solr = SolrQuery('taibif_occurrence')
     solr_url = solr.generate_solr_url(request.GET.lists())
+    type = request.GET['type']
     
     if len(solr_url) > 0:
-        generateCSV(solr_url,request)
+        if type == 'species' :
+            generateCSV(solr_url+'&facet=on&facet.field=scientificName',request)
+        else :
+            generateCSV(solr_url,request)
 
-    return JsonResponse({"status":search_count}, safe=False)
+    return JsonResponse({"status":'success'}, safe=False)
 
 def generateCSV(solr_url,request):
+    print(solr_url)
+    return
 
     #directory = os.path.abspath(os.path.join(os.path.curdir))
     #taibifVolumesPath = '/taibif-volumes/media/'
@@ -1300,8 +1306,27 @@ def generateCSV(solr_url,request):
     sendMail(downloadURL,request,dataPolicyURL)
 
 def sendMail(downloadURL,request,dataPolicyURL):
-    subject = '出現紀錄搜尋'
+    license = ''
+    datasets = request.GET.getlist('dataset')
+    facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name_zh}'
+    facet_license = 'dataset:{type:terms,field:license}'
+    facet_json = 'json.facet={'+facet_dataset + ',' +facet_license+'}'
 
+    for dataset in datasets:
+        r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?fl=license&fq=taibif_dataset_name:({urlquote(dataset)})&q.op=OR&q=*%3A*&rows=1')
+
+        if r.status_code == 200:
+            data = r.json()
+            print(data)
+            search_count = data['response']['numFound']
+            if search_count != 0:
+                datasetLicense = data['response']['docs'][0]['license']
+                if datasetLicense == 'CC-BY-NC 4.0':
+                    license = datasetLicense
+                else :
+                    license = '未明確授權'
+
+    subject = '出現紀錄搜尋'
 
     currentTime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     searchCondition = request.GET["search_condition"]
@@ -1327,8 +1352,12 @@ def sendMail(downloadURL,request,dataPolicyURL):
 <br/><br/>
 檔案類型：CSV
 
+<br/><br/>
+
+授權條款： {license}
 
 <br/><br/>
+
 使用條款：<a href="{dataPolicyURL}">{dataPolicyURL}</a>
 
 <br/><br/>
@@ -1338,7 +1367,7 @@ def sendMail(downloadURL,request,dataPolicyURL):
 若有問題再麻煩您回覆至
 
 <br/><br/>
-taibif.brcas@gmail.com
+<a href='mailto:taibif.brcas@gmail.com'>taibif.brcas@gmail.com</a>
 
 <br/><br/>
 TaiBIF團隊 敬上
