@@ -61,18 +61,6 @@ const sortData = (objs) => {
   );
 }
 
-const API_URL_PREFIX = `/api/v1/occurrence/charts`;
-
-const sortData = (objs) => {
-  return Object.keys(objs).sort().reduce(
-    (obj, key) => { 
-      obj[key] = objs[key]; 
-      return obj;
-    }, 
-    {}
-  );
-}
-
 function OccurrenceCharts(props) {
   const {filters} = props;
   const search = filtersToSearch(filters);
@@ -129,9 +117,7 @@ function OccurrenceCharts(props) {
   function DatasetDataBody() {
     return datasetData[1].map((x,index) => {
       const q = encodeURIComponent(x.title);
-      console.log('index',index)
-      console.log('offset',offset)
-      console.log('offset + limit',offset+limit)
+      
       return (
         index >= offset && index <= offset+limit ?
         <tr key={x.title}>
