@@ -1269,20 +1269,11 @@ def search_occurrence_v1(request):
 def export(request):
     solr = SolrQuery('taibif_occurrence')
     solr_url = solr.generate_solr_url(request.GET.lists())
-    type = request.GET['type']
-    
-    if len(solr_url) > 0:
-        if type == 'species' :
-            generateCSV(solr_url+'&facet=on&facet.field=scientificName',request)
-        else :
-            generateCSV(solr_url,request)
+    generateCSV(solr_url,request)
 
     return JsonResponse({"status":'success'}, safe=False)
 
 def generateCSV(solr_url,request):
-    print(solr_url)
-    return
-
     #directory = os.path.abspath(os.path.join(os.path.curdir))
     #taibifVolumesPath = '/taibif-volumes/media/'
     #csvFolder = directory+taibifVolumesPath
@@ -1290,19 +1281,27 @@ def generateCSV(solr_url,request):
     csvFolder = os.path.join(conf_settings.MEDIA_ROOT, CSV_MEDIA_FOLDER)
     timestramp = str(int(time.time()))
     filename = timestramp +'.csv'
+    tempFilename = timestramp +'_temp.csv'
     downloadURL = '没有任何資料'
+    csvFileTempPath = os.path.join(csvFolder, tempFilename)
     csvFilePath = os.path.join(csvFolder, filename)
     dataPolicyURL = request.scheme+"://"+request.META['HTTP_HOST']+'/data-policy'
     if not os.path.exists(csvFolder):
         os.makedirs(csvFolder)
 
     if len(solr_url) > 0:
-
         downloadURL = request.scheme+"://"+request.META['HTTP_HOST']+conf_settings.MEDIA_URL+os.path.join(CSV_MEDIA_FOLDER, filename)
-        #print("curl "+f'"{solr_url}"'+" > "+csvFolder+filename)
+        type = request.GET['type']
+        distinctCommand = ''
 
-        result = subprocess.Popen("curl "+f'"{solr_url}"'+" > "+csvFilePath, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if type == 'species' :
+            distinctCommand = "-u -k1,1"
 
+        commands = f'curl "{solr_url}" >  \"{csvFileTempPath}\"  &&  ( head -1 {csvFileTempPath} && tail -n+2 {csvFileTempPath}  | sort -t, {distinctCommand} ) > {csvFilePath} && rm -rf {csvFileTempPath}'
+
+        print(f'curl "{solr_url}" >  \"{csvFileTempPath}\"  &&  ( head -1 {csvFileTempPath} && tail -n+2 {csvFileTempPath}  | sort -t, {distinctCommand} ) > {csvFilePath} && rm -rf {csvFileTempPath}')
+        process = subprocess.Popen(commands, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+      
     sendMail(downloadURL,request,dataPolicyURL)
 
 def sendMail(downloadURL,request,dataPolicyURL):
