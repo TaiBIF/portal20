@@ -117,9 +117,7 @@ function OccurrenceCharts(props) {
   function DatasetDataBody() {
     return datasetData[1].map((x,index) => {
       const q = encodeURIComponent(x.title);
-      console.log('index',index)
-      console.log('offset',offset)
-      console.log('offset + limit',offset+limit)
+      
       return (
         index >= offset && index <= offset+limit ?
         <tr key={x.title}>
