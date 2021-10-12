@@ -134,10 +134,12 @@ export default function OccurrenceMap(props) {
                 current_path = current_path.split('?')[0]
                 let new_path = current_path.replace('map','search')
                 if (search!==''){
-                    new_path = new_path = new_path + '?' + search + '&lat=' + latStr + '&lng=' + lngStr}
+                    new_path = new_path = new_path + '?' + search + `&lat=${lat[0]}&lat=${lat[1]}&lng=${lng[0]}&lng=${lng[1]}`}
                 else {
-                    new_path = new_path = new_path + '?lat=' + latStr + '&lng=' + lngStr
+                    new_path = new_path = new_path + `?lat=${lat[0]}&lat=${lat[1]}&lng=${lng[0]}&lng=${lng[1]}`
                 }
+
+                //console.log(new_path)
                 window.location = new_path
                 
             })
