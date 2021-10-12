@@ -187,6 +187,10 @@ def occurrence_search_v2(request):
     facet_values = []
     facet_selected = {}
     query_list = []
+    is_chart = False
+    if re.search("^/api/v1/occurrence/charts.*", str(request.get_full_path())) :
+        is_chart = True
+    
     for key, values in request.GET.lists():
         if key == 'facet':
             facet_values = values
@@ -276,6 +280,13 @@ def occurrence_search_v2(request):
                 })
             menu['rows'] = month_rows
 
+    # year hack
+    #print(new_menus)
+    for menu in new_menus:
+        if menu['key'] == 'year':
+            if is_chart != True :
+                menu['rows'] = [{'key': 'fake_year_range', 'label': 'fake_year_range', 'count': 0}]
+    
     # HACK, for menu items all zero:
     for menu in new_menus:
         menu_default = None
@@ -290,7 +301,42 @@ def occurrence_search_v2(request):
                         # replace submenu !!
                         menu['rows'] = submenu[0]['rows']
 
+    #chart api return month/year/datasey facet 
+    if is_chart :
+        charts_year=[]
+        charts_month=[]
+        charts_dataset=[]
+        for x in new_menus:
+            if x['key'] == 'month':
+                charts_month = x['rows']
+            if x['key'] == 'dataset':
+                charts_dataset = x['rows']
+            if x['key'] == 'year':
+                charts_year = x['rows']
+
+        ret = {
+            'charts': [
+                {
+                    'key': 'year',
+                    'label': '年份',
+                    'rows': charts_year,
+                },
+                {
+                    'key': 'month',
+                    'label': '月份',
+                    'rows': charts_month,
+                },
+                {
+                    'key': 'dataset',
+                    'label': '資料集',
+                    'rows': charts_dataset,
+                },
+            ],
+        }
+        return JsonResponse(ret)
+
     resp['menus'] = new_menus
+
 
     # TODO, init taxon_key
     req_dict = dict(request.GET)

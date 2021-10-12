@@ -11,7 +11,7 @@ from utils.map_data import convert_coor_to_grid, convert_x_coor_to_grid, convert
 if ENV in ['dev','stag']:
     SOLR_PREFIX = 'http://solr:8983/solr/'
 # if ENV == 'dev':
-#     SOLR_PREFIX = 'http://54.65.81.61:8983/solr/'
+    # SOLR_PREFIX = 'http://54.65.81.61:8983/solr/'
 else:
     SOLR_PREFIX = 'http://solr:8983/solr/'
 
@@ -40,7 +40,9 @@ JSON_FACET_MAP = {
         },
         'year': {
             'type':'terms',
-            'field':'year'
+            'field':'year',
+            'mincount': 0,
+            'limit': -1,
         },
         'country': {
             'type':'terms',
@@ -246,11 +248,12 @@ class SolrQuery(object):
             })
         if data := resp['facets'].get('year', ''):
             #menu_year = [{'key': 0, 'label': 0, 'count': 0,'year_start':1990,'year_end':2021}]
+            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
             # TODO
             menus.append({
                 'key': 'year',
                 'label': '年份',
-                'rows': [{'key': 'fake_year_range', 'label': 'fake_year_range', 'count': 0}]
+                'rows':rows,
             })
         if data := resp['facets'].get('month', ''):
             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in sorted(data['buckets'], key=lambda x: x['val'])]
