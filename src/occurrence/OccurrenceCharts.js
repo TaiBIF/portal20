@@ -50,6 +50,8 @@ const chartData = {
 };
 
 const API_URL_PREFIX = `/api/v1/occurrence/charts`;
+const facetQueryString = `facet=year&facet=month&facet=dataset&facet=dataset_id&facet=publisher&facet=country&facet=license`;
+      
 
 const sortData = (objs) => {
   return Object.keys(objs).sort().reduce(
@@ -70,9 +72,15 @@ function OccurrenceCharts(props) {
   const [datasetData, setDatasetData] = useState([false, []]);
   const [offset, setOffset] = useState(0);
   const limit = 10;
-
+  
   useEffect(() => {
-    const apiURL = `${API_URL_PREFIX}?${search}`;
+    let apiURL = null;
+    if(search){
+      apiURL = `${API_URL_PREFIX}?${search}&${facetQueryString}`;
+    }else{
+      apiURL = `${API_URL_PREFIX}?${facetQueryString}`;
+    }
+
     fetchData(apiURL).then((data) => {
       const year = chartData.year;
       let dataCount = {}
