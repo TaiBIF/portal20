@@ -1360,7 +1360,7 @@ def sendMail(downloadURL,request,dataPolicyURL):
 使用條款：<a href="{dataPolicyURL}">{dataPolicyURL}</a>
 
 <br/><br/>
-下載鏈結：<a href="{downloadURL}">{downloadURL}</a>
+下載連結：<a href="{downloadURL}">{downloadURL}</a>
 
 <br/><br/>
 若有問題再麻煩您回覆至

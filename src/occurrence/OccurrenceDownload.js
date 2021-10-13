@@ -127,7 +127,7 @@ function OccurrenceDownload(props) {
                   </tr>
                   <tr className='odd'>
                     <th>保留期限:</th>
-                    <td>本站保留下載檔案連結一年 {searchDate} 至 {expireDate}。<br/>如有延長需求或因學術出版引用而有永久保留需求，請<a href='mailto:taibif.brcas@gmail.com'>聯絡我們</a></td>
+                    <td>本站保留下載檔案連結一年 {searchDate} 至 {expireDate}。<br/>如有延長需求或因學術出版引用而有永久保留需求，請<a href=' /contact-us'>聯絡我們</a></td>
                   </tr>
                   <tr>
                     <th>檔案格式:</th>
@@ -135,7 +135,7 @@ function OccurrenceDownload(props) {
                   </tr>
                   <tr className='odd'>
                     <th>備註:</th>
-                    <td>檔案為離線產生，處理完成後，系統會寄下載資訊到您輸入的電子郵件信箱。<br/>如未收到信件，請檢查您的郵件設定，如仍未收到信件，請<a href='mailto:taibif.brcas@gmail.com'>聯絡我們</a></td>
+                    <td>檔案為離線產生，處理完成後，系統會寄下載資訊到您輸入的電子郵件信箱。<br/>如未收到信件，請檢查您的郵件設定，如仍未收到信件，請<a href=' /contact-us'>聯絡我們</a></td>
                   </tr>
                   <tr>
                     <td colSpan={2}>
