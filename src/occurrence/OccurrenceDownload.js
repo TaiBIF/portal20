@@ -25,6 +25,7 @@ function OccurrenceDownload(props) {
   const email = useRef({});
   const expireDate = moment().add(1, 'Y').format('YYYY-MM-DD');
   email.current = watch("email");
+  const count = props.data.count
 
   useEffect(() => {
     generateFilterTag(filters,menus)
@@ -51,6 +52,11 @@ function OccurrenceDownload(props) {
   }
 
   const onSubmit = (data) => {    
+    if(count > 1000000) {
+      alert("下載資料量過大，請聯絡窗口!")
+      return false
+    }
+
     const facetQueryString = 'facet=year&facet=month&facet=dataset&facet=publisher&facet=country';
     
     const flQueryString = data.type == 'species' ? '&fl=scientificName,vernacularName,kingdom,phylum,class,order,family,genus,species,Total' : '';
