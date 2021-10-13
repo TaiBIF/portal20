@@ -1292,14 +1292,14 @@ def generateCSV(solr_url,request):
 
     if len(solr_url) > 0:
         downloadURL = request.scheme+"://"+request.META['HTTP_HOST']+conf_settings.MEDIA_URL+os.path.join(CSV_MEDIA_FOLDER, filename)
-        distinctCommand = ''
 
         if type == 'species' :
-            distinctCommand = "-u -k1,1"
+            commands = 'curl "'+solr_url+'" >  '+csvFileTempPath+'  &&  ( head -1 '+csvFileTempPath+' && tail -n+2 '+csvFileTempPath+'  | awk -F , \'{a[$0]++; next}END {for (i in a) print i", "a[i]}\'| awk -F , \'!seen[$1]++\' ) > '+csvFilePath+' && rm -rf '+csvFileTempPath
 
-        commands = f'curl "{solr_url}" >  \"{csvFileTempPath}\"  &&  ( head -1 {csvFileTempPath} && tail -n+2 {csvFileTempPath}  | sort -t, {distinctCommand} ) > {csvFilePath} && rm -rf {csvFileTempPath}'
+        else :
+            commands = f'curl "{solr_url}"  > {csvFilePath} '
 
-        #print(f'curl "{solr_url}" >  \"{csvFileTempPath}\"  &&  ( head -1 {csvFileTempPath} && tail -n+2 {csvFileTempPath}  | sort -t, {distinctCommand} ) > {csvFilePath} && rm -rf {csvFileTempPath}')
+        print(commands)
         process = subprocess.Popen(commands, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
       
     sendMail(downloadURL,request,dataPolicyURL)
