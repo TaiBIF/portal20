@@ -122,7 +122,7 @@ def search_occurrence_v1_charts(request):
     facet_year = 'year:{type:terms,field:year,limit:-1,mincount:0}'
     facet_json = 'json.facet={'+facet_dataset + ',' +facet_month+ ',' +facet_year+'}'
 
-    url = f'http://54.65.58.238:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&q={solr_q}&fq={solr_fq}&{facet_json}{lng_query}{lat_query}'
+    url = f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&q={solr_q}&fq={solr_fq}&{facet_json}{lng_query}{lat_query}'
     r = requests.get(url)
 
     if r.status_code == 200:
@@ -1175,7 +1175,7 @@ def search_occurrence_v1(request):
     facet_country = 'country:{type:terms,field:country,mincount:0,limit:-1}'
     facet_publisher = 'publisher:{type:terms,field:publisher}'
     facet_json = 'json.facet={'+facet_dataset + ',' +facet_month+ ',' +facet_country+','+facet_publisher+'}'
-    r = requests.get(f'http://54.65.58.238:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&rows={search_limit}&q={solr_q}&fq={solr_fq}&{facet_json}')
+    r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&rows={search_limit}&q={solr_q}&fq={solr_fq}&{facet_json}')
 
     if r.status_code == 200:
         data = r.json()
@@ -1312,7 +1312,7 @@ def sendMail(downloadURL,request,dataPolicyURL):
     facet_json = 'json.facet={'+facet_dataset + ',' +facet_license+'}'
 
     for dataset in datasets:
-        r = requests.get(f'http://54.65.58.238:8983/solr/taibif_occurrence/select?fl=license&fq=taibif_dataset_name:({urlquote(dataset)})&q.op=OR&q=*%3A*&rows=1')
+        r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?fl=license&fq=taibif_dataset_name:({urlquote(dataset)})&q.op=OR&q=*%3A*&rows=1')
 
         if r.status_code == 200:
             data = r.json()
