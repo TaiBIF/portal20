@@ -122,7 +122,7 @@ def search_occurrence_v1_charts(request):
     facet_year = 'year:{type:terms,field:year,limit:-1,mincount:0}'
     facet_json = 'json.facet={'+facet_dataset + ',' +facet_month+ ',' +facet_year+'}'
 
-    url = f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&q={solr_q}&fq={solr_fq}&{facet_json}{lng_query}{lat_query}'
+    url = f'http://54.65.58.238:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&q={solr_q}&fq={solr_fq}&{facet_json}{lng_query}{lat_query}'
     r = requests.get(url)
 
     if r.status_code == 200:
@@ -1175,7 +1175,7 @@ def search_occurrence_v1(request):
     facet_country = 'country:{type:terms,field:country,mincount:0,limit:-1}'
     facet_publisher = 'publisher:{type:terms,field:publisher}'
     facet_json = 'json.facet={'+facet_dataset + ',' +facet_month+ ',' +facet_country+','+facet_publisher+'}'
-    r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&rows={search_limit}&q={solr_q}&fq={solr_fq}&{facet_json}')
+    r = requests.get(f'http://54.65.58.238:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&rows={search_limit}&q={solr_q}&fq={solr_fq}&{facet_json}')
 
     if r.status_code == 200:
         data = r.json()
@@ -1280,8 +1280,9 @@ def generateCSV(solr_url,request):
     CSV_MEDIA_FOLDER = 'csv'
     csvFolder = os.path.join(conf_settings.MEDIA_ROOT, CSV_MEDIA_FOLDER)
     timestramp = str(int(time.time()))
-    filename = timestramp +'.csv'
-    tempFilename = timestramp +'_temp.csv'
+    type = request.GET['type']
+    filename = f'{type}_{timestramp}.csv'
+    tempFilename = f'{timestramp}_temp.csv'
     downloadURL = '没有任何資料'
     csvFileTempPath = os.path.join(csvFolder, tempFilename)
     csvFilePath = os.path.join(csvFolder, filename)
@@ -1291,7 +1292,6 @@ def generateCSV(solr_url,request):
 
     if len(solr_url) > 0:
         downloadURL = request.scheme+"://"+request.META['HTTP_HOST']+conf_settings.MEDIA_URL+os.path.join(CSV_MEDIA_FOLDER, filename)
-        type = request.GET['type']
         distinctCommand = ''
 
         if type == 'species' :
@@ -1299,20 +1299,20 @@ def generateCSV(solr_url,request):
 
         commands = f'curl "{solr_url}" >  \"{csvFileTempPath}\"  &&  ( head -1 {csvFileTempPath} && tail -n+2 {csvFileTempPath}  | sort -t, {distinctCommand} ) > {csvFilePath} && rm -rf {csvFileTempPath}'
 
-        print(f'curl "{solr_url}" >  \"{csvFileTempPath}\"  &&  ( head -1 {csvFileTempPath} && tail -n+2 {csvFileTempPath}  | sort -t, {distinctCommand} ) > {csvFilePath} && rm -rf {csvFileTempPath}')
+        #print(f'curl "{solr_url}" >  \"{csvFileTempPath}\"  &&  ( head -1 {csvFileTempPath} && tail -n+2 {csvFileTempPath}  | sort -t, {distinctCommand} ) > {csvFilePath} && rm -rf {csvFileTempPath}')
         process = subprocess.Popen(commands, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
       
     sendMail(downloadURL,request,dataPolicyURL)
 
 def sendMail(downloadURL,request,dataPolicyURL):
-    license = ''
+    license = 'CC-BY-NC 4.0'
     datasets = request.GET.getlist('dataset')
     facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name_zh}'
     facet_license = 'dataset:{type:terms,field:license}'
     facet_json = 'json.facet={'+facet_dataset + ',' +facet_license+'}'
 
     for dataset in datasets:
-        r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?fl=license&fq=taibif_dataset_name:({urlquote(dataset)})&q.op=OR&q=*%3A*&rows=1')
+        r = requests.get(f'http://54.65.58.238:8983/solr/taibif_occurrence/select?fl=license&fq=taibif_dataset_name:({urlquote(dataset)})&q.op=OR&q=*%3A*&rows=1')
 
         if r.status_code == 200:
             data = r.json()
