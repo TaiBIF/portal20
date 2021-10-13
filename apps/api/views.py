@@ -1326,8 +1326,9 @@ def generateCSV(solr_url,request):
     CSV_MEDIA_FOLDER = 'csv'
     csvFolder = os.path.join(conf_settings.MEDIA_ROOT, CSV_MEDIA_FOLDER)
     timestramp = str(int(time.time()))
-    filename = timestramp +'.csv'
-    tempFilename = timestramp +'_temp.csv'
+    type = request.GET['type']
+    filename = f'{type}_{timestramp}.csv'
+    tempFilename = f'{timestramp}_temp.csv'
     downloadURL = '没有任何資料'
     csvFileTempPath = os.path.join(csvFolder, tempFilename)
     csvFilePath = os.path.join(csvFolder, filename)
@@ -1337,7 +1338,6 @@ def generateCSV(solr_url,request):
 
     if len(solr_url) > 0:
         downloadURL = request.scheme+"://"+request.META['HTTP_HOST']+conf_settings.MEDIA_URL+os.path.join(CSV_MEDIA_FOLDER, filename)
-        type = request.GET['type']
         distinctCommand = ''
 
         if type == 'species' :
@@ -1345,13 +1345,13 @@ def generateCSV(solr_url,request):
 
         commands = f'curl "{solr_url}" >  \"{csvFileTempPath}\"  &&  ( head -1 {csvFileTempPath} && tail -n+2 {csvFileTempPath}  | sort -t, {distinctCommand} ) > {csvFilePath} && rm -rf {csvFileTempPath}'
 
-        print(f'curl "{solr_url}" >  \"{csvFileTempPath}\"  &&  ( head -1 {csvFileTempPath} && tail -n+2 {csvFileTempPath}  | sort -t, {distinctCommand} ) > {csvFilePath} && rm -rf {csvFileTempPath}')
+        #print(f'curl "{solr_url}" >  \"{csvFileTempPath}\"  &&  ( head -1 {csvFileTempPath} && tail -n+2 {csvFileTempPath}  | sort -t, {distinctCommand} ) > {csvFilePath} && rm -rf {csvFileTempPath}')
         process = subprocess.Popen(commands, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
       
     sendMail(downloadURL,request,dataPolicyURL)
 
 def sendMail(downloadURL,request,dataPolicyURL):
-    license = ''
+    license = 'CC-BY-NC 4.0'
     datasets = request.GET.getlist('dataset')
     facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name_zh}'
     facet_license = 'dataset:{type:terms,field:license}'
