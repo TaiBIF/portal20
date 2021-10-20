@@ -12,13 +12,13 @@ DATA_MAPPING = {
         'ZM': '尚比亞',
         'BI': '蒲隆地',
         'CN': '中國',
-        None:'其他'
+        'unknown':'其他',
     },
     'rights': {
         'CC-BY-NC': 'CC-BY-NC (4.0)',
         'CC-BY': 'CC-BY (4.0)',
         'CC0': 'CC0 (1.0)',
-        None:'未明確授權'
+        'unknown':'未明確授權',
     },
     'core': {
         'occurrence': 'Occurrence',
