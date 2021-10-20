@@ -622,12 +622,15 @@ def search_occurrence(request, cat=''):
 def search_dataset(request):
     has_menu = True if request.GET.get('menu', '') else False
     menu_list = []
-
+    # content search
     ds_search = DatasetSearch(list(request.GET.lists()))
+    # menu item
+    ds_menu = DatasetSearch([])
+
     if has_menu:
 
         #publisher_query = Dataset.objects\
-        publisher_query = ds_search.query\
+        publisher_query = ds_menu.query\
             .values('organization','organization_name')\
             .exclude(organization__isnull=True)\
             .annotate(count=Count('organization'))\
@@ -644,11 +647,10 @@ def search_dataset(request):
         publisher_rows = [{
             'key':x['organization'],
             'label':x['organization_name'],
-            'count': x['count']
+            'count': x['count'],
         } for x in publisher_query]
 
-
-        rights_query = ds_search.query\
+        rights_query = ds_menu.query\
             .values('data_license')\
             .exclude(data_license__exact='')\
             .annotate(count=Count('data_license'))\
@@ -660,7 +662,7 @@ def search_dataset(request):
         } for x in rights_query]
 
 
-        country_query = ds_search.query\
+        country_query = ds_menu.query\
             .values('country')\
             .exclude(country__exact='')\
             .annotate(count=Count('country'))\
