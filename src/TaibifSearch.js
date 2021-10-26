@@ -361,8 +361,23 @@ class TaibifSearch extends React.Component {
           //console.log(mArr[1]);
           this.setState({queryKeyword:decodeURIComponent(mArr[1])});
         } else if (mArr[0] == 'taxon_key') {
-          // TODO: init taxon_key
-          //console.log(mArr[1], this.state.taxonData);
+          let taxonData = this.state.taxonData
+          const kArr = m.split(':');
+          const apiUrl = `/api/taxon/tree/node/${kArr[1]}`;
+          fetch(apiUrl)
+            .then(res => res.json())
+            .then(
+              (json) => {
+                console.log('resp (tree): ', json);
+                const speciesName = json.data.name;
+                const tid = json.id;
+                taxonData.checked[tid] = speciesName;
+              },
+              (error) => {
+                console.log('cDidMount error tree', error);
+              });
+          filters.add(`${mArr[0]}=${mArr[1]}`);
+          // console.log("aaa",mArr[1], this.state.taxonData);
           ///const taxonData = ta
         } else {
           filters.add(`${mArr[0]}=${mArr[1]}`);
