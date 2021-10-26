@@ -235,7 +235,6 @@ def occurrence_search_v2(request):
         key = v['key']
         if key in selected_facet_menu:
             #print ('--------', i, facet_selected[key], selected_facet_menu[key], menus[i])
-            print(i, key, selected_facet_menu,'xxxx')
             tmp_menu = selected_facet_menu[key].copy()
             tmp_menu_add = []
             for selected in facet_selected[key]:
@@ -1334,12 +1333,12 @@ def generateCSV(solr_url,request):
     downloadURL = '没有任何資料'
     csvFileTempPath = os.path.join(csvFolder, tempFilename)
     csvFilePath = os.path.join(csvFolder, filename)
-    dataPolicyURL = request.scheme+"://"+request.META['HTTP_HOST']+'/data-policy'
+    dataPolicyURL = "https://"+request.META['HTTP_HOST']+'/data-policy'
     if not os.path.exists(csvFolder):
         os.makedirs(csvFolder)
 
     if len(solr_url) > 0:
-        downloadURL = request.scheme+"://"+request.META['HTTP_HOST']+conf_settings.MEDIA_URL+os.path.join(CSV_MEDIA_FOLDER, filename)
+        downloadURL = "https://"+request.META['HTTP_HOST']+conf_settings.MEDIA_URL+os.path.join(CSV_MEDIA_FOLDER, filename)
 
         if type == 'species' :
             commands = 'curl "'+solr_url+'" >  '+csvFileTempPath+'  &&  ( head -1 '+csvFileTempPath+' && tail -n+2 '+csvFileTempPath+'  | awk \'BEGIN{FS=OFS=","}NF=(NF-1)\'  | awk -F , \'{a[$0]++; next}END {for (i in a) print i", "a[i]}\'| awk -F , \'!seen[$1]++\' ) > '+csvFilePath+' && rm -rf '+csvFileTempPath
