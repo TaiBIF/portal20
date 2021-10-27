@@ -421,6 +421,7 @@ def species_view(request, pk):
     context = {}
     dataset = []
     search_count = 0
+    map_geojson = False
     taxon = get_object_or_404(Taxon, pk=pk)
     switch = {
             'kingdom':'kingdom_key',
@@ -429,21 +430,17 @@ def species_view(request, pk):
             'order':'order_key',
             'family':'family_key',
             'genus':'genus_key',
-            'species':'scientficName',
+            'species':'species_key',
         }
     total = []
-    
-    if taxon.rank != 'species':
-        solr_q = switch.get(taxon.rank) + ':' + str(pk)
-    else :
-        solr_q = switch.get(taxon.rank) + ':' + taxon.name
 
+    solr_q = switch.get(taxon.rank) + ':' + str(pk)
+    
 
     search_limit = 20
     facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name,limit:-1,mincount:1}'
     facet_dataset_zh = 'dataset_zh:{type:terms,field:taibif_dataset_name_zh,limit:-1,mincount:1}'
     facet_json = 'json.facet={'+facet_dataset +','+facet_dataset_zh +'}'
-    # r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=OR&rows={search_limit}&q={solr_q}&{facet_json}')
     
 
     if ENV in ['dev','stag']:
@@ -452,6 +449,9 @@ def species_view(request, pk):
         r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&rows={search_limit}&q=*:*&fq={solr_q}&{facet_json}')
 
 
+    map_url = "http://"+request.META['HTTP_HOST']+"/api/v2/occurrence/search?taxon_key="+taxon.rank+":"+str(taxon.id)+"&facet=year&facet=month&facet=dataset&facet=dataset_id&facet=publisher&facet=country&facet=license"
+    r2 = requests.get(map_url)
+
     if r.status_code == 200:
 
         data = r.json()
@@ -459,8 +459,6 @@ def species_view(request, pk):
         search_offset = data['response']['start']
         search_results = data['response']['docs']
 
-
-# dataset_occ_count
         if search_count != 0 :
             count = []
             dataset_list = []
@@ -471,11 +469,21 @@ def species_view(request, pk):
             
             for x,y,z in zip(count, dataset_list, dataset_zh_list):
                 dataset.append({'count':x,'name':y,'name_zh':z})                
+
+    if r2.status_code == 200:
+        data2 = r2.json()
+
+        if data2['map_geojson']['features']!=[]:
+            map_geojson = True
+
+    
+# dataset_occ_count
         
     context = {
         'taxon': taxon,
         'dataset':dataset,
         'total':search_count,
+        'map_view':map_geojson,
     }
     
     return render(request, 'species.html', context)
