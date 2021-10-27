@@ -9,7 +9,7 @@
 <script src="{% static 'js/leaflet-heat.js' %}"></script>
 
     <style>
-        #map { width: 800px; height: 600px; }
+        #map { height: 600px; }
         body { font: 16px/1.4 "Helvetica Neue", Arial, sans-serif; }
         .ghbtns { position: relative; top: 4px; margin-left: 5px; }
         a { color: #0077ff; }
@@ -17,31 +17,7 @@
 {% endblock %}
 
 {% block script %}
-{% if map_view %}
-{{ test|json_script:"occurrence-points" }}
 
-
-<script>
-
-  const map = L.map('map').setView([{{ map_view.0 }}, {{ map_view.1 }}], 10);
-
-  const tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-}).addTo(map);
-
-  //addressPoints = addressPoints.map(function (p) { return [p[0], p[1]]; });
-  const points = JSON.parse(document.getElementById('occurrence-points').textContent);
-  const occurrencePoints = points.map(function (p) {
-    return [p['decimallatitude'], p['decimallongitude']]
-  });
-  console.log(occurrencePoints);
-
-const heat = L.heatLayer(occurrencePoints).addTo(map);
-
-</script>
-
-
-{% endif %}
  <!-- script 4 owl carousel begin -->
   <script>
     $(document).ready(function() {
@@ -95,10 +71,10 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       }
     });
   </script>
-    
-  <!-- script 4 adjust Anchor end -->
-<script src="{% static 'js/species.js' %}" crossorigin="anonymous"></script>
-{% endblock %}
+  {% if map_view %}
+  <script src="{% static 'js/species.js' %}" crossorigin="anonymous" taxon_rank = {{ taxon.rank }} taxon_id = {{ taxon.id }}></script>
+{% endif %}
+  {% endblock %}
 
 {% block main %}
 {% include "inc_breadcrumb.html" with tab="0502" active_label="" %}
@@ -164,9 +140,11 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
       <!-- 地理分佈 begin -->
       <div id="section2">
         <h4 class="heading-md-ul">地理分佈</h4>
-        {% if map_view %}<div id="map"></div>
+
+        {% if map_view %}
+          <div id="map"></div>
         {% else %}
-        No data available
+          No data available
         {% endif %}
       </div>
       <!-- 地理分佈 end -->
@@ -270,11 +248,6 @@ const heat = L.heatLayer(occurrencePoints).addTo(map);
         </div>
       {% endif %}
       <!-- 文獻 end -->
-
-      {% comment %}
-     
-      <ul class="charge-list"></ul>
-      {% endcomment %}
 
 
 {% endblock %}
