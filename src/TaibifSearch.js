@@ -359,6 +359,7 @@ class TaibifSearch extends React.Component {
         const mArr = m.split('=');
         if (mArr[0] === 'q') {
           //console.log(mArr[1]);
+          filters.add(`q=${decodeURIComponent(mArr[1])}`);
           this.setState({queryKeyword:decodeURIComponent(mArr[1])});
         } else if (mArr[0] == 'taxon_key') {
           let taxonData = this.state.taxonData
@@ -385,8 +386,8 @@ class TaibifSearch extends React.Component {
         //mArr[1].split(',').forEach((x) => {
         //  filters.add(`${mArr[0]}=${x}`);
         //})
+        this.applyFilters(filters);
       });
-      this.applyFilters(filters);
     }
     else {
       this.getSearch();
