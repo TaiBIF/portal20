@@ -9,9 +9,9 @@ from conf.settings import ENV
 from utils.map_data import convert_coor_to_grid, convert_x_coor_to_grid, convert_y_coor_to_grid
 
 if ENV in ['dev','stag']:
-    SOLR_PREFIX = 'http://solr:8983/solr/'
+    # SOLR_PREFIX = 'http://solr:8983/solr/'
 # if ENV == 'dev':
-    # SOLR_PREFIX = 'http://54.65.81.61:8983/solr/'
+    SOLR_PREFIX = 'http://54.65.81.61:8983/solr/'
 else:
     SOLR_PREFIX = 'http://solr:8983/solr/'
 
@@ -282,7 +282,7 @@ class SolrQuery(object):
             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
             menus.append({
                 'key':'publisher',
-                'label': '發布者',
+                'label': '發布單位',
                 'rows': rows,
             })
         if data := resp['facets'].get('license', ''):

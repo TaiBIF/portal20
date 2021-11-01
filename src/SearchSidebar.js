@@ -111,7 +111,7 @@ function SearchSidebar(props) {
     searchTypeLabel = '物種';
   }
   else if (props.searchType === 'publisher') {
-    searchTypeLabel = '發布者';
+    searchTypeLabel = '發布單位';
   }
 
   let filterCount = 0;
