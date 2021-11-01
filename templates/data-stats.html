@@ -107,10 +107,24 @@ svg text.label {
     <h3>已發布資料列表 <small><a href="{% url 'search-dataset' %}" class="btn btn-default"> 👉 搜尋資料集</a></small></h3> 
     <table class="table table-bordered">
       <thead>
-        <tr><th width="20%">資料集名稱</th><th width="%26">發布者</th><th width="10%">資料類型</th><th width="8%">資料筆數</th><th width="8%">出現紀錄</th><th width="10%">發佈時間</th><th width="7%">地區</th><th width="11%">公開狀態</th></tr>
+        <tr><th width="20%">資料集名稱</th>
+          <th width="%26">發布單位</th>
+          <th width="10%">資料類型</th>
+          <th width="8%">資料筆數</th>
+          <th width="8%">出現紀錄</th>
+          <th width="10%">發佈時間</th><
+            th width="7%">地區</th>
+            <th width="11%">公開狀態</th></tr>
       </thead>
       {% for i in dataset_list %}
-      <tr><td>{% if i.status == "Public" %}<a href="{{ i.get_absolute_url }}">{{ i.title }}</a>{% else %}{{ i.title }}{% endif%}</td><td>{{ i.organization.name }}</td><td>{{ i.get_dwc_core_type_display }}</td><td>{{ i.num_record|intcomma }}</td><td>{{ i.num_occurrence|intcomma }}</td><td>{{ i.pub_date|date:'Y/m/d' }}</td><td>{{ i.country_for_human }}</td><td>{{ i.get_status_display }}{% if i.status == "Public" %}<br><small>{% if i.guid %}已註冊至 GBIF{% else %}未註冊至 GBIF{% endif %}</small>{% endif %}</td></tr>
+      <tr><td>{% if i.status == "PUBLIC" %}<a href="{{ i.get_absolute_url }}">{{ i.title }}</a>{% else %}{{ i.title }}{% endif%}</td>
+        <td>{{ i.organization.name }}</td>
+        <td>{{ i.get_dwc_core_type_display }}</td>
+        <td>{{ i.num_record|intcomma }}</td>
+        <td>{{ i.num_occurrence|intcomma }}</td>
+        <td>{{ i.pub_date|date:'Y/m/d' }}</td>
+        <td>{{ i.country_for_human }}</td>
+        <td>{{ i.get_status_display }}{% if i.status == "PUBLIC" %}<br><small>{% if i.guid %}已註冊至 GBIF{% else %}未註冊至 GBIF{% endif %}</small>{% endif %}</td></tr>
       {% endfor %}
     </table>
     {% endcomment %}

@@ -10,7 +10,7 @@ const filterLabels = {
   year:'年份',
   month:'月份',
   dataset:'資料集',
-  publisher:'發布者',
+  publisher:'發布單位',
   country:'國家',
 }
 
