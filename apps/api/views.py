@@ -472,7 +472,7 @@ def search_occurrence(request, cat=''):
             },
             {
                 'key':'publisher',
-                'label': '發布者',
+                'label': '發布單位',
                 'rows': publisher_rows
             }
         ]
@@ -624,7 +624,7 @@ def search_dataset(request):
     # content search
     ds_search = DatasetSearch(list(request.GET.lists()))
     # menu item
-    ds_menu = DatasetSearch([])
+    ds_menu = DatasetSearch([]) 
 
     if has_menu:
 
@@ -675,7 +675,7 @@ def search_dataset(request):
         menu_list = [
             {
                 'key':'publisher',
-                'label': '發布者',
+                'label': '發布單位',
                 'rows': publisher_rows
             },
             {
@@ -1287,7 +1287,7 @@ def search_occurrence_v1(request):
             },
             {
                 'key':'publisher',
-                'label': '發布者',
+                'label': '發布單位',
                 'rows': menu_publisher,
             }
         ],

@@ -94,7 +94,7 @@ function SearchSidebar(props) {
   //console.log(props);
   let isOccurrence = false;
   let searchTypeLabel = '';
-  const [queryKeyword, setQueryKeyword] = useState('');
+  const [queryKeyword, setQueryKeyword] = useState(props.queryKeyword);
   
   if (props.searchType === 'dataset') {
     searchTypeLabel = '資料集';
@@ -111,7 +111,7 @@ function SearchSidebar(props) {
     searchTypeLabel = '物種';
   }
   else if (props.searchType === 'publisher') {
-    searchTypeLabel = '發布者';
+    searchTypeLabel = '發布單位';
   }
 
   let filterCount = 0;

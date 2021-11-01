@@ -150,7 +150,7 @@ class DatasetTable extends React.Component {
       const disabledNext = (data.has_more === false) ? ' disabled' : '';
       const theadItems = [
         ['title', '資料集名稱'],
-        ['organization', '發布者'],
+        ['organization', '發布單位'],
         ['dwc_core_type', '資料類型'],
         ['num_record','資料筆數'],
         ['num_occurrence', '出現紀錄'],
