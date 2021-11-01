@@ -1,5 +1,5 @@
 import React from 'react';
-
+import ReactTooltip from 'react-tooltip';
 import OccurrenceRouter from './occurrence/OccurrenceRouter';
 import {
   filtersToSearch,
@@ -132,7 +132,7 @@ function PublisherResult(props) {
 const SEARCH_TYPE_LABEL_MAP = {
   'occurrence': '出現紀錄',
   'dataset': '資料集',
-  'publisher': '發布者',
+  'publisher': '發布單位',
   'species': '物種',
 }
 
@@ -247,6 +247,9 @@ function SearchMain(props) {
   if (qs.length > 0) {
     pageUrlPrefix = `${pageUrlPrefix}?${qs}`;
   }
+  const divStyle = {
+    display:'inline',
+  }
   //console.log(pageUrlPrefix);
   return (
       <div className="search-content">
@@ -255,8 +258,20 @@ function SearchMain(props) {
           <li className="active">搜尋{typeLabel}</li>
         </ol>
         <div className="search-content-heading-wrapper">
-      <h1 className="heading-lg">{typeLabel} <span className="heading-footnote">共 {countString} 筆資料 ({elapsed} 秒)</span></h1>
-          <span>篩選條件：</span>
+        {(props.searchType === 'publisher') ?
+        <React.Fragment>
+          <div className="tools-title" >
+          <a href='https://www.gbif.org/zh-tw/become-a-publisher'><span data-tip='發布單位已於 GBIF 註冊成為台灣的資料發布者，以單位機構為主，類型可包含公家機關、研究機構、大專院校、NGO組織等。詳情請見：https://www.gbif.org/zh-tw/become-a-publisher'
+          className="glyphicon glyphicon-info-sign"> </span></a>
+          <h1  style={divStyle} className="heading-lg">{typeLabel} 
+          <span className="heading-footnote"> 共 {countString} 筆資料 ({elapsed} 秒)</span></h1>
+          </div>
+        <ReactTooltip/>
+        </React.Fragment>
+       :<h1 className="heading-lg">{typeLabel} <span className="heading-footnote">共 {countString} 筆資料 ({elapsed} 秒)</span></h1>
+      }
+        
+        <span>篩選條件：</span>
           {filterTags}
         </div>
       {(props.searchType !== 'occurrence') ?

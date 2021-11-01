@@ -55,16 +55,16 @@ def search_all(request):
         ## 預設最多每組 20 筆
         count = 0
 
-        
+        # TODO check article type 
         # article
-        article_rows = []
-        for x in Article.objects.filter(title__icontains=q).all()[:10]:
-            article_rows.append({
-                'title': x.title,
-                'content': x.content,
-                'url': x.get_absolute_url()
-            })
-        count += len(article_rows)
+        # article_rows = []
+        # for x in Article.objects.filter(title__icontains=q).all()[:10]:
+        #     article_rows.append({
+        #         'title': x.title,
+        #         'content': x.content,
+        #         'url': x.get_absolute_url()
+        #     })
+        # count += len(article_rows)
 
         # occurrence
         occur_rows = []
@@ -120,11 +120,11 @@ def search_all(request):
         context = {
             'count': count,
             'results': [
-                {
-                    'cat': 'article',
-                    'label': '文章',
-                    'rows': article_rows
-                },
+                # {
+                #     'cat': 'article',
+                #     'label': '文章',
+                #     'rows': article_rows
+                # },
                 {
                     'cat': 'occurrence',
                     'label': '出現紀錄',
@@ -142,7 +142,7 @@ def search_all(request):
                 },
                 {
                     'cat': 'publisher',
-                    'label': '發布者',
+                    'label': '發布單位',
                     'rows': publisher_rows
                 },
             ]
@@ -489,12 +489,12 @@ def species_view(request, pk):
     return render(request, 'species.html', context)
 
 def search_view(request, cat=''):
-
+   
     context = {'env': settings.ENV}
     return render(request, 'search.html', context)
 
 
-def search_view_species(request, cat=''):
+def search_view_species(request, cat=''): 
 
     context = {'env': settings.ENV}
     return render(request, 'search_species.html', context)
