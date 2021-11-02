@@ -319,18 +319,19 @@ class Taxon(models.Model):
 
     @property
     def scientific_name_infraspecific(self):
-        if self.rank == 'species':
-            vlist = self.verbose.split('|')
-            slist = [self.name]
-            if vlist[4] and vlist[4] != '--':
-                slist.append(vlist[4])
-            if vlist[3] and vlist[3] != '--':
-                slist.append(vlist[3])
-            if vlist[6] and vlist[6] != '--':
-                slist.append(vlist[6])
-            if vlist[5] and vlist[5] != '--':
-                slist.append(vlist[5])
-            return ' '.join(slist)
+        # if self.rank == 'species':
+            # vlist = self.verbose.split('|')
+            # slist = [self.name]
+            # if vlist[4] and vlist[4] != '--':
+            #     slist.append(vlist[4])
+            # if vlist[3] and vlist[3] != '--':
+            #     slist.append(vlist[3])
+            # if vlist[6] and vlist[6] != '--':
+            #     slist.append(vlist[6])
+            # if vlist[5] and vlist[5] != '--':
+            #     slist.append(vlist[5])
+            # return ' '.join(slist)
+        return self
 
     @property
     def scientific_name_full(self):
