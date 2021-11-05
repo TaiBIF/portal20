@@ -89,7 +89,7 @@
                 <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="occurrence" onclick="goSearch('occurrence');">{% trans "出現紀錄" %}</a></li>
                 <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="species" onclick="goSearch('species');">{% trans "物種" %}</a></li>
                 <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="dataset" onclick="goSearch('dataset');">{% trans "資料集" %}</a></li>
-                <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="publisher" onclick="goSearch('publisher');">{% trans "發布單位" %}</a></li>
+                <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="publisher" data-toggle="tooltip" title="發布單位已於 GBIF 註冊成為台灣的資料發布者，以單位機構為主，類型可包含公家機關、研究機構、大專院校、NGO組織等。詳情請見：https://www.gbif.org/zh-tw/become-a-publisher'" onclick="goSearch('publisher');">{% trans "發布單位" %}</a></li>
               </ul>
               <div class="head-carousel-search-form-wrapper">
               <input type="text" class="head-carousel-search-input search-q" placeholder="{% trans "全站搜尋..." %}" name="q" id="taibif-search-keyword">
