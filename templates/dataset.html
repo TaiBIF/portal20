@@ -142,11 +142,15 @@
       <!-- 聯絡資訊 end -->
       {% if citation %}
       <h4 class="heading-md-ul">參考文獻</h4>
+      <ul>
         {% for i in citation %}
-          {% if i.citation %}{{i.citation}}<br>
+          <li>
+            {% if i.citation %}{{i.citation}}<br>
             {% if i.identifier %}{{i.identifier}}{% endif %}
           {% endif %}
+        </li>
         {% endfor %}
+      </ul>
       {% endif %}
         <!-- 引用格式 begin -->
       {% if dataset.gbif_cite %}
