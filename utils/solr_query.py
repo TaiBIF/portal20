@@ -20,13 +20,13 @@ JSON_FACET_MAP = {
         'dataset': {
             'type': 'terms',
             'field': 'taibif_dataset_name_zh',
-            'mincount': 0,
+            'mincount': 1,
             'limit': -1,
         },
         'dataset_id': {
             'type': 'terms',
             'field': 'taibif_dataset_name',
-            'mincount': 0,
+            'mincount': 1,
             'limit': -1,
         },
         'month': {
