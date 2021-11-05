@@ -629,7 +629,7 @@ def search_dataset(request):
     if has_menu:
 
         #publisher_query = Dataset.objects\
-        publisher_query = ds_menu.query\
+        publisher_query = ds_search.query\
             .values('organization','organization_name')\
             .exclude(organization__isnull=True)\
             .annotate(count=Count('organization'))\
@@ -649,7 +649,7 @@ def search_dataset(request):
             'count': x['count'],
         } for x in publisher_query]
 
-        rights_query = ds_menu.query\
+        rights_query = ds_search.query\
             .values('data_license')\
             .exclude(data_license__exact='')\
             .annotate(count=Count('data_license'))\
@@ -661,7 +661,7 @@ def search_dataset(request):
         } for x in rights_query]
 
 
-        country_query = ds_menu.query\
+        country_query = ds_search.query\
             .values('country')\
             .exclude(country__exact='')\
             .annotate(count=Count('country'))\
@@ -797,7 +797,7 @@ def data_stats(request):
     '''for D3 charts'''
     is_most = request.GET.get('most', '')
     current_year = datetime.datetime.now().year
-
+    
     query = Dataset.objects
     if is_most:
         query = query.filter(is_most_project=True)
@@ -815,7 +815,7 @@ def data_stats(request):
     for i in rows:
         if not i.pub_date:
             continue
-
+        
         y = str(i.pub_date.year)
         if str(current_year) == y:
             m = i.pub_date.month
