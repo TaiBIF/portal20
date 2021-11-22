@@ -15,6 +15,7 @@ services:
       - .:/taibif-code
       - ../taibif-volumes/bucket:/taibif-volumes/bucket
       - ../taibif-volumes/media:/taibif-volumes/media
+      - ../taibif-volumes/biomap:/biomap
     command: "./scripts/wait-for-it.sh db:5432 -t 5 -- ./scripts/docker-web-dev-entry.sh"
     #command: "./scripts/wait-for-it.sh db:5432 -t 5 -- ./scripts/docker-web-entry.sh"
     restart: always
@@ -47,3 +48,4 @@ services:
     command:
       - solr-precreate
       - gettingstarted
+  
