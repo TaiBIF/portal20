@@ -17,6 +17,8 @@ services:
       - ../taibif-volumes/media:/taibif-volumes/media
       - ../taibif-volumes/bucket:/taibif-bucket
       - ../taibif-volumes/logs/web:/taibif-code/logs
+      - ../taibif-volumes/biomap:/biomap
+
     command: "./scripts/wait-for-it.sh db:5432 -t 30 -- ./scripts/docker-web-entry.sh"
     #command: ./docker-web-entry.sh
     restart: always
@@ -59,6 +61,8 @@ services:
       - ../taibif-volumes/logs/nginx:/var/log/nginx
       - ../taibif-volumes/certbot/conf:/etc/letsencrypt
       - ../taibif-volumes/certbot/www:/var/www/certbot
+      - ../taibif-volumes/biomap:/biomap
+
     links:
       - web:web
     logging:
