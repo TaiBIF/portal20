@@ -17,11 +17,6 @@ class Migration(migrations.Migration):
             field=models.CharField(choices=[('Occurrence', '出現紀錄'), ('Checklist', '物種名錄'), ('Sampling event', '調查活動')], max_length=128, verbose_name='Dw-C Core Type'),
         ),
         migrations.AlterField(
-            model_name='simpledata',
-            name='taibif',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, related_name='simple_data', serialize=False, to='data.RawDataOccurrence'),
-        ),
-        migrations.AlterField(
             model_name='taxon',
             name='is_accepted_name',
             field=models.BooleanField(default=True, verbose_name='is accepted nam'),
