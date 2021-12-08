@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='SimpleData',
             fields=[
-                ('taibif_id', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to='data.RawDataOccurrence')),
+                ('taibif_id', models.BigIntegerField(primary_key=True)),
                 ('year', models.CharField(max_length=10, null=True)),
                 ('month', models.CharField(max_length=10, null=True)),
                 ('day', models.CharField(max_length=10, null=True)),
