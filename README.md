@@ -6,6 +6,9 @@ TaiBIF (Taiwan Biodiversity Information Facility)
 
 To install project, please follow these steps:
 
+prepare the environment:
+mv dotenv.example .env
+
 Development:
 ```
 docker-compose -f docker-compose.yml -f docker-compose-develop.yml build
@@ -39,7 +42,7 @@ $ docker-compose exec solr bash
 $ bin/solr create_core -c taibif_occurrence
 $ cp /workspace/conf-taibif-occur/taibif_occurrence/managed-schema /var/solr/data/taibif_occurrence/conf/
 $ cp /workspace/conf-taibif-occur/taibif_occurrence/solrconfig.xml /var/solr/data/taibif_occurrence/conf/
-$ cp /workspace/jts-core-1.18.1.jar /opt/solr-8.9.0/server/solr-webapp/webapp/WEB-INF/lib
+$ cp /workspace/jts-core-1.18.1.jar /opt/solr-8.11.0/server/solr-webapp/webapp/WEB-INF/lib
 
 # In project repo directory
 $ docker-compose restart solr
