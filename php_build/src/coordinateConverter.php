@@ -54,8 +54,15 @@ if (!empty($sourceXY)) {
 		);
 		$qparams = http_build_query($data);
 		$url = $ep . "?" . $qparams;
-		
-		$res = file_get_contents($url);
+		$stream_opts = [
+   			 "ssl" => [
+		         "verify_peer"=>false,
+			 "verify_peer_name"=>false,
+				    ]
+				]; 
+
+		$res = file_get_contents($url,false, stream_context_create($stream_opts));
+	//	$res = file_get_contents($url);
 		// do whatever needed to be done to $res
 		$res_res = explode("<br>", end(explode("Conversion : ", $res)));
 
