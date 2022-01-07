@@ -102,6 +102,11 @@ class Dataset(models.Model):
     #is_about_taiwan = models.BooleanField('是否 about Taiwan', default=True)
     #is_from_taiwan = models.BooleanField('是否 from Taiwan', default=True)
     keyword = models.TextField(blank=True, null=True)
+    
+    pre_released = models.DateTimeField(null=True)
+    pre_count = models.BigIntegerField(null=True)
+    pub_released = models.DateTimeField(null=True)
+    pub_count = models.BigIntegerField(null=True)
 
     objects = models.Manager()
     public_objects = PublicDatasetManager()
@@ -1083,3 +1088,10 @@ class CopyNew(models.Model):
     class Meta:
         managed = False
         db_table = 'copy_new'
+
+class taibifcode(models.Model):
+    objid = models.CharField(blank=True, null=True, max_length=128)
+    name = models.CharField(blank=True, null=True, max_length=128)
+    name_c = models.CharField(blank=True, null=True, max_length=128)
+    desc = models.TextField(blank=True, null=True)
+    

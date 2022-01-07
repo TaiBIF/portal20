@@ -1,13 +1,16 @@
 import urllib
 import logging
 import json
-
 import requests
+from apps.api.cached import COUNTRY_ROWS
 
 from conf.settings import ENV
 
 from utils.map_data import convert_coor_to_grid, convert_x_coor_to_grid, convert_y_coor_to_grid
 
+from apps.data.models import (
+    taibifcode
+)
 # if ENV in ['dev','stag']:
 #     # SOLR_PREFIX = 'http://solr:8983/solr/'
 # # if ENV == 'dev':
@@ -60,7 +63,40 @@ JSON_FACET_MAP = {
             'field':'license',
             'mincount': 0,
         },
+         'tw_area': {
+            'type':'terms',
+            'field':'tw_area',
+        },
     }
+}
+
+CODE_MAPPING ={
+    'county':{
+        0 : '其他',
+        1 : '臺北市',
+        2 : '臺中市',
+        3 : '基隆市',
+        4 : '臺南市',
+        5 : '高雄市',
+        6 : '新北市',
+        7 : '宜蘭縣',
+        8 : '桃園市',
+        9 : '嘉義市',
+        10 : '新竹縣',
+        11 : '苗栗縣',
+        12 : '南投縣',
+        13 : '彰化縣',
+        14 : '新竹市',
+        15 : '雲林縣',
+        16 : '嘉義縣',
+        17 : '屏東縣',
+        18 : '花蓮縣',
+        19 : '臺東縣',
+        20 : '金門縣',
+        21 : '澎湖縣',
+        22 : '連江縣',
+    }
+    
 }
 
 
@@ -70,6 +106,8 @@ def get_init_menu(facet_values=[]):
     solr_default = SolrQuery('taibif_occurrence', facet_values)
     req_default = solr_default.request()
     menus = solr_default.get_menus()
+    
+    print("init=====")
     # set all count to zero
     for i, v in enumerate(menus):
         for x in v['rows']:
@@ -246,6 +284,18 @@ class SolrQuery(object):
                 'label': '國家/區域',
                 'rows': rows,
             })
+            
+        if data := resp['facets'].get('tw_area', ''):
+            rows = [{'key': x['val'], 'label': CODE_MAPPING['county'][x['val']], 'count': x['count']} for x in data['buckets']]
+            for x  in rows:
+                if x['key'] == 0:
+                    rows.remove(x)
+            menus.append({
+                'key':'county',
+                'label': '台灣縣市',
+                'rows': rows,
+            })
+            
         if data := resp['facets'].get('year', ''):
             #menu_year = [{'key': 0, 'label': 0, 'count': 0,'year_start':1990,'year_end':2021}]
             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
@@ -292,7 +342,7 @@ class SolrQuery(object):
                 'label': 'CC授權',
                 'rows': rows,
             })
-
+            
         if key == '':
             return menus
         else:
