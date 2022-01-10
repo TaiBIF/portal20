@@ -773,7 +773,7 @@ def search_species(request):
             },
             {
                 'key': 'status',
-                'label': '狀態',
+                'label': '學名狀態',
                 'rows': [
                     {'label': '有效的', 'key': 'accepted'},
                     {'label': '同物異名', 'key': 'synonym'}
