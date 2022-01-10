@@ -11,12 +11,12 @@ from utils.map_data import convert_coor_to_grid, convert_x_coor_to_grid, convert
 from apps.data.models import (
     taibifcode
 )
-# if ENV in ['dev','stag']:
-#     # SOLR_PREFIX = 'http://solr:8983/solr/'
-# # if ENV == 'dev':
-#     SOLR_PREFIX = 'http://54.65.81.61:8983/solr/'
-# else:
-SOLR_PREFIX = 'http://solr:8983/solr/'
+if ENV in ['dev','stag']:
+    # SOLR_PREFIX = 'http://solr:8983/solr/'
+# if ENV == 'dev':
+    SOLR_PREFIX = 'http://54.65.81.61:8983/solr/'
+else:
+    SOLR_PREFIX = 'http://solr:8983/solr/'
 
 JSON_FACET_MAP = {
     'taibif_occurrence': {
