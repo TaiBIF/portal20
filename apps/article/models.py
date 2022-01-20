@@ -115,7 +115,7 @@ class Article(models.Model):
                     if '__files__' not in v:
                         vlist = v.split(':')
                         files.append({
-                            'url': '/PATH/TO/%s'%(vlist[0]),
+                            'url': '/media/article/download/%s'%(vlist[0]),
                             'descr': vlist[1]
                         })
                 return {'files': files}
