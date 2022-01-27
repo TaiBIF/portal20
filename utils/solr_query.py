@@ -15,6 +15,7 @@ if ENV in ['dev','stag']:
     # SOLR_PREFIX = 'http://solr:8983/solr/'
 # if ENV == 'dev':
     SOLR_PREFIX = 'http://54.65.81.61:8983/solr/'
+    # SOLR_PREFIX = 'http://solr:8983/solr/'
 else:
     SOLR_PREFIX = 'http://solr:8983/solr/'
 
@@ -63,9 +64,9 @@ JSON_FACET_MAP = {
             'field':'license',
             'mincount': 0,
         },
-         'tw_area': {
+         'taibif_county': {
             'type':'terms',
-            'field':'tw_area',
+            'field':'taibif_county',
         },
     }
 }
@@ -285,13 +286,13 @@ class SolrQuery(object):
                 'rows': rows,
             })
             
-        if data := resp['facets'].get('tw_area', ''):
+        if data := resp['facets'].get('taibif_county', ''):
             rows = [{'key': x['val'], 'label': CODE_MAPPING['county'][x['val']], 'count': x['count']} for x in data['buckets']]
             for x  in rows:
                 if x['key'] == 0:
                     rows.remove(x)
             menus.append({
-                'key':'county',
+                'key':'taibif_county',
                 'label': '台灣縣市',
                 'rows': rows,
             })
