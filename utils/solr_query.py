@@ -287,9 +287,9 @@ class SolrQuery(object):
             })
             
         if data := resp['facets'].get('taibif_county', ''):
-            rows = [{'key': x['val'], 'label': CODE_MAPPING['county'][x['val']], 'count': x['count']} for x in data['buckets']]
+            rows = [{'key': str(x['val']), 'label': CODE_MAPPING['county'][x['val']], 'count': x['count']} for x in data['buckets']]
             for x  in rows:
-                if x['key'] == 0:
+                if x['key'] == '0':
                     rows.remove(x)
             menus.append({
                 'key':'taibif_county',
