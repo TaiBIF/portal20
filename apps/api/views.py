@@ -15,7 +15,7 @@ from django.core.cache import cache
 from django.core.mail import send_mail
 from django.conf import settings as conf_settings
 from requests.sessions import default_headers
-from django.utils.http import urlquote
+from urllib.parse import quote
 
 
 from apps.data.models import (
@@ -1359,7 +1359,7 @@ def sendMail(downloadURL,request,dataPolicyURL):
     facet_json = 'json.facet={'+facet_dataset + ',' +facet_license+'}'
 
     for dataset in datasets:
-        r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?fl=license&fq=taibif_dataset_name:({urlquote(dataset)})&q.op=OR&q=*%3A*&rows=1')
+        r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?fl=license&fq=taibif_dataset_name:({quote(dataset)})&q.op=OR&q=*%3A*&rows=1')
 
         if r.status_code == 200:
             data = r.json()
