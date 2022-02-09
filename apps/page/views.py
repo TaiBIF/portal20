@@ -29,7 +29,7 @@ from .models import Post, Journal
 from utils.mail import taibif_mail_contact_us
 
 from apps.data.helpers.stats import get_home_stats
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from django.views.decorators.http import require_GET
 from django.utils.translation import activate
 

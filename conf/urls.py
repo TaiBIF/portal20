@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path, include
-from django.conf.urls import url
 from django.views.static import serve
 
 from conf import settings
@@ -29,15 +28,14 @@ from apps.data.views import (
     search_occurrence_download_view,
 )
 
-from apps.api.views import (
-    ChartMonth,
-    ChartYear,
-    taxon_bar,
-
-)
+# from apps.api.views import (
+#     ChartMonth,
+#     ChartYear,
+#     taxon_bar,
+# )
 
 urlpatterns = [
-    url('^media/(?P<path>.*)$', serve, {
+    re_path('media/(?P<path>.*)$', serve, {
             'document_root': settings.MEDIA_ROOT,
         }),
     path('api/', include('apps.api.urls')),
@@ -57,9 +55,9 @@ urlpatterns = [
     path('',  include('apps.page.urls')),
     path('admin/', admin.site.urls),
     ##Kuan-Yu added for API hichart function
-    path('test_y/', ChartYear, name='ChartYear'),
-    path('test_m/', ChartMonth, name='ChartMonth'),
-    path('taxon_bar/', taxon_bar, name='taxon_bar'),
+    # path('test_y/', ChartYear, name='ChartYear'),
+    # path('test_m/', ChartMonth, name='ChartMonth'),
+    # path('taxon_bar/', taxon_bar, name='taxon_bar'),
 
     ]
 
