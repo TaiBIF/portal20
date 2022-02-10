@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Cookbook 1 - 介紹{% endblock %}
+
+{% block main %}
+{% include "inc_breadcrumb.html" with tab="02" active_label="Cookbook"%}
+
+<style>
+  p, li{
+  line-height: 1.8;
+  }
+
+  hr {
+  border-top: 1px solid;
+    }
+</style>
+
+
+
+<!-- container begin -->
+
+
+
+<div class="container">
+
+  <div class="thumbnail">
+    <img src="{% static 'images/content-cookbook-ch1.jpg' %}" alt="Pandion haliaetus haliaetus (Linnaeus, 1758) 魚鷹，李豐曉 攝 (CC BY-NC)">
+    <div class="caption">
+      <span class="text-muted"><em>Pandion haliaetus haliaetus</em> (Linnaeus, 1758) 魚鷹，李豐曉 攝 (CC BY-NC)</span>
+    </div>
+  </div>
+
+    <!-- story title & share btns begin -->
+    <div class="article-head-wrapper">
+      {#<span class="article-post-date">2018/12/08</span>#}
+      <h2 class="h2">
+        第一章 介紹
+        <span class="article-author">作者：Tsuyoshi Hosoya 細矢 剛/ 譯者：何宣慶</span>
+      </h2>
+      <hr>
+
+      {% comment %}
+      <div class="article-share-btn-wrapper">
+        分享文章
+        <a href="#" class="navbar-oval-btn"><span class="myicon icon-social-fb"></span></a>
+        <a href="#" class="navbar-oval-btn"><span class="myicon icon-social-twitter"></span></a>
+        <a href="#" class="navbar-oval-btn"><span class="myicon icon-social-line"></span></a>
+        <a href="#" class="navbar-oval-btn"><span class="myicon icon-mail"></span></a>
+      </div>
+    </div>
+    {% endcomment %}
+    <!-- story title & share btns end -->
+
+    <!-- article content begin -->
+    <div class="article-content-wrapper">
+      <h4 class="heading-md" id="section1" style="font-weight:bold">1.1 生物多樣性是什麼？</h4>
+      <p>沒有任何一個生物可以獨自存活，任何生物都與其他生物息息相關。例如鳥類需要仰賴昆蟲為食、昆蟲需要仰賴植物維生、而植物有時候需要微生物的協助才可以生存。任何生物體死亡後，其屍體一定會被微生物（如真菌或細菌）所分解。這樣的關係存在於許多各式各樣的生物體之間，也就是我們所知的食物鏈 (food chain)，或是被視為存在於各種環境中的食物網 (food web)。</p>
+
+      <p>生物有所變異的範圍稱為「生物多樣性」。生物多樣性除了支持生物彼此間的生存，也對自然界的平衡有所貢獻。換句話說，生物多樣性是自然界中必要的特性。生物多樣性也撐起了我們的日常生活。</p>
+
+      <p>設想在生物之間形成了類似網絡的系統，當越多樣的生物存在於其中，生物間的關係所形成的網目就會變得更緻密（緊密連結）。其複雜的程度會使系統更加穩定，假使其中一個元素（生物）死光（或者說, 滅絕），該網絡仍可透過其複雜度而得以維繫之。</p>
+
+      <h4 class="heading-md" id="section2" style="font-weight:bold">1.2 生物多樣性的層級</h4>
+      <p>仔細深思生物多樣性，我們認為生物多樣性可透過三種不同角度切入與探討：
+      <ul>
+      <li>物種多樣性 (species diversity)，這可能是了解生物多樣性最直觀的一個概念。可以簡單地用”有多少種物種”來理解。物種多樣性也是其餘兩個觀點的基礎。</li>
+      <li>基因多樣性 (genetic diversity)，指單一物種之內的基因變異。基因變異的多樣性提供生物不同性狀（例如形態、生理以及行為等等），是族群在不斷改變的環境中適應與演化的基礎。</li>
+      <li>生態系多樣性 (ecosystem diversity)，指物種多樣性所依附之生態系的各種不同類型。簡單想像一下，海洋中的生物體一定跟森林中的不一樣，他們分別屬於不同種類的生物體所構成的不同生態系統。然而，各個生態系統之間是接續的，海洋與森林生態系中間有著許多像河流、湖泊、以及河口區域（半淡鹹水）等交界區的生態系。</li>
+      </ul>
+      </p>
+
+
+    <h4 class="heading-md" id="section3" style="font-weight:bold">1.3 生物多樣性資訊學是什麼？</h4>
+    <p>為了要知道物種的生物多樣性，我們必須要先知道哪個物種會在什麼時候出現在什麼地方，這兩件事都被定義為「資料 data」。換句話說，資料被定義為某種公認的標準下的個體觀測紀錄、測量或其他事實。另一方面，資訊則為來自於資料分析及解釋的一種知識（產品）。藉由累積生物多樣性資料，我們可以在已知棲地、區域或生態系統的狀況下，提取出其物種多樣性。一旦累積了一定的生物多樣性資料，我們可以將其與其他資料分析、評估或比較，以便開發或保育生物資源。例如，我們可能可以透過現有的發現找到可以使用的生物資源；物種分布資料可以被應用在決定保護區的範圍。整套流程藉由Busby於1996年發表了處理、策劃與管理各式資料的研究而有了新的資訊技術的狀況下發展出來。生物多樣性資訊學就是這樣的一個科學領域，換句話說，生物多樣性資訊學可以被定義為一個科學領域，其中資訊學應用於改善生物多樣性資訊的管理、展示、發現、探索和分析。</p>
+
+    <p>參照：維基百科 <a href="https://en.wikipedia.org/wiki/Biodiversity_informatics" class="myicon icon-link" target="_blank">生物多樣性資訊學</a></p>
+
+    <dl>
+      <dt>參考文獻:</dt>
+      <dd>Busby JR. 1996. Management of information to support conservation decision making. In: Hawksworth, DL, Kirk, PM, and Clarke, SD (eds). Biodiversity information: Needs and Options. CAB International. Pp. 105-114.</dd>
+    </dl>
+    <h4 class="heading-md" id="section4" style="font-weight:bold">1.4 聚焦於物種生物多樣性</h4>
+    <p>三種不同的生物多樣性層級對於了解整體的生物多樣性都是重要的，但物種多樣性會是了解基因及生態系統多樣性的基礎。物種同時是生物學的基礎單元，了解一個物種出現在何處及其數量也扮演著生態學研究的基礎。因此，在下面的章節中，我們會更深入探討物種多樣性。</p>
+    <p>藉由了解生物多樣性以及他們的出現紀錄，我們可以將這些資料應用在保育、人類衝擊以及入侵種等議題上。</p>
+
+    <h4 class="heading-md" id="section5" style="font-weight:bold">1.5 生物多樣性資料 / 資訊</h4>
+    <h4>1.5.1 特徵及形態描述</h4>
+    <p>當一個新的分類單元（任何分類的階級，例如科、屬、種等）被以種的方式描述時，一定會對該分類單元的分類特徵有所著墨。一般描述通常為一個物種長什麼樣子及該物種跟其他已知物種的差異。主要的資訊都是形態上的，但有時候也會包含生態上的資訊，其描述包含模式標本的資訊，即該物種一切描述的根本。</p>
+    <p>「由於這樣的描述可能散落在各種不同的期刊或書籍中，且先前已知物種的原始描述存在於古老的文獻中，因此這些描述的蒐集是必需的。生命大百科 (EOL) 蒐集這些描述，讓大眾可以了解這些物種看起來長什麼樣子。」</p>
+
+    <p>相關連結：</p>
+    <ul>
+      <li>生命大百科 <a href="https://eol.org" class="myicon icon-link" target="_blank">Encyclopedia of Life (EOL)</a> </li>
+      <li>生命大百科特徵資料庫 <a href="http://www.semantic-web-journal.net/content/traitbank-practical-semantics-organism-attribute-data" class="myicon icon-link" target="_blank">EOL TraitBank</a> </li>
+      <li>物種形態資料庫<a href="https://morphobank.org/" class="myicon icon-link" target="_blank">MorphoBank</a></li>
+    </ul>
+
+    <h4>1.5.2 分類學 / 文獻</h4>
+    <p>在物種的分類特徵首次被描述之後，可能還會有後續的分類學修訂工作，新的資訊會被加入，其分類也有可能會被修改（例如屬名合併到其他物種等）。我們應該要關注這些提供在文獻中的資訊，以了解物種或其他分類單元的現況。</p>
+    <p>分類學文獻也提供了各種不同的其他資料。特定主題或地區的物種清單通稱為名錄。這些可以提供先前已經確認的植物相、動物相或真菌相的一些基礎資訊。名錄整合某個特定主題的知識，例如瀕危物種或入侵物種。</p>
+    <h4>1.5.3 觀察 / 調查</h4>
+    <p>一旦物種被辨識，即成為認識生物多樣性的基礎。走進大自然，我們可以收集到不一樣的生物多樣性資訊。想像你正在一個森林中，正在辨識花、昆蟲、鳥類、蕈類等。第一個觀察生物多樣性資訊的步驟應該是將你所看到的每一個物種記錄下來，也就是透過觀察來認識大自然。</p>
+    <p>很多賞鳥人士很有系統性地提供鳥類調查的結果，因此累積了大量的採集資訊。如果我們以時間來分析這些訊息，我們可以推估出鳥類的遷徙路徑，即可協助估算由鳥類所攜帶之病原體的擴散狀況。</p>
+    <p>如果相對短時間內收集了巨大的資料，這些觀測資料的弱點可能是無法被客觀地被重新檢視。</p>
+    <p>參考網站：</p>
+    <ul>
+      <li><a href="https://ebird.org/content/ebird/">eBird</a></li>
+    </ul>
+    
+
+    <h4> 1.5.4 標本</h4>
+    <p>相對於觀測資料並未伴隨著實體證據，標本是可以在往後重新被檢視的物證。當對資料有所懷疑時，我們永遠可以回去檢視標本並修正可能存在的錯誤。很多標本的資料都已經被數位化並儲存。既然標本是支持生物多樣性資料最強的證據，典藏這些標本可能需要花費許多人力及金錢。相對於大量的觀察或調查資料，收集大量的標本是不容易的。</p>
+    <p>相關連結：</p>
+    <ul>
+      <li><a href="https://www.gbif.org/" class="myicon icon-link" target="_blank">GBIF 全球生物多樣性資訊機構</a></li>
+      <li><a href="https://obis.org" class="myicon icon-link" target="_blank">OBIS 海洋生物地理資訊系統</a></li>
+    </ul>
+    <h4>1.5.5 生態資料</h4>
+    <p>會需要生物多樣性資料的其中一個領域應該就是生態學了，其資料會應用於生物的消長、物種分布的限制因子及生物間的交互作用等研究。這些研究需要一定數量的觀測以及測量，不僅限於物種出現紀錄，亦需要更多的環境資料。例如，物種出現資料及經緯度、樹高與時間資料、生活史的氣候變化、溫度及降雨變化等。有些觀測可能是由肉眼所觀察，但也有資料是由機器透過規劃、隨機或偶然機會下自動收集的。不幸的是，儘管過去二十年來越來越多人提倡資料共享，讓資料可以被重複利用，很多這類的資料仍舊散落於個人的隨身電腦、桌上型電腦或各個伺服器中。</p>
+    <dl>
+      <dt>參考文獻:</dt>
+      <dd>Michener WK (2015) Ecological data sharing. Ecological Informatics 29: 33-44.</dd>
+    </dl>
+
+    </div>
+
+  </div>
+   <!-- container end -->
+{% endblock %}
