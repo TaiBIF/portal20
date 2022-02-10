@@ -131,7 +131,7 @@
                 <ul class="dropdown-menu" aria-labelledby="DropdownMenu-tool">
                   <li><a href="{% url 'tools' %}">{% trans "工具分享" %}</a></li>
                   {#<li><a href="#">{% trans "檔案下載" %}</a></li>#}
-                  <li><a href="{% url 'cookbook' %}">{% trans "Cookbook" %}</a></li>
+                  <li><a href="{% url 'cookbook' %}">{% trans "生物多樣性資訊概論" %}</a></li>
                 </ul>
               </li>
               <li class="dropdown">
@@ -237,8 +237,8 @@
       <div id='calendar'></div>
       <a href="/"><img src="{% static 'images/taibif-logo-w-l.png' %}" class="ft-brand center-block"></a>
       <p class="ft-contact">
-          <span class="myicon icon-pin-stroke" aria-hidden="true">11529 台北市南港區研究院路二段 128 號</span>
-          <span class="ft-xs-block">跨領域科技研究大樓 C301室</span>
+          <span class="myicon icon-pin-stroke" aria-hidden="true"> {% trans "11574 台北市南港區研究院路二段70巷28號" %}</span>
+          <span class="ft-xs-block">{% trans "跨領域科技研究大樓 C301室" %}</span>
       </p>
       <p class="ft-copywrite">Copyright © TaiBIF 臺灣生物多樣性資訊機構</p>
     </div>
