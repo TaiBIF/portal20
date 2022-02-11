@@ -1,0 +1,304 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %}Cookbook 2 - 資料標準化{% endblock %}
+
+{% block main %}
+{% include "inc_breadcrumb.html" with tab="02" active_label="Cookbook"%}
+
+<style>
+  p, li{
+  line-height: 1.8;
+  }
+  hr {
+  border-top: 1px solid;
+    }
+</style>
+
+
+<!-- container begin -->
+
+<link rel="stylesheet" href="{% static 'css/cookbook-detail-2.css' %}">
+
+
+<div class="container">
+
+    <div class="thumbnail">
+    <img src="{% static 'images/content-cookbook-ch2.jpg' %}" alt="Pseudagrion microcephalum (Rambur, 1842), CheongWeei Gan, Photo via iNaturalist (CC BY-NC 4.0)">
+    <div class="caption">
+      <span class="text-muted"><em>Pseudagrion microcephalum</em> (Rambur, 1842), CheongWeei Gan, Photo via iNaturalist (CC BY-NC 4.0)</span>
+    </div>
+  </div>
+
+    <!-- story title & share btns begin -->
+    <div class="article-head-wrapper">
+      {#<span class="article-post-date">2018/12/08</span>#}
+      <h2 class="h2">
+        第二章 資料標準化
+        <span class="article-author">作者：Tsuyoshi Hosoya 細矢 剛/ 譯者：雲翻譯公司</span>
+      </h2>
+      <hr>
+      {% comment %}
+      <div class="article-share-btn-wrapper">
+        分享文章
+        <a href="#" class="navbar-oval-btn"><span class="myicon icon-social-fb"></span></a>
+        <a href="#" class="navbar-oval-btn"><span class="myicon icon-social-twitter"></span></a>
+        <a href="#" class="navbar-oval-btn"><span class="myicon icon-social-line"></span></a>
+        <a href="#" class="navbar-oval-btn"><span class="myicon icon-mail"></span></a>
+      </div>
+    </div>
+    {% endcomment %}
+
+    <!-- article content begin -->
+  <div class="article-content-wrapper">
+
+      <h4 class="heading-md" id="section1" style="font-weight:bold">2.1 使用通用的原始資料格式</h4>
+      <p>如前一章所述，生物多樣性資料無所不在，只是以不同格式、不同媒介的方式存在著。 可能以Excel或Word檔案的方式儲存於筆電或電腦中，或者透過PDF檔案印出來以紙本方式儲存。</p>
+      <p>為了避免造成混淆，我們先將詞彙進行定義。 如你所見，一組生物多樣資料是由許多數據所組成，用於顯示物種在何時何地發現，以及如何識別物種。 這種單次的觀察或描述稱之為「紀錄」。 如果你去野外考察，可以使用特定方法獲得多筆紀錄。 這組紀錄稱之為「資料集」（例如「藉由穿越線調查法記錄在玉山中觀察到的樹種」）。</p>
+      <p>想像一下你取得一份資料表，可能是一個包含了數十行和數百列的文字串或數字的Excel檔或純文字檔案。 為了理解這份資料檔案的內容，首先你會怎麼做呢？ 如果沒有其他額外的資訊來說明這份資料，你可能會先嘗試閱讀表格內的第一列資料（表頭）。</p>
+      <br>
+      <p>表2.1 資料表的範例</p>
+      <table class="table">
+        <thead>
+         <tr>
+          <th>ID</th>
+          <th>Plot</th>
+          <th>Zone</th>
+          <th>Common Name</th>
+          <th>Sp</th>
+          <th>x</th>
+          <th>y</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+          <td>1</td>
+          <td>4094</td>
+          <td>北部</td>
+          <td>鵝兒腸</td>
+          <td><l>Stellaria aquatica (L.) Scop.</l></td>
+          <td>120.9785</td>
+          <td>24.68604</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>4094</td>
+          <td>北部</td>
+          <td>藿香薊</td>
+          <td><l>Ageratum conyzoides L.</l></td>
+          <td>120.9785</td>
+          <td>24.68604</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>4094</td>
+          <td>北部</td>
+          <td>大花咸豐草</td>
+          <td><l>Bidens pilosa L. var. radiata</l>(Sch. Bip.) J. A. Schmidt</td>
+          <td>120.9785</td>
+          <td>24.68604</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>4094</td>
+          <td>北部</td>
+          <td>野茼蒿</td>
+          <td><l>Conyza sumatrensis</l>(Retz.) E. Walker</td>
+          <td>120.9785</td>
+          <td>24.68604</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>4094</td>
+          <td>北部</td>
+          <td>粗毛小米菊</td>
+          <td><l>Galinsoga quadriradiata</l>Ruiz & Pav.</td>
+          <td>120.9785</td>
+          <td>24.68604</td>
+        </tr>
+        </tbody>
+
+
+    </table>
+
+      <p>舉例來說，「id」、「plot」、「zone」、「common name」、「sp」、「x」、「y」分別是什麼意思呢？ 如果你是植物學家或植物生態學家，且也看得懂中文，你可能很容易猜到這可能是關於植物野外調查的資料檔，包含了紀錄編號、樣區編號、調查區域、植物的中文俗名、學名以及樣區的座標。 資料表的欄位命名方式會因人而異。 如果你取得一個資料表卻無法理解其表頭的意思，會浪費許多時間去猜測它的含意。 或者更糟糕的情況，如果你必須去整合許多來源不一且沒有被標準化規範的資料表，你會很快地感到崩潰。 因此，為了便於資料的交流與整合，為何不用一個標準規範來記錄資料以節省大家的時間呢？ 所以接下來要做的第一步就是欄位名稱的標準化！</p>
+      <br>
+      <p>圖 2.1 顯示了文獻、觀察和標本資料整併的概念。 這三個資料集從每個資料來源中取得的資訊包含了分類（物種名）、何時（日期、時間）、何處（位置）及其他資訊， 但由於下列原因而無法於紀錄後直接附加其他紀錄：</p>
+      <p>觀察紀錄 表A</p>
+      <table class="table">
+      <thead>
+      <tr>
+        <th>名稱</th>
+        <th>時間</th>
+        <th>地點</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr>
+        <td>麻雀</td>
+        <td>上午7:00, 2015.04.01</td>
+        <td>台北，台灣</td>
+      </tr>
+      </tbody>
+      </table>
+    <br>
+
+
+      <p>標本 表B</p>
+        <table class="table">
+          <thead>
+          <tr>
+        <th>屬</th>
+        <th>種</th>
+        <th>命名者</th>
+        <th>日期</th>
+        <th>地點</th>
+        <th>採集者</th>
+        <th>鑑定者</th>
+        <th>基質</th>
+        </tr>
+          </thead>
+
+          <tbody>
+          <tr>
+        <td>Dasyscyphella</td>
+        <td>Longistipitata</td>
+        <td>Hosoya</td>
+        <td>2015-iv-1</td>
+        <td>日本茨城，筑波，植物園</td>
+        <td>T. Hosoya</td>
+        <td>T. Hosoya</td>
+        <td>日本山毛櫸殼斗</td>
+      </tr>
+          </tbody>
+        </table>
+    <br>
+
+
+      <p>文獻 表C</p>
+        <table class="table">
+        <thead>
+        <tr>
+        <th>名稱</th>
+        <th>日期</th>
+        <th>地點</th>
+        <th>緯度</th>
+        <th>精度</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+        <td>Dasyscyphella longistipitata</td>
+        <td>2015/04/01</td>
+        <td>青森，八甲田山</td>
+        <td>40.523591</td>
+        <td>140.970943</td>
+        </tr>
+        </tbody>
+        </table>
+
+    <ol>
+      <li>每一格的紀錄的呈現方式不盡相同。 舉例來說，在表Ａ中該物種在「名稱」的地方寫下的是它的俗名（麻雀），而物種名則以學名（拉丁文名稱）呈現在表B，且分別使用了三個格子來說明其屬、種和命名者，但在表C則僅使用一個格子。要注意的是，同樣是指「名稱」但在表A和表C中有不同的含意（表A中的名稱指的是俗名而在另一個表格中指的是學名）。</li>
+      <li>每個欄位都有其各自不同的定義。</li>
+      <li>每個資料格式都遵循著不同的規則。 舉例來說，表C中的位置（表示為「何處」）並不附加國家名稱，但另外兩個表格則剛好相反。 相同的日期（2015年4月1日）在三個表格中以不同的方式呈現。</li>
+    </ol>
+
+      <br>
+      <p>從上面的分析中，我們瞭解到要注意表格的合併方式：
+      <ol>
+        <li>每一個欄位必須使用一致性的術語，且有適當的定義。</li>
+        <li>資料的格式必須遵守標準化的規範。</li>
+      </ol>
+      那麼有沒有標準化的資料格式規範呢？ 實際上是有的！ 在本章我們介紹 GBIF所用的國際標準，稱之為「達爾文核心集」(DwC)。</p>
+
+    <h4 class="heading-md" id="section2" style="font-weight:bold">2.2 使用達爾文核心集作為主要標準</h4>
+      <p>達爾文核心集是由一群科學家所建立（生物分類學資料庫工作小組，TDWG，現為生物多樣性資訊標準）。 簡單來說，達爾文核心集是一組具有特定定義的術語詞彙表，且建議用於記錄生物多樣性資料。它最初是文獻中的都柏林核心延伸集，現在則成為用於分享生物多樣性資訊且廣為人知的穩定準則參考。 達爾文核心集允許建立超過150個項目的資料集（在資料庫術語中稱為「欄位」）。 每個欄位都有嚴格定義，且需遵循格式規則。 由於DwC是由許多不同的欄位所組成，因此會依照欄位的性質進行分組。 這樣的分組稱之為「類別 Class」（這邊的「Class」的意思和分類學中的「Class（綱）」的意思不一樣）。</p>
+    <p>以下是DwC中一些類別的列表和一些欄位的例子。 相關完整說明，請參閱網站<a href="http://rs.tdwg.org/dwc/terms/">http://rs.tdwg.org/dwc/terms/</a> 或 <a href="http://tools.gbif.org/dwca-assistant/">http://tools.gbif.org/dwca-assistant/</a>。</p>
+      <p>[ 類別 ] Record-Level（紀錄等級）提供管理每筆資料的資訊，此分類的欄位可以提供與其他資料庫資料的連結。<br>
+      [ 類別 ] Occurrence（出現紀錄）提供了資料被記錄的時間和地點的基本資訊。<br>
+      [ 類別 ] Organism（生物體）提供了該生物體性質的資訊，例如文字名稱或標籤、該生物體屬於無性生殖或菌落等。 此類別是為了描述更多非正式的分類學資訊，而從類別Taxon分出來的（見下方）。<br>
+      [ 類別 ] MaterialSample（樣本材料）可依據標本被典藏的具體性質來選擇及區分。<br>
+      [ 類別 ] Event（活動）在某段時間發生在某個地點的行動。<br>
+      [ 類別 ] Location（地點）可提供紀錄取得的地點資訊。<br>
+      [ 類別 ] GeologicalContext（地質狀況）可提供關於採集地點之地質環境資訊，舉例來說，可藉由地層學來確認一個地方或區域。 因這個類別是使用於達爾文核心集，故化石資訊也可被納入其中。<br>
+      [ 類別 ] Identification（鑑定資訊）提供了分類判定的資訊，例如當初這分類是由何人何時鑑定的，以及鑑定的參考來源等。<br>
+      [ 類別 ] Taxon（分類資訊）提供了分類學相關資訊，例如學名、更高階層的分類等級等。<br>
+      [ 輔助類別 ] MeasurementOrFact（測量或事實）提供該筆紀錄的量測資料或事實。<br>
+      [ 輔助類別 ] ResourceRelationship（資源關係）可提供關於紀錄間或標本間的關係資訊。</p>
+    <p>為了簡化適用於記錄生物多樣性資料的欄位名稱，全球生物多樣性資訊機構（GBIF）提供了Excel模板，用於記錄物種名錄和出現紀錄，以及任何有關於此資料表的其他資訊細節（亦稱為「詮釋資料」）。  我們之後會討論「詮釋資料」。 你可以從這裡<a href="https://github.com/gbif/ipt/wiki/checklistData">（https://github.com/gbif/ipt/wiki/checklistData）</a>下載用於記錄物種名錄資料的Excel模板，從這裡下載物種出現紀錄資料模板<a href="https://github.com/gbif/ipt/wiki/occurrenceData">（https://github.com/gbif/ipt/wiki/occurrenceData）</a>， 以及從這裡下載調查活動資料模板<a href="https://github.com/gbif/ipt/wiki/sampleEventData">（https://github.com/gbif/ipt/wiki/sampleEventData）</a>。 但要注意的是，有些欄位是必填的，而有些是選擇性提供即可。 若你需要更多的選擇性欄位詞彙來描述你的資料，你可以從達爾文核心延伸集找到更多的選項<a href="http://tools.gbif.org/dwca-validator/extensions.do">（http://tools.gbif.org/dwca-validator/extensions.do）</a>，再從中選取適合的詞彙。</p>
+      <p>相關連結：<br>
+      <ul>
+      <li><a href="http://www.tdwg.org/" class="myicon icon-link" target="_blank">生物分類學資料庫工作小組（TWDG)</a> </li>
+    <li><a href="http://rs.tdwg.org/dwc/terms/" class="myicon icon-link" target="_blank">達爾文核心集</a></li>
+    <li><a href="http://dublincore.org/" class="myicon icon-link" target="_blank">都柏林核心集</a></li>
+  </ul>
+
+    <hr>
+    <h4 class="bg-success">說明1：六十進位制和十進位制的座標資料轉換</h4>
+      <p>許多讀者會使用經度和緯度來標示座標，他們通常使用度、分和秒來表示。 度，分和秒皆遵循著六十進位制，但有時候秒是代表1/100。 只要習慣了這樣的表示方式，即可便利地於地圖上對特定地點進行定位。 但事實上這是一個較複雜的定位方式，因為我們需要用到三組數字來表示緯度和經度。 近年來有些地圖繪製軟體開始採用十進位制。這兩種進位制是可互相兼容換算的。由於十進位制的系統僅需兩組數字即可標示出地點，故其越來越常應用於標示經緯度。</p>
+      <p>從上述中我們學到重要的一課，那就是我們可以根據DwC的標準預先設計好表格，這樣可以提高效率，並避免因資料描述而導致的混淆和變動。</p>
+
+    <hr>
+
+    <h4 class="heading-md" id="section3" style="font-weight:bold">2.3 使用純文字檔而非Excel檔</h4>
+      <p>若你之前有整理資料的經驗，第一個會想到要使用的程式可能是Excel。 Excel是一個不錯的試算表軟體，它不僅可以計算資料，還可以做資料分析和利用。</p>
+      <p>下一個會遇到的問題就是儲存資料。 我們現在要將數位化的資料合併於一個表格中，以便進行後續的分析。 為了儲存資料，我們需要選擇適當的檔案格式。 大多數讀者可能會使用Microsoft Excel或其他試算表作為使用軟體， 因此自然而然會選擇Excel格式（.xls或 .xlsx），但Excel格式對於紀錄的數量有一定的限制。 Excel格式檔案的另一個缺點就是該檔案無法直接於更高階的資料庫軟體內使用。 此外，Excel格式有時會導致資料產生亂碼。 因此，會建議將文件另存為純文字格式（.csv或 .tsv）。 上述格式被稱之為逗號分隔值格式（CSV），欄位與欄位之間使用逗號分隔，資料與資料之間則是使用換行（CR）分隔。 因此，當Excel資料如以下所示時：</p>
+    <br>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>欄位1</th>
+        <th>欄位2</th>
+        <th>欄位3</th>
+        <th>欄位4</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>1</td>
+        <td>A</td>
+        <td>B</td>
+        <td>C</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>D</td>
+        <td>E</td>
+        <td>F</td>
+      </tr>
+      </tbody>
+    </table>
+
+      <p>編輯器軟體中呈現的方式如下：<br>欄位1 [,/tab] 欄位2 [,/tab] 欄位3 [,/tab] 欄位4 [CR]<br>1 [,/tab] A [,/tab] B [,/tab] C [CR]<br>2 [,/tab] D [,/tab] E [,/tab] F [CR]
+        <br>在CSV和TSV文件中， [,/tab] 代表的是逗號 (,) 或者tab代碼，而 [CR] 是換行代碼。<br>制表符分隔值格式（TSV）最不一樣的地方在於TSV檔案是使用 [Tab] 分隔而非逗號 [,]。 上述兩種檔案格式皆可在編輯器中閱讀，並且可於其他資料庫軟體中使用。
+      </p>
+
+      <h4 class="heading-md" id="section4" style="font-weight:bold">2.4 使用UTF-8進行字元編碼</h4>
+    <p>最後，在儲存資料時還需要記住的一件事就是，當你在處理資料時記得使用UTF-8進行字元編碼。 一般在教科書中，不會針對使用UTF-8進行字元編碼的原因進行詳細說明，因為這關係到更深層的技術和資訊。</p>
+    <p>簡單地說，UTF-8是一種被廣泛使用的字元編碼方式，幾乎可以避免所有程式語言產生亂碼，並確保可從任一台電腦上讀取資料。 它是一種全球性的標準字元編碼方式，而近年來許多網站也普遍採用UTF-8這種編碼方式。 即使Excel不支持UTF-8的編碼方式，但編輯器大多支持UTF-8的編碼方式（通常可以從字元編碼選單中選擇UTF-8）。 因此，若你是使用英文字母和數字以外的文字，建議使用UTF-8字元編碼並以純文字（CSV或TSV）格式儲存資料。</p>
+
+    <hr>
+    <h4 class="bg-success">說明2：如何產生唯一的識別碼？</h4>
+    <p>在生物多樣性資訊學下，資料藉由識別碼（ID）來進行區分。 任何的資料都需要一組ID，其必須具有獨特性以便能夠區別。 通常在任一資料集中，針對特定的資料必須給予一個唯一的ID。 舉例來說，如果將學名「X」賦予「101」這個ID，則每當在該資料集中使用X時必須要提及101這個ID，從而將X與其他學名區分。 在出現紀錄的資料集中，必須提供出現紀錄ID（occurrence ID）。 在這種情況下，為了區分資料，ID只能出現一次（唯一值）。</p>
+    <p>如果是同樣的資料，則可以接受複製其他資料集的ID。 然而，出現紀錄ID必須為全球唯一且可以被解析。 在這裡，「可解析」的意思是ID也可以作為一個鏈接，使資料的使用者（或機器）能夠透過該ID找到所有關於該事物的實用資訊。</p>
+    <p>為了產生這樣的ID，可以透過使用UUID（通用唯一識別碼）來取得。 UUID是隨機產生的字串（包含英文字母和數字），例如8612280c-f762-11e1-a439-00145eb45e92。 現在已經建立了產生UUID的方法，並且可以透過許多方式獲得。 舉例來說，“uuidgen command” 適用於LINUX和macOS (OS X)；Windows系統可以下載Microsoft GUID Generator； 也有線上的UUID 產生器服務，例如UUID Generator。這樣的雲端服務讓您可以產生一系列的UUID。 為了讓數位資料和UUID之間建立鏈接，還需要PURL（永久性統一資源定位器）。</p>
+    <p>相關連結:</p>
+    <ul>
+      <li><a href="https://www.microsoft.com/zh-tw/p/guid-generator/9n79sdd9s9jj?activetab=pivot:overviewtab" class="myicon icon-link" target="_blank">Microsoft GUID Generator</a></li>
+      <li><a href="https://www.uuidgenerator.net/" class="myicon icon-link" target="_blank">UUID Generator</a></li>
+      <li><a href="http://www.purlz.org/" class="myicon icon-link" target="_blank">PURL</a></li>
+  </ul>
+
+
+
+    </div>
+</div>
+
+
+
+
+{% endblock %}

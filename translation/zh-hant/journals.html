@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}資料論文/期刊{% endblock %}
+
+{% block main %}
+{% include "inc_breadcrumb.html" with tab="01" active_label="資料論文/期刊" %}
+
+
+  <!-- container begin -->
+  <div class="container">
+    <h1 class="heading-lg-ul">
+      資料期刊/論文
+    </h1>
+
+    <div class="journals-intro-ctn">
+      <h3>什麼是資料論文？</h3>
+      <p>資料論文（Data paper）是一個透過同儕審查（Peer reviewed）的論文發表形式，並發表於相關的期刊上，內容主要為描述作者所開放的資料集相關資訊，包含如何產生及收集資料、資料類型、涵蓋的物種、資料開放於何處及此資料集背景資訊（Meta data）等等，透過作者於此資料集所開放的資料授權方式，可作為日後學術論文應用其資料時所引用的依據。</p>
+      <h3>資料論文期刊</h3>
+      <p>當您透過 TaiBIF 的資料發布工具 <a href="http://ipt.taibif.tw" target="_blank">IPT</a>上傳您的資料並發布後，可下載其自動產生的 RTF 檔來撰寫您的資料論文，並選擇下列期刊投稿（期刊的 impact factor 及發表費用請見：<a href="https://www.gbif.org/data-papers" target="_blank">https://www.gbif.org/data-papers</a>）</p>
+
+    </div>
+
+
+    <!-- list begin -->
+
+    {% for jo in Journal_url%}
+    <div class="row relateed-datasabe-wrapper">
+
+      <div class="col-md-2 col-xs-4">
+        <a href="{{jo.url}}" target="_blank"><img src="{{jo.upload.url}}"></a>
+      </div>
+      <div class="col-md-10 col-xs-8">
+        <a href="{{jo.url}}"target="_blank"><span class="myicon icon-link"></span> {{jo.title}}</a>
+        <p>{{jo.content}}</p>
+      </div>
+
+    </div>
+    {% endfor %}
+
+
+
+
+    <!-- list end -->
+  </div>
+{% endblock %}
