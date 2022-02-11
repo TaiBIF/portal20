@@ -685,7 +685,7 @@ def search_dataset(request):
             },
             {
                 'key': 'rights',
-                'label': '授權狀態',
+                'label': '授權類型',
                 'rows': rights_rows
             }
         ]

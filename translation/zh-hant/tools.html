@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}工具分享{% endblock %}
+
+{% block main %}
+{% include "inc_breadcrumb.html" with tab="02" active_label="工具分享" %}
+
+
+  <!-- container begin -->
+  <div class="container">
+    <h1 class="heading-lg-ul">
+      工具分享
+    </h1>
+
+    <div class="journals-intro-ctn">
+      <p>生物多樣性資料校對轉換工具為 TaiBIF 資訊團隊研發，目前提供學名檢查、中文名批次比對與座標轉換。本研究目前由中研院「台灣生物多樣性資訊平台之學術、社會推廣與國際接軌」、科技部「建置與維護及整合臺灣生物多樣性資訊國家入口網 (TaiBIF) 及與 GBIF 接軌」及林務局「生態資源資料庫分組整合推動計畫」等計畫經費支持，引用網址：<a href="https://portal.taibif.tw/coordinateConverter.php" target="_blank">https://portal.taibif.tw/coordinateConverter.php</a></p>
+    </div>
+
+    <!-- list begin -->    
+    <!-- <div class="tools-intro-wrapper">
+      <div class="tools-title">學名拼字校對</div>
+      <div class="tools-content">
+        <p>
+          為能提升學名之正確性，本系統蒐羅 TaiCoL、GBIF backbone 與 Species 2000 名錄資料庫之學名資料做為比對校正之參考依據，並能顯示簡便明確的拼字差異及相似程度，以方便使用者鑑別學名字母異同之處，順利且省時地進行名錄之修訂。
+        </p>
+        <p><a href="http://taibif.tw/BDTools/lcs2.php" target="_blank"><span class="myicon icon-link"></span> Catalogue of Life (Species 2000) 名錄比對</a></p>
+        <p><a href="http://taibif.tw/BDTools/solrName-en.php" target="_blank"><span class="myicon icon-link"></span> Scientific name spell checker (Checklist of Taiwan)</a></p>
+        <p><a href="http://taibif.tw/BDTools/solrName.php" target="_blank"><span class="myicon icon-link"></span> 臺灣物種名錄比對</a></p>
+      </div>
+    </div> -->
+    <div class="tools-intro-wrapper">
+      <div class="tools-title">地理分布線上座標轉換</div>
+      <div class="tools-content">
+        <p>
+          有鑑於過去物種生態分布之地理座標系統不同，造成整合地理資訊上之困難，及物種於地圖上標記之錯誤，因此本系統可提供線上地理座標資訊，以便使用者更新老舊生態分布之資料，得以進一步比較分析與研究，系統提供 WGS 84、TM2 67 與 TM2 97 三種格式之間的相互轉換。
+        </p>
+        <p><a href="https://portal.taibif.tw/coordinateConverter.php" target="_blank"><span class="myicon icon-link"></span> 座標轉換</a></p>
+      </div>
+    </div -->
+
+    <div class="tools-intro-wrapper">
+      <div class="tools-title">物種中文名比對</div>
+      <div class="tools-content">
+        <p>
+          此工具提供使用者上傳多筆中文名稱，工具會針對所上傳的物種中文名稱比對出臺灣物種名錄中所對應的物種學名與物種代碼（name code），若比對不到中文名稱則傳回「no match」之訊息。
+        </p>
+        <p><a href="{% url 'tools-common_name_checker' %}" target="_blank"><span class="myicon icon-link"></span> 物種中文名比對</a></p>
+      </div>
+    </div>
+
+    <!--div class="tools-intro-wrapper">
+      <div class="tools-title">學名書寫形式校對</div>
+      <div class="tools-content">
+        <p>
+          為能提升學名書寫格式之一致性，本系統蒐羅 TaiCoL 名錄資料庫之學名資料做為比對校正之參考依據，提供學名、分類層級標識、命名者及年代之完整書寫順序，不僅能夠補足額外學名資訊外，更可讓使用者能簡便的統一學名資料格式，以提升未來資料比對交換之準確性。
+        </p>
+        <p><a href="http://taibif.tw/BDTools/getSCname.php" target="_blank"><span class="myicon icon-link"></span> 學名書寫形式校對</a></p>
+      </div>
+    </div>
+
+     <div class="tools-intro-wrapper">
+      <div class="tools-title">地理座標驗證</div>
+      <div class="tools-content">
+        <p>
+          為了提高物種分布準確性及達成利用地理資訊整合查詢之目的，故而開發本工具。使用者僅需上傳 EXCEL 檔案，檔案中包含三個欄位資訊，分別為 loc（地點文字說明）、x（經度）、y（緯度），本工具會依據這進行簡易的判斷，如地點與座標差異過大、或修正座標格式……等等，並將錯誤判別資訊回傳於使用者。
+        </p>
+        <p><a href="http://taibif.tw/BDTools/vgd.html" target="_blank"><span class="myicon icon-link"></span> 地理坐標驗證</a></p>
+      </div>
+    </div -->
+
+     <div class="tools-intro-wrapper">
+      <div class="tools-title">有效學名比對</div>
+      <div class="tools-content">
+        <p>
+          物種在分類學上往往存在同物異名，本工具提供批次的物種學名比對，可提供該學名是否為有效學名及物種代碼等相關資訊。
+        </p>
+        <p><a href="http://match.taibif.tw/" target="_blank"><span class="myicon icon-link"></span> NomenMatch</a></p>
+      </div>
+    </div>
+    <!-- list end -->
+  </div>
+{% endblock %}
