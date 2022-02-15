@@ -1,4 +1,6 @@
 import os
+import uuid
+
 from datetime import datetime
 
 from django.db import models
@@ -22,16 +24,14 @@ def article_cover_path(instance, filename):
     return ''
 
 def images_path(instance, filename):
-    if instance.pk:
+    if instance.post.pk: 
         ext = filename.split('.')[-1].lower()
-        #print(instance)
-        images_path = 'article/{}/images_{}.{}'.format(instance.pk, instance.pk, ext)
+        images_path = 'article/{}/images_{}.{}'.format(instance.post.pk, instance.image_uuid, ext)
 
         # delete if image name exist; or django will create a new hashed filename
         exist_path = os.path.join(settings.MEDIA_ROOT, images_path)
         if os.path.exists(exist_path):
             os.remove(exist_path)
-
         return images_path
     return ''
 
@@ -128,9 +128,10 @@ class Article(models.Model):
 
 class PostImage(models.Model):
     post = models.ForeignKey(Article, default=None, on_delete=models.CASCADE)
-    images = models.FileField(upload_to=images_path, blank=True)
+    image_uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    images = models.ImageField(upload_to=images_path, blank=True,)
     cover_license_text = models.CharField('授權文字', max_length=100, blank=True)
 
     def __str__(self):
         return self.post.title
-
+    

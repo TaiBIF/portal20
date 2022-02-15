@@ -949,8 +949,15 @@ a.navbar-icon-btn:last-child {
     right: 25%;
   }
 }
-.head-carousel-wrapper {
+.index-head-carousel-wrapper {
   height: 210px;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.head-carousel-wrapper {
+  height: auto;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -1073,11 +1080,19 @@ a.navbar-icon-btn:last-child {
 }
 
 @media (min-width: 567px) {
+  .index-head-carousel-wrapper,
+  .index-head-carousel-btn {
+    height: 315px;
+  }
+}
+
+@media (min-width: 567px) {
   .head-carousel-wrapper,
   .head-carousel-btn {
     height: 315px;
   }
 }
+
 @media (min-width: 768px) {
   .carousel-caption {
     right: 12%;
@@ -1092,9 +1107,14 @@ a.navbar-icon-btn:last-child {
     font-size: 32px;
   }
 
+  .index-head-carousel-wrapper,
+  .index-head-carousel-btn {
+    height: 420px;
+  }
+
   .head-carousel-wrapper,
   .head-carousel-btn {
-    height: 420px;
+    height: auto;
   }
 
   .head-carousel-search-wrapper {
@@ -1109,9 +1129,15 @@ a.navbar-icon-btn:last-child {
   }
 }
 @media (min-width: 1200px) {
+  .index-head-carousel-wrapper,
+  .index-head-carousel-btn {
+    height: 525px;
+  }
+}
+@media (min-width: 1200px) {
   .head-carousel-wrapper,
   .head-carousel-btn {
-    height: 525px;
+    max-height: 535px;
   }
 }
 .breadcrumb {
