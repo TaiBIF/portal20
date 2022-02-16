@@ -61,6 +61,7 @@ class TaibifSearch extends React.Component {
     this.handleTaxonKeywordChange = this.handleTaxonKeywordChange.bind(this);
     this.handleSuggestClick = this.handleSuggestClick.bind(this);
     this.debounce = this.debounce.bind(this);
+    this.clearCondition = this.clearCondition.bind(this);
   }
 
 
@@ -254,6 +255,20 @@ class TaibifSearch extends React.Component {
     this.applyFilters(filters);
   }
 
+  clearCondition(event, menuKey) {
+
+    this.setState({
+      isLoadedMain: false,
+    });
+    const filters = this.state.filters;
+      filters.forEach(function(x){
+        if (x.indexOf('year=') >= 0) {
+          filters.delete(x);
+        }
+      });
+    this.applyFilters(filters);
+  }
+
   /* DEPRICATED */
   handlePaginationClick(e, page) {
     let offset = this.state.search.offset;
@@ -443,7 +458,7 @@ class TaibifSearch extends React.Component {
             <div className="visible-xs">
               <a href="#" className="xs-schedule-flow-btn myicon icon-filter" data-toggle="modal" data-target="#flowBtnModal">進階篩選</a>
             </div>
-            <SearchSidebar menus={menus} onClick={this.handleMenuClick} filters={filters} onClickClear={(e)=>this.applyFilters()} queryKeyword={queryKeyword} onChangeKeyword={(e)=>{this.handleKeywordChange(e)}} onKeyPressKeyword={(e)=>{this.handleKeywordEnter(e)}} onClickSubmitKeyword={this.handleSubmitKeywordClick} searchType={searchType} taxonProps={taxonProps} />
+            <SearchSidebar menus={menus} onClick={this.handleMenuClick} filters={filters} onClickClear={(e)=>this.applyFilters()} queryKeyword={queryKeyword} onChangeKeyword={(e)=>{this.handleKeywordChange(e)}} onKeyPressKeyword={(e)=>{this.handleKeywordEnter(e)}} onClickSubmitKeyword={this.handleSubmitKeywordClick} searchType={searchType} taxonProps={taxonProps} clearCondition={this.clearCondition} />
           {searchMainContainer}
           </div>
       );
