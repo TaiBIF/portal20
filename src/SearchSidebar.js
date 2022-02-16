@@ -2,6 +2,8 @@ import React, {useState, useRef} from 'react';
 //import Accordion from "./components/Accordion";
 //import Tree from "./components/Tree";
 import SearchTaxon from './SearchSidebarTaxon';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Slider from '@material-ui/core/Slider';
 
 function Accordion(props) {
@@ -32,8 +34,10 @@ function Accordion(props) {
   const handleSliderCommitted = (event) => {
     onClick(event, content.key, yearValue.join(','))
   };
-
-
+  const clearYearCondition = (event) => {
+    console.log(event, content.key)
+    props.clearCondition(event,content.key)
+  };
   const menuItems = content.rows.map((x) => {
     if(content.key ===  'year'){
       console.log(yearValue);
@@ -41,9 +45,15 @@ function Accordion(props) {
         setYearValue(newValue);
         onClick(event, content.key, newValue);
       };
+    
       // console.log(content.key, handleChange)
       return (
-          <div className="year_test" key={x}>
+          <div className="year_slider" key={x}>
+            <div > 
+              <IconButton aria-label="delete" onClick={clearYearCondition} >
+                <DeleteIcon  />
+              </IconButton>
+            </div>
           <Slider
         value={yearValue}
         onChange={(e, newRange) => setYearValue(newRange)}
@@ -55,7 +65,7 @@ function Accordion(props) {
           />
           </div>
       );
-    } else{
+    } else{   
       const count = (x.count) >=0 ? x.count.toLocaleString() : null;
       const itemChecked = filters.has(`${content.key}=${x.key}`);
 
@@ -153,7 +163,7 @@ function SearchSidebar(props) {
   let accordionList = [];
   if (props.menus) {
     props.menus.forEach((m) => {
-      accordionList.push(<Accordion key={m.key} content={m} onClick={props.onClick} filters={props.filters}/>);
+      accordionList.push(<Accordion key={m.key} content={m} onClick={props.onClick} filters={props.filters} clearCondition={props.clearCondition}/>);
     });
   }
   return (
