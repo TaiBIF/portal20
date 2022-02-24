@@ -25,6 +25,8 @@ assert ENV in ['dev', 'test', 'prod', 'stag']
 
 ROOT_URLCONF = 'conf.urls'
 WSGI_APPLICATION = 'conf.wsgi.application'
+CSRF_TRUSTED_ORIGINS = ['https://portal.taibif.tw/','https://taibif.tw/','https://127.0.0.1']
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 #BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -152,7 +154,7 @@ LANGUAGE_CODE = 'zh-hant'
 
 LANGUAGES = (
     ('zh-hant', _('Traditional Chinese')),
-    ('en', ('English')),
+    ('en', _('English')),
 )
 
 
