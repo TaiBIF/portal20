@@ -902,7 +902,7 @@ a.navbar-icon-btn:last-child {
   height: 10px;
 }
 
-.carousel-inner > .item > img,
+.carousel-inner > .item > img, 
 .carousel-inner > .item > a > img {
   width: auto;
   margin:auto;
@@ -2140,6 +2140,11 @@ a.navbar-icon-btn:last-child {
   display: inline-block;
   vertical-align: middle;
   margin-right: 2px;
+}
+
+.article-content-wrapper > p > img {
+  width: 100%;
+  margin:auto;
 }
 
 .article-img-wrapper {
