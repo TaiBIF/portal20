@@ -43,7 +43,8 @@
           <label for="query-cn">輸入中文名</label>
           <textarea name="q" id="query-cn" class="form-control" rows="5">{% if q %}{{ q }}{% endif %}</textarea>
         </div>
-        <button type="submit" class="btn btn-primary">比對</button>
+        <button type="submit" class="btn btn-primary" name="compare" >比對</button>
+        <button type="submit" class="btn btn-primary" name="export_csv">expot to csv</button>
       </form>
       {% if results %}
       <table class="table">
@@ -83,6 +84,6 @@
       </table>
       {% endif %}
     </div>
-    <a href="{% url 'export_csv' %}">export to csv</a>
+    <!-- <a href="{% url 'export_csv' %}">export to csv</a> -->
   </div>
 {% endblock %}
