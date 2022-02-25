@@ -25,7 +25,8 @@ assert ENV in ['dev', 'test', 'prod', 'stag']
 
 ROOT_URLCONF = 'conf.urls'
 WSGI_APPLICATION = 'conf.wsgi.application'
-CSRF_TRUSTED_ORIGINS = ['https://portal.taibif.tw/','https://taibif.tw/','https://127.0.0.1']
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=[])
+
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
