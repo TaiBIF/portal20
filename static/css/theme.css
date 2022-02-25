@@ -902,9 +902,10 @@ a.navbar-icon-btn:last-child {
   height: 10px;
 }
 
-.carousel-inner > .item > img,
+.carousel-inner > .item > img, 
 .carousel-inner > .item > a > img {
-  width: 100%;
+  width: auto;
+  margin:auto;
 }
 
 .carousel-control {
@@ -956,7 +957,7 @@ a.navbar-icon-btn:last-child {
   background-repeat: no-repeat;
 }
 
-.head-carousel-wrapper {
+.head-carousel-wrapper { 
   height: auto;
   background-size: cover;
   background-position: center center;
@@ -2139,6 +2140,11 @@ a.navbar-icon-btn:last-child {
   display: inline-block;
   vertical-align: middle;
   margin-right: 2px;
+}
+
+.article-content-wrapper > p > img {
+  width: 100%;
+  margin:auto;
 }
 
 .article-img-wrapper {

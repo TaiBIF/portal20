@@ -170,6 +170,7 @@ def common_name_checker(request):
         }
         return render(request, 'tools-common_name_checker.html', context)
     elif request.method == 'POST':
+        
         q = request.POST.get('q', '')
         sep = request.POST.get('sep', 'n')
 
@@ -238,6 +239,19 @@ def common_name_checker(request):
             'q': q,
             'sep': sep,
         }
+        if 'export_csv' in request.POST:
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename="users.csv"'
+            response.write(codecs.BOM_UTF8)
+
+            writer = csv.writer(response)
+            print(request)
+            
+
+            for row in results: 
+                writer.writerow(row['match_list'])
+
+            return response
     return render(request, 'tools-common_name_checker.html', context)
 
 
@@ -248,7 +262,7 @@ def export_csv(request):
     response.write(codecs.BOM_UTF8)
 
     writer = csv.writer(response)
-    
+    print(request)
     
 
     for row in results: 
