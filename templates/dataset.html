@@ -30,7 +30,9 @@
 
       <p>
         <!-- 詮釋資料最後修改於：{{ dataset.mod_date|date:'Y/m/d' }}<br> -->
-        發布單位：{{ organization_name }}<br>
+        {% if  organization_name %}
+          發布單位：{{ organization_name }}<br>
+        {% endif %}
         發布日期：{{ dataset.mod_date|date:'Y/m/d' }}<br>
         <!-- 資料最後上傳日：{{ dataset.pub_date|date:'Y/m/d'}}<br> -->
         資料授權引用格式：{{ dataset.data_license }}<br>
