@@ -15,10 +15,10 @@ DATA_MAPPING = {
         'unknown':'其他',
     },
     'rights': {
-        'CC-BY-NC': 'CC-BY-NC (4.0)',
-        'CC-BY': 'CC-BY (4.0)',
-        'CC0': 'CC0 (1.0)',
-        'unknown':'未明確授權',
+        'Creative Commons Attribution Non Commercial (CC-BY-NC) 4.0 License': 'CC-BY-NC(4.0)',
+        'Creative Commons Attribution (CC-BY) 4.0 License': 'CC-BY(4.0)',
+        'Public Domain (CC0 1.0)': 'CC0 (1.0)',
+        None:'未明確授權',
     },
     'core': {
         'occurrence': 'Occurrence',
@@ -70,44 +70,39 @@ class Dataset(models.Model):
 
     title = models.CharField('title', max_length=300)
     name = models.CharField('name', max_length=128) # ipt shortname
-    description = models.TextField('Description')
     author = models.CharField('author', max_length=128)
     pub_date = models.DateTimeField('Publish Date', null=True)
     mod_date = models.DateTimeField('Modified Date', null=True)
     guid = models.CharField('GUID', max_length=40,null=True)
     status = models.CharField('status', max_length=10, choices=STATUS_CHOICE)
-    guid_verbatim = models.CharField('GUID', max_length=100)
     dwc_core_type = models.CharField('Dw-C Core Type', max_length=128, choices=DWC_CORE_TYPE_CHOICE, null=True)
     data_license = models.CharField('Data License', max_length=128,null=True)
-    cite = models.TextField(blank=True, null=True)
     version = models.TextField(blank=True, null=True)
     country = models.TextField(blank=True, null=True)
-    collection_id = models.TextField(blank=True, null=True)
-    gbif_cite = models.TextField(blank=True, null=True)
     gbif_doi = models.TextField(blank=True, null=True)
-    gbif_mod_date = models.DateTimeField('Modified Date from gbif', null=True)
-    organization_verbatim = models.TextField(blank=True, null=True)
     organization_name = models.TextField(blank=True, null=True)
     organization = models.ForeignKey('DatasetOrganization', null=True, blank=True, on_delete=models.SET_NULL, related_name='datasets')
-    #models.TextField(blank=True, null=True)
-    num_record = models.PositiveIntegerField(default=0)
     num_occurrence = models.PositiveIntegerField(default=0)
-    #stats_num_year_column = models.PositiveIntegerField(default=0)
-    #stats_num_coordinates = models.PositiveIntegerField(default=0)
-    extension_data = models.JSONField(null=True)
     is_most_project = models.BooleanField('是否為科技部計畫', default=False)
     quality = models.CharField('資料集品質', max_length=4, default='')
     has_publish_problem = models.BooleanField('是否有發布問題 (IPT 裡黃色的區塊)', default=False, help_text='有可能 IPT 授權沒填?')
     admin_memo = models.TextField('後台管理註記', blank=True, null=True, help_text='不會在前台出現')
-    #is_about_taiwan = models.BooleanField('是否 about Taiwan', default=True)
-    #is_from_taiwan = models.BooleanField('是否 from Taiwan', default=True)
-    keyword = models.TextField(blank=True, null=True)
     
     pre_released = models.DateTimeField(null=True)
     pre_count = models.BigIntegerField(null=True)
-    pub_released = models.DateTimeField(null=True)
-    pub_count = models.BigIntegerField(null=True)
-
+    # pub_released = models.DateTimeField(null=True)
+    # pub_count = models.BigIntegerField(null=True)
+    num_checklist = models.PositiveIntegerField(default=0)
+    num_event = models.PositiveIntegerField(default=0)
+    # recordsPublished = models.PositiveIntegerField(default=0)
+    metadataModified = models.DateTimeField(null=True)
+    mappingsModified = models.DateTimeField(null=True)
+    sourcesModified = models.DateTimeField(null=True)
+    lastPublished = models.DateTimeField(null=True)
+    created = models.DateTimeField(null=True)
+    language= models.CharField(max_length=128,null=True)
+    organization_uuid = models.CharField(max_length=256,null=True)
+    num_record = models.PositiveIntegerField(default=0)
     objects = models.Manager()
     public_objects = PublicDatasetManager()
 
@@ -143,7 +138,7 @@ class Dataset(models.Model):
         return r
 
 
-class Book_citation(models.Model):
+class Dataset_citation(models.Model):
 
     dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE, null=True)
     identifier = models.TextField(null=True,blank=True)
@@ -165,10 +160,18 @@ class Dataset_Contact(models.Model):
     electronicmailaddress =  models.CharField(max_length=512,null=True,blank=True)
     onlineurl =  models.CharField(max_length=256,null=True,blank=True)
     role =  models.CharField(max_length=128,null=True,blank=True)
-    creator =  models.BooleanField(default=False,null=True,blank=True)
+    role_type = models.CharField(max_length=128,null=True,blank=True)
+    # creator =  models.BooleanField(default=False,null=True,blank=True)
 
+class Dataset_keyword(models.Model):
+    dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE, null=True)
+    keyword = models.TextField(null=True,blank=True)
+    seq = models.TextField(null=True,blank=True)
 
-
+class Dataset_description(models.Model):
+    dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE, null=True)
+    description = models.TextField(null=True,blank=True)
+    seq = models.TextField(null=True,blank=True)
 
 class DatasetOrganization(models.Model):
     '''publisher'''

@@ -6,8 +6,8 @@ class DatasetAdmin(admin.ModelAdmin):
     model = Dataset
     list_display = ('title', 'name', 'num_occurrence', 'pub_date', 'guid')
     list_filter = ('is_most_project', 'dwc_core_type', 'has_publish_problem')
-    fields = ('title', 'name', 'description','author', 'pub_date', 'guid', 'dwc_core_type', 'num_record', 'num_occurrence', 'extension_data', 'is_most_project', 'has_publish_problem', 'admin_memo')
-    readonly_fields = ('title', 'name', 'description','author', 'pub_date', 'guid', 'dwc_core_type', 'num_record', 'num_occurrence', 'extension_data')
+    fields = ('title', 'name', 'author', 'pub_date', 'guid', 'dwc_core_type',  'num_occurrence',  'is_most_project', 'has_publish_problem', 'admin_memo')
+    readonly_fields = ('title', 'name', 'author', 'pub_date', 'guid', 'dwc_core_type',  'num_occurrence', )
     search_fields = ('title',)
 
 
