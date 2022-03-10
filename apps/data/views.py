@@ -24,11 +24,11 @@ from .models import (
     Taxon,
     Occurrence,
     Dataset,
-    Book_citation,
+    Dataset_citation,
+    Dataset_keyword,
     Dataset_Contact,
-    #RawDataOccurrence,
+    Dataset_description,
     DatasetOrganization,
-    #SimpleData,
 )
 from .helpers.species import get_species_info
 from .helpers.mod_search import (
@@ -89,7 +89,7 @@ def search_all(request):
 
         # dataset
         dataset_rows = []
-        for x in Dataset.objects.values('title', 'description', 'name').filter(Q(title__icontains=q) | Q(description__icontains=q)).exclude(status='Private').all()[:20]:
+        for x in Dataset.objects.values('title', 'name').filter(Q(title__icontains=q)).exclude(status='Private').all()[:20]:
             dataset_rows.append({
                 'title': x['title'],
                 'content':x['description'],
@@ -349,17 +349,31 @@ def dataset_view(request, name):
     
     try:
         dataset = Dataset.public_objects.get(name=name)
-
+        organization_name = None
+        try :
+            organization_name = DatasetOrganization.objects.get(id=dataset.organization_id).name 
+        except :
+            organization_name = None
         contacts = []
         citation =[]
+        description = []
+        keyword = []
         for x in Dataset_Contact.objects.filter(dataset=dataset.id).values():
             del x['id'],x['dataset_id']
             contacts.append(x)
             
-        for x in Book_citation.objects.filter(dataset=dataset.id).values():
+        for x in Dataset_citation.objects.filter(dataset=dataset.id).values():
             del x['id'],x['dataset_id']
             citation.append(x)
 
+        for x in Dataset_description.objects.filter(dataset=dataset.id).values():
+            del x['id'],x['dataset_id']
+            description.append(x)
+        
+
+        for x in Dataset_keyword.objects.filter(dataset=dataset.id).values():
+            del x['id'],x['dataset_id']
+            keyword.append(x)        
         
         #Count the number of longitude and latitude
         # dataset_s = SimpleData.objects.filter(taibif_dataset_name = name).values_list('longitude','latitude','year','taxon_family_id',
@@ -390,7 +404,7 @@ def dataset_view(request, name):
 
     # return render(request, 'dataset.html', {'dataset': dataset, 'LonNum':LonNum, 'LatNum':LatNum,'YrNum':YrNum, 'TaxNum':TaxNum,
                                             # 'FamNum':FamNum, 'SpNum':SpNum})
-    return render(request,'dataset.html',{'dataset':dataset,'contacts':contacts,'citation':citation})
+    return render(request,'dataset.html',{'dataset':dataset,'contacts':contacts,'citation':citation,'description': description, 'keyword':keyword,'organization_name':organization_name,})
 
 
 
@@ -443,10 +457,10 @@ def species_view(request, pk):
     facet_json = 'json.facet={'+facet_dataset +','+facet_dataset_zh +'}'
     
 
-    if ENV in ['dev','stag']:
-        r = requests.get(f'http://54.65.81.61:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&rows={search_limit}&q=*:*&fq={solr_q}&{facet_json}')
-    else:
-        r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&rows={search_limit}&q=*:*&fq={solr_q}&{facet_json}')
+    # if ENV in ['dev','stag']:
+    #     r = requests.get(f'http://54.65.81.61:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&rows={search_limit}&q=*:*&fq={solr_q}&{facet_json}')
+    # else:
+    r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&rows={search_limit}&q=*:*&fq={solr_q}&{facet_json}')
 
 
     map_url = "http://"+request.META['HTTP_HOST']+"/api/v2/occurrence/search?taxon_key="+taxon.rank+":"+str(taxon.id)+"&facet=year&facet=month&facet=dataset&facet=dataset_id&facet=publisher&facet=country&facet=license"

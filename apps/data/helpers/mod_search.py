@@ -282,7 +282,7 @@ class DatasetSearch(SuperSearch):
     def result_map(self, x):
         return {
             'title': x.title,
-            'description': x.description,
+            # 'description': x.description,
             'id': x.id,
             'name': x.name,
             'dwc_type': x.get_dwc_core_type_display(),
