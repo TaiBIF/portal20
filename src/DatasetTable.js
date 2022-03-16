@@ -71,6 +71,27 @@ class DatasetTable extends React.Component {
     this.applyFilters(filters);
   }
 
+  handlePaginate2(e, cat='', disabled=''){
+    e.preventDefault();
+    if (disabled) {
+      return false;
+    }
+    let filters = this.state.filters;
+    const limit = this.state.data.limit;
+    const offset = (cat-1)* limit;
+    for (let i of filters) {
+      if (i.indexOf('offset=') >= 0) {
+        filters.delete(i);
+        break;
+      }
+    }
+    filters.add(`offset=${offset}`);
+    this.setState({
+      isLoaded: false,
+    });
+    this.applyFilters(filters);
+  }
+
   applyFilters(filters) {
     const queryString = (filters) ?
           Array.from(filters).join('&') :
@@ -124,15 +145,12 @@ class DatasetTable extends React.Component {
         const dtime = v.pub_date.replace(/-/g, '/');
         const num_record = v.num_record.toLocaleString();
         const num_occurrence = v.num_occurrence.toLocaleString();
-        //let pubMemo = '';
         let pubMemo = '';
         if (v.status === 'PUBLIC') {
           pubMemo = (v.guid) ? '已註冊至 GBIF' : '未註冊至 GBIF';
           pubMemo = <div><small>{pubMemo}</small></div>;
         }
-        const title = (v.status === 'PUBLIC') ?
-              <a href={"/dataset/"+v.name}>{v.title}</a>:
-              v.title;
+        const title = (v.status === 'PUBLIC') ? <a href={"/dataset/"+v.name}>{v.title}</a>:v.title;
 
         return (<tr key={i}>
                 <td>{data.offset+i+1}</td>
@@ -146,6 +164,13 @@ class DatasetTable extends React.Component {
                 <td>{v.status_display}{pubMemo}</td>
                 </tr>)
       })
+      const currentPageNum = Math.ceil(data.offset / data.limit) + 1;
+      let paginationList = []
+      for (let i = 1; i <= (Math.ceil(data.count/data.limit)); i++) {
+        let disabledPage = (currentPageNum === i) ? ' disabled' : '';
+        paginationList.push(<li className={"page" + disabledPage} key={i} ><a style={{'margin': '10px'}} href="#" onClick={(e)=>this.handlePaginate2(e, i, disabledPage )}>{i}</a></li>)
+      }
+
       const disabledPrev = (data.offset === 0) ? ' disabled' : '';
       const disabledNext = (data.has_more === false) ? ' disabled' : '';
       const theadItems = [
@@ -160,9 +185,9 @@ class DatasetTable extends React.Component {
       ].map((v, i) => {
         let finger = null;
         if (this.state.sortDirection != null && this.state.sortKey === v[0]) {
-          finger = (this.state.sortDirection > 0) ? '👇' : '👆 ';
+          finger = (this.state.sortDirection > 0) ? '👇' : '👆';
         }
-        return <th key={i} onClick={(e)=>this.handleSort(e, v[0])}>{v[1]}{finger}</th>
+        return <th style={{'cursor': 'pointer'}} key={i} onClick={(e)=>this.handleSort(e, v[0])}>{v[1]}{finger}</th>
       });
       //
       return (
@@ -192,8 +217,8 @@ class DatasetTable extends React.Component {
           </table>
           <nav aria-label="...">
           <ul className="pager">
-          <li className={"previous"+disabledPrev}><a href="#" onClick={(e)=>this.handlePaginate(e, 'prev', disabledPrev)}><span aria-hidden="true">&larr;</span>上一頁</a></li>
-          <li className={"next"+disabledNext}><a href="#" onClick={(e)=>this.handlePaginate(e, 'next', disabledNext)}>下一頁 <span aria-hidden="true">&rarr;</span></a></li>
+          {paginationList}
+
           </ul>
           </nav>
           </div>

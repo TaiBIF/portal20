@@ -15,9 +15,9 @@ DATA_MAPPING = {
         'unknown':'其他',
     },
     'rights': {
-        'Creative Commons Attribution Non Commercial (CC-BY-NC) 4.0 License': 'CC-BY-NC(4.0)',
-        'Creative Commons Attribution (CC-BY) 4.0 License': 'CC-BY(4.0)',
-        'Public Domain (CC0 1.0)': 'CC0 (1.0)',
+        'Creative Commons Attribution Non Commercial (CC-BY-NC) 4.0 License': 'CC-BY-NC 4.0',
+        'Creative Commons Attribution (CC-BY) 4.0 License': 'CC-BY 4.0',
+        'Public Domain (CC0 1.0)': 'CC0 1.0',
         None:'未明確授權',
     },
     'core': {
@@ -27,9 +27,9 @@ DATA_MAPPING = {
         'meta': 'Metadata-only'
     },
     'publisher_dwc':{
-        'Occurrence':'出現紀錄',
-        'checklist':'物種名錄',
-        'Sampling event':'調查活動',
+        'OCCURRENCE':'出現紀錄',
+        'CHECKLIST':'物種名錄',
+        'SAMPLINGEVENT':'調查活動',
         'Metadata-only':'詮釋資料',
     }
 }
@@ -62,9 +62,9 @@ class Dataset(models.Model):
     )
 
     DWC_CORE_TYPE_CHOICE = (
-        ('Occurrence', '出現紀錄'),
-        ('checklist', '物種名錄'),
-        ('Sampling event', '調查活動'),
+        ('OCCURRENCE', '出現紀錄'),
+        ('CHECKLIST', '物種名錄'),
+        ('SAMPLINGEVENT', '調查活動'),
         # Meta
     )
 

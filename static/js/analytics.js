@@ -3,6 +3,10 @@ var width = 980;
 var height = 380;
 var padding = 80;
 
+
+const colorPrimary = '#846C5B';
+const colorSecondary = '#BB998B';
+
 function renderBarChart(selector, dataset) {
 
   var svg = d3.select(selector).append("svg").attr("width", width).attr("height", height);
@@ -20,11 +24,26 @@ function renderBarChart(selector, dataset) {
     .attr("transform", "translate(" + 0 + "," + (height - padding) + ")")
     .attr("class", "axis")
     .call(d3.axisBottom(xScale));
-
+  if (selector == '#taibif-stats__this_year_occurrence') {
   svg.append("g")
     .attr("transform", "translate(" + padding + "," + 0 + ")")
     .attr("class", "axis")
-    .call(d3.axisLeft(yScale).ticks(8));
+    .call(d3.axisLeft(yScale).ticks(5)
+    .tickFormat(function (d) {
+                switch(d) {
+                  case 1000000: return "1M"; break;
+                  case 2000000: return "2M"; break;
+                  case 3000000: return "3M"; break;
+                  case 4000000: return "4M"; break;
+                  case 5000000: return "5M"; break;
+              }})
+      );
+  } else {
+    svg.append("g")
+      .attr("transform", "translate(" + padding + "," + 0 + ")")
+      .attr("class", "axis")
+      .call(d3.axisLeft(yScale).ticks(5));
+  };
 
   svg.append("g")
     .selectAll("rect")
@@ -46,9 +65,52 @@ function renderBarChart(selector, dataset) {
     .attr("y", function(d) {return yScale(d.y)-5; })
     .text(function(d) {return d.y.toLocaleString()})
     .attr("class", "label");
+    const titleColor = colorPrimary;
+    const appendixColor = colorPrimary;//'#1d5a91';
+    const appendixColor2 = colorSecondary;//'#1d5a91';
+    const yUnitTitle = (selector == '#taibif-stats__this_year_occurrence') ? '筆' : '個';
+    // add graph title
+  svg.append("text")
+      .attr("x", 500)
+      .attr("y", height-30)
+      .attr("text-anchor", "middle")
+      .style("font-size", "18px")
+      .attr("fill", titleColor)
+      .text("月 份");
+  svg.append("text")
+      .attr("x", 30)
+      .attr("y", height / 2)
+      .attr("text-anchor", "middle")
+      .style("font-size", "18px")
+      .attr("fill", titleColor)
+      .text(yUnitTitle);
+  svg.append("text")
+      .attr("x", 30)
+      .attr("y", height / 2 + 30)
+      .attr("text-anchor", "middle")
+      .style("font-size", "18px")
+      .attr("fill", titleColor)
+      .text("數");  
+  
+  svg.append("text")
+    .attr("x", 980-9)
+    .attr("y", 60)
+    .attr("text-anchor", "middle")
+    .style("font-size", "18px")
+    .attr("fill", appendixColor)
+    .text("━ 目前累積筆數");
+  svg.append("text")
+    .attr("x", 980)
+    .attr("y", 88)
+    .attr("text-anchor", "middle")
+    .style("font-size", "18px")
+    .attr("fill", appendixColor2)
+    .text("┅ 當年度累積筆數");
+
 }
 
 const dataURL = (location.search.indexOf('most=') >= 0) ? '/api/data/stats?most=1': '/api/data/stats';
+//const dataURL = '/static/fake-data-stats.json'; // TODO!!
 d3.json(dataURL).then( data => {
   //console.log(data);
   renderBarChart('#taibif-stats__this_year_occurrence', data['current_year']['occurrence']);
@@ -63,7 +125,7 @@ d3.json(dataURL).then( data => {
 
 function renderLineChart(selector, dataset) {
   //console.log(dataset);
-  var svg = d3.select(selector).append("svg").attr("width", width).attr("height", height);
+  var svg = d3.select(selector).append("svg").attr("width", 1200).attr("height", height);
 
   var xScale = d3.scaleBand()
     .rangeRound([padding, width - padding])
@@ -71,24 +133,41 @@ function renderLineChart(selector, dataset) {
       .domain(dataset.map(function(d) {  return d.year; }));
 
   var yScale = d3.scaleLinear()
-    .domain([0, d3.max(dataset, function(d) { return d.y2; })])
+    .domain([0, d3.max(dataset, function(d) { console.log(d.y2);return d.y2; })])
     .range([height - padding, padding]);
 
   svg.append("g")
     .attr("transform", "translate(" + 0 + "," + (height - padding) + ")")
     .attr("class", "axis")
     .call(d3.axisBottom(xScale));
-
-  svg.append("g")
-    .attr("transform", "translate(" + padding + "," + 0 + ")")
-    .attr("class", "axis")
-    .call(d3.axisLeft(yScale).ticks(8));
+  //const ticks = ();
+  console.log(dataset);
+  if (selector == '#taibif-stats__trend_occurrence') {
+    console.log("test=",dataset);
+    svg.append("g")
+      .attr("transform", "translate(" + padding + "," + 0 + ")")
+      .attr("class", "axis")
+      .call(d3.axisLeft(yScale).ticks(5)
+      .tickFormat(function (d) {
+        switch(d) {
+          case 1000000: return "1M"; break;
+          case 2000000: return "2M"; break;
+          case 3000000: return "3M"; break;
+          case 4000000: return "4M"; break;
+          case 5000000: return "5M"; break;
+      }}));
+  } else {
+    svg.append("g")
+      .attr("transform", "translate(" + padding + "," + 0 + ")")
+      .attr("class", "axis")
+      .call(d3.axisLeft(yScale).ticks(5));
+  }
 
   let hackYSHIFT = 26;
   svg.append("path")
     .datum(dataset)
     .attr("fill", "none")
-    .attr("stroke", "#bb998b")
+    .attr("stroke", colorSecondary)
     .style("stroke-dasharray", ("3, 3"))
     .attr("stroke-width", 3)
     .attr("d", d3.line()
@@ -122,5 +201,46 @@ function renderLineChart(selector, dataset) {
     .attr("x", function(d) {return xScale(d.year)+24; })
     .attr("y", function(d) {return yScale(d.y1)-3; })
     .text(function(d) {return d.y1.toLocaleString()})
-    .attr("class", "label");
+    .attr("fill", colorSecondary);
+    //.attr("class", "label");
+  const titleColor = colorPrimary;
+  const appendixColor = colorPrimary;//'#1d5a91';
+  const appendixColor2 = colorSecondary;//'#1d5a91';
+  const yUnitTitle = (selector == '#taibif-stats__trend_occurrence') ? '筆' : '個';
+  // add graph title
+  svg.append("text")
+     .attr("x", 500)
+     .attr("y", height-30)
+     .attr("text-anchor", "middle")
+     .style("font-size", "18px")
+     .attr("fill", titleColor)
+     .text("年 份");
+  svg.append("text")
+     .attr("x", 30)
+     .attr("y", height / 2)
+     .attr("text-anchor", "middle")
+     .style("font-size", "18px")
+     .attr("fill", titleColor)
+     .text(yUnitTitle);
+  svg.append("text")
+     .attr("x", 30)
+     .attr("y", height / 2 + 30)
+     .attr("text-anchor", "middle")
+     .style("font-size", "18px")
+     .attr("fill", titleColor)
+     .text("數");
+  svg.append("text")
+     .attr("x", 980-9)
+     .attr("y", 60)
+     .attr("text-anchor", "middle")
+     .style("font-size", "18px")
+     .attr("fill", appendixColor)
+     .text("━ 目前累積筆數");
+  svg.append("text")
+     .attr("x", 980)
+     .attr("y", 88)
+     .attr("text-anchor", "middle")
+     .style("font-size", "18px")
+     .attr("fill", appendixColor2)
+     .text("┅ 當年度累積筆數");
 }
