@@ -25,7 +25,7 @@ $ nvm use lts/fermium
 $ npm install
 $ npm run dev
 ```
-.
+
 ## make translate (english)
 
 ```
