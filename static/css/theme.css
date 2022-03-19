@@ -1568,11 +1568,14 @@ a.navbar-icon-btn:last-child {
   width: 70px;
   height: 70px;
 }
-
+.news-card-parent-flex{
+  display: flex;
+}
 .news-card-wrapper {
   border: #ddd solid 1px;
   border-radius: 4px;
   margin-bottom: 50px;
+  height: 90%;
 }
 
 .news-card-cate {
