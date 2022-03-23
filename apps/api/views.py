@@ -813,12 +813,12 @@ def data_stats(request):
         'occurrence': []
     }
     for i in rows:
-        if not i.pub_date:
+        if not i.created:
             continue
         
-        y = str(i.pub_date.year)
+        y = str(i.created.year)
         if str(current_year) == y:
-            m = i.pub_date.month
+            m = i.created.month
             current_year_data['dataset'][m-1]['y'] += 1
             current_year_data['occurrence'][m-1]['y'] += i.num_occurrence
         if y not in hdata:
@@ -830,7 +830,7 @@ def data_stats(request):
             hdata[y]['dataset'] += 1
             hdata[y]['occurrence'] += i.num_occurrence
 
-    #print (hdata)
+    # print (hdata)
     sorted_year = sorted(hdata)
     accu_ds = 0
     accu_occur = 0
