@@ -34,7 +34,7 @@ svg text.label {
 
 {% if env == "dev" %}
 <script src="{% static 'js/dataset-table.dev.js' %}"></script>
-{% elif env == "prod" %}
+{% elif env == "prod" or env == "stag" %}
 <script src="{% static 'js/dataset-table.min.js' %}"></script>
 {% endif %}
 
