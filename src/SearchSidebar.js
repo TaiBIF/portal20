@@ -2,8 +2,8 @@ import React, {useState, useRef} from 'react';
 //import Accordion from "./components/Accordion";
 //import Tree from "./components/Tree";
 import SearchTaxon from './SearchSidebarTaxon';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
+// import IconButton from '@material-ui/core/IconButton';
+// import DeleteIcon from '@material-ui/icons/Delete';
 import Slider from '@material-ui/core/Slider';
 
 function Accordion(props) {

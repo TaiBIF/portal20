@@ -9,7 +9,7 @@ const colorSecondary = '#BB998B';
 
 function renderBarChart(selector, dataset) {
 
-  var svg = d3.select(selector).append("svg").attr("width", width).attr("height", height);
+  var svg = d3.select(selector).append("svg").attr("width", 1200).attr("height", height);
 
   var xScale = d3.scaleBand()
     .rangeRound([padding, width - padding])
