@@ -1578,6 +1578,14 @@ a.navbar-icon-btn:last-child {
   margin-bottom: 50px;
   height: 90%;
 }
+a.clamp2row {
+    min-height: 5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 .news-card-cate {
   color: #846C5B !important;
