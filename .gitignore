@@ -19,6 +19,7 @@ taibif_volumes
 
 # csv data
 csvData
+xaa_grid.csv
 
 .idea
 /tmp
