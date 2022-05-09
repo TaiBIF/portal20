@@ -202,7 +202,7 @@
           <ul class="news-card-list-ctn">
             {% for i in event_list|slice:"1:4" %}
             <li>
-              <a href="{{ i.get_absolute_url }}">{{ i.title }}</a>
+              <a href="{{ i.get_absolute_url }}" class="clamp2row">{{ i.title }}</a>
               <span>{{ i.created|date:'Y/m/d' }}</span>
             </li>
             {% endfor %}
@@ -228,7 +228,7 @@
           <ul class="news-card-list-ctn">
             {% for i in update_list|slice:"1:4" %}
             <li>
-              <a href="{{ i.get_absolute_url }}">{{ i.title }}</a>
+              <a href="{{ i.get_absolute_url }}" class="clamp2row">{{ i.title }}</a>
               <span>{{ i.created|date:'Y/m/d' }}</span>
             </li>
             {% endfor %}
