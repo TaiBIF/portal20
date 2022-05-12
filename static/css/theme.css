@@ -1579,7 +1579,8 @@ a.navbar-icon-btn:last-child {
   height: 90%;
 }
 a.clamp2row {
-    min-height: 5rem;
+    min-height: 6rem;
+    max-height:6rem;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
