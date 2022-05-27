@@ -25,6 +25,7 @@ export default function OccurrenceSearch(props) {
         <td>{ row.eventDate }</td>
         <td>{ countryOrLocality }</td>
         <td><a href={"/dataset/"+row.taibif_dataset_name+"/"}>{ row.taibif_dataset_name_zh }</a></td>
+        <td>{ row.basisOfRecord }</td>
         <td>{ row.kingdom }</td>
         <td>{ row.phylum }</td>
         <td>{ row.class }</td>
@@ -50,6 +51,7 @@ export default function OccurrenceSearch(props) {
             <th>時間</th>
             <th>國家/地區</th>
             <th>資料集</th>
+            <th>紀錄類型</th>
             <th>界</th>
             <th>門</th>
             <th>綱</th>
