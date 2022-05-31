@@ -156,7 +156,7 @@
   <!-- News board begin -->
   <div class="container">
     <h1 class="heading-xlg-center">{% trans "最新消息" %} </h1>
-    <div class="row">
+    <div class="row news-card-parent-flex">
       <!-- news list begin -->
       <div class="col-sm-12 col-md-4">
         <div class="news-card-wrapper">
@@ -176,7 +176,7 @@
           <ul class="news-card-list-ctn">
             {% for i in news_list|slice:"1:4" %}
             <li>
-              <a href="{{ i.get_absolute_url }}">{{ i.title }}</a>
+              <a href="{{ i.get_absolute_url }}" class="clamp2row">{{ i.title }}</a>
               <span>{{ i.created|date:'Y/m/d' }}</span>
             </li>
             {% endfor %}
@@ -202,7 +202,7 @@
           <ul class="news-card-list-ctn">
             {% for i in event_list|slice:"1:4" %}
             <li>
-              <a href="{{ i.get_absolute_url }}">{{ i.title }}</a>
+              <a href="{{ i.get_absolute_url }}" class="clamp2row">{{ i.title }}</a>
               <span>{{ i.created|date:'Y/m/d' }}</span>
             </li>
             {% endfor %}
@@ -228,7 +228,7 @@
           <ul class="news-card-list-ctn">
             {% for i in update_list|slice:"1:4" %}
             <li>
-              <a href="{{ i.get_absolute_url }}">{{ i.title }}</a>
+              <a href="{{ i.get_absolute_url }}" class="clamp2row">{{ i.title }}</a>
               <span>{{ i.created|date:'Y/m/d' }}</span>
             </li>
             {% endfor %}

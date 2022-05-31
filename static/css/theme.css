@@ -1569,10 +1569,23 @@ a.navbar-icon-btn:last-child {
   height: 70px;
 }
 
+.news-card-parent-flex{
+  display: flex;
+}
 .news-card-wrapper {
   border: #ddd solid 1px;
   border-radius: 4px;
   margin-bottom: 50px;
+  height: 90%;
+}
+a.clamp2row {
+    min-height: 6rem;
+    max-height:6rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .news-card-cate {
