@@ -149,7 +149,7 @@ class Dataset_Contact(models.Model):
     dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE, null=True)
     givenname =  models.CharField(max_length=128,null=True,blank=True)
     surname  =  models.CharField(max_length=128,null=True,blank=True)
-    organizationname =  models.CharField(max_length=128,null=True,blank=True)
+    organizationname =  models.CharField(max_length=512,null=True,blank=True)
     positionname =  models.CharField(max_length=1024,null=True,blank=True)
     deliverypoint =  models.CharField(max_length=2048,null=True,blank=True)
     city =  models.CharField(max_length=128,null=True,blank=True)

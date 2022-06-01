@@ -14,8 +14,8 @@ from apps.data.models import (
 if ENV in ['dev','stag']:
     # SOLR_PREFIX = 'http://solr:8983/solr/'
 # if ENV == 'dev':
-    SOLR_PREFIX = 'http://54.65.81.61:8983/solr/'
-    # SOLR_PREFIX = 'http://solr:8983/solr/'
+    # SOLR_PREFIX = 'http://54.65.81.61:8983/solr/'
+    SOLR_PREFIX = 'http://solr:8983/solr/'
 else:
     SOLR_PREFIX = 'http://solr:8983/solr/'
 
