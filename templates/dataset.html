@@ -53,13 +53,13 @@
       <p>
       </p>
       <div class="row">
-
+        
       <!-- row begin -->
         {% if dataset.num_occurrence %}
           <div class="col-xs-12 col-sm-6 col-md-3">
             <div class="data-wall-ctn">
               <span class="dtat-wall-name">出現紀錄筆數</span>
-              <span class="data-wall-numbers">{{ dataset.num_occurrence|intcomma }}</span>
+              <a href="{% url 'search-occurrence' cat='search'  %}?dataset={{ dataset.name }}"> <span class="data-wall-numbers">{{ dataset.num_occurrence|intcomma }}</span><a/>
             </div>
           </div>
         {% endif %}

@@ -12,6 +12,8 @@ DATA_MAPPING = {
         'ZM': '尚比亞',
         'BI': '蒲隆地',
         'CN': '中國',
+        'IN':'印度',
+        'VN':'越南',
         'unknown':'其他',
     },
     'rights': {
@@ -19,6 +21,7 @@ DATA_MAPPING = {
         'Creative Commons Attribution (CC-BY) 4.0 License': 'CC-BY 4.0',
         'Public Domain (CC0 1.0)': 'CC0 1.0',
         None:'未明確授權',
+        'unknown':'未明確授權',
     },
     'core': {
         'occurrence': 'Occurrence',
@@ -149,7 +152,7 @@ class Dataset_Contact(models.Model):
     dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE, null=True)
     givenname =  models.CharField(max_length=128,null=True,blank=True)
     surname  =  models.CharField(max_length=128,null=True,blank=True)
-    organizationname =  models.CharField(max_length=128,null=True,blank=True)
+    organizationname =  models.CharField(max_length=512,null=True,blank=True)
     positionname =  models.CharField(max_length=1024,null=True,blank=True)
     deliverypoint =  models.CharField(max_length=2048,null=True,blank=True)
     city =  models.CharField(max_length=128,null=True,blank=True)

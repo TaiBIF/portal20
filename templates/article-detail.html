@@ -57,7 +57,7 @@
       {% endif %}
     </div>
    </div>
-
+   <hr>
     <div class="article-content-wrapper">
       <p>
         {% if article.memo|slice:"0:4" == "nid:" %}
@@ -82,7 +82,7 @@
               <div class="head-carousel-wrapper item {% if forloop.counter == 1 %} active{% endif %}">
                 <img src="/media/{{ image.images }}">
                 <div class="carousel-caption">
-                  <p>{{image.cover_license_text}}ㄑㄧㄜiuyfiuf</p> 
+                  <p>{{image.cover_license_text}}</p> 
                 </div>
               </div>
             {% endfor %}
