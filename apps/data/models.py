@@ -13,7 +13,7 @@ DATA_MAPPING = {
         'BI': '蒲隆地',
         'CN': '中國',
         'IN':'印度',
-        'VN':'Viet Nam',
+        'VN':'越南',
         'unknown':'其他',
     },
     'rights': {
