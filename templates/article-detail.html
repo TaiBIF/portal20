@@ -49,10 +49,12 @@
     <div class="carousel-inner" >
       {% if  article.cover %}
         <div class="head-carousel-wrapper item active">
-            <img src="/media/{{ article.cover }}">
-            <p class="home-banner-cover-license">
-              {{article.cover_license_text}}
-            </p>    
+          <img style="width:75%" src="/media/{{ article.cover }}">
+        </div>
+        <div class="head-carousel-wrapper item active">
+          <p>
+            {{article.cover_license_text}}
+          </p>
         </div>
       {% endif %}
     </div>
