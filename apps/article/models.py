@@ -75,7 +75,7 @@ class Article(models.Model):
     is_pinned = models.CharField('置頂', max_length=2, default='N', choices=PINNED_CHOICE)
     is_homepage = models.BooleanField('首頁專題文章', null=True)
     is_content_markdown = models.BooleanField('內文是否 markdown', null=True, blank=True, help_text='舊文章要特別勾, 才會有 markdown 顯示')
-    cover = models.ImageField(upload_to=article_cover_path, blank=True)
+    cover = models.ImageField(upload_to=article_cover_path, blank=True, help_text='注：圖片尺寸誤過長')
     cover_license_text = models.CharField('授權文字', max_length=100, blank=True)
     tags = models.ManyToManyField(Tag, verbose_name='標籤', related_name='articles', blank=True)
     memo = models.CharField('備註(不會顯示)', max_length=128, blank=True)
