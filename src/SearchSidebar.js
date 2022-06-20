@@ -49,11 +49,6 @@ function Accordion(props) {
       // console.log(content.key, handleChange)
       return (
           <div className="year_slider" key={x}>
-            <div > 
-              <IconButton aria-label="delete" onClick={clearYearCondition} >
-                <DeleteIcon  />
-              </IconButton>
-            </div>
           <Slider
         value={yearValue}
         onChange={(e, newRange) => setYearValue(newRange)}

@@ -45,7 +45,6 @@ JSON_FACET_MAP = {
         'year': {
             'type':'terms',
             'field':'year',
-            'mincount': 0,
             'limit': -1,
         },
         'country': {
@@ -73,29 +72,29 @@ JSON_FACET_MAP = {
 
 CODE_MAPPING ={
     'county':{
-        0 : '其他',
-        1 : '臺北市',
-        2 : '臺中市',
-        3 : '基隆市',
-        4 : '臺南市',
-        5 : '高雄市',
-        6 : '新北市',
-        7 : '宜蘭縣',
-        8 : '桃園市',
-        9 : '嘉義市',
-        10 : '新竹縣',
-        11 : '苗栗縣',
-        12 : '南投縣',
-        13 : '彰化縣',
-        14 : '新竹市',
-        15 : '雲林縣',
-        16 : '嘉義縣',
-        17 : '屏東縣',
-        18 : '花蓮縣',
-        19 : '臺東縣',
-        20 : '金門縣',
-        21 : '澎湖縣',
-        22 : '連江縣',
+        None : '其他',
+        'Taipei' : '臺北市',
+        'Taichung' : '臺中市',
+        'Keelung' : '基隆市',
+        'Tainan' : '臺南市',
+        'Kaohsiung' : '高雄市',
+        'New Taipei' : '新北市',
+        'Yilan' : '宜蘭縣',
+        'Taoyuan' : '桃園市',
+        'Chiayi City' : '嘉義市',
+        'Hsinchu County' : '新竹縣',
+        'Miaoli' : '苗栗縣',
+        'Nantou' : '南投縣',
+        'Changhua' : '彰化縣',
+        'Hsinchu City' : '新竹市',
+        'Yulin' : '雲林縣',
+        'Chiayi County' : '嘉義縣',
+        'Pingtung' : '屏東縣',
+        'Hualien' : '花蓮縣',
+        'Taitung' : '臺東縣',
+        'Kinmen' : '金門縣',
+        'Penghu' : '澎湖縣',
+        'Lienkiang' : '連江縣',
     }
     
 }
@@ -195,7 +194,7 @@ class SolrQuery(object):
 
         self.solr_tuples.append(('q', self.solr_q))
         self.solr_tuples.append(('rows', self.rows)) #TODO remove redundant key['rows']
-
+ 
         if len(self.facet_values):
             self.solr_tuples.append(('facet', 'true'))
             s = ''
@@ -207,7 +206,7 @@ class SolrQuery(object):
                     #flist.append('{}:{}'.format(i, JSON_FACET_MAP[self.core][i]))
             s = ','.join(flist)
             self.solr_tuples.append(('json.facet', '{'f'{s}''}'))
-
+            
         query_string = urllib.parse.urlencode(self.solr_tuples)
         self.solr_url = f'{SOLR_PREFIX}{self.core}/select?{query_string}'
         return self.solr_url
@@ -221,7 +220,7 @@ class SolrQuery(object):
             self.solr_response = json.loads(resp_dict)
         except urllib.request.HTTPError as e:
             self.solr_error = str(e)
-
+            
         return {
             'solr_response': self.solr_response,
             'solr_error': self.solr_error,
@@ -239,7 +238,7 @@ class SolrQuery(object):
         is_last = False
         if resp['start'] + int(self.rows) >= resp['numFound']:
             is_last = True
-
+            
         for i in resp['docs']:
             i['taibif_occurrence_id'] = i['taibif_occ_id']
         return {
@@ -340,7 +339,7 @@ class SolrQuery(object):
             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
             menus.append({
                 'key':'license',
-                'label': 'CC授權',
+                'label': '授權類型',
                 'rows': rows,
             })
             
