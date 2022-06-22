@@ -35,7 +35,7 @@ JSON_FACET_MAP = {
         },
         'month': {
             'type': 'terms',
-            'field':'month',
+            'field':'taibif_month',
             'start':'1',
             'end':'13',
             'gap':'1',
@@ -44,12 +44,12 @@ JSON_FACET_MAP = {
         },
         'year': {
             'type':'terms',
-            'field':'year',
+            'field':'taibif_year',
             'limit': -1,
         },
         'country': {
             'type':'terms',
-            'field':'country',
+            'field':'taibif_country',
             'mincount': 0,
         },
         'publisher': {
