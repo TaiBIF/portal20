@@ -319,20 +319,18 @@ def occurrence_view(request, taibif_id):
 
     # other
 
+    lat = None
+    lon = None
+    if result[0].get('taibif_latitude'):
+        lat = result[0].get('taibif_latitude')[0]
+    elif result[0].get('decimalLatitude'):
+        lat = result[0].get('decimalLatitude')
 
-    if result[0].get('latitude'):
-        lat = result[0].get('latitude')
-    elif result[0].get('decimallatitude'):
-        lat = result[0].get('decimallatitude')
-
-    if result[0].get('longitude'):
-        lon = result[0].get('longitude')
-    elif result[0].get('decimallongitude'):
-        lon = result[0].get('decimallongitude')
-
-    if lat and lon:
-        context['map_view'] =  [lat, lon]
-
+    if result[0].get('taibif_longitude'):
+        lon = result[0].get('taibif_longitude')[0]
+    elif result[0].get('decimalLongitude'):
+        lon = result[0].get('decimalLongitude')
+    print(result[0])
     context = {
         'intro':intro,
         'record':record,
@@ -342,6 +340,9 @@ def occurrence_view(request, taibif_id):
         'location':location,
         'other':other,
     }
+    if lat and lon:
+        context['map_view'] =  [lat, lon]
+    print(context['map_view'])
 
     return render(request, 'occurrence.html', context)
 

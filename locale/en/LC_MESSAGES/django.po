@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-03 16:31+0800\n"
+"POT-Creation-Date: 2022-06-24 16:52+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,131 +18,151 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: apps/page/views.py:214
+#: apps/page/views.py:274
 msgid "這裡放需要翻譯的文字"
 msgstr ""
 
-#: conf/settings.py:131
+#: conf/settings.py:157
 msgid "Traditional Chinese"
 msgstr ""
 
-#: templates/base.html:106
+#: conf/settings.py:158
+msgid "English"
+msgstr ""
+
+#: templates/base.html:107
 msgid "找資料"
 msgstr "Get Data"
 
-#: templates/base.html:109
+#: templates/base.html:110
 msgid "物種出現紀錄"
 msgstr "Occurrences"
 
-#: templates/base.html:110 templates/index.html:90
+#: templates/base.html:111 templates/index.html:90 templates/search_all.html:25
+#: templates/search_all.html:26
 msgid "物種"
 msgstr "Species"
 
-#: templates/base.html:111 templates/index.html:91 templates/index.html:124
+#: templates/base.html:112 templates/index.html:91 templates/index.html:125
+#: templates/search_all.html:27
 msgid "資料集"
 msgstr "Datasets"
 
-#: templates/base.html:112 templates/index.html:92
-msgid "發布者"
-msgstr "Publishers"
+#: templates/base.html:113 templates/index.html:92 templates/search_all.html:28
+msgid "發布單位"
+msgstr ""
 
-#: templates/base.html:117
+#: templates/base.html:118
 msgid "資料開放"
 msgstr "Open data"
 
-#: templates/base.html:120
+#: templates/base.html:121
 msgid "Open Data 概述"
 msgstr "About open data"
 
-#: templates/base.html:121
+#: templates/base.html:122 templates/index.html:145
 msgid "資料發布狀況"
 msgstr "Data publishing status"
 
-#: templates/base.html:122
+#: templates/base.html:123
 msgid "資料上傳"
 msgstr "Publish your data"
 
-#: templates/base.html:123
+#: templates/base.html:124
 msgid "資料論文/期刊"
 msgstr "Data paper/Journal"
 
-#: templates/base.html:128
+#: templates/base.html:125
+msgid "使用條款暨隱私權政策"
+msgstr ""
+
+#: templates/base.html:130
 msgid "工具與文件"
 msgstr "Tools & Doc"
 
-#: templates/base.html:131
+#: templates/base.html:133
 msgid "工具分享"
 msgstr "Data check tools"
 
-#: templates/base.html:133
-msgid "Cookbook"
-msgstr "Cookbook"
+#: templates/base.html:135
+msgid "生物多樣性資訊概論"
+msgstr ""
 
-#: templates/base.html:138
+#: templates/base.html:140
 msgid "關於 TaiBIF"
 msgstr "About TaiBIF"
 
-#: templates/base.html:141
+#: templates/base.html:143
 msgid "TaiBIF 簡介"
 msgstr "About us"
 
-#: templates/base.html:143
+#: templates/base.html:145
 msgid "GBIF 介紹"
 msgstr "About GBIF"
 
-#: templates/base.html:144
+#: templates/base.html:146
 msgid "聯絡我們"
-msgstr "Contacts"
+msgstr "Contact Us"
 
-#: templates/base.html:145
+#: templates/base.html:147
 msgid "相關連結"
 msgstr "Databases & Links"
 
-#: templates/base.html:151
+#: templates/base.html:153
 msgid "更多資訊"
 msgstr "More Info"
 
-#: templates/base.html:156 templates/index.html:155
+#: templates/base.html:158 templates/index.html:158
 msgid "最新消息"
 msgstr "Latest news"
 
-#: templates/base.html:157 templates/index.html:160
+#: templates/base.html:159 templates/index.html:163
 msgid "新聞"
 msgstr "News"
 
-#: templates/base.html:158 templates/index.html:187
+#: templates/base.html:160 templates/index.html:190
 msgid "活動"
 msgstr "Activities & events"
 
-#: templates/base.html:159 templates/index.html:213
+#: templates/base.html:161 templates/index.html:216
 msgid "更新"
 msgstr "Updates"
 
-#: templates/base.html:162
+#: templates/base.html:164
 msgid "專題文章"
 msgstr "Theme articles"
 
-#: templates/base.html:163
+#: templates/base.html:165
 msgid "科普文章"
 msgstr "Popular science"
 
-#: templates/base.html:164
+#: templates/base.html:166
 msgid "技術專欄"
 msgstr "Technical column"
 
-#: templates/base.html:165
+#: templates/base.html:167
 msgid "出版品資料"
 msgstr "Publications"
 
-#: templates/base.html:166
+#: templates/base.html:168
 msgid "TaiBIF發表文章/海報"
 msgstr "TaiBIF academic publications"
+
+#: templates/base.html:241
+msgid "11574 台北市南港區研究院路二段70巷28號"
+msgstr ""
+"C301, No. 28, Ln 70, Sec 2 Academia Rd., Nangang Dist., 11574 Taipei, Taiwan"
+
+#: templates/base.html:242
+msgid "跨領域科技研究大樓 C301室"
+msgstr ""
 
 #: templates/index.html:84
 msgid "TaiBIF-生物多樣性資料開放的推手"
 msgstr "TaiBIF- The facilitator of biodiversity open data"
 
 #: templates/index.html:89 templates/index.html:116
+#: templates/search_all.html:24
 msgid "出現紀錄"
 msgstr "Occurrences"
 
@@ -150,10 +170,36 @@ msgstr "Occurrences"
 msgid "全站搜尋..."
 msgstr "Site search"
 
-#: templates/index.html:132
-msgid "涵蓋物種數"
-msgstr "Species"
+#: templates/index.html:121
+msgid "於 TaiBIF 公開之資料"
+msgstr ""
 
-#: templates/index.html:141
+#: templates/index.html:130
+msgid "於 TaiBIF 公開之資料集（含部分資訊缺漏之資料集"
+msgstr "Datasets (Records published on TaiBIF, including incomplete datasets)"
+
+#: templates/index.html:134
+msgid "涵蓋物種數"
+msgstr "Recorded Species"
+
+#: templates/index.html:139
+msgid "出現紀錄涵蓋物種數（包含部分國外資料及同物異名）"
+msgstr ""
+
+#: templates/index.html:144
 msgid "看更多"
 msgstr "More Info"
+
+#: templates/index.html:273
+msgid "指導單位"
+msgstr "Advisor"
+
+#: templates/index.html:288
+msgid "夥伴組織"
+msgstr "Partners"
+
+#~ msgid "發布者"
+#~ msgstr "Publishers"
+
+#~ msgid "Cookbook"
+#~ msgstr "Cookbook"
