@@ -2157,8 +2157,9 @@ a.clamp2row {
 }
 
 .article-content-wrapper > p > img {
-  width: 80%;
-  margin:auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .article-img-wrapper {
