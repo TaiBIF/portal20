@@ -4,6 +4,12 @@
 {% block main %}
 {% include "inc_breadcrumb.html" with tab="0503" active_label="" %}
 
+<style>
+  a > .data-wall-numbers:hover {
+    color: #008DA9;
+  }
+  
+</style>
 
 <!-- container begin -->
   <div class="container">
@@ -59,7 +65,9 @@
           <div class="col-xs-12 col-sm-6 col-md-3">
             <div class="data-wall-ctn">
               <span class="dtat-wall-name">出現紀錄筆數</span>
-              <a href="{% url 'search-occurrence' cat='search'  %}?dataset={{ dataset.name }}"> <span class="data-wall-numbers">{{ dataset.num_occurrence|intcomma }}</span><a/>
+                <a href="{% url 'search-occurrence' cat='search' %}?dataset={{ dataset.name }}"> 
+                  <span class="data-wall-numbers">{{ dataset.num_occurrence|intcomma }}</span>
+                </a>
             </div>
           </div>
         {% endif %}
