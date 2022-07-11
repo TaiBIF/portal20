@@ -47,13 +47,22 @@ def index(request):
     update_list = Article.objects.filter(category='UPDATE').all()[0:4]
     #topic_list = Article.objects.filter(category__in=['SCI', 'TECH', 'PUB']).order_by('?').all()[0:10]
     topic_list = Article.objects.filter(is_homepage=True).order_by('?').all()[0:10]
-
+    
+    occ_num_url = "http://"+request.META['HTTP_HOST']+"/api/v2/occurrence/search?facet=taxon_id&rows=0"
+    occ_result = requests.get(occ_num_url).json()
+    occ_num =  occ_result['count']
+    dataset_num = Dataset.objects.filter(status='PUBLIC').count()
+    taxon_cover = len(occ_result['facets']['taxon_id']['buckets'])
+         
     context = {
         'news_list': news_list,
         'event_list': event_list,
         'update_list': update_list,
         'topic_list': topic_list,
         'stats': get_home_stats(),
+        'dataset_num':dataset_num,
+        'occ_num':occ_num,
+        # 'taxon_cover':taxon_cover,
     }
 
     return render(request, 'index.html', context)
@@ -99,7 +108,7 @@ def contact_us(request):
     elif request.method == 'POST':
         ''' Begin reCAPTCHA validation '''
         recaptcha_response = request.POST.get('g-recaptcha-response')
-        #print(recaptcha_response)
+        # print(recaptcha_response)
         data = {
             'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
             'response': recaptcha_response
@@ -110,7 +119,7 @@ def contact_us(request):
 
         if result['success'] == False:
             messages.error(request, '請進行驗證，謝謝')
-        return redirect('contact_us')
+            return redirect('contact_us')
 
 
         data = {

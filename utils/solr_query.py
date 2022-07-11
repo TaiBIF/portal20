@@ -67,6 +67,12 @@ JSON_FACET_MAP = {
             'type':'terms',
             'field':'taibif_county',
         },
+         'taxon_id': {
+            'type':'terms',
+            'field':'taxon_id',
+            'mincount': 1,
+            'limit': -1,
+        },
     }
 }
 
@@ -213,7 +219,6 @@ class SolrQuery(object):
 
     def request(self, req_lists=[]):
         self.generate_solr_url(req_lists)
-
         try:
             resp =urllib.request.urlopen(self.solr_url)
             resp_dict = resp.read().decode()
