@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}Cookbook 2 - 準備用於發布的資料集{% endblock %}
 
@@ -18,7 +19,7 @@
 
 <!-- container begin -->
 <div class="container">
-
+  {% if LANGUAGE_CODE == "zh-hant" %}
   <div class="thumbnail">
     <img src="{% static 'images/content-cookbook-ch3.jpg' %}" alt="Callosciurus erythraeus subsp. thaiwanensis (Bonhote, 1901) 赤腹松鼠, 尹若宇 攝, Photo via iNaturalist (CC BY-NC 4.0)">
     <div class="caption">
@@ -280,34 +281,272 @@
   <br>
   <p><img src="{% static 'images/cookbook-3-7.png' %}" ></p>
 
-
-
-
-
-
-
-
-
-
-
-
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    {% endif %}
+    {% if LANGUAGE_CODE == "en" %}
+    <div class="thumbnail">
+      <img src="{% static 'images/content-cookbook-ch3.jpg' %}" alt="Callosciurus erythraeus subsp. thaiwanensis (Bonhote, 1901) 赤腹松鼠, 尹若宇 攝, Photo via iNaturalist (CC BY-NC 4.0)">
+      <div class="caption">
+        <span class="text-muted"><em>Callosciurus erythraeus </em>subsp. <em>thaiwanensis</em> (Bonhote, 1901) 赤腹松鼠, 尹若宇 攝, Photo via iNaturalist (CC BY-NC 4.0)</span>
+      </div>
+    </div>
+  
+      <!-- story title & share btns begin -->
+      <div class="article-head-wrapper">
+        {#<span class="article-post-date">2018/12/08</span>#}
+        <h2 class="h2">
+          Chapter 3: Prepare datasets for publishing
+          <span class="article-author">Author: Yu-Huang Wang ; Modified: Melissa Liu</span>
+        </h2>
+        <hr>
+        
+        
+        
+        
+        
+        
+        
+        
+      <!-- article content begin -->
+      <div class="article-content-wrapper">
+        <h4 class="heading-md" id="section1" style="font-weight:bold">3.1 Overview of publishing biodiversity dataset through GBIF</h4>
+        <p>A dataset includes metadata and raw data. The simplest dataset can just only include metadata. Currently, there are four types of datasets GBIF supported to publish: 1) metadata-only, 2) checklist, 3) occurrence, and 4) sampling-event datasets, with increasing richness in data content and complexity in data structure. To preserve the completeness of a dataset we suggest data providers publish the richest datasets as possible as they can.</p>
+        <p>To publish a dataset on the web is just like to produce a data product. Metadata is just like the specification and manual of a product. It tells the users about the content, usage of the product, information for customer services, etc. In other words, metadata may tell you how the data came from, how to use the data, whom you can contact with if you have any question about the data, etc. A product is a kind of resource, therefore, a dataset is also a resource on the web. In context of GBIF, dataset is one kind of resource. For publishing a dataset (or resource) via GBIF, you have to prepare resource metadata with checklist, occurrence, or sampling-event data using a collection of terms in the DarwinCore Extensions as the standardized column names in the data tables of your checklist, occurrence, or sampling-event data.</p>
+        <p>The simple way to prepare your dataset is to use an Excel template with predefined format to fill in the metadata and raw data. This will help you easily organize your data into the standardized data structure accepted by GBIF. GBIF provides simple Excel templates, which include DarwinCore terms as the standardized column names.</p>
+        <p>However, when you have a huge data table, for example, more ten thousand records, you will find it is not easy to handle too many records using Excel. In that situation, we will suggest you use R, an open source statistical and data-processing software. If you are new to R, we encourage you learn R because it is one of the most popular tools for data analysis. In this chapter, we will show you how to use Excel template and R-scripts to prepare a sampling-event dataset.</p>
+  
+        <h4 class="heading-md" id="section2" style="font-weight:bold">3.2 What is sampling-event data?</h4>
+        <p>Sometimes datasets can provide far more information than you might imagine, not just where and when a species was discovered, but also the opportunity to discover the community composition of a broader taxonomic group or species abundance at different times and places. These datasets typically come from standard operating procedures for measuring and monitoring biodiversity, such as transect surveys of plant communities, bird survey programs, freshwater and marine sampling. By indicating the methods, events, and relative abundances of species used to record the samples, these datasets can enhance comparisons between data collected at different times and locations under the same standard operating procedures, and sometimes even allow researchers to discover the absence of species in certain locations. 
+          Original reference:<a href="http://www.gbif.org/publishing-data/summary">http://www.gbif.org/publishing-data/summary）</a></p>
+        <h4 class="heading-md">3.2.1 Selected core terms for Sampling Event + Location</h4><span sryle="font-size:12px">(**Required)</span>
+        <br>
+        <table class="table table-bordered">
+          <tbody>
+          <tr>
+            <td>eventID**</td>
+            <td>minimumElevationInMeters</td>
+          </tr>
+          <tr>
+            <td>parentEventID</td>
+            <td>maximumElevationInMeters</td>
+          </tr>
+          <tr>
+            <td>eventDate**</td>
+            <td>minimumDepthInMeters</td>
+          </tr>
+          <tr>
+            <td>Habitat</td>
+            <td>maximumDepthInMeters</td>
+          </tr>
+          <tr>
+            <td>samplingProtocol**</td>
+            <td>minimumDistanceAboveSurfaceIn Meters</td>
+          </tr>
+          <tr>
+            <td>sampleSizeValue**</td>
+            <td>maximumDistanceAboveSurfaceIn Meters</td>
+          </tr>
+          <tr>
+            <td>sampleSizeUnit**</td>
+            <td>Continent</td>
+          </tr>
+          <tr>
+            <td>samplingEffort</td>
+            <td>Country</td>
+          </tr>
+  
+          <tr>
+            <td>locationID</td>
+            <td>countryCode</td>
+          </tr>
+              <tr>
+            <td>decimalLatitude</td>
+            <td>stateProvince</td>
+          </tr>
+              <tr>
+            <td>decimalLongitude</td>
+            <td>Country</td>
+          </tr>
+              <tr>
+            <td>geodeticDatum</td>
+            <td>Municipality</td>
+          </tr>
+              <tr>
+            <td>coordinateUncertaintyInMeters**</td>
+            <td>地點（locality）</td>
+          </tr>
+          <tr>
+            <td>coordinatePrecision**</td>
+            <td>&nbsp;</td>
+          </tr>
+          </tbody>
+        </table>
+        <p>Reference:<a href="http://tools.gbif.org/dwca-validator/extension.do?id=dwc:Event">http://tools.gbif.org/dwca-validator/extension.do?id=dwc:Event</a></p>
+  
+  
+        <h4 class="heading-md">3.2.2 MeasurementOrFact Core Terms</h4>
+        <ul>
+          <li>eventID**</li>
+          <li>measurementID</li>
+          <li>measurementType</li>
+          <li>measurementValue</li>
+          <li>measurementAccuracy</li>
+          <li>measurementUnit</li>
+          <li>measurementDeterminedBy </li>
+          <li>measurementDeterminedDate</li>
+          <li>measurementMethod</li>
+          <li>measurementRemarks</li>
+        </ul>
+        <p>Reference:<a href="http://tools.gbif.org/dwca-validator/extension.do?id=dwc:MeasurementOrFact">http://tools.gbif.org/dwca-validator/extension.do?id=dwc:MeasurementOrFact</a></p>
+  
+        <h4 class="heading-md">3.2.3 Selected core terms for Occurrence + Taxon</h4>
+        <br>
+        <table class="table table-bordered">
+          <tbody>
+          <tr>
+            <td>eventID**</td>
+            <td>individualCount</td>
+          </tr>
+          <tr>
+            <td>occurrenceID**</td>
+            <td>organismQuantity</td>
+          </tr>
+          <tr>
+            <td>scientificNameID</td>
+            <td>organismQuantityType</td>
+          </tr>
+          <tr>
+            <td>scientificName</td>
+            <td>sex</td>
+          </tr>
+          <tr>
+            <td>taxonID</td>
+            <td>lifestage</td>
+          </tr>
+          <tr>
+            <td>vernacularName</td>
+            <td>reproductiveCondition</td>
+          </tr>
+          <tr>
+            <td>taxonRank</td>
+            <td>behavior</td>
+          </tr>
+          <tr>
+            <td>kingdom</td>
+            <td>occurrenceStatus</td>
+          </tr>
+  
+          <tr>
+            <td>phylum</td>
+            <td>acceptedNameUsageID</td>
+          </tr>
+              <tr>
+            <td>class</td>
+            <td>acceptedNameUsage</td>
+          </tr>
+              <tr>
+            <td>order</td>
+            <td>specificEpithet</td>
+          </tr>
+              <tr>
+            <td>family</td>
+            <td>infraspecificEpithet</td>
+          </tr>
+              <tr>
+            <td>genus </td>
+            <td>scientificNameAuthorship</td>
+          </tr>
+          <tr>
+            <td>recordedBy</td>
+            <td>&nbsp;</td>
+          </tr>
+          </tbody>
+        </table>
+        <p>Reference:<a href="http://tools.gbif.org/dwca-validator/extension.do?id=dwc:Occurrence">http://tools.gbif.org/dwca-validator/extension.do?id=dwc:Occurrence</a></p>
+  
+        <h4 class="heading-md" id="section3" style="font-weight:bold">3.3 Darwin Core - Sampling-event Star Schema</h4>
+        <img src="{% static 'images/cookbook-3-flow.png' %}" >
+  
+        <h4 class="heading-md">3.3.1 Star schema</h4>
+        <p>GBIF 的發布資料結構如上圖所示（以調查活動為例），在發布資料前，先確認你的研究資料類型是屬於名錄、出現紀錄還是調查活動，並以該類型資料結構為基礎（Core核心集）去設定資料表的欄位名稱（參照 Darwin Core），而其他未被包含於核心集的資料，則可以選擇其他類型的欄位名稱，整理成延伸集（可視為核心集的補充說明）。所有的延伸集都必須能有一個欄位（強烈建議為唯一識別碼ID）與核心集相同，才能相互對應，追溯到同一批次的資料。可以把這些想像成一個excel表，主頁資料就是核心集，其他分頁都是延伸集，內容皆與主頁有關。</p>
+  
+        <h4 class="heading-md">3.3.2 如何發布資料呢？</h4>
+        <ol>
+          <li>Prepare raw data</li>
+          <li>Check and Clean the data (correct scientific names or other errors)</li>
+          <li>Adopt terms of Darwin Core Event vocabulary and MeasureOrFacts. Occurrence, … extensions as the column names of your data table</li>
+          <li>Transform data structure innto separate tables fitted into DarwinCore star-schema and save the tables as UTF-8 encoded CSV text files.</li>
+          <li>Prepare metadata</li>
+          <li>Register an account on the IPT hosted by the node (such as TaiBIF), which endorse your orgainzation as a data publishing orgainzation</li>
+          <li>Log into the IPT, create a new resource, upload your data tables and do DarwinCore mappings</li>
+          <li>Provide metadata</li>
+          <li>Publish the data</li>
+        </ol>
+  
+        <p><img src="{% static 'images/cookbook-3-1.png' %}" ></p>
+        <br>
+        <p><img src="{% static 'images/cookbook-3-2.png' %}" ></p>
+        <p>How to publish sampling-event data?<br><a href="http://github.com/gbif/ipt/wiki/samplingEventData#exemplar-datasets">http://github.com/gbif/ipt/wiki/samplingEventData#exemplar-datasets</a></p>
+        <p><img src="{% static 'images/cookbook-3-3-2.png' %}" ></p>
+  
+        <h4 class="heading-md" id="section4" style="font-weight:bold">3.4 Prepare sampling-event data using Excel template</h4>
+        <p>Example dataset annd tools for preparing data
+        <ul>
+          <li>Data file: 1_AlienPlantSurey.xlsx</li>
+          <li>MS Excel / LibreOffice Calc</li>
+          <li>Text editor: Notepad++ / PSPad / …</li>
+          <li>TaiBIF Scientific names matching service (Nomenmatch): <a href="http://match.taibif.tw">http://match.taibif.tw</a></li>
+        </ul>
+        </p>
+        
+    <p>Example data file
+    <ul>
+    <li>1_AlienPlantSurvey.xlsx</li>
+    <li>7 tables
+      <ol>
+        <li>1_partialSurveyPlot</li>
+        <li>2_partialPlantOccurrence</li>
+        <li>3_partialMatchingData</li>
+        <li>4_partialCleanedData</li>
+        <li>5_partialEvent</li>
+        <li>6_partialMeasurement</li>
+        <li>7_partialOccurrence</li>
+      </ol>
+    </li>
+  </ul>
+  
+  
+    </p>
+    <br>
+    <p>Nomenmatch
+    <p><img src="{% static 'images/cookbook-3-3.png' %}" ></p>
+        <br>
+    <p>Data cleaning and transformation workflow
+      <ol>
+    <li>Check and study the original data structure</li>
+    <li>Check the spelling of the input scientific name using matching service and get the matching results CSV text file</li>
+    <li>Using the Notepad++ to open the matching results file and copy all text and paste into an spreadsheet table</li>
+    <li>Cleaning names based on the matching results and get data of taxonRank and names for higher taxonomic ranks</li>
+    <li>Create Event, MeasurementOrFacts, and Occurrence tables</li>
+    <li>Mapping original column names to Darwin Core terms</li>
+    <li>Copy data of Event, Measurement, Occurrence tables respectively into Notepad++, encoded in UTF-8, then save as CSV text files.</li>
+  </ol>
+  
+    </p>
+    <br>
+    <p><img src="{% static 'images/cookbook-3-4.png' %}" ></p>
+    <br>
+    <p><img src="{% static 'images/cookbook-3-5.png' %}" ></p>
+    <br>
+    <p><img src="{% static 'images/cookbook-3-6.png' %}" ></p>
+    <br>
+    <p><img src="{% static 'images/cookbook-3-7.png' %}" ></p>
+    <p>Congratulations!
+      You are ready to publish the dataset using IPT.</p>
+      </div>
+  
+      {% endif %}
 
 </div>
 

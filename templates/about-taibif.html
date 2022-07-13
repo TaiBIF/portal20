@@ -1,13 +1,19 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% load i18n %}
 {% block title %}簡介{% endblock %}
 
 {% block main %}
 {% include "inc_breadcrumb.html" with tab="03" active_label="TaiBIF 簡介" %}
 
+{% get_current_language as LANGUAGE_CODE %}
+
+
 <!-- container begin -->
 <div class="container">
+
+  {% if LANGUAGE_CODE == "zh-hant" %}
+
   <h1 class="heading-lg-ul">
     臺灣生物多樣性資訊機構
     (Taiwan Biodiversity Information Facility, TaiBIF)
@@ -27,6 +33,84 @@
       <p>
       此外，TaiBIF 亦推動標準化資料之公開授權，供任何使用者合理使用。目前 TaiBIF 所流通的資料是採用 CC 授權 (Creative Common License)，包含 CC0，即作者不保留任何權利，允許任何人將資料做任何使用；CC-BY，雖亦允許任何人做任何使用，但需按照授權人指定的方式標示其姓名；CC-BY-NC 則代表使用時除了需標示授權人之姓名外，亦不得有商業目的性的使用。</p>
     </div>
+
+  {% endif %}
+  
+  {% if LANGUAGE_CODE == "en" %}
+  <h1 class="heading-lg-ul">
+    Taiwan Biodiversity Information Facility, TaiBIF
+  </h1>
+  <div class="article-content-wrapper">
+    <h3>About us</h3>
+      <p>
+        Systematics and Biodiversity Informatics Center was established in 2004. It was also commissioned by the Ministry of Science and Technology to operate Taiwan Biodiversity Information Facility (TaiBIF) and signed a memorandum of understanding to become one of the nodes of the Global Biodiversity Information Facility (GBIF) in Taiwan. Biodiversity open data with clear authorization would be published to  <a href="http://gbif.org/"target="_block">GBIF.org</a> for global science research, policymaking, and public construction use. In March 2008, the Academia Sinica further established the GBIF-ROC to promote inter-ministerial meetings about biodiversity information issues, and hope to form the mobilization and integration of information.
+
+        We hope to disseminate the concept of biodiversity information through cooperation with organizations and scholars, popular promotion, etc., and provide facilities and services, so that data providers, users, and decision-makers can use open data through demands. To become a multi-faceted biodiversity open data platform (<a href="http://taibif.tw/" target="_block"> taibif.tw </a>).
+
+      </p>
+  </div>
+
+  <div class="article-content-wrapper">
+    <h3>Purpose & Mission</h3>
+    <p>
+      We are promoting the integration, management, mobilization, and application of biodiversity information, including two parts:
+
+      The development of biodiversity information services and infrastructure through the establishment of processes, system, and software engineering methods, to ensure that appropriate software-assisted solutions are available in the process of data release and access.
+      The culture of data sharing, through discussing the concepts and methods of data management with various supervisory units and research teams, enhances relevant personal recognition of the value of open data, so that they are willing to organize, backup and standardize data, and strengthen readability reusability of data within their daily research life.
+      Based on the goals, we have the following tasks:
+      <li>Building biodiversity information infrastructure.</li>
+      <li>Promoting the openness and integration of biodiversity data.</li>
+      <li>Promoting the concept of open data.</li>
+      <li>Connecting Taiwan and international biodiversity information</li>
+    </p>
+  </div>
+  <div class="article-content-wrapper">
+    <h3>Achievements</h3>
+    <p>
+      There are four kinds of platform services:
+      <li>Taiwan Biodiversity Information Facility (<a href="http://taibif.tw/" target="_blank">taibif.tw</a>), mainly provide biodiversity open data searching and downloading, open data concepts teaching materials, related news, tools for coordinate converting and nomenamtch, data standard guideline, etc.</li>
+      <li>Taiwan Catalogue of Life (<a href="http://taicol.tw/" target="_blank" >taicol.tw</a>), provide scientific name searching and taxonomy specialists name list.</li>
+      <li>Integrated publishing toolkit (<a href="http://ipt.taibif.tw/" target="_blank">ipt.taibif.tw</a>), using Ecological Metadata Language (EML) and Darwin Core (DwC) as data exchange standards to provide data providers with data management and publishing services. This tool can be used to store individual or organization biodiversity data in the cloud and open to TaiBIF and GBIF platforms.</li>
+      <li>Taiwan Camera Trap Information System (<a href="http://camera-trap.tw/" target="_blank">camera-trap.tw</a>), the platform for camera trap data management and sharing, and also presents visual statistical data for the authorities and the public to understand the current situation.</li>
+    </p>
+  </div>
+  <div class="article-content-wrapper">
+    <h3>Promoting the openness and integration of biodiversity data</h3>
+    <p>
+      TaiBIF integrates information and connects to the international as a national node. In recent years, we have continued to promote the opening of biodiversity data and integrate it into GBIF. As of February 2021, Taiwan has opened more than 9 million species occurrence records to GBIF contains 15 data publishing units and a total of 65 datasets, making it the second-largest data volume in Asia (the first is India and the third is Japan). In addition to the internationally renowned bird citizen science dataset EOD-eBird Observation Dataset, Chinese Wild Bird Federation Bird Records Database and Herbarium of Taiwan Forestry Research Institute also contributed a lot.
+    </p>
+    <p>
+      We have also allied with the domestic biodiversity database management agencies to become partners, which is called “Taiwan Biodiversity Information Alliance (TBIA)”. Regular meetings are held to focus on species checklist integration, discussions on common data standards, database connection, the guideline of sensitive species data opening, biological spatiotemporal distribution maps, national biodiversity networks, and other topics, and proposed relevant solutions or reference documents, hoping to achieve a ten-year common vision.
+    </p>
+  </div>
+  <div class="article-content-wrapper">
+    <h3>Promoting the concept of open data</h3>
+    <p>
+      To let data providers and the public better understand the concept of biodiversity data openness and form a culture of data sharing, we promote in conferences every year, and hold workshops to explain the following topics:
+    </p>
+    <ol>
+      <li>Open data process</li>
+      <li>Data publishing type</li>
+      <li>Data standards and common fields</li>
+      <li>Pre-preparation for open data</li>
+      <li>How to upload data</li>
+      <li>Data paper</li>
+      <li>How to download and cite data</li>
+    </ol>
+    <p>  
+      We also cooperate with scholars and organizations to provide consulting services for data processing, data upload, and publication of data papers.
+    </p>
+  </div>
+  <div class="article-content-wrapper">
+    <h3>Connecting Taiwan and international biodiversity information</h3>
+    <p>We maintain close interaction and cooperation with GBIF, regularly assist in the review of BIFA project and workshops, communicate with project team members from Asian countries, and also collaborate with the Japan node JBIF to co-author Biodiversity Information Cookbook, the Mandarin version has been published on the official website of TaiBIF.
+    
+      Besides, we also cooperate with <a href="http://gbif.org/" target="_blank">GBIF.org</a> to launch the traditional Chinese version of the official website interface (<a href="https://www.gbif.org/zh-tw/" target="_blank">https://www.gbif.org/zh-tw/</a>).
+  </p>
+  </div>
+
+  {% endif %}
+
 </div>
   <!-- container end -->
 {% endblock %}

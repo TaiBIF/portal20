@@ -1,33 +1,33 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
+{% load helper_tags %}
 
 {% block title %}Open Data 概述{% endblock %}
 
+
+{% block script %}
+  <style>
+    p {
+    line-height: 1.8;
+    }
+
+    hr {
+    border-top: 1px solid;
+      }
+  </style>
+{% endblock %}
+{% get_current_language as LANGUAGE_CODE %}
 {% block main %}
 {% include "inc_breadcrumb.html" with tab="01" active_label="Open Data 概述" %}
 
 
-<style>
-  p {
-  line-height: 1.8;
-  }
-
-  hr {
-  border-top: 1px solid;
-    }
-
-
-
-</style>
-
-
 <!-- container begin -->
 <div class="container">
-  <h2 class="h2">
-    什麼是開放資料？
-  </h2>
-  <hr>
+  {% if LANGUAGE_CODE == "zh-hant" %}
 
+  <h2 class="h2">什麼是開放資料？</h2>
+  <hr>
   <div class="article-content-wrapper">
     <h4 class="heading-md" style="font-weight:bold">開放是在說什麼？</h4>
 
@@ -55,6 +55,52 @@
 
   <hr>
   <div><small>文字來源: <a href="https://opendatahandbook.org/guide/zh_TW/what-is-open-data/" target="_blank">Open Data Handbook</a></small></div>
+  {% endif %}
+  {% if LANGUAGE_CODE == "en" %}
+
+
+  <h2 class="h2">What is Open Data? </h2>
+  <hr>
+  <div class="article-content-wrapper">
+
+      <blockquote>Open data is data that can be freely used, reused and redistributed by anyone - subject only, at most, to the requirement to attribute and sharealike. </blockquote>
+
+    <p> Open Definition (<a href="https://opendefinition.org/od/2.1/en/" target="_block">full Open Definition</a>) The full Open Definition gives precise details as to what this means. To summarize the most important:</p>
+
+    <ul>
+      <li><strong>Availability and Access : </strong>the data must be available as a whole and at no more than a reasonable reproduction cost, preferably by downloading over the internet. The data must also be available in a convenient and modifiable form.</li>
+      <li><strong>Re-use and Redistribution :</strong> the data must be provided under terms that permit re-use and redistribution including the intermixing with other datasets.</li>
+      <li><strong>Universal Participation :</strong> everyone must be able to use, re-use and redistribute - there should be no discrimination against fields of endeavour or against persons or groups. For example, ‘non-commercial’ restrictions that would prevent ‘commercial’ use, or restrictions of use for certain purposes (e.g. only in education), are not allowed.</li>
+    </ul>
+
+     interoperability.
+
+
+
+
+
+
+
+
+
+
+
+    <br>
+      <p>If you’re wondering why it is so important to be clear about what open means and why this definition is used, there’s a simple answer:<strong> interoperability </strong>. </p>
+
+      <p>Interoperability denotes the ability of diverse systems and organizations to work together (inter-operate). In this case, it is the ability to interoperate - or intermix - different datasets.</p>
+
+      <p>Interoperability is important because it allows for different components to work together. This ability to componentize and to ‘plug together’ components is essential to building large, complex systems. Without interoperability this becomes near impossible — as evidenced in the most famous myth of the Tower of Babel where the (in)ability to communicate (to interoperate) resulted in the complete breakdown of the tower-building effort.</p>
+
+      <p>We face a similar situation with regard to data. The core of a “commons” of data (or code) is that one piece of “open” material contained therein can be freely intermixed with other “open” material. This interoperability is absolutely key to realizing the main practical benefits of “openness”: the dramatically enhanced ability to combine different datasets together and thereby to develop more and better products and services (these benefits are discussed in more detail in the section on ‘why’ open data).</p>
+
+      <p>Providing a clear definition of openness ensures that when you get two open datasets from two different sources, you will be able to combine them together, and it ensures that we <strong>avoid our own ‘tower of babel’: lots of datasets but little or no ability to combine them together into the larger systems where the real value lies.</strong></p>
+  </div>
+
+  <hr>
+  <div><small>Source: <a href="https://opendatahandbook.org/guide/zh_TW/what-is-open-data/" target="_blank">Open Data Handbook</a></small></div>
+
+  {% endif %}
 
 </div>
   <!-- container end -->

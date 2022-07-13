@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
 
 {% block title %}Cookbook 2 - 資料標準化{% endblock %}
@@ -23,7 +24,7 @@
 
 
 <div class="container">
-
+  {% if LANGUAGE_CODE == "zh-hant" %}
     <div class="thumbnail">
     <img src="{% static 'images/content-cookbook-ch2.jpg' %}" alt="Pseudagrion microcephalum (Rambur, 1842), CheongWeei Gan, Photo via iNaturalist (CC BY-NC 4.0)">
     <div class="caption">
@@ -186,7 +187,7 @@
         <th>日期</th>
         <th>地點</th>
         <th>緯度</th>
-        <th>精度</th>
+        <th>經度</th>
         </tr>
         </thead>
 
@@ -296,6 +297,284 @@
 
 
     </div>
+
+  {% endif %}
+  {% if LANGUAGE_CODE == "en" %}
+
+  <div class="thumbnail">
+    <img src="{% static 'images/content-cookbook-ch2.jpg' %}" alt="Pseudagrion microcephalum (Rambur, 1842), CheongWeei Gan, Photo via iNaturalist (CC BY-NC 4.0)">
+    <div class="caption">
+      <span class="text-muted"><em>Pseudagrion microcephalum</em> (Rambur, 1842), CheongWeei Gan, Photo via iNaturalist (CC BY-NC 4.0)</span>
+    </div>
+  </div>
+
+    <!-- story title & share btns begin -->
+    <div class="article-head-wrapper">
+      {#<span class="article-post-date">2018/12/08</span>#}
+      <h2 class="h2">
+        Chapter 2: Standardize data
+        <span class="article-author">Author: Tsuyoshi Hosoya</span>
+      </h2>
+      <hr>
+
+    <!-- article content begin -->
+  <div class="article-content-wrapper">
+
+      <h4 class="heading-md" id="section1" style="font-weight:bold">2.1 Use common raw data format</h4>
+      <p>As described in the previous chapter, biodiversity data are everywhere, and in different format in different media. They may be fixed in notebooks, in PC as Excel or Word files, or already printed on papers with available PDF.</p>
+      <p>To avoid confusion, let’s define some words. As you see, a set of biodiversity data is a combination of data to show what species occurred in where and when, and how it was recognized. A single description of such observation or description is termed “record”. If you go to a field research multiple records can be obtained by a certain methodology. These set of record are termed “dataset” (e.g. “tree species observed in Mt. MM by line transect”).</p>
+      <p>Imagine that if you get a data table, maybe an Excel file or a text file with tens of columns and hundreds of rows filled with text-strings or numbers. What will you do first to understand the meaning of this data file? If there is no extra information to explain the data, probably you will try to read the first row, the header, of this data table.</p>
+      <br>
+      <p>Table 2.1 An example of dataset</p>
+      <table class="table">
+        <thead>
+         <tr>
+          <th>ID</th>
+          <th>Plot</th>
+          <th>Zone</th>
+          <th>Common Name</th>
+          <th>Sp</th>
+          <th>x</th>
+          <th>y</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+          <td>1</td>
+          <td>4094</td>
+          <td>北部</td>
+          <td>鵝兒腸</td>
+          <td><l>Stellaria aquatica (L.) Scop.</l></td>
+          <td>120.9785</td>
+          <td>24.68604</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>4094</td>
+          <td>北部</td>
+          <td>藿香薊</td>
+          <td><l>Ageratum conyzoides L.</l></td>
+          <td>120.9785</td>
+          <td>24.68604</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>4094</td>
+          <td>北部</td>
+          <td>大花咸豐草</td>
+          <td><l>Bidens pilosa L. var. radiata</l>(Sch. Bip.) J. A. Schmidt</td>
+          <td>120.9785</td>
+          <td>24.68604</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>4094</td>
+          <td>北部</td>
+          <td>野茼蒿</td>
+          <td><l>Conyza sumatrensis</l>(Retz.) E. Walker</td>
+          <td>120.9785</td>
+          <td>24.68604</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>4094</td>
+          <td>北部</td>
+          <td>粗毛小米菊</td>
+          <td><l>Galinsoga quadriradiata</l>Ruiz & Pav.</td>
+          <td>120.9785</td>
+          <td>24.68604</td>
+        </tr>
+        </tbody>
+    </table>
+    
+
+    
+    
+    
+    
+    
+    
+    
+    <p>For example, what are the meaning of “id”, “plot”, “zone”, “common name”, “sp”, “x”, “y”? If you are a botanist or a plant ecologist and you also can read Chinese characters, you may easily guess this probably a data file about a field survey of plant, with record number, plot number, survey area, Chinese common name of plant, scientific name, coordinates of plot location.</p>
+    <p>Different people may use different ways to name the column titles of their data table. If you get a data table that you don’t understand the meaning of its header it will wastes you a lot of time to guess. Even worse, if you have to integrate many data tables from different people without common way or standardization. Soon you will be crazy. Therefore, to facilitate data exchange and integration, why don’t we have a standard for documenting the data to save everybody’s life? The first step is to adopt standardized column names!</p>
+    <p>Take a look at Fig. 2.1, representing a concept of merging data based on literature, observation, and specimens. The three data sets obtained from each of these data source all includes taxonomy (name of the species), when (date, time), where (location), and additional information. However, it is not possible just appending one record after another, because of the following reason.</p>
+      <br>
+      <p>Fig 2.1 Consolidation concept of document, observation, and specimen data. The information obtained from each data source in these three datasets includes taxonomy (species name), when (date, time), where (location) and other information, but cannot be directly appended to the record for the following reasons:</p>
+      <p>Observation Table A</p>
+      <table class="table">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>When</th>
+        <th>Where</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr>
+        <td>Sparrow</td>
+        <td>7:00 am, April 1, 2015</td>
+        <td>Taipei,Taiwan</td>
+      </tr>
+      </tbody>
+      </table>
+    <br>
+
+
+      <p>Specimen Table B</p>
+        <table class="table">
+          <thead>
+          <tr>
+        <th>Genus</th>
+        <th>Species</th>
+        <th>Author</th>
+        <th>Date</th>
+        <th>Location</th>
+        <th>Collector</th>
+        <th>Identified</th>
+        <th>by</th>
+        </tr>
+          </thead>
+
+          <tbody>
+          <tr>
+        <td>Dasyscyphella</td>
+        <td>Longistipitata</td>
+        <td>Hosoya</td>
+        <td>2015-iv-1</td>
+        <td>Botanical Garden, Tsukuba, Ibaraki, Japan</td>
+        <td>T. Hosoya</td>
+        <td>T. Hosoya</td>
+        <td>On Fagus crenata cupule</td>
+      </tr>
+          </tbody>
+        </table>
+    <br>
+
+
+      <p>Literature Table C</p>
+        <table class="table">
+        <thead>
+        <tr>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Place</th>
+        <th>Latitute</th>
+        <th>Longitude</th>
+        </tr>
+        </thead>
+        				
+        Fagus crenata	2015/04/01	Mt.Hakkoda, Aomori	40.523591	140.970943
+        <tbody>
+        <tr>
+        <td>Dasyscyphella longistipitata</td>
+        <td>2015/04/01</td>
+        <td>青森，八甲田山</td>
+        <td>40.523591</td>
+        <td>140.970943</td>
+        </tr>
+        </tbody>
+        </table>
+        
+    <ol>
+      <li>The property of each record in the cell is indicated differently. For instance, the name of the species is shown under “Name” written in common name (House sparrow) in Table 1, while species name is given in scientific name (Latin name) and separated into three cells (Genus, Species, and Author) in Table B, but in one cell in Table 3. It should be noted that the same word “Name” shows different meaning in Table A and Table C (Name in Table 1 indicates common name while the same word indicates the scientific name) .</li>
+      <li>The definition of each column is different from each other.</li>
+      <li>The format of the data is not following the same rule. For example, The locality in Table C (indicated as “Where”) is not accompanied with the name of the country, while the other two are. The same date (April 1, 2015) is indicated differently in the three tables).</li>
+    </ol>
+
+      <br>
+      <p>From above analyses, we recognize the following caution must be drawn to merge the table.
+      <ol>
+        <li>Each column must be consistent in terminology, and appropriately defined.</li>
+        <li>The format of the data must follow a standardized rule.</li>
+      </ol>
+      Then, is there any standardized data format? Actually, there is! It is called “Darwin Core” (DwC).</p>
+
+    <h4 class="heading-md" id="section2" style="font-weight:bold">2.2 Use Darwin Core as the main standard</h4>
+      <p>Darwin core was developed by a group of scientist (Taxonomic Databases Working Group, or TDWG (http://www.tdwg.org/), now known as Biodiversity Information Standards). In a simple explanation, you may say it’s a collection of vocabularies of terms with predefined meaning and suggested usage used to document biodiversity data. It was originally developed as an extension of Dublin Core for literature, and now world widely known as stable standard reference for sharing information on biodiversity. DwC allows us to make a stable dataset based on more than 150 items (termed “fields” in database jargon). Each field is strictly defined and follow a rule in format. Some of the representative fields are listed in Table #. Since DwC is consisted of wide range of fields, some fields are grouped based on their common nature. This group is called “Class” (Note they are different from the word “Class” used in taxonomy). DwC are maintained and being revised and expanded by TDWG.</p>
+    <p>Below is the list of classes and some examples of the fields in DwC. For full descriptions, visit <a href="http://rs.tdwg.org/dwc/terms/">http://rs.tdwg.org/dwc/terms/</a> or <a href="http://tools.gbif.org/dwca-assistant/">http://tools.gbif.org/dwca-assistant/</a>。</p>
+      <p>The Class Record-level Terms provides the information to manage each data. This fields in this class may provide links with data in other databases.<br>
+        <li>The Class Occurrence provides the fundamental information when and where the data were recorded.</li>
+        <li>The Class Organism provides the information regarding the nature of the given organisms, such as textual names or labels, whether the organism was recognized as a clone or colony, etc. This class is distinguished from the Class Taxon (see below) in describing more informal taxonomic information.</li>
+        <li>The Classes MaterialSample, LivingSpecimen, PreservedSpecimen may be chosen based on the nature of the basis of the record. It gives distinction whether the record is based on sampled materials or living specimens or preserved specimens.</li>
+        <li>The Classes Event, HumanObservation, MachineObservation gives the information whether the record was obtained by any kind of sampling activity or observation made by human or machines. Like the previous class, one of these should be chosen on necessary basis.</li>
+        <li>The Class Location provides information regarding the location where the record was obtained.</li>
+        <li>The Class GeologicalContext provides the geological information, such as stratigraphy, that qualifies a region or place. Since this class is in DwC, fossil information can be incorporated</li>
+        <li>The Class Identification provides information for taxonomic determination, such as who and when identified, references for the identification, etc.</li>
+        <li>The Class Taxon provides taxonomic information, such as scientific names, higher taxonomic ranks, etc.</li>
+        <li>[Auxiliary Terms] The Class MeasurementOrFact provides data if the record describes the measurment or the fact.</li>
+        <li>The Class ResourceRelationship provides XXXXXXXXXXXX</li>
+      </p>
+    <p>To simplify choosing suitable terms as the column names of tables for documenting your biodiversity data, Global Biodiversity Information Facility (GBIF) kindly prepares Excel templates for documenting checklists and occurrence of organisms as well as extra detailed information about the data table, called “metadata”. We will talk about “metadata” later. You can download the Excel templates for documenting species checklist data (<a href="https://github.com/gbif/ipt/wiki/checklistData">https://github.com/gbif/ipt/wiki/checklistData</a>), species occurrences data (<a href="https://github.com/gbif/ipt/wiki/occurrenceData">https://github.com/gbif/ipt/wiki/occurrenceData</a>), and sampling-event data (<a href="https://github.com/gbif/ipt/wiki/sampleEventData">https://github.com/gbif/ipt/wiki/sampleEventData</a>). But you have to notice that some of the fields (columns) are mandatory, some may be optional. If you need more optional terms to describe your data you can look up the extended vocabularies, called Darwin Core extensions (<a href="http://tools.gbif.org/dwca-validator/extensions.do"> http://tools.gbif.org/dwca-validator/extensions.do</a>), and pick up suitable terms.</p>
+    <p>為了簡化適用於記錄生物多樣性資料的欄位名稱，全球生物多樣性資訊機構（GBIF）提供了Excel模板，用於記錄物種名錄和出現紀錄，以及任何有關於此資料表的其他資訊細節（亦稱為「詮釋資料」）。  我們之後會討論「詮釋資料」。 你可以從這裡<a href="https://github.com/gbif/ipt/wiki/checklistData">（https://github.com/gbif/ipt/wiki/checklistData）</a>下載用於記錄物種名錄資料的Excel模板，從這裡下載物種出現紀錄資料模板<a href="https://github.com/gbif/ipt/wiki/occurrenceData">（https://github.com/gbif/ipt/wiki/occurrenceData）</a>， 以及從這裡下載調查活動資料模板<a href="https://github.com/gbif/ipt/wiki/sampleEventData">（https://github.com/gbif/ipt/wiki/sampleEventData）</a>。 但要注意的是，有些欄位是必填的，而有些是選擇性提供即可。 若你需要更多的選擇性欄位詞彙來描述你的資料，你可以從達爾文核心延伸集找到更多的選項<a href="http://tools.gbif.org/dwca-validator/extensions.do">（http://tools.gbif.org/dwca-validator/extensions.do）</a>，再從中選取適合的詞彙。</p>
+      <ul>
+      <li>TDWG:<a href="http://www.tdwg.org/" class="myicon icon-link" target="_blank">http://www.tdwg.org/</a> </li>
+      <li>Darwin Core:<a href="http://rs.tdwg.org/dwc/terms/" class="myicon icon-link" target="_blank"> http://rs.tdwg.org/dwc/terms/</a></li>
+      <li>Doublin Core:<a href="http://dublincore.org/" class="myicon icon-link" target="_blank">http://dublincore.org/</a></li>
+      </ul>
+
+    <hr>
+    <h4 class="bg-success">BOX1: Converting data between sexagesimal and decimal system in coordinates</h4>
+      <p>Many of the readers may have used longitude and latitude to indicate the coordinates. They are usually indicated by degrees, minutes, and seconds. Degrees, minutes, and seconds follow sexagesimal system, but seconds are sometimes indicated to 1/100. Once getting used to it, the system is convenient to indicate a certain point on the map. However, it is complicated because we need a set of three figures to indicate latitude/longitude. Recently a number of map drawing software adopt decimal systems. Both systems is compatible based on the calculations indicated in Fig. X. Since only a set of two figures are required to indicate a point, decimal systems is more increasingly applied to indicate longitude and latitude.</p>
+      <p>Since the data structure is now being standardized, they are ready to merge. The merged result is Table #. Note we may be able to fill up some of the fields (yellow cells) based on taxonomic information, or add more information to latitude and longitude. We may be also able to add some more fields in the Class of Location (e.g. continent, country, countryCode, etc.) as given in DwC.</p>
+      <p>From the above experience, we can learn an important lesson. We should design the table beforehand based on DwC. This increases the efficiency and avoid confusion and fluctuation in description of the data.</p>
+    <hr>
+
+    <h4 class="heading-md" id="section3" style="font-weight:bold">2.3 Use plain text instead of Excel file</h4>
+      <p>If you have any experience in gathering data of any kind, the first thing that comes in your mind may be using “Excel”. Excel is a nice spreadsheet software that allows not only the accumulation of data, but also analysis and exploitation.</p>
+      <p>The next question is to save the data. We now have a merged digitized data in a single table, which enables us to analyze. To save the data, we need to select a file format. Most of the readers may use Microsoft Excel or other spreadsheet software as a standard software. It is therefore natural to choose Excel format (.xls or .xlsx), but there is a certain limitation for the numbers of records in Excel format. Another disadvantage may be that Excel format file is not directly incorporated in database software with higher capability. Besides, Excel format sometimes causes garbling up of the data. Therefore, it is recommended for you to save the file as a plain text format (.csv or .tsv). In the former format known as Comma-separated Values Format (CSV), comma are inserted between the field, and line break (CR) is inserted between the data. Therefore, when the excel data looked like below</p>
+    <br>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Column1</th>
+        <th>Column2</th>
+        <th>Column3</th>
+        <th>Column4</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>1</td>
+        <td>A</td>
+        <td>B</td>
+        <td>C</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>D</td>
+        <td>E</td>
+        <td>F</td>
+      </tr>
+      </tbody>
+    </table>
+
+      <p>may be seen like below under editor software
+        <br>Field_1 [,/tab] Field_2 [,/tab] Field_3 [,/tab] Field_4 [CR]
+        <br>1 [,/tab] A [,/tab] B [,/tab] C [CR]<br>2 [,/tab] D [,/tab] E [,/tab] F [CR]
+        <br>where [,/tab] is a comma (,) or tab code, respectively in CSV and TSV, and [CR] is a line break code.
+        <br>The difference of Tab-separated Value Format (TSV) is that TSV files use [Tab] instead of comma [,]. Both file format are readable in editors, and usually supported by various database software.
+      </p>
+
+      <h4 class="heading-md" id="section4" style="font-weight:bold">2.4 Adopt UTF-8 character encoding</h4>
+    <p>Finally, one more thing to remember as a tip when saving the data. Use UTF-8 character encoding when you deal with the data. In the present textbook, detailed reason for this will not be described because it is highly technical and informatician directed.</p>
+    <p>Simply, UTF-8 is a universally applicable character encoding that avoids garble up for almost all the languages, and to ensure data readability in almost any computers. It is currently taken as a global standard character encoding, and recent websites generally adopt UTF-8. Excel does not support UTF-8, but usually editors support UTF-8 (Usually you can choose UTF-8 from “character encoding” menu). So, it is advisable to save the data in plain text (CSV or TSV) format with UTF-8 encoding, if you are using letters other than alphabets and digits.</p>
+
+    <hr>
+    <h4 class="bg-success">BOX2: How to generate unique identifiers?</h4>
+    <p>In the context of biodiversity informatics, a number of data are to be distinguished by identifiers (ID). IDs are supposed to be given to any data that should be uniquely distinguished. Naturally, an ID must be uniquely given to a specific data in the given dataset. For instance, if “101” is given to a scientific name “X”, 101 should be always used when X is used throughout the given database, thus distinguishing X from other scientific name. In the database of occurrence, occurrence ID may be given. In that case, given ID must appear only once to distinguish the data.</p>
+    <p>Duplication of the IDs with other database may be acceptable, if they mean the same data. However, in case of occurrence ID, it should be globally unique and resolvable. Here, “resolvable” means the ID also works as a link to enable a data user (or a machine) to find the useful information about the thing that is identified.</p>
+    <p>To generate such an ID, UUID (Universally Unique Identifier) is applicable. UUID is a strings (a line of digits and letters) generated at random (e.g. 8612280c-f762-11e1-a439-00145eb45e92). The methodology of generating UUID is established, and can be obtained through various ways. For example, “uuidgen command” is available for LINUX and macOS (OS X); Microsoft GUID Generator can be downloaded for windows; and online UUID generator services are also available such as UUID Generator.</p>
+    
+    <ul>
+      <li><a href="https://www.microsoft.com/zh-tw/p/guid-generator/9n79sdd9s9jj?activetab=pivot:overviewtab" class="myicon icon-link" target="_blank">Microsoft GUID Generator</a></li>
+      <li><a href="https://www.uuidgenerator.net/" class="myicon icon-link" target="_blank">UUID Generator</a></li>
+      <p>This cloud service allows you to generate a series of UUIDs. To give a link between digital objectives and UUIDs, PURLs (Persistent Uniform Resource Locators) may be applicable.</p>
+      <li><a href="http://www.purlz.org/" class="myicon icon-link" target="_blank">PURL</a></li>
+  </ul>
+ </div>
+  {% endif %}
 </div>
 
 

@@ -56,7 +56,7 @@
 
       <!-- visible-xs modal end -->
 
-
+      
       <!-- left nav begin -->
       <div class="col-sm-3 hidden-xs">
         <ul class="schedule-flow-nav-wrapper">
@@ -64,174 +64,353 @@
         </ul>
       </div>
       <!-- left nav end -->
+
+      {% if LANGUAGE_CODE == "zh-hant" %}
       <!-- right content begin -->
-      <div class="col-xs-12 col-sm-9 pub-data-content" data-cat="sop">
-        <iframe src="https://www.slideshare.net/slideshow/embed_code/key/vlHRsyodRczsZ?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-        <p>操作流程下載：<a href="/media/article/download/TaiBIF IPT操作說明2022 v2.5 公告版.pdf"class="myicon icon-download-document"></a></p>
-      </div>
-      
-
-      <div class="col-xs-12 col-sm-9 pub-data-content hide" data-cat="cc">
-
-        <div class="schedule-flow-wrapper schedule-flow-skin-1">
-          <div class="schedule-flow-title">姓名標示 (CC-BY)</div>
-          <div class="schedule-flow-content"><img src="{% static 'images/cc-by.png' %}" width="120px">
-            <br>本授權條款允許使用者重製、散布、傳輸以及修改著作（包括商業性利用），惟使用時必須按照著作人或授權人所指定的方式，表彰其姓名。</div>
+        <div class="col-xs-12 col-sm-9 pub-data-content" data-cat="sop">
+          <iframe src="https://www.slideshare.net/slideshow/embed_code/key/vlHRsyodRczsZ?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+          <p>操作流程下載：<a href="/media/article/download/TaiBIF IPT操作說明2022 v2.5 公告版.pdf"class="myicon icon-download-document"></a></p>
         </div>
+        
 
-        <br>
-
-        <div class="schedule-flow-wrapper schedule-flow-skin-1">
-          <div class="schedule-flow-title">姓名標示-非商業性(CC-BY-NC)</div>
-          <div class="schedule-flow-content"><img src="{% static 'images/cc-by-nc.png' %}" width="120px">
-            <br>本授權條款允許使用者重製、散布、傳輸以及修改著作，但不得為商業目的之使用。使用時必須按照授權者指定的方式表彰其姓名。</div>
-        </div>
-        <br>
+        <div class="col-xs-12 col-sm-9 pub-data-content hide" data-cat="cc">
 
           <div class="schedule-flow-wrapper schedule-flow-skin-1">
-          <div class="schedule-flow-title">公眾領域貢獻宣告 (CC0)</div>
-          <div class="schedule-flow-content">可使科學家、教育工作者、藝術家、其他創作者及著作權人，或內容受資料庫保護的權利人等拋棄他們對各自著作的利益，並盡可能將這些著作釋出到公眾領域，讓其他人可以任何目的自由地以該著作為基礎，從事創作、提升或再使用等行為，而不受著作權或是資料庫相關法律的限制。 CC0與其它創用CC授權不同，後者允許著作權人在一定範圍內選擇釋出的權利，並保留部分權利；相反的，CC0則提供另一種｢不保留權利｣的授權選擇，讓權利人能選擇不受著作權及資料庫相關法律保護，也不享有法律直接提供給創作人的排他權。參考: <a href="https://creativecommons.org/publicdomain/zero/1.0/legalcode.zh-Hant" target="_blank"> Public Domain (CC0 1.0)</a></div>
+            <div class="schedule-flow-title">姓名標示 (CC-BY)</div>
+            <div class="schedule-flow-content"><img src="{% static 'images/cc-by.png' %}" width="120px">
+              <br>本授權條款允許使用者重製、散布、傳輸以及修改著作（包括商業性利用），惟使用時必須按照著作人或授權人所指定的方式，表彰其姓名。</div>
+          </div>
+
+          <br>
+
+          <div class="schedule-flow-wrapper schedule-flow-skin-1">
+            <div class="schedule-flow-title">姓名標示-非商業性(CC-BY-NC)</div>
+            <div class="schedule-flow-content"><img src="{% static 'images/cc-by-nc.png' %}" width="120px">
+              <br>本授權條款允許使用者重製、散布、傳輸以及修改著作，但不得為商業目的之使用。使用時必須按照授權者指定的方式表彰其姓名。</div>
+          </div>
+          <br>
+
+            <div class="schedule-flow-wrapper schedule-flow-skin-1">
+            <div class="schedule-flow-title">公眾領域貢獻宣告 (CC0)</div>
+            <div class="schedule-flow-content">可使科學家、教育工作者、藝術家、其他創作者及著作權人，或內容受資料庫保護的權利人等拋棄他們對各自著作的利益，並盡可能將這些著作釋出到公眾領域，讓其他人可以任何目的自由地以該著作為基礎，從事創作、提升或再使用等行為，而不受著作權或是資料庫相關法律的限制。 CC0與其它創用CC授權不同，後者允許著作權人在一定範圍內選擇釋出的權利，並保留部分權利；相反的，CC0則提供另一種｢不保留權利｣的授權選擇，讓權利人能選擇不受著作權及資料庫相關法律保護，也不享有法律直接提供給創作人的排他權。參考: <a href="https://creativecommons.org/publicdomain/zero/1.0/legalcode.zh-Hant" target="_blank"> Public Domain (CC0 1.0)</a></div>
+          </div>
+
+
+          <p>參考: <a href="https://cc.ocf.tw/" target="_blank">CC 台灣社群</a></p>
         </div>
 
+        <div class="col-xs-12 col-sm-9 pub-data-content hide" data-cat="format">
+          <h1 class="heading-lg-ul">
+            各類型資料的達爾文核心標準 (DwC) 必填欄位
+          </h1>
 
-        <p>參考: <a href="https://cc.ocf.tw/" target="_blank">CC 台灣社群</a></p>
-      </div>
+          <div class="pub-data-section">
+            <blockquote>一份好的資料集，必須可以再利用（具互操作性），若能提供越多欄位資料，則資料的品質及價值也能相對地提高，在任何情況下，資料集至少要有下列所述 Darwin Core 欄位</blockquote>
+          </div>
+          <div class="pub-data-section">
+          <h4>相關參考連結：</h4>
+          <ul>
+            <li>DwC 資料欄位的各集合內容：<a href="https://tools.gbif.org/dwca-validator/extensions.do" target="_blank">Darwin Core Registered Extensions</a>（按 core 和 extension 分類）</li>
+            <li>DwC 資料欄位標準英文定義快速查詢：<a href="https://dwc.tdwg.org/terms/" target="_blank">Darwin core quick reference guide</a>（按詞條的 class 分類）</li>
+            <li>DwC 資料欄位標準中文簡要說明：<a href="http://taibif.tw/download/Darwin_Core.pdf" target="_blank">Darwin Core (DwC) 資料欄位標準</a></li>
+          </ul>
+          </div>
+          <div class="pub-data-section">
+          <h4>物種名錄 Checklist</h4>
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr><th>DwC 欄位名稱</th><th>所屬類別</th><th>定義</th><th>常見對應名稱</th><th>範例</th></tr>
+            </thead>
+            <tbody>
+            <tr><td>taxonID</td><td>Taxon</td><td>分類識別碼</td><td>ID、編號</td><td>32567</td></tr>
+            <tr><td>scientificName</td><td>Taxon</td><td>完整的學名，包括已知的作者和日期資訊。若是作為鑑定的一部分，應是可確定的最低分類階層的名稱。</td><td>學名、Name、名字</td><td>“Coleoptera” (目), “Vespertilionidae”(科), “Manis” (屬), “Ctenomys sociabilis” (屬 + 種小名),“Ambystoma tigrinum diaboli” (屬 +種小名 + 亞種小名), “Roptrocerus typographi (Györfi, 1952)” (屬 + 種小名 + 學名命名者), "Quercus agrifolia var. oxyadenia (Torr.) J.T.</td></tr>
+            </tbody>
+          </table>
+          <h4>出現紀錄 Occurrence</h4>
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr><th>DwC 欄位名稱</th><th>所屬類別</th><th>定義</th><th>常見對應名稱</th><th>範例</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>occurrenceID</td><td>Occurrence</td><td>出現紀錄識別碼</td><td>ID、編號</td><td> 32567</td></tr>
+              <tr><td>basisOfRecord</td><td>Record-level</td><td>資料紀錄的特定性質、類型，建議使用 Darwin Core 的控制詞彙</td><td> 樣本來源、樣本類型</td><td>保存標本 PreservedSpecimen, 化石標本 FossilSpecimen, 活體標本  LivingSpecimen, 人為觀測 HumanObservation, 機器觀測 MachineObservation</td></tr>
+              <tr><td>eventDate</td><td>Event </td><td>該筆資料被記錄的日期。</td><td> 調查日期、Date、時間</td><td> 「1994-11-05」代表單日，「1996-06」代表 1996 年 6 月</td></tr>
+              <tr><td>individualCount</td><td>Occurrence</td><td>出現紀錄被記錄時存在的個體數量。</td><td>數量、個體數</td><td>0, 1, 25</td></tr>
+              <tr><td>locality</td><td>Location</td><td>採集或觀測地點的明確描述。</td><td>地點</td><td>"觀音山", "Caribbean Sea", "Florida"</td></tr>
+              <tr><td>verbatimLatitude</td><td> Location</td><td>字面緯度，採集或觀測取得紀錄的緯度，任何座標系統皆可。</td><td> 緯度</td><td>41d 16'N</td></tr>
+              <tr><td>verbatimLongitude</td><td>Location</td><td>字面經度，採集或觀測取得紀錄的緯度，任何座標系統皆可。</td><td>經度</td><td>121d 10' 34" W</td></tr>
+              <tr><td>verbatimCoordinateSystem</td><td>Location</td><td>紀錄的座標單位</td><td></td><td>"decimal degrees", "degrees decimal minutes", "degrees minutes seconds"</td></tr>
+              <tr><td>geodeticDatum</td><td>Location</td><td>座標的大地基準。建議使用控制詞彙；若全未知，則填入"未知(unknown)"。</td><td></td><td>"EPSG:4326", "WGS84", "EPSG:3826" (TWD97 / TM2 臺灣), "EPSG:3828"（TWD67 / TM2 臺灣）</td></tr>
+            </tbody>
+          </table>
+          <h4>調查活動 Sampling event</h4>
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr><th>DwC 欄位名稱</th><th>所屬類別</th><th>定義</th><th>常見對應名稱</th><th>範例</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>eventID</td><td>Event</td><td>調查活動識別碼</td><td>ID、編號</td><td>32567</td></tr>
+              <tr><td>eventDate</td><td>Event</td><td>該筆資料被記錄的日期。</td><td>調查日期、Date、時間</td><td>「1994-11-05」代表單日，「1996-06」代表 1996 年 6 月</td></tr>
+              <tr><td>samplingProtocol</td><td>Event</td><td>調查方法或流程的名稱、描述，或其參考文獻。</td><td>材料方法、Method、Sampling method</td><td>"UV light trap", "mist net", "bottom trawl", "ad hoc observation",https://doi.org/10.1111/j.1466-8238.2009.00467.x, "Takats et al. 2001. Guidelines for Nocturnal Owl Monitoring in North America."</td></tr>
 
-      <div class="col-xs-12 col-sm-9 pub-data-content hide" data-cat="format">
-        <h1 class="heading-lg-ul">
-          各類型資料的達爾文核心標準 (DwC) 必填欄位
-        </h1>
-
-        <div class="pub-data-section">
-          <blockquote>一份好的資料集，必須可以再利用（具互操作性），若能提供越多欄位資料，則資料的品質及價值也能相對地提高，在任何情況下，資料集至少要有下列所述 Darwin Core 欄位</blockquote>
+            </tbody>
+          </table>
+          </div>
         </div>
-        <div class="pub-data-section">
-        <h4>相關參考連結：</h4>
-        <ul>
-          <li>DwC 資料欄位的各集合內容：<a href="https://tools.gbif.org/dwca-validator/extensions.do" target="_blank">Darwin Core Registered Extensions</a>（按 core 和 extension 分類）</li>
-          <li>DwC 資料欄位標準英文定義快速查詢：<a href="https://dwc.tdwg.org/terms/" target="_blank">Darwin core quick reference guide</a>（按詞條的 class 分類）</li>
-          <li>DwC 資料欄位標準中文簡要說明：<a href="http://taibif.tw/download/Darwin_Core.pdf" target="_blank">Darwin Core (DwC) 資料欄位標準</a></li>
-        </ul>
+        <div class="col-xs-12 col-sm-9 pub-data-content hide" data-cat="rule">
+          <h1 class="heading-lg-ul">
+            科技部生物多樣性學科相關計畫開放資料繳交規範
+          </h1>
+
+          <p>
+            科技部負責辦理《生物多樣性行動計畫》中 D12010「建立生物多樣性資訊交換機制及各類或各機構資料庫之建置與整合，並定期增修補充各項資料庫之內容」及 D21010「維護及更新生物多樣性監測資料之資訊管理系統」，從 2012 年起要求研究計畫必須在計畫結案三個月內繳交報告的同時，繳交計畫過程產生的生態分布資料（見說明1）。資料繳交之規範經學門召集人於2018年1月17日開會討論後，調整如下：
+          </p>
+          <ol>
+            <li>本規範所指之資料為接受科技部（以下簡稱本部）補助之研究計畫在執行過程所產生的資料，包含（但不限於）物種出現紀錄（見說明2）、形質測量、基因序列、環境因子測量讀數、名錄、測站、樣區、描述及詮釋資訊等等。</li>
+            <li>資料管理及繳交之技術細節，由科技部指定之資料管理單位（以下簡稱資料庫）定期舉辦說明會及更新線上資源說明之。</li>
+            <li>資料繳交至資料庫時，得依計畫主持人意願選擇公開條件，包含保留期限（立即公開、二年後公開、三年後公開）、公開範圍（臺灣或全球）及授權條件。資料庫於條件滿足時即公開。</li>
+            <li>研究資料之管理及繳交為計畫執行的一部分；資料繳交的履行情況及品質（見說明3）將會納入未來研究計畫申請時的審核參考。</li>
+            <li>使用公開之資料之研究成果及論文發表應適當引用所使用之資料（含明確指出資料提供者的貢獻），以持續促進資料公開分享對學門研究的正面影響。</li>
+          </ol>
+          <p>說明：</p>
+          <ol>
+            <li>科學研究成果的資料保存近年間在歐美隨著開放資料、開放政府運動有顯著的進展：美國國家科學基金會從 2011 年起開始要求研究計畫申請案必須寫明資料管理計畫並編列其執行所需經費(NSF 2013)，歐盟也明確定義「開放存取」(open access)為「研究報告及原始資料的免費取得」，且要求研究計畫中的資料管理計畫必須明確說明將會開放何種資料及維護的實際成本(European Union, 2018)。</li>
+            <li>物種出現紀錄定義為：經由 1)人為或自動化採集、觀測而取得，且2)經適當鑑定，且3)載明時間、地點及其它採集相關訊息之資料。</li>
+            <li>上傳資料的流程中，建議可使用 GBIF Data Validator (<a href="https://www.gbif.org/tool/81281/gbif-data-validator" target="_blank">https://www.gbif.org/tool/81281/gbif-data-validator</a>) 進行基本的資料品質檢驗。
+  </li>
+          </ol>
+          <p>參考資料：</p>
+          <p>European Union, 2018. Participant Portal H2020 Online Manual. Available at http://ec.europa.eu/research/participants/docs/h2020-funding-guide/cross-cutting-issues/open-access-dissemination_en.htm [accessed January 19, 2018].</p>
+          <p>NSF, 2013. Dissemination and Sharing of Research Results. Available at: http://www.nsf.gov/bfa/dias/policy/dmp.jsp</p>
         </div>
-        <div class="pub-data-section">
-        <h4>物種名錄 Checklist</h4>
-        <table class="table table-striped table-bordered">
-          <thead>
-            <tr><th>DwC 欄位名稱</th><th>所屬類別</th><th>定義</th><th>常見對應名稱</th><th>範例</th></tr>
-          </thead>
-          <tbody>
-          <tr><td>taxonID</td><td>Taxon</td><td>分類識別碼</td><td>ID、編號</td><td>32567</td></tr>
-          <tr><td>scientificName</td><td>Taxon</td><td>完整的學名，包括已知的作者和日期資訊。若是作為鑑定的一部分，應是可確定的最低分類階層的名稱。</td><td>學名、Name、名字</td><td>“Coleoptera” (目), “Vespertilionidae”(科), “Manis” (屬), “Ctenomys sociabilis” (屬 + 種小名),“Ambystoma tigrinum diaboli” (屬 +種小名 + 亞種小名), “Roptrocerus typographi (Györfi, 1952)” (屬 + 種小名 + 學名命名者), "Quercus agrifolia var. oxyadenia (Torr.) J.T.</td></tr>
-          </tbody>
-        </table>
-        <h4>出現紀錄 Occurrence</h4>
-        <table class="table table-striped table-bordered">
-          <thead>
-            <tr><th>DwC 欄位名稱</th><th>所屬類別</th><th>定義</th><th>常見對應名稱</th><th>範例</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>occurrenceID</td><td>Occurrence</td><td>出現紀錄識別碼</td><td>ID、編號</td><td> 32567</td></tr>
-            <tr><td>basisOfRecord</td><td>Record-level</td><td>資料紀錄的特定性質、類型，建議使用 Darwin Core 的控制詞彙</td><td> 樣本來源、樣本類型</td><td>保存標本 PreservedSpecimen, 化石標本 FossilSpecimen, 活體標本  LivingSpecimen, 人為觀測 HumanObservation, 機器觀測 MachineObservation</td></tr>
-            <tr><td>eventDate</td><td>Event </td><td>該筆資料被記錄的日期。</td><td> 調查日期、Date、時間</td><td> 「1994-11-05」代表單日，「1996-06」代表 1996 年 6 月</td></tr>
-            <tr><td>individualCount</td><td>Occurrence</td><td>出現紀錄被記錄時存在的個體數量。</td><td>數量、個體數</td><td>0, 1, 25</td></tr>
-            <tr><td>locality</td><td>Location</td><td>採集或觀測地點的明確描述。</td><td>地點</td><td>"觀音山", "Caribbean Sea", "Florida"</td></tr>
-            <tr><td>verbatimLatitude</td><td> Location</td><td>字面緯度，採集或觀測取得紀錄的緯度，任何座標系統皆可。</td><td> 緯度</td><td>41d 16'N</td></tr>
-            <tr><td>verbatimLongitude</td><td>Location</td><td>字面經度，採集或觀測取得紀錄的緯度，任何座標系統皆可。</td><td>經度</td><td>121d 10' 34" W</td></tr>
-            <tr><td>verbatimCoordinateSystem</td><td>Location</td><td>紀錄的座標單位</td><td></td><td>"decimal degrees", "degrees decimal minutes", "degrees minutes seconds"</td></tr>
-            <tr><td>geodeticDatum</td><td>Location</td><td>座標的大地基準。建議使用控制詞彙；若全未知，則填入"未知(unknown)"。</td><td></td><td>"EPSG:4326", "WGS84", "EPSG:3826" (TWD97 / TM2 臺灣), "EPSG:3828"（TWD67 / TM2 臺灣）</td></tr>
-          </tbody>
-        </table>
-        <h4>調查活動 Sampling event</h4>
-        <table class="table table-striped table-bordered">
-          <thead>
-            <tr><th>DwC 欄位名稱</th><th>所屬類別</th><th>定義</th><th>常見對應名稱</th><th>範例</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>eventID</td><td>Event</td><td>調查活動識別碼</td><td>ID、編號</td><td>32567</td></tr>
-            <tr><td>eventDate</td><td>Event</td><td>該筆資料被記錄的日期。</td><td>調查日期、Date、時間</td><td>「1994-11-05」代表單日，「1996-06」代表 1996 年 6 月</td></tr>
-            <tr><td>samplingProtocol</td><td>Event</td><td>調查方法或流程的名稱、描述，或其參考文獻。</td><td>材料方法、Method、Sampling method</td><td>"UV light trap", "mist net", "bottom trawl", "ad hoc observation",https://doi.org/10.1111/j.1466-8238.2009.00467.x, "Takats et al. 2001. Guidelines for Nocturnal Owl Monitoring in North America."</td></tr>
+        <div class="col-xs-12 col-sm-9 pub-data-content hide" data-cat="schedule">
+          <h1 class="heading-lg-ul">
+            科技部資料繳交依據與時程
+          </h1>
 
-          </tbody>
-        </table>
+          <p>依國際資料標準整理及繳交生物多樣性資料，便利學術同儕資料共享及引用，提昇研究水準。</p>
+
+          <div class="article-img-wrapper">
+            <img src="{% static 'images/workflow-most-ipt.jpg' %}" class="img-responsive">
+            <span>
+              資料管理流程 @TaiBIF，以上依科技部制定「生物多樣性及長期生態研究計畫之物種分布資料釋出作業規範」辦理
+            </span>
+          </div>
+
+          <div class="schedule-flow-wrapper schedule-flow-skin-1">
+            <div class="schedule-flow-title">1. 填寫詮釋資料</div>
+            <div class="schedule-flow-content">科技部計畫申請通過後即應填寫詮釋資料 (e.g., 聯絡人, 時間, 地理範圍)，讓其他人更能掌握資料集內容。</div>
+          </div>
+
+          <div class="schedule-flow-wrapper schedule-flow-skin-1">
+            <div class="schedule-flow-title">2. 原始資料是否包含物種資料？</div>
+            <div class="schedule-flow-content">研究資料是否包含物種出現紀錄(Occurrence)、物種名錄 (Checklist) 或調查活動 (Sampling event)。若為是則發布資料至 TaiBIF。</div>
+          </div>
+
+          <div class="schedule-flow-wrapper schedule-flow-skin-1">
+            <div class="schedule-flow-title">3. 上傳計畫報告</div>
+            <div class="schedule-flow-content">妥善整理和標準化收集的研究資料後，繳交計畫報告至科技部。待日後發表論文，達到資料公開時限時，仍須將資料開放。</div>
+          </div>
+
+          <div class="schedule-flow-wrapper schedule-flow-skin-2">
+            <div class="schedule-flow-title">4. 資料檢核</div>
+            <div class="schedule-flow-content">依照 Darwin Core 資料欄位標準，並使用資料檢核工具協助清理、標準化生物多樣性資料。</div>
+          </div>
+
+          <div class="schedule-flow-wrapper schedule-flow-skin-2">
+            <div class="schedule-flow-title">5. 利用 IPT 上傳</div>
+            <div class="schedule-flow-content">使用 IPT (Integrated Publishing Toolkit) 資料上傳工具，根據資料內容對應相關欄位。
+  http://ipt.taibif.tw</div>
+          </div>
+
+          <div class="schedule-flow-wrapper schedule-flow-skin-2">
+            <div class="schedule-flow-title">6. 更新詮釋資料</div>
+            <div class="schedule-flow-content">填寫詮釋資料 (Metadata)，包含計畫名稱、資料種類、授權方式 (採用創用CC授權)、計畫摘要、資料提供者、計畫聯絡人等資訊。</div>
+          </div>
+
+          <div class="schedule-flow-wrapper schedule-flow-skin-2">
+            <div class="schedule-flow-title">7. 發布及公開資料</div>
+            <div class="schedule-flow-content">確認資料填寫無誤之後，上傳原始資料並發布至 TaiBIF，恭喜發布資料成功！</div>
+          </div>
+
         </div>
-      </div>
-      <div class="col-xs-12 col-sm-9 pub-data-content hide" data-cat="rule">
-        <h1 class="heading-lg-ul">
-          科技部生物多樣性學科相關計畫開放資料繳交規範
-        </h1>
+        {% endif%}
+        {% if LANGUAGE_CODE == "en" %}
 
-        <p>
-          科技部負責辦理《生物多樣性行動計畫》中 D12010「建立生物多樣性資訊交換機制及各類或各機構資料庫之建置與整合，並定期增修補充各項資料庫之內容」及 D21010「維護及更新生物多樣性監測資料之資訊管理系統」，從 2012 年起要求研究計畫必須在計畫結案三個月內繳交報告的同時，繳交計畫過程產生的生態分布資料（見說明1）。資料繳交之規範經學門召集人於2018年1月17日開會討論後，調整如下：
-        </p>
-        <ol>
-          <li>本規範所指之資料為接受科技部（以下簡稱本部）補助之研究計畫在執行過程所產生的資料，包含（但不限於）物種出現紀錄（見說明2）、形質測量、基因序列、環境因子測量讀數、名錄、測站、樣區、描述及詮釋資訊等等。</li>
-          <li>資料管理及繳交之技術細節，由科技部指定之資料管理單位（以下簡稱資料庫）定期舉辦說明會及更新線上資源說明之。</li>
-          <li>資料繳交至資料庫時，得依計畫主持人意願選擇公開條件，包含保留期限（立即公開、二年後公開、三年後公開）、公開範圍（臺灣或全球）及授權條件。資料庫於條件滿足時即公開。</li>
-          <li>研究資料之管理及繳交為計畫執行的一部分；資料繳交的履行情況及品質（見說明3）將會納入未來研究計畫申請時的審核參考。</li>
-          <li>使用公開之資料之研究成果及論文發表應適當引用所使用之資料（含明確指出資料提供者的貢獻），以持續促進資料公開分享對學門研究的正面影響。</li>
-        </ol>
-        <p>說明：</p>
-        <ol>
-          <li>科學研究成果的資料保存近年間在歐美隨著開放資料、開放政府運動有顯著的進展：美國國家科學基金會從 2011 年起開始要求研究計畫申請案必須寫明資料管理計畫並編列其執行所需經費(NSF 2013)，歐盟也明確定義「開放存取」(open access)為「研究報告及原始資料的免費取得」，且要求研究計畫中的資料管理計畫必須明確說明將會開放何種資料及維護的實際成本(European Union, 2018)。</li>
-          <li>物種出現紀錄定義為：經由 1)人為或自動化採集、觀測而取得，且2)經適當鑑定，且3)載明時間、地點及其它採集相關訊息之資料。</li>
-          <li>上傳資料的流程中，建議可使用 GBIF Data Validator (<a href="https://www.gbif.org/tool/81281/gbif-data-validator" target="_blank">https://www.gbif.org/tool/81281/gbif-data-validator</a>) 進行基本的資料品質檢驗。
-</li>
-        </ol>
-        <p>參考資料：</p>
-        <p>European Union, 2018. Participant Portal H2020 Online Manual. Available at http://ec.europa.eu/research/participants/docs/h2020-funding-guide/cross-cutting-issues/open-access-dissemination_en.htm [accessed January 19, 2018].</p>
-        <p>NSF, 2013. Dissemination and Sharing of Research Results. Available at: http://www.nsf.gov/bfa/dias/policy/dmp.jsp</p>
-      </div>
-      <div class="col-xs-12 col-sm-9 pub-data-content hide" data-cat="schedule">
-        <h1 class="heading-lg-ul">
-           科技部資料繳交依據與時程
-        </h1>
-
-        <p>依國際資料標準整理及繳交生物多樣性資料，便利學術同儕資料共享及引用，提昇研究水準。</p>
-
-        <div class="article-img-wrapper">
-          <img src="{% static 'images/workflow-most-ipt.jpg' %}" class="img-responsive">
-          <span>
-            資料管理流程 @TaiBIF，以上依科技部制定「生物多樣性及長期生態研究計畫之物種分布資料釋出作業規範」辦理
-          </span>
+        <div class="col-xs-12 col-sm-9 pub-data-content" data-cat="sop">
+          <iframe src="https://www.slideshare.net/slideshow/embed_code/key/vlHRsyodRczsZ?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+          <p>Download：<a href="/media/article/download/TaiBIF IPT操作說明2022 v2.5 公告版.pdf"class="myicon icon-download-document"></a></p>
         </div>
+        
 
-        <div class="schedule-flow-wrapper schedule-flow-skin-1">
-          <div class="schedule-flow-title">1. 填寫詮釋資料</div>
-          <div class="schedule-flow-content">科技部計畫申請通過後即應填寫詮釋資料 (e.g., 聯絡人, 時間, 地理範圍)，讓其他人更能掌握資料集內容。</div>
-        </div>
+        <div class="col-xs-12 col-sm-9 pub-data-content hide" data-cat="cc">
 
-        <div class="schedule-flow-wrapper schedule-flow-skin-1">
-          <div class="schedule-flow-title">2. 原始資料是否包含物種資料？</div>
-          <div class="schedule-flow-content">研究資料是否包含物種出現紀錄(Occurrence)、物種名錄 (Checklist) 或調查活動 (Sampling event)。若為是則發布資料至 TaiBIF。</div>
-        </div>
+          <div class="schedule-flow-wrapper schedule-flow-skin-1">
+            <div class="schedule-flow-title">CC-BY</div>
+            <div class="schedule-flow-content"><img src="{% static 'images/cc-by.png' %}" width="120px">
+              <br>This license lets others distribute, remix, adapt, and build upon your work, even commercially, as long as they credit you for the original creation. This is the most accommodating of licenses offered. Recommended for maximum dissemination and use of licensed materials.</div>
+          </div>
 
-        <div class="schedule-flow-wrapper schedule-flow-skin-1">
-          <div class="schedule-flow-title">3. 上傳計畫報告</div>
-          <div class="schedule-flow-content">妥善整理和標準化收集的研究資料後，繳交計畫報告至科技部。待日後發表論文，達到資料公開時限時，仍須將資料開放。</div>
-        </div>
+          <br>
 
-        <div class="schedule-flow-wrapper schedule-flow-skin-2">
-          <div class="schedule-flow-title">4. 資料檢核</div>
-          <div class="schedule-flow-content">依照 Darwin Core 資料欄位標準，並使用資料檢核工具協助清理、標準化生物多樣性資料。</div>
-        </div>
+          <div class="schedule-flow-wrapper schedule-flow-skin-1">
+            <div class="schedule-flow-title">CC-BY-NC</div>
+            <div class="schedule-flow-content"><img src="{% static 'images/cc-by-nc.png' %}" width="120px">
+              <br>This license lets others remix, adapt, and build upon your work non-commercially, and although their new works must also acknowledge you and be non-commercial, they don’t have to license their derivative works on the same terms.</div>
+          </div>
+          <br>
 
-        <div class="schedule-flow-wrapper schedule-flow-skin-2">
-          <div class="schedule-flow-title">5. 利用 IPT 上傳</div>
-          <div class="schedule-flow-content">使用 IPT (Integrated Publishing Toolkit) 資料上傳工具，根據資料內容對應相關欄位。
-http://ipt.taibif.tw</div>
+            <div class="schedule-flow-wrapper schedule-flow-skin-1">
+            <div class="schedule-flow-title">CC0</div>
+            <div class="schedule-flow-content">CC0 enables scientists, educators, artists and other creators and owners of copyright- or database-protected content to waive those interests in their works and thereby place them as completely as possible in the public domain, so that others may freely build upon, enhance and reuse the works for any purposes without restriction under copyright or database law.
+
+              In contrast to CC’s licenses that allow copyright holders to choose from a range of permissions while retaining their copyright, CC0 empowers yet another choice altogether – the choice to opt out of copyright and database protection, and the exclusive rights automatically granted to creators – the “no rights reserved” alternative to our licenses. Reference: <a href="https://creativecommons.org/publicdomain/zero/1.0/legalcode.zh-Hant" target="_blank"> Public Domain (CC0 1.0)</a></div>
+          </div>
+
+
+          <p>Reference: <a href="https://cc.ocf.tw/" target="_blank">CC Taiwan</a></p>
         </div>
 
-        <div class="schedule-flow-wrapper schedule-flow-skin-2">
-          <div class="schedule-flow-title">6. 更新詮釋資料</div>
-          <div class="schedule-flow-content">填寫詮釋資料 (Metadata)，包含計畫名稱、資料種類、授權方式 (採用創用CC授權)、計畫摘要、資料提供者、計畫聯絡人等資訊。</div>
-        </div>
+        <div class="col-xs-12 col-sm-9 pub-data-content hide" data-cat="format">
+          <h1 class="heading-lg-ul">
+            Required fields for various data type using Darwin Core (DwC)
+          </h1>
 
-        <div class="schedule-flow-wrapper schedule-flow-skin-2">
-          <div class="schedule-flow-title">7. 發布及公開資料</div>
-          <div class="schedule-flow-content">確認資料填寫無誤之後，上傳原始資料並發布至 TaiBIF，恭喜發布資料成功！</div>
+          <div class="pub-data-section">
+            <blockquote>A good dataset must be reusable (interoperable). If more fields of data can be provided, the quality and value of the data can be improved. In any case, the dataset must at least have the following The Darwin Core fields:</blockquote>
+          </div>
+          
+          <div class="pub-data-section">
+          <h4>Checklist</h4>
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr><th>DwC</th><th>Data type</th><th>Definition</th><th>Comments</th><th>Example</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>taxonID</td><td>Taxon</td><td>An identifier for the set of taxon information (data associated with the Taxon class). May be a global unique identifier or an identifier specific to the data set.</td><td>NA</td><td>32567, https://www.gbif.org/species/212</td></tr>
+              <tr><td>scientificName</td><td>Taxon</td><td>The full scientific name, with authorship and date information if known. When forming part of an Identification, this should be the name in lowest level taxonomic rank that can be determined.</td><td></td><td>Coleoptera (order). Manis (genus). Ctenomys sociabilis (genus + specificEpithet). Roptrocerus typographi (Györfi, 1952) (genus + specificEpithet + scientificNameAuthorship).</td></tr>
+            </tbody>
+          </table>
+          <h4>Occurrence</h4>
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr><th>DwC</th><th>Data type</th><th>Definition</th><th>Comments</th><th>Example</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>occurrenceID</td><td>Occurrence</td><td>Unique identifier for the occurrence</td><td>Recommended best practice is to use a persistent, globally unique identifier.</td><td> http://arctos.database.museum/guid/MSB:Mamm:233627, 000866d2-c177-4648-a200-ead4007051b9, urn:catalog:UWBM:Bird:89776</td></tr>
+              <tr><td>basisOfRecord</td><td>Record-level</td><td>The specific nature and type of data record, it is recommended to use Darwin Core’s control vocabulary</td><td>Sample source, sample type</td><td>PreservedSepcimen, FossilSpecimen, LivingSpecimen, HumanObservation, MachineObservation</td></tr>
+              <tr><td>eventDate</td><td>Event </td><td>Record date of this occurrence data</td><td> Sampling date, sampling time</td><td> 1994-11-05 indicates single day,1996-06 indicates whole month</td></tr>
+              <tr><td>individualCount</td><td>Occurrence</td><td>The number of individuals that existed when the occurrence was recorded.</td><td>Numbers</td><td>0, 1, 25</td></tr>
+              <tr><td>locality</td><td>Location</td><td>Sampling or observation site</td><td>Site</td><td>Guanyin Mountain, Caribbean Sea, Florida</td></tr>
+              <tr><td>verbatimLatitude</td><td> Location</td><td>Latitude in any coordinate system</td><td>Latitude</td><td>41d 16'N</td></tr>
+              <tr><td>verbatimLongitude</td><td>Location</td><td>Longitude in any coordinate sysmtem	</td><td>Longitude	</td><td>121d 10' 34" W</td></tr>
+              <tr><td>verbatimCoordinateSystem</td><td>Location</td><td>Coordinate unit	</td><td></td><td>"decimal degrees", "degrees decimal minutes", "degrees minutes seconds"</td></tr>
+              <tr><td>geodeticDatum</td><td>Location</td><td>Recommended to use the EPSG code of the SRS, if known or use a controlled vocabulary for the name or code of the geodetic datum.	</td><td></td><td>"EPSG:4326", "WGS84", "EPSG:3826" (TWD97 / TM2 臺灣), "EPSG:3828"（TWD67 / TM2 臺灣）</td></tr>
+            </tbody>
+          </table>
+          <h4>Sampling event</h4>
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr><th>DwC</th><th>Data type</th><th>Definition</th><th>Comments</th><th>Examples</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>eventID</td><td>Event</td><td>Sampling event ID	</td><td>ID</td><td>32567</td></tr>
+              <tr><td>eventDate</td><td>Event</td><td>Date of data collection</td><td>Sampling date</td><td>1994-11-05 indicates single day,1996-06 indicates whole month</td></tr>
+              <tr><td>samplingProtocol</td><td>Event</td><td>Sampling method or name, description, references	</td><td>Materials and methods, Sampling methods	</td><td>"UV light trap", "mist net", "bottom trawl", "ad hoc observation",https://doi.org/10.1111/j.1466-8238.2009.00467.x, "Takats et al. 2001. Guidelines for Nocturnal Owl Monitoring in North America."</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <div class="pub-data-section">
+            <h4>References: </h4>
+            <ul>
+              <li>Darwin Core quick reference guide：<a href="https://tools.gbif.org/dwca-validator/extensions.do" target="_blank">Darwin Core Registered Extensions</a>（按 core 和 extension 分類）</li>
+              <li>Darwin Core Registered Extensions (sign-in required)：<a href="https://dwc.tdwg.org/terms/" target="_blank">Darwin core quick reference guide</a>（按詞條的 class 分類）</li>
+              <li>[Darwin Core standard in Chinese](link error_to fix)：<a href="http://taibif.tw/download/Darwin_Core.pdf" target="_blank">Darwin Core (DwC) 資料欄位標準</a></li>
+            </ul>
+            </div>
         </div>
+        <div class="col-xs-12 col-sm-9 pub-data-content hide" data-cat="rule">
+          <h1 class="heading-lg-ul">
+            Specification of open data submission for Biodiversity-related projects funded by MOST
+          </h1>
 
-      </div>
+          <p>
+            Taiwan Ministry of Science and Technology (MOST) is responsible for the following specific aims in “Biodiversity Action Plan”:
+            <li>D12010 “Establishment of a biodiversity information exchange mechanism, database establishment and integration of various types and institutions, and regularly updating the contents of various databases”</li>
+            <li>D21010 “Maintenance and update of biodiversity monitoring data and information management system”</li>
+            Since 2012, it is required that research projects must submit the report within three months after the project ended, along with the ecological distribution data generated during the research process (see Note 1). The specification of data submission has been adjusted as follows:
+          </p>
+          <ol>
+            <li>The data referred to in this specification are the data generated during the implementation of the research project subsidized by MOST, including (but not limited to) species occurrence records (see Note 2), morphological measurements, gene sequences, environmental factor measurements, species checklists, sampling sites, description, other associated information, and more.</li>
+            <li>For the technical details of data management and submission, the data management unit designated by the MOST will hold regular briefing sessions and update online resource explanations.</li>
+            <li>When submitting data to the database, the PI may choose the disclosure conditions, including retention period (immediate disclosure, disclosure after two years, disclosure after three years), disclosure scope (Taiwan or global), and authorization conditions. The data will be made public when the conditions are met.</li>
+            <li>The management and submission of research data are part of the project; the status and quality of the data submission (see Note 3) will be included in the review and as reference for future research project applications.</li>
+            <li>Research result and paper published using publicly available data should appropriately cite the data used (including contribution of the data provider), for promotion of open data in academic research.</li>
+          </ol>
+          <p>Note:</p>
+          <ol>
+            <li>Data preservation in scientific research has made remarkable progress in Europe and United States in recent years supporting the open data movement and open government initiative:
+              — National Science Foundation of the United States has begun to require research project proposal to specify data management plan and budget since 2011 (NSF, 2013).
+              — European Union defines “open access” as “free access to research reports and original data”, and require data management plan in the research project to state the openness of data and the maintenance cost (European Union, 2018).</li>
+            <li>Species occurrence records are defined as those obtained through 1) human or automated collection and observation, 2) organism was identified, and 3) data indicating the time, location, and other information relevant to the occurrence.</li>
+            <li>In the process of uploading data, it is recommended to use the GBIF Data Validator  (<a href="https://www.gbif.org/tool/81281/gbif-data-validator" target="_blank">https://www.gbif.org/tool/81281/gbif-data-validator</a>) for inspection of basic data quality.</li>
+          </ol>
+          <p>References:</p>
+          <li>European Union, 2018. Participant Portal H2020 Online Manual.</li>
+          <li>NSF, 2013. Dissemination and Sharing of Research Results. Available at: http://www.nsf.gov/bfa/dias/policy/dmp.jsp</li>
+        </div>
+        <div class="col-xs-12 col-sm-9 pub-data-content hide" data-cat="schedule">
+          <h1 class="heading-lg-ul">
+            MOST data and document submission
+          </h1>
+
+          <p>Organize and submit biodiversity data in accordance with international data standards, facilitate the sharing and citation of data among academic peers, and improve research standards.</p>
+
+          <div class="article-img-wrapper">
+            <img src="{% static 'images/workflow-most-ipt.jpg' %}" class="img-responsive">
+            <span>
+              Data management process @TaiBIF, the above is handled in accordance with the Taiwan Ministry of Science and Technology’s “Specifications for the Release of Species Distribution Data for Biodiversity and Long-term Ecological Research Programs”
+            </span>
+          </div>
+
+          <div class="schedule-flow-wrapper schedule-flow-skin-1">
+            <div class="schedule-flow-title">1. Filling metadata</div>
+            <div class="schedule-flow-content">Once a project was approved to be funded by MOST, fill in the metadata (e.g., contact person, time, research geographic scope) for the research, so that others can better grasp the content of the dataset.</div>
+          </div>
+
+          <div class="schedule-flow-wrapper schedule-flow-skin-1">
+            <div class="schedule-flow-title">2. Does the source data contain species data?</div>
+            <div class="schedule-flow-content">Whether the research data includes species occurrence records (Occurrence), species list (Checklist) or survey activities (Sampling event). If yes, publish the data to TaiBIF.</div>
+          </div>
+
+          <div class="schedule-flow-wrapper schedule-flow-skin-1">
+            <div class="schedule-flow-title">3. Upload report of the research project</div>
+            <div class="schedule-flow-content">After organizing and standardizing the collected research data, submit the project report to MOST. When the paper is published or time limit for data disclosure is reached, the data must be released.</div>
+          </div>
+
+          <div class="schedule-flow-wrapper schedule-flow-skin-2">
+            <div class="schedule-flow-title">4. Data validation</div>
+            <div class="schedule-flow-content">Clean up and standardize the data by following the Darwin Core. If prefer, use data validation tools to assist with the data clean up.</div>
+          </div>
+
+          <div class="schedule-flow-wrapper schedule-flow-skin-2">
+            <div class="schedule-flow-title">5. Upload using IPT</div>
+            <div class="schedule-flow-content">Use the TaiBIF IPT (Integrated Publishing Toolkit) to upload data correspond to the relevant fields according to the data content.
+  http://ipt.taibif.tw</div>
+          </div>
+
+          <div class="schedule-flow-wrapper schedule-flow-skin-2">
+            <div class="schedule-flow-title">6. Update metadata</div>
+            <div class="schedule-flow-content">Fill in the metadata, including the project name, data type, authorization method (creative CC), project summary, data provider, contact person and other information.</div>
+          </div>
+
+          <div class="schedule-flow-wrapper schedule-flow-skin-2">
+            <div class="schedule-flow-title">7. Publish and open data</div>
+            <div class="schedule-flow-content">After confirming that the information is filled correctly, upload and publish it to TaiBIF. Congratulations on the successful release of the data!</div>
+          </div>
+
+        </div>
+        {% endif%}
       <!-- right content end -->
     </div>
     <!-- row end -->
