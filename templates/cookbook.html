@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
+
+{% get_current_language as LANGUAGE_CODE %}
 
 {% block title %}Cookbook{% endblock %}
 
@@ -9,7 +12,8 @@
 
   <!-- container begin -->
   <div class="container">
-   <h1 class="heading-lg-ul">
+{% if LANGUAGE_CODE == "zh-hant"%}
+    <h1 class="heading-lg-ul">
       Cookbook
     </h1>
 
@@ -89,7 +93,90 @@
       <!-- 3rd accordion-panel begin -->
     </div>
     <!-- panel-group end -->
+{% endif %}
 
+{% if LANGUAGE_CODE == "en"%}
+    <h1 class="heading-lg-ul">
+      Cookbook
+    </h1>
+
+    <!-- panel-group begin -->
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <!-- 1st accordion-panel begin -->
+      <div class="panel panel-main">
+        <!-- accordion heading begin -->
+        <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              Chapter 1: Introduction
+            </a>
+          </h4>
+        </div>
+        <!-- accordion heading end -->
+        <!-- accordion collapse begin -->
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <ul class="panel-body">
+            <li><a href="{% url 'cookbook_detail_1' %}#section1">1.1 What is Biodiversity?</a></li>
+            <li><a href="{% url 'cookbook_detail_1' %}#section2">1.2 Levels of Biodiversity</a></li>
+            <li><a href="{% url 'cookbook_detail_1' %}#section3">1.3 What is Biodiversity Informatics?</a></li>
+            <li><a href="{% url 'cookbook_detail_1' %}#section3">1.4 Focus on species biodiversity</a></li>
+            <li><a href="{% url 'cookbook_detail_1' %}#section3">1.5 Where are the resources of biodiversity data / information?</a></li>
+          </ul>
+        </div>
+        <!-- accordion collapse end -->
+      </div>
+      <!-- 1st accordion-panel begin -->
+
+      <!-- 2nd accordion-panel begin -->
+      <div class="panel panel-main">
+        <!-- accordion heading begin -->
+        <div class="panel-heading" role="tab" id="headingTwo">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Chapter 2: Standardize data
+            </a>
+          </h4>
+        </div>
+        <!-- accordion heading end -->
+        <!-- accordion collapse begin -->
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <ul class="panel-body">
+            <li><a href="{% url 'cookbook_detail_2' %}#section1">2.1 Use common raw data format</a></li>
+            <li><a href="{% url 'cookbook_detail_2' %}#section2">2.2 Use Darwin Core as the main standard</a></li>
+            <li><a href="{% url 'cookbook_detail_2' %}#section3">2.3 Use plain text instead of Excel file</a></li>
+            <li><a href="{% url 'cookbook_detail_2' %}#section4">2.4 Adopt UTF-8 character encoding</a></li>
+          </ul>
+        </div>
+        <!-- accordion collapse end -->
+      </div>
+      <!-- 2nd accordion-panel begin -->
+
+      <!-- 3rd accordion-panel begin -->
+      <div class="panel panel-main">
+        <!-- accordion heading begin -->
+        <div class="panel-heading" role="tab" id="headingThree">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              Chapter 3: Prepare datasets for publishing
+            </a>
+          </h4>
+        </div>
+        <!-- accordion heading end -->
+        <!-- accordion collapse begin -->
+        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <ul class="panel-body">
+            <li><a href="{% url 'cookbook_detail_3' %}#section1">3.1 Overview of publishing biodiversity dataset through GBIF</a></li>
+            <li><a href="{% url 'cookbook_detail_3' %}#section2">3.2 What is sampling-event data?</a></li>
+            <li><a href="{% url 'cookbook_detail_3' %}#section3">3.3 Darwin Core - Sampling-event Star Schema</a></li>
+            <li><a href="{% url 'cookbook_detail_3' %}#section4">3.4 Prepare sampling-event data using Excel template</a></li>
+          </ul>
+        </div>
+        <!-- accordion collapse end -->
+      </div>
+      <!-- 3rd accordion-panel begin -->
+    </div>
+    <!-- panel-group end -->
+{% endif %}
   </div>
    <!-- container end -->
 {% endblock %}
