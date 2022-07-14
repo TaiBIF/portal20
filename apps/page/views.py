@@ -40,7 +40,7 @@ def act_lang(func):
         return resp
     return wrapper
 
-@act_lang
+# @act_lang
 def index(request):
     news_list = Article.objects.filter(category='NEWS').all()[0:4]
     event_list = Article.objects.filter(category='EVENT').all()[0:4]
@@ -67,11 +67,11 @@ def index(request):
 
     return render(request, 'index.html', context)
 
-@act_lang
+# @act_lang
 def publishing_data(request):
     return render(request, 'publishing-data.html')
 
-@act_lang
+# @act_lang
 def data_policy(request):
     return render(request, 'data-policy.html')
 
@@ -81,19 +81,19 @@ def journals(request):
 
     return render(None,'journals.html', locals())
 
-@act_lang
+# @act_lang
 def cookbook(request):
     return render(request, 'cookbook.html')
 
-@act_lang
+# @act_lang
 def cookbook_detail_1(request):
     return render(request, 'cookbook-detail-1.html')
 
-@act_lang
+# @act_lang
 def cookbook_detail_2(request):
     return render(request, 'cookbook-detail-2.html')
 
-@act_lang
+# @act_lang
 def cookbook_detail_3(request):
     return render(request, 'cookbook-detail-3.html')
 
@@ -142,15 +142,15 @@ def links(request):
     Post_url = Post.objects.all()
     return render(None,'links.html', locals())
 
-@act_lang
+# @act_lang
 def about_taibif(request):
     return render(request, 'about-taibif.html')
 
-@act_lang
+# @act_lang
 def about_gbif(request):
     return render(request, 'about-gbif.html')
 
-@act_lang
+# @act_lang
 def open_data(request):
     return render(request, 'open-data.html')
 
