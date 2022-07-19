@@ -29,9 +29,11 @@ class Post(models.Model):
     )
 
     title = models.CharField(u"網站名稱", max_length=200, default="")
+    title_en = models.CharField(u"網站英文名稱", max_length=200, default="")
     Upload = models.ImageField(upload_to= page_image_path, blank=True)
     url = models.URLField(u"網站", max_length = 200, default="")
     content = models.CharField(u"內容", max_length=200, default="",blank=True)
+    content_en = models.CharField(u"英文說明", max_length=200, default="",blank=True)
     sort = models.PositiveIntegerField(u"排序", default=0)
     cat = models.CharField(u"網站類型", max_length=200, choices=CATEGORY_CHOICE, default="", blank=True)
 
@@ -46,9 +48,11 @@ class Post(models.Model):
 
 class Journal(models.Model):
     title = models.CharField(u"網站名稱", max_length=200, default="")
+    title_en = models.CharField(u"網站英文名稱", max_length=200, default="")
     upload = models.ImageField(upload_to= page_image_path, blank=True)
     url = models.URLField(u"網站", max_length = 200, default="")
     content = models.CharField(u"內容", max_length=200, default="",blank=True)
+    content_en = models.CharField(u"英文說明", max_length=200, default="",blank=True)
     sort = models.PositiveIntegerField(u"排序", default=0)
     
 

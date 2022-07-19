@@ -6,11 +6,11 @@
 {% get_current_language as LANGUAGE_CODE %}
 
 {% block main %}
-{% include "inc_breadcrumb.html" with tab="01" active_label="資料使用條款暨隱私權政策" %}
 
 <!-- container begin -->
 <div class="container">
   {% if LANGUAGE_CODE == "zh-hant" %}
+  {% include "inc_breadcrumb.html" with tab="01" active_label="資料使用條款暨隱私權政策" %}
 
   <h1 class="heading-lg-ul">
     臺灣生物多樣性資訊機構(Taiwan Biodiversity Information Facility, TaiBIF)網站及資料使用條款暨隱私權政策
@@ -91,9 +91,10 @@
     </div>
     {% endif %}
     {% if LANGUAGE_CODE == "en" %}
+    {% include "inc_breadcrumb.html" with tab="01" active_label="Terms of Use & Privacy Policy" %}
 
     <h1 class="heading-lg-ul">
-      Terms of Use & Privacy Policy 
+      Taiwan Biodiversity Information Facility (TaiBIF) Website and Data Terms of Use & Privacy Policy 
     </h1>
   
     <div class="article-content-wrapper">

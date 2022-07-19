@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
-
+{% load i18n %}
 {% block title %}
 資料發布狀況
 {% endblock %}
@@ -54,7 +54,7 @@ svg text.label {
 
 {% block main %}
 {% include "inc_breadcrumb.html" with tab="01" active_label="資料發布狀況" %}
-
+{% if LANGUAGE_CODE == "zh-hant" %}
 <div class="container">
   <div class="row">
     <h1 class="heading-lg-ul">
@@ -104,4 +104,56 @@ svg text.label {
     <div id="dataset-table-container"></div>
   </div>
 </div>
+{% endif %}
+{% if LANGUAGE_CODE == "en" %}
+<div class="container">
+  <div class="row">
+    <h1 class="heading-lg-ul">
+      Data Publishing Status
+      <span class="heading-footnote">All</span>
+    </h1>
+    <div class="heading-sort-ctn">
+      <label class="custom-input-ctn">
+        <input type="checkbox" class="check-most"{% if request.GET.most %} checked{% endif %}>
+        <span class="checkmark"></span>
+        View only the release status of Biodiversity-related projects funded under Taiwan Ministry of Science and Technology
+      </label>
+    </div>
+
+
+    <h3>Statistics</h3>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Occurrences uploaded this year</div>
+      <div class="panel-body">
+        <div id="taibif-stats__this_year_occurrence"></div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Dataset uploaded this year</div>
+      <div class="panel-body">
+        <div id="taibif-stats__this_year_dataset"></div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Accumulative data</div>
+      <div class="panel-body">
+        <div id="taibif-stats__trend_occurrence"></div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Accumulative dataset</div>
+      <div class="panel-body">
+        <div id="taibif-stats__trend_dataset"></div>
+      </div>
+    </div>
+
+    <div id="dataset-table-container"></div>
+  </div>
+</div>
+
+{% endif %}
 {% endblock %}

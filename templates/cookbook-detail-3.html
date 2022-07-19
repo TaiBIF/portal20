@@ -469,9 +469,12 @@
         <img src="{% static 'images/cookbook-3-flow.png' %}" >
   
         <h4 class="heading-md">3.3.1 Star schema</h4>
-        <p>GBIF 的發布資料結構如上圖所示（以調查活動為例），在發布資料前，先確認你的研究資料類型是屬於名錄、出現紀錄還是調查活動，並以該類型資料結構為基礎（Core核心集）去設定資料表的欄位名稱（參照 Darwin Core），而其他未被包含於核心集的資料，則可以選擇其他類型的欄位名稱，整理成延伸集（可視為核心集的補充說明）。所有的延伸集都必須能有一個欄位（強烈建議為唯一識別碼ID）與核心集相同，才能相互對應，追溯到同一批次的資料。可以把這些想像成一個excel表，主頁資料就是核心集，其他分頁都是延伸集，內容皆與主頁有關。</p>
-  
-        <h4 class="heading-md">3.3.2 如何發布資料呢？</h4>
+        <p>Structure your core data containing column names by refering to Darwin Core terms, and the non-core data can be included as an extension set (it can be regarded as a supplementary description of the core set). All extension sets must have a field (strongly recommended as a unique identifier ID) that is the same as the core set to allow tracing back to the core data. You can think of these as an excel sheet, the homepage data is the core set, and the other pages are extension sets, and the content is related to the homepage.</p>
+        
+
+        
+        
+        <h4 class="heading-md">3.3.2 How to publish data?</h4>
         <ol>
           <li>Prepare raw data</li>
           <li>Check and Clean the data (correct scientific names or other errors)</li>

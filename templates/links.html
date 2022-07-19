@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}相關連結{% endblock %}
 
 {% block main %}
-{% include "inc_breadcrumb.html" with tab="03" active_label="相關連結" %}
 
   <!-- container begin -->
   <div class="container">
+    {% if LANGUAGE_CODE == "zh-hant" %}
+    {% include "inc_breadcrumb.html" with tab="03" active_label="相關連結" %}
+
     <h1 class="heading-lg-ul">
       相關連結
     </h1>
@@ -49,6 +52,57 @@
      {% endif %}
      {% endfor %}
 
+     {% endif %}
+     {% if LANGUAGE_CODE == "en" %}
+
+    {% include "inc_breadcrumb.html" with tab="03" active_label="Related websites" %}
+
+    <h1 class="heading-lg-ul">
+      Related websites
+    </h1>
+
+    <!-- web site begin -->
+    <h2 class="heading-md-bg">Websites</h2>
+    <p>The following are the governmental or other organizations that are related to biodiversity and information research or in collaboration with TaiBIF. Some organizations have also established databases related to biodiversity open data for different purposes. You are welcome to explore and utilize the contents!</p>
+    <ul class="row relateed-website-wrapper">
+
+      {% for post in Post_url %}
+      {% if post.cat == "web" %}
+      <li class="col-md-2 col-xs-6">
+
+        <a href="{{post.url}}" alt="" target="_blank"><img src="{{post.Upload.url}}"></a>
+        <a class="text-ellipsis-h2" href="{{post.url}}" alt="" target="_blank"><span class="myicon icon-link"></span> {{post.title}} </a>
+      </li>
+
+      {% endif %}
+      {% endfor %}
+
+    </ul>
+
+    <!-- web site end -->
+
+    <!-- database begin -->
+    <h2 class="heading-md-bg">Database</h2>
+    {% for post in Post_url%}
+    {% if post.cat == "data" %}
+    <div class="row relateed-datasabe-wrapper">
+      <div class="col-md-2 col-xs-4">
+        <a href="{{post.url}}" target="_blank"><img src="{{post.Upload.url}}"></a>
+      </div>
+
+      <div class="col-md-10 col-xs-8">
+        <a href="{{post.url}}" target="_blank"><span class="myicon icon-link"></span> 
+          {% if post.title_en == "" %} 
+          {{post.title}}
+          {% else %}
+          {{post.title_en}} 
+          {% endif %}</a>
+        <p>{{post.content_en}}</p>
+      </div>
+    </div>
+     {% endif %}
+     {% endfor %}
+     {% endif %}
 
 
     <!-- database end -->

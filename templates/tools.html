@@ -1,14 +1,17 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% load i18n %}
 {% block title %}工具分享{% endblock %}
 
 {% block main %}
-{% include "inc_breadcrumb.html" with tab="02" active_label="工具分享" %}
+
 
 
   <!-- container begin -->
   <div class="container">
+    
+    {% if LANGUAGE_CODE == "zh-hant" %}
+    {% include "inc_breadcrumb.html" with tab="02" active_label="工具分享" %}
     <h1 class="heading-lg-ul">
       工具分享
     </h1>
@@ -79,5 +82,78 @@
       </div>
     </div>
     <!-- list end -->
+    {% endif %}
+    {% if LANGUAGE_CODE == "en" %}
+    {% include "inc_breadcrumb.html" with tab="02" active_label="TaiBIF Tools" %}
+    <h1 class="heading-lg-ul">
+      TaiBIF Tools
+    </h1>
+
+    <div class="journals-intro-ctn">
+      <p>The biodiversity data proofreading and conversion tools were developed by TaiBIF. Currently, these tools include function for checking of scientific name, batch comparison of species' Chinese name and coordinate conversion. TaiBIF's tool development is currently supported by the Academia Sinica's "Taiwan Biodiversity Information Platform for Academic, Social Promotion and International Integration", the Taiwan Ministry of Science and Technology's "Construction, Maintenance and Integration of TaiBIF and its integration with GBIF" and Taiwan Forestry Bureau's "Ecological Resource Database Group Integration Promotion Program".<a href="https://portal.taibif.tw/coordinateConverter.php" target="_blank">https://portal.taibif.tw/coordinateConverter.php</a></p>
+    </div>
+
+    <!-- list begin -->    
+    <!-- <div class="tools-intro-wrapper">
+      <div class="tools-title">學名拼字校對</div>
+      <div class="tools-content">
+        <p>
+          為能提升學名之正確性，本系統蒐羅 TaiCoL、GBIF backbone 與 Species 2000 名錄資料庫之學名資料做為比對校正之參考依據，並能顯示簡便明確的拼字差異及相似程度，以方便使用者鑑別學名字母異同之處，順利且省時地進行名錄之修訂。
+        </p>
+        <p><a href="http://taibif.tw/BDTools/lcs2.php" target="_blank"><span class="myicon icon-link"></span> Catalogue of Life (Species 2000) 名錄比對</a></p>
+        <p><a href="http://taibif.tw/BDTools/solrName-en.php" target="_blank"><span class="myicon icon-link"></span> Scientific name spell checker (Checklist of Taiwan)</a></p>
+        <p><a href="http://taibif.tw/BDTools/solrName.php" target="_blank"><span class="myicon icon-link"></span> 臺灣物種名錄比對</a></p>
+      </div>
+    </div> -->
+    <div class="tools-intro-wrapper">
+      <div class="tools-title">Geographic coordinate conversion</div>
+      <div class="tools-content">
+        <p>
+          Different geographic coordinate systems of species' ecological distribution in the past had caused difficulties in integration of geographic information and causing errors in species marking on the map. This tool provide online conversion of geographic coordinates so that users can update the old ecological distribution data for further comparative analysis and research. The tool provides conversions between the three formats of WGS 84, TM2 67 and TM2 97.
+        </p>
+        <p><a href="https://portal.taibif.tw/coordinateConverter.php" target="_blank"><span class="myicon icon-link"></span> Geographic coordinate conversion tool</a></p>
+      </div>
+    </div -->
+
+    <div class="tools-intro-wrapper">
+      <div class="tools-title">Species' Chinese name comparison</div>
+      <div class="tools-content">
+        <p>
+          This tool allows users to upload multiple species' Chinese names. The tool will compare the Chinese names with the corresponding species scientific name and species name code in the Taiwan Catalogue of Life (TaiCoL; https://taibnet.sinica.edu.tw/). If the Chinese name is not found, a "no match" message will be returned.        </p>
+        <p><a href="{% url 'tools-common_name_checker' %}" target="_blank"><span class="myicon icon-link"></span> Species' Chinese name comparison</a></p>
+      </div>
+    </div>
+
+    <!--div class="tools-intro-wrapper">
+      <div class="tools-title">學名書寫形式校對</div>
+      <div class="tools-content">
+        <p>
+          為能提升學名書寫格式之一致性，本系統蒐羅 TaiCoL 名錄資料庫之學名資料做為比對校正之參考依據，提供學名、分類層級標識、命名者及年代之完整書寫順序，不僅能夠補足額外學名資訊外，更可讓使用者能簡便的統一學名資料格式，以提升未來資料比對交換之準確性。
+        </p>
+        <p><a href="http://taibif.tw/BDTools/getSCname.php" target="_blank"><span class="myicon icon-link"></span> 學名書寫形式校對</a></p>
+      </div>
+    </div>
+
+     <div class="tools-intro-wrapper">
+      <div class="tools-title">地理座標驗證</div>
+      <div class="tools-content">
+        <p>
+          為了提高物種分布準確性及達成利用地理資訊整合查詢之目的，故而開發本工具。使用者僅需上傳 EXCEL 檔案，檔案中包含三個欄位資訊，分別為 loc（地點文字說明）、x（經度）、y（緯度），本工具會依據這進行簡易的判斷，如地點與座標差異過大、或修正座標格式……等等，並將錯誤判別資訊回傳於使用者。
+        </p>
+        <p><a href="http://taibif.tw/BDTools/vgd.html" target="_blank"><span class="myicon icon-link"></span> 地理坐標驗證</a></p>
+      </div>
+    </div -->
+
+     <div class="tools-intro-wrapper">
+      <div class="tools-title">Scientific name validation</div>
+      <div class="tools-content">
+        <p>
+          Species often have synonyms in taxonomy. This tool provides batch comparison of species scientific name, check the validity of the scientific name, and also other relevant information.
+        </p>
+        <p><a href="http://match.taibif.tw/" target="_blank"><span class="myicon icon-link"></span> NomenMatch</a></p>
+      </div>
+    </div>
+    <!-- list end -->
+    {% endif %}
   </div>
 {% endblock %}
