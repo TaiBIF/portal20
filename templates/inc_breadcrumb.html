@@ -1,5 +1,8 @@
+{% load i18n %}
 <!-- breadcrumb begin -->
   <div class="container">
+  {% if LANGUAGE_CODE == "zh-hant" %}
+    
     <ol class="breadcrumb">
       <li><a href="{% url 'index' %}">首頁</a></li>
       {% if tab == "01" %}
@@ -25,5 +28,33 @@
       {% endif %}
       <li class="active">{{ active_label }}</li>
     </ol>
+  {% endif %}
+  {% if LANGUAGE_CODE == "en" %}
+    <ol class="breadcrumb">
+      <li><a href="{% url 'index' %}">index</a></li>
+      {% if tab == "01" %}
+      <li>Open Data</li>
+      {% elif tab  == "02" %}
+      <li>Tools & Documents</li>
+      {% elif tab  == "03" %}
+      <li>About TaiBIF</li>
+      {% elif tab  == "04" %}
+      <li>More Info</li>
+      {% elif tab  == "0501" %}
+      <li><a href="{% url 'search-occurrence' cat='search' %}">Occurrences</a></li>
+      {% elif tab  == "0502" %}
+      <li><a href="{% url 'search-species' %}">Species</a></li>
+      {% elif tab  == "0503" %}
+      <li><a href="{% url 'search-dataset' %}">Datasets</a></li>
+      {% elif tab  == "0504" %}
+      <li><a href="{% url 'search-publisher' %}">Publishers</a></li>
+      {% elif tab  == "05" %}
+      <li>Search</li>
+      {% elif tab  == "occurrence" %}
+      <li><a href="/occurrence/search/">Search Occurrences</a></li>
+      {% endif %}
+      <li class="active">{{ active_label }}</li>
+    </ol>
+  {% endif %}
   </div>
   <!-- breadcrumb end -->

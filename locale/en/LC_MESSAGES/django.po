@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-24 16:52+0800\n"
+"POT-Creation-Date: 2022-07-19 15:28+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: apps/page/views.py:274
+#: apps/page/views.py:283
 msgid "這裡放需要翻譯的文字"
 msgstr ""
 
@@ -32,7 +32,7 @@ msgstr ""
 
 #: templates/base.html:107
 msgid "找資料"
-msgstr "Get Data"
+msgstr "Find Data"
 
 #: templates/base.html:110
 msgid "物種出現紀錄"
@@ -50,43 +50,43 @@ msgstr "Datasets"
 
 #: templates/base.html:113 templates/index.html:92 templates/search_all.html:28
 msgid "發布單位"
-msgstr ""
+msgstr "Publishers"
 
 #: templates/base.html:118
 msgid "資料開放"
-msgstr "Open data"
+msgstr "Open Data"
 
 #: templates/base.html:121
 msgid "Open Data 概述"
-msgstr "About open data"
+msgstr "About Open Data"
 
 #: templates/base.html:122 templates/index.html:145
 msgid "資料發布狀況"
-msgstr "Data publishing status"
+msgstr "Data Publishing Status"
 
 #: templates/base.html:123
 msgid "資料上傳"
-msgstr "Publish your data"
+msgstr "Publish Your Data"
 
 #: templates/base.html:124
 msgid "資料論文/期刊"
-msgstr "Data paper/Journal"
+msgstr "Data Paper and Journal"
 
 #: templates/base.html:125
 msgid "使用條款暨隱私權政策"
-msgstr ""
+msgstr "Terms of Use & Privacy Policy"
 
 #: templates/base.html:130
 msgid "工具與文件"
-msgstr "Tools & Doc"
+msgstr "Tools & Documents"
 
 #: templates/base.html:133
 msgid "工具分享"
-msgstr "Data check tools"
+msgstr "TaiBIF Tools"
 
 #: templates/base.html:135
 msgid "生物多樣性資訊概論"
-msgstr ""
+msgstr "Biodiversity Cookbook"
 
 #: templates/base.html:140
 msgid "關於 TaiBIF"
@@ -94,7 +94,7 @@ msgstr "About TaiBIF"
 
 #: templates/base.html:143
 msgid "TaiBIF 簡介"
-msgstr "About us"
+msgstr "About Us"
 
 #: templates/base.html:145
 msgid "GBIF 介紹"
@@ -106,7 +106,7 @@ msgstr "Contact Us"
 
 #: templates/base.html:147
 msgid "相關連結"
-msgstr "Databases & Links"
+msgstr "Related Links"
 
 #: templates/base.html:153
 msgid "更多資訊"
@@ -114,7 +114,7 @@ msgstr "More Info"
 
 #: templates/base.html:158 templates/index.html:158
 msgid "最新消息"
-msgstr "Latest news"
+msgstr "News & Notices"
 
 #: templates/base.html:159 templates/index.html:163
 msgid "新聞"
@@ -122,7 +122,7 @@ msgstr "News"
 
 #: templates/base.html:160 templates/index.html:190
 msgid "活動"
-msgstr "Activities & events"
+msgstr "Activities & Events"
 
 #: templates/base.html:161 templates/index.html:216
 msgid "更新"
@@ -130,36 +130,41 @@ msgstr "Updates"
 
 #: templates/base.html:164
 msgid "專題文章"
-msgstr "Theme articles"
+msgstr "Articles"
 
 #: templates/base.html:165
 msgid "科普文章"
-msgstr "Popular science"
+msgstr "Popular Science"
 
 #: templates/base.html:166
 msgid "技術專欄"
-msgstr "Technical column"
+msgstr "Technical Memo"
 
 #: templates/base.html:167
 msgid "出版品資料"
-msgstr "Publications"
+msgstr "Related Publication"
 
 #: templates/base.html:168
 msgid "TaiBIF發表文章/海報"
-msgstr "TaiBIF academic publications"
+msgstr "TaiBIF Academic Publication"
 
 #: templates/base.html:241
 msgid "11574 台北市南港區研究院路二段70巷28號"
 msgstr ""
-"C301, No. 28, Ln 70, Sec 2 Academia Rd., Nangang Dist., 11574 Taipei, Taiwan"
+"C301, No. 28, Ln 70, Academia Rd. Sec. 2, Nangang Dist., 11574 Taipei, "
+"TAIWAN."
 
 #: templates/base.html:242
 msgid "跨領域科技研究大樓 C301室"
 msgstr ""
 
+#: templates/base.html:244
+msgid "Copyright © TaiBIF 臺灣生物多樣性資訊機構"
+msgstr "Copyright © Taiwan Biodiversity Information Facility"
+
 #: templates/index.html:84
 msgid "TaiBIF-生物多樣性資料開放的推手"
-msgstr "TaiBIF- The facilitator of biodiversity open data"
+msgstr "TaiBIF - The Facilitator of Biodiversity Open Data"
 
 #: templates/index.html:89 templates/index.html:116
 #: templates/search_all.html:24
@@ -168,15 +173,15 @@ msgstr "Occurrences"
 
 #: templates/index.html:95
 msgid "全站搜尋..."
-msgstr "Site search"
+msgstr "Site Search"
 
 #: templates/index.html:121
 msgid "於 TaiBIF 公開之資料"
-msgstr ""
+msgstr "Records published via TaiBIF"
 
 #: templates/index.html:130
 msgid "於 TaiBIF 公開之資料集（含部分資訊缺漏之資料集"
-msgstr "Datasets (Records published on TaiBIF, including incomplete datasets)"
+msgstr "Records published via TaiBIF, including incomplete dataset"
 
 #: templates/index.html:134
 msgid "涵蓋物種數"
@@ -184,11 +189,11 @@ msgstr "Recorded Species"
 
 #: templates/index.html:139
 msgid "出現紀錄涵蓋物種數（包含部分國外資料及同物異名）"
-msgstr ""
+msgstr "Recorded species appeared in the datasets"
 
 #: templates/index.html:144
 msgid "看更多"
-msgstr "More Info"
+msgstr "More"
 
 #: templates/index.html:273
 msgid "指導單位"

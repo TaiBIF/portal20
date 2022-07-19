@@ -52,7 +52,7 @@ def index(request):
     occ_result = requests.get(occ_num_url).json()
     occ_num =  occ_result['count']
     dataset_num = Dataset.objects.filter(status='PUBLIC').count()
-    taxon_cover = len(occ_result['facets']['taxon_id']['buckets'])
+    # taxon_cover = len(occ_result['facets']['taxon_id']['buckets'])
          
     context = {
         'news_list': news_list,
@@ -75,11 +75,11 @@ def publishing_data(request):
 def data_policy(request):
     return render(request, 'data-policy.html')
 
-@act_lang
+# @act_lang
 def journals(request):
     Journal_url = Journal.objects.all()
 
-    return render(None,'journals.html', locals())
+    return render(request,'journals.html', locals())
 
 # @act_lang
 def cookbook(request):
@@ -97,11 +97,11 @@ def cookbook_detail_2(request):
 def cookbook_detail_3(request):
     return render(request, 'cookbook-detail-3.html')
 
-@act_lang
+# @act_lang
 def tools(request):
     return render(request, 'tools.html')
 
-@act_lang
+# @act_lang
 def contact_us(request):
     if request.method == 'GET':
         return render(request, 'contact-us.html')
@@ -137,10 +137,10 @@ def contact_us(request):
 def plans(request):
     return render(request, 'plans.html')
 
-@act_lang
+# @act_lang
 def links(request):
     Post_url = Post.objects.all()
-    return render(None,'links.html', locals())
+    return render(request,'links.html', locals())
 
 # @act_lang
 def about_taibif(request):
@@ -154,7 +154,7 @@ def about_gbif(request):
 def open_data(request):
     return render(request, 'open-data.html')
 
-@act_lang
+# @act_lang
 def data_stats(request):
     is_most = request.GET.get('most', '')
 

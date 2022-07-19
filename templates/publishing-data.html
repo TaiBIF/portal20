@@ -22,50 +22,51 @@
 {% endblock %}
 
 {% block main %}
-{% include "inc_breadcrumb.html" with tab="01" active_label="資料上傳"%}
   <!-- container begin -->
   <div class="container">
-    <!-- row begin -->
-    <div class="row">
-      <!-- visible-xs modal begin -->
-      <div class="visible-xs">
-        <a href="javascript:void(0)" class="xs-schedule-flow-btn myicon icon-arrow-left" data-toggle="modal" data-target="#flowBtnModal">
-          更多資料上傳介紹
-        </a>
-      </div>
 
-      <!-- xs-schedule-navBtn-modal begin -->
-      <div class="modal right fade" id="flowBtnModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-
-            <div class="modal-body">
-              <span class="modal-close myicon icon-close" data-dismiss="modal" aria-label="Close"></span>
-              <ul class="schedule-flow-nav-wrapper">
-                {% include "inc_publishing-data-nav-items.html" %}
-              </ul>
-              </p>
-            </div>
-
-          </div>
-          <!-- modal-content -->
-        </div>
-        <!-- modal-dialog -->
-      </div>
-      <!-- xs-schedule-navBtn-modal end -->
-
-      <!-- visible-xs modal end -->
-
-      
-      <!-- left nav begin -->
-      <div class="col-sm-3 hidden-xs">
-        <ul class="schedule-flow-nav-wrapper">
-          {% include "inc_publishing-data-nav-items.html" %}
-        </ul>
-      </div>
-      <!-- left nav end -->
 
       {% if LANGUAGE_CODE == "zh-hant" %}
+      {% include "inc_breadcrumb.html" with tab="01" active_label="資料上傳"%}
+        <!-- row begin -->
+        <div class="row">
+          <!-- visible-xs modal begin -->
+          <div class="visible-xs">
+            <a href="javascript:void(0)" class="xs-schedule-flow-btn myicon icon-arrow-left" data-toggle="modal" data-target="#flowBtnModal">
+              更多資料上傳介紹
+            </a>
+          </div>
+    
+          <!-- xs-schedule-navBtn-modal begin -->
+          <div class="modal right fade" id="flowBtnModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+    
+                <div class="modal-body">
+                  <span class="modal-close myicon icon-close" data-dismiss="modal" aria-label="Close"></span>
+                  <ul class="schedule-flow-nav-wrapper">
+                    {% include "inc_publishing-data-nav-items.html" %}
+                  </ul>
+                  </p>
+                </div>
+    
+              </div>
+              <!-- modal-content -->
+            </div>
+            <!-- modal-dialog -->
+          </div>
+          <!-- xs-schedule-navBtn-modal end -->
+    
+          <!-- visible-xs modal end -->
+    
+          
+          <!-- left nav begin -->
+          <div class="col-sm-3 hidden-xs">
+            <ul class="schedule-flow-nav-wrapper">
+              {% include "inc_publishing-data-nav-items.html" %}
+            </ul>
+          </div>
+          <!-- left nav end -->
       <!-- right content begin -->
         <div class="col-xs-12 col-sm-9 pub-data-content" data-cat="sop">
           <iframe src="https://www.slideshare.net/slideshow/embed_code/key/vlHRsyodRczsZ?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
@@ -236,10 +237,50 @@
         </div>
         {% endif%}
         {% if LANGUAGE_CODE == "en" %}
-
+        
+        {% include "inc_breadcrumb.html" with tab="01" active_label="Publish Your Data"%}
+          <!-- row begin -->
+          <div class="row">
+            <!-- visible-xs modal begin -->
+            <div class="visible-xs">
+              <a href="javascript:void(0)" class="xs-schedule-flow-btn myicon icon-arrow-left" data-toggle="modal" data-target="#flowBtnModal">
+                更多資料上傳介紹
+              </a>
+            </div>
+      
+            <!-- xs-schedule-navBtn-modal begin -->
+            <div class="modal right fade" id="flowBtnModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+      
+                  <div class="modal-body">
+                    <span class="modal-close myicon icon-close" data-dismiss="modal" aria-label="Close"></span>
+                    <ul class="schedule-flow-nav-wrapper">
+                      {% include "inc_publishing-data-nav-items.html" %}
+                    </ul>
+                    </p>
+                  </div>
+      
+                </div>
+                <!-- modal-content -->
+              </div>
+              <!-- modal-dialog -->
+            </div>
+            <!-- xs-schedule-navBtn-modal end -->
+      
+            <!-- visible-xs modal end -->
+      
+            
+            <!-- left nav begin -->
+            <div class="col-sm-3 hidden-xs">
+              <ul class="schedule-flow-nav-wrapper">
+                {% include "inc_publishing-data-nav-items.html" %}
+              </ul>
+            </div>
+            <!-- left nav end -->
         <div class="col-xs-12 col-sm-9 pub-data-content" data-cat="sop">
           <iframe src="https://www.slideshare.net/slideshow/embed_code/key/vlHRsyodRczsZ?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-          <p>Download：<a href="/media/article/download/TaiBIF IPT操作說明2022 v2.5 公告版.pdf"class="myicon icon-download-document"></a></p>
+          <p>Download file: <a href="/media/article/download/TaiBIF IPT操作說明2022 v2.5 公告版.pdf"class="myicon icon-download-document"></a></p>
         </div>
         
 

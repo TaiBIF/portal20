@@ -3,7 +3,6 @@
 {% block title %}聯絡我們{% endblock %}
 
 {% block main %}
-{% include "inc_breadcrumb.html" with tab="03" active_label="聯絡我們" %}
 
 {% block script %}
 <script src='https://www.google.com/recaptcha/api.js'></script>
@@ -11,6 +10,9 @@
 
   <!-- container begin -->
 <div class="container">
+  {% if LANGUAGE_CODE == "zh-hant" %}
+  {% include "inc_breadcrumb.html" with tab="03" active_label="聯絡我們" %}
+
   {% if message %}
   <div class="alert alert-warning alert-dismissible" role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -79,5 +81,80 @@
 
     </div>
     <!-- contact form end -->
+
+
+  {% endif %}
+  {% if LANGUAGE_CODE == "en" %}
+  {% include "inc_breadcrumb.html" with tab="03" active_label="Contact Us" %}
+
+  {% if message %}
+  <div class="alert alert-warning alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>{{ message.head }}</strong> {{ message.content }}
+  </div>
+  {% endif %}
+  {% if messages %}
+  <div class="alert alert-warning alert-dismissible" role="alert">
+    {% for message in messages %}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>{{ message }}</strong>
+    {% endfor %}
+  </div>
+  {% endif %}
+    <h1 class="heading-lg-ul">
+      Contact Us
+      <span class="heading-footnote">All following fields are required</span>
+    </h1>
+    <!-- contact form begin -->
+    <div class="contact-form-wrapper clearfix">
+
+      <form method="post" action="{% url 'contact_us' %}">
+        {% csrf_token %}
+        <div class="form-group clearfix">
+          <div class="col-sm-4 col-xs-12">
+            <div class="custom-select">
+              <select name="cat" required>
+                <option>Select question type</option>
+                <option value="Inquiry of species-related information">Inquiry of species-related information</option>
+                <option value="Operational issue">Operational issue</option>
+                <option value="Report error">Report error</option>
+                <option value="Others">Others</option>
+              </select>
+
+            </div>
+          </div>
+
+          <div class="col-sm-4 col-xs-12">
+            <div class="input-group">
+              <div class="input-group-addon"><i class="myicon icon-user"></i></div>
+              <input type="text" class="form-control" placeholder="Name" name="name" required>
+            </div>
+          </div>
+
+          <div class="col-sm-4 col-xs-12">
+            <div class="input-group">
+              <div class="input-group-addon"><i class="myicon icon-mail"></i></div>
+              <input type="text" class="form-control" placeholder="Email" name="email" required>
+            </div>
+          </div>
+
+          <div class="col-xs-12">
+            <div class="input-group">
+              <div class="input-group-addon"><i class="myicon icon-write"></i></div>
+              <textarea class="form-control textarea" placeholder="Message" rows="3" name="content" required></textarea>
+            </div>
+          </div>
+
+          <div class="col-xs-12 contact-btn-wrapper">
+            <div class="g-recaptcha" data-sitekey="6LdbnAkaAAAAAALw87ZC4v5NFkkBrjDESgmyv5Kj"></div>
+            <button type="submit" class="btn btn-sunset">Send</button>
+          </div>
+
+        </div>
+      </form>
+
+    </div>
+    <!-- contact form end -->
+  {% endif %}
   </div>
 {% endblock %}

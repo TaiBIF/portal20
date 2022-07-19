@@ -19,12 +19,12 @@
 {% endblock %}
 {% get_current_language as LANGUAGE_CODE %}
 {% block main %}
-{% include "inc_breadcrumb.html" with tab="01" active_label="Open Data 概述" %}
 
 
 <!-- container begin -->
 <div class="container">
   {% if LANGUAGE_CODE == "zh-hant" %}
+  {% include "inc_breadcrumb.html" with tab="01" active_label="Open Data 概述" %}
 
   <h2 class="h2">什麼是開放資料？</h2>
   <hr>
@@ -58,6 +58,7 @@
   {% endif %}
   {% if LANGUAGE_CODE == "en" %}
 
+  {% include "inc_breadcrumb.html" with tab="01" active_label="About Open Data" %}
 
   <h2 class="h2">What is Open Data? </h2>
   <hr>

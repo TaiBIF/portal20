@@ -1,15 +1,19 @@
 {% extends "base.html" %}
 
 {% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 
 {% block title %}資料論文/期刊{% endblock %}
 
 {% block main %}
-{% include "inc_breadcrumb.html" with tab="01" active_label="資料論文/期刊" %}
 
 
   <!-- container begin -->
   <div class="container">
+    {% if LANGUAGE_CODE == "zh-hant" %}
+    {% include "inc_breadcrumb.html" with tab="01" active_label="資料論文/期刊" %}
+
     <h1 class="heading-lg-ul">
       資料期刊/論文
     </h1>
@@ -21,7 +25,6 @@
       <p>當您透過 TaiBIF 的資料發布工具 <a href="http://ipt.taibif.tw" target="_blank">IPT</a>上傳您的資料並發布後，可下載其自動產生的 RTF 檔來撰寫您的資料論文，並選擇下列期刊投稿（期刊的 impact factor 及發表費用請見：<a href="https://www.gbif.org/data-papers" target="_blank">https://www.gbif.org/data-papers</a>）</p>
 
     </div>
-
 
     <!-- list begin -->
 
@@ -40,7 +43,47 @@
     {% endfor %}
 
 
+    {% endif %}
+    {% if LANGUAGE_CODE == "en" %}
+    {% include "inc_breadcrumb.html" with tab="01" active_label="Data Paper and Journal" %}
 
+    <h1 class="heading-lg-ul">
+      Data Paper and Journal
+    </h1>
+
+    <div class="journals-intro-ctn">
+      <h3>What is Data paper?</h3>
+      <p>Data paper is a form of peer-reviewed article published in relevant journals. The content mainly describes the relevant information of the data set, including methods for data generation and collection, data type, species information, open data status and and background information of the dataset (Metadata) etc., through the CC licensing method chosen by the author of this dataset. Data paper can be used as the basis for data citing in future research paper or other document.</p>
+      <h3>Journals for biodiversity-related data papers</h3>
+      <p>After uploaded and published your data through TaiBIF's <a href="http://ipt.taibif.tw" target="_blank">IPT</a>, you may download the automatically generated RTF file for data paper writing, and may select the following journals for submission (for journal's impact factor and publication fee, please refer to: <a href="https://www.gbif.org/data-papers" target="_blank">https://www.gbif.org/data-papers</a>）</p>
+
+    </div>
+
+
+
+    <!-- list begin -->
+
+    {% for jo in Journal_url%}
+    <div class="row relateed-datasabe-wrapper">
+
+      <div class="col-md-2 col-xs-4">
+        <a href="{{jo.url}}" target="_blank"><img src="{{jo.upload.url}}"></a>
+      </div>
+      <div class="col-md-10 col-xs-8">
+        <a href="{{jo.url}}"target="_blank"><span class="myicon icon-link"></span> 
+          {% if jo.title_en == "" %} 
+          {{jo.title}}
+          {% else %}
+          {{jo.title_en}}
+          {% endif %}
+        </a>
+        <p>{{jo.content_en}}</p>
+      </div>
+
+    </div>
+    {% endfor %}
+
+    {% endif %}
 
     <!-- list end -->
   </div>

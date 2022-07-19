@@ -589,7 +589,7 @@
   <field name="rights" type="string"/>
   <field name="rightsHolder" type="string"/>
   <field name="sampleSizeUnit" type="text_general"/>
-  <field name="sampleSizeValue" type="pdoubles"/>
+  <field name="sampleSizeValue" type="string"/>
   <field name="samplingEffort" type="string"/>
   <field name="samplingProtocol" type="string"/>
   <field name="scientificName" type="string"/>
@@ -623,7 +623,7 @@
   <field name="year" type="pint"/>
   <field name="month" type="pint"/>
   <field name="day" type="pint"/>
-  <field name="taibif_event_Date" type="pdate"/>
+  <field name="taibif_event_Date" type="string"/>
   <!-- time end -->
   
   <!-- taxon start -->
