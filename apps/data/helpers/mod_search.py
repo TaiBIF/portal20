@@ -262,7 +262,7 @@ class DatasetSearch(SuperSearch):
                 v = values[0] # only get one
                 if not v:
                     continue
-                d = DATA_MAPPING['core'][v]
+                d = v
                 query = query.filter(dwc_core_type__exact=d)
             if key == 'publisher':
                 query = query.filter(organization__in=values)

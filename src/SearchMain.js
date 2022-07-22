@@ -74,6 +74,12 @@ function SpeciesResult(props) {
 }
 
 function DatasetResult(props) {
+  let listboxInnerTag = '';
+  if (props.language === 'zh-hant') {
+    listboxInnerTag = '記錄數量';
+  } else if (props.language === 'en'){
+    listboxInnerTag = 'Number of record';
+  }
   const rows = props.data.results.map((row, index) => {
     const num_record = row.num_record.toLocaleString('en');
     const link = `/dataset/${row.name}/`;
@@ -89,7 +95,7 @@ function DatasetResult(props) {
             <div className="listbox-inner-summary hidden-xs">
             <a href={link}>{row.description}</a>
             </div>
-            <span className="listbox-inner-tag"><a href="#">記錄數量：{num_record} </a></span>
+            <span className="listbox-inner-tag"><a href="#">{listboxInnerTag}：{num_record} </a></span>
           </div>
         </div>
     )
@@ -137,6 +143,8 @@ const SEARCH_TYPE_LABEL_MAP = {
 }
 
 function SearchMain(props) {
+
+  const language = props.language;
   // console.log(props, 'main');
   let initActiveTab = 'menu1';
   if (window.location.pathname === '/occurrence/taxonomy/') {
@@ -146,8 +154,7 @@ function SearchMain(props) {
   const countString = (props.data && props.data.count ) ? props.data.count.toLocaleString('en') : 0;
   const elapsed = (props.data && props.data.elapsed ) ? props.data.elapsed.toFixed(2) : '';
 
-  const typeLabel
-        = SEARCH_TYPE_LABEL_MAP[props.searchType];
+  const typeLabel = (language == 'en') ? props.searchType : SEARCH_TYPE_LABEL_MAP[props.searchType];
 
   let q = null;
   const filterTags = [];
@@ -171,7 +178,12 @@ function SearchMain(props) {
       filterTags.push((<span key={tagLabel} className="search-content-sort-tag">{ tagLabel }</span>));
     } else if (menuKey[0] === 'q') {
       q = decodeURIComponent(menuKey[1]);
-      filterTags.push((<span key="q" className="search-content-sort-tag">關鍵字:{ q }</span>));
+      if (language === 'zh-hant'){
+        filterTags.push((<span key="q" className="search-content-sort-tag">關鍵字:{ q }</span>));
+      } else if (language === 'en'){
+        filterTags.push((<span key="q" className="search-content-sort-tag">keyword:{ q }</span>));
+      }
+      
     } else if ((menuKey[0] === 'lat'||menuKey[0] === 'lng') && !mapTag) {
       console.log(props.filters)
       let lat = []
@@ -185,8 +197,13 @@ function SearchMain(props) {
         }
       });
       mapTag = true
-      filterTags.push((<span key="map" className="search-content-sort-tag">經度:{lng[0]}~{lng[1]}</span>));
-      filterTags.push((<span key="map" className="search-content-sort-tag">緯度:{lat[0]}~{lat[1]}</span>));
+      if (language === 'zh-hant'){
+        filterTags.push((<span key="map" className="search-content-sort-tag">經度:{lng[0]}~{lng[1]}</span>));
+        filterTags.push((<span key="map" className="search-content-sort-tag">緯度:{lat[0]}~{lat[1]}</span>));
+      } else if (language === 'en'){
+        filterTags.push((<span key="map" className="search-content-sort-tag">Longitude:{lng[0]}~{lng[1]}</span>));
+        filterTags.push((<span key="map" className="search-content-sort-tag">Latitude:{lat[0]}~{lat[1]}</span>));
+      }
     }
   }
 
@@ -212,18 +229,33 @@ function SearchMain(props) {
         act = f.split('=')[1];
       }
     }
-    tabNavs = (
+    if (language === 'zh-hant'){
+      tabNavs = (
         <div className="table-responsive">
           <ul className="nav nav-tabs nav-justified search-content-tab">
             <li className={act=="all" ? "active": null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'all')}>全部</a></li>
-            <li className={act=="occurrence" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'occurrence')}>出現紀錄</a></li>
-            <li className={act=="taxon" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'taxon')}>物種名錄</a></li>
-            <li className={act=="event" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'event')}>調查活動</a></li>
-            <li className={act=="meta" ? "active": null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'meta')}>詮釋資料</a></li>
+            <li className={act=="OCCURRENCE" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'OCCURRENCE')}>出現紀錄</a></li>
+            <li className={act=="CHECKLIST" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'CHECKLIST')}>物種名錄</a></li>
+            <li className={act=="SAMPLINGEVENT" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'SAMPLINGEVENT')}>調查活動</a></li>
+            <li className={act=="Metadata-only" ? "active": null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'mMetadata-onlyeta')}>詮釋資料</a></li>
           </ul>
         </div>)
+    } else if (language === 'en'){
+      tabNavs = (
+        <div className="table-responsive">
+          <ul className="nav nav-tabs nav-justified search-content-tab">
+            <li className={act=="all" ? "active": null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'all')}>All</a></li>
+            <li className={act=="occurrence" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'occurrence')}>Occurrence</a></li>
+            <li className={act=="taxon" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'taxon')}>Checklist</a></li>
+            <li className={act=="event" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'event')}>Sampling event</a></li>
+            <li className={act=="meta" ? "active": null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'meta')}>Metadata</a></li>
+          </ul>
+        </div>)
+    }
+    
   } else if (props.searchType == 'species') {
-    tabNavs = (
+    if (language === 'zh-hant'){
+      tabNavs = (
         <div className="table-responsive">
           <ul className="nav nav-tabs search-content-tab">
             <li className={tabActive == "menu1" ? "active": null}><a data-toggle="tab" onClick={(e)=>toggleTab(e, 'menu1')}>資料列表</a></li>
@@ -233,13 +265,66 @@ function SearchMain(props) {
             }
           </ul>
         </div>)
+    } else if (language === 'en'){
+      tabNavs = (
+        <div className="table-responsive">
+          <ul className="nav nav-tabs search-content-tab">
+            <li className={tabActive == "menu1" ? "active": null}><a data-toggle="tab" onClick={(e)=>toggleTab(e, 'menu1')}>Table</a></li>
+            {q
+             ? <li className={tabActive == "menu2" ? "active" : null}><a data-toggle="tab" onClick={(e)=>toggleTab(e, 'menu2')}>Others</a></li>
+             : null
+            }
+          </ul>
+        </div>)
+    }
+    
   } else if (props.searchType === 'publisher') {
-    tabNavs = (
+    if (language === 'zh-hant'){
+      tabNavs = (
         <div className="table-responsive">
           <ul className="nav nav-tabs search-content-tab">
             <li className="active"><a data-toggle="tab">全部</a></li>
           </ul>
         </div>);
+    } else if (language === 'en'){
+      tabNavs = (
+        <div className="table-responsive">
+          <ul className="nav nav-tabs search-content-tab">
+            <li className="active"><a data-toggle="tab">All</a></li>
+          </ul>
+        </div>);
+    }
+    
+  }
+  
+
+  let tabFilter = null;
+  if (props.searchType === 'publisher') {
+    if (language === 'zh-hant'){
+      tabFilter = (
+        <div className="tools-title" >
+          <a href='https://www.gbif.org/zh-tw/become-a-publisher'><span data-tip='發布單位已於 GBIF 註冊成為台灣的資料發布者，以單位機構為主，類型可包含公家機關、研究機構、大專院校、NGO組織等。詳情請見：https://www.gbif.org/zh-tw/become-a-publisher'
+          className="glyphicon glyphicon-info-sign"> </span></a>
+          <h1 style={{display: 'inline'}} className="heading-lg">{typeLabel} 
+          <span className="heading-footnote"> 共 {countString} 筆資料 ({elapsed} 秒)</span></h1>
+          </div>)
+    }else if (language === 'en'){
+      tabFilter = (
+        <div className="tools-title" >
+          <a href='https://www.gbif.org/zh-tw/become-a-publisher'><span data-tip='The dataset publisher is mainly organisation, which includes but not restricted to government institution, research institution, college, university, and NGO organisation. For more information, see https://www.gbif.org/become-a-publisher'
+          className="glyphicon glyphicon-info-sign"> </span></a>
+          <h1 style={{display: 'inline'}} className="heading-lg">{typeLabel} 
+          <span className="heading-footnote">   {countString} Result ({elapsed} sec)</span></h1>
+          </div>)
+    }
+  } else {
+    if (language === 'zh-hant'){
+      tabFilter = (
+        <h1 className="heading-lg">{typeLabel} <span className="heading-footnote">共 {countString} 筆資料 ({elapsed} 秒)</span></h1>)
+    }else if (language === 'en'){
+      tabFilter = (
+        <h1 className="heading-lg">{typeLabel} <span className="heading-footnote">{countString} Result ({elapsed} sec)</span></h1>)
+    }
   }
 
   let pageUrlPrefix = `/${props.searchType}/search/`;
@@ -247,31 +332,22 @@ function SearchMain(props) {
   if (qs.length > 0) {
     pageUrlPrefix = `${pageUrlPrefix}?${qs}`;
   }
-  const divStyle = {
-    display:'inline',
-  }
+  
   //console.log(pageUrlPrefix);
   return (
       <div className="search-content">
-        <ol className="breadcrumb">
-          <li><a href="/">首頁</a></li>
-          <li className="active">搜尋{typeLabel}</li>
-        </ol>
+          {(language == "en" ) ?
+          <ol className="breadcrumb">
+            <li><a href="/">Home</a></li><li className="active">Search {typeLabel}</li>
+          </ol>
+          :<ol className="breadcrumb">
+            <li><a href="/">首頁</a></li><li className="active">搜尋{typeLabel}</li>
+          </ol>
+          }
         <div className="search-content-heading-wrapper">
-        {(props.searchType === 'publisher') ?
-        <React.Fragment>
-          <div className="tools-title" >
-          <a href='https://www.gbif.org/zh-tw/become-a-publisher'><span data-tip='發布單位已於 GBIF 註冊成為台灣的資料發布者，以單位機構為主，類型可包含公家機關、研究機構、大專院校、NGO組織等。詳情請見：https://www.gbif.org/zh-tw/become-a-publisher'
-          className="glyphicon glyphicon-info-sign"> </span></a>
-          <h1  style={divStyle} className="heading-lg">{typeLabel} 
-          <span className="heading-footnote"> 共 {countString} 筆資料 ({elapsed} 秒)</span></h1>
-          </div>
-        <ReactTooltip/>
-        </React.Fragment>
-       :<h1 className="heading-lg">{typeLabel} <span className="heading-footnote">共 {countString} 筆資料 ({elapsed} 秒)</span></h1>
-      }
+        {tabFilter}
         
-        <span>篩選條件：</span>
+        <span>{language === 'en' ? 'Filtered by:' :'篩選條件：'}</span>
           {filterTags}
         </div>
       {(props.searchType !== 'occurrence') ?
@@ -280,18 +356,18 @@ function SearchMain(props) {
         <div className="tab-content">
           <div id="menu1" className="tab-pane fade in active">
           {props.searchType === 'dataset'
-           ? <DatasetResult data={props.data} /> : null}
+           ? <DatasetResult data={props.data} language={language} /> : null}
           {(props.searchType === 'species' && tabActive === 'menu1')
-           ? <SpeciesResult data={props.data} /> : null}
+           ? <SpeciesResult data={props.data} language={language} /> : null}
           {(props.searchType === 'species' && tabActive === 'menu2' && q)
-           ? <SpeciesOther q={q}/> : null}
+           ? <SpeciesOther q={q} language={language}/> : null}
           {props.searchType === 'publisher'
-           ? <PublisherResult data={props.data} /> : null}
+           ? <PublisherResult data={props.data}  language={language}/> : null}
           {props.data.count > 0 ? props.pagination: null}
            </div>
          </div>
          </React.Fragment>
-       : <OccurrenceRouter data={props.data} filters={props.filters}  urlPrefix={pageUrlPrefix}/>
+       : <OccurrenceRouter data={props.data} filters={props.filters}  urlPrefix={pageUrlPrefix} language={language}/>
       }
       {/* pagination */}
       {(props.searchType !== 'occurrence')?

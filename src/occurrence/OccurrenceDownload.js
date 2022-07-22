@@ -71,7 +71,9 @@ function OccurrenceDownload(props) {
   return (
     <div className="col-xs-12">
     <div className="tools-intro-wrapper">
-      <div className="tools-title">下載選項</div>
+      { props.languague === 'en' ?
+      <div className="tools-title">Download option</div>
+    :<div className="tools-title">下載選項</div>}
         <div className="tools-content">
           <div className="table-responsive">
             <table className="table borderless text-left" id="occurence-charts-dataset-table">
@@ -103,7 +105,10 @@ function OccurrenceDownload(props) {
         </div>
       </div>
       <div className="tools-intro-wrapper">
-        <div className="tools-title">下載名錄</div>
+      { props.languague === 'en' ?
+      <div className="tools-title">Download option</div>
+    :<div className="tools-title">下載選項</div>}
+        
           <div className="tools-content">
             <div className="table-responsive">
               <form onSubmit={handleSubmit(onSubmit)}>
@@ -111,7 +116,10 @@ function OccurrenceDownload(props) {
                 <table className="table borderless text-left" id="occurence-charts-dataset-table">
                   <tbody>
                   <tr>
-                    <th>下載選項:</th>
+                  { props.languague === 'en' ?
+                  <th>Download option: </th>
+                  :<th>下載選項:</th>}
+                    
                     <td>
                       <select  {...register("type",{required:true})}>
                         <option value='simple'>Simple</option>
@@ -123,31 +131,71 @@ function OccurrenceDownload(props) {
                     <th>搜尋條件:</th>
                     <td>{searchCondition}</td>
                   </tr> */}
+                  { props.languague == 'en' ?
                   <tr className='odd'>
-                    <th>搜尋時間:</th>
-                    <td>{searchDate}</td>
+                  <th>Search date:</th>
+                  <td>{searchDate}</td>
+                </tr>
+                  :<tr className='odd'>
+                  <th>搜尋時間:</th>
+                  <td>{searchDate}</td>
                   </tr>
+                  }
+                  { props.languague == 'en' ?
                   <tr>
-                    <th>使用條款:</th>
-                    <td>請閱讀本站<a target='_blank' href='/data-policy'>使用條款</a>，下載資料即表示您同意該條款內容。</td>
-                  </tr>
+                  <th>Terms of Use:</th>
+                  <td>By downloading the material, you agreed to our<a target='_blank' href='/data-policy'> Terms of Use</a></td>
+                </tr>
+                  :<tr>
+                  <th>使用條款:</th>
+                  <td>請閱讀本站<a target='_blank' href='/data-policy'>使用條款</a>，下載資料即表示您同意該條款內容。</td>
+                </tr>
+                  }
+                  
+                  { props.languague == 'en' ?
                   <tr className='odd'>
-                    <th>保留期限:</th>
-                    <td>本站保留下載檔案連結一年 {searchDate} 至 {expireDate}。<br/>如有延長需求或因學術出版引用而有永久保留需求，請<a target='_blank' href=' /contact-us'>聯絡我們</a></td>
+                  <th>Retention period:</th>
+                  <td>This site retains the download file link for one year from {searchDate} to {expireDate}. <br/>Please <a target='_blank' href=' /contact-us'>contact us</a> for extensions or perpetual retention for publication</td>
+                </tr>
+                  :<tr className='odd'>
+                  <th>保留期限:</th>
+                  <td>本站保留下載檔案連結一年 {searchDate} 至 {expireDate}。<br/>如有延長需求或因學術出版引用而有永久保留需求，請<a target='_blank' href=' /contact-us'>聯絡我們</a></td>
+                </tr>
+                  }
+                  
+                  { props.languague == 'en' ?
+                  <tr>
+                    <th>File format:</th>
+                    <td>CSV</td>
                   </tr>
+                  :
                   <tr>
                     <th>檔案格式:</th>
                     <td>CSV</td>
                   </tr>
+                  }
+                  { props.languague == 'en' ?
+                  <tr className='odd'>
+                    <th>Note:</th>
+                    <td>The file is generated offline. The system will send the download information to the email address you entered. <br/>If you did not received the email, please check your email settings or <a target='_blank' href=' /contact-us'>contact us</a></td>
+                  </tr>
+                  :
                   <tr className='odd'>
                     <th>備註:</th>
                     <td>檔案為離線產生，處理完成後，系統會寄下載資訊到您輸入的電子郵件信箱。<br/>如未收到信件，請檢查您的郵件設定，如仍未收到信件，請<a target='_blank' href=' /contact-us'>聯絡我們</a></td>
                   </tr>
+                  }
+                  
                   <tr>
                     <td colSpan={2}>
                       <div className="input-group">
                         <span className="input-group-addon">
+                        
+                        {props.languague =='en' ?
+                          <span className="input-group-text" id='download-email'>Email address</span>
+                        :
                           <span className="input-group-text" id='download-email'>電子郵件信箱</span>
+                        }
                         </span>	
                         <input type="email"  {...register("email",{required:true,
                         pattern: {
@@ -163,7 +211,12 @@ function OccurrenceDownload(props) {
                     <td colSpan={2}>
                       <div className="input-group">
                         <span className="input-group-addon">
+                        {props.languague =='en' ?
+                          <span className="input-group-text" id='confirm-download-email'>Re-enter email address</span>
+                        :
                           <span className="input-group-text" id='confirm-download-email'>請再次輸入您的電子郵件信箱</span>
+                        }
+                        
                         </span>	
                         <input type="email" className="form-control" {...register("confirm_email",{required:true,
                         pattern: {
@@ -179,7 +232,12 @@ function OccurrenceDownload(props) {
                   </tr>
                   </tbody>
                 </table>
+                {props.languague =='en' ?
+                <button type='submit' className="btn text-center btn-block" id='download-dataset-btn'>Download</button>
+                :
                 <button type='submit' className="btn text-center btn-block" id='download-dataset-btn'>下載檔案</button>
+                }
+                
               </form>
             </div>
           </div>

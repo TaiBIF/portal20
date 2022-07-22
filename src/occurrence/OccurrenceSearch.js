@@ -36,14 +36,12 @@ export default function OccurrenceSearch(props) {
         </tr>
     )
   });
-  //  download link
-  /*const downloadLink = (props.downloadUrl !== '') ?
-        <a href={props.downloadUrl} className="btn btn-primary" target="_blank">下載篩選結果 (CSV)</a> :
-        <button className="btn btn-primary disabled">資料量太大，無法下載，請縮小搜尋範圍</button>; */
-  return (
-      <div className="table-responsive">
-        <table className="table">
-        <thead>
+  
+  
+  let columnName = null;
+  if (props.language === 'zh-hant'){
+    columnName = 
+  (<thead>
           <tr>
             <th>#</th>
             <th>學名</th>
@@ -60,7 +58,38 @@ export default function OccurrenceSearch(props) {
             <th>屬</th>
             <th>種</th>
           </tr>
-        </thead>
+    </thead>)}
+    else if (props.language === 'en'){
+      columnName = (
+      <thead>
+          <tr>
+            <th>#</th>
+            <th>Scientfic Name</th>
+            <th>Common Name</th>
+            <th>Time</th>
+            <th>Country or Area</th>
+            <th>Dataset</th>
+            <th>Basic of Record</th>
+            <th>Kingdom</th>
+            <th>Pyhlum</th>
+            <th>Class</th>
+            <th>Family</th>
+            <th>Order</th>
+            <th>Genus</th>
+            <th>Specie</th>
+          </tr>
+    </thead>)
+    }
+  //  download link
+  /*const downloadLink = (props.downloadUrl !== '') ?
+        <a href={props.downloadUrl} className="btn btn-primary" target="_blank">下載篩選結果 (CSV)</a> :
+        <button className="btn btn-primary disabled">資料量太大，無法下載，請縮小搜尋範圍</button>; */
+  return (
+      <div className="table-responsive">
+        <table className="table">
+        
+            {columnName}
+          
         <tbody>
         {rows}
         </tbody>

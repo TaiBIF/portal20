@@ -102,10 +102,19 @@ function SearchSidebar(props) {
   const [queryKeyword, setQueryKeyword] = useState(props.queryKeyword);
   
   if (props.searchType === 'dataset') {
-    searchTypeLabel = '資料集';
+    if (props.language === 'zh-hant') {
+      searchTypeLabel = '資料集';
+    } else if (props.language === 'en'){
+      searchTypeLabel = 'Dataset';
+    }
   }
   else if (props.searchType === 'occurrence') {
-    searchTypeLabel = '出現紀錄';
+    if (props.language === 'zh-hant') {
+      searchTypeLabel = '出現紀錄';
+    } else if (props.language === 'en'){
+      searchTypeLabel = 'Occurrence';
+    }
+    
     isOccurrence = true;
 
     //const scientificNameContent = <SearchTaxon {...props.taxonProps} />;
@@ -113,10 +122,20 @@ function SearchSidebar(props) {
     //searchTaxonContainer = <SearchTaxon {...props.taxonProps} />;
   }
   else if (props.searchType === 'species') {
-    searchTypeLabel = '物種';
+    if (props.language === 'zh-hant') {
+      searchTypeLabel = '物種';
+    } else if (props.language === 'en'){
+      searchTypeLabel = 'Species';
+    }
+    
   }
   else if (props.searchType === 'publisher') {
-    searchTypeLabel = '發布單位';
+    if (props.language === 'zh-hant') {
+      searchTypeLabel = '發布單位';
+    } else if (props.language === 'en'){
+      searchTypeLabel = 'Publisher';
+    }
+    
   }
 
   let filterCount = 0;
@@ -161,6 +180,13 @@ function SearchSidebar(props) {
       accordionList.push(<Accordion key={m.key} content={m} onClick={props.onClick} filters={props.filters} clearCondition={props.clearCondition}/>);
     });
   }
+  let formControlPlaceholder = '';
+  if (props.language === 'zh-hant') {
+    formControlPlaceholder = '搜尋關鍵字';
+  } else if (props.language === 'en'){
+    formControlPlaceholder = 'Keyword Search';
+  }
+
   return (
       <div className="search-sidebar">
         <div className="modal right fade modal-search-side-wrapper" id="flowBtnModal" tabIndex="-1" role="dialog">
@@ -174,7 +200,7 @@ function SearchSidebar(props) {
                 </div>
               </div>
               <div className="input-group search-sidebar-header-kw">
-      <input className="form-control" placeholder="搜尋關鍵字" name="search-term" id="search-term" type="text" value="" value={queryKeyword} onChange={handleChangeKeyword} onKeyPress={props.onKeyPressKeyword} />
+      <input className="form-control" placeholder={formControlPlaceholder} name="search-term" id="search-term" type="text" value={queryKeyword} onChange={handleChangeKeyword} onKeyPress={props.onKeyPressKeyword} />
                 <div className="input-group-btn">
       <button className="btn" type="submit" onClick={(e)=>props.onClickSubmitKeyword(e, queryKeyword)}>
                     <i className="glyphicon glyphicon-search"></i>
