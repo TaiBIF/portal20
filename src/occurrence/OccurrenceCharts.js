@@ -159,7 +159,11 @@ function OccurrenceCharts(props) {
       <React.Fragment>
       <div className="col-xs-12">
         <div className="tools-intro-wrapper">
-          <div className="tools-title" data-tip='每月出現紀錄：僅顯示有提供月份之出現紀錄筆數，為歷年月份資料筆數累計值'><span className="glyphicon glyphicon-info-sign"></span>月份</div>
+          { props.language === 'en'? 
+            <div className="tools-title" data-tip='Occurrence record per month: Display only record with month provided, value is the number of cumulative records'><span className="glyphicon glyphicon-info-sign"></span>Month</div>
+            :
+            <div className="tools-title" data-tip='每月出現紀錄：僅顯示有提供月份之出現紀錄筆數，為歷年月份資料筆數累計值'><span className="glyphicon glyphicon-info-sign"></span>月份</div>
+          }
             <div className="tools-content">
             { monthData[0]
               ? <Bar
@@ -192,7 +196,12 @@ function OccurrenceCharts(props) {
 
       <div className="col-xs-12">
         <div className="tools-intro-wrapper">
-      <div className="tools-title" data-tip='每年出現紀錄：僅顯示有提供年份之出現紀錄筆數'><span className="glyphicon glyphicon-info-sign"></span>年份</div>
+        { props.language === 'en'? 
+            <div className="tools-title" data-tip='Occurrence record per year: Display only record with year provided'><span className="glyphicon glyphicon-info-sign"></span>Year</div>
+            :
+            <div className="tools-title" data-tip='每年出現紀錄：僅顯示有提供年份之出現紀錄筆數'><span className="glyphicon glyphicon-info-sign"></span>年份</div>
+          }
+      
           <div className="tools-content">
           { yearData[0]
             ? <Line data={yearData[1]} options={{
@@ -233,17 +242,32 @@ function OccurrenceCharts(props) {
      */}
       <div className="col-xs-12">
       <div className="tools-intro-wrapper">
+      { props.language === 'en'?
+      <div className="tools-title">Dataset</div>
+      :
       <div className="tools-title">資料集</div>
+      }
+      
       <div className="tools-content">
       <div className="table-responsive">
       <table className="table borderless" id="occurence-charts-dataset-table">
       <thead>
+      { props.language === 'en'?
+      <tr>
+      <th>&nbsp;</th>
+      <th className=" bg-transparent">Dataset Name</th>
+      <th>Numbers</th>
+      <th>&nbsp;</th>
+      </tr>
+      :
       <tr>
       <th>&nbsp;</th>
       <th className=" bg-transparent">資料集</th>
       <th>出現次數</th>
       <th>&nbsp;</th>
       </tr>
+      }
+      
       </thead>
       <tbody>
       {datasetData[0] ? <DatasetDataBody />: null}

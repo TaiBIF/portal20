@@ -29,7 +29,14 @@ class TaibifSearch extends React.Component {
     else if (window.location.pathname === '/species/search/') {
       searchType = 'species';
     }
-
+    let language = ''
+    if (document.getElementsByTagName('script')[11]['lang'] === ''){
+      language = 'zh-hant'
+    }else if (document.getElementsByTagName('script')[11]['lang'] === 'zh-hant'){
+      language = 'zh-hant'
+    }else if (document.getElementsByTagName('script')[11]['lang'] === 'en'){
+      language = 'en'
+    }
     this.state = {
       isLoaded: false,
       isLoadedMain: true,
@@ -37,6 +44,7 @@ class TaibifSearch extends React.Component {
       menus: {},
       filters: new Set(),
       searchType: searchType,
+      language: language,
       queryKeyword: '',
       taxonData: {
         suggestList: [],
@@ -423,6 +431,7 @@ class TaibifSearch extends React.Component {
       const menus = this.state.menus;
       const filters = this.state.filters;
       const searchType = this.state.searchType;
+      const language = this.state.language;
       const mainData = this.state.search;
       const queryKeyword = this.state.queryKeyword; // DEPRICATTED
 
@@ -448,7 +457,7 @@ class TaibifSearch extends React.Component {
             </div>
         );
       } else {
-        searchMainContainer = <SearchMain data={mainData} searchType={searchType} filters={filters} menus={menus} onClickTab={this.handleTabClick} taxonProps={taxonProps} />;
+        searchMainContainer = <SearchMain data={mainData} searchType={searchType} language={language} filters={filters} menus={menus} onClickTab={this.handleTabClick} taxonProps={taxonProps} />;
       }
 
       const defaultPage = (this.state.page) ? this.state.page : '1';
@@ -458,7 +467,7 @@ class TaibifSearch extends React.Component {
             <div className="visible-xs">
               <a href="#" className="xs-schedule-flow-btn myicon icon-filter" data-toggle="modal" data-target="#flowBtnModal">進階篩選</a>
             </div>
-            <SearchSidebar menus={menus} onClick={this.handleMenuClick} filters={filters} onClickClear={(e)=>this.applyFilters()} queryKeyword={queryKeyword} onChangeKeyword={(e)=>{this.handleKeywordChange(e)}} onKeyPressKeyword={(e)=>{this.handleKeywordEnter(e)}} onClickSubmitKeyword={this.handleSubmitKeywordClick} searchType={searchType} taxonProps={taxonProps} clearCondition={this.clearCondition} />
+            <SearchSidebar menus={menus} onClick={this.handleMenuClick} filters={filters} onClickClear={(e)=>this.applyFilters()} queryKeyword={queryKeyword} onChangeKeyword={(e)=>{this.handleKeywordChange(e)}} onKeyPressKeyword={(e)=>{this.handleKeywordEnter(e)}} onClickSubmitKeyword={this.handleSubmitKeywordClick} searchType={searchType} language={language} taxonProps={taxonProps} clearCondition={this.clearCondition} />
           {searchMainContainer}
           </div>
       );

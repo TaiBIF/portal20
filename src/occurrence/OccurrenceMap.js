@@ -50,6 +50,29 @@ const API_URL_PREFIX = `/api/v2/occurrence/map`;
             }) // Change marker to circle
         } 
 
+    function popMsg(props,response,rows){
+        let popMsg = null;
+        if (props.language === 'en') {
+            popMsg = (
+                <div>
+                    <h6>Occurrence record within this range</h6>
+                    <ul style={{listStyleType: "none", padding:0}}>{rows}</ul>
+                    <p>{response.count} Result</p>
+                    <a id="search-by-map">Use latitude and longitude range as filter ➡️</a>
+                    </div>)
+        }else{
+            popMsg=(
+                <div>
+                <h6>在此範圍內的出現紀錄</h6>
+                <ul style={{listStyleType: "none", padding:0}}>{rows}</ul>
+                <p>共{response.count}筆</p>
+                <a id="search-by-map">以此經緯度範圍作為篩選條件➡️</a>
+                </div>)
+            }
+
+        return popMsg
+    }
+
 export default function OccurrenceMap(props) {
    
     const {filters} = props;
@@ -96,6 +119,8 @@ export default function OccurrenceMap(props) {
                 api_url = `/api/v2/occurrence/get_map_species?lat=${lat[0]}&lat=${lat[1]}&lng=${lng[0]}&lng=${lng[1]}`
             }
 
+            
+
             $.ajax({
                 url: api_url,
             // set other AJAX options
@@ -108,12 +133,7 @@ export default function OccurrenceMap(props) {
                         )
                     })
                     // http://jsfiddle.net/gq5Wf/6/
-                    return <div>
-                    <h6>在此範圍內的出現紀錄</h6>
-                    <ul style={{listStyleType: "none", padding:0}}>{rows}</ul>
-                    <p>共{response.count}筆</p>
-                    <a id="search-by-map">以此經緯度範圍作為篩選條件➡️</a>
-                    </div>
+                    return popMsg(props,response,rows)
                 }
 
             // remove previous layer

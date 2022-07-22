@@ -75,7 +75,6 @@ def search_all(request):
         for x in resp['results']:
             name=''
             name_zh=''
-            print ('==============',x)
             if 'scientificName' in x.keys():
                 name = x['scientificName']
             if  'vernacularName' in x.keys():
@@ -330,7 +329,7 @@ def occurrence_view(request, taibif_id):
         lon = result[0].get('taibif_longitude')[0]
     elif result[0].get('decimalLongitude'):
         lon = result[0].get('decimalLongitude')
-    print(result[0])
+    # print(result[0])
     context = {
         'intro':intro,
         'record':record,
@@ -342,7 +341,7 @@ def occurrence_view(request, taibif_id):
     }
     if lat and lon:
         context['map_view'] =  [lat, lon]
-    print(context['map_view'])
+    # print(context['map_view'])
 
     return render(request, 'occurrence.html', context)
 

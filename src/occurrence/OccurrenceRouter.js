@@ -51,7 +51,7 @@ const navTabsData = [
   }
 ];
 
-const OccurrenceRouter = ({data, filters,urlPrefix}) =>  {
+const OccurrenceRouter = ({data, filters,urlPrefix, language}) =>  {
   //console.log(data);
   const path = window.location.pathname;
   const m = path.match(/\/occurrence\/(search|map|gallery|taxonomy|charts|download)/);
@@ -64,7 +64,7 @@ const OccurrenceRouter = ({data, filters,urlPrefix}) =>  {
     if (!navTabsData[i].disable) {
       navTabs.push(
           <li key={key} className={activeTab === key ? "active" : null} onClick={(e)=>setActiveTab(key)}>
-          <Link to={navTabsData[i].path}>{navTabsData[i].label}</Link>
+          <Link to={navTabsData[i].path}>{language === 'en' ? navTabsData[i].key : navTabsData[i].label}</Link>
           </li>
       );
     }
@@ -82,20 +82,20 @@ const OccurrenceRouter = ({data, filters,urlPrefix}) =>  {
       </div>
       <Switch>
         <Route path={navTabsData[0].path}>
-          <OccurrenceSearch data={data} />
+          <OccurrenceSearch data={data} language={language} />
           <Pagination offset={data.offset} total={data.count} urlPrefix={urlPrefix} />
         </Route>
         <Route path={navTabsData[2].path}>
-          <OccurrenceMap data={data} filters={filters}/>
+          <OccurrenceMap data={data} filters={filters} language={language} />
         </Route>
         <Route path={navTabsData[4].path}>
-      <OccurrenceCharts filters={filters} />
+      <OccurrenceCharts filters={filters} language={language} />
         </Route>
         <Route path={navTabsData[3].path}>
-      <OccurrenceTaxonomy filters={filters} />
+      <OccurrenceTaxonomy filters={filters} language={language} />
         </Route>
         <Route path={navTabsData[5].path}>
-      <OccurrenceDownload filters={filters} data={data} />
+      <OccurrenceDownload filters={filters} data={data} language={language} />
         </Route>
       </Switch>
       </Router>
