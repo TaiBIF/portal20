@@ -237,7 +237,7 @@ function SearchMain(props) {
             <li className={act=="OCCURRENCE" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'OCCURRENCE')}>出現紀錄</a></li>
             <li className={act=="CHECKLIST" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'CHECKLIST')}>物種名錄</a></li>
             <li className={act=="SAMPLINGEVENT" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'SAMPLINGEVENT')}>調查活動</a></li>
-            <li className={act=="Metadata-only" ? "active": null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'mMetadata-onlyeta')}>詮釋資料</a></li>
+            <li className={act=="Metadata-only" ? "active": null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'metadata')}>詮釋資料</a></li>
           </ul>
         </div>)
     } else if (language === 'en'){

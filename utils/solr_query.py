@@ -101,6 +101,7 @@ CODE_MAPPING ={
         'Kinmen' : '金門縣',
         'Penghu' : '澎湖縣',
         'Lienkiang' : '連江縣',
+        'Bagmati' :'其他',
     }
     
 }
