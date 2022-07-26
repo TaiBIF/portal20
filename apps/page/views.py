@@ -47,10 +47,11 @@ def index(request):
     update_list = Article.objects.filter(category='UPDATE').all()[0:4]
     #topic_list = Article.objects.filter(category__in=['SCI', 'TECH', 'PUB']).order_by('?').all()[0:10]
     topic_list = Article.objects.filter(is_homepage=True).order_by('?').all()[0:10]
-    
-    occ_num_url = "http://"+request.META['HTTP_HOST']+"/api/v2/occurrence/search?facet=taxon_id&rows=0"
-    occ_result = requests.get(occ_num_url).json()
-    occ_num =  occ_result['count']
+
+    url = f'http://solr:8983/solr/taibif_occurrence/select?indent=true&q.op=OR&q=*%3A*&rows=0'
+    r = requests.get(url).json()   
+    occ_num =  r['response']['numFound']
+
     dataset_num = Dataset.objects.filter(status='PUBLIC').count()
     # taxon_cover = len(occ_result['facets']['taxon_id']['buckets'])
          
@@ -116,7 +117,7 @@ def contact_us(request):
         r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
         result = r.json()
         ''' End reCAPTCHA validation '''
-
+        
         if result['success'] == False:
             messages.error(request, '請進行驗證，謝謝')
             return redirect('contact_us')
