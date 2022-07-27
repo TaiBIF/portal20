@@ -29,14 +29,8 @@ class TaibifSearch extends React.Component {
     else if (window.location.pathname === '/species/search/') {
       searchType = 'species';
     }
-    let language = ''
-    if (document.getElementsByTagName('script')[11]['lang'] === ''){
-      language = 'zh-hant'
-    }else if (document.getElementsByTagName('script')[11]['lang'] === 'zh-hant'){
-      language = 'zh-hant'
-    }else if (document.getElementsByTagName('script')[11]['lang'] === 'en'){
-      language = 'en'
-    }
+    let language = document.getElementById('taibif-search-container').lang
+ 
     this.state = {
       isLoaded: false,
       isLoadedMain: true,

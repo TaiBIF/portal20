@@ -28,7 +28,7 @@ Search
 </style>
 {#<link rel="stylesheet" href="{% static 'css/tree.css' %}" />#}
 {% endblock %}
-
+{% get_current_language as LANGUAGE_CODE %}
 
 {% block script %}
 {#<script src="https://code.highcharts.com/highcharts.js"></script>#}
@@ -36,24 +36,24 @@ Search
 {#<script src="{% static 'js/test.js' %}"></script>#}
 
 {% if env == "prod" or env == "stag" %}
-  {% if LANGUAGE_CODE == "zh-hant" %}
-    <script src="/static/js/search{{JS_BUNDLE_VERSION}}.min.js" lang="zh-hant"></script>
-  {% endif%}
-  {% if LANGUAGE_CODE == "en" %}
-    <script src="/static/js/search{{JS_BUNDLE_VERSION}}.min.js" lang="en"></script>
-  {% endif%}
+
+  <script src="/static/js/search{{JS_BUNDLE_VERSION}}.min.js"></script>
+
 {% else %}
-  {% if LANGUAGE_CODE == "zh-hant" %}
-    <script src="{% static 'js/search.dev.js' %}" lang="zh-hant"></script>
-  {% endif%}
-  {% if LANGUAGE_CODE == "en" %}
-    <script src="{% static 'js/search.dev.js' %}" lang="en"></script>
-  {% endif%}
+
+  <script src="{% static 'js/search.dev.js' %}"></script>
 
 {% endif %}
 {% endblock %}
 
 {% block main %}
 <!--div class="container search-container" id="taibif-search-container" data-q="{{ request.GET.q }}"></div-->
-<div class="container-fluid search-container-fluid" id="taibif-search-container" data-q="{{ request.GET.q }}"></div>
+{% if LANGUAGE_CODE == "zh-hant" %}
+  <div class="container-fluid search-container-fluid" id="taibif-search-container" data-q="{{ request.GET.q }}"  lang="zh-hant"></div>
+  <span id="taibif-search-container-zh-hant">
+{% endif%}
+{% if LANGUAGE_CODE == "en" %}
+  <div class="container-fluid search-container-fluid" id="taibif-search-container" data-q="{{ request.GET.q }}" lang="en"></div>
+  <span id="taibif-search-container-en">
+{% endif%}
 {% endblock %}
