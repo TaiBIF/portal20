@@ -101,7 +101,6 @@ CODE_MAPPING ={
         'Kinmen' : '金門縣',
         'Penghu' : '澎湖縣',
         'Lienkiang' : '連江縣',
-        'Bagmati' :'其他',
     }
     
 }
@@ -287,18 +286,23 @@ class SolrQuery(object):
             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
             menus.append({
                 'key': 'country', #'countrycode',
-                'label': '國家/區域',
+                'label': '國家/區域 Country or Area',
                 'rows': rows,
             })
             
         if data := resp['facets'].get('taibif_county', ''):
-            rows = [{'key': str(x['val']), 'label': CODE_MAPPING['county'][x['val']], 'count': x['count']} for x in data['buckets']]
+            rows = []
+            for x in data['buckets']:
+                if CODE_MAPPING['county'].get(x['val']):
+                    rows.append( {'key': str(x['val']), 
+                     'label': CODE_MAPPING['county'][x['val']],
+                     'count': x['count']})
             for x  in rows:
                 if x['key'] == '0':
                     rows.remove(x)
             menus.append({
                 'key':'taibif_county',
-                'label': '台灣縣市',
+                'label': '台灣縣市 Taiwan City or County',
                 'rows': rows,
             })
             
@@ -308,14 +312,14 @@ class SolrQuery(object):
             # TODO
             menus.append({
                 'key': 'year',
-                'label': '年份',
+                'label': '年份 Year',
                 'rows':rows,
             })
         if data := resp['facets'].get('month', ''):
             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in sorted(data['buckets'], key=lambda x: x['val'])]
             menus.append({
                 'key': 'month',
-                'label': '月份',
+                'label': '月份 Month',
                 'rows': rows,
             })
         if data := resp['facets'].get('dataset', ''):
@@ -331,21 +335,21 @@ class SolrQuery(object):
             # rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
             menus.append({
                 'key': 'dataset',
-                'label': '資料集',
+                'label': '資料集 Dataset',
                 'rows': rows,
             })
         if data := resp['facets'].get('publisher', ''):
             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
             menus.append({
                 'key':'publisher',
-                'label': '發布單位',
+                'label': '發布單位 Publisher',
                 'rows': rows,
             })
         if data := resp['facets'].get('license', ''):
             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
             menus.append({
                 'key':'license',
-                'label': '授權類型',
+                'label': '授權類型 Licence',
                 'rows': rows,
             })
             
