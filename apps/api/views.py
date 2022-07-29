@@ -260,7 +260,6 @@ def occurrence_search_v2(request):
             new_menus.append(tmp_menu)
         else:
             new_menus.append(menus[i])
-
     # month hack
     #print(new_menus)
     for menu in new_menus:
@@ -271,7 +270,7 @@ def occurrence_search_v2(request):
                 for x in menu['rows']:
                     if str(x['key']) == str(month):
                         count = x['count']
-                        break
+
                 month_rows.append({
                     'key': str(month),
                     'label': str(month),
@@ -299,19 +298,40 @@ def occurrence_search_v2(request):
                     if submenu := list(found):
                         # replace submenu !!
                         menu['rows'] = submenu[0]['rows']
-
     #chart api return month/year/datasey facet 
     if is_chart :
         charts_year=[]
         charts_month=[]
         charts_dataset=[]
-        for x in new_menus:
-            if x['key'] == 'month':
-                charts_month = x['rows']
-            if x['key'] == 'dataset':
-                charts_dataset = x['rows']
-            if x['key'] == 'year':
-                charts_year = x['rows']
+        menus = solr.get_menus()
+        for menu in menus:
+            if menu['key'] == 'month':
+                for month in range(1, 13):
+                    count = 0
+                    for x in menu['rows']:
+                        if str(x['key']) == str(month):
+                            count = x['count']
+
+                    charts_month.append({
+                        'key': str(month),
+                        'label': str(month),
+                        'count': count
+                    })
+            if menu['key'] == 'year':
+                for x in menu['rows']:
+                    if int(x['key']) > 1784:
+                        charts_year.append({
+                        'key': x['key'],
+                        'label': x['label'],
+                        'count': x['count']
+                    })
+            if menu['key'] == 'dataset':
+                for x in menu['rows']:
+                    charts_dataset.append({
+                        'key': x['key'],
+                        'label': x['label'],
+                        'count': x['count']
+                    })
 
         ret = {
             'charts': [

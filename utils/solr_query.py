@@ -36,10 +36,7 @@ JSON_FACET_MAP = {
         'month': {
             'type': 'terms',
             'field':'taibif_month',
-            'start':'1',
-            'end':'13',
-            'gap':'1',
-            'limit': 12,
+            'limit': -1,
             #'mincount': 0, cause solr error?
         },
         'year': {
