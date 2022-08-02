@@ -113,7 +113,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-		'django.template.context_processors.i18n',
+		        'django.template.context_processors.i18n',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -274,3 +274,4 @@ LOCALE_PATHS = (
 )
 
 JS_BUNDLE_VERSION = env('JS_BUNDLE_VERSION', default='')
+HCAPTCHA_SECRET_KEY = env('HCAPTCHA_SECRET_KEY', default='')

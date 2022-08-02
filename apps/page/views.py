@@ -108,13 +108,13 @@ def contact_us(request):
         return render(request, 'contact-us.html')
     elif request.method == 'POST':
         ''' Begin reCAPTCHA validation '''
-        recaptcha_response = request.POST.get('g-recaptcha-response')
+        recaptcha_response = request.POST.get('h-captcha-response')
         # print(recaptcha_response)
         data = {
-            'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+            'secret': settings.HCAPTCHA_SECRET_KEY,
             'response': recaptcha_response
         }
-        r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+        r = requests.post('https://hcaptcha.com/siteverify', data=data)
         result = r.json()
         ''' End reCAPTCHA validation '''
         
