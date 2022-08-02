@@ -5,11 +5,14 @@ import SearchTaxon from './SearchSidebarTaxon';
 // import IconButton from '@material-ui/core/IconButton';
 // import DeleteIcon from '@material-ui/icons/Delete';
 import Slider from '@material-ui/core/Slider';
+import "./SearchKeyword.css";
 
 function Accordion(props) {
   const {content, onClick, filters} = props;
   const [isOpen, setOpenState] = useState(false);
-  const yearRange = [1900, 2021];// TODO: hard-coded
+  const [filteredData, setFilteredData] = useState([]);
+
+  const yearRange = [1795, 2022];// TODO: hard-coded
   let yearSelected = yearRange;
   filters.forEach((x) => {
     const [key, values] = x.split('=');
@@ -21,7 +24,7 @@ function Accordion(props) {
   const [yearValue, setYearValue] = useState(yearSelected);
 
   const sliderMarks = [];
-  for (let i=1900; i<2022; i++) {
+  for (let i=1795; i<2023; i++) {
     sliderMarks.push({value: i, label: i});
   }
 
@@ -63,7 +66,6 @@ function Accordion(props) {
     } else{   
       const count = (x.count) >=0 ? x.count.toLocaleString() : null;
       const itemChecked = filters.has(`${content.key}=${x.key}`);
-
       return (
           <div className="search-sidebar-checkbox-wrapper" key={x.key}>
             <label className="custom-input-ctn">
@@ -78,6 +80,19 @@ function Accordion(props) {
       );
     }
   });
+
+  const handleFilter = (event) =>{
+    const searchWord = event.target.value
+    const newFilter = content.rows.filter((value)=>{
+      return value.label.toLowerCase().includes(searchWord.toLowerCase())
+    });
+
+    if (searchWord ===""){
+      setFilteredData([]);
+    }else{
+      setFilteredData(newFilter);
+    }
+  };
   return (
     <React.Fragment>
     <div className="search-sidebar-accordion-wrapper">
@@ -88,6 +103,25 @@ function Accordion(props) {
       </div>
       { isOpen ?
       <div className="search-sidebar-accordion-content collapse in">
+        {content.label == '資料集 Dataset'?
+        <div className="searchInputs">
+        <input type="text" placeholder="Search..." onChange={handleFilter} />
+        {/* <div className="searchIcon"> </div> */}
+        </div>
+        :null
+        }        
+        {filteredData.length !=0 && (
+        <div className="dataResult" style={{zIndex:'9999',position:'absolute'}} >
+          
+          {filteredData.slice(0,15).map((value, key) => {
+            
+            const itemChecked = filters.has(`${content.key}=${value.key}`);
+            return (<div className="dataItem" key={key} onClick={(e)=> {e.persist(); onClick(e, content.key, value.key);}} >
+               <p checked={!itemChecked}>{value.label}</p>
+            </div>
+          )})}
+        </div>
+        )}
         {menuItems}
       </div>
     : null}
