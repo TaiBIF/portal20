@@ -18,15 +18,16 @@ https://portal.taibif.tw/api/
 
 | 參數名稱 |  參數描述 |查詢範例|
 | -------- | -------- | --------  |
-| q | 關鍵字查詢 |/api/v2/occurrence/search?q=olypedates braueri|
+| q | 關鍵字查詢 |/api/v2/occurrence/search?q=Zosterops japonicus|
 |year| 年份搜尋，採範圍搜尋| /api/v2/occurrence/search?year=2000,2010|
 |country|國家|/api/v2/occurrence/search?country=Taiwan|
 |dataset|資料集|/api/v2/occurrence/search?dataset=Taiwan Wild Bird Federation Bird Records Database&dataset|
 |month|月份|/api/v2/occurrence/search?month=2&month=9|
 |publisher|資料集發布者|/api/v2/occurrence/search?publisher=|
-|taibif_county|台灣縣市|/api/v2/occurrence/search?taibif_county=22|
-|facet|參數總計|/api/v2/occurrence/search?facet=year&facet=month&facet=dataset&facet=publisher&facet=country|
+|taibif_county|台灣縣市|/api/v2/occurrence/search?taibif_county=Chiayi County|
+|facet|參數總計|/api/v2/occurrence/search?facet=year&facet=month&facet=dataset&facet=dataset_id&facet=publisher&facet=country&facet=license&facet=taibif_county|
 |rows|詳細資料回傳筆數|/api/v2/occurrence/search?rows=1|
+|lat&lng|座標查詢|/api/v2/occurrence/search?lat=-22.24829&lat=-14.21675&lng=-151.29169&lng=-142.59653|
 |debug_solr|除錯資訊|debug_solr=1|
 
 
