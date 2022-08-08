@@ -7,7 +7,7 @@ const chartData = {
     labels: [],
     datasets: [
       {
-        label: '每年出現紀錄',
+        label: 'Occurrence record per year',
         fill: false,
         lineTension: 0.1,
         backgroundColor: '#7DC49D',
@@ -30,10 +30,10 @@ const chartData = {
     ]
   },
   month: {
-    labels: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+    labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
     datasets: [
       {
-        label: '每月出現紀錄',
+        label: 'Occurrence record per month',
         backgroundColor: '#74B175',
         borderColor: '#7DC49D',
         borderWidth: 1,

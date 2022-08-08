@@ -823,8 +823,8 @@ def data_stats(request):
 
     hdata = {}
     current_year_data = {
-        'dataset': [{'x': '{}月'.format(x), 'y': 0} for x in range(1, 13)],
-        'occurrence': [{'x': '{}月'.format(x), 'y': 0} for x in range(1, 13)]
+        'dataset': [{'x': '{}'.format(x), 'y': 0} for x in range(1, 13)],
+        'occurrence': [{'x': '{}'.format(x), 'y': 0} for x in range(1, 13)]
     }
     history_data = {
         'dataset': [],

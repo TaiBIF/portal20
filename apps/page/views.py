@@ -121,8 +121,11 @@ def contact_us(request):
         if result['success'] == False:
             messages.error(request, '請進行驗證，謝謝')
             return redirect('contact_us')
-
-
+        
+        if re.search("\?", request.POST.get('cat','')) :
+            messages.error(request, '請進行驗證，謝謝')
+            return redirect('contact_us')
+        
         data = {
             'name':  request.POST.get('name', ''),
             'cat': request.POST.get('cat', ''),

@@ -12,7 +12,8 @@ const filterLabels = {
   publisher:'發布單位',
   country:'國家',
   lat: '緯度',
-  lng: '經度'
+  lng: '經度',
+  taibif_county: '台灣縣市'
 }
 
 const API_URL_PREFIX = `/api/dataset/export`;
@@ -53,7 +54,10 @@ function OccurrenceDownload(props) {
 
   const onSubmit = (data) => {    
     if(count > 1000000) {
-      alert("下載資料量過大，請聯絡窗口!")
+      {  props.language === 'en' ?
+      alert("File is too large to download, please contact us!")
+      :alert("下載資料量過大，請聯絡窗口!")
+      }
       return false
     }
 
@@ -65,13 +69,18 @@ function OccurrenceDownload(props) {
     const apiURL = `${API_URL_PREFIX}`;
     const filterQueryString = filtersToSearch(filters)
     fetchData(filters ? `${apiURL}?${filterQueryString}&${queryString}` : `${apiURL}?${queryString}`)
-    alert(`下載資訊巳寄到${data.email}。`)
+    
+    {  props.language === 'en' ?
+    alert(`Download link has been sent to ${data.email}`)
+    :alert(`下載資訊巳寄到${data.email}。`)
+    }
+    
   }
 
   return (
     <div className="col-xs-12">
     <div className="tools-intro-wrapper">
-      { props.languague === 'en' ?
+      {  props.language === 'en' ?
       <div className="tools-title">Download option</div>
     :<div className="tools-title">下載選項</div>}
         <div className="tools-content">
@@ -87,7 +96,7 @@ function OccurrenceDownload(props) {
                 </tr>
                 <tr>
                   <th>simple</th>
-                  <td className='text-center'>x</td>
+                  <td className='text-center'>o</td>
                   <td className='text-center'>o</td>
                   <td className='text-center'>o (if available)</td>
                   <td className='text-center'>csv</td>
@@ -105,7 +114,7 @@ function OccurrenceDownload(props) {
         </div>
       </div>
       <div className="tools-intro-wrapper">
-      { props.languague === 'en' ?
+      { props.language === 'en' ?
       <div className="tools-title">Download option</div>
     :<div className="tools-title">下載選項</div>}
         
@@ -116,7 +125,7 @@ function OccurrenceDownload(props) {
                 <table className="table borderless text-left" id="occurence-charts-dataset-table">
                   <tbody>
                   <tr>
-                  { props.languague === 'en' ?
+                  { props.language === 'en' ?
                   <th>Download option: </th>
                   :<th>下載選項:</th>}
                     
@@ -131,7 +140,7 @@ function OccurrenceDownload(props) {
                     <th>搜尋條件:</th>
                     <td>{searchCondition}</td>
                   </tr> */}
-                  { props.languague == 'en' ?
+                  { props.language == 'en' ?
                   <tr className='odd'>
                   <th>Search date:</th>
                   <td>{searchDate}</td>
@@ -141,7 +150,7 @@ function OccurrenceDownload(props) {
                   <td>{searchDate}</td>
                   </tr>
                   }
-                  { props.languague == 'en' ?
+                  { props.language == 'en' ?
                   <tr>
                   <th>Terms of Use:</th>
                   <td>By downloading the material, you agreed to our<a target='_blank' href='/data-policy'> Terms of Use</a></td>
@@ -152,7 +161,7 @@ function OccurrenceDownload(props) {
                 </tr>
                   }
                   
-                  { props.languague == 'en' ?
+                  { props.language == 'en' ?
                   <tr className='odd'>
                   <th>Retention period:</th>
                   <td>This site retains the download file link for one year from {searchDate} to {expireDate}. <br/>Please <a target='_blank' href=' /contact-us'>contact us</a> for extensions or perpetual retention for publication</td>
@@ -163,7 +172,7 @@ function OccurrenceDownload(props) {
                 </tr>
                   }
                   
-                  { props.languague == 'en' ?
+                  { props.language == 'en' ?
                   <tr>
                     <th>File format:</th>
                     <td>CSV</td>
@@ -174,7 +183,7 @@ function OccurrenceDownload(props) {
                     <td>CSV</td>
                   </tr>
                   }
-                  { props.languague == 'en' ?
+                  { props.language == 'en' ?
                   <tr className='odd'>
                     <th>Note:</th>
                     <td>The file is generated offline. The system will send the download information to the email address you entered. <br/>If you did not received the email, please check your email settings or <a target='_blank' href=' /contact-us'>contact us</a></td>
@@ -191,7 +200,7 @@ function OccurrenceDownload(props) {
                       <div className="input-group">
                         <span className="input-group-addon">
                         
-                        {props.languague =='en' ?
+                        {props.language =='en' ?
                           <span className="input-group-text" id='download-email'>Email address</span>
                         :
                           <span className="input-group-text" id='download-email'>電子郵件信箱</span>
@@ -211,7 +220,7 @@ function OccurrenceDownload(props) {
                     <td colSpan={2}>
                       <div className="input-group">
                         <span className="input-group-addon">
-                        {props.languague =='en' ?
+                        {props.language =='en' ?
                           <span className="input-group-text" id='confirm-download-email'>Re-enter email address</span>
                         :
                           <span className="input-group-text" id='confirm-download-email'>請再次輸入您的電子郵件信箱</span>
@@ -232,7 +241,7 @@ function OccurrenceDownload(props) {
                   </tr>
                   </tbody>
                 </table>
-                {props.languague =='en' ?
+                {props.language =='en' ?
                 <button type='submit' className="btn text-center btn-block" id='download-dataset-btn'>Download</button>
                 :
                 <button type='submit' className="btn text-center btn-block" id='download-dataset-btn'>下載檔案</button>
