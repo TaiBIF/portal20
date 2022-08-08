@@ -2,6 +2,7 @@
 
 {% load static %}
 {% load helper_tags %}
+{% load i18n %}
 
 {% block title %}{{ article_cat_label }}{% endblock %}
 
@@ -102,35 +103,35 @@
     </div>
     {% elif layout_type == "A2" %}
     <h1 class="heading-lg-ul">
-      {{ article_cat_label }}
-      <span class="heading-footnote">全部</span>
+       {% trans article_cat_label %} 
+      <span class="heading-footnote">{% trans "全部" %}</span>
     </h1>
     <!-- sort by begin -->
     <div class="heading-sort-ctn">
       <form class="form-inline">
-        <span class="heading-sort-name">篩選</span>
+        <span class="heading-sort-name">{% trans "篩選" %}</span>
 
         <label class="custom-input-ctn">
           <input type="checkbox" class="select-category-sci" data-type="sci"{% if article_cat == "sci" %} checked="checked"{% endif %}>
           <span class="checkmark"></span>
-         科普文章
+          {% trans "科普文章" %}
         </label>
 
         <label class="custom-input-ctn">
           <input type="checkbox" class="select-category-sci" data-type="tech"{% if article_cat == "tech" %} checked="checked"{% endif %}>
           <span class="checkmark"></span>
-          技術專欄
+          {% trans "技術專欄" %} 
         </label>
 
         <label class="custom-input-ctn">
           <input type="checkbox" class="select-category-sci" data-type="pub"{% if article_cat == "pub" %} checked="checked"{% endif %}>
           <span class="checkmark"></span>
-          出版品資料
+          {% trans "出版品資料" %}
         </label>
         <label class="custom-input-ctn">
           <input type="checkbox" class="select-category-sci" data-type="pos"{% if article_cat == "pos" %} checked="checked"{% endif %}>
           <span class="checkmark"></span>
-          發表文章/海報
+          {% trans "TaiBIF發表文章/海報" %}
         </label> 
       </form>
     </div>

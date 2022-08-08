@@ -2,6 +2,9 @@
 {% load static %}
 {% load humanize %}
 {% load i18n %}
+
+{% get_current_language as LANGUAGE_CODE %}
+
 {% block title %}
 資料發布狀況
 {% endblock %}
@@ -53,9 +56,10 @@ svg text.label {
 {% endblock %}
 
 {% block main %}
-{% include "inc_breadcrumb.html" with tab="01" active_label="資料發布狀況" %}
+
 {% if LANGUAGE_CODE == "zh-hant" %}
-<div class="container">
+{% include "inc_breadcrumb.html" with tab="01" active_label="資料發布狀況" %}
+<div class="container" lang="zh-hant" >
   <div class="row">
     <h1 class="heading-lg-ul">
       資料發布狀況
@@ -101,12 +105,13 @@ svg text.label {
       </div>
     </div>
 
-    <div id="dataset-table-container"></div>
+    <div id="dataset-table-container" lang="zh-hant"></div>
   </div>
 </div>
 {% endif %}
 {% if LANGUAGE_CODE == "en" %}
-<div class="container">
+{% include "inc_breadcrumb.html" with tab="01" active_label="Data Publishing Status" %}
+<div class="container" lang="en">
   <div class="row">
     <h1 class="heading-lg-ul">
       Data Publishing Status
@@ -151,7 +156,7 @@ svg text.label {
       </div>
     </div>
 
-    <div id="dataset-table-container"></div>
+    <div id="dataset-table-container" lang={{LANGUAGE_CODE}}></div>
   </div>
 </div>
 

@@ -4,17 +4,20 @@ class DatasetTable extends React.Component {
   constructor(props) {
     super(props);
 
+    let language = document.getElementById('dataset-table-container').lang
+
     this.state = {
       isLoaded: false,
       filters: new Set(),
       sortDirection: 1,
       sortKey: '',
+      language: language,
     }
     this.applyFilters = this.applyFilters.bind(this);
     this.handlePaginate = this.handlePaginate.bind(this);
     this.handleSort = this.handleSort.bind(this);
   }
-
+  
   handleSort(e, key) {
     let filters = this.state.filters;
     let sort = this.state.sortDirection;
@@ -100,7 +103,7 @@ class DatasetTable extends React.Component {
           '/api/dataset/search' :
           `/api/dataset/search?${queryString}`;
 
-    console.log('fetch: ', apiUrl);
+    // console.log('fetch: ', apiUrl);
     fetch(apiUrl)
       .then(res => res.json())
       .then(
@@ -132,7 +135,7 @@ class DatasetTable extends React.Component {
   }
 
   render() {
-    const { error, isLoaded, data, serverError } = this.state;
+    const { error, isLoaded, data, serverError,language } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
@@ -147,9 +150,15 @@ class DatasetTable extends React.Component {
         const num_occurrence = v.num_occurrence.toLocaleString();
         let pubMemo = '';
         if (v.status === 'PUBLIC') {
-          pubMemo = (v.guid) ? '已註冊至 GBIF' : '未註冊至 GBIF';
+          if (language === 'en') {
+            pubMemo = (v.guid) ? 'Registered to GBIF' : 'Not registered to GBIF';
+          }
+          else { 
+            pubMemo = (v.guid) ? '已註冊至 GBIF' : '未註冊至 GBIF';
+          }
           pubMemo = <div><small>{pubMemo}</small></div>;
         }
+        
         const title = (v.status === 'PUBLIC') ? <a href={"/dataset/"+v.name}>{v.title}</a>:v.title;
 
         return (<tr key={i}>
@@ -173,7 +182,16 @@ class DatasetTable extends React.Component {
 
       const disabledPrev = (data.offset === 0) ? ' disabled' : '';
       const disabledNext = (data.has_more === false) ? ' disabled' : '';
-      const theadItems = [
+      const tableColName = (language === 'en') ? [
+        ['title', 'Dataset name'],
+        ['organization', 'Publisher'],
+        ['dwc_core_type', 'Data type'],
+        ['num_record','Data count'],
+        ['num_occurrence', 'Occurrence'],
+        ['pub_date', 'Publish time'],
+        ['country', 'Area'],
+        ['status', 'Open status'],
+      ] : [
         ['title', '資料集名稱'],
         ['organization', '發布單位'],
         ['dwc_core_type', '資料類型'],
@@ -182,7 +200,8 @@ class DatasetTable extends React.Component {
         ['pub_date', '發佈時間'],
         ['country', '地區'],
         ['status', '公開狀態'],
-      ].map((v, i) => {
+      ];
+      const theadItems = tableColName.map((v, i) => {
         let finger = null;
         if (this.state.sortDirection != null && this.state.sortKey === v[0]) {
           finger = (this.state.sortDirection > 0) ? '👇' : '👆';
@@ -192,7 +211,8 @@ class DatasetTable extends React.Component {
       //
       return (
           <div>
-          <h3>資料集列表 <small><a href="/dataset/search" className="btn btn-default"> 👉 搜尋資料集</a></small></h3>
+            {(language ==='en')? <h3>List of dataset <small><a href="/dataset/search" className="btn btn-default"> 👉 Search dataset</a></small></h3>
+            :<h3>資料集列表 <small><a href="/dataset/search" className="btn btn-default"> 👉 搜尋資料集</a></small></h3>}
           <table className="table table-bordered">
           <colgroup>
           <col span="1" style={{'width': '2%'}}/>
