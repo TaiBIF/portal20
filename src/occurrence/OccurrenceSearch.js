@@ -20,8 +20,8 @@ export default function OccurrenceSearch(props) {
     return (
         <tr key={index} onClick={(e)=>{window.location.href=`/occurrence/${row.taibif_occ_id}`}} className={classes.occurrenceRow}>
         <td>{ sn }</td>
-        <td>{/*http://taibif.tw/zh/namecode/{{ i.name_code */}{ row.scientificName }</td>
-        <td>{ row.name_zh }</td>
+        <td>{ row.vernacularName }</td>
+        <td >{/*http://taibif.tw/zh/namecode/{{ i.name_code */}{ row.scientificName }</td>
         <td>{ row.eventDate }</td>
         <td>{ countryOrLocality }</td>
         <td><a href={"/dataset/"+row.taibif_dataset_name+"/"}>{ row.taibif_dataset_name_zh }</a></td>
@@ -31,8 +31,7 @@ export default function OccurrenceSearch(props) {
         <td>{ row.class }</td>
         <td>{ row.order }</td>
         <td>{ row.family }</td>
-        <td>{ row.genus }</td>
-        <td>{ row.species }</td>
+        <td style={{fontStyle: "italic"}}> { row.genus }</td>
         </tr>
     )
   });
@@ -44,8 +43,8 @@ export default function OccurrenceSearch(props) {
   (<thead>
           <tr>
             <th>#</th>
+            <th style={{'width': '100px'}}>俗名</th>
             <th>學名</th>
-            <th>俗名</th>
             <th>時間</th>
             <th>國家/地區</th>
             <th>資料集</th>
@@ -56,7 +55,6 @@ export default function OccurrenceSearch(props) {
             <th>目</th>
             <th>科</th>
             <th>屬</th>
-            <th>種</th>
           </tr>
     </thead>)}
     else if (props.language === 'en'){
@@ -76,7 +74,6 @@ export default function OccurrenceSearch(props) {
             <th>Family</th>
             <th>Order</th>
             <th>Genus</th>
-            <th>Specie</th>
           </tr>
     </thead>)
     }

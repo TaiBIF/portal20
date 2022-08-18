@@ -3,7 +3,7 @@ import React, {useState, useRef} from 'react';
 //import Tree from "./components/Tree";
 import SearchTaxon from './SearchSidebarTaxon';
 // import IconButton from '@material-ui/core/IconButton';
-// import DeleteIcon from '@material-ui/icons/Delete';
+import {Delete} from '@material-ui/icons';
 import Slider from '@material-ui/core/Slider';
 import "./SearchKeyword.css";
 
@@ -41,6 +41,7 @@ function Accordion(props) {
     console.log(event, content.key)
     props.clearCondition(event,content.key)
   };
+  
   const menuItems = content.rows.map((x) => {
     if(content.key ===  'year'){
       console.log(yearValue);
@@ -52,14 +53,17 @@ function Accordion(props) {
       // console.log(content.key, handleChange)
       return (
           <div className="year_slider" key={x}>
-          <Slider
-        value={yearValue}
-        onChange={(e, newRange) => setYearValue(newRange)}
-        onChangeCommitted={handleSliderCommitted}
-        max={yearRange[1]}
-        min={yearRange[0]}
-        valueLabelDisplay="auto"
-        aria-labelledby="range-slider"
+          <Delete  style={{ position: 'absolute', right: 1 , width:'10%'}} onClick={clearYearCondition} />
+          
+          <Slider 
+            style={{width:'90%'}}
+            value={yearValue}
+            onChange={(e, newRange) => setYearValue(newRange)}
+            onChangeCommitted={handleSliderCommitted}
+            max={yearRange[1]}
+            min={yearRange[0]}
+            valueLabelDisplay="auto"
+            aria-labelledby="range-slider"
           />
           </div>
       );

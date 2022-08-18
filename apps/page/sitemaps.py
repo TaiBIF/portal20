@@ -3,9 +3,7 @@ from apps.data.models import (
     Taxon,
     Occurrence,
     Dataset,
-    #RawDataOccurrence,
     DatasetOrganization,
-    #SimpleData,
 )
 from django.contrib import sitemaps
 from django.urls import reverse
@@ -17,7 +15,7 @@ class DatasetSitemap(Sitemap):
 
 
     def items(self):
-        return Dataset.objects.all()
+        return Dataset.objects.filter(status='PUBLIC')
 
 
     def lastmod(self, obj):
@@ -26,8 +24,8 @@ class DatasetSitemap(Sitemap):
 
 
 class StaticSitemap(sitemaps.Sitemap):
-     priority = 0.8
      changefreq = 'weekly'
+     priority = 0.8
 
      # The below method returns all urls defined in urls.py file
      def items(self):
