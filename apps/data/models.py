@@ -165,6 +165,7 @@ class Dataset_Contact(models.Model):
     role =  models.CharField(max_length=128,null=True,blank=True)
     role_type = models.CharField(max_length=128,null=True,blank=True)
     # creator =  models.BooleanField(default=False,null=True,blank=True)
+    
 
 class Dataset_keyword(models.Model):
     dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE, null=True)
@@ -172,7 +173,7 @@ class Dataset_keyword(models.Model):
     seq = models.TextField(null=True,blank=True)
 
 class Dataset_description(models.Model):
-    dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE, null=True)
+    dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE, null=True, related_query_name="desc",)
     description = models.TextField(null=True,blank=True)
     seq = models.TextField(null=True,blank=True)
 
