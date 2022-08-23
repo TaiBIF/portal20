@@ -27,3 +27,20 @@ ul.leaflet-draw-actions.leaflet-draw-actions-bottom li a[title="Cancel editing, 
     padding-bottom: 0 !important;
 }
 
+.pop-msg{
+  margin: 10px 0 0;
+}
+.pop-msg p{
+  font-size: 15px;
+  margin: 0px;
+}
+.pop-msg li {
+  margin-top:2px;
+  margin-bottom:2px;
+}
+.pop-msg li a {
+  font-size: 15px; 
+}
+.pop-msg a {
+  font-size: 13px; 
+}
