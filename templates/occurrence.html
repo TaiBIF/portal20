@@ -37,26 +37,30 @@
 <div class="container">
   <div class="article-head-wrapper">
     {% if event.eventDate.value %}<span class="article-post-date">{{ event.eventDate.value }}</span>{% endif %}
-    <h1>
+    <h1 style="margin-top:0px">
+      {% if taxon.vernacularName.value %}
+        {{ taxon.vernacularName.value }}
+      {% endif %}
       {% if intro.scientificName %}
-      {{ intro.scientificName }}
-      <!-- {{ occurrence.simple_data.taxon_species.scientific_name_infraspecific }} -->
+        <I>{{ intro.scientificName }}</I>
       {% elif occurrence.scientificname %}
-      {{ occurrence.scientificname }}
-      {% else %}
-      {{ occurrence }}
+        {{ occurrence.scientificname }}
       {% endif %}
       {% if intro.name_zh %}
-      {{ intro.name_zh }}
+        {{ intro.name_zh }}
       {% endif %}
     </h1>
   </div>
-
+  
   <div class="jumbotron">
     <dl>      
       <!-- <dd>{{ intro.scientificname}}{% if intro.simple_data.taxon_species %} (<a href="/species/{{ intro.spe }} ">{{ occurrence.simple_data.taxon_species.scientific_name_infraspecific}}</a>){% endif %}</dd> -->
       <dt>物種</dt>
-      <dd>{{ intro.scientificName}}</dd>
+      <dd>
+        {% if taxon.vernacularName.value %}
+          {{ taxon.vernacularName.value }}
+        {% endif %} 
+      <I>{{ intro.scientificName}} </I></dd>
       <dt>資料集</dt>
       <dd><a href="/dataset/{{ intro.dataset}}">{{ intro.dataset_zh }}</a></dd>
       <dt>發布單位</dt>
@@ -87,7 +91,7 @@
     <table class="table">
       <thead><tr><th width="40%">欄位名稱</th><th>值</th></tr></thead>
       <tbody>
-        {% for k,v in record.items %}
+        {% for k,v in occ.items %}
           {% if v.value != None %}
             <tr><td>{{ v.name_zh }}</td><td>{{ v.value }}</td></tr>
           {% endif %}      
@@ -118,7 +122,11 @@
         <tbody>
           {% for k,v in taxon.items %}
             {% if v.value != None %}
-              <tr><td>{{ v.name_zh }}</td><td>{{ v.value }}</td></tr>
+              {% if k == 'genus' or k == 'subgenus' or k == 'scientificName' %}
+                <tr><td>{{ v.name_zh }}</td><td><I>{{ v.value }}</I></td></tr>
+              {% else %}
+                <tr><td>{{ v.name_zh }}</td><td>{{ v.value }}</td></tr>
+              {% endif %}
             {% endif %}
           {% endfor %}
         </tbody>

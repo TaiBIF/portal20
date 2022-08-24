@@ -54,18 +54,18 @@ const API_URL_PREFIX = `/api/v2/occurrence/map`;
         let popMsg = null;
         if (props.language === 'en') {
             popMsg = (
-                <div>
-                    <h6>Occurrence record within this range</h6>
+                <div className="pop-msg">
+                    <h4>Occurrence record within this range</h4>
                     <ul style={{listStyleType: "none", padding:0}}>{rows}</ul>
                     <p>{response.count} Result</p>
                     <a id="search-by-map">Use latitude and longitude range as filter ➡️</a>
                     </div>)
         }else{
             popMsg=(
-                <div>
-                <h6>在此範圍內的出現紀錄</h6>
+                <div className="pop-msg">
+                <h4>在此範圍內的出現紀錄</h4>
                 <ul style={{listStyleType: "none", padding:0}}>{rows}</ul>
-                <p>共{response.count}筆</p>
+                <p>共 {response.count} 筆</p>
                 <a id="search-by-map">以此經緯度範圍作為篩選條件➡️</a>
                 </div>)
             }

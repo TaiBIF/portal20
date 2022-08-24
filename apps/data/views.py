@@ -88,10 +88,10 @@ def search_all(request):
 
         # dataset
         dataset_rows = []
-        for x in Dataset.objects.values('title', 'name').filter(Q(title__icontains=q)).exclude(status='Private').all()[:20]:
+        for x in Dataset.objects.values('title', 'name','id').filter(Q(title__icontains=q)).exclude(status='Private').all()[:20]:
             dataset_rows.append({
                 'title': x['title'],
-                'content':x['description'],
+                'content':Dataset_description.objects.filter(dataset=x['id']).order_by('seq')[0].description, 
                 'url': '/dataset/{}'.format(x['name'])
             })
         count += len(dataset_rows)
