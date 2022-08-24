@@ -13,10 +13,22 @@ const useStyles = makeStyles({
 export default function OccurrenceSearch(props) {
   // console.log(props);
   const classes = useStyles();
-  
+  const bor_allow = ["PreservedSpecimen", 
+                      "FossilSpecimen",
+                      "LivingSpecimen",
+                      "MaterialSample",
+                      "Event",
+                      "HumanObservation",
+                      "MachineObservation",
+                      "Taxon",
+                      "Occurrence",
+                      "MaterialCitation"]
   const rows = props.data.results.map((row, index) => {
     const sn = props.data.offset + index + 1;
-    const countryOrLocality = [row.country, row.locality].join('/');
+    const countryOrLocality = [row.taibif_country, row.locality].join('/');
+    
+
+    const bor = bor_allow.includes(row.basisOfRecord) ? row.basisOfRecord : "";
     return (
         <tr key={index} onClick={(e)=>{window.location.href=`/occurrence/${row.taibif_occ_id}`}} className={classes.occurrenceRow}>
         <td>{ sn }</td>
@@ -25,7 +37,7 @@ export default function OccurrenceSearch(props) {
         <td>{ row.eventDate }</td>
         <td>{ countryOrLocality }</td>
         <td><a href={"/dataset/"+row.taibif_dataset_name+"/"}>{ row.taibif_dataset_name_zh }</a></td>
-        <td>{ row.basisOfRecord }</td>
+        <td>{ bor }</td>
         <td>{ row.kingdom }</td>
         <td>{ row.phylum }</td>
         <td>{ row.class }</td>
@@ -44,8 +56,8 @@ export default function OccurrenceSearch(props) {
           <tr>
             <th>#</th>
             <th style={{'width': '100px'}}>俗名</th>
-            <th>學名</th>
-            <th>時間</th>
+            <th>對應有效學名</th>
+            <th>日期</th>
             <th>國家/地區</th>
             <th>資料集</th>
             <th>紀錄類型</th>

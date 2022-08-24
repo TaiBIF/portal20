@@ -1864,22 +1864,38 @@ a.clamp2row {
 }
 .partner-list-ctn li {
   width: 20%;
-  float: none;
   display: inline-block;
   margin-top: 10px;
   margin-bottom: 30px;
 }
 .partner-list-ctn li img {
-  display: block;
-  max-width: 100%;
   height: auto;
-  width: 100%;
+  width: 60%;
 }
-
+/* 
 @media (max-width: 767px) {
   .partner-list-ctn li {
     width: 40%;
   }
+} */
+
+.advisor-list-ctn {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.advisor-list-ctn li {
+  float: none;
+  display: inline-block;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+.advisor-list-ctn li img {
+  display: unset;
+  max-width: 100%;
+  height: auto;
+  width: 100%;
 }
 .listbox-img-right-wrapper {
   margin-top: 15px;

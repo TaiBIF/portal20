@@ -44,3 +44,8 @@
 .species-taxon-children__item:last-child:after{
     content: " ";
 }
+
+.occ-intro{
+    margin:0px;
+    width:100%;
+}

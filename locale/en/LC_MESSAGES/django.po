@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-19 15:28+0800\n"
+"POT-Creation-Date: 2022-08-05 15:15+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: apps/page/views.py:283
+#: apps/page/views.py:284
 msgid "這裡放需要翻譯的文字"
 msgstr ""
 
@@ -29,6 +29,30 @@ msgstr ""
 #: conf/settings.py:158
 msgid "English"
 msgstr ""
+
+#: templates/article-list.html:107
+msgid "全部"
+msgstr "All"
+
+#: templates/article-list.html:112
+msgid "篩選"
+msgstr "Filtered by "
+
+#: templates/article-list.html:117 templates/base.html:165
+msgid "科普文章"
+msgstr "Popular Science"
+
+#: templates/article-list.html:123 templates/base.html:166
+msgid "技術專欄"
+msgstr "Technical Memo"
+
+#: templates/article-list.html:129 templates/base.html:167
+msgid "出版品資料"
+msgstr "Related Publication"
+
+#: templates/article-list.html:134 templates/base.html:168
+msgid "TaiBIF發表文章/海報"
+msgstr "TaiBIF Academic Publication"
 
 #: templates/base.html:107
 msgid "找資料"
@@ -131,22 +155,6 @@ msgstr "Updates"
 #: templates/base.html:164
 msgid "專題文章"
 msgstr "Articles"
-
-#: templates/base.html:165
-msgid "科普文章"
-msgstr "Popular Science"
-
-#: templates/base.html:166
-msgid "技術專欄"
-msgstr "Technical Memo"
-
-#: templates/base.html:167
-msgid "出版品資料"
-msgstr "Related Publication"
-
-#: templates/base.html:168
-msgid "TaiBIF發表文章/海報"
-msgstr "TaiBIF Academic Publication"
 
 #: templates/base.html:241
 msgid "11574 台北市南港區研究院路二段70巷28號"
