@@ -39,6 +39,8 @@ function Accordion(props) {
   };
   const clearYearCondition = (event) => {
     console.log(event, content.key)
+    yearSelected = [1795, 2022]
+    setYearValue(yearSelected)
     props.clearCondition(event,content.key)
   };
   

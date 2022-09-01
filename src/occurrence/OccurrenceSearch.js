@@ -74,9 +74,9 @@ export default function OccurrenceSearch(props) {
       <thead>
           <tr>
             <th>#</th>
-            <th>Scientfic Name</th>
             <th>Common Name</th>
-            <th>Time</th>
+            <th>Scientfic Name</th>
+            <th>Date</th>
             <th>Country or Area</th>
             <th>Dataset</th>
             <th>Basic of Record</th>

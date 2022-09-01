@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-05 15:15+0800\n"
+"POT-Creation-Date: 2022-08-31 15:15+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: apps/page/views.py:284
+#: apps/page/views.py:287
 msgid "這裡放需要翻譯的文字"
 msgstr ""
 
@@ -30,11 +30,11 @@ msgstr ""
 msgid "English"
 msgstr ""
 
-#: templates/article-list.html:107
+#: templates/article-list.html:90 templates/article-list.html:107
 msgid "全部"
 msgstr "All"
 
-#: templates/article-list.html:112
+#: templates/article-list.html:95 templates/article-list.html:112
 msgid "篩選"
 msgstr "Filtered by "
 
@@ -53,6 +53,10 @@ msgstr "Related Publication"
 #: templates/article-list.html:134 templates/base.html:168
 msgid "TaiBIF發表文章/海報"
 msgstr "TaiBIF Academic Publication"
+
+#: templates/base.html:70 templates/index.html:95 templates/search_all.html:31
+msgid "全站搜尋..."
+msgstr "Site Search"
 
 #: templates/base.html:107
 msgid "找資料"
@@ -179,10 +183,6 @@ msgstr "TaiBIF - The Facilitator of Biodiversity Open Data"
 msgid "出現紀錄"
 msgstr "Occurrences"
 
-#: templates/index.html:95
-msgid "全站搜尋..."
-msgstr "Site Search"
-
 #: templates/index.html:121
 msgid "於 TaiBIF 公開之資料"
 msgstr "Records published via TaiBIF"
@@ -210,6 +210,10 @@ msgstr "Advisor"
 #: templates/index.html:288
 msgid "夥伴組織"
 msgstr "Partners"
+
+#: templates/search_all.html:70
+msgid "查無資料"
+msgstr "No Data"
 
 #~ msgid "發布者"
 #~ msgstr "Publishers"

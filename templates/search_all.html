@@ -28,7 +28,7 @@ Dataset::search
                 <li class="col-xs-3"><a href="{% url 'search-publisher' %}?q={{ request.GET.q }}" class="search-type-btn" data-type="publisher">{% trans "發布單位" %}</a></li>
               </ul>
               <div class="head-carousel-search-form-wrapper">
-              <input type="text" class="head-carousel-search-input" placeholder="全站搜尋..." name="q" value="{{ request.GET.q }}">
+              <input type="text" class="head-carousel-search-input" placeholder="{% trans "全站搜尋..." %}" name="q" value="{{ request.GET.q }}">
               <button class="head-carousel-search-btn" type="submit">
                 <span class="myicon icon-search"></span>
               </button>
@@ -67,7 +67,7 @@ Dataset::search
         {% endif %}
       {% endfor %}
       {% else %}
-      <h2>查無資料</h2>
+      <h2>{% trans "查無資料" %}</h2>
       {% endif %}
     </div>
   </div>
