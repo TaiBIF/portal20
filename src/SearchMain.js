@@ -214,6 +214,10 @@ function SearchMain(props) {
     }
   }
 
+  function Capitalize(str){
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
   function toggleTab(e, menu) {
     e.preventDefault()
     setTabActive(menu);
@@ -313,7 +317,7 @@ function SearchMain(props) {
         <div className="tools-title" >
           <a href='https://www.gbif.org/zh-tw/become-a-publisher'><span data-tip='The dataset publisher is mainly organisation, which includes but not restricted to government institution, research institution, college, university, and NGO organisation. For more information, see https://www.gbif.org/become-a-publisher'
           className="glyphicon glyphicon-info-sign"> </span></a>
-          <h1 style={{display: 'inline'}} className="heading-lg">{typeLabel} 
+          <h1 style={{display: 'inline'}} className="heading-lg">{Capitalize(typeLabel)} 
           <span className="heading-footnote">   {countString} Result ({elapsed} sec)</span></h1>
           </div>)
     }
@@ -323,7 +327,7 @@ function SearchMain(props) {
         <h1 className="heading-lg">{typeLabel} <span className="heading-footnote">共 {countString} 筆資料 ({elapsed} 秒)</span></h1>)
     }else if (language === 'en'){
       tabFilter = (
-        <h1 className="heading-lg">{typeLabel} <span className="heading-footnote">{countString} Result ({elapsed} sec)</span></h1>)
+        <h1 className="heading-lg">{Capitalize(typeLabel)} <span className="heading-footnote">{countString} Result ({elapsed} sec)</span></h1>)
     }
   }
 
