@@ -86,13 +86,13 @@
   <div class="container">
     {% if layout_type == "A1" %}
     <h1 class="heading-lg-ul">
-      {{ article_cat_label }}
-      <span class="heading-footnote">全部</span>
+      {% trans article_cat_label %}
+      <span class="heading-footnote">{% trans "全部" %}</span>
     </h1>
     <!-- sort by begin -->
     <div class="heading-sort-ctn">
       <form class="form-inline">
-        <span class="heading-sort-name">篩選</span>
+        <span class="heading-sort-name">{% trans "篩選" %}</span>
         <div class="input-group">
           <div class="input-group-addon">
             <i class="glyphicon glyphicon-calendar"></i>

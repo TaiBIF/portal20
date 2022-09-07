@@ -49,6 +49,51 @@ const chartData = {
   }
 };
 
+const chartData_e = {
+  year: {
+    labels: [],
+    datasets: [
+      {
+        label: 'Occurrence record per year',
+        fill: false,
+        lineTension: 0.1,
+        backgroundColor: '#7DC49D',
+        borderColor: '#74B175',
+        borderCapStyle: 'butt',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'miter',
+        pointBorderColor: '#7DC49D',
+        pointBackgroundColor: '#74B175',
+        pointBorderWidth: 1,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: '#7DC49D',
+        pointHoverBorderColor: '#74B175',
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        data: [],
+      }
+    ]
+  },
+  month: {
+    labels: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+    datasets: [
+      {
+        label: 'Occurrence record per month',
+        backgroundColor: '#74B175',
+        borderColor: '#7DC49D',
+        borderWidth: 1,
+        hoverBackgroundColor: '#7DC49D',
+        hoverBorderColor: '#74B175',
+        barPercentage: 1.0,
+        categoryPercentage: 1.0,
+        data: []
+      }
+    ]
+  }
+};
+
 const API_URL_PREFIX = `/api/v1/occurrence/charts`;
 const facetQueryString = `facet=year&facet=month&facet=dataset&facet=dataset_id&facet=publisher&facet=country&facet=license`;
       
@@ -80,7 +125,9 @@ function OccurrenceCharts(props) {
     }else{
       apiURL = `${API_URL_PREFIX}?${facetQueryString}`;
     }
+    if (props.language === 'zh-hant'){
     fetchData(apiURL).then((data) => {
+      
       const year = chartData.year;
       let dataCount = {}
       let ordered = []
@@ -116,7 +163,47 @@ function OccurrenceCharts(props) {
         return {key:row.key,title:row.label,num_occurrence:row.count,percent:p};
       });
       setDatasetData([true, newData])
-    });
+    });}
+    else{fetchData(apiURL).then((data) => {
+      
+      const year = chartData_e.year;
+      let dataCount = {}
+      let ordered = []
+      data.charts[0].rows.forEach(row => {
+        dataCount = {...dataCount,[row.label]:row.count}
+      });
+
+      ordered = sortData(dataCount)
+    
+      year.labels = Object.keys(ordered)
+      year.datasets[0].data =  Object.values(ordered);
+      setYearData([true, year]);
+
+      const month = chartData_e.month;
+      dataCount = {}
+      data.charts[1].rows.forEach(row => {
+        dataCount = {...dataCount,[row.label]:row.count}
+      });
+      ordered = sortData(dataCount)
+    
+      month.labels = Object.keys(ordered)
+      month.datasets[0].data =  Object.values(ordered);
+
+      setMonthData([true, month])
+
+      let num_occurrence_max = 0;
+      const newData = data.charts[2].rows.map((row, i) => {
+        if (i === 0) {
+          num_occurrence_max = row.count;
+        }
+        const p = Math.round(row.count / num_occurrence_max * 100);
+
+        return {key:row.key,title:row.label,num_occurrence:row.count,percent:p};
+      });
+      setDatasetData([true, newData])
+    });}
+
+    
   }, [filters]);
 
   function DatasetDataBody() {

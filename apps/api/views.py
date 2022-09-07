@@ -733,7 +733,7 @@ def search_publisher(request):
         menu_list = [
             {
                 'key': 'countrycode',
-                'label': '國家/區域',
+                'label': '國家/區域 Country or Area',
                 'rows': [{'label': DATA_MAPPING['country'][x['country_code']], 'count': x['count'], 'key': x['country_code'] } for x in country_list]
             },
         ]
@@ -741,7 +741,7 @@ def search_publisher(request):
         menus = [
             {
                 'key': 'country_code',
-                'label': '國家/區域',
+                'label': '國家/區域 Country or Area',
                 'rows': [{'label': DATA_MAPPING['country'][x['country_code']], 'key': x['country_code'], 'count': x['count']} for x in country_list]
             },
         ]
@@ -819,8 +819,8 @@ def data_stats(request):
     query = Dataset.objects
     if is_most:
         query = query.filter(is_most_project=True)
-    rows = query.all()
-
+        
+    rows = query.filter(status__contains='PUBLIC')
     hdata = {}
     current_year_data = {
         'dataset': [{'x': '{}'.format(x), 'y': 0} for x in range(1, 13)],
@@ -838,17 +838,16 @@ def data_stats(request):
         if str(current_year) == y:
             m = i.created.month
             current_year_data['dataset'][m-1]['y'] += 1
-            current_year_data['occurrence'][m-1]['y'] += i.num_occurrence
+            current_year_data['occurrence'][m-1]['y'] += i.num_record
         if y not in hdata:
             hdata[y] = {
-                'dataset': 0,
-                'occurrence': 0
-            }
+                'dataset': 1,
+                'occurrence': i.num_record
+            } 
         else:
             hdata[y]['dataset'] += 1
-            hdata[y]['occurrence'] += i.num_occurrence
-
-    # print (hdata)
+            hdata[y]['occurrence'] += i.num_record
+            
     sorted_year = sorted(hdata)
     accu_ds = 0
     accu_occur = 0
