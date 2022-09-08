@@ -36,10 +36,20 @@
 <!-- container begin -->
 <div class="container">
   <div class="article-head-wrapper">
-    {% if event.eventDate.value %}<span class="article-post-date">{{ event.eventDate.value }}</span>{% endif %}
+    {% if event.eventDate.value %}
+    <span class="article-post-date">
+      {% if event.eventDate.value.1 != None %}
+        {{ event.eventDate.value.1 }}
+      {% else %}
+        {{ event.eventDate.value.0 }}
+      {% endif %}
+      </span>
+    {% endif %}
     <h1 style="margin-top:0px">
-      {% if taxon.vernacularName.value %}
-        {{ taxon.vernacularName.value }}
+      {% if taxon.vernacularName.value.1 %}
+          {{ taxon.vernacularName.value.1 }}
+        {% else %}
+          {{ taxon.vernacularName.value.0 }}
       {% endif %}
       {% if intro.scientificName %}
         <I>{{ intro.scientificName }}</I>
@@ -57,8 +67,10 @@
       <!-- <dd>{{ intro.scientificname}}{% if intro.simple_data.taxon_species %} (<a href="/species/{{ intro.spe }} ">{{ occurrence.simple_data.taxon_species.scientific_name_infraspecific}}</a>){% endif %}</dd> -->
       <dt>物種</dt>
       <dd>
-        {% if taxon.vernacularName.value %}
-          {{ taxon.vernacularName.value }}
+        {% if taxon.vernacularName.value.1 %}
+          {{ taxon.vernacularName.value.1 }}
+        {% else %}
+          {{ taxon.vernacularName.value.0 }}
         {% endif %} 
       <I>{{ intro.scientificName}} </I></dd>
       <dt>資料集</dt>
@@ -75,11 +87,23 @@
   </div>
   
   <table class="table">
-    <thead><tr><th width="40%">欄位名稱</th><th>值</th></tr></thead>
+    <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th></tr></thead>
     <tbody>
       {% for k,v in record.items %}
-          {% if v.value != None %}
-            <tr><td>{{ v.name_zh }}</td><td>{{ v.value }}</td></tr>
+          {% if v.value.0 != None or v.value.1 != None %}
+            <tr>
+              <td>{{ v.name_zh }}</td>
+              <td>
+              {% if v.value.1 != None %}
+                {{ v.value.1 }}
+              {% endif %}
+              </td>
+              <td>
+              {% if v.value.0 != None %}
+                {{ v.value.0 }}
+              {% endif %}
+              </td>
+            </tr>
           {% endif %}      
       {% endfor %}
     </tbody>
@@ -89,11 +113,23 @@
       <h1 class="heading-lg-ul">出現紀錄 Occurrence</h1>
     </div>
     <table class="table">
-      <thead><tr><th width="40%">欄位名稱</th><th>值</th></tr></thead>
+      <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th></tr></thead>
       <tbody>
         {% for k,v in occ.items %}
-          {% if v.value != None %}
-            <tr><td>{{ v.name_zh }}</td><td>{{ v.value }}</td></tr>
+          {% if v.value.0 != None or v.value.1 != None %}
+            <tr>
+              <td>{{ v.name_zh }}</td>
+              <td>
+                {% if v.value.1 != None%}
+                  {{ v.value.1 }}
+                {% endif%}
+              </td>
+              <td>
+                {% if v.value.0 != None %}
+                  {{ v.value.0 }}
+                {% endif%}
+              </td>
+            </tr>
           {% endif %}      
         {% endfor %}
       </tbody>
@@ -103,11 +139,22 @@
         <h1 class="heading-lg-ul">調查活動 Event</h1>
       </div>
       <table class="table">
-        <thead><tr><th width="40%">欄位名稱</th><th>值</th></tr></thead>
+        <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th></tr></thead>
         <tbody>
           {% for k,v in event.items %}
-            {% if v.value != None %}
-              <tr><td>{{ v.name_zh }}</td><td>{{ v.value }}</td></tr>
+            {% if v.value.0 != None or v.value.1 != None %}
+              <tr><td>{{ v.name_zh }}</td>
+                <td>
+                  {% if v.value.1 != None %}
+                    {{ v.value.1 }}
+                  {% endif %}
+                </td>
+                <td>
+                  {% if v.value.0 != None %}
+                    {{ v.value.0 }}
+                  {% endif %}
+                </td>
+              </tr>
             {% endif %}  
           {% endfor %}
         </tbody>
@@ -118,14 +165,37 @@
         <h1 class="heading-lg-ul">分類 Taxon</h1>
       </div>
       <table class="table">
-        <thead><tr><th width="40%">欄位名稱</th><th>值</th></tr></thead>
+        <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th></tr></thead>
         <tbody>
           {% for k,v in taxon.items %}
-            {% if v.value != None %}
+            {% if v.value.0 != None or v.value.1 != None %}
               {% if k == 'genus' or k == 'subgenus' or k == 'scientificName' %}
-                <tr><td>{{ v.name_zh }}</td><td><I>{{ v.value }}</I></td></tr>
+                <tr>
+                  <td>{{ v.name_zh }}</td>
+                  <td><I>
+                    {% if v.value.1 != None %}
+                      {{ v.value.1 }}
+                    {% endif %}
+                  </I></td>
+                  <td><I>
+                    {% if v.value.0 != None %}
+                      {{ v.value.0 }}
+                    {% endif %}
+                  </I></td>
+                </tr>
               {% else %}
-                <tr><td>{{ v.name_zh }}</td><td>{{ v.value }}</td></tr>
+                <tr><td>{{ v.name_zh }}</td>
+                  <td>
+                    {% if v.value.1 != None %}
+                      {{ v.value.1 }}
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if v.value.0 != None %}
+                      {{ v.value.0 }}
+                    {% endif %}
+                  </td>
+                </tr>
               {% endif %}
             {% endif %}
           {% endfor %}
@@ -137,11 +207,22 @@
         <h1 class="heading-lg-ul">地理資訊 Location</h1>
       </div>
       <table class="table">
-        <thead><tr><th width="40%">欄位名稱</th><th>值</th></tr></thead>
+        <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th></tr></thead>
         <tbody>
           {% for k,v in location.items %}
-            {% if v.value != None %}
-              <tr><td>{{ v.name_zh }}</td><td>{{ v.value }}</td></tr>
+            {% if v.value.0 != None or  v.value.1 != None %}
+            <tr><td>{{ v.name_zh }}</td>
+              <td>
+                {% if v.value.1 != None %}
+                  {{ v.value.1 }}
+                {% endif %}
+              </td>
+              <td>
+                {% if v.value.0 != None %}
+                  {{ v.value.0 }}
+                {% endif %}
+              </td>
+            </tr>
             {% endif %}
           {% endfor %}
         </tbody>
