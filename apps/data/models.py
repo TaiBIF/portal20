@@ -86,7 +86,7 @@ class Dataset(models.Model):
     organization_name = models.TextField(blank=True, null=True)
     organization = models.ForeignKey('DatasetOrganization', null=True, blank=True, on_delete=models.SET_NULL, related_name='datasets')
     num_occurrence = models.PositiveIntegerField(default=0)
-    is_most_project = models.BooleanField('是否為科技部計畫', default=False)
+    is_most_project = models.BooleanField('是否為國科會計畫', default=False)
     quality = models.CharField('資料集品質', max_length=4, default='')
     has_publish_problem = models.BooleanField('是否有發布問題 (IPT 裡黃色的區塊)', default=False, help_text='有可能 IPT 授權沒填?')
     admin_memo = models.TextField('後台管理註記', blank=True, null=True, help_text='不會在前台出現')
