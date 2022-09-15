@@ -17,7 +17,7 @@ import {
 
 const navTabsData = [
   {
-    'key': 'search',
+    'key': 'Search',
     'label': '資料列表',
     'path': '/occurrence/search/',
   },
@@ -28,7 +28,7 @@ const navTabsData = [
     'disable': true,
   },
   {
-    'key': 'map',
+    'key': 'Map',
     'label': '分佈地圖',
     'path': '/occurrence/map/',
     //'disable': true,
@@ -45,7 +45,7 @@ const navTabsData = [
     'path': '/occurrence/charts/',
   },
   {
-    'key': 'download',
+    'key': 'Download',
     'label': '下載',
     'path': '/occurrence/download/',
   }

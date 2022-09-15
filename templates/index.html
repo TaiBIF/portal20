@@ -140,11 +140,11 @@
         </div>
         <div class="col-xs-12 col-sm-6 col-md-3">
           <div class="data-wall-ctn">
-            <a href="{% url 'data_stats' %}?most=1">
+            <a href="{% url 'data_stats' %}">
             <span class="dtat-wall-name">{% trans "看更多" %}</span>
             <span class="data-wall-numbers"><small>{% trans "資料發布狀況" %}</small></span> <!--手動更改數字{{ stats.num_dataset|intcomma }} -->
             {#<span class="dtat-wall-name"><br/></span>#}
-            <span class="data-wall-icon myicon icon-arrow-right"></span>
+            <span class="data-wall-icon myicon icon-arrow-right" ></span>
             </a>
           </div>
         </div>
