@@ -195,13 +195,11 @@ def for_tbia_search(request):
         query_list.append((key, values[0]))
 
     if request.GET.get('start_date'):
-        print(request.GET.get('start_date'))
         start_date = datetime.datetime.strptime(request.GET.get('start_date'), '%Y-%m-%d').isoformat() + 'Z'
     if request.GET.get('end_date'):
-        print(request.GET.get('end_date'))
         end_date = datetime.datetime.strptime(request.GET.get('end_date'), '%Y-%m-%d').isoformat() + 'Z'
         
-    query_list.append(('q', f'taibif_event_Date:[{start_date} TO {end_date}]'))
+    query_list.append(('q', f'mod_date:[{start_date} TO {end_date}]'))
     
     solr_q = urllib.parse.urlencode(query_list,quote_via=urllib.parse.quote)
     url = f'http://solr:8983/solr/taibif_occurrence/select?q.op=AND&{solr_q}'
