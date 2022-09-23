@@ -2,7 +2,7 @@ import time
 import json
 import datetime
 import re
-import random
+import urllib
 import csv
 import os
 import subprocess
@@ -181,6 +181,82 @@ def get_map_species(request):
     
     return JsonResponse(resp)
 
+
+def for_tbia_search(request):
+    query_list = []
+    start_date = "*"
+    end_date = "*"
+    solr_error = ''
+    solr_response = ''
+    
+    for key, values in request.GET.lists():
+        if key == "start_date" or key == "end_date":
+            continue
+        query_list.append((key, values[0]))
+
+    if request.GET.get('start_date'):
+        print(request.GET.get('start_date'))
+        start_date = datetime.datetime.strptime(request.GET.get('start_date'), '%Y-%m-%d').isoformat() + 'Z'
+    if request.GET.get('end_date'):
+        print(request.GET.get('end_date'))
+        end_date = datetime.datetime.strptime(request.GET.get('end_date'), '%Y-%m-%d').isoformat() + 'Z'
+        
+    query_list.append(('q', f'taibif_event_Date:[{start_date} TO {end_date}]'))
+    
+    solr_q = urllib.parse.urlencode(query_list,quote_via=urllib.parse.quote)
+    url = f'http://solr:8983/solr/taibif_occurrence/select?q.op=AND&{solr_q}'
+
+    try: 
+        resp =urllib.request.urlopen(url)
+        resp_dict = resp.read().decode()
+        solr_response = json.loads(resp_dict)
+    except urllib.request.HTTPError as e:
+        solr_error = str(e)
+            
+    if not solr_response['response']['docs']:
+        return JsonResponse({
+            'results': 0,
+            'solr_error_msg': solr_error,
+            'solr_url': url,
+            'solr_tuples': query_list,
+        })
+    res={}
+    res_list=[] 
+    for i in solr_response['response']['docs']:
+        res_list.append({
+            'occurrenceID':i['occurrenceID'],
+            'scientificName': i['taibif_scientificName'] if 'taibif_scientificName' in i else (i['scientificName'] if 'scientificName' in i else ''),
+            'isPreferredName': i['taibif_vernacularName'] if 'taibif_vernacularName' in i else (i['vernacularName'] if 'vernacularName' in i else ''),
+            # 'sensitiveCategory':,
+            # 'taxonRank':,
+            'eventDate':i['taibif_event_Date'] if 'taibif_event_Date' in i else (i['eventDate'] if 'eventDate' in i else ''),
+            'verbatimLongitude':i['taibif_longitude'] if 'taibif_longitude' in i  else (i['decimalLongitude'] if 'decimalLongitude' in i else ''),
+            'verbatimLatitude':i['taibif_latitude'] if 'taibif_latitude' in i  else (i['decimalLatitude'] if 'decimalLatitude' in i else ''),
+            'verbatimCoordinateSystem':i['verbatimCoordinates'] if 'verbatimCoordinates' in i else '',
+            'verbatimSRS':i['verbatimSRS'] if 'verbatimSRS' in i else '',
+            'coordinateUncertaintyInMeters':i['coordinateUncertaintyInMeters'] if 'coordinateUncertaintyInMeters' in i else '',
+            'dataGeneralizations':i['taibif_dataGeneralizations'] if 'taibif_dataGeneralizations' in i else (i['dataGeneralizations']  if 'dataGeneralizations' in i else ''),
+            'coordinatePrecision':i['taibif_coordinatePrecision'] if 'taibif_coordinatePrecision' in i else (i['coordinatePrecision'] if 'coordinatePrecision' in i else ''),
+            'locality':i['taibif_locality'] if 'taibif_locality' in i  else (i['locality'] if 'locality' in i else ''),
+            'organismQuantity':i['taibif_organismQuantity'] if 'taibif_organismQuantity' in i else (i['organismQuantity'] if 'organismQuantity' in i else ''),
+            'organismQuantityType':i['taibif_organismQuantityType'] if 'taibif_organismQuantityType' in i else (i['organismQuantityType'] if 'organismQuantityType' in i else ''),
+            'recordedBy':i['taibif_recordedBy'] if 'taibif_recordedBy' in i else (i['recordedBy'] if 'recordedBy' in i else ''),
+            # 'taxonID':,
+            # 'scientificNameID':,
+            'basisOfRecord':i['basisOfRecord'] if 'basisOfRecord' in i else '',
+            'datasetName':i['taibif_dataset_name_zh'] if 'taibif_dataset_name_zh' in i else (i['taibif_datasetName'] if 'taibif_datasetName' in i else ''),
+            # 'resourceContacts':
+            # 'references':
+            'license':i['taibif_license'] if 'taibif_license' in i else (i['license'] if 'license' in i else ''),
+            # 'created':,
+            # 'modified':,
+        })
+
+    res['num'] = solr_response['response']['numFound']
+    res['start'] = solr_response['response']['start']
+    res['data'] = res_list
+
+    return JsonResponse(res)
 
 def occurrence_search_v2(request):
     time_start = time.time()
