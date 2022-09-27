@@ -2,6 +2,8 @@ import urllib
 import logging
 import json
 import requests
+import datetime
+
 from apps.api.cached import COUNTRY_ROWS
 
 from conf.settings import ENV
@@ -196,7 +198,8 @@ class SolrQuery(object):
                 self.solr_tuples.append(('fq', map_query))
 
         self.solr_tuples.append(('q', self.solr_q))
-        self.solr_tuples.append(('rows', self.rows)) #TODO remove redundant key['rows']
+        if not 'rows' in req_lists:
+            self.solr_tuples.append(('rows', self.rows)) #TODO remove redundant key['rows']
  
         if len(self.facet_values):
             self.solr_tuples.append(('facet', 'true'))
@@ -240,9 +243,9 @@ class SolrQuery(object):
         is_last = False
         if resp['start'] + int(self.rows) >= resp['numFound']:
             is_last = True
-            
         for i in resp['docs']:
             i['taibif_occurrence_id'] = i['taibif_occ_id']
+            i['taibif_event_Date'] = i['taibif_event_Date'][0].replace('T00:00:00Z','')
         return {
             'offset': resp['start'],
             'limit': self.rows,

@@ -18,4 +18,5 @@ urlpatterns = [
     path('v2/occurrence/map', views.occurrence_search_v2, name='api-occurrence-search-v2-map'),
     path('dataset/export', views.export, name='export'),
     path('v2/occurrence/get_map_species', views.get_map_species, name='get_map_species'),
+    path('v2/occurrence/basic_occ', views.for_tbia_search, name='api-tbia'),
 ]

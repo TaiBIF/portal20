@@ -251,7 +251,7 @@ def occurrence_view(request, taibif_id):
 
     taxon['taxonID']={'name_zh':'分類ID','value':[result[0].get('taxonID'),result[0].get('taibif_taxonID')]}
     taxon['scientificNameID']={'name_zh':'學名ID','value':[result[0].get('scientificNameID'),result[0].get('taibif_scientificNameID')]}
-    taxon['acceptedNameUsageID']={'name_zh':'有效學名ID','value':[result[0].get('acceptedNameUsageID'),acceptedNameUsageID]}
+    taxon['acceptedNameUsageID']={'name_zh':'有效學名ID','value':[acceptedNameUsageID,'']}
     taxon['scientificName']={'name_zh':'學名','value':[result[0].get('scientificName'),result[0].get('taibif_scientificName')]}
     taxon['acceptedNameUsage']={'name_zh':'有效學名','value':[result[0].get('acceptedNameUsage'),result[0].get('taibif_acceptedNameUsage')]}
     taxon['originalNameUsage']={'name_zh':'originalNameUsage','value':[result[0].get('originalNameUsage'),result[0].get('taibif_originalNameUsage')]}
@@ -285,7 +285,7 @@ def occurrence_view(request, taibif_id):
     location['country']={'name_zh':'國家','value':[result[0].get('country'),result[0].get('taibif_country')]}
     location['countryCode']={'name_zh':'國家代碼','value':[result[0].get('countryCode'),result[0].get('taibif_countryCode')]}
     location['stateProvince']={'name_zh':'省份/州','value':[result[0].get('stateProvince'),result[0].get('taibif_stateProvince')]}
-    location['county']={'name_zh':'縣市','value':[result[0].get('county'),result[0].get('taibif_ch_county') +'/'+ result[0].get('taibif_county')]}
+    location['county']={'name_zh':'縣市','value':[result[0].get('county'), result[0].get('taibif_ch_county') if result[0].get('taibif_ch_county') else '' +'/'+ result[0].get('taibif_county') if result[0].get('taibif_county') else '']}
     location['municipality']={'name_zh':'municipality','value':[result[0].get('municipality'),result[0].get('taibif_municipality')]}
     location['locality']={'name_zh':'地區','value':[result[0].get('locality'),result[0].get('taibif_locality')]}
     location['verbatimLocality']={'name_zh':'字面上地區','value':[result[0].get('verbatimLocality'),result[0].get('taibif_verbatimLocality')]}
