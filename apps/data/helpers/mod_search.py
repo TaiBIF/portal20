@@ -262,6 +262,29 @@ class DatasetSearch(SuperSearch):
                 
                 desc = list(Dataset_description.objects.filter(description__icontains=v).values_list('id', flat=True))                  
                 query = query.filter(Q(title__icontains=v)| Q(pk__in=(desc)))
+            
+            if key == 'title':
+                query = query.filter(title__contains=values[0])
+            if key == 'name':
+                query = query.filter(name__contains=values[0])
+            if key == 'author':
+                query = query.filter(creator__contains=values[0])
+            if key == 'organization_id':
+                query = query.filter(organization_uuid=values[0])
+            if key == 'organization_name':
+                query = query.filter(organization_name__contains=values[0])
+            if key == 'license':
+                query = query.filter(data_license__contains=values[0])
+            if key == 'dwc_core_type':
+                query = query.filter(dwc_core_type__contains=values[0])
+            if key == 'doi':
+                query = query.filter(gbif_doi=values[0])
+            if key == 'pub_date':
+                query = query.filter(pub_date__contains=values[0])
+            if key == 'mod_date':
+                query = query.filter(mod_date__contains=values[0])
+            if key == 'doi':
+                query = query.filter(doi_contains=values[0])
                 
             if key == 'core':
                 v = values[0] # only get one
