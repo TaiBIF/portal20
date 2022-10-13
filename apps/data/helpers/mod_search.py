@@ -1,4 +1,5 @@
 from abc import ABCMeta, abstractmethod
+from datetime import datetime
 from pydoc import describe
 import time
 import re
@@ -268,7 +269,7 @@ class DatasetSearch(SuperSearch):
             if key == 'name':
                 query = query.filter(name__contains=values[0])
             if key == 'author':
-                query = query.filter(creator__contains=values[0])
+                query = query.filter(author__contains=values[0])
             if key == 'organization_id':
                 query = query.filter(organization_uuid=values[0])
             if key == 'organization_name':
@@ -277,12 +278,28 @@ class DatasetSearch(SuperSearch):
                 query = query.filter(data_license__contains=values[0])
             if key == 'dwc_core_type':
                 query = query.filter(dwc_core_type__contains=values[0])
-            if key == 'doi':
-                query = query.filter(gbif_doi=values[0])
+            if key == 'gbif_dataset_id':
+                query = query.filter(guid=values[0])
             if key == 'pub_date':
-                query = query.filter(pub_date__contains=values[0])
+                date_range = values[0].split(',',1)
+                if len(date_range) ==2:
+                    start_date = datetime.strptime(date_range[0], "%Y-%m-%d")
+                    end_date = datetime.strptime(date_range[1], "%Y-%m-%d")
+                    query = query.filter(pub_date__range=(start_date,end_date))
+                elif len(date_range) ==1:
+                    start_date = datetime.strptime(date_range[0], "%Y-%m-%d")
+                    end_date = datetime.strptime(str(datetime.today().date()), "%Y-%m-%d")
+                    query = query.filter(pub_date__range=(start_date,end_date))
             if key == 'mod_date':
-                query = query.filter(mod_date__contains=values[0])
+                date_range = values[0].split(',',1)
+                if len(date_range) ==2:
+                    start_date = datetime.strptime(date_range[0], "%Y-%m-%d")
+                    end_date = datetime.strptime(date_range[1], "%Y-%m-%d")
+                    query = query.filter(mod_date__range=(start_date,end_date))
+                elif len(date_range) ==1:
+                    start_date = datetime.strptime(date_range[0], "%Y-%m-%d")
+                    end_date = datetime.strptime(str(datetime.today().date()), "%Y-%m-%d")
+                    query = query.filter(mod_date__range=(start_date,end_date))
             if key == 'doi':
                 query = query.filter(doi_contains=values[0])
                 
