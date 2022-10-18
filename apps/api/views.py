@@ -181,8 +181,33 @@ def get_map_species(request):
     
     return JsonResponse(resp)
 
+def dataset_api(request):
+    
+    ds_search = DatasetSearch(list(request.GET.lists()))
+    result_d =  ds_search.query.values()
+    
+    rows = [{
+        'title' : x['title'] if 'title' in x else None,
+        'name' : x['name'],
+        'author' : x['author'] if 'author' in x else None,
+        'pub_date' : x['pub_date'].strftime("%Y-%m-%d") if 'pub_date' in x else None,
+        'mod_date' : x['mod_date'].strftime("%Y-%m-%d") if 'mod_date' in x else None,
+        'core' : x['dwc_core_type'] if 'dwc_core_type' in x else None,
+        'license' : x['data_license'] if 'data_license' in x and x['data_license'] != None else 'unknown',
+        'doi' : x['gbif_doi'] if 'doi' in x else None,
+        'organization_id' : x['organization_uuid'] if 'organization_uuid' in x else None,
+        'organization_name' : x['organization_name'] if 'organization_name' in x else None,
+        'num_record' : x['num_record'] if 'num_record' in x else None,
+        'gbif_dataset_id' : x['guid'] if 'guid' in x else None,
+        # 'citation' : x['citation'] if 'citation' in x else None,
+        # 'resource' : x['resource'] if 'resource' in x else None,
+    } for x in result_d ]
+    
+    return HttpResponse(json.dumps(rows), content_type="application/json")
+    
+    
 
-def for_tbia_search(request):
+def for_basic_occ(request):
     query_list = []
     start_date = "*"
     end_date = "*"
@@ -227,7 +252,7 @@ def for_tbia_search(request):
             'isPreferredName': i['taibif_vernacularName'] if 'taibif_vernacularName' in i else (i['vernacularName'] if 'vernacularName' in i else ''),
             # 'sensitiveCategory':,
             # 'taxonRank':,
-            'eventDate':i['taibif_event_Date'] if 'taibif_event_Date' in i else (i['eventDate'] if 'eventDate' in i else ''),
+            'eventDate':i['taibif_event_date'] if 'taibif_event_date' in i else (i['eventDate'] if 'eventDate' in i else ''),
             'verbatimLongitude':i['taibif_longitude'] if 'taibif_longitude' in i  else (i['decimalLongitude'] if 'decimalLongitude' in i else ''),
             'verbatimLatitude':i['taibif_latitude'] if 'taibif_latitude' in i  else (i['decimalLatitude'] if 'decimalLatitude' in i else ''),
             'verbatimCoordinateSystem':i['verbatimCoordinates'] if 'verbatimCoordinates' in i else '',

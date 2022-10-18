@@ -229,7 +229,7 @@ def occurrence_view(request, taibif_id):
     event['eventID']={'name_zh':'調查活動ID','value':[result[0].get('eventID'),result[0].get('taibif_eventID')]}
     event['parentEventID']={'name_zh':'parentEventID','value':[result[0].get(' parentEventID'),result[0].get(' taibif_parentEventID')]}
     event['fieldNumber']={'name_zh':'野外調查編號','value':[result[0].get('fieldNumber'),result[0].get('taibif_fieldNumber')]}
-    event['eventDate']={'name_zh':'調查活動日期','value':[result[0].get('eventDate'),result[0].get('taibif_event_Date')]}
+    event['eventDate']={'name_zh':'調查活動日期','value':[result[0].get('eventDate'),result[0].get('taibif_event_date')]}
     event['eventTime']={'name_zh':'調查活動時間','value':[result[0].get('eventTime'),result[0].get('taibif_eventTime')]}
     event['startDayOfYear']={'name_zh':'起始年份','value':[result[0].get('startDayOfYear'),result[0].get('staibif_tartDayOfYear')]}
     event['endDayOfYear']={'name_zh':'結束年份','value':[result[0].get('endDayOfYear'),result[0].get('taibif_endDayOfYear')]}

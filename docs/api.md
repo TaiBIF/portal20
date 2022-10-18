@@ -51,6 +51,22 @@ https://portal.taibif.tw/api/
 
 
 ## 資料集 DATASET
+----
+| 參數名稱 |  參數描述 |查詢範例|
+| -------- | -------- | -------- |
+|title|資料集名稱|/api/v1/dataset?title=海龜|
+|dwc_core_type|核心集|/api/v1/dataset?dwc_core_type=samplingevent|
+|organization_id|gbif 發布單位 id|/api/v1/dataset?organization_id=7c07cec1-2925-443c-81f1-333e4187bdea|
+|organization_name|發布單位 名稱|/api/v1/dataset?organization_name=Taiwan|
+|author|發布者|資料集creator|
+|pub_date|發布日期|pub_date|/api/v1/dataset?pub_date=2013-08-12,2020-07-01,/api/v1/dataset?pub_date=2020-07-30
+|mod_date|更新日期|/api/v1/dataset?mod_date=2022-03-21|
+|gbif_dataset_id|gbif 資料集 id|/api/v1/dataset?gbif_dataset_id=233783dc-e13a-4770-9d24-797590ff8716|
+|license|資料授權引用格式|/api/v1/dataset?license=CC0|
+<!-- |resource|來源|尚未加入 ipt 或是 gbif| -->
+<!-- |num_record|核心集紀錄數|num_record| -->
+<!-- |doi|doi|如果有的話| -->
+<!-- |citation|引用|| -->
 
 ## 物種 TAXON
 

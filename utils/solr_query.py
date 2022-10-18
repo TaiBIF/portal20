@@ -244,8 +244,11 @@ class SolrQuery(object):
         if resp['start'] + int(self.rows) >= resp['numFound']:
             is_last = True
         for i in resp['docs']:
-            i['taibif_occurrence_id'] = i['taibif_occ_id']
-            i['taibif_event_Date'] = i['taibif_event_Date'][0].replace('T00:00:00Z','')
+            try:
+                i['taibif_occurrence_id'] = i['taibif_occ_id']
+                i['taibif_event_date'] = i['taibif_event_date'][0].replace('T00:00:00Z','')
+            except :
+                print(f' error info in occ = {i}')
         return {
             'offset': resp['start'],
             'limit': self.rows,

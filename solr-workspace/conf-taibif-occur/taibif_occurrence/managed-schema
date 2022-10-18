@@ -552,7 +552,7 @@
   <field name="higherClassification" type="string"/>
   <field name="higherGeography" type="string"/>
   <field name="higherGeographyID" type="text_general"/>
-  <field name="id" type="string"/>
+  <!-- <field name="id" type="string"/> -->
   <field name="identificationID" type="text_general"/>
   <field name="identificationReferences" type="text_general"/>
   <field name="identificationRemarks" type="string"/>
@@ -668,7 +668,7 @@
   <field name="taibif_dataset_name" type="string"/>
   <field name="taibif_dataset_name_zh" type="string"/>
   <field name="taibif_day" type="plongs"/>
-  <field name="taibif_event_Date" type="pdates"/>
+  <field name="taibif_event_date" type="pdates"/>
   <field name="taibif_created" type="pdates"/>
   <field name="taibif_geodeticDatum" type="string"/>
   <field name="taibif_latitude" type="pdoubles"/>
@@ -780,38 +780,36 @@
   <dynamicField name="*_f" type="pfloat" indexed="true" stored="true"/>
   <dynamicField name="*_d" type="pdouble" indexed="true" stored="true"/>
   <dynamicField name="*_p" type="location" indexed="true" stored="true"/>
+  <copyField source="scientificName" dest="_text_"/>
+  <copyField source="vernacularName" dest="_text_"/>
+  <copyField source="taibif_scientificname" dest="_text_"/>
   <copyField source="basisOfRecord" dest="_text_"/>
-  <copyField source="behavior" dest="_text_"/>
-  <copyField source="class" dest="_text_"/>
-  <copyField source="classzh" dest="_text_"/>
-  <copyField source="continent" dest="_text_"/>
-  <copyField source="country" dest="_text_"/>
-  <copyField source="countryCode" dest="_text_"/>
-  <copyField source="county" dest="_text_"/>
-  <copyField source="datasetName" dest="_text_"/>
-  <copyField source="family" dest="_text_"/>
-  <copyField source="familyzh" dest="_text_"/>
-  <copyField source="genus" dest="_text_"/>
-  <copyField source="genuszh" dest="_text_"/>
-  <copyField source="habitat" dest="_text_"/>
-  <copyField source="island" dest="_text_"/>
   <copyField source="kingdom" dest="_text_"/>
   <copyField source="kingdomzh" dest="_text_"/>
-  <copyField source="license" dest="_text_"/>
-  <copyField source="locality" dest="_text_"/>
-  <copyField source="order" dest="_text_"/>
-  <copyField source="orderzh" dest="_text_"/>
   <copyField source="phylum" dest="_text_"/>
   <copyField source="phylumzh" dest="_text_"/>
-  <copyField source="publisher" dest="_text_"/>
-  <copyField source="recordedBy" dest="_text_"/>
-  <copyField source="rights" dest="_text_"/>
-  <copyField source="scientificName" dest="_text_"/>
+  <copyField source="order" dest="_text_"/>
+  <copyField source="orderzh" dest="_text_"/>
+  <copyField source="family" dest="_text_"/>
+  <copyField source="familyzh" dest="_text_"/>
+  <copyField source="class" dest="_text_"/>
+  <copyField source="classzh" dest="_text_"/>
+  <copyField source="genus" dest="_text_"/>
+  <copyField source="genuszh" dest="_text_"/>
+  <copyField source="county" dest="_text_"/>
   <copyField source="taibif_ch_county" dest="_text_"/>
   <copyField source="taibif_country" dest="_text_"/>
   <copyField source="taibif_countryCode" dest="_text_"/>
   <copyField source="taibif_county" dest="_text_"/>
+  <copyField source="locality" dest="_text_"/>
+  <copyField source="habitat" dest="_text_"/>
+  <copyField source="island" dest="_text_"/>
+  <copyField source="country" dest="_text_"/>
+  <copyField source="countryCode" dest="_text_"/>
+  <copyField source="datasetName" dest="_text_"/>
+  <copyField source="license" dest="_text_"/>
+  <copyField source="rights" dest="_text_"/>
   <copyField source="taibif_dataset_name" dest="_text_"/>
   <copyField source="taibif_dataset_name_zh" dest="_text_"/>
-  <copyField source="taibif_scientificname" dest="_text_"/>
+  <copyField source="publisher" dest="_text_"/>
 </schema>
