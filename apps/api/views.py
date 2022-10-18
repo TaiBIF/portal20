@@ -252,7 +252,7 @@ def for_basic_occ(request):
             'isPreferredName': i['taibif_vernacularName'] if 'taibif_vernacularName' in i else (i['vernacularName'] if 'vernacularName' in i else ''),
             # 'sensitiveCategory':,
             # 'taxonRank':,
-            'eventDate':i['taibif_event_Date'] if 'taibif_event_Date' in i else (i['eventDate'] if 'eventDate' in i else ''),
+            'eventDate':i['taibif_event_date'] if 'taibif_event_date' in i else (i['eventDate'] if 'eventDate' in i else ''),
             'verbatimLongitude':i['taibif_longitude'] if 'taibif_longitude' in i  else (i['decimalLongitude'] if 'decimalLongitude' in i else ''),
             'verbatimLatitude':i['taibif_latitude'] if 'taibif_latitude' in i  else (i['decimalLatitude'] if 'decimalLatitude' in i else ''),
             'verbatimCoordinateSystem':i['verbatimCoordinates'] if 'verbatimCoordinates' in i else '',
