@@ -167,7 +167,6 @@ def occurrence_view(request, taibif_id):
     
     lat = 0
     lon = 0
-
     # intro 
     intro['dataset_zh']=result[0].get('taibif_dataset_name_zh')
     intro['publisher']=result[0].get('publisher')
@@ -233,9 +232,20 @@ def occurrence_view(request, taibif_id):
     event['eventTime']={'name_zh':'調查活動時間','value':[result[0].get('eventTime'),result[0].get('taibif_eventTime')]}
     event['startDayOfYear']={'name_zh':'起始年份','value':[result[0].get('startDayOfYear'),result[0].get('staibif_tartDayOfYear')]}
     event['endDayOfYear']={'name_zh':'結束年份','value':[result[0].get('endDayOfYear'),result[0].get('taibif_endDayOfYear')]}
-    event['year']={'name_zh':'年','value':[result[0].get('year'),result[0].get('taibif_year')[0]]}
-    event['month']={'name_zh':'月','value':[result[0].get('month'),result[0].get('taibif_month')[0]]}
-    event['day']={'name_zh':'日','value':[result[0].get('day'),result[0].get('taibif_day')[0]]}
+    
+    tmp_y = None
+    tmp_m = None
+    tmp_d = None
+    if result[0].get('taibif_year'):
+        tmp_y = result[0].get('taibif_year')[0]
+    if result[0].get('taibif_month'):
+        tmp_m = result[0].get('taibif_month')[0]
+    if result[0].get('taibif_day'):
+        tmp_d = result[0].get('taibif_day')[0]
+    event['year']={'name_zh':'年','value':[result[0].get('year'),tmp_y]}
+    event['month']={'name_zh':'月','value':[result[0].get('month'),tmp_m]}
+    event['day']={'name_zh':'日','value':[result[0].get('day'),tmp_d]}
+    
     event['verbatimEventDate']={'name_zh':'字面上調查活動日期','value':[result[0].get('verbatimEventDate'),result[0].get('taibif_verbatimEventDate')]}
     event['habitat']={'name_zh':'棲地','value':[result[0].get('habitat'),result[0].get('taibif_habitat')]}
     event['samplingProtocol']={'name_zh':'調查方法','value':[result[0].get('samplingProtocol'),result[0].get('taibif_samplingProtocol')]}
@@ -274,6 +284,22 @@ def occurrence_view(request, taibif_id):
     taxon['nomenclaturalCode']={'name_zh':'nomenclaturalCode','value':[result[0].get('nomenclaturalCode'),result[0].get('taibif_nomenclaturalCode')]}
     taxon['taxonRemarks']={'name_zh':'分類註記','value':[result[0].get('taxonRemarks'),result[0].get('taibif_taxonRemarks')]}
 
+    lat = None
+    lon = None
+    lat_d = None
+    lon_d = None
+    if result[0].get('taibif_latitude'):
+        lat = result[0].get('taibif_latitude')[0]
+        lat_d = result[0].get('taibif_latitude')[0]
+    elif result[0].get('decimalLatitude'):
+        lat = result[0].get('decimalLatitude')
+
+    if result[0].get('taibif_longitude'):
+        lon = result[0].get('taibif_longitude')[0]
+        lon_d = result[0].get('taibif_longitude')[0]
+    elif result[0].get('decimalLongitude'):
+        lon = result[0].get('decimalLongitude')
+        
     # location
     location['locationID']={'name_zh':'locationID','value':[result[0].get('locationID'),result[0].get('taibif_locationID')]}
     location['higherGeographyID']={'name_zh':'higherGeographyID','value':[result[0].get('higherGeographyID'),result[0].get('taibif_higherGeographyID')]}
@@ -297,8 +323,8 @@ def occurrence_view(request, taibif_id):
     location['verbatimDepth']={'name_zh':'字面上深度','value':[result[0].get('verbatimDepth'),result[0].get('taibif_verbatimDepth')]}
     location['locationAccordingTo']={'name_zh':'locationAccordingTo','value':[result[0].get('locationAccordingTo'),result[0].get('taibif_locationAccordingTo')]}
     location['locationRemarks']={'name_zh':'locationRemarks','value':[result[0].get('locationRemarks'),result[0].get('taibif_locationRemarks')]}
-    location['decimalLatitude']={'name_zh':'十進位緯度','value':[result[0].get('decimalLatitude'),result[0].get('taibif_latitude')[0]]}
-    location['decimalLongitude']={'name_zh':'十進位經度','value':[result[0].get('decimalLongitude'),result[0].get('taibif_longitude')[0]]}
+    location['decimalLatitude']={'name_zh':'十進位緯度','value':[result[0].get('decimalLatitude'),lat_d]}
+    location['decimalLongitude']={'name_zh':'十進位經度','value':[result[0].get('decimalLongitude'),lon_d]}
     location['geodeticDatum']={'name_zh':'geodeticDatum','value':[result[0].get('geodeticDatum'),result[0].get('taibif_geodeticDatum')]}
     location['coordinateUncertaintyInMeters']={'name_zh':'座標誤差(公尺)','value':[result[0].get('coordinateUncertaintyInMeters'),result[0].get('taibif_coordinateUncertaintyInMeters')]}
     location['coordinatePrecision']={'name_zh':'座標精準度','value':[result[0].get('coordinatePrecision'),result[0].get('taibif_coordinatePrecision')]}
@@ -316,20 +342,6 @@ def occurrence_view(request, taibif_id):
     location['georeferenceSources']={'name_zh':'georeferenceSources','value':[result[0].get('georeferenceSources'),result[0].get('taibif_georeferenceSources')]}
     location['georeferenceRemarks']={'name_zh':'georeferenceRemarks','value':[result[0].get('georeferenceRemarks'),result[0].get('taibif_georeferenceRemarks')]}
 
-    # other
-
-    lat = None
-    lon = None
-    if result[0].get('taibif_latitude'):
-        lat = result[0].get('taibif_latitude')[0]
-    elif result[0].get('decimalLatitude'):
-        lat = result[0].get('decimalLatitude')
-
-    if result[0].get('taibif_longitude'):
-        lon = result[0].get('taibif_longitude')[0]
-    elif result[0].get('decimalLongitude'):
-        lon = result[0].get('decimalLongitude')
-    # print(result[0])
     context = {
         'intro':intro,
         'record':record,
