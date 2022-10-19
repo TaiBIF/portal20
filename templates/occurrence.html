@@ -48,7 +48,7 @@
     <h1 style="margin-top:0px">
       {% if taxon.vernacularName.value.1 %}
           {{ taxon.vernacularName.value.1 }}
-        {% else %}
+      {% elif taxon.vernacularName.value.0 != None %}
           {{ taxon.vernacularName.value.0 }}
       {% endif %}
       {% if intro.scientificName %}
@@ -69,7 +69,7 @@
       <dd>
         {% if taxon.vernacularName.value.1 %}
           {{ taxon.vernacularName.value.1 }}
-        {% else %}
+        {% elif taxon.vernacularName.value.0 != None %}
           {{ taxon.vernacularName.value.0 }}
         {% endif %} 
       <I>{{ intro.scientificName}} </I></dd>
