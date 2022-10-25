@@ -189,16 +189,16 @@ def dataset_api(request):
     rows = [{
         'title' : x['title'] if 'title' in x else None,
         'name' : x['name'],
-        'author' : x['author'] if 'author' in x else None,
-        'pub_date' : x['pub_date'].strftime("%Y-%m-%d") if 'pub_date' in x else None,
-        'mod_date' : x['mod_date'].strftime("%Y-%m-%d") if 'mod_date' in x else None,
+        'author' : x['author'] if 'author' in x and x['mod_date'] != None else None,
+        'pub_date' : x['pub_date'].strftime("%Y-%m-%d") if 'pub_date' in x and x['pub_date'] != None else None,
+        'mod_date' : x['mod_date'].strftime("%Y-%m-%d") if 'mod_date' in x and x['mod_date'] != None else None,
         'core' : x['dwc_core_type'] if 'dwc_core_type' in x else None,
         'license' : x['data_license'] if 'data_license' in x and x['data_license'] != None else 'unknown',
-        'doi' : x['gbif_doi'] if 'doi' in x else None,
-        'organization_id' : x['organization_uuid'] if 'organization_uuid' in x else None,
-        'organization_name' : x['organization_name'] if 'organization_name' in x else None,
-        'num_record' : x['num_record'] if 'num_record' in x else None,
-        'gbif_dataset_id' : x['guid'] if 'guid' in x else None,
+        'doi' : x['gbif_doi'] if 'doi' in x and x['gbif_doi'] != None else None,
+        'organization_id' : x['organization_uuid'] if 'organization_uuid' in x and x['organization_uuid'] != None else None,
+        'organization_name' : x['organization_name'] if 'organization_name' in x and x['organization_name'] != None else None,
+        'num_record' : x['num_record'] if 'num_record' in x and x['num_record'] != None else None,
+        'gbif_dataset_id' : x['guid'] if 'guid' in x and x['guid'] != None else None,
         # 'citation' : x['citation'] if 'citation' in x else None,
         # 'resource' : x['resource'] if 'resource' in x else None,
     } for x in result_d ]
@@ -213,12 +213,20 @@ def for_basic_occ(request):
     end_date = "*"
     solr_error = ''
     solr_response = ''
-    
+    rows=10
+    offset=0
     for key, values in request.GET.lists():
         if key == "start_date" or key == "end_date":
             continue
-        query_list.append((key, values[0]))
-
+        elif key == "rows":
+            rows = values[0]
+            query_list.append((key, values[0]))
+        elif key == "offset":
+            offset = values[0]
+            query_list.append(('start', values[0]))
+        else:
+            query_list.append((key, values[0]))
+    print("query_list == ",query_list)
     if request.GET.get('start_date'):
         start_date = datetime.datetime.strptime(request.GET.get('start_date'), '%Y-%m-%d').isoformat() + 'Z'
     if request.GET.get('end_date'):
@@ -228,7 +236,7 @@ def for_basic_occ(request):
     
     solr_q = urllib.parse.urlencode(query_list,quote_via=urllib.parse.quote)
     url = f'http://solr:8983/solr/taibif_occurrence/select?q.op=AND&{solr_q}'
-
+    print(url)
     try: 
         resp =urllib.request.urlopen(url)
         resp_dict = resp.read().decode()
@@ -239,9 +247,9 @@ def for_basic_occ(request):
     if not solr_response['response']['docs']:
         return JsonResponse({
             'results': 0,
-            'solr_error_msg': solr_error,
-            'solr_url': url,
-            'solr_tuples': query_list,
+            'query_list': query_list,
+            'error_url': url,
+            'error_msg': ""+solr_error,
         })
     res={}
     res_list=[] 
@@ -275,9 +283,10 @@ def for_basic_occ(request):
             # 'modified':,
         })
 
-    res['num'] = solr_response['response']['numFound']
-    res['start'] = solr_response['response']['start']
-    res['data'] = res_list
+    res['count'] = solr_response['response']['numFound']
+    res['offset'] = int(offset)
+    res['rows'] = int(rows)
+    res['results'] = res_list
 
     return JsonResponse(res)
 
