@@ -508,11 +508,9 @@
 
 
   <field name="admin_memo" type="text_general"/>
-  <field name="alternative_name_c" type="string"/>
   <field name="author" type="text_general"/>
   <field name="class_key" type="plongs"/>
   <field name="classzh" type="string"/>
-  <field name="common_name" type="string"/>
   <field name="coreid" type="string"/>
   <field name="created" type="pdates"/>
   <field name="data_license" type="text_general"/>
@@ -600,7 +598,7 @@
   <field name="nameAccordingTo" type="string"/>
   <field name="namePublishedIn" type="string"/>
   <field name="name_taicol" type="string"/>
-  <field name="name_zh" type="string"/>
+  <field name="taibif_vernacular_name" type="string"/>
   <field name="namecode" type="plongs"/>
   <field name="nomenclaturalCode" type="string"/>
   <field name="nomenclaturalStatus" type="text_general"/>
@@ -669,7 +667,8 @@
   <field name="taibif_dataset_name" type="string"/>
   <field name="taibif_dataset_name_zh" type="string"/>
   <field name="taibif_day" type="plongs"/>
-  <field name="taibif_event_date" type="pdates"/>
+  <!-- <field name="taibif_event_date" type="pdates"/> -->
+  <field name="taibif_event_date" type="text_general"/>
   <field name="taibif_created" type="pdates"/>
   <field name="taibif_geodeticDatum" type="string"/>
   <field name="taibif_latitude" type="pdoubles"/>
@@ -709,8 +708,8 @@
 
   <field name="waterBody" type="text_general"/>
   <field name="year" type="pint"/>
-  <field name="year_x" type="plongs"/>
-  <field name="year_y" type="plongs"/>
+  <field name="year_x" type="pint"/>
+  <field name="year_y" type="pint"/>
 
   <dynamicField name="*_txt_en_split_tight" type="text_en_splitting_tight" indexed="true" stored="true"/>
   <dynamicField name="*_descendent_path" type="descendent_path" indexed="true" stored="true"/>
@@ -783,6 +782,7 @@
   <dynamicField name="*_p" type="location" indexed="true" stored="true"/>
   <copyField source="scientificName" dest="_text_"/>
   <copyField source="vernacularName" dest="_text_"/>
+  <copyField source="taibif_taxon_name_zh" dest="_text_"/>
   <copyField source="taibif_scientificname" dest="_text_"/>
   <copyField source="basisOfRecord" dest="_text_"/>
   <copyField source="kingdom" dest="_text_"/>

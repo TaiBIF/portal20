@@ -230,7 +230,7 @@ def occurrence_view(request, taibif_id):
     event['fieldNumber']={'name_zh':'野外調查編號','value':[result[0].get('fieldNumber'),result[0].get('taibif_fieldNumber')]}
     event['eventDate']={'name_zh':'調查活動日期','value':[result[0].get('eventDate'),result[0].get('taibif_event_date')]}
     event['eventTime']={'name_zh':'調查活動時間','value':[result[0].get('eventTime'),result[0].get('taibif_eventTime')]}
-    event['startDayOfYear']={'name_zh':'起始年份','value':[result[0].get('startDayOfYear'),result[0].get('staibif_tartDayOfYear')]}
+    event['startDayOfYear']={'name_zh':'起始年份','value':[result[0].get('startDayOfYear'),result[0].get('staibif_startDayOfYear')]}
     event['endDayOfYear']={'name_zh':'結束年份','value':[result[0].get('endDayOfYear'),result[0].get('taibif_endDayOfYear')]}
     
     tmp_y = None
@@ -260,10 +260,10 @@ def occurrence_view(request, taibif_id):
         acceptedNameUsageID = result[0].get('acceptedNameUsageID')
 
     taxon['taxonID']={'name_zh':'分類ID','value':[result[0].get('taxonID'),result[0].get('taibif_taxonID')]}
-    taxon['scientificNameID']={'name_zh':'學名ID','value':[result[0].get('scientificNameID'),result[0].get('taibif_scientificNameID')]}
-    taxon['acceptedNameUsageID']={'name_zh':'有效學名ID','value':[acceptedNameUsageID,'']}
-    taxon['scientificName']={'name_zh':'學名','value':[result[0].get('scientificName'),result[0].get('taibif_scientificName')]}
-    taxon['acceptedNameUsage']={'name_zh':'有效學名','value':[result[0].get('acceptedNameUsage'),result[0].get('taibif_acceptedNameUsage')]}
+    taxon['scientificNameID']={'name_zh':'學名ID','value':[result[0].get('scientificNameID'),result[0].get('taibif_accepted_namecode')]}
+    taxon['acceptedNameUsageID']={'name_zh':'有效學名ID','value':[acceptedNameUsageID,result[0].get('taibif_accepted_namecode')]}
+    taxon['scientificName']={'name_zh':'學名','value':[result[0].get('scientificName'),result[0].get('taibif_scientificname')]}
+    taxon['acceptedNameUsage']={'name_zh':'有效學名','value':[result[0].get('acceptedNameUsage'),result[0].get('taibif_scientificname')]}
     taxon['originalNameUsage']={'name_zh':'originalNameUsage','value':[result[0].get('originalNameUsage'),result[0].get('taibif_originalNameUsage')]}
     taxon['nameAccordingTo']={'name_zh':'nameAccordingTo','value':[result[0].get('nameAccordingTo'),result[0].get('taibif_nameAccordingTo')]}
     taxon['namePublishedIn']={'name_zh':'namePublishedIn','value':[result[0].get('namePublishedIn'),result[0].get('taibif_namePublishedIn')]}
@@ -280,7 +280,7 @@ def occurrence_view(request, taibif_id):
     taxon['taxonRank']={'name_zh':'分類位階','value':[result[0].get('taxonRank'),result[0].get('taibif_taxonRank')]}
     taxon['verbatimTaxonRank']={'name_zh':'字面上分類位階','value':[result[0].get('verbatimTaxonRank'),result[0].get('taibif_verbatimTaxonRank')]}
     taxon['scientificNameAuthorship']={'name_zh':'scientificNameAuthorship','value':[result[0].get('scientificNameAuthorship'),result[0].get('taibif_scientificNameAuthorship')]}
-    taxon['vernacularName']={'name_zh':'俗名','value':[result[0].get('vernacularName'),result[0].get('taibif_vernacularName')]}
+    taxon['vernacularName']={'name_zh':'俗名','value':[result[0].get('vernacularName'),result[0].get('taibif_vernacular_name')]}
     taxon['nomenclaturalCode']={'name_zh':'nomenclaturalCode','value':[result[0].get('nomenclaturalCode'),result[0].get('taibif_nomenclaturalCode')]}
     taxon['taxonRemarks']={'name_zh':'分類註記','value':[result[0].get('taxonRemarks'),result[0].get('taibif_taxonRemarks')]}
 
