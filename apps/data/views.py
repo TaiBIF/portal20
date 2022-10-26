@@ -202,8 +202,8 @@ def occurrence_view(request, taibif_id):
     # occ 
     occ['catalogNumber']={'name_zh':'catalogNumber','value':[result[0].get('catalogNumber'),result[0].get('taibif_catalogNumber')]}
     occ['occurrenceID']={'name_zh':'出現紀錄ID','value':[result[0].get('occurrenceID'),result[0].get('taibif_occurrenceID')]}
-    occ['recordNumber ']={'name_zh':'採集號','value':[result[0].get('recordNumber '),result[0].get('taibif_recordNumber ')]}
-    occ['recordedByID ']={'name_zh':'記錄者ID','value':[result[0].get('recordedByID'),result[0].get('taibif_recordedByID')]}
+    occ['recordNumber']={'name_zh':'採集號','value':[result[0].get('recordNumber '),result[0].get('taibif_recordNumber ')]}
+    occ['recordedByID']={'name_zh':'記錄者ID','value':[result[0].get('recordedByID'),result[0].get('taibif_recordedByID')]}
     occ['recordedBy']={'name_zh':'記錄者','value':[result[0].get('recordedBy'),result[0].get('taibif_recordedBy')]}
     occ['individualCount']={'name_zh':'個體數量','value':[result[0].get('individualCount'),result[0].get('taibif_individualCount')]}
     occ['organismQuantity']={'name_zh':'數量','value':[result[0].get('organismQuantity'),result[0].get('taibif_organismQuantity')]}
@@ -269,6 +269,7 @@ def occurrence_view(request, taibif_id):
     taxon['namePublishedIn']={'name_zh':'namePublishedIn','value':[result[0].get('namePublishedIn'),result[0].get('taibif_namePublishedIn')]}
     taxon['higherClassification']={'name_zh':'高階分類階層','value':[result[0].get('higherClassification'),result[0].get('taibif_higherClassification')]}
     taxon['kingdom']={'name_zh':'界','value':[result[0].get('kingdom'),result[0].get('kingdomzh')]}
+    taxon['taxon_backbone']=result[0].get('taxon_backbone') 
     taxon['phylum']={'name_zh':'門','value':[result[0].get('phylum'),result[0].get('phylumzh')]}
     taxon['class']={'name_zh':'綱','value':[result[0].get('class'),result[0].get('classzh')]}
     taxon['order']={'name_zh':'目','value':[result[0].get('order'),result[0].get('orderzh')]}
