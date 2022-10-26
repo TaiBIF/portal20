@@ -5,12 +5,27 @@
 <link href="{% static 'css/taibif.css' %}" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/leaflet.css' %}">
 <script src="{% static 'js/leaflet.js' %}"></script>
-    <style>
-        #map { width: auto; height: 600px; }
-        body { font: 16px/1.4 "Helvetica Neue", Arial, sans-serif; }
-        .ghbtns { position: relative; top: 4px; margin-left: 5px; }
-        a { color: #0077ff; }
-    </style>
+<style>
+    #map { width: auto; height: 600px; }
+    body { font: 16px/1.4 "Helvetica Neue", Arial, sans-serif; }
+    .ghbtns { position: relative; top: 4px; margin-left: 5px; }
+    a { color: #0077ff; }
+    .taxonbackbone {
+      position: relative;
+      display: inline-block;
+      margin-top: 20px;
+    }
+    .taxonbackbone[alt]:hover::after {
+      content: attr(alt);
+      white-space: pre;
+      position: absolute;
+      top: -120%;
+      padding: 7px;
+      border-radius: 5px;
+      color: white;
+      background-color: #4A3E3A ;
+    }
+</style>
 {% endblock %}
 
 {% block script %}
@@ -162,7 +177,13 @@
 
 
       <div class="article-head-wrapper">
-        <h1 class="heading-lg-ul">分類 Taxon</h1>
+        <h1 class="heading-lg-ul">分類 Taxon 
+        {% if  taxon.taxon_backbone != None %}
+          <div class="taxonbackbone" alt="Backbone:{{ taxon.taxon_backbone }}">
+            <span class="glyphicon glyphicon-info-sign"></span>
+          </div>
+        {% endif %}
+        </h1>
       </div>
       <table class="table">
         <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th></tr></thead>

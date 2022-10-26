@@ -26,14 +26,15 @@ export default function OccurrenceSearch(props) {
   const rows = props.data.results.map((row, index) => {
     const sn = props.data.offset + index + 1;
     const countryOrLocality = [row.taibif_country, row.locality].join('/');
+    const vernacular_name = row.taibif_vernacular_name ? row.taibif_vernacular_name : row.vernacularName;
     
 
     const bor = bor_allow.includes(row.basisOfRecord) ? row.basisOfRecord : "";
     return (
         <tr key={index} onClick={(e)=>{window.location.href=`/occurrence/${row.taibif_occ_id}`}} className={classes.occurrenceRow}>
         <td>{ sn }</td>
-        <td>{ row.vernacularName }</td>
-        <td >{/*http://taibif.tw/zh/namecode/{{ i.name_code */}{ row.scientificName }</td>
+        <td>{ vernacular_name }</td>
+        <td >{/*http://taibif.tw/zh/namecode/{{ i.name_code */}{ row.taibif_scientificname }</td>
         <td>{ row.eventDate }</td>
         <td>{ countryOrLocality }</td>
         <td><a href={"/dataset/"+row.taibif_dataset_name+"/"}>{ row.taibif_dataset_name_zh }</a></td>
