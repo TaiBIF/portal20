@@ -705,6 +705,7 @@
   <field name="verbatimTaxonRank" type="string"/>
   <field name="vernacularName" type="string"/>
   <field name="version" type="pdoubles"/>
+  <field name="taibif_taxon_name_zh" type="text_general"/>
 
   <field name="waterBody" type="text_general"/>
   <field name="year" type="pint"/>

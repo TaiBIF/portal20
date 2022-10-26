@@ -34,7 +34,7 @@ export default function OccurrenceSearch(props) {
         <tr key={index} onClick={(e)=>{window.location.href=`/occurrence/${row.taibif_occ_id}`}} className={classes.occurrenceRow}>
         <td>{ sn }</td>
         <td>{ vernacular_name }</td>
-        <td >{/*http://taibif.tw/zh/namecode/{{ i.name_code */}{ row.taibif_scientificname }</td>
+        <td style={{fontStyle: "italic"}}>{ row.taibif_scientificname }</td>
         <td>{ row.eventDate }</td>
         <td>{ countryOrLocality }</td>
         <td><a href={"/dataset/"+row.taibif_dataset_name+"/"}>{ row.taibif_dataset_name_zh }</a></td>
