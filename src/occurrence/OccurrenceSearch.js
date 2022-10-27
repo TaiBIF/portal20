@@ -39,12 +39,12 @@ export default function OccurrenceSearch(props) {
         <td>{ countryOrLocality }</td>
         <td><a href={"/dataset/"+row.taibif_dataset_name+"/"}>{ row.taibif_dataset_name_zh }</a></td>
         <td>{ bor }</td>
-        <td>{ row.kingdom }</td>
-        <td>{ row.phylum }</td>
-        <td>{ row.class }</td>
-        <td>{ row.order }</td>
-        <td>{ row.family }</td>
-        <td style={{fontStyle: "italic"}}> { row.genus }</td>
+        <td>{ row.kingdomzh }</td>
+        <td>{ row.phylumzh }</td>
+        <td>{ row.classzh }</td>
+        <td>{ row.orderzh }</td>
+        <td>{ row.familyzh }</td>
+        <td style={{fontStyle: "italic"}}> { row.genuszh }</td>
         </tr>
     )
   });

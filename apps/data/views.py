@@ -260,8 +260,8 @@ def occurrence_view(request, taibif_id):
         acceptedNameUsageID = result[0].get('acceptedNameUsageID')
 
     taxon['taxonID']={'name_zh':'分類ID','value':[result[0].get('taxonID'),result[0].get('taibif_taxonID')]}
-    taxon['scientificNameID']={'name_zh':'學名ID','value':[result[0].get('scientificNameID'),result[0].get('taibif_accepted_namecode')]}
-    taxon['acceptedNameUsageID']={'name_zh':'有效學名ID','value':[acceptedNameUsageID,result[0].get('taibif_accepted_namecode')]}
+    taxon['scientificNameID']={'name_zh':'學名ID','value':[result[0].get('scientificNameID'),result[0].get('taibif_namecode')[0] if result[0].get('taibif_namecode') != None else result[0].get('taibif_namecode')]}
+    taxon['acceptedNameUsageID']={'name_zh':'有效學名ID','value':[acceptedNameUsageID,result[0].get('taibif_accepted_namecode')[0] if result[0].get('taibif_accepted_namecode') != None else result[0].get('taibif_accepted_namecode')]}
     taxon['scientificName']={'name_zh':'學名','value':[result[0].get('scientificName'),result[0].get('taibif_scientificname')]}
     taxon['acceptedNameUsage']={'name_zh':'有效學名','value':[result[0].get('acceptedNameUsage'),result[0].get('taibif_scientificname')]}
     taxon['originalNameUsage']={'name_zh':'originalNameUsage','value':[result[0].get('originalNameUsage'),result[0].get('taibif_originalNameUsage')]}
@@ -281,7 +281,7 @@ def occurrence_view(request, taibif_id):
     taxon['taxonRank']={'name_zh':'分類位階','value':[result[0].get('taxonRank'),result[0].get('taibif_taxonRank')]}
     taxon['verbatimTaxonRank']={'name_zh':'字面上分類位階','value':[result[0].get('verbatimTaxonRank'),result[0].get('taibif_verbatimTaxonRank')]}
     taxon['scientificNameAuthorship']={'name_zh':'scientificNameAuthorship','value':[result[0].get('scientificNameAuthorship'),result[0].get('taibif_scientificNameAuthorship')]}
-    taxon['vernacularName']={'name_zh':'俗名','value':[result[0].get('vernacularName'),result[0].get('taibif_vernacular_name')[0]]}
+    taxon['vernacularName']={'name_zh':'俗名','value':[result[0].get('vernacularName'),result[0].get('taibif_vernacular_name') if result[0].get('taibif_vernacular_name')!=None else '']}
     taxon['nomenclaturalCode']={'name_zh':'nomenclaturalCode','value':[result[0].get('nomenclaturalCode'),result[0].get('taibif_nomenclaturalCode')]}
     taxon['taxonRemarks']={'name_zh':'分類註記','value':[result[0].get('taxonRemarks'),result[0].get('taibif_taxonRemarks')]}
 
@@ -306,7 +306,7 @@ def occurrence_view(request, taibif_id):
     location['higherGeographyID']={'name_zh':'higherGeographyID','value':[result[0].get('higherGeographyID'),result[0].get('taibif_higherGeographyID')]}
     location['higherGeography']={'name_zh':'higherGeography','value':[result[0].get('higherGeography'),result[0].get('taibif_higherGeography')]}
     location['continent']={'name_zh':'洲','value':[result[0].get('continent'),result[0].get('taibif_continent')]}
-    location['waterBody']={'name_zh':'水體','value':[result[0].get('waterBody'),result[0].get('taibif_waterBody')]}
+    location['waterBody']={'name_zh':'水體','value':[result[0].get('waterBody')[0] if result[0].get('waterBody') != None else result[0].get('waterBody'),result[0].get('taibif_waterBody')[0] if result[0].get('taibif_waterBody') != None else result[0].get('taibif_waterBody')]}
     location['islandGroup']={'name_zh':'群島','value':[result[0].get('islandGroup'),result[0].get('taibif_islandGroup')]}
     location['island']={'name_zh':'島嶼','value':[result[0].get('island'),result[0].get('taibif_island')]}
     location['country']={'name_zh':'國家','value':[result[0].get('country'),result[0].get('taibif_country')]}
