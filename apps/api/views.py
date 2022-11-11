@@ -215,18 +215,8 @@ def for_basic_occ(request):
     solr_response = ''
     rows=10
     offset=0
-    for key, values in request.GET.lists():
-        if key == "start_date" or key == "end_date":
-            continue
-        elif key == "rows":
-            rows = values[0]
-            query_list.append((key, values[0]))
-        elif key == "offset":
-            offset = values[0]
-            query_list.append(('start', values[0]))
-        else:
-            query_list.append((key, values[0]))
-    print("query_list == ",query_list)
+    fq_query=''
+    
     if request.GET.get('start_date'):
         start_date = datetime.datetime.strptime(request.GET.get('start_date'), '%Y-%m-%d').isoformat() + 'Z'
     if request.GET.get('end_date'):
@@ -234,22 +224,51 @@ def for_basic_occ(request):
         
     query_list.append(('q', f'mod_date:[{start_date} TO {end_date}]'))
     
+    for key, values in request.GET.lists():
+        if key == "start_date" or key == "end_date":
+            continue
+        elif key == "rows":
+            rows = values[0]
+            if int(rows)<=300:
+                query_list.append((key, values[0]))
+            else : 
+                rows = 300
+                query_list.append((key, 300))
+        elif key == "offset":
+            offset = values[0]
+            query_list.append(('start', values[0]))
+    
+    
+    if request.GET.get("datasetFullName"):
+        fq_query = 'fq=taibif_dataset_name_zh:'+ str(request.GET.get('datasetFullName'))
+    
+    if request.GET.get("datasetFullName") and request.GET.get("dataset_name") :
+        fq_query = fq_query + '&fq=taibif_dataset_name:'+ str(request.GET.get('dataset_name'))
+    
+    if not request.GET.get("datasetFullName") and request.GET.get("dataset_name") :
+        fq_query = 'fq=taibif_dataset_name:'+ str(request.GET.get('dataset_name'))
+    
+    
+    
     solr_q = urllib.parse.urlencode(query_list,quote_via=urllib.parse.quote)
-    url = f'http://solr:8983/solr/taibif_occurrence/select?q.op=AND&{solr_q}'
-    print(url)
+    if fq_query:
+        url = f'http://solr:8983/solr/taibif_occurrence/select?q.op=AND&{solr_q}&{fq_query}'
+    else:
+        url = f'http://solr:8983/solr/taibif_occurrence/select?q.op=AND&{solr_q}'
+    
     try: 
         resp =urllib.request.urlopen(url)
         resp_dict = resp.read().decode()
         solr_response = json.loads(resp_dict)
     except urllib.request.HTTPError as e:
         solr_error = str(e)
-            
-    if not solr_response['response']['docs']:
+        
+    if not solr_response['response']['docs']: 
         return JsonResponse({
             'results': 0,
             'query_list': query_list,
             'error_url': url,
-            'error_msg': ""+solr_error,
+            'error_msg': solr_error,
         })
     res={}
     res_list=[] 
@@ -260,11 +279,11 @@ def for_basic_occ(request):
             'isPreferredName': i['taibif_vernacularName'] if 'taibif_vernacularName' in i else (i['vernacularName'] if 'vernacularName' in i else ''),
             # 'sensitiveCategory':,
             # 'taxonRank':,
-            'eventDate':i['taibif_event_date'] if 'taibif_event_date' in i else (i['eventDate'] if 'eventDate' in i else ''),
-            'verbatimLongitude':i['taibif_longitude'] if 'taibif_longitude' in i  else (i['decimalLongitude'] if 'decimalLongitude' in i else ''),
-            'verbatimLatitude':i['taibif_latitude'] if 'taibif_latitude' in i  else (i['decimalLatitude'] if 'decimalLatitude' in i else ''),
-            'verbatimCoordinateSystem':i['verbatimCoordinates'] if 'verbatimCoordinates' in i else '',
-            'verbatimSRS':i['verbatimSRS'] if 'verbatimSRS' in i else '',
+            'eventDate':i['taibif_event_date'][0] if 'taibif_event_date' in i else (i['eventDate'] if 'eventDate' in i else ''),
+            'longitude':str(i['taibif_longitude'][0]) if 'taibif_longitude' in i  else '',
+            'latitude':str(i['taibif_longitude'][0]) if 'taibif_latitude' in i  else '',
+            'geodeticDatum':i['taibif_geodeticDatum'] if 'taibif_geodeticDatum' in i else '',
+            # 'verbatimSRS':i['verbatimSRS'] if 'verbatimSRS' in i else '',
             'coordinateUncertaintyInMeters':i['coordinateUncertaintyInMeters'] if 'coordinateUncertaintyInMeters' in i else '',
             'dataGeneralizations':i['taibif_dataGeneralizations'] if 'taibif_dataGeneralizations' in i else (i['dataGeneralizations']  if 'dataGeneralizations' in i else ''),
             'coordinatePrecision':i['taibif_coordinatePrecision'] if 'taibif_coordinatePrecision' in i else (i['coordinatePrecision'] if 'coordinatePrecision' in i else ''),
@@ -275,12 +294,14 @@ def for_basic_occ(request):
             # 'taxonID':,
             # 'scientificNameID':,
             'basisOfRecord':i['basisOfRecord'] if 'basisOfRecord' in i else '',
-            'datasetName':i['taibif_dataset_name_zh'] if 'taibif_dataset_name_zh' in i else (i['taibif_datasetName'] if 'taibif_datasetName' in i else ''),
+            'datasetFullName':i['taibif_dataset_name_zh'] if 'taibif_dataset_name_zh' in i else '',
+            'datasetName':i['taibif_dataset_name'] if 'taibif_dataset_name' in i else '',
             # 'resourceContacts':
             # 'references':
             'license':i['taibif_license'] if 'taibif_license' in i else (i['license'] if 'license' in i else ''),
             # 'created':,
             # 'modified':,
+            'mod_date':i['mod_date'][0]
         })
 
     res['count'] = solr_response['response']['numFound']
