@@ -348,13 +348,13 @@ class SolrQuery(object):
                 'label': '發布單位 Publisher',
                 'rows': rows,
             })
-        if data := resp['facets'].get('license', ''):
-            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
-            menus.append({
-                'key':'license',
-                'label': '授權類型 Licence',
-                'rows': rows,
-            })
+        # if data := resp['facets'].get('license', ''):
+        #     rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
+        #     menus.append({
+        #         'key':'license',
+        #         'label': '授權類型 Licence',
+        #         'rows': rows,
+        #     })
             
         if key == '':
             return menus
