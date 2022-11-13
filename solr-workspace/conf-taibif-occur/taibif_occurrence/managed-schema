@@ -489,11 +489,11 @@
   <field name="county" type="string"/>
 
   <field name="decimalLatitude" type="string"/>
-  <field name="decimalLatitude_x" type="pdoubles"/>
-  <field name="decimalLatitude_y" type="pdoubles"/>
+  <field name="decimalLatitude_x" type="string"/>
+  <field name="decimalLatitude_y" type="string"/>
   <field name="decimalLongitude" type="string"/>
-  <field name="decimalLongitude_x" type="pdoubles"/>
-  <field name="decimalLongitude_y" type="pdoubles"/>
+  <field name="decimalLongitude_x" type="string"/>
+  <field name="decimalLongitude_y" type="string"/>
   <field name="habitat" type="string"/>
 
   <!--  GeologicalContext -->
@@ -518,7 +518,7 @@
   <field name="dataset_name" type="string"/> <!-- similar with datasetName -->
 
   <field name="dateIdentified" type="string"/>
-  <field name="day" type="pint"/>
+  <field name="day" type="string"/>
   <field name="disposition" type="string"/>
   <field name="dwc_core_type" type="text_general"/>
   <field name="dynamicProperties" type="text_general"/>
@@ -590,7 +590,7 @@
   <field name="minimumElevationInMeters" type="string"/>
   <field name="mod_date" type="pdates"/>
   <field name="modified" type="string"/>
-  <field name="month" type="pint"/>
+  <field name="month" type="string"/>
   <field name="month_x" type="plongs"/>
   <field name="month_y" type="pdoubles"/>
   <field name="municipality" type="string"/>
@@ -602,10 +602,6 @@
   <field name="namecode" type="plongs"/>
   <field name="nomenclaturalCode" type="string"/>
   <field name="nomenclaturalStatus" type="text_general"/>
-  <field name="num_checklist" type="plongs"/>
-  <field name="num_event" type="plongs"/>
-  <field name="num_occurrence" type="plongs"/>
-  <field name="num_record" type="plongs"/>
   <field name="occID" type="plongs"/>
   <field name="occurrenceID" type="string"/>
   <field name="occurrenceRemarks" type="string"/>
@@ -674,7 +670,7 @@
   <field name="taibif_latitude" type="pdoubles"/>
   <field name="taibif_longitude" type="pdoubles"/>
   <field name="taibif_month" type="plongs"/>
-  <field name="taibif_occ_id" type="plongs"/>
+  <field name="taibif_occ_id" type="string"/>
   <field name="taibif_scientificname" type="string"/>
   <field name="taibif_uuid" type="string"/>
   <field name="taibif_year" type="plongs"/>
@@ -710,9 +706,9 @@
   <field name="taibif_taxon_name_zh" type="text_general"/>
 
   <field name="waterBody" type="text_general"/>
-  <field name="year" type="pint"/>
-  <field name="year_x" type="pint"/>
-  <field name="year_y" type="pint"/>
+  <field name="year" type="text_general"/>
+  <field name="year_x" type="text_general"/>
+  <field name="year_y" type="text_general"/>
 
   <dynamicField name="*_txt_en_split_tight" type="text_en_splitting_tight" indexed="true" stored="true"/>
   <dynamicField name="*_descendent_path" type="descendent_path" indexed="true" stored="true"/>
