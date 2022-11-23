@@ -72,9 +72,29 @@ JSON_FACET_MAP = {
             'mincount': 1,
             'limit': -1,
         },
+         'taibif_error': {
+            'type':'terms',
+            'field':'taibif_error',
+            'mincount': 1,
+        },
+         'CoordinateInvalid': {
+            'type':'terms',
+            'field':'CoordinateInvalid',
+            'mincount': 1,
+        },
+         'TaxonMatchNone': {
+            'type':'terms',
+            'field':'TaxonMatchNone',
+            'mincount': 1,
+        },
+         'RecordedDateInvalid': {
+            'type':'terms',
+            'field':'RecordedDateInvalid',
+            'mincount': 1,
+        },
     }
 }
-
+  
 CODE_MAPPING ={
     'county':{
         None : '其他',
@@ -165,6 +185,8 @@ class SolrQuery(object):
                         taxon_key_list.append(f'{rank}_key:{taxon_id}')
                 #fq=(cat1:val1 OR cat2:val2 OR (cat3:(val3 AND val4)))
                 self.solr_tuples.append(('fq', ' OR '.join(taxon_key_list)))
+            elif key == 'issues':
+                self.solr_tuples.append(('fq', '{}:"{}"'.format(values[0], 'true')))
             elif key in JSON_FACET_MAP[self.core]:
                 field = JSON_FACET_MAP[self.core][key]['field']
                 if (field == 'taibif_dataset_name_zh'):
@@ -214,7 +236,7 @@ class SolrQuery(object):
             self.solr_tuples.append(('json.facet', '{'f'{s}''}'))
             
         query_string = urllib.parse.urlencode(self.solr_tuples)
-        self.solr_url = f'{SOLR_PREFIX}{self.core}/select?{query_string}'
+        self.solr_url = f'{SOLR_PREFIX}{self.core}/select?{query_string}'        
         return self.solr_url
 
     def request(self, req_lists=[]):
@@ -348,13 +370,43 @@ class SolrQuery(object):
                 'label': '發布單位 Publisher',
                 'rows': rows,
             })
-        # if data := resp['facets'].get('license', ''):
-        #     rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
-        #     menus.append({
-        #         'key':'license',
-        #         'label': '授權類型 Licence',
-        #         'rows': rows,
-        #     })
+        if data := resp['facets'].get('license', ''):
+            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
+            menus.append({
+                'key':'license',
+                'label': '授權類型 Licence',
+                'rows': rows,
+            })
+        
+        
+        geo = 0
+        taxon = 0
+        date_i = 0 
+        if data := resp['facets'].get('CoordinateInvalid', ''):
+            geo = 0
+            for i in data['buckets']:
+                if str(i['val']) == 'True':
+                    geo = i['count']
+        if data := resp['facets'].get('TaxonMatchNone', ''):
+            taxon = 0
+            for i in data['buckets']:
+                if str(i['val']) == 'True':
+                    taxon = i['count']
+        if data := resp['facets'].get('RecordedDateInvalid', ''):
+            date_i = 0
+            for i in data['buckets']:
+                if str(i['val']) == 'True':
+                    date_i = i['count']            
+                    
+            rows = [{'key':'TaxonMatchNone', 'label': 'Taxon Match None', 'count': int(taxon)},
+                    {'key':'CoordinateInvalid', 'label': 'Coordinate Invalid', 'count': int(geo)},
+                    {'key':'RecordedDateInvalid', 'label': 'Recorded Date Invalid', 'count': int(date_i)},
+                    ]
+            menus.append({
+                'key':'issues',
+                'label': '問題 issues',
+                'rows': rows,
+            })
             
         if key == '':
             return menus

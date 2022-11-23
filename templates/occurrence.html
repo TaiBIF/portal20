@@ -25,6 +25,45 @@
       color: white;
       background-color: #4A3E3A ;
     }
+
+    .rcorners1 {
+      border-radius: 8px;
+      background: #f5cc27;
+      padding: 1px;
+      width: 10px;
+      height: 10px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .rcorners1[alt]:hover::after {
+      content: attr(alt);
+      white-space: pre;
+      position: absolute;
+      top: -120%;
+      padding: 7px;
+      border-radius: 5px;
+      background-color: #f5cc27 ;
+    }
+
+    .balanced-row{
+      display: flex;
+      justify-content: space-around;
+      background-color: #EEEEEE;
+      padding: 2.142857142855rem;
+      
+    }
+    .occurrence-info{
+      padding: 2.142857142855rem 0;
+    }
+    
+    .occurrence-warning{
+      border-radius: 10px;
+      background-color: #f5cc27;
+      display: inline;
+    }
+    
+
 </style>
 {% endblock %}
 
@@ -76,24 +115,35 @@
       {% endif %}
     </h1>
   </div>
-  
-  <div class="jumbotron">
-    <dl>      
-      <!-- <dd>{{ intro.scientificname}}{% if intro.simple_data.taxon_species %} (<a href="/species/{{ intro.spe }} ">{{ occurrence.simple_data.taxon_species.scientific_name_infraspecific}}</a>){% endif %}</dd> -->
-      <dt>物種</dt>
-      <dd>
-        {% if taxon.vernacularName.value.1 %}
-          {{ taxon.vernacularName.value.1 }}
-        {% elif taxon.vernacularName.value.0 != None %}
-          {{ taxon.vernacularName.value.0 }}
-        {% endif %} 
-      <I>{{ intro.scientificName}} </I></dd>
-      <dt>資料集</dt>
-      <dd><a href="/dataset/{{ intro.dataset}}">{{ intro.dataset_zh }}</a></dd>
-      <dt>發布單位</dt>
-      <dd>{%if intro.publisher_id%}<a href="/dataset/{{ intro.publisher}}">{% endif %}{{ intro.publisher }}</a></dd>
-    </dl>
-  </div>
+  <section class="occurrence-info">
+    <div class="balanced-row">   
+      <div>
+        <dl>
+          <dt>物種</dt>
+          <dd>
+            {% if taxon.vernacularName.value.1 %}
+              {{ taxon.vernacularName.value.1 }}
+            {% elif taxon.vernacularName.value.0 != None %}
+              {{ taxon.vernacularName.value.0 }}
+            {% endif %} 
+            <I>{{ intro.scientificName}} </I>
+          </dd>
+        </dl>
+      </div>
+      <div>
+        <dl>              
+          <dt>資料集</dt>
+          <dd><a href="/dataset/{{ intro.dataset}}">{{ intro.dataset_zh }}</a></dd>
+          <dt>發布單位</dt>
+          <dd>{%if intro.publisher_id%}<a href="/dataset/{{ intro.publisher}}">{% endif %}{{ intro.publisher }}</a></dd>
+          <dt >問題</dt>
+          {% for i in intro.issues %}
+            <dd class="occurrence-warning">{{ i }}</dd>
+          {% endfor%}
+        </dl>
+      </div>
+    </div>
+  </section>
   {% if map_view %}<div id="map"></div>{% endif %}
 
 
@@ -151,7 +201,11 @@
       </table>
      
       <div class="article-head-wrapper">
-        <h1 class="heading-lg-ul">調查活動 Event</h1>
+        <h1 class="heading-lg-ul">調查活動 Event
+          {% if  "Recorded Date Invalid" in intro.issues %}
+          <div class = "rcorners1" alt="Issue:Recorded Date Invalid"></div>
+          {% endif %}
+        </h1>
       </div>
       <table class="table">
         <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th></tr></thead>
@@ -183,8 +237,13 @@
             <span class="glyphicon glyphicon-info-sign"></span>
           </div>
         {% endif %}
+        {% if  "Taxon Match None" in intro.issues %}
+        <div class = "rcorners1" alt="Issue:Taxon Match None"></div>
+        {% endif %}
         </h1>
+        
       </div>
+      
       <table class="table">
         <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th></tr></thead>
         <tbody>
@@ -225,7 +284,10 @@
 
 
       <div class="article-head-wrapper">
-        <h1 class="heading-lg-ul">地理資訊 Location</h1>
+        <h1 class="heading-lg-ul">地理資訊 Location{% if  "Coordinate Invalid" in intro.issues %}
+          <div class = "rcorners1" alt="Issue:Coordinate Invalid"></div>
+          {% endif %}
+        </h1>
       </div>
       <table class="table">
         <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th></tr></thead>

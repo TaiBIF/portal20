@@ -164,7 +164,7 @@ def occurrence_view(request, taibif_id):
     taxon = {}
     location = {}
     other = {}
-    
+    # taxon_error = result[0].get('taxon_error')[0]#'無吻合的分類群'
     lat = 0
     lon = 0
     # intro 
@@ -179,7 +179,14 @@ def occurrence_view(request, taibif_id):
     intro['class_key']=result[0].get('class_key')
     intro['genus_key']=result[0].get('genus_key')
     intro['dataset']=result[0].get('taibif_dataset_name')
-    # intro['name_zh']=result[0].get('tname_zh')
+    issues = []
+    if result[0].get('TaxonMatchNone')[0]:
+        issues.append("Taxon Match None")
+    if result[0].get('CoordinateInvalid')[0]:
+        issues.append("Coordinate Invalid")
+    if result[0].get('RecordedDateInvalid')[0]:
+        issues.append("Recorded Date Invalid")
+    intro['issues']=issues
     
 
     # record
@@ -349,12 +356,12 @@ def occurrence_view(request, taibif_id):
         'occ':occ,
         'event':event, 
         'taxon':taxon,
+        # 'taxon_error':taxon_error,
         'location':location,
         'other':other,
     }
     if lat and lon:
         context['map_view'] =  [lat, lon]
-    # print(context['map_view'])
 
     return render(request, 'occurrence.html', context)
 

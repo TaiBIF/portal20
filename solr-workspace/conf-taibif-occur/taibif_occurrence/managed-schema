@@ -534,7 +534,7 @@
   <field name="gbif_doi" type="text_general"/>
   <field name="genus_key" type="plongs"/>
   <field name="genuszh" type="string"/>
-  <field name="geo_error" type="string"/>
+  <field name="geo_error" type="text_general"/>
   <field name="geodeticDatum" type="string"/>
   <field name="geologicalContextID" type="text_general"/>
   <field name="geom" type="location_rpt" uninvertible="true" indexed="true" stored="true"/>
@@ -680,10 +680,10 @@
   <field name="taxonRank" type="string"/>
   <field name="taxonRemarks" type="string"/>
   <field name="taxon_backbone" type="string"/>
-  <field name="taxon_error" type="string"/>
+  <field name="taxon_error" type="text_general"/>
   <field name="taxon_id" type="pint"/>
   <field name="taxonomicStatus" type="text_general"/>
-  <field name="time_error" type="string"/>
+  <field name="time_error" type="text_general"/>
   <field name="time_issue" type="text_general"/>
   <field name="title" type="text_general"/>
   <field name="type" type="string"/>
