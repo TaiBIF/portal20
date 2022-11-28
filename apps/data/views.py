@@ -442,8 +442,11 @@ def publisher_view(request, pk):
             'core_type':  DATA_MAPPING['publisher_dwc'][x.dwc_core_type],
             'num_record':  x.num_record,
         })
-    
-    
+
+    context["info"] = {
+        'dataset_num' : Dataset.objects.filter(organization__id=pk).count(),
+        'sum_occurrence' : Dataset.objects.filter(organization__id=pk).aggregate(Sum('num_occurrence'))['num_occurrence__sum']
+    }
     context['dataset'] = dataset
 
 
