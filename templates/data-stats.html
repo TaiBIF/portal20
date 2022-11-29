@@ -10,6 +10,20 @@
 {% endblock %}
 {% block head %}
 <style>
+  .info {
+    position: relative;
+    display: inline-block;
+  }
+  .info[alt]:hover::after {
+    content: attr(alt);
+    white-space: pre;
+    position: absolute;
+    top: -120%;
+    padding: 7px;
+    border-radius: 5px;
+    color: white;
+    background-color: #4A3E3A ;
+  }
   .axis {
       font: 16px sans-serif;
   }
@@ -78,7 +92,7 @@ svg text.label {
     <h3>統整數據</h3>
 
     <div class="panel panel-default">
-      <div class="panel-heading">今年度上傳資料筆數</div>
+      <div class="panel-heading">今年度上傳出現紀錄資料筆數</div>
       <div class="panel-body">
         <div id="taibif-stats__this_year_occurrence"></div>
       </div>
@@ -92,7 +106,7 @@ svg text.label {
     </div>
 
     <div class="panel panel-default">
-      <div class="panel-heading">累積資料筆數</div>
+      <div class="panel-heading">累積出現紀錄資料筆數</div>
       <div class="panel-body">
         <div id="taibif-stats__trend_occurrence"></div>
       </div>
