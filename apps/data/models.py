@@ -34,6 +34,7 @@ DATA_MAPPING = {
         'CHECKLIST':'物種名錄',
         'SAMPLINGEVENT':'調查活動',
         'Metadata-only':'詮釋資料',
+        'metadata':'詮釋資料',
     }
 }
 
@@ -187,6 +188,7 @@ class DatasetOrganization(models.Model):
     country_code = models.CharField('country_code', max_length=8, default='TW',null=True)
     administrative_contact = models.CharField('administrative_contact', max_length=256, default='',null=True)
     endorsed_by = models.CharField('endorsed_by', max_length=256, default='',null=True)
+    organization_gbif_uuid = models.CharField('organization_gbif_uuid', max_length=256, default='',null=True)
     installations = models.CharField('installations', max_length=256, default='',null=True)
     technical_contact = models.CharField('technical_contact', max_length=256, default='',null=True)
     country_or_area = models.CharField('country_or_area', max_length=256, default='',null=True)
