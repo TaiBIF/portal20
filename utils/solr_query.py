@@ -50,6 +50,7 @@ JSON_FACET_MAP = {
             'type':'terms',
             'field':'taibif_country',
             'mincount': 0,
+            'limit': -1,
         },
         'publisher': {
             'type':'terms',
@@ -65,6 +66,7 @@ JSON_FACET_MAP = {
          'taibif_county': {
             'type':'terms',
             'field':'taibif_county',
+            'limit': -1,
         },
          'taxon_id': {
             'type':'terms',

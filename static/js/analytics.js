@@ -1,6 +1,6 @@
 
 var width = 980;
-var height = 380;
+var height = 360;
 var padding = 80;
 
 
@@ -33,11 +33,14 @@ function renderBarChart(selector, dataset) {
     .call(d3.axisLeft(yScale).ticks(5)
     .tickFormat(function (d) {
                 switch(d) {
-                  case 1000000: return "1M"; break;
-                  case 2000000: return "2M"; break;
-                  case 3000000: return "3M"; break;
-                  case 4000000: return "4M"; break;
-                  case 5000000: return "5M"; break;
+                  case 100000: return "100K"; break;
+                  case 200000: return "200K"; break;
+                  case 300000: return "300K"; break;
+                  case 400000: return "400K"; break;
+                  case 500000: return "500K"; break;
+                  case 600000: return "600K"; break;
+                  case 700000: return "700K"; break;
+                  case 800000: return "800K"; break;
               }})
       );
   } else {
@@ -185,10 +188,10 @@ function renderLineChart(selector, dataset) {
     .text(function(d) {return d.y1.toLocaleString()})
     .attr("fill", colorSecondary);
     //.attr("class", "label");
-  const titleColor = colorPrimary;
-  const appendixColor = colorPrimary;//'#1d5a91';
-  const appendixColor2 = colorSecondary;//'#1d5a91';
-  const yUnitTitle = (selector == '#taibif-stats__trend_occurrence') ? '筆  數' : '個  數';
+    const titleColor = colorPrimary;
+    const appendixColor = colorPrimary;//'#1d5a91';
+    const appendixColor2 = colorSecondary;//'#1d5a91';
+    const yUnitTitle = (selector == '#taibif-stats__trend_occurrence') ? '筆  數' : '個  數';
   // add graph title
   svg.append("text")
      .attr("x", 500)
