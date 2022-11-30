@@ -22,7 +22,11 @@ function Accordion(props) {
     }
   });
   const [yearValue, setYearValue] = useState(yearSelected);
-
+  const long_term = new Set(['country',"taibif_county","dataset","publisher"])
+  let isLong = false;
+  if (long_term.has(content.key)){
+    isLong = true;
+  }
   const sliderMarks = [];
   for (let i=1795; i<2023; i++) {
     sliderMarks.push({value: i, label: i});
@@ -108,7 +112,7 @@ function Accordion(props) {
         </a>
       </div>
       { isOpen ?
-      <div className="search-sidebar-accordion-content collapse in">
+      <div className={isLong ? "search-sidebar-accordion-content-scroll collapse in": "search-sidebar-accordion-content collapse in"}>
         {content.label == '資料集 Dataset'?
         <div className="searchInputs">
         <input type="text" placeholder="Search..." onChange={handleFilter} />
