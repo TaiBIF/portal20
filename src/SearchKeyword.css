@@ -4,6 +4,11 @@
     display: flex;
 }
 
+.searchInputs input{
+    width: 100%;
+    display: flex;
+}
+
 .search input {
     background-color: white;
     border: 0;

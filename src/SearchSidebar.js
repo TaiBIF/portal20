@@ -48,6 +48,25 @@ function Accordion(props) {
     props.clearCondition(event,content.key)
   };
   
+  const datasetMenuItems = content.rows.map((x) => {
+    if (content.key ===  'dataset'){   
+      const count = (x.count) >=0 ? x.count.toLocaleString() : null;
+      const itemChecked = filters.has(`${content.key}=${x.key}`);
+      if (itemChecked){
+        return (
+            <div className="search-sidebar-checkbox-wrapper" key={x.key}>
+              <label className="custom-input-ctn">
+              <input type="checkbox" onChange={(e)=> {e.persist(); onClick(e, content.key, x.key)}} checked={itemChecked} />
+              <span className="checkmark"></span>
+              <span className="search-sidebar-count-group">
+                <span className="name">{x.label}</span>
+                <span className="count">{count}</span>
+              </span>
+              </label>
+            </div>
+        );
+      }
+  }})
   const menuItems = content.rows.map((x) => {
     if(content.key ===  'year'){
       console.log(yearValue);
@@ -73,7 +92,24 @@ function Accordion(props) {
           />
           </div>
       );
-    } else{   
+    } else if (content.key ===  'dataset'){   
+      const count = (x.count) >=0 ? x.count.toLocaleString() : null;
+      const itemChecked = filters.has(`${content.key}=${x.key}`);
+      if (!itemChecked){
+        return (
+            <div className="search-sidebar-checkbox-wrapper" key={x.key}>
+              <label className="custom-input-ctn">
+              <input type="checkbox" onChange={(e)=> {e.persist(); onClick(e, content.key, x.key)}} checked={itemChecked} />
+              <span className="checkmark"></span>
+              <span className="search-sidebar-count-group">
+                <span className="name">{x.label}</span>
+                <span className="count">{count}</span>
+              </span>
+              </label>
+            </div>
+        );
+      }
+    } else {
       const count = (x.count) >=0 ? x.count.toLocaleString() : null;
       const itemChecked = filters.has(`${content.key}=${x.key}`);
       return (
@@ -116,10 +152,9 @@ function Accordion(props) {
         {content.label == '資料集 Dataset'?
         <div className="searchInputs">
         <input type="text" placeholder="Search..." onChange={handleFilter} />
-        {/* <div className="searchIcon"> </div> */}
         </div>
         :null
-        }        
+        }
         {filteredData.length !=0 && (
         <div className="dataResult" style={{zIndex:'9999',position:'absolute'}} >
           
@@ -132,6 +167,7 @@ function Accordion(props) {
           )})}
         </div>
         )}
+        {datasetMenuItems}
         {menuItems}
       </div>
     : null}
