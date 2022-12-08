@@ -82,7 +82,7 @@ def search_all(request):
             occur_rows.append({
                 'title': '{} {}'.format(name, name_zh),
                 'content': '資料集: {}'.format(x['taibif_dataset_name_zh']),
-                'url': '/occurrence/{}'.format(x['taibif_occ_id']) 
+                'url': '/occurrence/{}'.format(x['taibif_occ_id'][0]) 
             })
         count += len(occur_rows)
 
@@ -168,7 +168,7 @@ def occurrence_view(request, taibif_id):
     lat = 0
     lon = 0
     # intro 
-    print("result ==== ", result)
+
     intro['dataset_zh']=result[0].get('taibif_dataset_name_zh')
     intro['publisher']=result[0].get('publisher')
     intro['basisOfRecord']=result[0].get('basisOfRecord')

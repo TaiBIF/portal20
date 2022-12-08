@@ -1,0 +1,14 @@
+
+{% if LANGUAGE_CODE == "zh-hant" %}
+<li><a href="#" data-cat="occurrence_api" class="pub-data-nav-item active">出現紀錄</a></li>
+<li><a href="#" data-cat="species_api" class="pub-data-nav-item">物種</a></li>
+<li><a href="#" data-cat="dataset_api" class="pub-data-nav-item">資料集</a></li>
+<li><a href="#" data-cat="publisher_api" class="pub-data-nav-item">發布單位</a></li>
+{% endif %}
+
+{% if LANGUAGE_CODE == "en" %}
+<li><a href="#" data-cat="occurrence_api" class="pub-data-nav-item active">Occurrence</a></li>
+<li><a href="#" data-cat="species_api" class="pub-data-nav-item">Species</a></li>
+<li><a href="#" data-cat="dataset_api" class="pub-data-nav-item">Dataset</a></li>
+<li><a href="#" data-cat="publisher_api" class="pub-data-nav-item">Publisher</a></li>
+{% endif %}

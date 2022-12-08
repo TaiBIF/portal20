@@ -27,7 +27,10 @@ from apps.data.views import (
     species_view,
     search_occurrence_download_view,
 )
-
+from apps.page.views import (
+    page_not_found_view,
+    response_error_handler
+)
 # from apps.api.views import (
 #     ChartMonth,
 #     ChartYear,
@@ -54,6 +57,9 @@ urlpatterns = [
     path('article/', include('apps.article.urls')),
     path('',  include('apps.page.urls')),
     path('admin/', admin.site.urls),
+    path('500', response_error_handler),
+    path('400', page_not_found_view),
+
     ##Kuan-Yu added for API hichart function
     # path('test_y/', ChartYear, name='ChartYear'),
     # path('test_m/', ChartMonth, name='ChartMonth'),
@@ -63,6 +69,8 @@ urlpatterns = [
 
 # AWS SES
 #urlpatterns += (path(r'^admin/django-ses/', include('django_ses.urls')),)
+handler500 = response_error_handler
+handler404 = page_not_found_view
 
 if settings.DEBUG:
     import debug_toolbar

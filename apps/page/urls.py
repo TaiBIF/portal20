@@ -45,6 +45,7 @@ urlpatterns = [
     # path("robots.txt", robots_txt),
     #path('test', views.test, name='test'),
     path('bar_chart', views.bar_chart, name='bar_chart'),
+    path('taibif-api', views.taibif_api, name='taibif_api'),
 
 ]
 
