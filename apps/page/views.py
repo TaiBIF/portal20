@@ -367,18 +367,17 @@ def bar_chart(request):
 
 
 
-
     return render(request, 'bar_chart.html',context)
 
 
+@act_lang
+def taibif_api(request):
+    return render(request, 'taibif-api.html')
 
 
+def page_not_found_view(request,exception=None):
+    return render(request, '404.html', status=404)
 
 
-
-
-
-
-
-
-
+def response_error_handler(request,exception=None):
+    return render(request, '500.html', status=500)
