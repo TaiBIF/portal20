@@ -82,7 +82,7 @@ def search_all(request):
             occur_rows.append({
                 'title': '{} {}'.format(name, name_zh),
                 'content': '資料集: {}'.format(x['taibif_dataset_name_zh']),
-                'url': '/occurrence/{}'.format(x['taibif_occ_id'][0]) 
+                'url': '/occurrence/{}'.format(x['taibif_occ_id']) 
             })
         count += len(occur_rows)
 
