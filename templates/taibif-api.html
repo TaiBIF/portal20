@@ -20,20 +20,6 @@
   });
 </script>
 
-<style>
-  .col-sm-3 {
-    width:20%;
-  }
-  .table {
-    display: block;
-    overflow: auto;
-  }
-
-  .table td{
-    word-wrap:break-all;
-  }
-  
-</style>
 {% endblock %}
 
 {% block main %}
@@ -123,21 +109,41 @@
         </div>
         
 
-        <div class="col-xs-12 col-sm-9 pub-data-content hide" data-cat="species_api">
+        {% comment %} <div class="col-xs-12 col-sm-9 pub-data-content hide" data-cat="species_api">
+          <h1 class="heading-lg-ul">
+            物種 Species API
+          </h1>
+          <p>物種相關資訊</p>
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr><th>Resource URL</th><th>請求方式 (Method)</th><th>回應資訊(Response)</th><th>資料描述(Description)</th><th>呼叫參數(Parameters)</th></tr>
+            </thead>
+            <tbody>
+            <tr><td>/api/v1/taxon?</td><td>GET</td><td>Taxon</td><td>取得物種資訊。</td><td>id,name</td></tr>
+            </tbody>
+          </table>
 
-        </div>
+          <h4>查詢參數說明</h4>
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr><th>參數名稱</th><th>參數描述</th><th>查詢範例</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>id</td><td>taibif 物種 key </td><td>/api/v1/taxon?id=</td></tr>
+              <tr><td>name</td><td>taibif scientific name </td><td>/api/v1/taxon?name=</td></tr>
+            </tbody>
+          </table>
+        </div> {% endcomment %}
 
         <div class="col-xs-12 col-sm-9 pub-data-content hide" data-cat="dataset_api">
           <h1 class="heading-lg-ul">
             資料集 Datset API
           </h1>
-
-          
           <div class="pub-data-section">
-          <h4>相關參考連結：</h4>
+          {% comment %} <h4>相關參考連結：</h4>
           <ul>
             <li>DwC 資料欄位標準中文簡要說明：<a href="http://taibif.tw/download/Darwin_Core.pdf" target="_blank">Darwin Core (DwC) 資料欄位標準</a></li>
-          </ul>
+          </ul> {% endcomment %}
           </div>
           <div class="pub-data-section">
           <h4>查詢方式</h4>
@@ -146,7 +152,7 @@
               <tr><th>Resource URL</th><th>請求方式 (Method)</th><th>回應資訊(Response)</th><th>資料描述(Description)</th><th>呼叫參數(Parameters)</th></tr>
             </thead>
             <tbody>
-            <tr><td>/api/v2/dataset/search</td><td>GET</td><td>dataset</td><td>取得資料集的詳細資訊。</td><td></td></tr>
+            <tr><td>/api/v2/dataset/search</td><td>GET</td><td>dataset</td><td>取得資料集的詳細資訊。</td><td>title, dwc_core_type, organization_id, organization_name, author, pub_date, mod_date, gbif_dataset_id, license</td></tr>
             </tbody>
           </table>
 
@@ -171,7 +177,33 @@
           </div>
         </div>
         <div class="col-xs-12 col-sm-9 pub-data-content hide" data-cat="publisher_api">
+          <h1 class="heading-lg-ul">
+            發布單位 Publisher API
+          </h1>
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr><th>Resource URL</th><th>請求方式 (Method)</th><th>回應資訊(Response)</th><th>資料描述(Description)</th><th>呼叫參數(Parameters)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>/api/v1/publisher</td><td>GET</td><td>Publisher</td><td>列出所有發布單位資訊。</td><td>q,id,countrycode</td></tr>
+              <tr><td>/api/v1/publisher/dataset/id</td><td>GET</td><td>Publisher</td><td>取得發布單位資料集資訊。</td><td>id</td></tr>
+            </tbody>
+          </table>
 
+          <h4>查詢參數說明</h4>
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr><th>參數名稱</th><th>參數描述</th><th>查詢範例</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>q</td><td>單位名稱</td><td>/api/v1/publisher?q=Forestry</td></tr>
+              <tr><td>id</td><td>單位於TaiBIF的唯一編號</td><td>/api/v1/publisher?id=1</td></tr>
+              <tr><td>countrycode</td><td>單位地理位置</td><td>/api/v1/publisher?countrycode=PH</td></tr>
+            </tbody>
+          </table>
+          <hr>
+          <br>
+          
         </div>
         {% endif%}
         {% if LANGUAGE_CODE == "en" %}

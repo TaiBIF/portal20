@@ -102,16 +102,10 @@
     <h1 style="margin-top:0px">
       {% if taxon.vernacularName.value.1 %}
           {{ taxon.vernacularName.value.1 }}
+          <I>{{ taxon.scientificName.value.1}}</I>
       {% elif taxon.vernacularName.value.0 != None %}
           {{ taxon.vernacularName.value.0 }}
-      {% endif %}
-      {% if intro.scientificName %}
-        <I>{{ intro.scientificName }}</I>
-      {% elif occurrence.scientificname %}
-        {{ occurrence.scientificname }}
-      {% endif %}
-      {% if intro.name_zh %}
-        {{ intro.name_zh }}
+          <I> {{ taxon.vernacularName.value.0 }}</I>
       {% endif %}
     </h1>
   </div>
@@ -119,14 +113,18 @@
     <div class="balanced-row">   
       <div>
         <dl>
-          <dt>物種</dt>
+          <dt>物種 - 原始資料</dt>
           <dd>
-            {% if taxon.vernacularName.value.1 %}
-              {{ taxon.vernacularName.value.1 }}
-            {% elif taxon.vernacularName.value.0 != None %}
+            {% if taxon.vernacularName.value.0 %}
               {{ taxon.vernacularName.value.0 }}
             {% endif %} 
-            <I>{{ intro.scientificName}} </I>
+            <I>{{ taxon.scientificName.value.0}} </I>
+            {% if taxon.vernacularName.value.1 %}
+              <dt>物種 - 轉譯資料</dt>
+              <dd>
+                {{ taxon.vernacularName.value.1 }}
+              <I>{{ taxon.scientificName.value.1}} </I>
+            {% endif %} 
           </dd>
         </dl>
       </div>
@@ -233,7 +231,7 @@
       <div class="article-head-wrapper">
         <h1 class="heading-lg-ul">分類 Taxon 
         {% if  taxon.taxon_backbone != None %}
-          <div class="taxonbackbone" alt="Backbone:{{ taxon.taxon_backbone }}">
+          <div class="taxonbackbone" alt="Backbone: {{ taxon.taxon_backbone }}">
             <span class="glyphicon glyphicon-info-sign"></span>
           </div>
         {% endif %}
@@ -249,7 +247,7 @@
         <tbody>
           {% for k,v in taxon.items %}
             {% if v.value.0 != None or v.value.1 != None %}
-              {% if k == 'genus' or k == 'subgenus' or k == 'scientificName' %}
+              {% if k == 'genus' or k == 'subgenus' or k == 'scientificName' or k == 'acceptedNameUsage' %}
                 <tr>
                   <td>{{ v.name_zh }}</td>
                   <td><I>
@@ -257,11 +255,11 @@
                       {{ v.value.1 }}
                     {% endif %}
                   </I></td>
-                  <td><I>
+                  <td>
                     {% if v.value.0 != None %}
                       {{ v.value.0 }}
                     {% endif %}
-                  </I></td>
+                  </td>
                 </tr>
               {% else %}
                 <tr><td>{{ v.name_zh }}</td>
