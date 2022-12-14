@@ -468,12 +468,11 @@ def species_view(request, pk):
             'order':'order_key',
             'family':'family_key',
             'genus':'genus_key',
-            'species':'species_key',
+            'species':'taxon_id',
         }
     total = []
 
     solr_q = switch.get(taxon.rank) + ':' + str(pk)
-    
 
     search_limit = 20
     facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name,limit:-1,mincount:1}'
