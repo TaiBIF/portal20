@@ -23,17 +23,21 @@
     $(document).ready(function() {
       var owl = $('#speciesGallery');
       owl.owlCarousel({
-        nav: false,
-        dots: false,
+        nav: true,
         loop: true,
         autoplay: true,
         autoplayTimeout: 3000,
         autoplayHoverPause: true,
-        items : 1,
-        animateOut: 'fadeOut',
         thumbs: true,
-        thumbImage: true,
         lazyLoad : true,
+        responsive: {
+          0: {
+            items: 1 // 螢幕大小為 0~600 顯示 1 個項目
+          },
+          1000: {
+            items: 3 // 螢幕大小為 1000 以上 顯示 5 個項目
+          }
+        }
       })
     })
   </script>
@@ -164,10 +168,11 @@
           <tbody>
 
             {% for set in dataset %}
-
+            
             <tr>
-              <td><a href="{% url 'dataset-detail'  name=set.name %}">{{ set.name_zh }}</a></td>
-              <td>{{ set.count }}</td>
+              {% comment %} <td><a href="{% url 'dataset-detail'  name=set.name %}">{{ set.name_zh }}</a></td> {% endcomment %}
+              <td><a href="{% url 'search-occurrence' cat='search'  %}?taxon_key={{taxon.rank}}:{{ taxon.id }}&dataset={{set.name}}">{{ set.name_zh }}</a></td>
+              <td>{{ set.count|intcomma:False }}</td>
               <!-- <td> -->
 <!-- 占比 -->
                 <!-- <div class="chart-bar-h-bg">

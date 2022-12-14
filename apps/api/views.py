@@ -205,7 +205,78 @@ def dataset_api(request):
     
     return HttpResponse(json.dumps(rows), content_type="application/json")
     
+# def taxon_api(request):
     
+#     ds_search = SpeciesSearch(list(request.GET.lists())).result_map
+#     result_d = ds_search.query.values()
+    
+#     rows = [{
+#         'title' : x['title'] if 'title' in x else None,
+#         'name' : x['name'],
+#         'author' : x['author'] if 'author' in x and x['mod_date'] != None else None,
+#         'pub_date' : x['pub_date'].strftime("%Y-%m-%d") if 'pub_date' in x and x['pub_date'] != None else None,
+#         'mod_date' : x['mod_date'].strftime("%Y-%m-%d") if 'mod_date' in x and x['mod_date'] != None else None,
+#         'core' : x['dwc_core_type'] if 'dwc_core_type' in x else None,
+#         'license' : x['data_license'] if 'data_license' in x and x['data_license'] != None else 'unknown',
+#         'doi' : x['gbif_doi'] if 'doi' in x and x['gbif_doi'] != None else None,
+#         'organization_id' : x['organization_uuid'] if 'organization_uuid' in x and x['organization_uuid'] != None else None,
+#         'organization_name' : x['organization_name'] if 'organization_name' in x and x['organization_name'] != None else None,
+#         'num_record' : x['num_record'] if 'num_record' in x and x['num_record'] != None else None,
+#         'gbif_dataset_id' : x['guid'] if 'guid' in x and x['guid'] != None else None,
+#         # 'citation' : x['citation'] if 'citation' in x else None,
+#         # 'resource' : x['resource'] if 'resource' in x else None,
+#     } for x in result_d ]
+    
+#     return HttpResponse(json.dumps(rows), content_type="application/json")
+
+
+def publisher_api(request):
+    dataset = []
+
+    ds_search = PublisherSearch(list(request.GET.lists()))
+    result_d =  ds_search.query.values()
+        
+    rows = [{
+        'id' : x['id'] if 'id' in x else None,
+        'name' : x['name'],
+        'description' : x['description'] if 'description' in x else None,
+        'country_code' : x['country_code'] if 'country_code' in x else None,
+        'administrative_contact' : x['administrative_contact'] if 'administrative_contact' in x else None,
+        'country_or_area' : x['country_or_area'] if 'country_or_area' in x else None,
+        'installations' : x['installations'] if 'installations' in x else None,
+        'technical_contact' : x['technical_contact'] if 'technical_contact' in x else None,
+        'organization_gbif_uuid' : x['organization_gbif_uuid'] if 'organization_gbif_uuid' in x else None,
+    } for x in result_d ]
+    
+    return HttpResponse(json.dumps(rows), content_type="application/json")
+
+
+def publisher_dataset_api(request,pk):
+    dataset = []
+    org = DatasetOrganization.objects.get(id=pk)
+    
+    rows = {
+        'name' : org.name ,
+        'description' : org.description,
+        'administrative_contact' : org.administrative_contact,
+        'technical_contact' : org.technical_contact,
+        'country_code' : org.country_code,
+        'country_or_area' :org.country_or_area,
+        'installations' : org.installations,
+        'organization_gbif_uuid' : org.organization_gbif_uuid,
+    }
+    
+    for x in Dataset.objects.filter(organization=pk).all():
+        dataset.append({
+            'name': x.name,
+            'name_zh': x.title,
+            'core_type':  DATA_MAPPING['publisher_dwc'][x.dwc_core_type],
+            'gbif_dataset_uuid':  x.organization_uuid,
+        })
+
+    rows['dataset'] = dataset
+
+    return HttpResponse(json.dumps(rows), content_type="application/json")
 
 def for_basic_occ(request):
     query_list = []
