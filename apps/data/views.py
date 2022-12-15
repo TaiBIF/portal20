@@ -89,9 +89,14 @@ def search_all(request):
         # dataset
         dataset_rows = []
         for x in Dataset.objects.values('title', 'name','id').filter(Q(title__icontains=q)).exclude(status='Private').all()[:20]:
+            tmp_content = Dataset_description.objects.filter(dataset=x['id']).order_by('seq')
+            if len(tmp_content) > 0:
+                tmp_content = Dataset_description.objects.filter(dataset=x['id']).order_by('seq')[0].description
+            else:
+                tmp_content = ''
             dataset_rows.append({
-                'title': x['title'],
-                'content':Dataset_description.objects.filter(dataset=x['id']).order_by('seq')[0].description, 
+                'title': x['title'] if x['title'] != '' else x['name'],
+                'content':tmp_content, 
                 'url': '/dataset/{}'.format(x['name'])
             })
         count += len(dataset_rows)
