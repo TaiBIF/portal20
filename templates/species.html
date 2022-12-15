@@ -162,7 +162,7 @@
           <thead>
             <tr>
               <th>資料集</th>
-              <th>出現次數</th>
+              <th>紀錄筆數</th>
               <!-- <th>&nbsp;</th> -->
             </tr>
           </thead>
@@ -171,9 +171,8 @@
             {% for set in dataset %}
             
             <tr>
-              {% comment %} <td><a href="{% url 'dataset-detail'  name=set.name %}">{{ set.name_zh }}</a></td> {% endcomment %}
-              <td><a href="{% url 'search-occurrence' cat='search'  %}?taxon_key={{taxon.rank}}:{{ taxon.id }}&dataset={{set.name}}">{{ set.name_zh }}</a></td>
-              <td>{{ set.count|intcomma:False }}</td>
+              <td><a href="{% url 'dataset-detail' name=set.name %}">{{ set.name_zh }}</a></td>
+              <td><a href="{% url 'search-occurrence' cat='search'  %}?taxon_key={{taxon.rank}}:{{ taxon.id }}&dataset={{set.name}}">{{ set.count|intcomma:False }}</td>
               <!-- <td> -->
 <!-- 占比 -->
                 <!-- <div class="chart-bar-h-bg">
