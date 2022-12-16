@@ -19,11 +19,11 @@ function renderBarChart(selector, dataset) {
     .domain(dataset.map(function(d) { return d.x; }));
 
   var yScale_d = d3.scaleLinear()
-    .domain([0, d3.max(dataset, function(d) { return d.y; }) + 200000 || 100000])
+    .domain([0, d3.max(dataset, function(d) { return d.y; }) + 100000 || 100000])
     .range([height - padding, padding]);
 
   var yScale_ds = d3.scaleLinear()
-    .domain([0, d3.max(dataset, function(d) { return d.y; }) + 3 || 5])
+    .domain([0, d3.max(dataset, function(d) { return d.y; }) + 5 || 5])
     .range([height - padding, padding]);
 
   svg.append("g")
@@ -35,7 +35,7 @@ function renderBarChart(selector, dataset) {
   svg.append("g")
     .attr("transform", "translate(" + padding + "," + 0 + ")")
     .attr("class", "axis")
-    .call(d3.axisLeft(yScale_d).ticks(7)
+    .call(d3.axisLeft(yScale_d).ticks(5)
     .tickFormat(function (d) {
                 switch(d) {
                   case 100000: return "100K"; break;
@@ -66,15 +66,16 @@ function renderBarChart(selector, dataset) {
     .data(dataset)
     .enter()
     .append("text")
-    .attr("x", function(d) { return xScale(d.x)+14; })
-    .attr("y", function(d) {return yScale_d(d.y)-5; })
+    .attr("x", function(d) { return xScale(d.x) + 14; })
+    .attr("y", function(d) {return yScale_d(d.y) - 5; })
     .text(function(d) {return d.y.toLocaleString()})
     .attr("class", "label");
   } else {
     svg.append("g")
       .attr("transform", "translate(" + padding + "," + 0 + ")")
       .attr("class", "axis")
-      .call(d3.axisLeft(yScale_ds).ticks(6));
+      .call(d3.axisLeft(yScale_ds).ticks(5)
+      );
       
     svg.append("g")
     .selectAll("rect")
@@ -111,8 +112,8 @@ function renderBarChart(selector, dataset) {
       .text((language === 'en')? "Month" : "月 份");
 
   svg.append("text")
-      .attr("x", -200)
-      .attr("y", height - padding * 4.2)
+      .attr("x", -180)
+      .attr("y", height - padding * 4.2 )
       .attr("text-anchor", "middle")
       .attr("transform", "rotate(-90)")
       .style("font-size", "18px")
@@ -145,11 +146,11 @@ function renderLineChart(selector, dataset) {
       .domain(dataset.map(function(d) {  return d.year; }));
 
   var yScale_d = d3.scaleLinear()
-    .domain([0, d3.max(dataset, function(d) { return d.y2; }) + 200000])
+    .domain([0, d3.max(dataset, function(d) { return d.y2; }) + 9000])
     .range([height - padding, padding]);
 
   var yScale_ds = d3.scaleLinear()
-  .domain([0, d3.max(dataset, function(d) { return d.y2; }) + 15 ])
+  .domain([0, d3.max(dataset, function(d) { return d.y2; }) + 10 ])
   .range([height - padding, padding]);
   
   svg.append("g")
@@ -165,6 +166,11 @@ function renderLineChart(selector, dataset) {
       .call(d3.axisLeft(yScale_d).ticks(5)
       .tickFormat(function (d) {
         switch(d) {
+          case 2000: return "2K"; break;
+          case 4000: return "4K"; break;
+          case 6000: return "6K"; break;
+          case 8000: return "8K"; break;
+          case 10000: return "10K"; break;
           case 1000000: return "1M"; break;
           case 2000000: return "2M"; break;
           case 3000000: return "3M"; break;
@@ -198,7 +204,7 @@ function renderLineChart(selector, dataset) {
       .enter()
       .append("text")
       .attr("x", function(d) {return xScale(d.year)+14; })
-      .attr("y", function(d) {return yScale_d(d.y2)-20 })
+      .attr("y", function(d) {return yScale_d(d.y2)-20; })
       .text(function(d) {return d.y2.toLocaleString()})
       .attr("class", "label");
 
@@ -215,7 +221,8 @@ function renderLineChart(selector, dataset) {
     svg.append("g")
       .attr("transform", "translate(" + padding + "," + 0 + ")")
       .attr("class", "axis")
-      .call(d3.axisLeft(yScale_ds).ticks(5));
+      .call(d3.axisLeft(yScale_ds).ticks(5)
+      );
     
     svg.append("path")
     .datum(dataset)
@@ -271,7 +278,7 @@ function renderLineChart(selector, dataset) {
      .attr("fill", titleColor)
      .text((language === 'en')? "Year" : "年 份");
   svg.append("text")
-     .attr("x", -200)
+     .attr("x", -180)
      .attr("y", height - padding * 4.3)
      .attr("text-anchor", "middle")
      .attr("transform", "rotate(-90)")
