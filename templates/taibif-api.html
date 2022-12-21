@@ -96,11 +96,11 @@
             <tbody>
             <tr><td>q</td><td>關鍵字查詢</td><td>/api/v2/occurrence/search?q=Zosterops japonicus</td></tr>
             <tr><td>country</td><td>國家</td><td>/api/v2/occurrence/search?country=Taiwan</td></tr>
-            <tr><td>dataset</td><td>資料集</td><td>/api/v2/occurrence/search?dataset=Taiwan Wild Bird Federation Bird Records Database&dataset</td></tr>
+            {% comment %} <tr><td>dataset</td><td>資料集</td><td>/api/v2/occurrence/search?dataset=Taiwan Wild Bird Federation Bird Records Database&dataset</td></tr> {% endcomment %}
             <tr><td>month</td><td>月份</td><td>/api/v2/occurrence/search?month=2&month=9</td></tr>
-            <tr><td>publisher</td><td>資料集發布者</td><td>/api/v2/occurrence/search?publisher=</td></tr>
+            {% comment %} <tr><td>publisher</td><td>資料集發布者</td><td>/api/v2/occurrence/search?publisher=</td></tr> {% endcomment %}
             <tr><td>taibif_county</td><td>台灣縣市</td><td>/api/v2/occurrence/search?taibif_county=Chiayi County</td></tr>
-            <tr><td>facet</td><td>參數總計</td><td>/api/v2/occurrence/search?facet=year&facet=month&facet=dataset</td></tr>
+            {% comment %} <tr><td>facet</td><td>參數總計</td><td>/api/v2/occurrence/search?facet=year&facet=month&facet=dataset</td></tr> {% endcomment %}
             <tr><td>rows</td><td>回傳筆數</td><td>/api/v2/occurrence/search?rows=1</td></tr>
             <tr><td>lat&lng</td><td>座標查詢</td><td>/api/v2/occurrence/search?lat=-22.24829&lat=-14.21675&lng=-151.29169&lng=-142.59653</td></tr>
             </tbody>
@@ -163,7 +163,7 @@
             </thead>
             <tbody>
             <tr><td>title</td><td>資料集名稱</td><td>/api/v1/dataset?title=海龜</td></tr>
-            <tr><td>dwc_core_type</td><td>核心集</td><td>/api/v1/dataset?dwc_core_type=samplingevent</td></tr>
+            {% comment %} <tr><td>dwc_core_type</td><td>核心集</td><td>/api/v1/dataset?dwc_core_type=samplingevent</td></tr> {% endcomment %}
             <tr><td>organization_id</td><td>gbif發布單位id</td><td>/api/v1/dataset?organization_id=7c07cec1-2925-443c-81f1-333e4187bdea</td></tr>
             <tr><td>organization_name</td><td>發布單位名稱</td><td>/api/v1/dataset?organization_name=Taiwan</td></tr>
             <tr><td>author</td><td>發布者</td><td>/api/v1/dataset?author=李</td></tr>

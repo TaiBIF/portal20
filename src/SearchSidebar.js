@@ -81,7 +81,7 @@ function Accordion(props) {
           <Delete  style={{ position: 'absolute', right: 1 , width:'10%'}} onClick={clearYearCondition} />
           
           <Slider 
-            style={{width:'90%'}}
+            style={{width:'90%',color: "#846C5B"}}
             value={yearValue}
             onChange={(e, newRange) => setYearValue(newRange)}
             onChangeCommitted={handleSliderCommitted}
