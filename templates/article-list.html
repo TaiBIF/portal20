@@ -31,10 +31,30 @@
       });
 
       // topic type select
-      // 用 API 處理 !
+      $('#article-search-input').keypress(function(e){
+        if (e.key=="Enter"){
+          var keyword = e.target.value;
+          query="q=" + keyword;
+          window.location.href= `/article/search/?${query}`;
+        }
+      });
       $('.select-category-sci').click(function(e){
-        const selectedType = e.target.dataset.type;
-        window.location = `${window.location.origin}/article/category/${selectedType}`;
+        const url = window.location.search.substring(1)
+        const selectedType = "category=" + e.target.dataset.type;
+        const urlParams = new URLSearchParams(url);
+        const entries = urlParams.entries();
+        var q = []
+        for(const entry of entries) {
+            q.push(`${entry[0]}=${entry[1]}`);
+        }
+        if (q.includes(selectedType)){
+          var index = q.indexOf(selectedType);
+          if (index !== -1) {
+            q.splice(index, 1);
+          }
+        }else{q.push(selectedType)}
+        query = q.join('&')
+        window.location = `${window.location.origin}/article/search/?${query}`;
       });
     });
   </script>
@@ -43,7 +63,7 @@
 
 {% block main %}
   <!-- carousel begin -->
-  <div id="carousel-example" class="carousel slide" data-ride="carousel">
+  {% comment %} <div id="carousel-example" class="carousel slide" data-ride="carousel">
     <!-- carousel indicators begin -->
     <ol class="carousel-indicators">
       <li data-target="#carousel-example" data-slide-to="0" class="active"></li>
@@ -52,7 +72,7 @@
     <!-- carousel indicators end -->
 
     <!-- carousel content wrapper begin -->
-    <div class="carousel-inner" role="listbox">
+     <div class="carousel-inner" role="listbox">
       {% for i in cover_list %}
       <div class="index-head-carousel-wrapper item{% if forloop.counter == 1 %} active{% endif %}" style="background-image: url('{% if i.cover %}{{ i.cover.url}}{% endif %}');">
         <a href="{{ i.get_absolute_url }}" class="index-head-carousel-btn"></a>
@@ -64,7 +84,7 @@
 
       </div>
       {% endfor %}
-    </div>
+    </div> 
     <!-- carousel content wrapper begin -->
 
     <!-- carousel controls begin -->
@@ -75,67 +95,63 @@
     <a class="right carousel-control" href="#carousel-example" role="button" data-slide="next">
       <span class="myicon icon-arrow-right" aria-hidden="true"></span>
       <span class="sr-only">Next</span>
-    </a>
+    </a> 
     <!-- carousel controls end -->
-  </div>
+  </div> {% endcomment %}
   <!-- carousel end -->
 
-  {% include "inc_breadcrumb.html" with tab="04" active_label="" %}
+  {% include "inc_breadcrumb.html" with tab="04" %}
 
   <!-- container begin -->
   <div class="container">
-    {% if layout_type == "A1" %}
     <h1 class="heading-lg-ul">
-      {% trans article_cat_label %}
-      <span class="heading-footnote">{% trans "全部" %}</span>
+      文章
     </h1>
     <!-- sort by begin -->
     <div class="heading-sort-ctn">
       <form class="form-inline">
         <span class="heading-sort-name">{% trans "篩選" %}</span>
-        <div class="input-group">
-          <div class="input-group-addon">
-            <i class="glyphicon glyphicon-calendar"></i>
-          </div>
-          <input type="text" class="form-control" placeholder="以時間篩選新聞..." id="newsFilter" value="{% if request.GET.start and request.GET.end %}{{ request.GET.start }} - {{request.GET.end }}{% endif %}">
-        </div>
-      </form>
-    </div>
-    {% elif layout_type == "A2" %}
-    <h1 class="heading-lg-ul">
-       {% trans article_cat_label %} 
-      <span class="heading-footnote">{% trans "全部" %}</span>
-    </h1>
-    <!-- sort by begin -->
-    <div class="heading-sort-ctn">
-      <form class="form-inline">
-        <span class="heading-sort-name">{% trans "篩選" %}</span>
-
+        <input type="text" placeholder="關鍵字查詢" name="q" id="article-search-input" value={{ article_search_keyword }}>
+        <button class="head-carousel-search-btn" type="submit">
+          <span class="myicon icon-search"></span>
+        </button>
         <label class="custom-input-ctn">
-          <input type="checkbox" class="select-category-sci" data-type="sci"{% if article_cat == "sci" %} checked="checked"{% endif %}>
+          <input type="checkbox" class="select-category-sci" data-type="news" {% if "NEWS" in article_cat %} checked="checked"{% endif %}>
+          <span class="checkmark"></span>
+          {% trans "新聞" %}
+        </label>
+        <label class="custom-input-ctn">
+          <input type="checkbox" class="select-category-sci" data-type="event"{% if "EVENT" in article_cat%} checked="checked"{% endif %}>
+          <span class="checkmark"></span>
+          {% trans "活動" %}
+        </label>
+        <label class="custom-input-ctn">
+          <input type="checkbox" class="select-category-sci" data-type="update"{% if "UPDATE" in article_cat%} checked="checked"{% endif %}>
+          <span class="checkmark"></span>
+          {% trans "更新" %}
+        </label>
+        <label class="custom-input-ctn">
+          <input type="checkbox" class="select-category-sci" data-type="sci"{% if "SCI" in article_cat %} checked="checked"{% endif %}>
           <span class="checkmark"></span>
           {% trans "科普文章" %}
-        </label>
-
+        </label>  
         <label class="custom-input-ctn">
-          <input type="checkbox" class="select-category-sci" data-type="tech"{% if article_cat == "tech" %} checked="checked"{% endif %}>
+          <input type="checkbox" class="select-category-sci" data-type="tech"{% if "TECH" in article_cat %} checked="checked"{% endif %}>
           <span class="checkmark"></span>
           {% trans "技術專欄" %} 
         </label>
-
         <label class="custom-input-ctn">
-          <input type="checkbox" class="select-category-sci" data-type="pub"{% if article_cat == "pub" %} checked="checked"{% endif %}>
+          <input type="checkbox" class="select-category-sci" data-type="pub"{% if "PUB" in article_cat%} checked="checked"{% endif %}>
           <span class="checkmark"></span>
           {% trans "出版品資料" %}
         </label>
         <label class="custom-input-ctn">
-          <input type="checkbox" class="select-category-sci" data-type="pos"{% if article_cat == "pos" %} checked="checked"{% endif %}>
+          <input type="checkbox" class="select-category-sci" data-type="pos"{% if "POS"  in article_cat%} checked="checked"{% endif %}>
           <span class="checkmark"></span>
           {% trans "TaiBIF發表文章/海報" %}
         </label> 
       </form>
     </div>
-    {% endif %}
     <!-- sort by end -->
     {% for article in article_list %}
     <div class="row listbox-img-right-wrapper">

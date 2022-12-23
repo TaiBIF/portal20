@@ -55,16 +55,15 @@ def search_all(request):
         ## 預設最多每組 20 筆
         count = 0
 
-        # TODO check article type 
         # article
-        # article_rows = []
-        # for x in Article.objects.filter(title__icontains=q).all()[:10]:
-        #     article_rows.append({
-        #         'title': x.title,
-        #         'content': x.content,
-        #         'url': x.get_absolute_url()
-        #     })
-        # count += len(article_rows)
+        article_rows = []
+        for x in Article.objects.filter(title__icontains=q).all()[:10]:
+            article_rows.append({
+                'title': x.title,
+                'content': x.content,
+                'url': x.get_absolute_url()
+            })
+        count += len(article_rows)
 
         # occurrence
         occur_rows = []
@@ -88,7 +87,7 @@ def search_all(request):
 
         # dataset
         dataset_rows = []
-        for x in Dataset.objects.values('title', 'name','id').filter(Q(title__icontains=q)).exclude(status='Private').all()[:20]:
+        for x in Dataset.objects.values('title', 'name','id').filter(Q(title__icontains=q)).exclude(status='Private').all()[:5]:
             tmp_content = Dataset_description.objects.filter(dataset=x['id']).order_by('seq')
             if len(tmp_content) > 0:
                 tmp_content = Dataset_description.objects.filter(dataset=x['id']).order_by('seq')[0].description
@@ -103,7 +102,7 @@ def search_all(request):
 
         # species
         species_rows = []
-        for x in Taxon.objects.filter(Q(name__icontains=q) | Q(name_zh__icontains=q)).all()[:20]:
+        for x in Taxon.objects.filter(Q(name__icontains=q) | Q(name_zh__icontains=q)).all()[:5]:
             species_rows.append({
                 'title': '[{}] {}'.format(x.get_rank_display(), x.get_name()),
                 'content': '物種數: {}'.format(x.count),
@@ -113,7 +112,7 @@ def search_all(request):
 
         # publisher
         publisher_rows = []
-        for x in DatasetOrganization.objects.filter(name__icontains=q).all()[:20]:
+        for x in DatasetOrganization.objects.filter(name__icontains=q).all()[:5]:
             publisher_rows.append({
                 'title': x.name,
                 'content': x.description,
@@ -124,11 +123,11 @@ def search_all(request):
         context = {
             'count': count,
             'results': [
-                # {
-                #     'cat': 'article',
-                #     'label': '文章',
-                #     'rows': article_rows
-                # },
+                {
+                    'cat': 'article',
+                    'label': '文章',
+                    'rows': article_rows
+                },
                 {
                     'cat': 'occurrence',
                     'label': '出現紀錄',
@@ -489,7 +488,6 @@ def species_view(request, pk):
     #     r = requests.get(f'http://54.65.81.61:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&rows={search_limit}&q=*:*&fq={solr_q}&{facet_json}')
     # else:
     r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&rows={search_limit}&q=*:*&fq={solr_q}&{facet_json}')
-
 
     map_url = "http://"+request.META['HTTP_HOST']+"/api/v2/occurrence/search?taxon_key="+taxon.rank+":"+str(taxon.id)+"&facet=year&facet=month&facet=dataset&facet=dataset_id&facet=publisher&facet=country&facet=license"
     r2 = requests.get(map_url)
