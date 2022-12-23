@@ -850,6 +850,7 @@ def search_dataset(request):
         publisher_query = ds_search.query\
             .values('organization','organization_name')\
             .exclude(organization__isnull=True)\
+            .exclude(organization_name__isnull=True)\
             .annotate(count=Count('organization'))\
             .order_by('-count')
         #publisher_query = publisher_query.filter()

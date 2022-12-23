@@ -6,6 +6,17 @@ from django.core.paginator import Paginator
 from .models import Article, PostImage
 from itertools import chain
 
+CODE_MAPPING ={
+    'cat':{
+        'news':'新聞', 
+        'event':'活動',
+        'update':'更新',
+        'sci':'科普文章',
+        'tech':'技術專欄',
+        'pub':'出版品資料',
+        'pos':'TaiBIF發表文章/海報',
+    }
+}
 #DEPRICATED 不合用
 class ArticleListView(generic.ListView):
     template_name = 'article-list.html'
@@ -59,6 +70,7 @@ def article_list(request, category):
         'article_list': article_list,
         'cover_list': cover_list,
         'article_cat': category,
+        'article_cat_ch': CODE_MAPPING['cat'][category],
         'article_cat_label': valid_category[0][1],
         'layout_type': layout_type,
     })
@@ -76,8 +88,37 @@ def article_detail(request, pk):
     })
 
 
+def article_search(request):
+    page = request.GET.get('page', '')
+    article_cat = []
+    article_search_keyword =''
+    for key, values in request.GET.lists():
+        if key == "q":
+            article_search_keyword = values[0]
+        if key == "category":
+            for i in values:
+                article_cat.append(i.upper())
 
-
+    if article_cat :
+        if article_search_keyword:
+            rows = Article.objects.filter(category__in=article_cat,title__icontains=article_search_keyword).all()
+            cover_list = Article.objects.filter(category__in=article_cat,title__icontains=article_search_keyword,is_pinned='Y')
+        else:
+            rows = Article.objects.filter(category__in=article_cat).all() 
+            cover_list = Article.objects.filter(category__in=article_cat,is_pinned='Y')
+    else:
+        rows = Article.objects.filter(title__icontains=article_search_keyword).all()    
+        cover_list = Article.objects.filter(title__icontains=article_search_keyword,is_pinned='Y')
+    
+    paginator = Paginator(rows, 20)
+    article_list = paginator.get_page(page)
+    
+    return render(request, 'article-list.html', {
+        'article_list': article_list,
+        'cover_list': cover_list,
+        'article_cat': article_cat,
+        'article_search_keyword': article_search_keyword,
+    })
 def article_tag_list(request, tag_name):
     page = request.GET.get('page', '')
     rows = Article.objects.filter(tags__name=tag_name).all()

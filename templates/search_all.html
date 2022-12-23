@@ -48,17 +48,19 @@ Dataset::search
           <a href="{{ i.url }}" class="list-group-item">
           <h4 class="list-group-item-heading">{{ i.title }}</h4>
           {% if cat.cat == "article" %}
-          <p class="list-group-item-text">{{ i.content|striptags|truncatechars:200 }}</p>
+          <p class="list-group-item-text">{{ i.content|striptags|truncatechars:100 }}</p>
           {% else %}
-          <p class="list-group-item-text">{{ i.content|truncatechars:200 }}</p>
+          <p class="list-group-item-text">{{ i.content|truncatechars:100 }}</p>
           {% endif %}
           </a>
           {% endfor %}
           {% if cat.rows|length >= 10 %}
           <h4 class="list-group-item-heading">...</h4>
-          {% if cat.cat != "article" %}{# TODO #}
-          <a href="/{{ cat.cat }}/search?q={{ request.GET.q }}" class="list-group-item list-group-item-success">
-            {% endif %}
+          {% if cat.cat != "article" %}
+            <a href="/{{ cat.cat }}/search/?q={{ request.GET.q }}" class="list-group-item list-group-item-success">
+          {% elif cat.cat == "article" %}
+            <a href="/article/search/?q={{ request.GET.q }}" class="list-group-item list-group-item-success">
+          {% endif %}
           <h4 class="list-group-item-heading">搜尋: {{ request.GET.q }}</h4>
           <p class="list-group-item-text">更多{{cat.label}}</p>
           </a>
