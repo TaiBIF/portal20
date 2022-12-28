@@ -21,7 +21,7 @@ from django.conf import settings
 
 from apps.article.models import Article
 from .models import (
-    Taxon,
+    Taxon,,
     Occurrence,
     Dataset,
     Dataset_citation,
@@ -172,7 +172,7 @@ def occurrence_view(request, taibif_id):
     lat = 0
     lon = 0
     # intro 
-
+    # TODO
     intro['dataset_zh']=result[0].get('taibif_dataset_name_zh')
     intro['publisher']=result[0].get('publisher')
     intro['basisOfRecord']=result[0].get('basisOfRecord')

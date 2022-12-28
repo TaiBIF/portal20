@@ -386,22 +386,22 @@ class Taxon(models.Model):
     def species_pic(self):
         query = Taxon.objects
         if self.rank != 'species':
+            id_list = []
             if self.rank == 'kingdom':
-                query = query.filter(kingdom_id=self.id,taieol_pic__isnull=False).order_by('taieol_pic').distinct('taieol_pic')
+                query = Taxon_Picture.objects.filter(kingdom_id=self.id)[:30]
             elif self.rank == 'phylum':
-                query = query.filter(phylum_id=self.id,taieol_pic__isnull=False).order_by('taieol_pic').distinct('taieol_pic')
+                query = Taxon_Picture.objects.filter(phylum_id=self.id)[:30]
             elif self.rank == 'class':
-                query = query.filter(class_id=self.id,taieol_pic__isnull=False).order_by('taieol_pic').distinct('taieol_pic')
+                query = Taxon_Picture.objects.filter(class_id=self.id)[:30]
             elif self.rank == 'order':
-                query = query.filter(order_id=self.id,taieol_pic__isnull=False).order_by('taieol_pic').distinct('taieol_pic')
+                query = Taxon_Picture.objects.filter(order_id=self.id)[:30]
             elif self.rank == 'family':
-                query = query.filter(family_id=self.id,taieol_pic__isnull=False).order_by('taieol_pic').distinct('taieol_pic')
+                query = Taxon_Picture.objects.filter(family_id=self.id)[:30]
             elif self.rank == 'genus':
-                query = query.filter(genus_id=self.id,taieol_pic__isnull=False).order_by('taieol_pic').distinct('taieol_pic')
-        
+                query = Taxon_Picture.objects.filter(genus_id=self.id)[:30]
             return list(query.all())
         else:
-            query = query.filter(id = self.id)
+            query = Taxon_Picture.objects.filter(taxon_id=self.id)
             return list(query.all())
 
     @property
@@ -444,6 +444,27 @@ class Taxon(models.Model):
     class Meta:
         ordering = ['id','name']
 
+class Taxon_Picture(models.Model):
+    name_code = models.TextField(null=True,blank=True)
+    taxon = models.ForeignKey(Taxon, on_delete=models.CASCADE, null=True, related_query_name="pic")
+    url = models.TextField(null=True,blank=True)
+    folder = models.TextField(null=True,blank=True)
+    image_name = models.TextField(null=True,blank=True)
+    chinese_name = models.TextField(null=True,blank=True)
+    name = models.TextField(null=True,blank=True)
+    photographer = models.TextField(null=True,blank=True)
+    location = models.TextField(null=True,blank=True)
+    date = models.TextField(null=True,blank=True)
+    note = models.TextField(null=True,blank=True)
+    kingdom_id = models.TextField(null=True,blank=True)
+    phylum_id = models.TextField(null=True,blank=True)
+    class_id = models.TextField(null=True,blank=True)
+    order_id = models.TextField(null=True,blank=True)
+    family_id = models.TextField(null=True,blank=True)
+    genus_id = models.TextField(null=True,blank=True)
+    license = models.TextField(null=True,blank=True)
+    taieol_pic = models.TextField(null=True,blank=True)
+    
 OCCURRENCE_COLUMN_MAP = {'occurrenceID': 'occurrence_id', 'occurrenceRemarks': 'occurrence_remarks', 'occurrenceStatus': 'occurrence_status', 'institutionID': 'institution_id', 'institutionCode': 'institution_code', 'ownerInstitutionCode': 'owner_institution_code', 'collectionID': 'collection_id', 'collectionCode': 'collection_code', 'catalogNumber': 'catalog_number', 'otherCatalogNumbers': 'other_catalog_numbers', 'recordNumber': 'record_number', 'recordedBy': 'recorded_by', 'fieldNumber': 'field_number', 'fieldNotes': 'field_notes', 'basisOfRecord': 'basis_of_record', 'datasetID': 'dataset_id', 'datasetName': 'dataset_name', 'language': 'language', 'type': 'type_field', 'typeStatus': 'type_status', 'coreid': 'coreid', 'lifeStage': 'life_stage', 'eventTime': 'event_time', 'eventRemarks': 'event_remarks', 'year': 'year', 'month': 'month', 'day': 'day', 'startDayOfYear': 'start_day_of_year', 'endDayOfYear': 'end_day_of_year', 'eventDate': 'event_date', 'eventID': 'event_id', 'verbatimEventDate': 'verbatim_event_date', 'verbatimDepth': 'verbatim_depth', 'kingdom': 'kingdom', 'phylum': 'phylum', 'class': 'class_field', 'order': 'order_field', 'family': 'family', 'genus': 'genus', 'subgenus': 'subgenus', 'vernacularName': 'vernacular_name', 'scientificName': 'scientific_name', 'scientificNameID': 'scientific_name_id', 'taxonRank': 'taxon_rank', 'taxonID': 'taxon_id', 'verbatimTaxonRank': 'verbatim_taxon_rank', 'associatedTaxa': 'associated_taxa', 'specificEpithet': 'specific_epithet', 'scientificNameAuthorship': 'scientific_name_authorship', 'acceptedNameUsage': 'accepted_name_usage', 'acceptedNameUsageID': 'accepted_name_usage_id', 'originalNameUsage': 'original_name_usage', 'nameAccordingTo': 'name_according_to', 'higherClassification': 'higher_classification', 'taxonRemarks': 'taxon_remarks', 'dateIdentified': 'date_identified', 'identificationQualifier': 'identification_qualifier', 'identifiedBy': 'identified_by', 'identificationVerificationStatus': 'identification_verification_status', 'previousIdentifications': 'previous_identifications', 'county': 'county', 'country': 'country', 'countryCode': 'country_code', 'stateProvince': 'state_province', 'locality': 'locality', 'locationID': 'location_id', 'higherGeography': 'higher_geography', 'georeferencedDate': 'georeferenced_date', 'georeferenceSources': 'georeference_sources', 'georeferencedBy': 'georeferenced_by', 'geodeticDatum': 'geodetic_datum', 'georeferenceProtocol': 'georeference_protocol', 'georeferenceRemarks': 'georeference_remarks', 'georeferenceVerificationStatus': 'georeference_verification_status', 'decimalLongitude': 'decimal_longitude', 'decimalLatitude': 'decimal_latitude', 'verbatimLatitude': 'verbatim_latitude', 'verbatimLongitude': 'verbatim_longitude', 'verbatimLocality': 'verbatim_locality', 'verbatimCoordinates': 'verbatim_coordinates', 'coordinateUncertaintyInMeters': 'coordinate_uncertainty_in_meters', 'verbatimCoordinateSystem': 'verbatim_coordinate_system', 'coordinatePrecision': 'coordinate_precision', 'locationAccordingTo': 'location_according_to', 'pointRadiusSpatialFit': 'point_radius_spatial_fit', 'rights': 'rights', 'rightsHolder': 'rights_holder', 'license': 'license_field', 'preparations': 'preparations', 'id': 'id_field', 'modified': 'modified', 'dataGeneralizations': 'data_generalizations', 'organismID': 'organism_id', 'organismQuantityType': 'organism_quantity_type', 'organismQuantity': 'organism_quantity', 'sex': 'sex', 'individualCount': 'individual_count', 'verbatimElevation': 'verbatim_elevation', 'minimumElevationInMeters': 'minimum_elevation_in_meters', 'maximumElevationInMeters': 'maximum_elevation_in_meters', 'minimumDepthInMeters': 'minimum_depth_in_meters', 'maximumDepthInMeters': 'maximum_depth_in_meters', 'waterBody': 'water_body', 'island': 'island', 'habitat': 'habitat', 'reproductiveCondition': 'reproductive_condition', 'continent': 'continent', 'infraspecificEpithet': 'infraspecific_epithet', 'footprintWKT': 'footprint_wkt', 'associatedMedia': 'associated_media', 'associatedSequences': 'associated_sequences', 'associatedReferences': 'associated_references', 'nomenclaturalCode': 'nomenclatural_code', 'footprintSpatialFit': 'footprint_spatial_fit', 'establishmentMeans': 'establishment_means', 'behavior': 'behavior', 'informationWithheld': 'information_withheld', 'islandGroup': 'island_group', 'municipality': 'municipality', 'materialSampleID': 'material_sample_id', 'samplingProtocol': 'sampling_protocol', 'samplingEffort': 'sampling_effort', 'disposition': 'disposition', 'references': 'references', 'namePublishedInYear': 'name_published_in_year', 'namePublishedIn': 'name_published_in', 'dataset_name': 'dataset_name'}
 
 class Occurrence(models.Model):
