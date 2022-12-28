@@ -200,12 +200,20 @@
         <!-- carousel photos begin -->
           <div class="owl-carousel owl-theme" id="speciesGallery">
             {% for i in taxon.species_pic %}
-              {% if i.taieol_pic %}
-                <div>
-                  <img  src="{{i.taieol_pic}}">
-                  <div class="home-banner-cover-license">{{i.name}} {% if i.name_zh %} {{ i.name_zh }}{% endif %}</div>
-                </div>
-              {% endif %}
+            <div class="news-card-img-wrapper">
+              <div class="news-card-title-ctn">
+                {% if i.image_name%}
+                  <p class="img-license">{% if i.photographer %}{{i.photographer}}@{% endif %}TaiBIF 臺灣生物多樣性資訊機構-CC BY</p>
+                  </div>
+                  <div class="news-card-img-overlay"></div>
+                  <img src="/media/{{i.folder}}{{i.image_name}}" style="height:315px;" loading="lazy">
+                {% elif i.taieol_pic %}
+                  <p class="img-license">taieol</p>
+                  </div>
+                  <div class="news-card-img-overlay"></div>
+                  <img src="{{i.taieol_pic}}" style="height:315px;" loading="lazy">
+                {% endif%}
+            </div>
             {% endfor %}
           </div>
       <!-- TaiCol物種描述 end -->
