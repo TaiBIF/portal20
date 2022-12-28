@@ -21,7 +21,7 @@ from django.conf import settings
 
 from apps.article.models import Article
 from .models import (
-    Taxon,,
+    Taxon,
     Occurrence,
     Dataset,
     Dataset_citation,

@@ -80,9 +80,9 @@ def article_detail(request, pk):
     article = get_object_or_404(Article, pk=pk)
     imagesList = PostImage.objects.filter(post=pk)
     recommended = Article.objects.filter(category=article.category).order_by('?')[0:5]
-    
     return render(request, 'article-detail.html', {
         'article': article,
+        'article_type': dict(article.CATEGORY_CHOICE)[article.category],
         'recommended': recommended,
         'imagesList': imagesList
     })

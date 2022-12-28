@@ -12,7 +12,7 @@
       {% elif tab  == "03" %}
       <li>關於 TaiBIF</li>
       {% elif tab  == "04" %}
-      <li>更多資訊</li>
+      <li><a href="{% url 'article-search' %}">更多資訊</a></li>
       {% elif tab  == "0501" %}
       <li><a href="{% url 'search-occurrence' cat='search' %}">物種出現紀錄</a></li>
       {% elif tab  == "0502" %}
@@ -39,7 +39,7 @@
       {% elif tab  == "03" %}
       <li>About TaiBIF</li>
       {% elif tab  == "04" %}
-      <li>More Info</li>
+      <li><a href="{% url 'article-search' %}">More Info</a></li>
       {% elif tab  == "0501" %}
       <li><a href="{% url 'search-occurrence' cat='search' %}">Occurrences</a></li>
       {% elif tab  == "0502" %}
