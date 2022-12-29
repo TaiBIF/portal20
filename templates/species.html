@@ -27,9 +27,10 @@
         dots: false,
         loop: true,
         autoplay: true,
-        autoplayTimeout: 3000,
+        autoplayTimeout: 5000,
         autoplayHoverPause: true,
         thumbs: true,
+        margin: 10,
         lazyLoad : true,
         responsive: {
           0: {
@@ -196,22 +197,22 @@
         {% if taxon.taieol_desc %}
         {{taxon.taieol_desc}}
         {% endif %}
-
+        <hr>
         <!-- carousel photos begin -->
           <div class="owl-carousel owl-theme" id="speciesGallery">
             {% for i in taxon.species_pic %}
             <div class="news-card-img-wrapper">
               <div class="news-card-title-ctn">
                 {% if i.image_name%}
-                  <p class="img-license">{% if i.photographer %}{{i.photographer}}@{% endif %}TaiBIF 臺灣生物多樣性資訊機構-CC BY</p>
+                  <p class="img-license">{% if i.photographer %}{{i.photographer}}@{% endif %}TaiBIF 臺灣生物多樣性資訊機構-CC BY 4.0</p>
                   </div>
                   <div class="news-card-img-overlay"></div>
-                  <img src="/media/{{i.folder}}{{i.image_name}}" style="height:315px;" loading="lazy">
+                  <img src="/media/{{i.folder}}{{i.image_name}}" style="max-height:400px;" >
                 {% elif i.taieol_pic %}
-                  <p class="img-license">taieol</p>
+                  <p class="img-license">{% if i.photographer %}{{i.photographer}}@{% endif %}TaiEOL 生命大百科-CC BY 4.0</p>
                   </div>
                   <div class="news-card-img-overlay"></div>
-                  <img src="{{i.taieol_pic}}" style="height:315px;" loading="lazy">
+                  <img src="{{i.taieol_pic}}" style="max-height:400px;" >
                 {% endif%}
             </div>
             {% endfor %}
