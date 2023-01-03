@@ -94,6 +94,18 @@ JSON_FACET_MAP = {
             'field':'RecordedDateInvalid',
             'mincount': 1,
         },
+         'forest_reserves': {
+            'type':'terms',
+            'field':'forest_reserves',
+            'mincount': 0,
+            'limit': -1,
+        },
+         'wildlife_refuges': {
+            'type':'terms',
+            'field':'wildlife_refuges',
+            'mincount': 0,
+            'limit': -1,
+        },
     }
 }
   
@@ -333,6 +345,22 @@ class SolrQuery(object):
                 'rows': rows,
             })
             
+        if data := resp['facets'].get('forest_reserves', ''):
+            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
+            menus.append({
+                'key': 'forest_reserves', #'countrycode',
+                'label': '自然生態保護區 Forest Reserves',
+                'rows': rows,
+            })
+        
+        if data := resp['facets'].get('wildlife_refuges', ''):
+            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
+            menus.append({
+                'key': 'wildlife_refuges', #'countrycode',
+                'label': '野生動物保護區 Wildlife Refuges',
+                'rows': rows,
+            })
+        
         if data := resp['facets'].get('year', ''):
             #menu_year = [{'key': 0, 'label': 0, 'count': 0,'year_start':1990,'year_end':2021}]
             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
@@ -372,6 +400,7 @@ class SolrQuery(object):
                 'label': '發布單位 Publisher',
                 'rows': rows,
             })
+        
         if data := resp['facets'].get('license', ''):
             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
             menus.append({
@@ -379,7 +408,7 @@ class SolrQuery(object):
                 'label': '授權類型 Licence',
                 'rows': rows,
             })
-        
+
         
         geo = 0
         taxon = 0
