@@ -271,6 +271,8 @@ class Taxon(models.Model):
     taieol_desc = models.TextField('taieol_desc', null=True)
     taieol_pic = models.CharField('taieol_pic',max_length=1000,null=True)
     
+    backbone = models.CharField('backbone', max_length=1000, null=True, blank=True)
+    
     def __str__(self):
         r = '{}: {}'.format(self.rank, self.get_name())
         return r
