@@ -847,49 +847,80 @@ def search_dataset(request):
     ds_menu = DatasetSearch([]) 
 
     if has_menu:
-        publisher_query = ds_search.query\
+        # publisher 
+        publisher_list = ds_menu.query\
             .values('organization','organization_name')\
+            .exclude(organization__isnull=True)\
+            .exclude(organization_name__isnull=True)\
+            .distinct('organization')
+        
+        publisher_count = ds_search.query\
+            .values('organization')\
             .exclude(organization__isnull=True)\
             .exclude(organization_name__isnull=True)\
             .annotate(count=Count('organization'))\
             .order_by('-count')
-        #publisher_query = publisher_query.filter()
-        #publisher_query = ds_search.query.values('organization','organization_verbatim')\
-        #                                 .exclude(organization__isnull=True)\
-        #                                 .annotate(count=Count('organization'))\
-        #                                 .order_by('-count')
-        # 
-        #print (publisher_query)    
-        #for x in publisher_query : 
-        #    print('===========',x)
+        
+        for i in publisher_list:
+            if publisher_count.filter(organization=i['organization']):
+                i['count'] = publisher_count.filter(organization=i['organization'])[0]['count']    
+            else:
+                i['count'] = 0
         publisher_rows = [{
             'key':x['organization'],
             'label':x['organization_name'],
             'count': x['count'],
-        } for x in publisher_query]
-
-        rights_query = ds_search.query\
-            .values('data_license')\
-            .exclude(data_license__exact='')\
-            .annotate(count=Count('data_license'))\
-            .order_by('-count')
-        rights_rows = [{
-            'key': DATA_MAPPING['rights'][x['data_license']],
-            'label':DATA_MAPPING['rights'][x['data_license']],
-            'count': x['count']
-        } for x in rights_query]
+        } for x in publisher_list]
+        publisher_rows = sorted(publisher_rows, key=lambda d: d['count'], reverse=True) 
 
 
-        country_query = ds_search.query\
+       
+        # country
+        country_list = ds_menu.query\
+            .values('country')\
+            .exclude(country__exact='')\
+            .distinct('country')
+        country_count = ds_search.query\
             .values('country')\
             .exclude(country__exact='')\
             .annotate(count=Count('country'))\
             .order_by('-count')
+        for i in country_list:
+            if country_count.filter(country=i['country']):
+                i['count'] = country_count.filter(country=i['country'])[0]['count']    
+            else:
+                i['count'] = 0
+        
         country_rows = [{
             'key':x['country'],
             'label':DATA_MAPPING['country'][x['country']],
             'count': x['count']
-        } for x in country_query]
+        } for x in country_list]
+        country_rows = sorted(country_rows, key=lambda d: d['count'], reverse=True) 
+
+
+        # license
+        rights_list = ds_menu.query\
+            .values('data_license')\
+            .exclude(data_license__exact='')\
+            .distinct('data_license')
+        rights_count = ds_search.query\
+            .values('data_license')\
+            .exclude(data_license__exact='')\
+            .annotate(count=Count('data_license'))\
+            .order_by('-count')
+        for i in rights_list:
+            if rights_count.filter(data_license=i['data_license']):
+                i['count'] = rights_count.filter(data_license=i['data_license'])[0]['count']
+            else:
+                i['count'] = 0
+                
+        rights_rows = [{
+            'key': DATA_MAPPING['rights'][x['data_license']],
+            'label':DATA_MAPPING['rights'][x['data_license']],
+            'count': x['count']
+        } for x in rights_list]
+        rights_rows = sorted(rights_rows, key=lambda d: d['count'], reverse=True) 
 
         menu_list = [
             {
