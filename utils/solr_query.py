@@ -281,7 +281,7 @@ class SolrQuery(object):
             is_last = True
         for i in resp['docs']:
             try:
-                i['taibif_occurrence_id'] = i['taibif_occ_id']
+                # DEPRECATED i['taibif_occurrence_id'] = i['taibif_occ_id']
                 i['taibif_event_date'] = i['taibif_event_date'][0].replace('T00:00:00Z','')
             except :
                 print(f' error info in occ = {i}')
@@ -290,7 +290,7 @@ class SolrQuery(object):
             'limit': self.rows,
             'count': resp['numFound'],
             'results': resp['docs'],
-            'endOfRecords': is_last,
+            # 'endOfRecords': is_last, DEPRECATED?
             'facets': facets, # TODO: redundant with menus
         }
 

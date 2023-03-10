@@ -18,10 +18,11 @@ urlpatterns = [
     path('v2/occurrence/map', views.occurrence_search_v2, name='api-occurrence-search-v2-map'),
     path('dataset/export', views.export, name='export'),
     path('v2/occurrence/get_map_species', views.get_map_species, name='get_map_species'),
-    path('v2/occurrence/basic_occ', views.for_basic_occ, name='api_basic_occ'),
     
     path('v1/dataset', views.dataset_api, name='api_dataset'),
     # path('v1/taxon', views.taxon_api, name='api_taxon'),
     path('v1/publisher', views.publisher_api, name='api_publisher'),
     path('v1/publisher/dataset/<int:pk>', views.publisher_dataset_api, name='api_publisher_dataset'),
+    path('v2/occurrence/basic_occ', views.for_basic_occ, name='api_basic_occ'),
+    path('v2/occurrence/detail_occ', views.occurrence_api, name='occurrence_api'),    
 ]
