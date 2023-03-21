@@ -621,6 +621,155 @@ def taxon_tree_node(request, pk):
     }
     return HttpResponse(json.dumps(data), content_type="application/json")
 
+def occurrence_api(request):
+    
+    offset = 0
+    fq_list = []
+    generate_list = []
+    q_list = []
+    map_query = ''
+    
+    
+    if request.GET.get('q'): 
+        q_list.append(('q', request.GET.get('q')))
+    else:
+        q_list.append(('q', '{}:{}'.format('*', '*')))
+    
+    for key, values in request.GET.lists():
+        print("key,value === ",key,values)
+        if key == "start_date" or key == "end_date":
+            continue
+        
+        # generate search
+            
+        elif key == 'fl':
+            generate_list.append(('fl', values[0]))
+        elif key == 'wt':
+            generate_list.remove(('wt', 'json'))
+            generate_list.append(('wt', values[0]))
+        elif key == "rows":
+            rows = int(values[0])
+            if rows <=3000:
+                generate_list.append((key, values[0]))
+            else : 
+                rows = 3000
+                generate_list.append((key, 3000))
+        elif key == "offset":
+            offset = values[0]
+            generate_list.append(('start', values[0]))
+        
+        # fq query 
+        elif key == "basisOfRecord":
+            fq_list.append(('fq', '{}:{}'.format('taibif_basisOfRecord', values[0])))
+        elif key == "country":
+            fq_list.append(('fq', '{}:{}'.format('taibif_country', values[0])))
+        elif key == "month":
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_month', values[0])))
+        elif key == "county":
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_county', values[0])))
+        elif key == "occurrenceID":
+            fq_list.append(('fq', '{}:"{}"'.format('occurrenceID', values[0])))
+        elif key == "kingdom":
+            fq_list.append(('fq', '{}:"{}"'.format('kingdomzh', values[0])))
+        elif key == "phylum":
+            fq_list.append(('fq', '{}:"{}"'.format('phylumzh', values[0])))
+        elif key == "class":
+            fq_list.append(('fq', '{}:"{}"'.format('classzh', values[0])))
+        elif key == "order":
+            fq_list.append(('fq', '{}:"{}"'.format('orderzh', values[0])))
+        elif key == "family":
+            fq_list.append(('fq', '{}:"{}"'.format('familyzh', values[0])))
+        elif key == "genus":
+            fq_list.append(('fq', '{}:"{}"'.format('genuszh', values[0])))
+        elif key == "taxonRank":
+            fq_list.append(('fq', '{}:"{}"'.format('taxon_rank', values[0])))
+        elif key == "taicolId":
+            fq_list.append(('fq', '{}:"{}"'.format('taicol_id', values[0])))
+        elif key == "issue":
+            if str(values[0]) == 'Taxon Match None':
+                fq_list.append(('fq', '{}:"{}"'.format('TaxonMatchNone', 'true')))
+            if str(values[0]) == 'Recorded Date Invalid':
+                fq_list.append(('fq', '{}:"{}"'.format('RecordedDateInvalid', 'true')))
+            if str(values[0]) == 'Coordinate Invalid':
+                fq_list.append(('fq', '{}:"{}"'.format('CoordinateInvalid', 'true')))
+        elif key == "occurrenceStatus":
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_occurrenceStatus', values[0])))
+        elif key == "scientificName":
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_scientificname', values[0])))
+        elif key == "taibifOccID":
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_occ_id', values[0])))            
+        # range query
+        elif key == "year":
+            if ',' in values[0]:
+                vlist = values[0].split(',')
+                fq_list.append(('fq', f'taibif_year:[{vlist[0]} TO {vlist[1]}]'))
+            else:
+                fq_list.append(('fq', '{}:{}'.format('taibif_year', values[0])))
+        
+        elif key == "eventDate":
+            if ',' in values[0]:
+                vlist = values[0].split(',')
+                fq_list.append(('fq', f'taibif_event_date:[{vlist[0]}T00:00:00Z TO {vlist[1]}T00:00:00Z]'))
+            else:
+                fq_list.append(('fq', f'taibif_event_date:[{values[0]}T00:00:00Z TO NOW]'))
+        elif key == "modifiedDate":
+            if ',' in values[0]:
+                vlist = values[0].split(',')
+                fq_list.append(('fq', f'modifiedDate:[{vlist[0]}T00:00:00Z TO {vlist[1]}T00:00:00Z]'))
+            else:
+                fq_list.append(('fq', f'modifiedDate:[{values[0]}T00:00:00Z TO NOW]'))
+        elif key == "taibifModDate":
+            if ',' in values[0]:
+                vlist = values[0].split(',')
+                fq_list.append(('fq', f'mod_date:[{vlist[0]}T00:00:00Z TO {vlist[1]}T00:00:00Z]'))
+            else:
+                fq_list.append(('fq', f'mod_date:[{values[0]}T00:00:00Z TO NOW]'))
+        
+        elif key == "coordinateUncertaintyInMeters":
+            if ',' in values[0]:
+                vlist = values[0].split(',')
+                fq_list.append(('fq', f'taibif_coordinateUncertaintyInMeters:[{vlist[0]} TO {vlist[1]}]'))
+            else:
+                fq_list.append(('fq', '{}:{}'.format('taibif_coordinateUncertaintyInMeters', values[0])))
+                    
+        elif key == 'decimalLatitude':
+            coor_list = [ float(c) for c in values]
+            y1 = convert_y_coor_to_grid(min(coor_list))
+            y2 = convert_y_coor_to_grid(max(coor_list))
+            map_query = "{!frange l=" + str(y1) + " u=" + str(y2) + "}grid_y"
+            fq_list.append(('fq', map_query))
+        elif key == 'decimalLongitude':
+            coor_list = [ float(c) for c in values]
+            x1 = convert_x_coor_to_grid(min(coor_list))
+            x2 = convert_x_coor_to_grid(max(coor_list))
+            map_query = "{!frange l=" + str(x1) + " u=" + str(x2) + "}grid_x"
+            fq_list.append(('fq', map_query))
+        elif key == 'license':
+            fq_list.append(('fq', '{}:{}'.format('license', values[0])))
+        elif key == 'gbif_dataset_uuid':
+            if values[0]:
+                fq_list.append(('fq', '{}:"{}"'.format('gbif_dataset_uuid', values[0])))
+            else: 
+                fq_list.append(('fq', '{}:{}'.format('gbif_dataset_uuid', '*')))
+
+    solr = SolrQuery('taibif_occurrence')
+    fq_query = urllib.parse.urlencode(fq_list)
+    q_query = urllib.parse.urlencode(q_list)
+    generate_query = urllib.parse.urlencode(generate_list)
+
+    solr.solr_url = f'http://solr:8983/solr/{solr.core}/select?indent=true&q.op=OR'
+    if generate_query:
+        solr.solr_url = solr.solr_url+f'&{generate_query}'
+    if q_query:
+        solr.solr_url = solr.solr_url+f'&{q_query}'
+    if fq_query:
+        solr.solr_url = solr.solr_url+f'&{fq_query}'
+        
+    resp =urllib.request.urlopen(solr.solr_url)
+    resp_dict = resp.read().decode()
+    solr.solr_response = json.loads(resp_dict)
+    return JsonResponse(solr.solr_response)
+
 # DEPRICATED
 #@json_ret
 def search_occurrence(request, cat=''):
