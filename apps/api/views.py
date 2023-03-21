@@ -631,7 +631,7 @@ def occurrence_api(request):
     
     
     if request.GET.get('q'): 
-        q_list.append(('q', values[0]))
+        q_list.append(('q', request.GET.get('q')))
     else:
         q_list.append(('q', '{}:{}'.format('*', '*')))
     
@@ -659,14 +659,16 @@ def occurrence_api(request):
             generate_list.append(('start', values[0]))
         
         # fq query 
+        elif key == "basisOfRecord":
+            fq_list.append(('fq', '{}:{}'.format('taibif_basisOfRecord', values[0])))
         elif key == "country":
             fq_list.append(('fq', '{}:{}'.format('taibif_country', values[0])))
         elif key == "month":
-            fq_list.append(('fq', '{}:"{}"'.format('month', values[0])))
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_month', values[0])))
         elif key == "county":
-            fq_list.append(('fq', '{}:"{}"'.format('taibif_country', values[0])))
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_county', values[0])))
         elif key == "occurrenceID":
-            fq_list.append(('fq', '{}:"{}"'.format('taibif_occ_id', values[0])))
+            fq_list.append(('fq', '{}:"{}"'.format('occurrenceID', values[0])))
         elif key == "kingdom":
             fq_list.append(('fq', '{}:"{}"'.format('kingdomzh', values[0])))
         elif key == "phylum":
@@ -679,9 +681,9 @@ def occurrence_api(request):
             fq_list.append(('fq', '{}:"{}"'.format('familyzh', values[0])))
         elif key == "genus":
             fq_list.append(('fq', '{}:"{}"'.format('genuszh', values[0])))
-        elif key == "rank":
-            fq_list.append(('fq', '{}:"{}"'.format('rank', values[0])))
-        elif key == "taicol_id":
+        elif key == "taxonRank":
+            fq_list.append(('fq', '{}:"{}"'.format('taxon_rank', values[0])))
+        elif key == "taicolId":
             fq_list.append(('fq', '{}:"{}"'.format('taicol_id', values[0])))
         elif key == "issue":
             if str(values[0]) == 'Taxon Match None':
@@ -691,11 +693,11 @@ def occurrence_api(request):
             if str(values[0]) == 'Coordinate Invalid':
                 fq_list.append(('fq', '{}:"{}"'.format('CoordinateInvalid', 'true')))
         elif key == "occurrenceStatus":
-            fq_list.append(('fq', '{}:"{}"'.format('occurrenceStatus', values[0])))
-                
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_occurrenceStatus', values[0])))
         elif key == "scientificName":
             fq_list.append(('fq', '{}:"{}"'.format('taibif_scientificname', values[0])))
-        
+        elif key == "taibifOccID":
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_occ_id', values[0])))            
         # range query
         elif key == "year":
             if ',' in values[0]:
@@ -726,9 +728,9 @@ def occurrence_api(request):
         elif key == "coordinateUncertaintyInMeters":
             if ',' in values[0]:
                 vlist = values[0].split(',')
-                fq_list.append(('fq', f'{key}:[{vlist[0]} TO {vlist[1]}]'))
+                fq_list.append(('fq', f'taibif_coordinateUncertaintyInMeters:[{vlist[0]} TO {vlist[1]}]'))
             else:
-                fq_list.append(('fq', '{}:{}'.format(key, values[0])))
+                fq_list.append(('fq', '{}:{}'.format('taibif_coordinateUncertaintyInMeters', values[0])))
                     
         elif key == 'decimalLatitude':
             coor_list = [ float(c) for c in values]
@@ -742,6 +744,13 @@ def occurrence_api(request):
             x2 = convert_x_coor_to_grid(max(coor_list))
             map_query = "{!frange l=" + str(x1) + " u=" + str(x2) + "}grid_x"
             fq_list.append(('fq', map_query))
+        elif key == 'license':
+            fq_list.append(('fq', '{}:{}'.format('license', values[0])))
+        elif key == 'gbif_dataset_uuid':
+            if values[0]:
+                fq_list.append(('fq', '{}:"{}"'.format('gbif_dataset_uuid', values[0])))
+            else: 
+                fq_list.append(('fq', '{}:{}'.format('gbif_dataset_uuid', '*')))
 
     solr = SolrQuery('taibif_occurrence')
     fq_query = urllib.parse.urlencode(fq_list)
