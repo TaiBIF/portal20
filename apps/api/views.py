@@ -660,13 +660,26 @@ def occurrence_api(request):
         
         # fq query 
         elif key == "basisOfRecord":
-            fq_list.append(('fq', '{}:{}'.format('taibif_basisOfRecord', values[0])))
+            if ',' in values[0]:
+                vlist = values[0].split(',')
+                vlistString = '" OR "'.join(vlist)
+                fq_list.append(('fq', f'taibif_basisOfRecord:"{vlistString}"'))
+            else: 
+                fq_list.append(('fq', '{}:{}'.format('taibif_basisOfRecord', values[0])))
         elif key == "country":
-            fq_list.append(('fq', '{}:{}'.format('taibif_country', values[0])))
-        elif key == "month":
-            fq_list.append(('fq', '{}:"{}"'.format('taibif_month', values[0])))
+            if ',' in values[0]:
+                vlist = values[0].split(',')
+                vlistString = '" OR "'.join(vlist)
+                fq_list.append(('fq', f'taibif_country:"{vlistString}"'))
+            else: 
+                fq_list.append(('fq', '{}:{}'.format('taibif_country', values[0])))
         elif key == "county":
-            fq_list.append(('fq', '{}:"{}"'.format('taibif_county', values[0])))
+            if ',' in values[0]:
+                vlist = values[0].split(',')
+                vlistString = '" OR "'.join(vlist)
+                fq_list.append(('fq', f'taibif_county:"{vlistString}"'))
+            else: 
+                fq_list.append(('fq', '{}:"{}"'.format('taibif_county', values[0])))
         elif key == "occurrenceID":
             fq_list.append(('fq', '{}:"{}"'.format('occurrenceID', values[0])))
         elif key == "kingdom":
@@ -683,8 +696,10 @@ def occurrence_api(request):
             fq_list.append(('fq', '{}:"{}"'.format('genuszh', values[0])))
         elif key == "taxonRank":
             fq_list.append(('fq', '{}:"{}"'.format('taxon_rank', values[0])))
-        elif key == "taicolId":
+        elif key == "taicolID":
             fq_list.append(('fq', '{}:"{}"'.format('taicol_id', values[0])))
+        elif key == "taxonGroup":
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_taxonGroup', values[0])))
         elif key == "issue":
             if str(values[0]) == 'Taxon Match None':
                 fq_list.append(('fq', '{}:"{}"'.format('TaxonMatchNone', 'true')))
@@ -705,13 +720,21 @@ def occurrence_api(request):
                 fq_list.append(('fq', f'taibif_year:[{vlist[0]} TO {vlist[1]}]'))
             else:
                 fq_list.append(('fq', '{}:{}'.format('taibif_year', values[0])))
+
+        elif key == "month":
+            if ',' in values[0]:
+                vlist = values[0].split(',')
+                fq_list.append(('fq', f'taibif_month:[{vlist[0]} TO {vlist[1]}]'))
+            else:
+                fq_list.append(('fq', '{}:"{}"'.format('taibif_month', values[0])))
+
         
         elif key == "eventDate":
             if ',' in values[0]:
                 vlist = values[0].split(',')
                 fq_list.append(('fq', f'taibif_event_date:[{vlist[0]}T00:00:00Z TO {vlist[1]}T00:00:00Z]'))
             else:
-                fq_list.append(('fq', f'taibif_event_date:[{values[0]}T00:00:00Z TO NOW]'))
+                fq_list.append(('fq', f'taibif_event_date:{values[0]}'))
         elif key == "modifiedDate":
             if ',' in values[0]:
                 vlist = values[0].split(',')
@@ -745,7 +768,14 @@ def occurrence_api(request):
             map_query = "{!frange l=" + str(x1) + " u=" + str(x2) + "}grid_x"
             fq_list.append(('fq', map_query))
         elif key == 'license':
-            fq_list.append(('fq', '{}:{}'.format('license', values[0])))
+            litype = ''
+            if values[0] == 'CC-BY':
+                litype = 'Creative Commons Attribution (CC-BY) 4.0 License'
+            elif values[0] == 'CC-BY-NC':
+                litype = 'Creative Commons Attribution Non Commercial (CC-BY-NC) 4.0 License'
+            elif values[0] == 'CC0':
+                litype = 'Public Domain (CC0 1.0)'
+            fq_list.append(('fq', '{}:"{}"'.format('license', litype)))
         elif key == 'gbif_dataset_uuid':
             if values[0]:
                 fq_list.append(('fq', '{}:"{}"'.format('gbif_dataset_uuid', values[0])))
