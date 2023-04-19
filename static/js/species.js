@@ -28,7 +28,7 @@ function gerBorderColor(d) {
 
 const rank = document.currentScript.getAttribute('taxon_rank'); 
 const id = document.currentScript.getAttribute('taxon_id'); 
-const endpoint = `/api/v2/occurrence/search?taxon_key=${rank}:${id}&facet=year&facet=month&facet=dataset&facet=dataset_id&facet=publisher&facet=country&facet=license`;
+const endpoint = `/api/v2/occurrence/search?path=${id}&facet=year&facet=month&facet=dataset&facet=dataset_id&facet=publisher&facet=country&facet=license`;
 
 $.ajax({
   type: "GET",

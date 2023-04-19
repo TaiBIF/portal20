@@ -41,7 +41,7 @@ function StyledScientificName(props) {
 
 function SpeciesResult(props) {
   const rows = props.data.results.map((row, index) => {
-    const link = `/species/${row.id}/`;
+    const link = `/species/${row.taicol_taxon_id}/`;
     // TODO species image
       // <a href="05-searchPublisher.html"><img src="images/logo-sinica.jpg" class="img-responsive"></a>
     const imgLink = null;
@@ -52,7 +52,7 @@ function SpeciesResult(props) {
             <div className="listbox-inner-summary hidden-xs">
               <ul className="scientific-name-wrapper">
               { row.rank_list.map((t)=>
-                <li key={t.id}><a href={"/species/"+t.id}>{t.name} {t.name_zh}</a></li>
+                <li key={t.taicol_taxon_id}><a href={"/species/"+t.taicol_taxon_id}>{t.name} {t.name_zh}</a></li>
               )}
                 <li><a href={link}><StyledScientificName data={row} /></a></li>
               </ul>
