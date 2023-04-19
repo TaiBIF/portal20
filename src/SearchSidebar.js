@@ -12,7 +12,7 @@ function Accordion(props) {
   const [isOpen, setOpenState] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
 
-  const yearRange = [1795, 2022];// TODO: hard-coded
+  const yearRange = [1795, 2023];// TODO: hard-coded
   let yearSelected = yearRange;
   filters.forEach((x) => {
     const [key, values] = x.split('=');
@@ -28,7 +28,7 @@ function Accordion(props) {
     isLong = true;
   }
   const sliderMarks = [];
-  for (let i=1795; i<2023; i++) {
+  for (let i=1795; i<2024; i++) {
     sliderMarks.push({value: i, label: i});
   }
 
@@ -43,7 +43,7 @@ function Accordion(props) {
   };
   const clearYearCondition = (event) => {
     console.log(event, content.key)
-    yearSelected = [1795, 2022]
+    yearSelected = [1795, 2023]
     setYearValue(yearSelected)
     props.clearCondition(event,content.key)
   };
@@ -266,7 +266,6 @@ function SearchSidebar(props) {
   } else if (props.language === 'en'){
     formControlPlaceholder = 'Keyword Search';
   }
-
   return (
       <div className="search-sidebar">
         <div className="modal right fade modal-search-side-wrapper" id="flowBtnModal" tabIndex="-1" role="dialog">
@@ -280,6 +279,7 @@ function SearchSidebar(props) {
                 </div>
               </div>
               <div className="input-group search-sidebar-header-kw">
+
       <input className="form-control" placeholder={formControlPlaceholder} name="search-term" id="search-term" type="text" value={queryKeyword} onChange={handleChangeKeyword} onKeyPress={props.onKeyPressKeyword} />
                 <div className="input-group-btn">
       <button className="btn" type="submit" onClick={(e)=>props.onClickSubmitKeyword(e, queryKeyword)}>

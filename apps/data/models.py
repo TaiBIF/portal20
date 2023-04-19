@@ -20,6 +20,9 @@ DATA_MAPPING = {
         'Creative Commons Attribution Non Commercial (CC-BY-NC) 4.0 License': 'CC-BY-NC 4.0',
         'Creative Commons Attribution (CC-BY) 4.0 License': 'CC-BY 4.0',
         'Public Domain (CC0 1.0)': 'CC0 1.0',
+        'CC-BY-NC':'CC-BY-NC 4.0',
+        'CC-BY':'CC-BY',
+        'CC0':'CC0',
         None:'未明確授權',
         'unknown':'未明確授權',
     },
@@ -235,15 +238,16 @@ class TaxonTree(models.Model):
         return r
 
 class Taxon(models.Model):
-    RANK_LIST = [
-        ('kingdom', '界'),
-        ('phylum', '門'),
-        ('class', '綱'),
-        ('order', '目'),
-        ('family', '科'),
-        ('genus', '屬'),
-        ('species', '種'),
-    ]
+    RANK_LIST = [('Domain', '域'), ('Superkingdom', '總界'), ('Kingdom', '界'), ('Subkingdom', '亞界'), ('Infrakingdom', '下界'), 
+ ('Superdivision', '超部|總部'), ('Division', '部|類'), ('Subdivision', '亞部|亞類'), (
+     'Infradivision', '下部|下類'), ('Parvdivision','小部|小類'), ('Superphylum', '超門|總門'), ('Phylum', '門'),
+ ('Subphylum', '亞門'), ('Infraphylum', '下門'), ('Microphylum', '小門'), ('Parvphylum', '小門'), 
+ ('Superclass', '超綱|總綱'), ('Class', '綱'), ('Subclass', '亞綱'), ('Infraclass','下綱'),('Superorder','超目|總目'), 
+ ('Order', '目'), ('Suborder', '亞目'), ('Infraorder', '下目'), ('Superfamily', '超科|總科'), ('Family', '科'),
+ ('Subfamily', '亞科'), ('Tribe', '族'), ('Subtribe', '亞族'), ('Genus', '屬'), ('Subgenus', '亞屬'), ('Seection', '亞組|亞節'), 
+ ('Species', '種'), ('Subspecies', '亞種'), ('Nothosubspecies', '雜交亞種'), ('Variety', '變種'), 
+ ('Subvariety', '亞變種'), ('Nothovariety', '雜交變種'), ('Form', '型'), ('Subform', '亞型'), 
+ ('Special Form', '特別品型'), ('Race', '種族'), ('Stirp', '種族'), ('Morph', '形態型'), ('Aberration', '異常個體'), ('Hybrid Formula', '雜交組合')]
 
     rank = models.CharField('rank', max_length=32, choices=RANK_LIST)
     name = models.CharField('name', max_length=128)
@@ -257,7 +261,17 @@ class Taxon(models.Model):
     family_id = models.IntegerField('family_id',default=0,null=True)
     genus_id = models.IntegerField('genus_id',default=0,null=True)
     
-    
+    kingdom_taxon_id = models.CharField('kingdom_taxon_id', max_length=128, null=True)
+    phylum_taxon_id = models.CharField('phylum_taxon_id', max_length=128, null=True)
+    class_taxon_id = models.CharField('class_taxon_id', max_length=128, null=True)
+    order_taxon_id = models.CharField('order_taxon_id', max_length=128, null=True)
+    family_taxon_id = models.CharField('family_taxon_id', max_length=128, null=True)
+    genus_taxon_id = models.CharField('genus_taxon_id', max_length=128, null=True)
+    formatted_name = models.CharField('formatted_name', max_length=256, null=True)
+    name_author = models.CharField('name_author', max_length=256, null=True)
+    parent_taxon_id = models.CharField('self', max_length=256, null=True)
+    # parent_taxon_id = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
+
     specific_epithet = models.CharField('specific epithet', max_length=128, null=True)
     count = models.PositiveIntegerField('count', default=0,null=True)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
@@ -272,6 +286,9 @@ class Taxon(models.Model):
     taieol_pic = models.CharField('taieol_pic',max_length=1000,null=True)
     
     backbone = models.CharField('backbone', max_length=1000, null=True, blank=True)
+    taicol_name_id = models.IntegerField('taicol name id', null=True, default=0)
+    taicol_taxon_id = models.CharField('taicol taxon id', max_length=1000, null=True, blank=True)
+    path = models.TextField('path', null=True)
     
     def __str__(self):
         r = '{}: {}'.format(self.rank, self.get_name())
@@ -300,7 +317,8 @@ class Taxon(models.Model):
     
 
     def synonyms(self):
-        sys_name = Taxon.objects.filter(accepted_name_id=self.accepted_name_id,is_accepted_name=False).exclude(id=self.id)
+        sys_name = Taxon.objects.filter(accepted_name_id=self.id,is_accepted_name=False).exclude(id=self.id).exclude(taicol_name_id__isnull=True)
+
         return list(sys_name.all())
 
     @staticmethod
@@ -370,41 +388,29 @@ class Taxon(models.Model):
     @property
     def taicol_namecode_link(self):
         url =''
-        if self.rank == 'species':
-            if self.rank == 'species' and self.source_id:
-                url = 'https://taibnet.sinica.edu.tw/chi/taibnet_species_detail.php?name_code={}'.format(self.source_id)
+        if self.taicol_taxon_id:
+            url = 'https://taicol.tw/taxon/{}'.format(self.taicol_taxon_id)
+        
+        # if self.rank == 'species':
+        #     if self.rank == 'species' and self.source_id:
+        #         url = 'https://taibnet.sinica.edu.tw/chi/taibnet_species_detail.php?name_code={}'.format(self.source_id)
         return url
 
     @property
     def rank_list(self):
-        def get_rank_tree(x, a=[]):
-            if x.parent:
-                a.append(x.parent)
-                return get_rank_tree(x.parent, a)
+        if self.path:
+            rank_list = self.path.split(">")
+            a=[]
+            for i in rank_list:
+                a.append(Taxon.objects.get(taicol_taxon_id = i))
             return list(reversed(a))
-        return get_rank_tree(self)
+        else:
+            return []
 
     @property
     def species_pic(self):
-        query = Taxon.objects
-        if self.rank != 'species':
-            id_list = []
-            if self.rank == 'kingdom':
-                query = Taxon_Picture.objects.filter(kingdom_id=self.id)[:30]
-            elif self.rank == 'phylum':
-                query = Taxon_Picture.objects.filter(phylum_id=self.id)[:30]
-            elif self.rank == 'class':
-                query = Taxon_Picture.objects.filter(class_id=self.id)[:30]
-            elif self.rank == 'order':
-                query = Taxon_Picture.objects.filter(order_id=self.id)[:30]
-            elif self.rank == 'family':
-                query = Taxon_Picture.objects.filter(family_id=self.id)[:30]
-            elif self.rank == 'genus':
-                query = Taxon_Picture.objects.filter(genus_id=self.id)[:30]
-            return list(query.all())
-        else:
-            query = Taxon_Picture.objects.filter(taxon_id=self.id)
-            return list(query.all())
+        query = Taxon_Picture.objects.filter(path__contains=self.taicol_taxon_id)[:30]
+        return list(query.all())
 
     @property
     def children(self):
@@ -415,16 +421,17 @@ class Taxon(models.Model):
         rows = []
         for i in Taxon.RANK_LIST:
             q = Taxon.objects.filter(rank=i[0])
-            if status and i[0] == 'species': # only count on species
-                if status == 'accepted':
-                    q = q.filter(is_accepted_name=True)
-                elif status == 'synonym':
-                    q = q.filter(is_accepted_name=False)
-            rows.append({
-                'count': q.count(),
-                'key': i[0],
-                'label': '{} {}'.format(i[1], i[0].capitalize())
-            })
+            if len(q)>0:
+                if status and i[0] == 'Species': # only count on species
+                    if status == 'accepted':
+                        q = q.filter(is_accepted_name=True)
+                    elif status == 'synonym':
+                        q = q.filter(is_accepted_name=False)
+                rows.append({
+                    'count': q.count(),
+                    'key': i[0],
+                    'label': '{} {}'.format(i[1], i[0].capitalize())
+                })
         #taxon_list = Taxon.objects.\
         #    filter(tree_id=1,
         #           rank=rank).\
@@ -466,6 +473,8 @@ class Taxon_Picture(models.Model):
     genus_id = models.TextField(null=True,blank=True)
     license = models.TextField(null=True,blank=True)
     taieol_pic = models.TextField(null=True,blank=True)
+    path = models.TextField(null=True,blank=True)
+    taicol_taxon_id = models.CharField('taicol taxon id', max_length=1000, null=True, blank=True)
     
 OCCURRENCE_COLUMN_MAP = {'occurrenceID': 'occurrence_id', 'occurrenceRemarks': 'occurrence_remarks', 'occurrenceStatus': 'occurrence_status', 'institutionID': 'institution_id', 'institutionCode': 'institution_code', 'ownerInstitutionCode': 'owner_institution_code', 'collectionID': 'collection_id', 'collectionCode': 'collection_code', 'catalogNumber': 'catalog_number', 'otherCatalogNumbers': 'other_catalog_numbers', 'recordNumber': 'record_number', 'recordedBy': 'recorded_by', 'fieldNumber': 'field_number', 'fieldNotes': 'field_notes', 'basisOfRecord': 'basis_of_record', 'datasetID': 'dataset_id', 'datasetName': 'dataset_name', 'language': 'language', 'type': 'type_field', 'typeStatus': 'type_status', 'coreid': 'coreid', 'lifeStage': 'life_stage', 'eventTime': 'event_time', 'eventRemarks': 'event_remarks', 'year': 'year', 'month': 'month', 'day': 'day', 'startDayOfYear': 'start_day_of_year', 'endDayOfYear': 'end_day_of_year', 'eventDate': 'event_date', 'eventID': 'event_id', 'verbatimEventDate': 'verbatim_event_date', 'verbatimDepth': 'verbatim_depth', 'kingdom': 'kingdom', 'phylum': 'phylum', 'class': 'class_field', 'order': 'order_field', 'family': 'family', 'genus': 'genus', 'subgenus': 'subgenus', 'vernacularName': 'vernacular_name', 'scientificName': 'scientific_name', 'scientificNameID': 'scientific_name_id', 'taxonRank': 'taxon_rank', 'taxonID': 'taxon_id', 'verbatimTaxonRank': 'verbatim_taxon_rank', 'associatedTaxa': 'associated_taxa', 'specificEpithet': 'specific_epithet', 'scientificNameAuthorship': 'scientific_name_authorship', 'acceptedNameUsage': 'accepted_name_usage', 'acceptedNameUsageID': 'accepted_name_usage_id', 'originalNameUsage': 'original_name_usage', 'nameAccordingTo': 'name_according_to', 'higherClassification': 'higher_classification', 'taxonRemarks': 'taxon_remarks', 'dateIdentified': 'date_identified', 'identificationQualifier': 'identification_qualifier', 'identifiedBy': 'identified_by', 'identificationVerificationStatus': 'identification_verification_status', 'previousIdentifications': 'previous_identifications', 'county': 'county', 'country': 'country', 'countryCode': 'country_code', 'stateProvince': 'state_province', 'locality': 'locality', 'locationID': 'location_id', 'higherGeography': 'higher_geography', 'georeferencedDate': 'georeferenced_date', 'georeferenceSources': 'georeference_sources', 'georeferencedBy': 'georeferenced_by', 'geodeticDatum': 'geodetic_datum', 'georeferenceProtocol': 'georeference_protocol', 'georeferenceRemarks': 'georeference_remarks', 'georeferenceVerificationStatus': 'georeference_verification_status', 'decimalLongitude': 'decimal_longitude', 'decimalLatitude': 'decimal_latitude', 'verbatimLatitude': 'verbatim_latitude', 'verbatimLongitude': 'verbatim_longitude', 'verbatimLocality': 'verbatim_locality', 'verbatimCoordinates': 'verbatim_coordinates', 'coordinateUncertaintyInMeters': 'coordinate_uncertainty_in_meters', 'verbatimCoordinateSystem': 'verbatim_coordinate_system', 'coordinatePrecision': 'coordinate_precision', 'locationAccordingTo': 'location_according_to', 'pointRadiusSpatialFit': 'point_radius_spatial_fit', 'rights': 'rights', 'rightsHolder': 'rights_holder', 'license': 'license_field', 'preparations': 'preparations', 'id': 'id_field', 'modified': 'modified', 'dataGeneralizations': 'data_generalizations', 'organismID': 'organism_id', 'organismQuantityType': 'organism_quantity_type', 'organismQuantity': 'organism_quantity', 'sex': 'sex', 'individualCount': 'individual_count', 'verbatimElevation': 'verbatim_elevation', 'minimumElevationInMeters': 'minimum_elevation_in_meters', 'maximumElevationInMeters': 'maximum_elevation_in_meters', 'minimumDepthInMeters': 'minimum_depth_in_meters', 'maximumDepthInMeters': 'maximum_depth_in_meters', 'waterBody': 'water_body', 'island': 'island', 'habitat': 'habitat', 'reproductiveCondition': 'reproductive_condition', 'continent': 'continent', 'infraspecificEpithet': 'infraspecific_epithet', 'footprintWKT': 'footprint_wkt', 'associatedMedia': 'associated_media', 'associatedSequences': 'associated_sequences', 'associatedReferences': 'associated_references', 'nomenclaturalCode': 'nomenclatural_code', 'footprintSpatialFit': 'footprint_spatial_fit', 'establishmentMeans': 'establishment_means', 'behavior': 'behavior', 'informationWithheld': 'information_withheld', 'islandGroup': 'island_group', 'municipality': 'municipality', 'materialSampleID': 'material_sample_id', 'samplingProtocol': 'sampling_protocol', 'samplingEffort': 'sampling_effort', 'disposition': 'disposition', 'references': 'references', 'namePublishedInYear': 'name_published_in_year', 'namePublishedIn': 'name_published_in', 'dataset_name': 'dataset_name'}
 

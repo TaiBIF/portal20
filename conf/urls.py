@@ -53,7 +53,7 @@ urlpatterns = [
     path('occurrence/<str:taibif_id>', occurrence_view, name='occurrence-detail'),
     path('dataset/<name>/', dataset_view, name='dataset-detail'),
     path('publisher/<int:pk>/', publisher_view, name='publisher-detail'),
-    path('species/<int:pk>/', species_view, name='species-detail'),
+    path('species/<str:taicol_taxon_id>/', species_view, name='species-detail'),
     path('article/', include('apps.article.urls')),
     path('',  include('apps.page.urls')),
     path('admin/', admin.site.urls),

@@ -376,7 +376,6 @@ class SpeciesSearch(SuperSearch):
     def __init__(self, filters):
         self.model = Taxon
         super().__init__(filters)
-        print ('this is filters = ',self.filters)
         # filter query
         query = self.query
         for key, values in self.filters:
@@ -403,6 +402,7 @@ class SpeciesSearch(SuperSearch):
                     else:
                         or_cond.add(Q(hierarchy_string__icontains='-{}-'.format(v)), Q.OR)
                 query = query.filter(or_cond)
+            query = query.filter(taicol_taxon_id__isnull=False).order_by('taicol_taxon_id')
 
             self.query = query
 
@@ -412,7 +412,7 @@ class SpeciesSearch(SuperSearch):
             'name': x.name,
             'name_zh': x.name_zh,
             'name_full': '',#TODO react.js
-            #'name_list': x.
+            'taicol_taxon_id': x.taicol_taxon_id,
             # 'count': x.count,
             'rank': x.rank,
             'rank_display': x.get_rank_display(),
