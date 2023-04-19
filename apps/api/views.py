@@ -372,7 +372,8 @@ def for_basic_occ(request):
             'license':i['taibif_license'] if 'taibif_license' in i else (i['license'] if 'license' in i else ''),
             # 'created':,
             # 'modified':,
-            'mod_date':i['mod_date'][0]
+            'mod_date':i['mod_date'][0],
+            'typeStatus':i['typeStatus'][0]
         })
 
     res['count'] = solr_response['response']['numFound']
@@ -1175,11 +1176,8 @@ def search_publisher(request):
 def search_species(request):
     status = request.GET.get('status', '')
     rank = request.GET.get('rank', '')
-    print (status)
-
     species_search = SpeciesSearch(list(request.GET.lists()))
     #species_ids = list(species_search.query.values('id').all())
-    #print (species_ids, len(species_ids))
     has_menu = True if request.GET.get('menu', '') else False
     menu_list = []
     if has_menu:
@@ -1198,6 +1196,7 @@ def search_species(request):
                 'rows': [{
                     'key': x['key'],
                     'label': x['label'],
+                    'count': x['count'],
                 } for x in Taxon.get_tree(rank=rank, status=status)]
             },
             {
@@ -1588,7 +1587,6 @@ def taxon_bar(request):
 
     return HttpResponse(json.dumps(data), content_type="application/json")
 
-#------- DEPRECATED ------#
 
 def search_occurrence_v1(request):
     year_start = 1000
@@ -1740,6 +1738,7 @@ def search_occurrence_v1(request):
     } for x in treeRoot]
     ret['tree'] = treeData
     return JsonResponse(ret)
+#------- DEPRECATED ------#
 
 def export(request):
     solr = SolrQuery('taibif_occurrence')

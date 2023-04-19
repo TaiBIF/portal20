@@ -112,28 +112,28 @@ JSON_FACET_MAP = {
 CODE_MAPPING ={
     'county':{
         None : '其他',
-        'Taipei' : '臺北市',
-        'Taichung' : '臺中市',
-        'Keelung' : '基隆市',
-        'Tainan' : '臺南市',
-        'Kaohsiung' : '高雄市',
-        'New Taipei' : '新北市',
-        'Yilan' : '宜蘭縣',
-        'Taoyuan' : '桃園市',
+        'Taipei City' : '臺北市',
+        'Taichung City' : '臺中市',
+        'Keelung City' : '基隆市',
+        'Tainan City' : '臺南市',
+        'Kaohsiung City' : '高雄市',
+        'New Taipei City' : '新北市',
+        'Yilan County' : '宜蘭縣',
+        'Taoyuan City' : '桃園市',
         'Chiayi City' : '嘉義市',
         'Hsinchu County' : '新竹縣',
-        'Miaoli' : '苗栗縣',
-        'Nantou' : '南投縣',
-        'Changhua' : '彰化縣',
+        'Miaoli County' : '苗栗縣',
+        'Nantou County' : '南投縣',
+        'Changhua County' : '彰化縣',
         'Hsinchu City' : '新竹市',
-        'Yulin' : '雲林縣',
+        'Yunlin County' : '雲林縣',
         'Chiayi County' : '嘉義縣',
-        'Pingtung' : '屏東縣',
-        'Hualien' : '花蓮縣',
-        'Taitung' : '臺東縣',
-        'Kinmen' : '金門縣',
-        'Penghu' : '澎湖縣',
-        'Lienkiang' : '連江縣',
+        'Pingtung County' : '屏東縣',
+        'Hualien County' : '花蓮縣',
+        'Taitung County' : '臺東縣',
+        'Kinmen County' : '金門縣',
+        'Penghu County' : '澎湖縣',
+        'Lienchiang County' : '連江縣',
     }
     
 }
@@ -199,6 +199,8 @@ class SolrQuery(object):
                         taxon_key_list.append(f'{rank}_key:{taxon_id}')
                 #fq=(cat1:val1 OR cat2:val2 OR (cat3:(val3 AND val4)))
                 self.solr_tuples.append(('fq', ' OR '.join(taxon_key_list)))
+            elif key == 'path':
+                self.solr_tuples.append(('fq', 'path:"{}"'.format(values[0])))
             elif key == 'issues':
                 self.solr_tuples.append(('fq', '{}:"{}"'.format(values[0], 'true')))
             elif key in JSON_FACET_MAP[self.core]:

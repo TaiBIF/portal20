@@ -158,7 +158,6 @@ def occurrence_view(request, taibif_id):
     # occurrence = get_object_or_404(RawDataOccurrence, taibif_id=taibif_id)
     solr = SolrQuery('taibif_occurrence')
     req = solr.get_occurrence(taibif_id)
-    resp = solr.get_response()
     result = req['results']
     
     intro = {}
@@ -177,12 +176,12 @@ def occurrence_view(request, taibif_id):
     intro['publisher']=result[0].get('publisher')
     intro['basisOfRecord']=result[0].get('basisOfRecord')
     intro['scientificName']=result[0].get('scientificName')
-    intro['species_key']=result[0].get('species_key')
-    intro['kingdom_key']=result[0].get('kingdom_key')
-    intro['phylum_key']=result[0].get('phylum_key')
-    intro['order_key']=result[0].get('order_key')
-    intro['class_key']=result[0].get('class_key')
-    intro['genus_key']=result[0].get('genus_key')
+    # intro['species_key']=result[0].get('species_key')
+    # intro['kingdom_key']=result[0].get('kingdom_key')
+    # intro['phylum_key']=result[0].get('phylum_key')
+    # intro['order_key']=result[0].get('order_key')
+    # intro['class_key']=result[0].get('class_key')
+    # intro['genus_key']=result[0].get('genus_key')
     intro['dataset']=result[0].get('taibif_dataset_name')
     issues = []
     if result[0].get('TaxonMatchNone')[0]:
@@ -240,7 +239,7 @@ def occurrence_view(request, taibif_id):
     event['eventID']={'name_zh':'調查活動ID','value':[result[0].get('eventID'),result[0].get('taibif_eventID')]}
     event['parentEventID']={'name_zh':'parentEventID','value':[result[0].get(' parentEventID'),result[0].get(' taibif_parentEventID')]}
     event['fieldNumber']={'name_zh':'野外調查編號','value':[result[0].get('fieldNumber'),result[0].get('taibif_fieldNumber')]}
-    event['eventDate']={'name_zh':'調查活動日期','value':[result[0].get('eventDate'),result[0].get('taibif_event_date')]}
+    event['eventDate']={'name_zh':'調查活動日期','value':[result[0].get('eventDate'),result[0].get('taibif_event_date')]} 
     event['eventTime']={'name_zh':'調查活動時間','value':[result[0].get('eventTime'),result[0].get('taibif_eventTime')]}
     event['startDayOfYear']={'name_zh':'起始年份','value':[result[0].get('startDayOfYear'),result[0].get('staibif_startDayOfYear')]}
     event['endDayOfYear']={'name_zh':'結束年份','value':[result[0].get('endDayOfYear'),result[0].get('taibif_endDayOfYear')]}
@@ -272,8 +271,8 @@ def occurrence_view(request, taibif_id):
         acceptedNameUsageID = result[0].get('acceptedNameUsageID')
 
     taxon['taxonID']={'name_zh':'分類ID','value':[result[0].get('taxonID'),result[0].get('taibif_taxonID')]}
-    taxon['scientificNameID']={'name_zh':'學名ID','value':[result[0].get('scientificNameID'),result[0].get('taibif_namecode')[0] if result[0].get('taibif_namecode') != None else result[0].get('taibif_namecode')]}
-    taxon['acceptedNameUsageID']={'name_zh':'有效學名ID','value':[acceptedNameUsageID,result[0].get('taibif_accepted_namecode')[0] if result[0].get('taibif_accepted_namecode') != None else result[0].get('taibif_accepted_namecode')]}
+    taxon['scientificNameID']={'name_zh':'學名ID','value':[result[0].get('scientificNameID'),result[0].get('taibif_namecode') if result[0].get('taibif_namecode') != None else result[0].get('taibif_namecode')]}
+    taxon['acceptedNameUsageID']={'name_zh':'有效學名ID','value':[acceptedNameUsageID,result[0].get('taibif_accepted_namecode') if result[0].get('taibif_accepted_namecode') != None else result[0].get('taibif_accepted_namecode')]}
     taxon['scientificName']={'name_zh':'學名','value':[result[0].get('scientificName'),result[0].get('taibif_scientificname')]}
     taxon['acceptedNameUsage']={'name_zh':'有效學名','value':[result[0].get('acceptedNameUsage'),result[0].get('taibif_scientificname')]}
     taxon['originalNameUsage']={'name_zh':'originalNameUsage','value':[result[0].get('originalNameUsage'),result[0].get('taibif_originalNameUsage')]}
@@ -459,12 +458,12 @@ def publisher_view(request, pk):
 
 
 # 地理分佈|資料集出現次數|物種描述|文獻
-def species_view(request, pk):
+def species_view(request, taicol_taxon_id):
     context = {}
     dataset = []
     search_count = 0
     map_geojson = False
-    taxon = get_object_or_404(Taxon, pk=pk)
+    taxon = get_object_or_404(Taxon, taicol_taxon_id=taicol_taxon_id)
     switch = {
             'kingdom':'kingdom_key',
             'phylum':'phylum_key',
@@ -476,8 +475,10 @@ def species_view(request, pk):
         }
     total = []
 
-    solr_q = switch.get(taxon.rank) + ':' + str(pk)
 
+    # solr_q = switch.get(taxon.rank) + ':' + str(taicol_taxon_id)
+    solr_q = 'path :' + str(taicol_taxon_id)
+    # scientificName
     search_limit = 20
     facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name,limit:-1,mincount:1}'
     facet_dataset_zh = 'dataset_zh:{type:terms,field:taibif_dataset_name_zh,limit:-1,mincount:1}'
@@ -489,15 +490,17 @@ def species_view(request, pk):
     # else:
     r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&rows={search_limit}&q=*:*&fq={solr_q}&{facet_json}')
 
-    map_url = "http://"+request.META['HTTP_HOST']+"/api/v2/occurrence/search?taxon_key="+taxon.rank+":"+str(taxon.id)+"&facet=year&facet=month&facet=dataset&facet=dataset_id&facet=publisher&facet=country&facet=license"
+
+    map_url = "http://"+request.META['HTTP_HOST']+"/api/v2/occurrence/search?q=*:*&fq="+solr_q+"&facet=year&facet=month&facet=dataset&facet=dataset_id&facet=publisher&facet=country&facet=license"
     r2 = requests.get(map_url)
 
+    # 資料集出現次數資訊
     if r.status_code == 200:
 
         data = r.json()
         search_count = data['response']['numFound']
-        search_offset = data['response']['start']
-        search_results = data['response']['docs']
+        # search_offset = data['response']['start']
+        # search_results = data['response']['docs']
 
         if search_count != 0 :
             count = []
