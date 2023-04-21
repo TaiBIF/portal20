@@ -93,7 +93,6 @@ class TaibifSearch extends React.Component {
         taxonData: taxonData,
       }
     });
-
     const apiUrl = `/api/species/search/?q=${v}&rank=species`;
     fetch(apiUrl)
       .then(res => res.json())
@@ -113,18 +112,17 @@ class TaibifSearch extends React.Component {
         (error) => {
         });
   }
-
   handleTreeSpeciesClick(e, tid, name, rank) {
     //e.stopPropagation();
     const filters = this.state.filters;
-    let rankC = (rank) ? `${rank}:` : '';
-    if (parseInt(tid) <= 6 && rankC == '') {
-      rankC = 'kingdom:';
-    }
+    // let rankC = (rank) ? `${rank}:` : '';
+    // if (parseInt(tid) <= 6 && rankC == '') {
+    //   rankC = 'kingdom:';
+    // }
     this.setState((prevState) => {
       const taxonData = prevState.taxonData;
       taxonData.checked[tid] = name;
-      filters.add(`taxon_key=${rankC}${tid}`);
+      filters.add(`path=${tid}`);
       return {
         isLoadedMain: false,
         taxonData: taxonData,
@@ -132,14 +130,12 @@ class TaibifSearch extends React.Component {
     });
     this.applyFilters(filters);
   }
-
-  handleTaxonRemove(e, tid) {
+  handleTaxonRemove(e, taicol_taxon_id) {
     const filters = this.state.filters;
     this.setState((prevState) => {
       const taxonData = prevState.taxonData;
-      delete taxonData.checked[tid];
-      const foundTaxonKeys = Array.from(filters).filter((x)=>x.indexOf('taxon_key=') >=0);
-
+      delete taxonData.checked[taicol_taxon_id];
+      const foundTaxonKeys = Array.from(filters).filter((x)=>x.indexOf('path=') >=0);
       foundTaxonKeys.forEach((x)=> {
         const klist = x.split('=');
         if (klist[1].indexOf(':') >= 0) {
@@ -387,8 +383,8 @@ class TaibifSearch extends React.Component {
               (json) => {
                 console.log('resp (tree): ', json);
                 const speciesName = json.data.name;
-                const tid = json.id;
-                taxonData.checked[tid] = speciesName;
+                const taicol_taxon_id = json.taicol_taxon_id;
+                taxonData.checked[taicol_taxon_id] = speciesName;
               },
               (error) => {
                 console.log('cDidMount error tree', error);

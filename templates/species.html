@@ -78,7 +78,7 @@
     });
   </script>
   {% if map_view %}
-  <script src="{% static 'js/species.js' %}" crossorigin="anonymous" taxon_rank = {{ taxon.rank }} taxon_id = {{ taxon.id }}></script>
+  <script src="{% static 'js/species.js' %}" crossorigin="anonymous"  taxon_id = {{ taxon.taicol_taxon_id }}></script>
 {% endif %}
   {% endblock %}
 
@@ -118,9 +118,8 @@
       <!-- <h4 class="heading-md-ul">學名</h4> -->
       <ul class="scientific-name-wrapper">
         {% for i in taxon.rank_list %}
-        <li>{{ i.scientific_name_full }} {{ i.name_zh }}</li>
+        <li>{{ i.scientific_name_full }} {% if i.name_zh %} {{ i.name_zh }}{% endif %}</li>
         {% endfor %}
-        <li><i>{{ taxon.scientific_name_full }}</i> {% if taxon.name_zh %} {{ taxon.name_zh }}{% endif %}</li>
       </ul>
       <!-- 學名 end -->
 
@@ -173,7 +172,7 @@
             
             <tr>
               <td><a href="{% url 'dataset-detail' name=set.name %}">{{ set.name_zh }}</a></td>
-              <td><a href="{% url 'search-occurrence' cat='search'  %}?taxon_key={{taxon.rank}}:{{ taxon.id }}&dataset={{set.name}}">{{ set.count|intcomma:False }}</td>
+              <td><a href="{% url 'search-occurrence' cat='search'  %}?path={{ taxon.taicol_taxon_id }}&dataset={{set.name}}">{{ set.count|intcomma:False }}</td>
               <!-- <td> -->
 <!-- 占比 -->
                 <!-- <div class="chart-bar-h-bg">

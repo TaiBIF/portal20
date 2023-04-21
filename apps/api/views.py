@@ -313,11 +313,11 @@ def for_basic_occ(request):
     if request.GET.get("datasetFullName"):
         fq_query = 'fq=taibif_dataset_name_zh:'+ str(request.GET.get('datasetFullName'))
     
-    if request.GET.get("datasetFullName") and request.GET.get("dataset_name") :
-        fq_query = fq_query + '&fq=taibif_dataset_name:'+ str(request.GET.get('dataset_name'))
+    if request.GET.get("typeStatus") :
+        fq_query = fq_query + '&fq=typeStatus:*'+ str(request.GET.get('typeStatus')+'*')
     
-    if not request.GET.get("datasetFullName") and request.GET.get("dataset_name") :
-        fq_query = 'fq=taibif_dataset_name:'+ str(request.GET.get('dataset_name'))
+    # if not request.GET.get("datasetFullName") and request.GET.get("dataset_name") :
+    #     fq_query = 'fq=taibif_dataset_name:'+ str(request.GET.get('dataset_name'))
     
     
     
@@ -373,7 +373,7 @@ def for_basic_occ(request):
             # 'created':,
             # 'modified':,
             'mod_date':i['mod_date'][0],
-            'typeStatus':i['typeStatus'][0]
+            'typeStatus':i['typeStatus'] if 'typeStatus' in i else '',
         })
 
     res['count'] = solr_response['response']['numFound']
@@ -564,9 +564,9 @@ def occurrence_search_v2(request):
     if tkey := req_dict.get('taxon_key', ''):
         taxon_key = tkey
     # tree
-    treeRoot = Taxon.objects.filter(rank='kingdom').all()
+    treeRoot = Taxon.objects.filter(rank='Kingdom').all()
     treeData = [{
-        'id': x.id,
+        'id': x.taicol_taxon_id,
         'data': {
             'name': x.get_name(),
             'count': x.count,
@@ -598,11 +598,10 @@ def occurrence_search_v2(request):
     #print('final', time.time() - time_start)
     return JsonResponse(resp)
 
-
-def taxon_tree_node(request, pk):
-    taxon = Taxon.objects.get(pk=pk)
+def taxon_tree_node(request, taicol_taxon_id):
+    taxon = Taxon.objects.get(taicol_taxon_id=taicol_taxon_id)
     children = [{
-        'id':x.id,
+        'id':x.taicol_taxon_id,
         'data': {
             'name': x.get_name(),
             'count': x.count,
@@ -612,7 +611,7 @@ def taxon_tree_node(request, pk):
 
     data = {
         'rank': taxon.rank,
-        'id': taxon.id,
+        'id': taxon.taicol_taxon_id,
         'data': {
             'name': taxon.get_name(),
             'count': taxon.count,
@@ -713,7 +712,9 @@ def occurrence_api(request):
         elif key == "scientificName":
             fq_list.append(('fq', '{}:"{}"'.format('taibif_scientificname', values[0])))
         elif key == "taibifOccID":
-            fq_list.append(('fq', '{}:"{}"'.format('taibif_occ_id', values[0])))            
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_occ_id', values[0])))
+        elif key == "typeStatus":
+            fq_list.append(('fq', '{}:{}'.format('typeStatus', '*'+values[0]+'*')))
         # range query
         elif key == "year":
             if ',' in values[0]:

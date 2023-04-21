@@ -200,7 +200,7 @@ class SolrQuery(object):
                 #fq=(cat1:val1 OR cat2:val2 OR (cat3:(val3 AND val4)))
                 self.solr_tuples.append(('fq', ' OR '.join(taxon_key_list)))
             elif key == 'path':
-                self.solr_tuples.append(('fq', 'path:"{}"'.format(values[0])))
+                self.solr_tuples.append(('fq', 'path:*{}*'.format(values[0])))
             elif key == 'issues':
                 self.solr_tuples.append(('fq', '{}:"{}"'.format(values[0], 'true')))
             elif key in JSON_FACET_MAP[self.core]:
@@ -252,7 +252,7 @@ class SolrQuery(object):
             self.solr_tuples.append(('json.facet', '{'f'{s}''}'))
             
         query_string = urllib.parse.urlencode(self.solr_tuples)
-        self.solr_url = f'{SOLR_PREFIX}{self.core}/select?{query_string}'        
+        self.solr_url = f'{SOLR_PREFIX}{self.core}/select?{query_string}'
         return self.solr_url
 
     def request(self, req_lists=[]):
