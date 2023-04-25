@@ -106,7 +106,7 @@ def search_all(request):
             species_rows.append({
                 'title': '[{}] {}'.format(x.get_rank_display(), x.get_name()),
                 'content': '物種數: {}'.format(x.count),
-                'url': '/species/{}'.format(x.id),
+                'url': '/species/{}'.format(x.taicol_taxon_id),
             })
         count += len(species_rows)
 
