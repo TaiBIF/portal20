@@ -314,7 +314,7 @@ def for_basic_occ(request):
         fq_query = 'fq=taibif_dataset_name_zh:'+ str(request.GET.get('datasetFullName'))
     
     if request.GET.get("typeStatus") :
-        fq_query = fq_query + '&fq=typeStatus:*'+ str(request.GET.get('typeStatus')+'*')
+        fq_query = fq_query + '&fq=typeStatus:*'+ str(request.GET.get('typeStatus')+'*%20-typeStatus:*voucher*')
     
     # if not request.GET.get("datasetFullName") and request.GET.get("dataset_name") :
     #     fq_query = 'fq=taibif_dataset_name:'+ str(request.GET.get('dataset_name'))
@@ -333,7 +333,6 @@ def for_basic_occ(request):
         solr_response = json.loads(resp_dict)
     except urllib.request.HTTPError as e:
         solr_error = str(e)
-        
     if not solr_response['response']['docs']: 
         return JsonResponse({
             'results': 0,
@@ -345,7 +344,7 @@ def for_basic_occ(request):
     res_list=[] 
     for i in solr_response['response']['docs']:
         res_list.append({
-            'occurrenceID':i['occurrenceID'],
+            'occurrenceID':i['taibif_occ_id'],
             'scientificName': i['taibif_scientificName'] if 'taibif_scientificName' in i else (i['scientificName'] if 'scientificName' in i else ''),
             'isPreferredName': i['taibif_vernacularName'] if 'taibif_vernacularName' in i else (i['vernacularName'] if 'vernacularName' in i else ''),
             # 'sensitiveCategory':,
@@ -714,7 +713,7 @@ def occurrence_api(request):
         elif key == "taibifOccID":
             fq_list.append(('fq', '{}:"{}"'.format('taibif_occ_id', values[0])))
         elif key == "typeStatus":
-            fq_list.append(('fq', '{}:{}'.format('typeStatus', '*'+values[0]+'*')))
+            fq_list.append(('fq', '{}:{} -typeStatus:*voucher*'.format('typeStatus', '*'+values[0]+'*')))
         # range query
         elif key == "year":
             if ',' in values[0]:
