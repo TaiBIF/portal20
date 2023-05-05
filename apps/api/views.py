@@ -279,103 +279,158 @@ def publisher_dataset_api(request,pk):
     return HttpResponse(json.dumps(rows), content_type="application/json")
 
 def for_basic_occ(request):
+    # rows, offset, taibifModDate
     query_list = []
-    start_date = "*"
-    end_date = "*"
     solr_error = ''
-    solr_response = ''
     rows=10
     offset=0
     fq_query=''
+    fq_list = []
     
-    if request.GET.get('start_date'):
-        start_date = datetime.datetime.strptime(request.GET.get('start_date'), '%Y-%m-%d').isoformat() + 'Z'
-    if request.GET.get('end_date'):
-        end_date = datetime.datetime.strptime(request.GET.get('end_date'), '%Y-%m-%d').isoformat() + 'Z'
-        
-    query_list.append(('q', f'mod_date:[{start_date} TO {end_date}]'))
+    generate_list = []
+    q_list = []
+    
+    if request.GET.get('q'): 
+        q_list.append(('q', request.GET.get('q')))
+    else:
+        q_list.append(('q', '{}:{}'.format('*', '*')))
     
     for key, values in request.GET.lists():
-        if key == "start_date" or key == "end_date":
-            continue
+        if key == 'fl':
+            generate_list.append(('fl', values[0]))
+        elif key == 'wt':
+            generate_list.remove(('wt', 'json'))
+            generate_list.append(('wt', values[0]))
         elif key == "rows":
-            rows = values[0]
-            if int(rows)<=300:
-                query_list.append((key, values[0]))
+            rows = int(values[0])
+            if rows <=3000:
+                generate_list.append((key, values[0]))
             else : 
-                rows = 300
-                query_list.append((key, 300))
+                rows = 3000
+                generate_list.append((key, 3000))
         elif key == "offset":
             offset = values[0]
-            query_list.append(('start', values[0]))
+            generate_list.append(('start', values[0]))
+        
+        elif key == "basisOfRecord":
+            if ',' in values[0]:
+                vlist = values[0].split(',')
+                vlistString = '" OR "'.join(vlist)
+                fq_list.append(('fq', f'taibif_basisOfRecord:"{vlistString}"'))
+            else: 
+                fq_list.append(('fq', '{}:{}'.format('taibif_basisOfRecord', values[0])))
+        elif key == "occurrenceID":
+            fq_list.append(('fq', '{}:"{}"'.format('occurrenceID', values[0])))
+        elif key == "taxonRank":
+            fq_list.append(('fq', '{}:"{}"'.format('taxon_rank', values[0])))
+            
+        elif key == "scientificName":
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_scientificname', values[0])))
+        elif key == "taibifOccID":
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_occ_id', values[0])))
+        elif key == "typeStatus":
+            fq_list.append(('fq', '{}:{} -typeStatus:*voucher*'.format('typeStatus', '*'+values[0]+'*')))
+            
+        elif key == "datasetNameZh":
+            fq_list.append(('fq', '{}:{}'.format('taibif_dataset_name_zh', values[0])))
+            
+        
+        # range query
+        elif key == "eventDate":
+            if ',' in values[0]:
+                vlist = values[0].split(',')
+                fq_list.append(('fq', f'taibif_event_date:[{vlist[0]}T00:00:00Z TO {vlist[1]}T00:00:00Z]'))
+            else:
+                fq_list.append(('fq', f'taibif_event_date:{values[0]}'))
+        elif key == "taibifModDate":
+            if ',' in values[0]:
+                vlist = values[0].split(',')
+                fq_list.append(('fq', f'mod_date:[{vlist[0]}T00:00:00Z TO {vlist[1]}T00:00:00Z]'))
+            else:
+                fq_list.append(('fq', f'mod_date:"{values[0]}T00:00:00Z"'))
+        
+        elif key == "coordinateUncertaintyInMeters":
+            if ',' in values[0]:
+                vlist = values[0].split(',')
+                fq_list.append(('fq', f'taibif_coordinateUncertaintyInMeters:[{vlist[0]} TO {vlist[1]}]'))
+            else:
+                fq_list.append(('fq', '{}:{}'.format('taibif_coordinateUncertaintyInMeters', values[0])))
+        elif key == 'license':
+            litype = ''
+            if values[0] == 'CC-BY':
+                litype = 'Creative Commons Attribution (CC-BY) 4.0 License'
+            elif values[0] == 'CC-BY-NC':
+                litype = 'Creative Commons Attribution Non Commercial (CC-BY-NC) 4.0 License'
+            elif values[0] == 'CC0':
+                litype = 'Public Domain (CC0 1.0)'
+            fq_list.append(('fq', '{}:"{}"'.format('license', litype)))
     
-    
-    if request.GET.get("datasetFullName"):
-        fq_query = 'fq=taibif_dataset_name_zh:'+ str(request.GET.get('datasetFullName'))
-    
-    if request.GET.get("typeStatus") :
-        fq_query = fq_query + '&fq=typeStatus:*'+ str(request.GET.get('typeStatus')+'*%20-typeStatus:*voucher*')
-    
-    # if not request.GET.get("datasetFullName") and request.GET.get("dataset_name") :
-    #     fq_query = 'fq=taibif_dataset_name:'+ str(request.GET.get('dataset_name'))
-    
-    
-    
-    solr_q = urllib.parse.urlencode(query_list,quote_via=urllib.parse.quote)
+    solr = SolrQuery('taibif_occurrence')
+    fq_query = urllib.parse.urlencode(fq_list)
+    q_query = urllib.parse.urlencode(q_list)
+    generate_query = urllib.parse.urlencode(generate_list)
+
+    solr.solr_url = f'http://solr:8983/solr/{solr.core}/select?indent=true&q.op=OR'
+    if generate_query:
+        solr.solr_url = solr.solr_url+f'&{generate_query}'
+    if q_query:
+        solr.solr_url = solr.solr_url+f'&{q_query}'
     if fq_query:
-        url = f'http://solr:8983/solr/taibif_occurrence/select?q.op=AND&{solr_q}&{fq_query}'
-    else:
-        url = f'http://solr:8983/solr/taibif_occurrence/select?q.op=AND&{solr_q}'
-    
+        solr.solr_url = solr.solr_url+f'&{fq_query}'
     try: 
-        resp =urllib.request.urlopen(url)
+        resp =urllib.request.urlopen(solr.solr_url)
         resp_dict = resp.read().decode()
-        solr_response = json.loads(resp_dict)
+        solr.solr_response = json.loads(resp_dict)
     except urllib.request.HTTPError as e:
         solr_error = str(e)
-    if not solr_response['response']['docs']: 
+        
+    if not solr.solr_response['response']['docs']: 
         return JsonResponse({
             'results': 0,
-            'query_list': query_list,
-            'error_url': url,
+            'query_list': fq_list,
+            'error_url': solr.solr_url,
             'error_msg': solr_error,
         })
+   
     res={}
     res_list=[] 
-    for i in solr_response['response']['docs']:
+    for i in solr.solr_response['response']['docs']:
         res_list.append({
-            'occurrenceID':i['taibif_occ_id'],
-            'scientificName': i['taibif_scientificName'] if 'taibif_scientificName' in i else (i['scientificName'] if 'scientificName' in i else ''),
-            'isPreferredName': i['taibif_vernacularName'] if 'taibif_vernacularName' in i else (i['vernacularName'] if 'vernacularName' in i else ''),
+            'taibifOccID':i['taibif_occ_id'],
+            'occurrenceID':i['occurrenceID'] if 'occurrenceID' in i else None,
+            # associatedMedia
+            'scientificName': i['taibif_scientificname'] if 'taibif_scientificname' in i else None,
+            'isPreferredName': i['taibif_vernacular_name'] if 'taibif_vernacular_name' in i else None,
             # 'sensitiveCategory':,
-            # 'taxonRank':,
-            'eventDate':i['taibif_event_date'][0] if 'taibif_event_date' in i else (i['eventDate'] if 'eventDate' in i else ''),
-            'longitude':str(i['taibif_longitude'][0]) if 'taibif_longitude' in i  else '',
-            'latitude':str(i['taibif_longitude'][0]) if 'taibif_latitude' in i  else '',
-            'geodeticDatum':i['taibif_geodeticDatum'] if 'taibif_geodeticDatum' in i else '',
-            # 'verbatimSRS':i['verbatimSRS'] if 'verbatimSRS' in i else '',
-            'coordinateUncertaintyInMeters':i['coordinateUncertaintyInMeters'] if 'coordinateUncertaintyInMeters' in i else '',
-            'dataGeneralizations':i['taibif_dataGeneralizations'] if 'taibif_dataGeneralizations' in i else (i['dataGeneralizations']  if 'dataGeneralizations' in i else ''),
-            'coordinatePrecision':i['taibif_coordinatePrecision'] if 'taibif_coordinatePrecision' in i else (i['coordinatePrecision'] if 'coordinatePrecision' in i else ''),
-            'locality':i['taibif_locality'] if 'taibif_locality' in i  else (i['locality'] if 'locality' in i else ''),
-            'organismQuantity':i['taibif_organismQuantity'] if 'taibif_organismQuantity' in i else (i['organismQuantity'] if 'organismQuantity' in i else ''),
-            'organismQuantityType':i['taibif_organismQuantityType'] if 'taibif_organismQuantityType' in i else (i['organismQuantityType'] if 'organismQuantityType' in i else ''),
-            'recordedBy':i['taibif_recordedBy'] if 'taibif_recordedBy' in i else (i['recordedBy'] if 'recordedBy' in i else ''),
-            # 'taxonID':,
-            # 'scientificNameID':,
-            'basisOfRecord':i['basisOfRecord'] if 'basisOfRecord' in i else '',
-            'datasetFullName':i['taibif_dataset_name_zh'] if 'taibif_dataset_name_zh' in i else '',
-            'datasetName':i['taibif_dataset_name'] if 'taibif_dataset_name' in i else '',
+            'taxonRank':i['taxon_rank'] if 'taxon_rank' in i else None,
+            'eventDate':i['taibif_event_date'] if 'taibif_event_date' in i else None,
+            'decimalLongitude':str(i['taibif_longitude'][0]) if 'taibif_longitude' in i  else None,
+            'decimalLatitude':str(i['taibif_latitude'][0]) if 'taibif_latitude' in i  else None,
+            # verbatimCoordinateSystem
+            'geodeticDatum':i['taibif_geodeticDatum'] if 'taibif_geodeticDatum' in i else None, #對到verbatimCoordinateSystem
+            'verbatimSRS':i['taibif_crs'] if 'taibif_crs' in i else None, # verbatimSRS
+            'coordinateUncertaintyInMeters':i['taibif_coordinateUncertaintyInMeters'] if 'taibif_coordinateUncertaintyInMeters' in i else None,
+            'dataGeneralizations':i['dataGeneralizations'] if 'dataGeneralizations' in i else None,
+            'coordinatePrecision':i['coordinatePrecision'] if 'coordinatePrecision' in i else None,
+            'locality':i['locality'] if 'locality' in i  else None,
+            'organismQuantity':i['organismQuantity'] if 'organismQuantity' in i else None,
+            'organismQuantityType':i['organismQuantityType'] if 'organismQuantityType' in i else None,
+            'recordedBy':i['recordedBy'] if 'recordedBy' in i else None,
+            'taxonID':i['taibif_accepted_namecode']if 'taibif_accepted_namecode' in i else  None,
+            'scientificNameID':i['taibif_namecode'] if 'taibif_namecode' in i else  None,
+            'basisOfRecord':i['taibif_basisOfRecord'] if 'taibif_basisOfRecord' in i else None,
+            'datasetNameZh':i['taibif_dataset_name_zh'] if 'taibif_dataset_name_zh' in i else None,
+            'datasetName':i['taibif_dataset_name'] if 'taibif_dataset_name' in i else None,
             # 'resourceContacts':
             # 'references':
-            'license':i['taibif_license'] if 'taibif_license' in i else (i['license'] if 'license' in i else ''),
-            # 'created':,
-            # 'modified':,
-            'mod_date':i['mod_date'][0],
-            'typeStatus':i['typeStatus'] if 'typeStatus' in i else '',
+            'typeStatus':i['typeStatus'] if 'typeStatus' in i else None,
+            'license':i['license'] if 'license' in i else None,
+            'taibifcreatedDate':i['mod_date'][0],
+            'taibifModDate':i['mod_date'][0],
+            'taxonBackbone':i['taxon_backbone']if 'taxon_backbone' in i else None,
         })
 
-    res['count'] = solr_response['response']['numFound']
+    res['count'] = solr.solr_response['response']['numFound']
     res['offset'] = int(offset)
     res['rows'] = int(rows)
     res['results'] = res_list
