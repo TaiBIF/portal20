@@ -395,6 +395,14 @@ def for_basic_occ(request):
     res={}
     res_list=[] 
     for i in solr.solr_response['response']['docs']:
+        backbone = i['taxon_backbone']if 'taxon_backbone' in i else None
+        taicol_taxon_id = None
+        gbif_accepted_id = None
+        if backbone == "TaiCOL":
+            taicol_taxon_id = i['taibif_accepted_namecode'] if 'taibif_accepted_namecode' in i else  None,
+        elif backbone == "GBIF":
+            gbif_accepted_id = i['taibif_accepted_namecode'] if 'taibif_accepted_namecode' in i else  None,
+        
         res_list.append({
             'taibifOccID':i['taibif_occ_id'],
             'occurrenceID':i['occurrenceID'] if 'occurrenceID' in i else None,
@@ -402,6 +410,10 @@ def for_basic_occ(request):
             'scientificName': i['taibif_scientificname'] if 'taibif_scientificname' in i else None,
             'isPreferredName': i['taibif_vernacular_name'] if 'taibif_vernacular_name' in i else None,
             # 'sensitiveCategory':,
+            'taxonBackbone':backbone,
+            'scientificNameID':i['taibif_namecode'] if 'taibif_namecode' in i else  None,
+            'taicol_taxon_id': taicol_taxon_id[0] if taicol_taxon_id in i else  None,
+            'gbif_accepted_id':gbif_accepted_id[0] if gbif_accepted_id in i else  None ,
             'taxonRank':i['taxon_rank'] if 'taxon_rank' in i else None,
             'eventDate':i['taibif_event_date'] if 'taibif_event_date' in i else None,
             'decimalLongitude':str(i['taibif_longitude'][0]) if 'taibif_longitude' in i  else None,
@@ -416,8 +428,6 @@ def for_basic_occ(request):
             'organismQuantity':i['organismQuantity'] if 'organismQuantity' in i else None,
             'organismQuantityType':i['organismQuantityType'] if 'organismQuantityType' in i else None,
             'recordedBy':i['recordedBy'] if 'recordedBy' in i else None,
-            'taxonID':i['taibif_accepted_namecode']if 'taibif_accepted_namecode' in i else  None,
-            'scientificNameID':i['taibif_namecode'] if 'taibif_namecode' in i else  None,
             'basisOfRecord':i['taibif_basisOfRecord'] if 'taibif_basisOfRecord' in i else None,
             'datasetNameZh':i['taibif_dataset_name_zh'] if 'taibif_dataset_name_zh' in i else None,
             'datasetName':i['taibif_dataset_name'] if 'taibif_dataset_name' in i else None,
@@ -427,7 +437,8 @@ def for_basic_occ(request):
             'license':i['license'] if 'license' in i else None,
             'taibifcreatedDate':i['mod_date'][0],
             'taibifModDate':i['mod_date'][0],
-            'taxonBackbone':i['taxon_backbone']if 'taxon_backbone' in i else None,
+            # 'selfProduced':i['selfProduced'],
+            'selfProduced':True,
         })
 
     res['count'] = solr.solr_response['response']['numFound']
