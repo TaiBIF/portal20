@@ -412,8 +412,8 @@ def for_basic_occ(request):
             # 'sensitiveCategory':,
             'taxonBackbone':backbone,
             'scientificNameID':i['taibif_namecode'] if 'taibif_namecode' in i else  None,
-            'taicol_taxon_id': taicol_taxon_id[0] if taicol_taxon_id in i else  None,
-            'gbif_accepted_id':gbif_accepted_id[0] if gbif_accepted_id in i else  None ,
+            'taicolTaxonId': taicol_taxon_id[0] if taicol_taxon_id in i else  None,
+            'gbifAcceptedId':gbif_accepted_id[0] if gbif_accepted_id in i else  None ,
             'taxonRank':i['taxon_rank'] if 'taxon_rank' in i else None,
             'eventDate':i['taibif_event_date'] if 'taibif_event_date' in i else None,
             'decimalLongitude':str(i['taibif_longitude'][0]) if 'taibif_longitude' in i  else None,
@@ -687,8 +687,10 @@ def taxon_tree_node(request, taicol_taxon_id):
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 def occurrence_api(request):
-    
-    offset = 0
+    solr_error = ''
+    rows=10
+    offset=0
+    fq_query=''
     fq_list = []
     generate_list = []
     q_list = []
@@ -859,10 +861,99 @@ def occurrence_api(request):
     if fq_query:
         solr.solr_url = solr.solr_url+f'&{fq_query}'
         
-    resp =urllib.request.urlopen(solr.solr_url)
-    resp_dict = resp.read().decode()
-    solr.solr_response = json.loads(resp_dict)
-    return JsonResponse(solr.solr_response)
+    try: 
+        resp =urllib.request.urlopen(solr.solr_url)
+        resp_dict = resp.read().decode()
+        solr.solr_response = json.loads(resp_dict)
+    except urllib.request.HTTPError as e:
+        solr_error = str(e)
+        
+    if not solr.solr_response['response']['docs']: 
+        return JsonResponse({
+            'results': 0,
+            'query_list': fq_list,
+            'error_url': solr.solr_url,
+            'error_msg': solr_error,
+        })
+   
+    res={}
+    res_list=[] 
+    for i in solr.solr_response['response']['docs']:
+        backbone = i['taxon_backbone']if 'taxon_backbone' in i else None
+        taicol_taxon_id = None
+        gbif_accepted_id = None
+        if backbone == "TaiCOL":
+            taicol_taxon_id = i['taibif_accepted_namecode'] if 'taibif_accepted_namecode' in i else  None,
+        elif backbone == "GBIF":
+            gbif_accepted_id = i['taibif_accepted_namecode'] if 'taibif_accepted_namecode' in i else  None,
+        
+        issues=None
+        if i['TaxonMatchNone'][0] == True:
+            issues.append('TaxonMatchNone')
+        if i['CoordinateInvalid'][0] == True:
+            issues.append('CoordinateInvalid')
+        if i['RecordedDateInvalid'][0] == True:
+            issues.append('RecordedDateInvalid')
+
+        
+        res_list.append({
+            'taibifOccID':i['taibif_occ_id'],
+            'occurrenceID':i['occurrenceID'] if 'occurrenceID' in i else None,
+            # associatedMedia
+            'scientificName': i['taibif_scientificname'] if 'taibif_scientificname' in i else None,
+            'isPreferredName': i['taibif_vernacular_name'] if 'taibif_vernacular_name' in i else None,
+            # 'sensitiveCategory':,
+            'taxonBackbone':backbone,
+            'scientificNameID':i['taibif_namecode'] if 'taibif_namecode' in i else  None,
+            'taicolTaxonId': taicol_taxon_id[0] if taicol_taxon_id in i else  None,
+            'gbifAcceptedId':gbif_accepted_id[0] if gbif_accepted_id in i else  None ,
+            'taxonRank':i['taxon_rank'] if 'taxon_rank' in i else None,
+            'eventDate':i['taibif_event_date'] if 'taibif_event_date' in i else None,
+            'decimalLongitude':str(i['taibif_longitude'][0]) if 'taibif_longitude' in i  else None,
+            'decimalLatitude':str(i['taibif_latitude'][0]) if 'taibif_latitude' in i  else None,
+            # verbatimCoordinateSystem
+            'geodeticDatum':i['taibif_geodeticDatum'] if 'taibif_geodeticDatum' in i else None, #對到verbatimCoordinateSystem
+            'verbatimSRS':i['taibif_crs'] if 'taibif_crs' in i else None, # verbatimSRS
+            'coordinateUncertaintyInMeters':i['taibif_coordinateUncertaintyInMeters'] if 'taibif_coordinateUncertaintyInMeters' in i else None,
+            'dataGeneralizations':i['dataGeneralizations'] if 'dataGeneralizations' in i else None,
+            'coordinatePrecision':i['coordinatePrecision'] if 'coordinatePrecision' in i else None,
+            'locality':i['locality'] if 'locality' in i  else None,
+            'organismQuantity':i['organismQuantity'] if 'organismQuantity' in i else None,
+            'organismQuantityType':i['organismQuantityType'] if 'organismQuantityType' in i else None,
+            'recordedBy':i['recordedBy'] if 'recordedBy' in i else None,
+            'basisOfRecord':i['taibif_basisOfRecord'] if 'taibif_basisOfRecord' in i else None,
+            'datasetNameZh':i['taibif_dataset_name_zh'] if 'taibif_dataset_name_zh' in i else None,
+            'datasetName':i['taibif_dataset_name'] if 'taibif_dataset_name' in i else None,
+            # 'resourceContacts':
+            # 'references':
+            'typeStatus':i['typeStatus'] if 'typeStatus' in i else None,
+            'license':i['license'] if 'license' in i else None,
+            'taibifCreatedDate':i['mod_date'][0],
+            'taibifModDate':i['mod_date'][0],
+            # 'selfProduced':i['selfProduced'],
+            'selfProduced':True,
+            'modifiedDate':i['modified'] if 'modified' in i else None,
+            # 'gbifDatasetID':i['modifiedDate'] if 'typeStatus' in i else None,
+            'occurrenceStatus':i['occurrenceStatus'] if 'occurrenceStatus' in i else None,
+            'establishmentMeans':i['establishmentMeans'] if 'establishmentMeans' in i else None,
+            'taxonGroup':i['taibif_taxonGroup'] if 'taibif_taxonGroup' in i else None,
+            'kingdom':i['kingdomzh'] if 'kingdomzh' in i else None,
+            'phylum':i['phylumzh'] if 'phylumzh' in i else None,
+            'class':i['classzh'] if 'classzh' in i else None,
+            'order':i['orderzh'] if 'orderzh' in i else None,
+            'family':i['familyzh'] if 'familyzh' in i else None,
+            'genus':i['genuszh'] if 'genuszh' in i else None,
+            'country':i['country'] if 'country' in i else None,
+            'county':i['county'] if 'county' in i else None,
+            'issue':issues,
+            
+        })
+
+    res['count'] = solr.solr_response['response']['numFound']
+    res['offset'] = int(offset)
+    res['rows'] = int(rows)
+    res['results'] = res_list
+    return JsonResponse(res)
 
 
 
@@ -881,7 +972,6 @@ def raw_occ_api(request):
         q_list.append(('q', '{}:{}'.format('*', '*')))
     
     for key, values in request.GET.lists():
-        print("key,value === ",key,values)
         if key == "start_date" or key == "end_date":
             continue
         
