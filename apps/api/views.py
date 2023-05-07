@@ -237,15 +237,15 @@ def publisher_api(request):
     result_d =  ds_search.query.values()
         
     rows = [{
-        'id' : x['id'] if 'id' in x else None,
+        'publisherGbifUuid' : x['organization_gbif_uuid'] if 'organization_gbif_uuid' in x else None,
+        # 'id' : x['id'] if 'id' in x else None,
         'name' : x['name'],
         'description' : x['description'] if 'description' in x else None,
-        'country_code' : x['country_code'] if 'country_code' in x else None,
-        'administrative_contact' : x['administrative_contact'] if 'administrative_contact' in x else None,
-        'country_or_area' : x['country_or_area'] if 'country_or_area' in x else None,
+        'countryCode' : x['country_code'] if 'country_code' in x else None,
+        'administrativeContact' : x['administrative_contact'] if 'administrative_contact' in x else None,
+        'countryOrArea' : x['country_or_area'] if 'country_or_area' in x else None,
         'installations' : x['installations'] if 'installations' in x else None,
-        'technical_contact' : x['technical_contact'] if 'technical_contact' in x else None,
-        'organization_gbif_uuid' : x['organization_gbif_uuid'] if 'organization_gbif_uuid' in x else None,
+        'technicalContact' : x['technical_contact'] if 'technical_contact' in x else None,
     } for x in result_d ]
     
     return HttpResponse(json.dumps(rows), content_type="application/json")

@@ -355,8 +355,10 @@ class PublisherSearch(SuperSearch):
                 if not v:
                     continue
                 query = query.filter(name__icontains=v)
-            if key == 'countrycode':
+            if key == 'countrycode' or key == 'countryCode':
                 query = query.filter(country_code__in=values)
+            if key == 'publisherGbifUuid':
+                query = query.filter(organization_gbif_uuid__in=values)
 
         self.query = query
 
