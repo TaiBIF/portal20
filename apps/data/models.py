@@ -17,9 +17,9 @@ DATA_MAPPING = {
         'unknown':'其他',
     },
     'rights': {
-        'Creative Commons Attribution Non Commercial (CC-BY-NC) 4.0 License': 'CC-BY-NC 4.0',
-        'Creative Commons Attribution (CC-BY) 4.0 License': 'CC-BY 4.0',
-        'Public Domain (CC0 1.0)': 'CC0 1.0',
+        'Creative Commons Attribution Non Commercial (CC-BY-NC) 4.0 License': 'CC-BY-NC',
+        'Creative Commons Attribution (CC-BY) 4.0 License': 'CC-BY',
+        'Public Domain (CC0 1.0)': 'CC0',
         'unknown':'未明確授權',
     },
     'core': {

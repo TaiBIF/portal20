@@ -270,17 +270,17 @@ class DatasetSearch(SuperSearch):
                 query = query.filter(name__contains=values[0])
             if key == 'author':
                 query = query.filter(author__contains=values[0])
-            if key == 'organization_id':
+            if key == 'organization_id' or key == 'publisherID':
                 query = query.filter(organization_uuid=values[0])
-            if key == 'organization_name':
+            if key == 'organization_name' or key == 'publisherName':
                 query = query.filter(organization_name__contains=values[0])
             if key == 'license':
                 query = query.filter(data_license__contains=values[0])
             if key == 'dwc_core_type':
                 query = query.filter(dwc_core_type__contains=values[0])
-            if key == 'gbif_dataset_id':
+            if key == 'gbif_dataset_id' or key == 'gbifDatasetID':
                 query = query.filter(guid=values[0])
-            if key == 'pub_date':
+            if key == 'pub_date' or key ==  'publicationDate':
                 date_range = values[0].split(',',1)
                 if len(date_range) ==2:
                     start_date = datetime.strptime(date_range[0], "%Y-%m-%d")
@@ -290,7 +290,7 @@ class DatasetSearch(SuperSearch):
                     start_date = datetime.strptime(date_range[0], "%Y-%m-%d")
                     end_date = datetime.strptime(str(datetime.today().date()), "%Y-%m-%d")
                     query = query.filter(pub_date__range=(start_date,end_date))
-            if key == 'mod_date':
+            if key == 'mod_date' or key == 'modifiedDate':
                 date_range = values[0].split(',',1)
                 if len(date_range) ==2:
                     start_date = datetime.strptime(date_range[0], "%Y-%m-%d")
@@ -311,7 +311,7 @@ class DatasetSearch(SuperSearch):
                 query = query.filter(dwc_core_type__exact=d)
             if key == 'publisher':
                 query = query.filter(organization__in=values)
-            if key == 'rights':
+            if key == 'rights' or key == 'license':
                 rights_reverse_map = {v: k for k,v in DATA_MAPPING['rights'].items()}
                 query = query.filter(data_license=rights_reverse_map[values[0]])
             if key == 'country':
@@ -355,8 +355,10 @@ class PublisherSearch(SuperSearch):
                 if not v:
                     continue
                 query = query.filter(name__icontains=v)
-            if key == 'countrycode':
+            if key == 'countrycode' or key == 'countryCode':
                 query = query.filter(country_code__in=values)
+            if key == 'publisherGbifUuid':
+                query = query.filter(organization_gbif_uuid__in=values)
 
         self.query = query
 
