@@ -936,7 +936,7 @@ def occurrence_api(request):
             # 'gbifDatasetID':i['modifiedDate'] if 'typeStatus' in i else None,
             'occurrenceStatus':i['occurrenceStatus'] if 'occurrenceStatus' in i else None,
             'establishmentMeans':i['establishmentMeans'] if 'establishmentMeans' in i else None,
-            'taxonGroup':i['taibif_taxonGroup'] if 'taibif_taxonGroup' in i else None,
+            'taxonGroup':i['taibif_taxonGroup'][0] if 'taibif_taxonGroup' in i else None,
             'kingdom':i['kingdomzh'] if 'kingdomzh' in i else None,
             'phylum':i['phylumzh'] if 'phylumzh' in i else None,
             'class':i['classzh'] if 'classzh' in i else None,
