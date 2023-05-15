@@ -326,12 +326,12 @@ def for_basic_occ(request):
             
         elif key == "scientificName":
             fq_list.append(('fq', '{}:"{}"'.format('taibif_scientificname', values[0])))
-        elif key == "taibifOccID":
+        elif key == "taibifOccurrenceID":
             fq_list.append(('fq', '{}:"{}"'.format('taibif_occ_id', values[0])))
         elif key == "typeStatus":
             fq_list.append(('fq', '{}:{} -typeStatus:*voucher*'.format('typeStatus', '*'+values[0]+'*')))
             
-        elif key == "datasetNameZh":
+        elif key == "datasetName":
             fq_list.append(('fq', '{}:{}'.format('taibif_dataset_name_zh', values[0])))
             
         
@@ -342,7 +342,7 @@ def for_basic_occ(request):
                 fq_list.append(('fq', f'taibif_event_date:[{vlist[0]}T00:00:00Z TO {vlist[1]}T00:00:00Z]'))
             else:
                 fq_list.append(('fq', f'taibif_event_date:{values[0]}'))
-        elif key == "taibifModDate":
+        elif key == "taibifModifiedDate":
             if ',' in values[0]:
                 vlist = values[0].split(',')
                 fq_list.append(('fq', f'mod_date:[{vlist[0]}T00:00:00Z TO {vlist[1]}T00:00:00Z]'))
@@ -758,7 +758,7 @@ def occurrence_api(request):
             fq_list.append(('fq', '{}:"{}"'.format('genuszh', values[0])))
         elif key == "taxonRank":
             fq_list.append(('fq', '{}:"{}"'.format('taxon_rank', values[0])))
-        elif key == "taicolID":
+        elif key == "taicolTaxonId":
             fq_list.append(('fq', '{}:"{}"'.format('taicol_id', values[0])))
         elif key == "taxonGroup":
             fq_list.append(('fq', '{}:"{}"'.format('taibif_taxonGroup', values[0])))
@@ -773,7 +773,7 @@ def occurrence_api(request):
             fq_list.append(('fq', '{}:"{}"'.format('taibif_occurrenceStatus', values[0])))
         elif key == "scientificName":
             fq_list.append(('fq', '{}:"{}"'.format('taibif_scientificname', values[0])))
-        elif key == "taibifOccID":
+        elif key == "taibifOccurrenceID":
             fq_list.append(('fq', '{}:"{}"'.format('taibif_occ_id', values[0])))
         elif key == "typeStatus":
             fq_list.append(('fq', '{}:{} -typeStatus:*voucher*'.format('typeStatus', '*'+values[0]+'*')))
@@ -805,7 +805,7 @@ def occurrence_api(request):
                 fq_list.append(('fq', f'modifiedDate:[{vlist[0]}T00:00:00Z TO {vlist[1]}T00:00:00Z]'))
             else:
                 fq_list.append(('fq', f'modifiedDate:[{values[0]}T00:00:00Z TO NOW]'))
-        elif key == "taibifModDate":
+        elif key == "taibifModifiedDate":
             if ',' in values[0]:
                 vlist = values[0].split(',')
                 fq_list.append(('fq', f'mod_date:[{vlist[0]}T00:00:00Z TO {vlist[1]}T00:00:00Z]'))
@@ -818,7 +818,10 @@ def occurrence_api(request):
                 fq_list.append(('fq', f'taibif_coordinateUncertaintyInMeters:[{vlist[0]} TO {vlist[1]}]'))
             else:
                 fq_list.append(('fq', '{}:{}'.format('taibif_coordinateUncertaintyInMeters', values[0])))
-                    
+            
+        elif key == "datasetName":
+            fq_list.append(('fq', '{}:{}'.format('taibif_dataset_name_zh', values[0])))
+        
         elif key == 'decimalLatitude':
             coor_list = [ float(c) for c in values]
             y1 = convert_y_coor_to_grid(min(coor_list))
@@ -1023,7 +1026,7 @@ def raw_occ_api(request):
             fq_list.append(('fq', '{}:"{}"'.format('genuszh', values[0])))
         elif key == "taxonRank":
             fq_list.append(('fq', '{}:"{}"'.format('taxon_rank', values[0])))
-        elif key == "taicolID":
+        elif key == "taicolTaxonId":
             fq_list.append(('fq', '{}:"{}"'.format('taicol_id', values[0])))
         elif key == "taxonGroup":
             fq_list.append(('fq', '{}:"{}"'.format('taibif_taxonGroup', values[0])))
@@ -1038,7 +1041,7 @@ def raw_occ_api(request):
             fq_list.append(('fq', '{}:"{}"'.format('taibif_occurrenceStatus', values[0])))
         elif key == "scientificName":
             fq_list.append(('fq', '{}:"{}"'.format('taibif_scientificname', values[0])))
-        elif key == "taibifOccID":
+        elif key == "taibifOccurrenceID":
             fq_list.append(('fq', '{}:"{}"'.format('taibif_occ_id', values[0])))
         elif key == "typeStatus":
             fq_list.append(('fq', '{}:{} -typeStatus:*voucher*'.format('typeStatus', '*'+values[0]+'*')))
@@ -1070,7 +1073,7 @@ def raw_occ_api(request):
                 fq_list.append(('fq', f'modifiedDate:[{vlist[0]}T00:00:00Z TO {vlist[1]}T00:00:00Z]'))
             else:
                 fq_list.append(('fq', f'modifiedDate:[{values[0]}T00:00:00Z TO NOW]'))
-        elif key == "taibifModDate":
+        elif key == "taibifModifiedDate":
             if ',' in values[0]:
                 vlist = values[0].split(',')
                 fq_list.append(('fq', f'mod_date:[{vlist[0]}T00:00:00Z TO {vlist[1]}T00:00:00Z]'))
