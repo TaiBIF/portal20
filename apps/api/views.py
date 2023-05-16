@@ -364,6 +364,9 @@ def for_basic_occ(request):
             elif values[0] == 'CC0':
                 litype = 'Public Domain (CC0 1.0)'
             fq_list.append(('fq', '{}:"{}"'.format('license', litype)))
+        elif key == 'selfProduced':
+            continue
+        #     fq_list.append(('fq', '{}:{}'.format('selfProduced', values[0])))
     
     solr = SolrQuery('taibif_occurrence')
     fq_query = urllib.parse.urlencode(fq_list)
@@ -399,44 +402,61 @@ def for_basic_occ(request):
     for i in solr.solr_response['response']['docs']:
         backbone = i['taxon_backbone']if 'taxon_backbone' in i else None
         mediaLicense = i['mediaLicense'] if 'mediaLicense' in i else None
-
+        print(i)
         res_list.append({
-            'taibifOccurrenceID':i['taibif_occ_id'],
             'occurrenceID':i['occurrenceID'] if 'occurrenceID' in i else None,
-            'associatedMedia':i['associatedMedia']  if mediaLicense else  None,
-            'mediaLicense':mediaLicense,
+            'taibifOccurrenceID':i['taibif_occ_id'],
+            'basisOfRecord':i['taibif_basisOfRecord'] if 'taibif_basisOfRecord' in i else None,
+            # 'modifiedDate':i['modified'] if 'modified' in i else None,
+            'taibifModifiedDate':i['mod_date'][0],
+            'datasetName':i['taibif_dataset_name_zh'] if 'taibif_dataset_name_zh' in i else None,
+            'occurrenceStatus':i['taibif_occurrenceStatus'] if 'occurrenceStatus' in i else None,
             'scientificName': i['taibif_scientificname'] if 'taibif_scientificname' in i else None,
-            'isPreferredName': i['taibif_vernacular_name'] if 'taibif_vernacular_name' in i else None,
-            'taxonBackbone':backbone,
-            'scientificNameID':i['taibif_namecode'] if 'taibif_namecode' in i else  None,
-            'taicolTaxonId': i['taibif_accepted_namecode']  if backbone == "TaiCOL" else  None,
-            'gbifAcceptedId':i['taibif_accepted_namecode']  if backbone == "GBIF" else  None ,
             'taxonRank':i['taxon_rank'] if 'taxon_rank' in i else None,
+            'taicolTaxonID': i['taibif_accepted_namecode']  if backbone == "TaiCOL" else  None,
+            'kingdom':i['kingdomzh'] if 'kingdomzh' in i else None,
+            'phylum':i['phylumzh'] if 'phylumzh' in i else None,
+            'class':i['classzh'] if 'classzh' in i else None,
+            'order':i['orderzh'] if 'orderzh' in i else None,
+            'family':i['familyzh'] if 'familyzh' in i else None,
+            'genus':i['genuszh'] if 'genuszh' in i else None,
+            'taxonGroup':i['taibif_taxonGroup'][0] if 'taibif_taxonGroup' in i else None,
             'eventDate':i['taibif_event_date'] if 'taibif_event_date' in i else None,
-            'modifiedDate':i['modified'] if 'modified' in i else None,
-            'decimalLongitude':str(i['taibif_longitude'][0]) if 'taibif_longitude' in i  else None,
+            'year':i['taibif_year'][0] if 'taibif_year' in i else None,
+            'month':i['taibif_month'][0] if 'taibif_month' in i else None,
             'decimalLatitude':str(i['taibif_latitude'][0]) if 'taibif_latitude' in i  else None,
+            'decimalLongitude':str(i['taibif_longitude'][0]) if 'taibif_longitude' in i  else None,
+            'coordinateUncertaintyInMeters':i['taibif_coordinateUncertaintyInMeters'][0] if 'taibif_coordinateUncertaintyInMeters' in i else None,
+            'country':i['taibif_country'] if 'taibif_country' in i else None,
+            'county':i['taibif_county'] if 'taibif_county' in i else None,
+            'license':i['license'] if 'license' in i else None,
+            'selfProduced':True,
+            # 'selfProduced':i['selfProduced'],
+            'taibifCreatedDate':i['mod_date'][0],
+            'datasetShortName':i['taibif_dataset_name'] if 'taibif_dataset_name' in i else None,
+            'isPreferredName': i['taibif_vernacular_name'] if 'taibif_vernacular_name' in i else None,
+            'gbifAcceptedID':i['taibif_accepted_namecode']  if backbone == "GBIF" else  None ,
+            'scientificNameID':i['taibif_namecode'] if 'taibif_namecode' in i else  None,
+            'taxonBackbone':backbone,
+            'day':i['taibif_day'][0] if 'taibif_day' in i else None,
             'geodeticDatum':i['taibif_geodeticDatum'] if 'taibif_geodeticDatum' in i else None, #對到verbatimCoordinateSystem
             'verbatimSRS':i['taibif_crs'] if 'taibif_crs' in i else None, # verbatimSRS
-            'coordinateUncertaintyInMeters':i['taibif_coordinateUncertaintyInMeters'][0] if 'taibif_coordinateUncertaintyInMeters' in i else None,
             'dataGeneralizations':i['dataGeneralizations'] if 'dataGeneralizations' in i else None,
             'coordinatePrecision':i['coordinatePrecision'] if 'coordinatePrecision' in i else None,
             'locality':i['locality'] if 'locality' in i  else None,
-            'organismQuantity':i['organismQuantity'] if 'organismQuantity' in i else None,
-            'organismQuantityType':i['organismQuantityType'] if 'organismQuantityType' in i else None,
-            'recordedBy':i['recordedBy'] if 'recordedBy' in i else None,
-            'recordNumber':i['recordNumber'] if 'recordNumber' in i else None,
+            'habitatReserve':i['forestN'][0] if 'forestN' in i else None,
+            'wildlifeReserve':i['wildlifeN'][0] if 'wildlifeN' in i else None,
+            'countryCode':i['taibif_countryCode'] if 'taibif_countryCode' in i else None,
+            'typeStatus':i['typeStatus'] if 'typeStatus' in i else None,
             'preservation':i['preservation'] if 'preservation' in i else None,
             'collectionID':i['collectionID'] if 'collectionID' in i else None,
-            'basisOfRecord':i['taibif_basisOfRecord'] if 'taibif_basisOfRecord' in i else None,
-            'datasetName':i['taibif_dataset_name_zh'] if 'taibif_dataset_name_zh' in i else None,
-            'datasetShortName':i['taibif_dataset_name'] if 'taibif_dataset_name' in i else None,
-            'typeStatus':i['typeStatus'] if 'typeStatus' in i else None,
-            'license':i['license'] if 'license' in i else None,
-            'taibifCreatedDate':i['mod_date'][0],
-            'taibifModifiedDate':i['mod_date'][0],
-            # 'selfProduced':i['selfProduced'],
-            'selfProduced':True,
+            'recordedBy':i['recordedBy'] if 'recordedBy' in i else None,
+            'recordNumber':i['recordNumber'] if 'recordNumber' in i else None,
+            'organismQuantity':i['organismQuantity'] if 'organismQuantity' in i else None,
+            'organismQuantityType':i['organismQuantityType'] if 'organismQuantityType' in i else None,
+            'associatedMedia':i['associatedMedia']  if mediaLicense else  None,
+            'mediaLicense':mediaLicense,
+            
         })
 
     res['count'] = solr.solr_response['response']['numFound']
