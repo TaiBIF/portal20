@@ -187,18 +187,18 @@ def dataset_api(request):
     result_d =  ds_search.query.values()
     
     rows = [{
-        'title' : x['title'] if 'title' in x else None,
+        'datasetName' : x['title'] if 'title' in x else None,
         'publisherID' : x['organization_uuid'] if 'organization_uuid' in x and x['organization_uuid'] != None else None,
         'publisherName' : x['organization_name'] if 'organization_name' in x and x['organization_name'] != None else None,
         'author' : x['author'] if 'author' in x and x['mod_date'] != None else None,
-        'name' : x['name'],
+        'datasetShortName' : x['name'],
         'publicationDate' : x['pub_date'].strftime("%Y-%m-%d") if 'pub_date' in x and x['pub_date'] != None else None,
-        'modifiedDate' : x['mod_date'].strftime("%Y-%m-%d") if 'mod_date' in x and x['mod_date'] != None else None,
+        'datasetModifiedDate' : x['mod_date'].strftime("%Y-%m-%d") if 'mod_date' in x and x['mod_date'] != None else None,
         'gbifDatasetID' : x['guid'] if 'guid' in x and x['guid'] != None else None,
         'core' : x['dwc_core_type'] if 'dwc_core_type' in x else None,
         'license' : x['data_license'] if 'data_license' in x and x['data_license'] != None else 'unknown',
         'doi' : x['gbif_doi'] if 'doi' in x and x['gbif_doi'] != None else None,
-        'num_record' : x['num_record'] if 'num_record' in x and x['num_record'] != None else None,
+        'numRecord' : x['num_record'] if 'num_record' in x and x['num_record'] != None else None,
         # 'citation' : x['citation'] if 'citation' in x else None,
         # 'resource' : x['resource'] if 'resource' in x else None,
     } for x in result_d ]
@@ -237,11 +237,11 @@ def publisher_api(request):
     result_d =  ds_search.query.values()
         
     rows = [{
-        'publisherGbifUuid' : x['organization_gbif_uuid'] if 'organization_gbif_uuid' in x else None,
+        'publisherID' : x['organization_gbif_uuid'] if 'organization_gbif_uuid' in x else None,
         # 'id' : x['id'] if 'id' in x else None,
-        'name' : x['name'],
-        'description' : x['description'] if 'description' in x else None,
+        'publisherName' : x['name'],
         'countryCode' : x['country_code'] if 'country_code' in x else None,
+        'description' : x['description'] if 'description' in x else None,
         'administrativeContact' : x['administrative_contact'] if 'administrative_contact' in x else None,
         'countryOrArea' : x['country_or_area'] if 'country_or_area' in x else None,
         'installations' : x['installations'] if 'installations' in x else None,
@@ -900,11 +900,11 @@ def occurrence_api(request):
         mediaLicense = i['mediaLicense'] if 'mediaLicense' in i else None
 
         issues = []
-        if i['TaxonMatchNone'][0] == True:
+        if 'TaxonMatchNone' in i and i['TaxonMatchNone'][0] == True:
             issues.append('TaxonMatchNone')
-        if i['CoordinateInvalid'][0] == True:
+        if 'CoordinateInvalid' in i and i['CoordinateInvalid'][0] == True:
             issues.append('CoordinateInvalid')
-        if i['RecordedDateInvalid'][0] == True:
+        if 'RecordedDateInvalid' in i and i['RecordedDateInvalid'][0] == True:
             issues.append('RecordedDateInvalid')
         
         res_list.append({
