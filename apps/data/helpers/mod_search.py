@@ -264,7 +264,7 @@ class DatasetSearch(SuperSearch):
                 desc = list(Dataset_description.objects.filter(description__icontains=v).values_list('id', flat=True))                  
                 query = query.filter(Q(title__icontains=v)| Q(pk__in=(desc)))
             
-            if key == 'title':
+            if key == 'title' or key == 'datasetName':
                 query = query.filter(title__contains=values[0])
             if key == 'name':
                 query = query.filter(name__contains=values[0])
@@ -290,7 +290,7 @@ class DatasetSearch(SuperSearch):
                     start_date = datetime.strptime(date_range[0], "%Y-%m-%d")
                     end_date = datetime.strptime(str(datetime.today().date()), "%Y-%m-%d")
                     query = query.filter(pub_date__range=(start_date,end_date))
-            if key == 'mod_date' or key == 'modifiedDate':
+            if key == 'mod_date' or key == 'datasetModifiedDate':
                 date_range = values[0].split(',',1)
                 if len(date_range) ==2:
                     start_date = datetime.strptime(date_range[0], "%Y-%m-%d")
@@ -350,14 +350,14 @@ class PublisherSearch(SuperSearch):
         # filter query
         query = self.query
         for key, values in self.filters:
-            if key == 'q':
+            if key == 'q' or key == 'publisherName':
                 v = values[0] # only get one
                 if not v:
                     continue
                 query = query.filter(name__icontains=v)
             if key == 'countrycode' or key == 'countryCode':
                 query = query.filter(country_code__in=values)
-            if key == 'publisherGbifUuid':
+            if key == 'publisherGbifUuid' or key == 'publisherID':
                 query = query.filter(organization_gbif_uuid__in=values)
 
         self.query = query
