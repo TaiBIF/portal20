@@ -407,9 +407,9 @@ def for_basic_occ(request):
         backbone = i['taxon_backbone']if 'taxon_backbone' in i else None
         mediaLicense = i['mediaLicense'] if 'mediaLicense' in i else None
         group = i['taibif_taxonGroup'][0] if 'taibif_taxonGroup' in i else None
-        if group == "Reptiles":
-            name = i['orderzh'] if 'orderzh' in i else None
-            group  = taxonGroup_check(name)
+        if 'orderzh' in i :
+            if i['orderzh'] in ['Accipitriformes','Anseriformes','Apodiformes','Bucerotiformes','Caprimulgiformes','Charadriiformes','Ciconiiformes','Columbiformes','Coraciiformes','Cuculiformes','Falconiformes','Galliformes','Gaviiformes','Gruiformes','Passeriformes','Pelecaniformes','Phaethontiformes','Phoenicopteriformes','Piciformes','Podicipediformes','Procellariiformes','Psittaciformes','Strigiformes','Suliformes','Struthioniformes',]:
+                group = 'Birds'
         
         res_list.append({
             'occurrenceID':i['occurrenceID'] if 'occurrenceID' in i else None,
@@ -784,7 +784,10 @@ def occurrence_api(request):
         elif key == "genus":
             fq_list.append(('fq', '{}:"{}"'.format('genuszh', values[0])))
         elif key == "taxonGroup":
-            fq_list.append(('fq', '{}:"{}"'.format('taibif_taxonGroup', values[0])))
+            if str(values[0]) == 'birds':
+                fq_list.append(('fq', '{}:{}'.format('taibif_taxonGroup', 'Accipitriformes Anseriformes Apodiformes Bucerotiformes Caprimulgiformes Charadriiformes Ciconiiformes Columbiformes Coraciiformes Cuculiformes Falconiformes Galliformes Gaviiformes Gruiformes Passeriformes Pelecaniformes Phaethontiformes Phoenicopteriformes Piciformes Podicipediformes Procellariiformes Psittaciformes Strigiformes Suliformes Struthioniformes')))
+            else:
+                fq_list.append(('fq', '{}:"{}"'.format('taibif_taxonGroup', values[0])))
         elif key == "country":
             if ',' in values[0]:
                 vlist = values[0].split(',')
@@ -915,9 +918,9 @@ def occurrence_api(request):
         backbone = i['taxon_backbone']if 'taxon_backbone' in i else None
         mediaLicense = i['mediaLicense'] if 'mediaLicense' in i else None
         group = i['taibif_taxonGroup'][0] if 'taibif_taxonGroup' in i else None
-        if group == "reptiles":
-            name = i['orderzh'] if 'orderzh' in i else None
-            group  = taxonGroup_check(name)
+        if 'orderzh' in i :
+            if i['orderzh'] in ['Accipitriformes','Anseriformes','Apodiformes','Bucerotiformes','Caprimulgiformes','Charadriiformes','Ciconiiformes','Columbiformes','Coraciiformes','Cuculiformes','Falconiformes','Galliformes','Gaviiformes','Gruiformes','Passeriformes','Pelecaniformes','Phaethontiformes','Phoenicopteriformes','Piciformes','Podicipediformes','Procellariiformes','Psittaciformes','Strigiformes','Suliformes','Struthioniformes',]:
+                group = 'Birds'
         issues = []
         if 'TaxonMatchNone' in i and i['TaxonMatchNone'][0] == True:
             issues.append('TaxonMatchNone')
@@ -1064,7 +1067,10 @@ def raw_occ_api(request):
         elif key == "genus":
             fq_list.append(('fq', '{}:"{}"'.format('genuszh', values[0])))
         elif key == "taxonGroup":
-            fq_list.append(('fq', '{}:"{}"'.format('taibif_taxonGroup', values[0])))
+            if str(values[0]) == 'birds':
+                fq_list.append(('fq', '{}:{}'.format('taibif_taxonGroup', 'Accipitriformes Anseriformes Apodiformes Bucerotiformes Caprimulgiformes Charadriiformes Ciconiiformes Columbiformes Coraciiformes Cuculiformes Falconiformes Galliformes Gaviiformes Gruiformes Passeriformes Pelecaniformes Phaethontiformes Phoenicopteriformes Piciformes Podicipediformes Procellariiformes Psittaciformes Strigiformes Suliformes Struthioniformes')))
+            else:
+                fq_list.append(('fq', '{}:"{}"'.format('taibif_taxonGroup', values[0])))
         elif key == "country":
             if ',' in values[0]:
                 vlist = values[0].split(',')
@@ -2235,12 +2241,3 @@ TaiBIF團隊 敬上
         conf_settings.TAIBIF_SERVICE_EMAIL,
         [request.GET["email"]],
         html_message=html)
-
-
-def taxonGroup_check(name):
-    group = ''
-    if name in ['Accipitriformes','Anseriformes','Apodiformes','Bucerotiformes','Caprimulgiformes','Charadriiformes','Ciconiiformes','Columbiformes','Coraciiformes','Cuculiformes','Falconiformes','Galliformes','Gaviiformes','Gruiformes','Passeriformes','Pelecaniformes','Phaethontiformes','Phoenicopteriformes','Piciformes','Podicipediformes','Procellariiformes','Psittaciformes','Strigiformes','Suliformes','Struthioniformes',]:
-        group = "Bird"
-    else:
-        group = name
-    return group
