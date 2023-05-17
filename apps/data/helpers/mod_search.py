@@ -274,8 +274,6 @@ class DatasetSearch(SuperSearch):
                 query = query.filter(organization_uuid=values[0])
             if key == 'organization_name' or key == 'publisherName':
                 query = query.filter(organization_name__contains=values[0])
-            if key == 'license':
-                query = query.filter(data_license__contains=values[0])
             if key == 'dwc_core_type':
                 query = query.filter(dwc_core_type__contains=values[0])
             if key == 'gbif_dataset_id' or key == 'gbifDatasetID':
@@ -312,8 +310,11 @@ class DatasetSearch(SuperSearch):
             if key == 'publisher':
                 query = query.filter(organization__in=values)
             if key == 'rights' or key == 'license':
-                rights_reverse_map = {v: k for k,v in DATA_MAPPING['rights'].items()}
-                query = query.filter(data_license=rights_reverse_map[values[0]])
+                if str(values[0]) == 'NA':
+                    query = query.filter(data_license__contains='unknown')
+                else:
+                    rights_reverse_map = {v: k for k,v in DATA_MAPPING['rights'].items()}
+                    query = query.filter(data_license=rights_reverse_map[values[0]])
             if key == 'country':
                 query = query.filter(country__in=values)
             if key == 'is_most_project':
