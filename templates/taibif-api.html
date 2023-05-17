@@ -136,46 +136,46 @@
               <tr><td colspan="8">基本資訊</td></tr>
               <tr><td>occurrenceID</td><td>資料發布者提供資料辨識碼</td><td>ID</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?occurrenceID=HAST-127359</td><td></td></tr>
               <tr><td>taibifOccurrenceID</td><td>TaiBIF 資料辨識碼</td><td>ID</td><td>Ｏ</td><td>Ｏ</td><td></td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?occurrenceID=hast-1186</td><td></td></tr>
-              <tr><td>basisOfRecord</td><td>紀錄類型</td><td>string</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?basisOfRecord=HumanObservation</td><td></td></tr>
-              <tr><td>modifiedDate</td><td>原始資料更新日期</td><td>date</td><td></td><td>Ｏ</td><td>Ｏ</td><td>單一日期：https://portal.taibif.tw/api/v2/occurrence/detail_occ?modifiedDate=2022-01-01<br>
+              <tr><td>basisOfRecord</td><td>紀錄類型</td><td>String</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?basisOfRecord=HumanObservation</td><td></td></tr>
+              <tr><td>modifiedDate</td><td>原始資料更新日期</td><td>Date</td><td></td><td>Ｏ</td><td>Ｏ</td><td>單一日期：https://portal.taibif.tw/api/v2/occurrence/detail_occ?modifiedDate=2022-01-01<br>
               兩個日期之間：https://portal.taibif.tw/api/v2/occurrence/detail_occ?modifiedDate=2022-01-01,2022-03-31</td><td></td></tr>
-              <tr><td>taibifModifiedDate</td><td>TaiBIF 更新日期</td><td>date</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>單一日期：https://portal.taibif.tw/api/v2/occurrence/detail_occ?taibifModifiedDate=2022-01-01<br>
+              <tr><td>taibifModifiedDate</td><td>TaiBIF 更新日期</td><td>Date</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>單一日期：https://portal.taibif.tw/api/v2/occurrence/detail_occ?taibifModifiedDate=2022-01-01<br>
               兩個日期之間：https://portal.taibif.tw/api/v2/occurrence/detail_occ?taibifModifiedDate=2022-01-01,2022-03-31</td><td></td></tr>
               <tr><td>gbifDatasetID</td><td>GBIF 資料集 ID</td><td>UUID</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?gbifDatasetID=233783dc-e13a-4770-9d24-797590ff8716</td><td></td></tr>
-              <tr><td>datasetName</td><td>資料集名稱</td><td>string</td><td>Ｏ</td><td>Ｏ</td><td></td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?datasetName=turtlespot</td><td></td></tr>
-              <tr><td>occurrenceStatus</td><td>觀測狀態</td><td>string</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?occurrenceStatus=present</td><td></td></tr>
+              <tr><td>datasetName</td><td>資料集名稱</td><td>String</td><td>Ｏ</td><td>Ｏ</td><td></td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?datasetName=turtlespot</td><td></td></tr>
+              <tr><td>occurrenceStatus</td><td>觀測狀態</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?occurrenceStatus=present</td><td></td></tr>
               <tr><td colspan="8">物種資訊</td></tr>
-              <tr><td>scientificName</td><td>拉丁學名</td><td>string</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?scientificName=chelonia
+              <tr><td>scientificName</td><td>拉丁學名</td><td>String</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?scientificName=chelonia
               https://portal.taibif.tw/api/v2/occurrence/detail_occ?scientificName=Collix ghosha</td><td></td></tr>
-              <tr><td>taxonGroup</td><td>類群種類</td><td>string</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?taxonGroup=insects</td><td>物種類群，目前提供：plants, fungi, bacteria, insects, fishes, reptiles, amphibians, birds, mammals, others. 如有別的類群需求請聯絡我們。</td></tr>
+              <tr><td>taxonGroup</td><td>類群種類</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?taxonGroup=insects</td><td>物種類群，目前提供：plants, fungi, bacteria, insects, fishes, reptiles, amphibians, birds, mammals, others. 如有別的類群需求請聯絡我們。</td></tr>
               <tr><td>taicolTaxonID</td><td>臺灣物種名錄物種編碼 taxonID</td><td>numeric</td><td></td><td>Ｏ</td><td></td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?taicolTaxonID=380137</td><td></td></tr>
-              <tr><td>kingdom</td><td>界</td><td>string</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?kingdom=Plantae</td><td></td></tr>
-              <tr><td>phylum</td><td>門</td><td>string</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?phylum=Tracheophyta</td><td></td></tr>
-              <tr><td>class</td><td>科</td><td>string</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?class=Elasmobranchii</td><td></td></tr>
-              <tr><td>order</td><td>目</td><td>string</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?order=Kentrogonida</td><td></td></tr>
-              <tr><td>family</td><td>綱</td><td>string</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?family=Sminthuridae</td><td></td></tr>
-              <tr><td>genus</td><td>屬</td><td>string</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?genus=Apamamia</td><td></td></tr>
-              <tr><td>taxonRank</td><td>分類階層</td><td>string</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?taxonRank=order</td><td></td></tr>
-              <tr><td>establishmentMeans</td><td>類群當地原生性</td><td>string</td><td></td><td></td><td>Ｏ</td><td></td><td>native, nativeReintroduced, introduced, introducedAssistedColonisation, vagrant, uncertain</td></tr>
+              <tr><td>kingdom</td><td>界</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?kingdom=Plantae</td><td></td></tr>
+              <tr><td>phylum</td><td>門</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?phylum=Tracheophyta</td><td></td></tr>
+              <tr><td>class</td><td>科</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?class=Elasmobranchii</td><td></td></tr>
+              <tr><td>order</td><td>目</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?order=Kentrogonida</td><td></td></tr>
+              <tr><td>family</td><td>綱</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?family=Sminthuridae</td><td></td></tr>
+              <tr><td>genus</td><td>屬</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?genus=Apamamia</td><td></td></tr>
+              <tr><td>taxonRank</td><td>分類階層</td><td>String</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?taxonRank=order</td><td></td></tr>
+              <tr><td>establishmentMeans</td><td>類群當地原生性</td><td>String</td><td></td><td></td><td>Ｏ</td><td></td><td>native, nativeReintroduced, introduced, introducedAssistedColonisation, vagrant, uncertain</td></tr>
               <tr><td colspan="8">時間資訊</td></tr>
-              <tr><td>eventDate</td><td>觀測日期</td><td>date</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>單一日期：https://portal.taibif.tw/api/v2/occurrence/detail_occ?eventDate=2022-01-01<br>
+              <tr><td>eventDate</td><td>觀測日期</td><td>Date</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>單一日期：https://portal.taibif.tw/api/v2/occurrence/detail_occ?eventDate=2022-01-01<br>
               兩個日期之間：https://portal.taibif.tw/api/v2/occurrence/detail_occ?eventDate=2022-01-01,2022-03-31</td><td></td></tr>
-              <tr><td>year</td><td>觀測年</td><td>numeric</td><td></td><td>Ｏ</td><td>Ｏ</td><td>單一年份：https://portal.taibif.tw/api/v2/occurrence/detail_occ?year=2022
+              <tr><td>year</td><td>觀測年</td><td>Numeric</td><td></td><td>Ｏ</td><td>Ｏ</td><td>單一年份：https://portal.taibif.tw/api/v2/occurrence/detail_occ?year=2022
               <br>兩個年份之間： https://portal.taibif.tw/api/v2/occurrence/detail_occ?year=2020,2022</td><td></td></tr>
-              <tr><td>month</td><td>觀測月</td><td>numeric</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?month=3</td><td></td></tr>
+              <tr><td>month</td><td>觀測月</td><td>Numeric</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?month=3</td><td></td></tr>
               <tr><td colspan="8">地理資訊</td></tr>
-              <tr><td>country</td><td>國家</td><td>string</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?country=Taiwan</td><td></td></tr>
-              <tr><td>county</td><td>臺灣縣市</td><td>string</td><td></td><td>Ｏ</td><td>Ｏ</td><td>單一縣市：https://portal.taibif.tw/api/v2/occurrence/detail_occ?county=Lienchiang County<br>
+              <tr><td>country</td><td>國家</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?country=Taiwan</td><td></td></tr>
+              <tr><td>county</td><td>臺灣縣市</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>單一縣市：https://portal.taibif.tw/api/v2/occurrence/detail_occ?county=Lienchiang County<br>
               多選：https://portal.taibif.tw/api/v2/occurrence/detail_occ?county=Kaohsiung City,Taitung County</td><td></td></tr>
-              <tr><td>decimalLatitude</td><td>緯度</td><td>numeric</td><td></td><td>Ｏ</td><td>Ｏ</td><td>緯度之間：https://portal.taibif.tw/api/v2/occurrence/detail_occ?decimalLatitude=-22.24829&decimalLatitude=-14.21675
+              <tr><td>decimalLatitude</td><td>緯度</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>緯度之間：https://portal.taibif.tw/api/v2/occurrence/detail_occ?decimalLatitude=-22.24829&decimalLatitude=-14.21675
               <br>經緯度之間：https://portal.taibif.tw/api/v2/occurrence/detail_occ?decimalLongitude=121&decimalLatitude=22
               <br>方形：https://portal.taibif.tw/api/v2/occurrence/detail_occ?decimalLongitude=120&decimalLongitude=121&decimalLatitude=22&decimalLatitude=24</td><td></td></tr>
-              <tr><td>decimalLongitude</td><td>經度</td><td>numeric</td><td></td><td>Ｏ</td><td>Ｏ</td><td>格式同上</td><td></td></tr>
-              <tr><td>coordinateUncertaintyInMeters</td><td>原始座標誤差(公尺)</td><td>numeric</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?coordinateUncertaintyInMeters=500</td><td></td></tr>
+              <tr><td>decimalLongitude</td><td>經度</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>格式同上</td><td></td></tr>
+              <tr><td>coordinateUncertaintyInMeters</td><td>原始座標誤差(公尺)</td><td>String</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?coordinateUncertaintyInMeters=500</td><td></td></tr>
               <tr><td colspan="8">其他資訊</td></tr>
-              <tr><td>issue</td><td>資料問題</td><td>string</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?issue=Taxon Match None</td><td>Taxon Match None, Coordinate Invalid, Recorded Date Invalid</td></tr>
-              <tr><td>license</td><td>觀測紀錄授權</td><td>string</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?license=CC0</td><td>CC0, CC-BY, CC-BY-NC, NA</td></tr>
-              <tr><td>selfProduced</td><td>TaiBIF IPT 來源的資料</td><td>string</td><td></td><td></td><td></td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?selfProduced=TRUE</td><td>TRUE, FALSE</td></tr>
+              <tr><td>issue</td><td>資料問題</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?issue=Taxon Match None</td><td>Taxon Match None, Coordinate Invalid, Recorded Date Invalid</td></tr>
+              <tr><td>license</td><td>觀測紀錄授權</td><td>String</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?license=CC0</td><td>CC0, CC-BY, CC-BY-NC, NA</td></tr>
+              <tr><td>selfProduced</td><td>TaiBIF IPT 來源的資料</td><td>String</td><td></td><td></td><td></td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?selfProduced=TRUE</td><td>TRUE, FALSE</td></tr>
             </tbody>
           </table>
 
@@ -184,33 +184,33 @@
             <thead><tr><th>回傳欄位</th><th>說明</th><th>型態</th></tr></thead>
             <tbody>
               <tr><td colspan="3">基本資訊</td></tr>
-              <tr><td>taibifCreatedDate</td><td>資料建立日期</td><td>string</td></tr>
-              <tr><td>datasetShortName</td><td>資料集名稱</td><td>string</td></tr>
+              <tr><td>taibifCreatedDate</td><td>資料建立日期</td><td>String</td></tr>
+              <tr><td>datasetShortName</td><td>資料集名稱</td><td>String</td></tr>
               <tr><td colspan="3">物種資訊</td></tr>
-              <tr><td>isPreferredName</td><td>TaiCOL 上的俗名</td><td>string</td></tr>
-              <tr><td>gbifAcceptedID</td><td>GBIF TaxonID</td><td>string</td></tr>
-              <tr><td>scientificNameID</td><td>物種名稱代碼</td><td>string</td></tr>
-              <tr><td>taxonBackbone</td><td>物種 Backbone 來源</td><td>string</td></tr>
+              <tr><td>isPreferredName</td><td>TaiCOL 上的俗名</td><td>String</td></tr>
+              <tr><td>gbifAcceptedID</td><td>GBIF TaxonID</td><td>String</td></tr>
+              <tr><td>scientificNameID</td><td>物種名稱代碼</td><td>String</td></tr>
+              <tr><td>taxonBackbone</td><td>物種 Backbone 來源</td><td>String</td></tr>
               <tr><td colspan="3">時間資訊</td></tr>
-              <tr><td>day</td><td>日</td><td>numeric</td></tr>
+              <tr><td>day</td><td>日</td><td>Numeric</td></tr>
               <tr><td colspan="3">地理資訊</td></tr>
-              <tr><td>geodeticDatum</td><td>座標系統</td><td>string</td></tr>
-              <tr><td>verbatimSRS</td><td>空間參考系統</td><td>string</td></tr>
-              <tr><td>dataGeneralizations</td><td>座標是否有模糊化</td><td>boolean</td></tr>
-              <tr><td>coordinatePrecision</td><td>座標模糊化程度</td><td>decimal</td></tr>
-              <tr><td>locality</td><td>出現地</td><td>string</td></tr>
-              <tr><td>habitatReserve</td><td>自然生態保護區</td><td>string</td></tr>
-              <tr><td>wildlifeReserve</td><td>野生動物保護區</td><td>string</td></tr>
-              <tr><td>countryCode</td><td>國家代碼</td><td>string</td></tr>
+              <tr><td>geodeticDatum</td><td>座標系統</td><td>String</td></tr>
+              <tr><td>verbatimSRS</td><td>空間參考系統</td><td>String</td></tr>
+              <tr><td>dataGeneralizations</td><td>座標是否有模糊化</td><td>String</td></tr>
+              <tr><td>coordinatePrecision</td><td>座標模糊化程度</td><td>String</td></tr>
+              <tr><td>locality</td><td>出現地</td><td>String</td></tr>
+              <tr><td>habitatReserve</td><td>自然生態保護區</td><td>String</td></tr>
+              <tr><td>wildlifeReserve</td><td>野生動物保護區</td><td>String</td></tr>
+              <tr><td>countryCode</td><td>國家代碼</td><td>String</td></tr>
               <tr><td colspan="3">標本相關</td></tr>
-              <tr><td>typeStatus</td><td>模式標本</td><td>string</td></tr>
-              <tr><td>preservation</td><td>保存方式</td><td>string</td></tr>
-              <tr><td>collectionID</td><td>館藏號</td><td>string</td></tr>
+              <tr><td>typeStatus</td><td>模式標本</td><td>String</td></tr>
+              <tr><td>preservation</td><td>保存方式</td><td>String</td></tr>
+              <tr><td>collectionID</td><td>館藏號</td><td>String</td></tr>
               <tr><td colspan="3">其他資訊</td></tr>
-              <tr><td>recordedBy</td><td>記錄(採集)者</td><td>string</td></tr>
-              <tr><td>recordNumber</td><td>採集號</td><td>string</td></tr>
-              <tr><td>organismQuantity</td><td>數量</td><td>numeric</td></tr>
-              <tr><td>organismQuantityType</td><td>數量單位</td><td>string</td></tr>
+              <tr><td>recordedBy</td><td>記錄(採集)者</td><td>String</td></tr>
+              <tr><td>recordNumber</td><td>採集號</td><td>String</td></tr>
+              <tr><td>organismQuantity</td><td>數量</td><td>String</td></tr>
+              <tr><td>organismQuantityType</td><td>數量單位</td><td>String</td></tr>
               <tr><td>associatedMedia</td><td>多媒體連結</td><td>String</td></tr>
               <tr><td>mediaLicense</td><td>多媒體授權</td><td>String</td></tr>
             </tbody>
