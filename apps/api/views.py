@@ -324,7 +324,7 @@ def for_basic_occ(request):
             else: 
                 fq_list.append(('fq', '{}:{}'.format('taibif_basisOfRecord', values[0])))
         elif key == "datasetName":
-            fq_list.append(('fq', '{}:{}'.format('taibif_dataset_name_zh', values[0])))
+            fq_list.append(('fq', '{}:{}'.format('taibif_dataset_name_zh', '*'+values[0]+'*')))
         elif key == "taxonRank":
             fq_list.append(('fq', '{}:"{}"'.format('taxon_rank', values[0])))
                 
@@ -762,7 +762,7 @@ def occurrence_api(request):
             else: 
                 fq_list.append(('fq', '{}:{}'.format('taibif_basisOfRecord', values[0])))
         elif key == "datasetName":
-            fq_list.append(('fq', '{}:{}'.format('taibif_dataset_name_zh', values[0])))
+            fq_list.append(('fq', '{}:{}'.format('taibif_dataset_name_zh', '*'+values[0]+'*')))
         elif key == "occurrenceStatus":
             fq_list.append(('fq', '{}:"{}"'.format('taibif_occurrenceStatus', values[0])))
         elif key == "scientificName":
@@ -1045,7 +1045,7 @@ def raw_occ_api(request):
             else: 
                 fq_list.append(('fq', '{}:{}'.format('taibif_basisOfRecord', values[0])))
         elif key == "datasetName":
-            fq_list.append(('fq', '{}:{}'.format('taibif_dataset_name_zh', values[0])))
+            fq_list.append(('fq', '{}:{}'.format('taibif_dataset_name_zh', '*'+values[0]+'*')))
         elif key == "occurrenceStatus":
             fq_list.append(('fq', '{}:"{}"'.format('taibif_occurrenceStatus', values[0])))
         elif key == "scientificName":
