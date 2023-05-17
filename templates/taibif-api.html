@@ -39,7 +39,7 @@
       <!-- right content begin -->
         <div class="col-xs-12 col-sm-9 pub-data-content" data-cat="usage_api">
           <h1 class="heading-lg-ul">說明 Usage</h1>
-          最後修改：2023/04/25
+          最後修改：2023/05/17
           <div class="pub-data-section">
             <h4>使用規範：</h4>
             
@@ -47,13 +47,13 @@
             <h4>回傳格式說明：</h4>
             <ul>
               <li>回傳格式為 JSON。</li>
-              <li>查詢網址為 https://portal.taibif.tw/api/{version}/{type}/{mode}?{parameter}，其中：
+              <li>查詢網址為 <b>https://portal.taibif.tw/api/{version}/{type}/{mode}?{parameter}</b>，其中：
                 <ul>
                   <li>{version}：API 版本，此版本為 v2 。</li>
                   <li>{type}：查詢資料種類，目前提供 occurrence、dataset 與 publisher 。</li>
 
-                  <li>{mode}：<strong>限出現紀錄 (occurrence) 資料類型查詢</strong>，目前提供 basic_occ（轉譯欄位 + 基本欄位資料回傳）、 detail_occ（轉譯欄位 + 基本欄位 + 常用欄位資料回傳）與 raw_occ（原始資料回傳）。<br>各自的差別請看
-                  <a href="#" data-cat="occurrence_api" class="pub-data-nav-item">出現紀錄查詢類型</a>說明。</li>
+                  <li>{mode}：<strong>限出現紀錄 (occurrence) 資料類型查詢</strong>，目前提供 basic_occ（轉譯欄位 + 基本欄位資料回傳）、 detail_occ（轉譯欄位 + 基本欄位 + 常用欄位資料回傳）與 raw_occ（原始資料回傳）。
+                    <br>各自的差別請看<a href="#" data-cat="occurrence_api" class="pub-data-nav-item">出現紀錄查詢類型</a>說明。</li>
 
                   <li>{parameter}：查詢參數</li>
                   <li>網址範例：</li>
@@ -134,48 +134,48 @@
             <thead><tr><th>參數名稱 {parameter}</th><th>中文欄位名</th><th>型態</th><th>basic_occ 可查詢</th><th>detail_occ 可查詢</th><th>raw_occ 可查詢</th><th>範例</th><th>補充說明與限定搜尋字彙</th></tr></thead>
             <tbody>
               <tr><td colspan="8">基本資訊</td></tr>
-              <tr><td>occurrenceID</td><td>資料發布者提供資料辨識碼</td><td>ID</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?occurrenceID=HAST-127359</td><td></td></tr>
-              <tr><td>taibifOccurrenceID</td><td>TaiBIF 資料辨識碼</td><td>ID</td><td>Ｏ</td><td>Ｏ</td><td></td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?occurrenceID=hast-1186</td><td></td></tr>
-              <tr><td>basisOfRecord</td><td>紀錄類型</td><td>String</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?basisOfRecord=HumanObservation</td><td></td></tr>
-              <tr><td>modifiedDate</td><td>原始資料更新日期</td><td>Date</td><td></td><td>Ｏ</td><td>Ｏ</td><td>單一日期：https://portal.taibif.tw/api/v2/occurrence/detail_occ?modifiedDate=2022-01-01<br>
-              兩個日期之間：https://portal.taibif.tw/api/v2/occurrence/detail_occ?modifiedDate=2022-01-01,2022-03-31</td><td></td></tr>
-              <tr><td>taibifModifiedDate</td><td>TaiBIF 更新日期</td><td>Date</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>單一日期：https://portal.taibif.tw/api/v2/occurrence/detail_occ?taibifModifiedDate=2022-01-01<br>
-              兩個日期之間：https://portal.taibif.tw/api/v2/occurrence/detail_occ?taibifModifiedDate=2022-01-01,2022-03-31</td><td></td></tr>
-              <tr><td>gbifDatasetID</td><td>GBIF 資料集 ID</td><td>UUID</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?gbifDatasetID=233783dc-e13a-4770-9d24-797590ff8716</td><td></td></tr>
-              <tr><td>datasetName</td><td>資料集名稱</td><td>String</td><td>Ｏ</td><td>Ｏ</td><td></td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?datasetName=turtlespot</td><td></td></tr>
-              <tr><td>occurrenceStatus</td><td>觀測狀態</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?occurrenceStatus=present</td><td></td></tr>
+              <tr><td>occurrenceID</td><td>資料發布者提供資料辨識碼</td><td>ID</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td><a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?occurrenceID=HAST-127359" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?occurrenceID=HAST-127359</a></td><td></td></tr>
+              <tr><td>taibifOccurrenceID</td><td>TaiBIF 資料辨識碼</td><td>ID</td><td>Ｏ</td><td>Ｏ</td><td></td><td><a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?occurrenceID=hast-1186" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?occurrenceID=hast-1186</a></td><td></td></tr>
+              <tr><td>basisOfRecord</td><td>紀錄類型</td><td>String</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td><a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?basisOfRecord=HumanObservation" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?basisOfRecord=HumanObservation</a></td><td></td></tr>
+              <tr><td>modifiedDate</td><td>原始資料更新日期</td><td>Date</td><td></td><td>Ｏ</td><td>Ｏ</td><td>單一日期：<a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?modifiedDate=2022-01-01" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?modifiedDate=2022-01-01</a><br>
+                兩個日期之間：<a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?modifiedDate=2022-01-01,2022-03-31" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?modifiedDate=2022-01-01,2022-03-31</a></td><td></td></tr>
+              <tr><td>taibifModifiedDate</td><td>TaiBIF 更新日期</td><td>Date</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>單一日期：<a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?taibifModifiedDate=2022-01-01" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?taibifModifiedDate=2022-01-01</a><br>
+                兩個日期之間：<a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?taibifModifiedDate=2022-01-01,2022-03-31" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?taibifModifiedDate=2022-01-01,2022-03-31</a></td><td></td></tr>
+              <tr><td>gbifDatasetID</td><td>GBIF 資料集 ID</td><td>UUID</td><td></td><td>Ｏ</td><td>Ｏ</td><td><a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?gbifDatasetID=233783dc-e13a-4770-9d24-797590ff8716" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?gbifDatasetID=233783dc-e13a-4770-9d24-797590ff8716</a></td><td></td></tr>
+              <tr><td>datasetName</td><td>資料集名稱</td><td>String</td><td>Ｏ</td><td>Ｏ</td><td></td><td><a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?datasetName=turtlespot" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?datasetName=Sea turtle</a></td><td></td></tr>
+              <tr><td>occurrenceStatus</td><td>觀測狀態</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td><a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?occurrenceStatus=present" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?occurrenceStatus=present</a></td><td></td></tr>
               <tr><td colspan="8">物種資訊</td></tr>
-              <tr><td>scientificName</td><td>拉丁學名</td><td>String</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?scientificName=chelonia
-              https://portal.taibif.tw/api/v2/occurrence/detail_occ?scientificName=Collix ghosha</td><td></td></tr>
-              <tr><td>taxonGroup</td><td>類群種類</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?taxonGroup=insects</td><td>物種類群，目前提供：plants, fungi, bacteria, insects, fishes, reptiles, amphibians, birds, mammals, others. 如有別的類群需求請聯絡我們。</td></tr>
-              <tr><td>taicolTaxonID</td><td>臺灣物種名錄物種編碼 taxonID</td><td>numeric</td><td></td><td>Ｏ</td><td></td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?taicolTaxonID=380137</td><td></td></tr>
-              <tr><td>kingdom</td><td>界</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?kingdom=Plantae</td><td></td></tr>
-              <tr><td>phylum</td><td>門</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?phylum=Tracheophyta</td><td></td></tr>
-              <tr><td>class</td><td>科</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?class=Elasmobranchii</td><td></td></tr>
-              <tr><td>order</td><td>目</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?order=Kentrogonida</td><td></td></tr>
-              <tr><td>family</td><td>綱</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?family=Sminthuridae</td><td></td></tr>
-              <tr><td>genus</td><td>屬</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?genus=Apamamia</td><td></td></tr>
-              <tr><td>taxonRank</td><td>分類階層</td><td>String</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?taxonRank=order</td><td></td></tr>
-              <tr><td>establishmentMeans</td><td>類群當地原生性</td><td>String</td><td></td><td></td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/raw_occ?establishmentMeans=native</td><td>native, nativeReintroduced, introduced, introducedAssistedColonisation, vagrant, uncertain</td></tr>
+              <tr><td>scientificName</td><td>拉丁學名</td><td>String</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td><a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?scientificName=chelonia" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?scientificName=chelonia</a><br>
+                <a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?scientificName=Collix ghosha" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?scientificName=Collix ghosha</a></td><td></td></tr>
+              <tr><td>taxonGroup</td><td>類群種類</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td><a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?taxonGroup=insects" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?taxonGroup=insects</a></td><td>物種類群，目前提供：plants, fungi, bacteria, insects, fishes, reptiles, amphibians, birds, mammals, others. 如有別的類群需求請聯絡我們。</td></tr>
+              <tr><td>taicolTaxonID</td><td>臺灣物種名錄物種編碼 taxonID</td><td>String</td><td></td><td>Ｏ</td><td></td><td><a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?taicolTaxonId=t0096596" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?taicolTaxonId=t0096596</a></td><td></td></tr>
+              <tr><td>kingdom</td><td>界</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td><a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?kingdom=Plantae" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?kingdom=Plantae</a></td><td></td></tr>
+              <tr><td>phylum</td><td>門</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td><a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?phylum=Tracheophyta" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?phylum=Tracheophyta</a></td><td></td></tr>
+              <tr><td>class</td><td>科</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td><a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?class=Elasmobranchii" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?class=Elasmobranchii</a></td><td></td></tr>
+              <tr><td>order</td><td>目</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td><a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?order=Kentrogonida" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?order=Kentrogonida</a></td><td></td></tr>
+              <tr><td>family</td><td>綱</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td><a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?family=Sminthuridae" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?family=Sminthuridae</a></td><td></td></tr>
+              <tr><td>genus</td><td>屬</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td><a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?genus=Apamamia" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?genus=Apamamia</a></td><td></td></tr>
+              <tr><td>taxonRank</td><td>分類階層</td><td>String</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td><a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?taxonRank=order" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?taxonRank=order</a></td><td></td></tr>
+              <tr><td>establishmentMeans</td><td>類群當地原生性</td><td>String</td><td></td><td></td><td>Ｏ</td><td><a href="https://portal.taibif.tw/api/v2/occurrence/raw_occ?establishmentMeans=native" target="_blank">https://portal.taibif.tw/api/v2/occurrence/raw_occ?establishmentMeans=native</a></td><td>native, nativeReintroduced, introduced, introducedAssistedColonisation, vagrant, uncertain</td></tr>
               <tr><td colspan="8">時間資訊</td></tr>
-              <tr><td>eventDate</td><td>觀測日期</td><td>Date</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>單一日期：https://portal.taibif.tw/api/v2/occurrence/detail_occ?eventDate=2022-01-01<br>
-              兩個日期之間：https://portal.taibif.tw/api/v2/occurrence/detail_occ?eventDate=2022-01-01,2022-03-31</td><td></td></tr>
-              <tr><td>year</td><td>觀測年</td><td>Numeric</td><td></td><td>Ｏ</td><td>Ｏ</td><td>單一年份：https://portal.taibif.tw/api/v2/occurrence/detail_occ?year=2022
-              <br>兩個年份之間： https://portal.taibif.tw/api/v2/occurrence/detail_occ?year=2020,2022</td><td></td></tr>
-              <tr><td>month</td><td>觀測月</td><td>Numeric</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?month=3</td><td></td></tr>
+              <tr><td>eventDate</td><td>觀測日期</td><td>Date</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>單一日期：<a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?eventDate=2022-01-01" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?eventDate=2022-01-01</a><br>
+                兩個日期之間：<a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?eventDate=2022-01-01,2022-03-31" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?eventDate=2022-01-01,2022-03-31</a></td><td></td></tr>
+              <tr><td>year</td><td>觀測年</td><td>Numeric</td><td></td><td>Ｏ</td><td>Ｏ</td><td>單一年份：<a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?year=2022" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?year=2022</a><br>
+                兩個年份之間：<a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?year=2020,2022" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?year=2020,2022</a></td><td></td></tr>
+              <tr><td>month</td><td>觀測月</td><td>Numeric</td><td></td><td>Ｏ</td><td>Ｏ</td><td><a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?month=3" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?month=3</a></td><td></td></tr>
               <tr><td colspan="8">地理資訊</td></tr>
-              <tr><td>country</td><td>國家</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?country=Taiwan</td><td></td></tr>
-              <tr><td>county</td><td>臺灣縣市</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>單一縣市：https://portal.taibif.tw/api/v2/occurrence/detail_occ?county=Lienchiang County<br>
-              多選：https://portal.taibif.tw/api/v2/occurrence/detail_occ?county=Kaohsiung City,Taitung County</td><td></td></tr>
-              <tr><td>decimalLatitude</td><td>緯度</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>緯度之間：https://portal.taibif.tw/api/v2/occurrence/detail_occ?decimalLatitude=-22.24829&decimalLatitude=-14.21675
-              <br>經緯度之間：https://portal.taibif.tw/api/v2/occurrence/detail_occ?decimalLongitude=121&decimalLatitude=22
-              <br>方形：https://portal.taibif.tw/api/v2/occurrence/detail_occ?decimalLongitude=120&decimalLongitude=121&decimalLatitude=22&decimalLatitude=24</td><td></td></tr>
+              <tr><td>country</td><td>國家</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td><a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?country=Taiwan" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?country=Taiwan</a></td><td></td></tr>
+              <tr><td>county</td><td>臺灣縣市</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>單一縣市：<a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?county=Lienchiang County" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?county=Lienchiang County</a><br>
+              多選：<a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?county=Kaohsiung City,Taitung County" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?county=Kaohsiung City,Taitung County</a></td><td></td></tr>
+              <tr><td>decimalLatitude</td><td>緯度</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>緯度之間：<a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?decimalLatitude=-22.24829&decimalLatitude=-14.21675" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?decimalLatitude=-22.24829&decimalLatitude=-14.21675</a>
+              <br>經緯度之間：<a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?decimalLongitude=121&decimalLatitude=22" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?decimalLongitude=121&decimalLatitude=22</a>
+              <br>方形：<a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?decimalLongitude=120&decimalLongitude=121&decimalLatitude=22&decimalLatitude=24" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?decimalLongitude=120&decimalLongitude=121&decimalLatitude=22&decimalLatitude=24</a></td><td></td></tr>
               <tr><td>decimalLongitude</td><td>經度</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>格式同上</td><td></td></tr>
-              <tr><td>coordinateUncertaintyInMeters</td><td>原始座標誤差(公尺)</td><td>String</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?coordinateUncertaintyInMeters=500</td><td></td></tr>
+              <tr><td>coordinateUncertaintyInMeters</td><td>原始座標誤差(公尺)</td><td>String</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td><a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?coordinateUncertaintyInMeters=500" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?coordinateUncertaintyInMeters=500</a></td><td></td></tr>
               <tr><td colspan="8">其他資訊</td></tr>
-              <tr><td>issue</td><td>資料問題</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?issue=Taxon Match None</td><td>Taxon Match None, Coordinate Invalid, Recorded Date Invalid</td></tr>
-              <tr><td>license</td><td>觀測紀錄授權</td><td>String</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?license=CC0</td><td>CC0, CC-BY, CC-BY-NC, NA</td></tr>
-              <tr><td>selfProduced</td><td>TaiBIF IPT 來源的資料</td><td>String</td><td></td><td></td><td></td><td>https://portal.taibif.tw/api/v2/occurrence/detail_occ?selfProduced=TRUE</td><td>TRUE, FALSE</td></tr>
+              <tr><td>issue</td><td>資料問題</td><td>String</td><td></td><td>Ｏ</td><td>Ｏ</td><td><a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?issue=Taxon Match None" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?issue=Taxon Match None</a></td><td>Taxon Match None, Coordinate Invalid, Recorded Date Invalid</td></tr>
+              <tr><td>license</td><td>觀測紀錄授權</td><td>String</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td><a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?license=CC0" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?license=CC0</a></td><td>CC0, CC-BY, CC-BY-NC, NA</td></tr>
+              <tr><td>selfProduced</td><td>TaiBIF IPT 來源的資料</td><td>Boolean</td><td>Ｏ</td><td>Ｏ</td><td>Ｏ</td><td><a href="https://portal.taibif.tw/api/v2/occurrence/detail_occ?selfProduced=TRUE" target="_blank">https://portal.taibif.tw/api/v2/occurrence/detail_occ?selfProduced=TRUE</a></td><td>TRUE, FALSE</td></tr>
             </tbody>
           </table>
 
@@ -250,28 +250,28 @@
               <tr><th>參數名稱 {parameter}</th><th>說明</th><th>範例</th><th>限定搜尋字彙</th></tr>
             </thead>
             <tbody>
-              <tr><td>datasetName</td><td>資料集名稱，關鍵字模糊查詢</td><td>https://portal.taibif.tw/api/v2/dataset?datasetName=海龜</td><td></td></tr>
-              <tr><td>publisherID</td><td>同 GBIF 發布單位 ID</td><td>https://portal.taibif.tw/api/v2/dataset?publisherID=7c07cec1-2925-443c-81f1-333e4187bdea</td><td></td></tr>
-              <tr><td>publisherName</td><td>發布單位名稱，關鍵字模糊查詢</td><td>https://portal.taibif.tw/api/v2/dataset?publisherName=Taiwan</td><td></td></tr>
-              <tr><td>author</td><td>發布者</td><td>https://portal.taibif.tw/api/v2/dataset?author=Li</td><td></td></tr>
-              <tr><td>publicationDate</td><td>資料集發布日期</td><td>單一日期：https://portal.taibif.tw/api/v2/dataset?publicationDate=2020-07-30 <br>兩個日期之間：https://portal.taibif.tw/api/v2/dataset?publicationDate=2013-08-12,2020-07-01</td><td></td></tr>
-              <tr><td>datasetModifiedDate</td><td>資料集更新日期</td><td>https://portal.taibif.tw/api/v2/dataset?datasetModifiedDate=2020-07-30</td><td></td></tr>
-              <tr><td>gbifDatasetID</td><td>GBIF 資料集 ID</td><td>https://portal.taibif.tw/api/v2/dataset?gbifDatasetID=233783dc-e13a-4770-9d24-797590ff8716</td><td></td></tr>
-              <tr><td>license</td><td>資料授權格式</td><td>https://portal.taibif.tw/api/v2/dataset?license=CC0 <br>https://portal.taibif.tw/api/v2/dataset?license=CC-BY</td><td>CC0, CC-BY, CC-BY-NC, NA</td></tr>
-              <tr><td>core</td><td>資料核心集</td><td>https://portal.taibif.tw/api/v2/dataset?core=OCCURRENCE</td><td>SAMPLINGEVENT, OCCURRENCE, CHECKLIST, METADATA, OTHER</td></tr>
+              <tr><td>datasetName</td><td>資料集名稱，關鍵字模糊查詢</td><td><a href="https://portal.taibif.tw/api/v2/dataset?datasetName=海龜" target="_blank">https://portal.taibif.tw/api/v2/dataset?datasetName=海龜</a></td><td></td></tr>
+              <tr><td>publisherID</td><td>同 GBIF 發布單位 ID</td><td><a href="https://portal.taibif.tw/api/v2/dataset?publisherID=7c07cec1-2925-443c-81f1-333e4187bdea" target="_blank">https://portal.taibif.tw/api/v2/dataset?publisherID=7c07cec1-2925-443c-81f1-333e4187bdea</a></td><td></td></tr>
+              <tr><td>publisherName</td><td>發布單位名稱，關鍵字模糊查詢</td><td><a href="https://portal.taibif.tw/api/v2/dataset?publisherName=Taiwan" target="_blank">https://portal.taibif.tw/api/v2/dataset?publisherName=Taiwan</a></td><td></td></tr>
+              <tr><td>author</td><td>發布者</td><td><a href="https://portal.taibif.tw/api/v2/dataset?author=Li" target="_blank">https://portal.taibif.tw/api/v2/dataset?author=Li</a></td><td></td></tr>
+              <tr><td>publicationDate</td><td>資料集發布日期</td><td>單一日期：<a href="https://portal.taibif.tw/api/v2/dataset?publicationDate=2020-07-30" target="_blank">https://portal.taibif.tw/api/v2/dataset?publicationDate=2020-07-30</a> <br>兩個日期之間：<a href="https://portal.taibif.tw/api/v2/dataset?publicationDate=2013-08-12,2020-07-01" target="_blank">https://portal.taibif.tw/api/v2/dataset?publicationDate=2013-08-12,2020-07-01</a></td><td></td></tr>
+              <tr><td>datasetModifiedDate</td><td>資料集更新日期</td><td><a href="https://portal.taibif.tw/api/v2/dataset?datasetModifiedDate=2020-07-30" target="_blank">https://portal.taibif.tw/api/v2/dataset?datasetModifiedDate=2020-07-30</a></td><td></td></tr>
+              <tr><td>gbifDatasetID</td><td>GBIF 資料集 ID</td><td><a href="https://portal.taibif.tw/api/v2/dataset?gbifDatasetID=233783dc-e13a-4770-9d24-797590ff8716" target="_blank">https://portal.taibif.tw/api/v2/dataset?gbifDatasetID=233783dc-e13a-4770-9d24-797590ff8716</a></td><td></td></tr>
+              <tr><td>license</td><td>資料授權格式</td><td><a href="https://portal.taibif.tw/api/v2/dataset?license=CC0" target="_blank">https://portal.taibif.tw/api/v2/dataset?license=CC0</a> <br><a href="https://portal.taibif.tw/api/v2/dataset?license=CC-BY" target="_blank">https://portal.taibif.tw/api/v2/dataset?license=CC-BY</a></td><td>CC0, CC-BY, CC-BY-NC, NA</td></tr>
+              <tr><td>core</td><td>資料核心集</td><td><a href="https://portal.taibif.tw/api/v2/dataset?core=OCCURRENCE" target="_blank">https://portal.taibif.tw/api/v2/dataset?core=OCCURRENCE</a></td><td>SAMPLINGEVENT, OCCURRENCE, CHECKLIST, METADATA, OTHER</td></tr>
               	
             </tbody>
           </table>
-          <h4>其他回傳欄位說明：</h4>
-          使用 Dataset API 共回傳 12 個欄位。
+          <h4>回傳欄位說明：</h4>
+          使用 Dataset API 回傳欄位包含查詢參數，總共 12 個欄位。
           <table class="table table-striped table-bordered">
             <thead>
-              <tr><th>回傳欄位</th><th>說明</th></tr>
+              <tr><th>回傳欄位</th><th>說明</th><th>型態</th></tr>
             </thead>
             <tbody>
-              <tr><td>datasetShortName</td><td>資料集在 IPT 上的 short name</td></tr>
-              <tr><td>doi</td><td>數位物件識別號（Digital Object Identifier）</td></tr>
-              <tr><td>num_record</td><td>資料筆數</td></tr>
+              <tr><td>datasetShortName</td><td>資料集在 IPT 上的 short name</td><td>String</td></tr>
+              <tr><td>doi</td><td>數位物件識別號（Digital Object Identifier）</td><td>String</td></tr>
+              <tr><td>numRecord</td><td>資料筆數</td><td>String</td></tr>
             </tbody>
           </table>
           </div>
@@ -298,23 +298,23 @@
               <tr><th>參數名稱{parameter}</th><th>說明</th><th>範例</th></tr>
             </thead>
             <tbody>
-              <tr><td>publisherName</td><td>單位名稱，關鍵字模糊查詢</td><td>https://portal.taibif.tw/api/v2/publisher?publisherName=Forestry</td></tr>
-              <tr><td>publisherID</td><td>於 TaiBIF 註冊的發布單位列表，同 GBIF 發布單位 ID</td><td>https://portal.taibif.tw/api/v2/publisher?publisherID=e506ec0c-b3c5-4c3d-ae69-ebc56596fc52</td></tr>
-              <tr><td>countryCode</td><td>發布單位國家代碼，使用 ISO 3166-1 兩碼</td><td>https://portal.taibif.tw/api/v2/publisher?countryCode=TW</td></tr>
+              <tr><td>publisherName</td><td>單位名稱，關鍵字模糊查詢</td><td><a href="https://portal.taibif.tw/api/v2/publisher?publisherName=Forestry" target="_blank">https://portal.taibif.tw/api/v2/publisher?publisherName=Forestry</a></td></tr>
+              <tr><td>publisherID</td><td>於 TaiBIF 註冊的發布單位列表，同 GBIF 發布單位 ID</td><td><a href="https://portal.taibif.tw/api/v2/publisher?publisherID=e506ec0c-b3c5-4c3d-ae69-ebc56596fc52" target="_blank">https://portal.taibif.tw/api/v2/publisher?publisherID=e506ec0c-b3c5-4c3d-ae69-ebc56596fc52</a></td></tr>
+              <tr><td>countryCode</td><td>發布單位國家代碼，使用 ISO 3166-1 兩碼</td><td><a href="https://portal.taibif.tw/api/v2/publisher?countryCode=TW" target="_blank">https://portal.taibif.tw/api/v2/publisher?countryCode=TW</a></td></tr>
             </tbody>
           </table>
 
-          <h4>其他回傳欄位說明：</h4>使用 Publisher API 共回傳 8 個欄位。
+          <h4>其他回傳欄位說明：</h4> 使用 Publisher API 回傳欄位包含查詢參數，總共 8 個欄位。
           <table class="table table-striped table-bordered">
             <thead>
-              <tr><th>回傳欄位</th><th>說明</th></tr>
+              <tr><th>回傳欄位</th><th>說明</th><th>型態</th></tr>
             </thead>
             <tbody>
-              <tr><td>description</td><td>發布單位描述</td></tr>
-              <tr><td>administrativeContact</td><td>發布單位聯絡人</td></tr>
-              <tr><td>countryOrArea</td><td>發布單位國家</td></tr>
-              <tr><td>installations</td><td></td></tr>
-              <tr><td>technicalContact</td><td>技術聯絡人</td></tr>
+              <tr><td>description</td><td>發布單位描述</td><td>String</td></tr>
+              <tr><td>administrativeContact</td><td>發布單位聯絡人</td><td>String</td></tr>
+              <tr><td>countryOrArea</td><td>發布單位國家</td><td>String</td></tr>
+              <tr><td>installations</td><td>裝置</td><td>String</td></tr>
+              <tr><td>technicalContact</td><td>技術聯絡人</td><td>String</td></tr>
             </tbody>
           </table>
         </div>
