@@ -360,12 +360,17 @@ def for_basic_occ(request):
                 litype = 'Creative Commons Attribution Non Commercial (CC-BY-NC) 4.0 License'
             elif values[0] == 'CC0':
                 litype = 'Public Domain (CC0 1.0)'
+            elif values[0] == 'NA':
+                fq_list.append(('fq', '-license:[* TO *]'))
+                continue
             fq_list.append(('fq', '{}:"{}"'.format('license', litype)))
         
         # TODO
         elif key == 'selfProduced':
-        #     fq_list.append(('fq', '{}:{}'.format('selfProduced', values[0])))
-            continue
+            if values[0] == 'TRUE':
+                continue
+            # else:
+                # fq_list.append(('fq', '{}:{}'.format('selfProduced', 'FALSE')))
     
     solr = SolrQuery('taibif_occurrence')
     fq_query = urllib.parse.urlencode(fq_list)
@@ -385,7 +390,7 @@ def for_basic_occ(request):
         solr.solr_response = json.loads(resp_dict)
     except urllib.request.HTTPError as e:
         solr_error = str(e)
-        
+    
     if not solr.solr_response['response']['docs']: 
         return JsonResponse({
             'results': 0,
@@ -401,7 +406,11 @@ def for_basic_occ(request):
     for i in solr.solr_response['response']['docs']:
         backbone = i['taxon_backbone']if 'taxon_backbone' in i else None
         mediaLicense = i['mediaLicense'] if 'mediaLicense' in i else None
-        print(i)
+        group = i['taibif_taxonGroup'][0] if 'taibif_taxonGroup' in i else None
+        if group == "Reptiles":
+            name = i['orderzh'] if 'orderzh' in i else None
+            group  = taxonGroup_check(name)
+        
         res_list.append({
             'occurrenceID':i['occurrenceID'] if 'occurrenceID' in i else None,
             'taibifOccurrenceID':i['taibif_occ_id'],
@@ -419,7 +428,7 @@ def for_basic_occ(request):
             'order':i['orderzh'] if 'orderzh' in i else None,
             'family':i['familyzh'] if 'familyzh' in i else None,
             'genus':i['genuszh'] if 'genuszh' in i else None,
-            'taxonGroup':i['taibif_taxonGroup'][0] if 'taibif_taxonGroup' in i else None,
+            'taxonGroup':group,
             'eventDate':i['taibif_event_date'] if 'taibif_event_date' in i else None,
             'year':i['taibif_year'][0] if 'taibif_year' in i else None,
             'month':i['taibif_month'][0] if 'taibif_month' in i else None,
@@ -428,7 +437,7 @@ def for_basic_occ(request):
             'coordinateUncertaintyInMeters':i['taibif_coordinateUncertaintyInMeters'][0] if 'taibif_coordinateUncertaintyInMeters' in i else None,
             'country':i['taibif_country'] if 'taibif_country' in i else None,
             'county':i['taibif_county'] if 'taibif_county' in i else None,
-            'license':i['license'] if 'license' in i else None,
+            'license':i['license'] if 'license' in i else 'NA',
             'selfProduced':True,
             # 'selfProduced':i['selfProduced'],
             
@@ -761,7 +770,7 @@ def occurrence_api(request):
         elif key == "taxonRank":
             fq_list.append(('fq', '{}:"{}"'.format('taxon_rank', values[0])))
         elif key == "taicolTaxonId":
-            fq_list.append(('fq', '{}:"{}"'.format('taicol_id', values[0])))
+            fq_list.append(('fq', '{}:"{}"'.format('taicol_taxon_id', values[0])))
         elif key == "kingdom":
             fq_list.append(('fq', '{}:"{}"'.format('kingdomzh', values[0])))
         elif key == "phylum":
@@ -863,8 +872,15 @@ def occurrence_api(request):
                 litype = 'Creative Commons Attribution Non Commercial (CC-BY-NC) 4.0 License'
             elif values[0] == 'CC0':
                 litype = 'Public Domain (CC0 1.0)'
+            elif values[0] == 'NA':
+                fq_list.append(('fq', '-license:[* TO *]'))
+                continue
             fq_list.append(('fq', '{}:"{}"'.format('license', litype)))
                 
+        elif key == 'selfProduced':
+            if values[0] == 'TRUE':
+                continue
+            
     solr = SolrQuery('taibif_occurrence')
     fq_query = urllib.parse.urlencode(fq_list)
     q_query = urllib.parse.urlencode(q_list)
@@ -898,7 +914,10 @@ def occurrence_api(request):
     for i in solr.solr_response['response']['docs']:
         backbone = i['taxon_backbone']if 'taxon_backbone' in i else None
         mediaLicense = i['mediaLicense'] if 'mediaLicense' in i else None
-
+        group = i['taibif_taxonGroup'][0] if 'taibif_taxonGroup' in i else None
+        if group == "reptiles":
+            name = i['orderzh'] if 'orderzh' in i else None
+            group  = taxonGroup_check(name)
         issues = []
         if 'TaxonMatchNone' in i and i['TaxonMatchNone'][0] == True:
             issues.append('TaxonMatchNone')
@@ -925,7 +944,7 @@ def occurrence_api(request):
             'order':i['orderzh'] if 'orderzh' in i else None,
             'family':i['familyzh'] if 'familyzh' in i else None,
             'genus':i['genuszh'] if 'genuszh' in i else None,
-            'taxonGroup':i['taibif_taxonGroup'][0] if 'taibif_taxonGroup' in i else None,
+            'taxonGroup':group,
             'establishmentMeans':i['establishmentMeans'] if 'establishmentMeans' in i else None,
             'eventDate':i['taibif_event_date'] if 'taibif_event_date' in i else None,
             'year':i['taibif_year'][0] if 'taibif_year' in i else None,
@@ -936,7 +955,7 @@ def occurrence_api(request):
             'country':i['taibif_country'] if 'taibif_country' in i else None,
             'county':i['taibif_county'] if 'taibif_county' in i else None,
             'issue':','.join(issues) if issues else None,
-            'license':i['license'] if 'license' in i else None,
+            'license':i['license'] if 'license' in i else 'NA',
             # 'selfProduced':i['selfProduced'],
             'selfProduced':True,
             
@@ -1049,7 +1068,7 @@ def raw_occ_api(request):
         elif key == "taxonRank":
             fq_list.append(('fq', '{}:"{}"'.format('taxon_rank', values[0])))
         elif key == "taicolTaxonId":
-            fq_list.append(('fq', '{}:"{}"'.format('taicol_id', values[0])))
+            fq_list.append(('fq', '{}:"{}"'.format('taicol_taxon_id', values[0])))
         elif key == "taxonGroup":
             fq_list.append(('fq', '{}:"{}"'.format('taibif_taxonGroup', values[0])))
         elif key == "issue":
@@ -1129,6 +1148,9 @@ def raw_occ_api(request):
                 litype = 'Creative Commons Attribution Non Commercial (CC-BY-NC) 4.0 License'
             elif values[0] == 'CC0':
                 litype = 'Public Domain (CC0 1.0)'
+            elif values[0] == 'NA':
+                fq_list.append(('fq', '-license:[* TO *]'))
+                continue
             fq_list.append(('fq', '{}:"{}"'.format('license', litype)))
         elif key == 'gbif_dataset_uuid':
             if values[0]:
@@ -2207,3 +2229,12 @@ TaiBIF團隊 敬上
         conf_settings.TAIBIF_SERVICE_EMAIL,
         [request.GET["email"]],
         html_message=html)
+
+
+def taxonGroup_check(name):
+    group = ''
+    if name in ['Accipitriformes','Anseriformes','Apodiformes','Bucerotiformes','Caprimulgiformes','Charadriiformes','Ciconiiformes','Columbiformes','Coraciiformes','Cuculiformes','Falconiformes','Galliformes','Gaviiformes','Gruiformes','Passeriformes','Pelecaniformes','Phaethontiformes','Phoenicopteriformes','Piciformes','Podicipediformes','Procellariiformes','Psittaciformes','Strigiformes','Suliformes','Struthioniformes',]:
+        group = "Bird"
+    else:
+        group = name
+    return group
