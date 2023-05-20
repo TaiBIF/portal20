@@ -935,6 +935,7 @@ def occurrence_api(request):
             'basisOfRecord':i['taibif_basisOfRecord'] if 'taibif_basisOfRecord' in i else None,
             'modifiedDate':i['modified'] if 'modified' in i else None,
             'taibifModifiedDate':i['mod_date'][0],
+            'taibifDatasetID':i['taibifDatasetID'],
             'gbifDatasetID':i['gbif_dataset_uuid'] if 'gbif_dataset_uuid' in i else None,
             'datasetName':i['taibif_dataset_name_zh'] if 'taibif_dataset_name_zh' in i else None,
             'occurrenceStatus':i['taibif_occurrenceStatus'] if 'taibif_occurrenceStatus' in i else None,

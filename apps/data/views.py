@@ -87,7 +87,7 @@ def search_all(request):
 
         # dataset
         dataset_rows = []
-        for x in Dataset.objects.values('title', 'name','id').filter(Q(title__icontains=q)).exclude(status='PRIVATE').all()[:5]:
+        for x in Dataset.objects.values('title', 'name','id','taibif_dataset_id').filter(Q(title__icontains=q)).exclude(status='PRIVATE').all()[:5]:
             tmp_content = Dataset_description.objects.filter(dataset=x['id']).order_by('seq')
             if len(tmp_content) > 0:
                 tmp_content = Dataset_description.objects.filter(dataset=x['id']).order_by('seq')[0].description
@@ -96,7 +96,7 @@ def search_all(request):
             dataset_rows.append({
                 'title': x['title'] if x['title'] != '' else x['name'],
                 'content':tmp_content, 
-                'url': '/dataset/{}'.format(x['name'])
+                'url': '/dataset/{}'.format(x['taibif_dataset_id'])
             })
         count += len(dataset_rows)
 
@@ -369,10 +369,10 @@ def occurrence_view(request, taibif_id):
 
     return render(request, 'occurrence.html', context)
 
-def dataset_view(request, name):
-    
+def dataset_view(request, taibif_dataset_id):
+
     try:
-        dataset = Dataset.public_objects.get(name=name)
+        dataset = Dataset.public_objects.get(taibif_dataset_id=taibif_dataset_id)
         organization_name = None
         try :
             organization_name = DatasetOrganization.objects.get(id=dataset.organization_id).name 
@@ -419,7 +419,6 @@ def dataset_view(request, name):
         # count_sp = [item[4] for item in dataset_s]
         # SpNum = len(set(count_sp))
 
-        #dataset_o = RawDataOccurrence.objects.filter(taibif_dataset_name=name).values_list('family')
 
         
 
