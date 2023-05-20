@@ -3,6 +3,7 @@ from django.db.models import Q, Count
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
+import uuid
 
 DATA_MAPPING = {
     'country': {
@@ -70,7 +71,7 @@ class Dataset(models.Model):
         ('SAMPLINGEVENT', '調查活動'),
         # Meta
     )
-
+    taibif_dataset_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     title = models.CharField('title', max_length=300)
     name = models.CharField('name', max_length=128) # ipt shortname
     author = models.CharField('author', max_length=128)

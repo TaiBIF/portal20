@@ -51,7 +51,7 @@ urlpatterns = [
     path('species/search/', search_view, name='search-species'),
     # path('species/search/', search_view_species, name='search-species'),
     path('occurrence/<str:taibif_id>', occurrence_view, name='occurrence-detail'),
-    path('dataset/<name>/', dataset_view, name='dataset-detail'),
+    path('dataset/<uuid:taibif_dataset_id>/', dataset_view, name='dataset-detail'),
     path('publisher/<int:pk>/', publisher_view, name='publisher-detail'),
     path('species/<str:taicol_taxon_id>/', species_view, name='species-detail'),
     path('article/', include('apps.article.urls')),
