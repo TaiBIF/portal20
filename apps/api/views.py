@@ -188,6 +188,7 @@ def dataset_api(request):
     
     rows = [{
         'datasetName' : x['title'] if 'title' in x else None,
+        'taibifDatasetID' : str(x['taibif_dataset_id']) if 'taibif_dataset_id' in x else None,
         'publisherID' : x['organization_uuid'] if 'organization_uuid' in x and x['organization_uuid'] != None else None,
         'publisherName' : x['organization_name'] if 'organization_name' in x and x['organization_name'] != None else None,
         'author' : x['author'] if 'author' in x and x['mod_date'] != None else None,
