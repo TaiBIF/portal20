@@ -188,6 +188,7 @@ def dataset_api(request):
     
     rows = [{
         'datasetName' : x['title'] if 'title' in x else None,
+        'taibifDatasetID' : str(x['taibif_dataset_id']) if 'taibif_dataset_id' in x else None,
         'publisherID' : x['organization_uuid'] if 'organization_uuid' in x and x['organization_uuid'] != None else None,
         'publisherName' : x['organization_name'] if 'organization_name' in x and x['organization_name'] != None else None,
         'author' : x['author'] if 'author' in x and x['mod_date'] != None else None,
@@ -325,6 +326,10 @@ def for_basic_occ(request):
                 fq_list.append(('fq', '{}:{}'.format('taibif_basisOfRecord', values[0])))
         elif key == "datasetName":
             fq_list.append(('fq', '{}:{}'.format('taibif_dataset_name_zh', '*'+values[0]+'*')))
+            
+        elif key == "taibifDatasetID":
+            fq_list.append(('fq', '{}:{}'.format('taibifDatasetID', values[0])))
+        
         elif key == "taxonRank":
             fq_list.append(('fq', '{}:"{}"'.format('taxon_rank', values[0])))
                 
@@ -410,7 +415,6 @@ def for_basic_occ(request):
         if 'orderzh' in i :
             if i['orderzh'] in ['Accipitriformes','Anseriformes','Apodiformes','Bucerotiformes','Caprimulgiformes','Charadriiformes','Ciconiiformes','Columbiformes','Coraciiformes','Cuculiformes','Falconiformes','Galliformes','Gaviiformes','Gruiformes','Passeriformes','Pelecaniformes','Phaethontiformes','Phoenicopteriformes','Piciformes','Podicipediformes','Procellariiformes','Psittaciformes','Strigiformes','Suliformes','Struthioniformes',]:
                 group = 'Birds'
-        
         res_list.append({
             'occurrenceID':i['occurrenceID'] if 'occurrenceID' in i else None,
             'taibifOccurrenceID':i['taibif_occ_id'],
@@ -420,6 +424,7 @@ def for_basic_occ(request):
             'datasetName':i['taibif_dataset_name_zh'] if 'taibif_dataset_name_zh' in i else None,
             'occurrenceStatus':i['taibif_occurrenceStatus'] if 'taibif_occurrenceStatus' in i else None,
             'scientificName': i['taibif_scientificname'] if 'taibif_scientificname' in i else None,
+            'taibifDatasetID': i['taibifDatasetID'][0],
             'taxonRank':i['taxon_rank'] if 'taxon_rank' in i else None,
             'taicolTaxonID': i['taibif_accepted_namecode']  if backbone == "TaiCOL" else  None,
             'kingdom':i['kingdomzh'] if 'kingdomzh' in i else None,
@@ -879,7 +884,9 @@ def occurrence_api(request):
                 fq_list.append(('fq', '-license:[* TO *]'))
                 continue
             fq_list.append(('fq', '{}:"{}"'.format('license', litype)))
-                
+        elif key == "taibifDatasetID":
+            fq_list.append(('fq', '{}:{}'.format('taibifDatasetID', values[0])))
+
         elif key == 'selfProduced':
             if values[0] == 'TRUE':
                 continue
@@ -935,7 +942,7 @@ def occurrence_api(request):
             'basisOfRecord':i['taibif_basisOfRecord'] if 'taibif_basisOfRecord' in i else None,
             'modifiedDate':i['modified'] if 'modified' in i else None,
             'taibifModifiedDate':i['mod_date'][0],
-            'taibifDatasetID':i['taibifDatasetID'],
+            'taibifDatasetID': i['taibifDatasetID'][0],
             'gbifDatasetID':i['gbif_dataset_uuid'] if 'gbif_dataset_uuid' in i else None,
             'datasetName':i['taibif_dataset_name_zh'] if 'taibif_dataset_name_zh' in i else None,
             'occurrenceStatus':i['taibif_occurrenceStatus'] if 'taibif_occurrenceStatus' in i else None,
@@ -1093,7 +1100,10 @@ def raw_occ_api(request):
                 fq_list.append(('fq', '{}:"{}"'.format('RecordedDateInvalid', 'true')))
             if str(values[0]) == 'Coordinate Invalid':
                 fq_list.append(('fq', '{}:"{}"'.format('CoordinateInvalid', 'true')))
-                
+        
+        elif key == "taibifDatasetID":
+            fq_list.append(('fq', '{}:{}'.format('taibifDatasetID', values[0])))
+ 
         elif key == "typeStatus":
             fq_list.append(('fq', '{}:{} -typeStatus:*voucher*'.format('typeStatus', '*'+values[0]+'*')))
         # range query

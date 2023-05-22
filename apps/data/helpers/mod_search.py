@@ -301,6 +301,9 @@ class DatasetSearch(SuperSearch):
             if key == 'doi':
                 query = query.filter(doi_contains=values[0])
                 
+            if key == 'taibifDatasetID':
+                query = query.filter(taibif_dataset_id=values[0])
+
             if key == 'core':
                 v = values[0] # only get one
                 if not v:
