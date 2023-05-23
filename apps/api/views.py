@@ -1510,7 +1510,6 @@ def search_dataset(request):
             'count': x['count'],
         } for x in publisher_list]
         publisher_rows = sorted(publisher_rows, key=lambda d: d['count'], reverse=True) 
-        print("publisher_rows ==== ", publisher_rows)
 
 
        
