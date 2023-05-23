@@ -658,6 +658,8 @@
   <field name="taibif_day" type="plongs"/>
   <field name="taibif_error" type="string"/>
   <field name="taibif_event_date" type="string"/>
+  <field name="taibif_dataset_id" type="string"/>
+  <field name="taibifDatasetID" type="string"/>
   <field name="taibif_geodeticDatum" type="string"/>
   <field name="taibif_latitude" type="pdoubles"/>
   <field name="taibif_longitude" type="pdoubles"/>

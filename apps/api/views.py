@@ -283,7 +283,7 @@ def for_basic_occ(request):
     # rows, offset, taibifModDate
     query_list = []
     solr_error = ''
-    rows=10
+    rows=100
     offset=0
     fq_query=''
     fq_list = []
@@ -325,7 +325,7 @@ def for_basic_occ(request):
             else: 
                 fq_list.append(('fq', '{}:{}'.format('taibif_basisOfRecord', values[0])))
         elif key == "datasetName":
-            fq_list.append(('fq', '{}:{}'.format('taibif_dataset_name_zh', '*'+values[0]+'*')))
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_dataset_name_zh', values[0])))
             
         elif key == "taibifDatasetID":
             fq_list.append(('fq', '{}:{}'.format('taibifDatasetID', values[0])))
@@ -366,17 +366,23 @@ def for_basic_occ(request):
             elif values[0] == 'CC0':
                 litype = 'Public Domain (CC0 1.0)'
             elif values[0] == 'NA':
-                fq_list.append(('fq', '-license:[* TO *]'))
-                continue
+                litype = 'unknown'
+                # fq_list.append(('fq', '-license:[* TO *]'))
+                # continue
             fq_list.append(('fq', '{}:"{}"'.format('license', litype)))
         
-        # TODO
         elif key == 'selfProduced':
-            if values[0] == 'TRUE':
-                continue
-            # else:
-                # fq_list.append(('fq', '{}:{}'.format('selfProduced', 'FALSE')))
+            fq_list.append(('fq', '{}:{}'.format('selfProduced', values[0])))
+        else:
+            return JsonResponse({
+                'results': 0,
+                'query_column': key,
+                'error_msg':"the column can't be search in this mode.",
+            })
     
+    if "rows" not in generate_list:
+        generate_list.append(("rows", 100))
+        
     solr = SolrQuery('taibif_occurrence')
     fq_query = urllib.parse.urlencode(fq_list)
     q_query = urllib.parse.urlencode(q_list)
@@ -397,14 +403,22 @@ def for_basic_occ(request):
         solr_error = str(e)
     
     if not solr.solr_response['response']['docs']: 
-        return JsonResponse({
-            'results': 0,
-            'query_list': fq_list,
-            'error_url': solr.solr_url,
-            'error_msg': solr_error,
-        })
-   
-   
+        if solr_error:
+            return JsonResponse({
+                'results': 0,
+                'query_list': fq_list,
+                'error_url': solr.solr_url,
+                'error_msg': solr_error,
+            })    
+        
+        if solr.solr_response['response']['numFound'] == 0:
+            res={}
+            res_list=[] 
+            res['count'] = solr.solr_response['response']['numFound']
+            res['offset'] = int(offset)
+            res['rows'] = int(rows)
+            res['results'] = res_list
+            return JsonResponse(res)
    
     res={}
     res_list=[] 
@@ -424,7 +438,7 @@ def for_basic_occ(request):
             'datasetName':i['taibif_dataset_name_zh'] if 'taibif_dataset_name_zh' in i else None,
             'occurrenceStatus':i['taibif_occurrenceStatus'] if 'taibif_occurrenceStatus' in i else None,
             'scientificName': i['taibif_scientificname'] if 'taibif_scientificname' in i else None,
-            'taibifDatasetID': i['taibifDatasetID'][0],
+            'taibifDatasetID': i['taibifDatasetID'],
             'taxonRank':i['taxon_rank'] if 'taxon_rank' in i else None,
             'taicolTaxonID': i['taibif_accepted_namecode']  if backbone == "TaiCOL" else  None,
             'kingdom':i['kingdomzh'] if 'kingdomzh' in i else None,
@@ -442,9 +456,8 @@ def for_basic_occ(request):
             'coordinateUncertaintyInMeters':i['taibif_coordinateUncertaintyInMeters'][0] if 'taibif_coordinateUncertaintyInMeters' in i else None,
             'country':i['taibif_country'] if 'taibif_country' in i else None,
             'county':i['taibif_county'] if 'taibif_county' in i else None,
-            'license':i['license'] if 'license' in i else 'NA',
-            'selfProduced':True,
-            # 'selfProduced':i['selfProduced'],
+            'license':i['license'] if 'license' in i and i['license']!= 'unknown' else 'NA',
+            'selfProduced':i['selfProduced'][0],
             
             'taibifCreatedDate':i['mod_date'][0],
             'datasetShortName':i['taibif_dataset_name'] if 'taibif_dataset_name' in i else None,
@@ -473,6 +486,7 @@ def for_basic_occ(request):
             
         })
 
+    res['url'] = solr.solr_url
     res['count'] = solr.solr_response['response']['numFound']
     res['offset'] = int(offset)
     res['rows'] = int(rows)
@@ -720,7 +734,7 @@ def taxon_tree_node(request, taicol_taxon_id):
 
 def occurrence_api(request):
     solr_error = ''
-    rows=10
+    rows=100
     offset=0
     fq_query=''
     fq_list = []
@@ -881,16 +895,25 @@ def occurrence_api(request):
             elif values[0] == 'CC0':
                 litype = 'Public Domain (CC0 1.0)'
             elif values[0] == 'NA':
-                fq_list.append(('fq', '-license:[* TO *]'))
-                continue
+                litype = 'unknown'
+                # fq_list.append(('fq', '-license:[* TO *]'))
+                # continue
             fq_list.append(('fq', '{}:"{}"'.format('license', litype)))
         elif key == "taibifDatasetID":
             fq_list.append(('fq', '{}:{}'.format('taibifDatasetID', values[0])))
 
         elif key == 'selfProduced':
-            if values[0] == 'TRUE':
-                continue
-            
+            fq_list.append(('fq', '{}:{}'.format('selfProduced', values[0])))
+        else:
+            return JsonResponse({
+                'results': 0,
+                'query_column': key,
+                'error_msg':"the column can't be search in this mode.",
+            })
+    
+    if "rows" not in generate_list:
+        generate_list.append(("rows", 100))
+        
     solr = SolrQuery('taibif_occurrence')
     fq_query = urllib.parse.urlencode(fq_list)
     q_query = urllib.parse.urlencode(q_list)
@@ -912,12 +935,22 @@ def occurrence_api(request):
         solr_error = str(e)
         
     if not solr.solr_response['response']['docs']: 
-        return JsonResponse({
-            'results': 0,
-            'query_list': fq_list,
-            'error_url': solr.solr_url,
-            'error_msg': solr_error,
-        })
+        if solr_error:
+            return JsonResponse({
+                'results': 0,
+                'query_list': fq_list,
+                'error_url': solr.solr_url,
+                'error_msg': solr_error,
+            })    
+        
+        if solr.solr_response['response']['numFound'] == 0:
+            res={}
+            res_list=[] 
+            res['count'] = solr.solr_response['response']['numFound']
+            res['offset'] = int(offset)
+            res['rows'] = int(rows)
+            res['results'] = res_list
+            return JsonResponse(res)
    
     res={}
     res_list=[] 
@@ -942,7 +975,7 @@ def occurrence_api(request):
             'basisOfRecord':i['taibif_basisOfRecord'] if 'taibif_basisOfRecord' in i else None,
             'modifiedDate':i['modified'] if 'modified' in i else None,
             'taibifModifiedDate':i['mod_date'][0],
-            'taibifDatasetID': i['taibifDatasetID'][0],
+            'taibifDatasetID': i['taibifDatasetID'],
             'gbifDatasetID':i['gbif_dataset_uuid'] if 'gbif_dataset_uuid' in i else None,
             'datasetName':i['taibif_dataset_name_zh'] if 'taibif_dataset_name_zh' in i else None,
             'occurrenceStatus':i['taibif_occurrenceStatus'] if 'taibif_occurrenceStatus' in i else None,
@@ -966,9 +999,8 @@ def occurrence_api(request):
             'country':i['taibif_country'] if 'taibif_country' in i else None,
             'county':i['taibif_county'] if 'taibif_county' in i else None,
             'issue':','.join(issues) if issues else None,
-            'license':i['license'] if 'license' in i else 'NA',
-            # 'selfProduced':i['selfProduced'],
-            'selfProduced':True,
+            'license':i['license'] if 'license' in i and i['license']!= 'unknown' else 'NA',
+            'selfProduced':i['selfProduced'][0],
             
             'taibifCreatedDate':i['mod_date'][0],
             'datasetShortName':i['taibif_dataset_name'] if 'taibif_dataset_name' in i else None,
@@ -996,6 +1028,7 @@ def occurrence_api(request):
             'mediaLicense':mediaLicense,
         })
 
+    res['url'] = solr.solr_url
     res['count'] = solr.solr_response['response']['numFound']
     res['offset'] = int(offset)
     res['rows'] = int(rows)
@@ -1006,7 +1039,7 @@ def occurrence_api(request):
 
 def raw_occ_api(request):
     solr_error = ''
-    rows=10
+    rows=100
     offset=0
     fq_query=''
     fq_list = []
@@ -1170,17 +1203,26 @@ def raw_occ_api(request):
             elif values[0] == 'CC0':
                 litype = 'Public Domain (CC0 1.0)'
             elif values[0] == 'NA':
-                fq_list.append(('fq', '-license:[* TO *]'))
-                continue
+                litype = 'unknown'
+                # fq_list.append(('fq', '-license:[* TO *]'))
+                # continue
             fq_list.append(('fq', '{}:"{}"'.format('license', litype)))
         
         elif key == 'establishmentMeans':
             fq_list.append(('fq', '{}:{}'.format('establishmentMeans', values[0])))
 
         elif key == 'selfProduced':
-            if values[0] == 'TRUE':
-                continue
+            fq_list.append(('fq', '{}:{}'.format('selfProduced', values[0])))
+        else:
+            return JsonResponse({
+                'results': 0,
+                'query_column': key,
+                'error_msg':"the column can't be search in this mode.",
+            })
 
+    if "rows" not in generate_list:
+        generate_list.append(("rows", 100))
+        
     solr = SolrQuery('taibif_occurrence')
     fq_query = urllib.parse.urlencode(fq_list)
     q_query = urllib.parse.urlencode(q_list)
@@ -1197,7 +1239,26 @@ def raw_occ_api(request):
     resp =urllib.request.urlopen(solr.solr_url)
     resp_dict = resp.read().decode()
     solr.solr_response = json.loads(resp_dict)
+    if not solr.solr_response['response']['docs']: 
+        if solr_error:
+            return JsonResponse({
+                'results': 0,
+                'query_list': fq_list,
+                'error_url': solr.solr_url,
+                'error_msg': solr_error,
+            })    
+        
+        if solr.solr_response['response']['numFound'] == 0:
+            res={}
+            res_list=[] 
+            res['count'] = solr.solr_response['response']['numFound']
+            res['offset'] = int(offset)
+            res['rows'] = int(rows)
+            res['results'] = res_list
+            return JsonResponse(res)
     return JsonResponse(solr.solr_response)
+
+
 
 # DEPRICATED
 #@json_ret
