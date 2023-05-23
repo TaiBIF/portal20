@@ -366,8 +366,9 @@ def for_basic_occ(request):
             elif values[0] == 'CC0':
                 litype = 'Public Domain (CC0 1.0)'
             elif values[0] == 'NA':
-                fq_list.append(('fq', '-license:[* TO *]'))
-                continue
+                litype = 'unknown'
+                # fq_list.append(('fq', '-license:[* TO *]'))
+                # continue
             fq_list.append(('fq', '{}:"{}"'.format('license', litype)))
         
         elif key == 'selfProduced':
@@ -455,9 +456,8 @@ def for_basic_occ(request):
             'coordinateUncertaintyInMeters':i['taibif_coordinateUncertaintyInMeters'][0] if 'taibif_coordinateUncertaintyInMeters' in i else None,
             'country':i['taibif_country'] if 'taibif_country' in i else None,
             'county':i['taibif_county'] if 'taibif_county' in i else None,
-            'license':i['license'] if 'license' in i else 'NA',
-            'selfProduced':True,
-            # 'selfProduced':i['selfProduced'],
+            'license':i['license'] if 'license' in i and i['license']!= 'unknown' else 'NA',
+            'selfProduced':i['selfProduced'][0],
             
             'taibifCreatedDate':i['mod_date'][0],
             'datasetShortName':i['taibif_dataset_name'] if 'taibif_dataset_name' in i else None,
@@ -895,8 +895,9 @@ def occurrence_api(request):
             elif values[0] == 'CC0':
                 litype = 'Public Domain (CC0 1.0)'
             elif values[0] == 'NA':
-                fq_list.append(('fq', '-license:[* TO *]'))
-                continue
+                litype = 'unknown'
+                # fq_list.append(('fq', '-license:[* TO *]'))
+                # continue
             fq_list.append(('fq', '{}:"{}"'.format('license', litype)))
         elif key == "taibifDatasetID":
             fq_list.append(('fq', '{}:{}'.format('taibifDatasetID', values[0])))
@@ -998,9 +999,8 @@ def occurrence_api(request):
             'country':i['taibif_country'] if 'taibif_country' in i else None,
             'county':i['taibif_county'] if 'taibif_county' in i else None,
             'issue':','.join(issues) if issues else None,
-            'license':i['license'] if 'license' in i else 'NA',
-            # 'selfProduced':i['selfProduced'],
-            'selfProduced':True,
+            'license':i['license'] if 'license' in i and i['license']!= 'unknown' else 'NA',
+            'selfProduced':i['selfProduced'][0],
             
             'taibifCreatedDate':i['mod_date'][0],
             'datasetShortName':i['taibif_dataset_name'] if 'taibif_dataset_name' in i else None,
@@ -1203,8 +1203,9 @@ def raw_occ_api(request):
             elif values[0] == 'CC0':
                 litype = 'Public Domain (CC0 1.0)'
             elif values[0] == 'NA':
-                fq_list.append(('fq', '-license:[* TO *]'))
-                continue
+                litype = 'unknown'
+                # fq_list.append(('fq', '-license:[* TO *]'))
+                # continue
             fq_list.append(('fq', '{}:"{}"'.format('license', litype)))
         
         elif key == 'establishmentMeans':
