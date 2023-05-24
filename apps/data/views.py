@@ -182,7 +182,7 @@ def occurrence_view(request, taibif_id):
     # intro['order_key']=result[0].get('order_key')
     # intro['class_key']=result[0].get('class_key')
     # intro['genus_key']=result[0].get('genus_key')
-    intro['dataset']=result[0].get('taibif_dataset_name')
+    intro['dataset']=result[0].get('taibifDatasetID')
     issues = []
     if result[0].get('TaxonMatchNone')[0]:
         issues.append("Taxon Match None")
