@@ -105,7 +105,7 @@ export default function OccurrenceSearch(props) {
         <td style={{fontStyle: "italic"}}>{ row.taibif_scientificname }</td>
         <td>{ row.eventDate }</td>
         <td>{ countryOrLocality }</td>
-        <td><a href={"/dataset/"+row.taibif_dataset_name+"/"}>{ row.taibif_dataset_name_zh }</a></td>
+        <td><a href={"/dataset/"+row.taibif_dataset_id+"/"}>{ row.taibif_dataset_name_zh }</a></td>
         <td>{ bor }</td>
         <td>{ row.kingdomzh }</td>
         <td>{ row.phylumzh }</td>

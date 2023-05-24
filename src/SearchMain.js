@@ -82,7 +82,7 @@ function DatasetResult(props) {
   }
   const rows = props.data.results.map((row, index) => {
     const num_record = row.num_record.toLocaleString('en');
-    const link = `/dataset/${row.name}/`;
+    const link = `/dataset/${row.taibif_dataset_id}/`;
     // TODO
     // before <span> 紀錄數量
     //  <span className="listbox-inner-tag"><a href="#">引用次數：48</a></span>
