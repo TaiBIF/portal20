@@ -159,7 +159,7 @@ class DatasetTable extends React.Component {
           pubMemo = <div><small>{pubMemo}</small></div>;
         }
         
-        const title = (v.status === 'PUBLIC') ? <a href={"/dataset/"+v.name}>{v.title}</a>:v.title;
+        const title = (v.status === 'PUBLIC') ? <a href={"/dataset/"+v.taibif_dataset_id}>{v.title}</a>:v.title;
 
         return (<tr key={i}>
                 <td>{data.offset+i+1}</td>
