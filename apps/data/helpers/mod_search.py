@@ -343,6 +343,7 @@ class DatasetSearch(SuperSearch):
             'status_display': x.get_status_display(),
             'status': x.status,
             'guid': x.guid,
+            'taibif_dataset_id': str(x.taibif_dataset_id),
         }
 
 class PublisherSearch(SuperSearch):
