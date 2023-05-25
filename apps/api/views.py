@@ -934,7 +934,6 @@ def occurrence_api(request):
     except urllib.request.HTTPError as e:
         solr_error = str(e)
     
-    print("solr ==== ",solr)
     if not solr.solr_response['response']['docs']: 
         if solr_error:
             return JsonResponse({
