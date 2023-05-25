@@ -334,7 +334,7 @@ def for_basic_occ(request):
             fq_list.append(('fq', '{}:"{}"'.format('taxon_rank', values[0])))
                 
         elif key == "scientificName":
-            fq_list.append(('fq', '{}:"{}"'.format('taibif_scientificname', values[0])))
+            fq_list.append(('fq', '{}:{}'.format('taibif_scientificname', values[0])))
         elif key == "typeStatus":
             fq_list.append(('fq', '{}:{} -typeStatus:*voucher*'.format('typeStatus', '*'+values[0]+'*')))
             
@@ -933,7 +933,7 @@ def occurrence_api(request):
         solr.solr_response = json.loads(resp_dict)
     except urllib.request.HTTPError as e:
         solr_error = str(e)
-        
+    
     if not solr.solr_response['response']['docs']: 
         if solr_error:
             return JsonResponse({
