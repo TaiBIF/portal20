@@ -287,10 +287,8 @@ def for_basic_occ(request):
     offset=0
     fq_query=''
     fq_list = []
-    
     generate_list = []
     q_list = []
-    
     if request.GET.get('q'): 
         q_list.append(('q', request.GET.get('q')))
     else:
@@ -325,10 +323,10 @@ def for_basic_occ(request):
             else: 
                 fq_list.append(('fq', '{}:{}'.format('taibif_basisOfRecord', values[0])))
         elif key == "datasetName":
-            fq_list.append(('fq', '{}:"{}"'.format('taibif_dataset_name_zh', values[0])))
+            fq_list.append(('fq', '{}:{}'.format('taibif_dataset_name_zh', values[0])))
             
         elif key == "taibifDatasetID":
-            fq_list.append(('fq', '{}:{}'.format('taibifDatasetID', values[0])))
+            fq_list.append(('fq', '{}:"{}"'.format('taibifDatasetID', values[0])))
         
         elif key == "taxonRank":
             fq_list.append(('fq', '{}:"{}"'.format('taxon_rank', values[0])))
@@ -781,11 +779,11 @@ def occurrence_api(request):
             else: 
                 fq_list.append(('fq', '{}:{}'.format('taibif_basisOfRecord', values[0])))
         elif key == "datasetName":
-            fq_list.append(('fq', '{}:{}'.format('taibif_dataset_name_zh', '*'+values[0]+'*')))
+            fq_list.append(('fq', '{}:{}'.format('taibif_dataset_name_zh', values[0])))
         elif key == "occurrenceStatus":
             fq_list.append(('fq', '{}:"{}"'.format('taibif_occurrenceStatus', values[0])))
         elif key == "scientificName":
-            fq_list.append(('fq', '{}:"{}"'.format('taibif_scientificname', values[0])))
+            fq_list.append(('fq', '{}:{}'.format('taibif_scientificname', values[0])))
         elif key == "taxonRank":
             fq_list.append(('fq', '{}:"{}"'.format('taxon_rank', values[0])))
         elif key == "taicolTaxonId":
@@ -900,7 +898,7 @@ def occurrence_api(request):
                 # continue
             fq_list.append(('fq', '{}:"{}"'.format('license', litype)))
         elif key == "taibifDatasetID":
-            fq_list.append(('fq', '{}:{}'.format('taibifDatasetID', values[0])))
+            fq_list.append(('fq', '{}:"{}"'.format('taibifDatasetID', values[0])))
 
         elif key == 'selfProduced':
             fq_list.append(('fq', '{}:{}'.format('selfProduced', values[0])))
@@ -1086,11 +1084,11 @@ def raw_occ_api(request):
             else: 
                 fq_list.append(('fq', '{}:{}'.format('taibif_basisOfRecord', values[0])))
         elif key == "datasetName":
-            fq_list.append(('fq', '{}:{}'.format('taibif_dataset_name_zh', '*'+values[0]+'*')))
+            fq_list.append(('fq', '{}:{}'.format('taibif_dataset_name_zh', values[0])))
         elif key == "occurrenceStatus":
             fq_list.append(('fq', '{}:"{}"'.format('taibif_occurrenceStatus', values[0])))
         elif key == "scientificName":
-            fq_list.append(('fq', '{}:"{}"'.format('taibif_scientificname', values[0])))
+            fq_list.append(('fq', '{}:{}'.format('taibif_scientificname', values[0])))
         elif key == "taxonRank":
             fq_list.append(('fq', '{}:"{}"'.format('taxon_rank', values[0])))
         elif key == "taicolTaxonId":
@@ -1135,7 +1133,7 @@ def raw_occ_api(request):
                 fq_list.append(('fq', '{}:"{}"'.format('CoordinateInvalid', 'true')))
         
         elif key == "taibifDatasetID":
-            fq_list.append(('fq', '{}:{}'.format('taibifDatasetID', values[0])))
+            fq_list.append(('fq', '{}:"{}"'.format('taibifDatasetID', values[0])))
  
         elif key == "typeStatus":
             fq_list.append(('fq', '{}:{} -typeStatus:*voucher*'.format('typeStatus', '*'+values[0]+'*')))
@@ -1484,6 +1482,7 @@ def search_dataset(request):
     ds_search = DatasetSearch(list(request.GET.lists()))
     # menu item
     ds_menu = DatasetSearch([]) 
+    print("ds_menu=== ",ds_menu.query.values('organization','organization_name').distinct('organization'))
 
     if has_menu:
         # publisher 
@@ -1499,7 +1498,6 @@ def search_dataset(request):
             .exclude(organization_name__isnull=True)\
             .annotate(count=Count('organization'))\
             .order_by('-count')
-        
         for i in publisher_list:
             if publisher_count.filter(organization=i['organization']):
                 i['count'] = publisher_count.filter(organization=i['organization'])[0]['count']    
