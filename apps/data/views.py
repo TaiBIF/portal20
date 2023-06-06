@@ -334,7 +334,7 @@ def occurrence_view(request, taibif_id):
     location['decimalLatitude']={'name_zh':'十進位緯度','value':[result[0].get('decimalLatitude'),lat_d]}
     location['decimalLongitude']={'name_zh':'十進位經度','value':[result[0].get('decimalLongitude'),lon_d]}
     location['geodeticDatum']={'name_zh':'geodeticDatum','value':[result[0].get('geodeticDatum'),result[0].get('taibif_geodeticDatum')]}
-    location['coordinateUncertaintyInMeters']={'name_zh':'座標誤差(公尺)','value':[result[0].get('coordinateUncertaintyInMeters'),result[0].get('taibif_coordinateUncertaintyInMeters')[0]]}
+    location['coordinateUncertaintyInMeters']={'name_zh':'座標誤差(公尺)','value':[result[0].get('coordinateUncertaintyInMeters') if result[0].get('coordinateUncertaintyInMeters') != None else '',result[0].get('taibif_coordinateUncertaintyInMeters')[0] if result[0].get('taibif_coordinateUncertaintyInMeters') != None else '']}
     location['coordinatePrecision']={'name_zh':'座標精準度','value':[result[0].get('coordinatePrecision'),result[0].get('taibif_coordinatePrecision')]}
     location['pointRadiusSpatialFit']={'name_zh':'pointRadiusSpatialFit','value':[result[0].get('pointRadiusSpatialFit'),result[0].get('taibif_pointRadiusSpatialFit')]}
     location['verbatimCoordinates']={'name_zh':'字面上座標','value':[result[0].get('verbatimCoordinates'),result[0].get('verbatimCoordinates')]}
