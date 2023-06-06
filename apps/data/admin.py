@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Taxon, TaxonTree, Dataset
+from .models import Taxon, Dataset
 
 class DatasetAdmin(admin.ModelAdmin):
     model = Dataset
@@ -13,18 +13,12 @@ class DatasetAdmin(admin.ModelAdmin):
 
 class TaxonAdmin(admin.ModelAdmin):
     model = Taxon
-    list_filter = ('rank','tree')
-    list_display = ('name', 'name_zh', 'rank', 'parent', 'count', 'tree')
-    fields = (('parent','parent_id'), 'name', 'name_zh', 'rank', 'count', 'tree')
+    # list_filter = ('rank')
+    list_display = ('name', 'name_zh', 'rank', 'parent', 'count')
+    fields = (('parent','parent_id'), 'name', 'name_zh', 'rank', 'count')
     readonly_fields = ('count', 'parent', 'parent_id')
     search_fields = ('name', 'name_zh')
 
-class TaxonTreeAdmin(admin.ModelAdmin):
-    model = TaxonTree
-    list_display = ('name',)
-    fields = ('name', 'rank_map')
-
 
 admin.site.register(Taxon, TaxonAdmin)
-admin.site.register(TaxonTree, TaxonTreeAdmin)
 admin.site.register(Dataset, DatasetAdmin)
