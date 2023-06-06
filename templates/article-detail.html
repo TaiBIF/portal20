@@ -76,10 +76,10 @@
 
 
     <!--Post images 位置-->
+    {% if imagesList %}
       <div id="carousel-postImages" class="carousel slide" data-ride="carousel">
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
-          {% if imagesList %}
             {% for image in imagesList %}
               <div class="head-carousel-wrapper item {% if forloop.counter == 1 %} active{% endif %}">
                 <img src="/media/{{ image.images }}">
@@ -88,7 +88,6 @@
                 </div>
               </div>
             {% endfor %}
-          {% endif %}
         </div>
         
         <!-- Controls -->
@@ -102,7 +101,7 @@
           <span class="sr-only">Next</span>
         </a>
     </div>
-
+    {% endif %}
     {% comment %}
     <!-- attachment info begin -->
     <ul class="article-attachment-wrapper">
