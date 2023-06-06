@@ -78,8 +78,8 @@
 }
 .taxon-tree-node-item:before {
     position: absolute;
-    left: 0px;
-    top: -2px;
+    /* left: 0px; */
+    /* top: -2px; */
     content: '';
     display: block;
     height: 20px;
