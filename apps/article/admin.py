@@ -17,6 +17,7 @@ class ArticleAdmin(admin.ModelAdmin):
         'cover',
         'cover_license_text',
         'title', 'category',
+        'summary',
         'content',
         'is_content_markdown',
         'tags',
