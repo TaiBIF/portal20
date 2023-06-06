@@ -105,7 +105,7 @@
     <!-- story title begin -->
     <div class="article-head-wrapper">
       <h1 class="heading-lg">
-        <i>{{ taxon.name }} </i> {% if taxon.name_zh %} {{ taxon.name_zh }}{% endif %} {% if not taxon.is_accepted_name %}<small><span class="label label-warning">同物異名</span></small>{% endif %}
+        {{ taxon.name|safe }}{% if taxon.name_zh %} {{ taxon.name_zh }}{% endif %} {% if not taxon.is_accepted_name %}<small><span class="label label-warning">同物異名</span></small>{% endif %}
       </h1>
     </div>
     <!-- story title end -->
@@ -118,7 +118,7 @@
       <!-- <h4 class="heading-md-ul">學名</h4> -->
       <ul class="scientific-name-wrapper">
         {% for i in taxon.rank_list %}
-        <li>{{ i.scientific_name_full }} {% if i.name_zh %} {{ i.name_zh }}{% endif %}</li>
+        <li><a href={{ i.scientific_name_full.url }} >{{ i.scientific_name_full.formatted_name|safe }} {% if i.name_zh %} {{ i.name_zh }}{% endif %}</a></li>
         {% endfor %}
       </ul>
       <!-- 學名 end -->
@@ -139,7 +139,7 @@
 
       {% endif %}
       <!-- TaiCoL編號 begin -->
-      <p align="right"><a href="{{ taxon.taicol_namecode_link }}"><span class="myicon icon-link"></span>來源：TaiCoL</a></p>
+      <p align="right"><a href="{{ taxon.taicol_namecode_link }}"><span class="myicon icon-link"></span>來源：TaiCOL</a></p>
       <!-- TaiCoL編號 end -->
 
       <!-- 地理分佈 begin -->
@@ -171,7 +171,7 @@
             {% for set in dataset %}
             
             <tr>
-              <td><a href="{% url 'dataset-detail' name=set.name %}">{{ set.name_zh }}</a></td>
+              <td><a href="{% url 'dataset-detail' taibif_dataset_id=set.taibifDatasetID %}">{{ set.name_zh }}</a></td>
               <td><a href="{% url 'search-occurrence' cat='search'  %}?path={{ taxon.taicol_taxon_id }}&dataset={{set.name}}">{{ set.count|intcomma:False }}</td>
               <!-- <td> -->
 <!-- 占比 -->

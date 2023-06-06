@@ -67,6 +67,7 @@ class Article(models.Model):
         ('Y', '是'),
     )
     title = models.CharField('標題', max_length=500)
+    summary = models.TextField('摘要', blank=True)
     content = models.TextField('內文', blank=True, help_text='新文章預設都是 markdown 顯示')
     slug = models.SlugField(unique=True, blank=True, max_length=500)
     created = models.DateTimeField('發布時間', default=timezone.now)

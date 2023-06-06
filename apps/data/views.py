@@ -155,7 +155,7 @@ def search_all(request):
 
 
 def occurrence_view(request, taibif_id):
-    # occurrence = get_object_or_404(RawDataOccurrence, taibif_id=taibif_id)
+
     solr = SolrQuery('taibif_occurrence')
     req = solr.get_occurrence(taibif_id)
     result = req['results']
@@ -167,7 +167,7 @@ def occurrence_view(request, taibif_id):
     taxon = {}
     location = {}
     other = {}
-    # taxon_error = result[0].get('taxon_error')[0]#'無吻合的分類群'
+
     lat = 0
     lon = 0
     # intro 
@@ -176,19 +176,14 @@ def occurrence_view(request, taibif_id):
     intro['publisher']=result[0].get('publisher')
     intro['basisOfRecord']=result[0].get('basisOfRecord')
     intro['scientificName']=result[0].get('scientificName')
-    # intro['species_key']=result[0].get('species_key')
-    # intro['kingdom_key']=result[0].get('kingdom_key')
-    # intro['phylum_key']=result[0].get('phylum_key')
-    # intro['order_key']=result[0].get('order_key')
-    # intro['class_key']=result[0].get('class_key')
-    # intro['genus_key']=result[0].get('genus_key')
+    
     intro['dataset']=result[0].get('taibifDatasetID')
     issues = []
-    if result[0].get('TaxonMatchNone')[0]:
+    if hasattr(result[0],'TaxonMatchNone') and result[0].get('TaxonMatchNone')[0]:
         issues.append("Taxon Match None")
-    if result[0].get('CoordinateInvalid')[0]:
+    if hasattr(result[0],'CoordinateInvalid') and result[0].get('CoordinateInvalid')[0]:
         issues.append("Coordinate Invalid")
-    if result[0].get('RecordedDateInvalid')[0]:
+    if hasattr(result[0],'RecordedDateInvalid') and result[0].get('RecordedDateInvalid')[0] :
         issues.append("Recorded Date Invalid")
     intro['issues']=issues
     
@@ -270,9 +265,10 @@ def occurrence_view(request, taibif_id):
     except:
         acceptedNameUsageID = result[0].get('acceptedNameUsageID')
 
-    taxon['taxonID']={'name_zh':'分類ID','value':[result[0].get('taxonID'),result[0].get('taibif_taxonID')]}
-    taxon['scientificNameID']={'name_zh':'學名ID','value':[result[0].get('scientificNameID'),result[0].get('taibif_namecode') if result[0].get('taibif_namecode') != None else result[0].get('taibif_namecode')]}
-    taxon['acceptedNameUsageID']={'name_zh':'有效學名ID','value':[acceptedNameUsageID,result[0].get('taibif_accepted_namecode') if result[0].get('taibif_accepted_namecode') != None else result[0].get('taibif_accepted_namecode')]}
+    taxon['taxonID']={'name_zh':'分類編碼','value':[result[0].get('taxonID'),result[0].get('taibif_taxonID')]}
+    taxon['scientificNameID']={'name_zh':'學名編碼','value':[result[0].get('scientificNameID'),result[0].get('taibif_namecode') if result[0].get('taibif_namecode') != None else '']}
+    taxon['acceptedNameUsageID']={'name_zh':'有效學名編碼','value':[acceptedNameUsageID,result[0].get('taibif_accepted_namecode') if result[0].get('taibif_accepted_namecode') != None else '']}
+    taxon['scientificNameTaxonID']={'name_zh':'物種編碼','value':[result[0].get('taibif_taxon_id'),result[0].get('taibif_taxon_id') if result[0].get('taicol_taxon_id') != None else '']}
     taxon['scientificName']={'name_zh':'學名','value':[result[0].get('scientificName'),result[0].get('taibif_scientificname')]}
     taxon['acceptedNameUsage']={'name_zh':'有效學名','value':[result[0].get('acceptedNameUsage'),result[0].get('taibif_scientificname')]}
     taxon['originalNameUsage']={'name_zh':'originalNameUsage','value':[result[0].get('originalNameUsage'),result[0].get('taibif_originalNameUsage')]}
@@ -338,7 +334,7 @@ def occurrence_view(request, taibif_id):
     location['decimalLatitude']={'name_zh':'十進位緯度','value':[result[0].get('decimalLatitude'),lat_d]}
     location['decimalLongitude']={'name_zh':'十進位經度','value':[result[0].get('decimalLongitude'),lon_d]}
     location['geodeticDatum']={'name_zh':'geodeticDatum','value':[result[0].get('geodeticDatum'),result[0].get('taibif_geodeticDatum')]}
-    location['coordinateUncertaintyInMeters']={'name_zh':'座標誤差(公尺)','value':[result[0].get('coordinateUncertaintyInMeters'),result[0].get('taibif_coordinateUncertaintyInMeters')]}
+    location['coordinateUncertaintyInMeters']={'name_zh':'座標誤差(公尺)','value':[result[0].get('coordinateUncertaintyInMeters'),result[0].get('taibif_coordinateUncertaintyInMeters')[0]]}
     location['coordinatePrecision']={'name_zh':'座標精準度','value':[result[0].get('coordinatePrecision'),result[0].get('taibif_coordinatePrecision')]}
     location['pointRadiusSpatialFit']={'name_zh':'pointRadiusSpatialFit','value':[result[0].get('pointRadiusSpatialFit'),result[0].get('taibif_pointRadiusSpatialFit')]}
     location['verbatimCoordinates']={'name_zh':'字面上座標','value':[result[0].get('verbatimCoordinates'),result[0].get('verbatimCoordinates')]}
@@ -481,7 +477,8 @@ def species_view(request, taicol_taxon_id):
     search_limit = 20
     facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name,limit:-1,mincount:1}'
     facet_dataset_zh = 'dataset_zh:{type:terms,field:taibif_dataset_name_zh,limit:-1,mincount:1}'
-    facet_json = 'json.facet={'+facet_dataset +','+facet_dataset_zh +'}'
+    facet_taibif_dataset_id = 'taibifDatasetID:{type:terms,field:taibifDatasetID,limit:-1,mincount:1}'
+    facet_json = 'json.facet={'+facet_dataset +','+facet_dataset_zh +','+facet_taibif_dataset_id +'}'
     
 
     # if ENV in ['dev','stag']:
@@ -498,8 +495,6 @@ def species_view(request, taicol_taxon_id):
 
         data = r.json()
         search_count = data['response']['numFound']
-        # search_offset = data['response']['start']
-        # search_results = data['response']['docs']
 
         if search_count != 0 :
             count = []
@@ -508,9 +503,10 @@ def species_view(request, taicol_taxon_id):
             count = [x['count'] for x in data['facets']['dataset']['buckets']]
             dataset_list = [x['val'] for x in data['facets']['dataset']['buckets']]
             dataset_zh_list = [x['val']for x in data['facets']['dataset_zh']['buckets']]
+            dataset_taibif_dataset_id = [x['val']for x in data['facets']['taibifDatasetID']['buckets']]
             
-            for x,y,z in zip(count, dataset_list, dataset_zh_list):
-                dataset.append({'count':x,'name':y,'name_zh':z})                
+            for x,y,z,n in zip(count, dataset_list, dataset_zh_list,dataset_taibif_dataset_id):
+                dataset.append({'count':x,'name':y,'name_zh':z,'taibifDatasetID':n})                
 
     if r2.status_code == 200:
         data2 = r2.json()
