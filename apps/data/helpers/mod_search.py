@@ -419,10 +419,10 @@ class SpeciesSearch(SuperSearch):
             'name_zh': x.name_zh,
             'name_full': '',#TODO react.js
             'taicol_taxon_id': x.taicol_taxon_id,
-            # 'count': x.count,
+            'formatted_name': x.formatted_name,
             'rank': x.rank,
             'rank_display': x.get_rank_display(),
-            'rank_list': [{'name': t.name, 'rank': t.rank, 'name_zh': t.name_zh, 'id': t.id} for t in x.rank_list],
+            'rank_list': [{'name': t.name, 'rank': t.rank, 'name_zh': t.name_zh, 'taicol_taxon_id': t.taicol_taxon_id,'formatted_name':t.formatted_name} for t in x.rank_list],
             'is_accepted_name': x.is_accepted_name,
         }
 
