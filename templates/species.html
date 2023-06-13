@@ -105,7 +105,9 @@
     <!-- story title begin -->
     <div class="article-head-wrapper">
       <h1 class="heading-lg">
-        {{ taxon.name|safe }}{% if taxon.name_zh %} {{ taxon.name_zh }}{% endif %} {% if not taxon.is_accepted_name %}<small><span class="label label-warning">同物異名</span></small>{% endif %}
+        {{ taxon.scientific_name_full.formatted_name|safe }}
+        {% if taxon.name_zh %} {{ taxon.name_zh }}{% endif %} 
+        {% if not taxon.is_accepted_name %}<small><span class="label label-warning">同物異名</span></small>{% endif %}
       </h1>
     </div>
     <!-- story title end -->

@@ -56,7 +56,6 @@ const OccurrenceRouter = ({data, filters,urlPrefix, language}) =>  {
   const path = window.location.pathname;
   const m = path.match(/\/occurrence\/(search|map|gallery|taxonomy|charts|download)/);
   const initTab = (m[1]) ? m[1] : 'search';
-
   const [activeTab, setActiveTab] = useState(initTab);
   const navTabs = [];
   for (let i in navTabsData) {
@@ -64,7 +63,7 @@ const OccurrenceRouter = ({data, filters,urlPrefix, language}) =>  {
     if (!navTabsData[i].disable) {
       navTabs.push(
           <li key={key} className={activeTab === key ? "active" : null} onClick={(e)=>setActiveTab(key)}>
-          <Link to={navTabsData[i].path}>{language === 'en' ? navTabsData[i].key : navTabsData[i].label}</Link>
+          <Link to={navTabsData[i].path+window.location.search}>{language === 'en' ? navTabsData[i].key : navTabsData[i].label}</Link>
           </li>
       );
     }
