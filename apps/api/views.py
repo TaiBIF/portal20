@@ -1479,21 +1479,21 @@ def search_species(request):
             .order_by('-count')
     
     taxon_count = kingdom_count.union(phylum_count).union(order_count).union(class_count).union(family_count).union(genus_count).order_by('-count')[:10]
-    if taxon_count[0]['taxon_id'] != None: 
-        for x in taxon_count:
-            x['name'] = Taxon.objects.get(taicol_taxon_id = x['taxon_id']).name
-        
+    
+    higherTaxon_menu_tmp = []
+    if taxon_count:
+        higherTaxon_menu_tmp = [{
+            'key': x['taxon_id'],
+            'label': Taxon.objects.get(taicol_taxon_id = x['taxon_id']).name,
+            'count': x['count'],
+        } for x in taxon_count if x['taxon_id'] != None]
     
     if has_menu:
         menus = [
             {
                 'key': 'highertaxon',
                 'label': '高階分類群',
-                'rows': [{
-                    'key': x['taxon_id'],
-                    'label': x['name'],
-                    'count': x['count'],
-                } for x in taxon_count if taxon_count[0]['taxon_id'] != None ],
+                'rows': higherTaxon_menu_tmp,
             },
             {
                 'key': 'rank',
