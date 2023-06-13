@@ -7,6 +7,7 @@ import csv
 import os
 import subprocess
 import requests
+from django.core import serializers
 
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Count, Q, Sum
@@ -1264,9 +1265,13 @@ def search_dataset(request):
     ds_search = DatasetSearch(list(request.GET.lists()))
     # menu item
     ds_menu = DatasetSearch([]) 
-    print("ds_menu=== ",ds_menu.query.values('organization','organization_name').distinct('organization'))
-
     if has_menu:
+        condiction_menu = list(request.GET.lists())
+        publisher_query = []
+        for k,v in condiction_menu:
+            if k!= "publisher":
+                publisher_query.append((k,v))
+        publisher_menu = DatasetSearch(publisher_query) 
         # publisher 
         publisher_list = ds_menu.query\
             .values('organization','organization_name')\
@@ -1274,7 +1279,7 @@ def search_dataset(request):
             .exclude(organization_name__isnull=True)\
             .distinct('organization')
         
-        publisher_count = ds_search.query\
+        publisher_count = publisher_menu.query\
             .values('organization')\
             .exclude(organization__isnull=True)\
             .exclude(organization_name__isnull=True)\
@@ -1293,13 +1298,17 @@ def search_dataset(request):
         publisher_rows = sorted(publisher_rows, key=lambda d: d['count'], reverse=True) 
 
 
-       
+        country_query = []
+        for k,v in condiction_menu:
+            if k!= "country":
+                country_query.append((k,v))
+        country_menu = DatasetSearch(country_query) 
         # country
         country_list = ds_menu.query\
             .values('country')\
             .exclude(country__exact='')\
             .distinct('country')
-        country_count = ds_search.query\
+        country_count = country_menu.query\
             .values('country')\
             .exclude(country__exact='')\
             .annotate(count=Count('country'))\
@@ -1318,12 +1327,17 @@ def search_dataset(request):
         country_rows = sorted(country_rows, key=lambda d: d['count'], reverse=True) 
 
 
+        rights_query = []
+        for k,v in condiction_menu:
+            if k!= "data_license":
+                rights_query.append((k,v))
+        rights_menu = DatasetSearch(rights_query) 
         # license
         rights_list = ds_menu.query\
             .values('data_license')\
             .exclude(data_license__exact='')\
             .distinct('data_license')
-        rights_count = ds_search.query\
+        rights_count = rights_menu.query\
             .values('data_license')\
             .exclude(data_license__exact='')\
             .annotate(count=Count('data_license'))\
@@ -1419,16 +1433,68 @@ def search_species(request):
     #species_ids = list(species_search.query.values('id').all())
     has_menu = True if request.GET.get('menu', '') else False
     menu_list = []
+    
+    condiction_menu = list(request.GET.lists())
+    higherTaxon_query = []
+    for k,v in condiction_menu:
+        if k!= "highertaxon":
+            higherTaxon_query.append((k,v))
+    higherTaxon_menu = SpeciesSearch(higherTaxon_query) 
+
+    kingdom_count = higherTaxon_menu.query\
+            .extra(select ={'taxon_id':'kingdom_taxon_id'})\
+            .values('taxon_id')\
+            .exclude(kingdom_taxon_id__exact='')\
+            .annotate(count=Count('kingdom_taxon_id'))\
+            .order_by('-count')
+    phylum_count = higherTaxon_menu.query\
+            .extra(select ={'taxon_id':'phylum_taxon_id'})\
+            .values('taxon_id')\
+            .exclude(phylum_taxon_id__exact='')\
+            .annotate(count=Count('phylum_taxon_id'))\
+            .order_by('-count')
+    order_count = higherTaxon_menu.query\
+            .extra(select ={'taxon_id':'order_taxon_id'})\
+            .values('taxon_id')\
+            .exclude(order_taxon_id__exact='')\
+            .annotate(count=Count('order_taxon_id'))\
+            .order_by('-count')
+    class_count = higherTaxon_menu.query\
+            .extra(select ={'taxon_id':'class_taxon_id'})\
+            .values('taxon_id')\
+            .exclude(class_taxon_id__exact='')\
+            .annotate(count=Count('class_taxon_id'))\
+            .order_by('-count')
+    family_count = higherTaxon_menu.query\
+            .extra(select ={'taxon_id':'family_taxon_id'})\
+            .values('taxon_id')\
+            .exclude(family_taxon_id__exact='')\
+            .annotate(count=Count('family_taxon_id'))\
+            .order_by('-count')
+    genus_count = higherTaxon_menu.query\
+            .extra(select ={'taxon_id':'genus_taxon_id'})\
+            .values('taxon_id')\
+            .exclude(genus_taxon_id__exact='')\
+            .annotate(count=Count('genus_taxon_id'))\
+            .order_by('-count')
+    
+    taxon_count = kingdom_count.union(phylum_count).union(order_count).union(class_count).union(family_count).union(genus_count).order_by('-count')[:10]
+    if taxon_count[0]['taxon_id'] != None: 
+        for x in taxon_count:
+            x['name'] = Taxon.objects.get(taicol_taxon_id = x['taxon_id']).name
+        
+    
     if has_menu:
         menus = [
-            # {
-            #     'key': 'highertaxon',
-            #     'label': '高階分類群',
-            #     'rows': [{
-            #         'key': x.id,
-            #         'label': x.get_name(),
-            #     } for x in Taxon.objects.filter(rank='kingdom')],
-            # },
+            {
+                'key': 'highertaxon',
+                'label': '高階分類群',
+                'rows': [{
+                    'key': x['taxon_id'],
+                    'label': x['name'],
+                    'count': x['count'],
+                } for x in taxon_count if taxon_count[0]['taxon_id'] != None ],
+            },
             {
                 'key': 'rank',
                 'label': '分類位階 Rank',
@@ -1798,3 +1864,20 @@ TaiBIF團隊 敬上
         conf_settings.TAIBIF_SERVICE_EMAIL,
         [request.GET["email"]],
         html_message=html)
+
+
+
+def get_autocomplete_taxon(request):
+    names = []
+    if keyword_str := request.GET.get('keyword','').strip():
+        regex_string = '^'+ keyword_str +'.*'
+        autocomplete_taxon = Taxon.objects.filter(name__iregex=regex_string)[:10]
+        
+        if autocomplete_taxon:
+            names = [{
+                'key': x.taicol_taxon_id,
+                'name': x.name,
+                'label':x.name,
+            } for x in autocomplete_taxon]
+     
+    return HttpResponse(json.dumps(names), content_type='application/json') 

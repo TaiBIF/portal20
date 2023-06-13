@@ -25,4 +25,5 @@ urlpatterns = [
     path('v2/occurrence/basic_occ', views.for_basic_occ, name='api_basic_occ'),
     path('v2/occurrence/detail_occ', views.occurrence_api, name='occurrence_api'),    
     path('v2/occurrence/raw_occ', views.raw_occ_api, name='raw_occ_api'),
+    path('get_autocomplete_taxon/', views.get_autocomplete_taxon, name='get_autocomplete_taxon'),
 ]

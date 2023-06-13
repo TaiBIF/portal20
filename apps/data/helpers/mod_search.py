@@ -402,16 +402,15 @@ class SpeciesSearch(SuperSearch):
                 elif v == 'synonym':
                     query = query.filter(is_accepted_name=False)
             if key == 'highertaxon':
-                or_cond = Q()
-                for v in values:
-                    if int(v) <=8 :
-                        or_cond.add(Q(hierarchy_string__icontains='{}-'.format(v)), Q.OR)
-                    else:
-                        or_cond.add(Q(hierarchy_string__icontains='-{}-'.format(v)), Q.OR)
-                query = query.filter(or_cond)
-            query = query.filter(taicol_taxon_id__isnull=False).order_by('taicol_taxon_id')
+                final_q = Q()
+                for tmp_q in [Q(path__icontains=i) for i in values]:
+                    final_q = final_q | tmp_q;
+                query = query.filter(final_q)
 
             self.query = query
+        
+        self.query = query.filter(taicol_taxon_id__isnull=False).order_by('taicol_taxon_id')
+        
 
     def result_map(self, x):
         return {
