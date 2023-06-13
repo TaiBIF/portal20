@@ -11,6 +11,7 @@ function Accordion(props) {
   const {content, onClick, filters} = props;
   const [isOpen, setOpenState] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
+  const [taxonFiltedData, setTaxonFiltedData] = useState([]);
 
   const yearRange = [1795, 2023];// TODO: hard-coded
   let yearSelected = yearRange;
@@ -22,7 +23,7 @@ function Accordion(props) {
     }
   });
   const [yearValue, setYearValue] = useState(yearSelected);
-  const long_term = new Set(['country',"taibif_county","dataset","publisher"])
+  const long_term = new Set(['country',"taibif_county","dataset","publisher","highertaxon","rank"])
   let isLong = false;
   if (long_term.has(content.key)){
     isLong = true;
@@ -139,6 +140,36 @@ function Accordion(props) {
       setFilteredData(newFilter);
     }
   };
+  
+  const get_autocomplete_taxon = (event) =>{
+    const searchWord = event.target.value
+    const newFilter = content.rows.filter((value)=>{
+      return value.label.toLowerCase().includes(searchWord.toLowerCase())
+    });
+    let apiUrl = null;
+
+    apiUrl =  `${window.location.origin}/api/get_autocomplete_taxon/?keyword=${searchWord}`
+    fetch(apiUrl)
+    .then(res => res.json())
+    .then(
+      (jsonData) => {
+        console.log('resp: ', jsonData);
+        if (jsonData.solr_error_msg) {
+          alert(jsonData.solr_error_msg); // TODO: need better UI
+          return
+        }
+        if (searchWord ===""){
+          setTaxonFiltedData([]);
+        }else{
+          setTaxonFiltedData(jsonData);
+        }
+      },
+      (error) => {
+      });
+  };
+  
+  console.log('filteredData == ',filteredData)
+
   return (
     <React.Fragment>
     <div className="search-sidebar-accordion-wrapper">
@@ -157,9 +188,20 @@ function Accordion(props) {
         }
         {filteredData.length !=0 && (
         <div className="dataResult" style={{zIndex:'9999',position:'absolute'}} >
-          
           {filteredData.slice(0,15).map((value, key) => {
-            
+            const itemChecked = filters.has(`${content.key}=${value.key}`);
+            return (<div className="dataItem" key={key} onClick={(e)=> {e.persist(); onClick(e, content.key, value.key);}} >
+               <p checked={!itemChecked}>{value.label}</p>
+            </div>
+          )})}
+        </div>
+        )}
+
+        {content.label == '高階分類群'? <div className="searchInputs"><input type="text" placeholder="Search..." onChange={get_autocomplete_taxon} /></div> : null }
+        {taxonFiltedData.length !=0 && (
+        <div className="dataResult" style={{zIndex:'9999',position:'absolute'}} >
+          
+          {taxonFiltedData.slice(0,15).map((value, key) => {
             const itemChecked = filters.has(`${content.key}=${value.key}`);
             return (<div className="dataItem" key={key} onClick={(e)=> {e.persist(); onClick(e, content.key, value.key);}} >
                <p checked={!itemChecked}>{value.label}</p>

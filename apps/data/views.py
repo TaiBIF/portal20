@@ -68,22 +68,23 @@ def search_all(request):
         # occurrence
         occur_rows = []
         solr = SolrQuery('taibif_occurrence')
-        req = solr.request(request.GET.lists())
+        req = solr.request(list(request.GET.lists()))
         resp = solr.get_response()
         
-        for x in resp['results']:
-            name=''
-            name_zh=''
-            if 'scientificName' in x.keys():
-                name = x['scientificName']
-            if  'vernacularName' in x.keys():
-                name_zh = x['vernacularName']
-            occur_rows.append({
-                'title': '{} {}'.format(name, name_zh),
-                'content': '資料集: {}'.format(x['taibif_dataset_name_zh']),
-                'url': '/occurrence/{}'.format(x['taibif_occ_id']) 
-            })
-        count += len(occur_rows)
+        if resp != None:
+            for x in resp['results']:
+                name=''
+                name_zh=''
+                if 'scientificName' in x.keys():
+                    name = x['scientificName']
+                if  'vernacularName' in x.keys():
+                    name_zh = x['vernacularName']
+                occur_rows.append({
+                    'title': '{} {}'.format(name, name_zh),
+                    'content': '資料集: {}'.format(x['taibif_dataset_name_zh']),
+                    'url': '/occurrence/{}'.format(x['taibif_occ_id']) 
+                })
+            count += len(occur_rows)
 
         # dataset
         dataset_rows = []
