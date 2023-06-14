@@ -1491,11 +1491,6 @@ def search_species(request):
     if has_menu:
         menus = [
             {
-                'key': 'highertaxon',
-                'label': '高階分類群',
-                'rows': higherTaxon_menu_tmp,
-            },
-            {
                 'key': 'rank',
                 'label': '分類位階 Rank',
                 'rows': [{
@@ -1505,11 +1500,16 @@ def search_species(request):
                 } for x in Taxon.get_tree(rank=rank, status=status)]
             },
             {
+                'key': 'highertaxon',
+                'label': '高階分類群 Higher Taxon Classification',
+                'rows': higherTaxon_menu_tmp,
+            },
+            {
                 'key': 'status',
                 'label': '學名狀態 Status',
                 'rows': [
-                    {'label': '有效的', 'key': 'accepted'},
-                    {'label': '同物異名', 'key': 'synonym'}
+                    {'label': '有效的 Accepted', 'key': 'accepted'},
+                    {'label': '同物異名 Synonym', 'key': 'synonym'}
                 ]
             },
             

@@ -265,11 +265,19 @@ def occurrence_view(request, taibif_id):
         acceptedNameUsageID = int(float(result[0].get('acceptedNameUsageID')))
     except:
         acceptedNameUsageID = result[0].get('acceptedNameUsageID')
-
+        
+    taxon_obj_name = None
+    taxon_obj_accepted_name = None
+    if result[0].get('taxon_backbone') =='TaiCOL':
+        if result[0].get('taibif_namecode'):
+            taxon_obj_name = Taxon.objects.get(taicol_taxon_id = result[0].get('taibif_namecode'))
+        if result[0].get('taibif_accepted_namecode'):
+            taxon_obj_accepted_name = Taxon.objects.get(taicol_taxon_id = result[0].get('taibif_accepted_namecode')) 
+        
     taxon['taxonID']={'name_zh':'分類編碼','value':[result[0].get('taxonID'),result[0].get('taibif_taxonID')]}
-    taxon['scientificNameID']={'name_zh':'學名編碼','value':[result[0].get('scientificNameID'),result[0].get('taibif_namecode') if result[0].get('taibif_namecode') != None else '']}
-    taxon['acceptedNameUsageID']={'name_zh':'有效學名編碼','value':[acceptedNameUsageID,result[0].get('taibif_accepted_namecode') if result[0].get('taibif_accepted_namecode') != None else '']}
-    taxon['scientificNameTaxonID']={'name_zh':'物種編碼','value':[result[0].get('taibif_taxon_id'),result[0].get('taibif_taxon_id') if result[0].get('taicol_taxon_id') != None else '']}
+    taxon['scientificNameID']={'name_zh':'學名編碼','value':[result[0].get('scientificNameID'),taxon_obj_name.taicol_name_id if taxon_obj_name != None else '']}
+    taxon['acceptedNameUsageID']={'name_zh':'有效學名編碼','value':[acceptedNameUsageID,taxon_obj_accepted_name.taicol_name_id if taxon_obj_accepted_name != None else '']}
+    taxon['scientificNameTaxonID']={'name_zh':'物種編碼','value':['',result[0].get('taicol_taxon_id')[0] if result[0].get('taicol_taxon_id') != None else '']}
     taxon['scientificName']={'name_zh':'學名','value':[result[0].get('scientificName'),result[0].get('taibif_scientificname')]}
     taxon['acceptedNameUsage']={'name_zh':'有效學名','value':[result[0].get('acceptedNameUsage'),result[0].get('taibif_scientificname')]}
     taxon['originalNameUsage']={'name_zh':'originalNameUsage','value':[result[0].get('originalNameUsage'),result[0].get('taibif_originalNameUsage')]}
@@ -473,7 +481,7 @@ def species_view(request, taicol_taxon_id):
 
 
     # solr_q = switch.get(taxon.rank) + ':' + str(taicol_taxon_id)
-    solr_q = 'path :' + str(taicol_taxon_id)
+    solr_q = 'path:' + str(taicol_taxon_id)
     # scientificName
     search_limit = 20
     facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name,limit:-1,mincount:1}'
