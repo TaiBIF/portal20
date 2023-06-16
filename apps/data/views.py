@@ -176,7 +176,8 @@ def occurrence_view(request, taibif_id):
     intro['dataset_zh']=result[0].get('taibif_dataset_name_zh')
     intro['publisher']=result[0].get('publisher')
     intro['basisOfRecord']=result[0].get('basisOfRecord')
-    intro['scientificName']=result[0].get('scientificName')
+    intro['scientificName']=result[0].get('formatted_name')  if result[0].get('formatted_name')  else result[0].get('scientificName')
+    intro['scientificName_zh']=result[0].get('taibif_vernacular_name') if result[0].get('taibif_vernacular_name') else ''
     
     intro['dataset']=result[0].get('taibifDatasetID')
     issues = []
@@ -271,6 +272,7 @@ def occurrence_view(request, taibif_id):
     if result[0].get('taxon_backbone') =='TaiCOL':
         if result[0].get('taibif_namecode'):
             taxon_obj_name = Taxon.objects.get(taicol_taxon_id = result[0].get('taibif_namecode'))
+            print("taxon_obj_name.name === ",taxon_obj_name.name)
         if result[0].get('taibif_accepted_namecode'):
             taxon_obj_accepted_name = Taxon.objects.get(taicol_taxon_id = result[0].get('taibif_accepted_namecode')) 
         
@@ -278,8 +280,8 @@ def occurrence_view(request, taibif_id):
     taxon['scientificNameID']={'name_zh':'學名編碼','value':[result[0].get('scientificNameID'),taxon_obj_name.taicol_name_id if taxon_obj_name != None else '']}
     taxon['acceptedNameUsageID']={'name_zh':'有效學名編碼','value':[acceptedNameUsageID,taxon_obj_accepted_name.taicol_name_id if taxon_obj_accepted_name != None else '']}
     taxon['scientificNameTaxonID']={'name_zh':'物種編碼','value':['',result[0].get('taicol_taxon_id')[0] if result[0].get('taicol_taxon_id') != None else '']}
-    taxon['scientificName']={'name_zh':'學名','value':[result[0].get('scientificName'),result[0].get('taibif_scientificname')]}
-    taxon['acceptedNameUsage']={'name_zh':'有效學名','value':[result[0].get('acceptedNameUsage'),result[0].get('taibif_scientificname')]}
+    taxon['scientificName']={'name_zh':'學名','value':[result[0].get('scientificName'),taxon_obj_name.name if taxon_obj_name != None else '']}
+    taxon['acceptedNameUsage']={'name_zh':'有效學名','value':[result[0].get('acceptedNameUsage'),taxon_obj_accepted_name.name if taxon_obj_accepted_name != None else '']}
     taxon['originalNameUsage']={'name_zh':'originalNameUsage','value':[result[0].get('originalNameUsage'),result[0].get('taibif_originalNameUsage')]}
     taxon['nameAccordingTo']={'name_zh':'nameAccordingTo','value':[result[0].get('nameAccordingTo'),result[0].get('taibif_nameAccordingTo')]}
     taxon['namePublishedIn']={'name_zh':'namePublishedIn','value':[result[0].get('namePublishedIn'),result[0].get('taibif_namePublishedIn')]}

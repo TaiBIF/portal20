@@ -52,9 +52,9 @@ function SpeciesResult(props) {
             <div className="listbox-inner-summary hidden-xs">
               <ul className="scientific-name-wrapper">
               { row.rank_list.map((t)=>
-                <li key={t.taicol_taxon_id}><a href={"/species/"+t.taicol_taxon_id}>{t.name} {t.name_zh}</a></li>
+                <li key={t.taicol_taxon_id}><a href={"/species/"+t.taicol_taxon_id}>{t.formatted_name} {t.name_zh}</a></li>
               )}
-                <li><a href={link}><StyledScientificName data={row} /></a></li>
+                {/* <li><a href={link}><StyledScientificName data={row} /></a></li> */}
               </ul>
             </div>
             {row.is_accepted_name
@@ -172,8 +172,12 @@ function SearchMain(props) {
             }
           }
         tagLabel = found.rows[i]['label']
-      
+        console.log(" the query ==1= ",found.rows[i]['label'])
+
       } else {
+        console.log(" the query ==2= ",found)
+        console.log(" the menuKey ==2= ",menuKey)
+        
         tagLabel = `${found['label']}: ${decodeURIComponent(menuKey[1])}`;}
       filterTags.push((<span key={tagLabel} className="search-content-sort-tag">{ tagLabel }</span>));
     } else if (menuKey[0] === 'q') {
@@ -371,7 +375,7 @@ function SearchMain(props) {
            </div>
          </div>
          </React.Fragment>
-       : <OccurrenceRouter data={props.data} filters={props.filters}  urlPrefix={pageUrlPrefix} language={language}/>
+       : <OccurrenceRouter data={props.data} filters={props.filters}  urlPrefix={pageUrlPrefix} language={language} queryKeyword={props.queryKeyword}/>
       }
       {/* pagination */}
       {(props.searchType !== 'occurrence')?

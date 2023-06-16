@@ -100,10 +100,8 @@
       </span>
     {% endif %}
     <h1 style="margin-top:0px">
-      {% if taxon.vernacularName.value.1 %}
-          {{ taxon.vernacularName.value.1 }} {{ taxon.scientificName.value.1 }}
-      {% elif taxon.vernacularName.value.0 != None %}
-          {{ taxon.vernacularName.value.0 }} {{ taxon.scientificName.value.0 }}
+      {% if intro.scientificName%}
+          {{ intro.scientificName_zh }} {{ intro.scientificName|safe }}
       {% endif %}
     </h1>
   </div>

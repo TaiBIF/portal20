@@ -555,6 +555,7 @@
   <field name="kingdom" type="string"/>
   <field name="kingdom_key" type="plongs"/>
   <field name="kingdomzh" type="string"/>
+  <field name="formatted_name" type="string"/>
   <field name="language" type="string"/>
   <field name="latitude" type="pdoubles"/>
   <field name="license" type="string"/>
