@@ -197,7 +197,7 @@ function Accordion(props) {
         </div>
         )}
 
-        {content.label == '高階分類群'? <div className="searchInputs"><input type="text" placeholder="Search..." onChange={get_autocomplete_taxon} /></div> : null }
+        {content.label == '高階分類群 Higher Taxon Classification'? <div className="searchInputs"><input type="text" placeholder="Search..." onChange={get_autocomplete_taxon} /></div> : null }
         {taxonFiltedData.length !=0 && (
         <div className="dataResult" style={{zIndex:'9999',position:'absolute'}} >
           
