@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}資料標準化{% endblock %}
+
+
+{% block main %}
+
+    
+    <!-- topnav begin -->
+    <div class="bg-main-pale">
+        <div class="container">
+          <div class="caption-mascot-wrapper">
+            <h1 class="title">資料標準化</h1>
+            <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
+          </div>
+        </div>
+      </div>
+      <!-- topnav end -->
+      <!-- container begin -->
+      <div class="container my-5">
+        <!-- breadcrumb begin -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+            <li class="breadcrumb-item">開放資料</li>
+            <li class="breadcrumb-item active" aria-current="page">資料標準化</li>
+          </ol>
+        </nav>
+        <!-- breadcrumb end -->
+        <!-- row begin -->
+        <div class="row">
+          <!-- col left begin -->
+          <div class="col-12 col-md-3">
+  
+            <div class="dropdown dropdown-flexible-wrapper">
+              <a class="btn btn-toggle-flexible" href="#" data-toggle="dropdown">
+                資料標準與模板
+              </a>
+              <div class="dropdown-menu dropdown-menu-flexible">
+                <a class="dropdown-item" href="#">達爾文核心標準 Darwin Core</a>
+                <a class="dropdown-item" href="#">生態檢核資料模板</a>
+                <a class="dropdown-item" href="#">自然史典藏資料模板</a>
+                <a class="dropdown-item" href="#">病媒介資料模板</a>
+              </div>
+            </div>
+  
+            <div class="dropdown dropdown-flexible-wrapper">
+              <a class="btn btn-toggle-flexible" href="#" data-toggle="dropdown">
+                主題資料發布指引
+              </a>
+              <div class="dropdown-menu dropdown-menu-flexible">
+                <a class="dropdown-item" href="#">DNA 資料發布指引</a>
+                <a class="dropdown-item" href="#">敏感物種資料處理原則?</a>
+              </div>
+            </div>
+  
+          </div>
+          <!-- col left end -->
+          <!-- col right begin -->
+          <div class="col-12 col-md-9">
+            <h4 class="headline-left-hr">申請資料清理服務</h4>
+            <p>一份好的資料集，必須可以再利用（具互操作性），若能提供越多欄位資料，則資料的品質及價值也能相對地提高，在任何情況下，資料集至少要有下列所述 Darwin Core 欄位</p>
+            <h4 class="headline-left">物種名錄 Checklist</h4>
+            <div class="table-responsive">
+              <table class="table table-ltmilo">
+                <thead>
+                  <tr>
+                    <th>DwC 欄位名稱</th>
+                    <th>所屬類別</th>
+                    <th>定義</th>
+                    <th>常見對應名稱</th>
+                    <th>範例</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>taxonID</td>
+                    <td>Taxon</td>
+                    <td>分類識別碼</td>
+                    <td>ID、編號</td>
+                    <td>32567</td>
+                  </tr>
+                  <tr>
+                    <td>scientificName</td>
+                    <td>Taxon</td>
+                    <td>完整的學名，包括已知的作者和日期資訊。若是作為鑑定的一部分，應是可確定的最低分類階層的名稱。</td>
+                    <td>學名、Name、名字</td>
+                    <td>“Coleoptera” (目), “Vespertilionidae”(科), “Manis” (屬), “Ctenomys sociabilis” (屬 + 種小名),“Ambystoma tigrinum diaboli” (屬 +種小名 + 亞種小名), “Roptrocerus typographi (Györfi, 1952)” (屬 + 種小名 + 學名命名者), "Quercus agrifolia var. oxyadenia (Torr.) J.T.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- col right end -->
+        </div>
+        <!-- row end -->
+      </div>
+      <!-- container end -->
+{% endblock %}

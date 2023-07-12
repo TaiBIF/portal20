@@ -372,7 +372,8 @@ class Taxon(models.Model):
         
         name = {}
         if self.taicol_taxon_id:
-            name['url'] = 'http://127.0.0.1:8000/species/{}'.format(self.taicol_taxon_id)
+            # request.META['HTTP_HOST']+settings.MEDIA_URL 
+            name['url'] = '/species/{}'.format(self.taicol_taxon_id)
         
         if self.formatted_name:
             name['formatted_name'] = self.formatted_name

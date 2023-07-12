@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}FAQ 問答集{% endblock %}
+
+{% block main %}
+    <!-- topnav begin -->
+    <div class="bg-main-pale">
+        <div class="container">
+          <div class="caption-mascot-wrapper">
+            <h1 class="title">FAQ 問答集</h1>
+            <img src="assets/images/mascot-Mreevesi.png" alt="" class="symbol">
+          </div>
+        </div>
+      </div>
+      <!-- topnav end -->
+      <!-- container begin -->
+      <div class="container my-5">
+        <!-- breadcrumb begin -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+            <li class="breadcrumb-item">關於我們</li>
+            <li class="breadcrumb-item active" aria-current="page">FAQ 問答集</li>
+          </ol>
+        </nav>
+        <!-- breadcrumb end -->
+        <!-- row begin -->
+        <div class="row">
+          <!-- col left begin -->
+          <div class="col-12 col-md-3">
+  
+            <div class="dropdown dropdown-flexible-wrapper">
+              <a class="btn btn-toggle-flexible" href="#" data-toggle="dropdown">
+                開放資料諮詢服務
+              </a>
+              <div class="dropdown-menu dropdown-menu-flexible">
+                <a class="dropdown-item" href="#">申請資料清理服務</a>
+                <a class="dropdown-item" href="#">申請線上自學工作坊</a>
+                <a class="dropdown-item" href="#">資料發布問題諮詢</a>
+                <a class="dropdown-item" href="#">資料論文合作</a>
+              </div>
+            </div>
+  
+            <div class="dropdown dropdown-flexible-wrapper">
+              <a class="btn btn-toggle-flexible" href="#" data-toggle="dropdown">
+                資料集發布常見問題
+              </a>
+              <div class="dropdown-menu dropdown-menu-flexible">
+                <a class="dropdown-item" href="#">如何將舊資料集轉換到新資料集？</a>
+                <a class="dropdown-item" href="#">想要更改發布組織怎麼辦?</a>
+                <a class="dropdown-item" href="#">發布後是否可以更改授權？</a>
+                <a class="dropdown-item" href="#">詮釋資料怎麼寫？</a>
+              </div>
+            </div>
+  
+            <p class="text-gray-8">如果找不到想詢問的問題，也可以直接詢問</p>
+            <a href="#" class="btn btn-block btn-sunset-md mb-3">
+              <span class="myicon icon-contact-mail mr-1"></span>聯絡我們
+            </a>
+  
+          </div>
+          <!-- col left end -->
+          <!-- col right begin -->
+          <div class="col-12 col-md-9">
+            <h4 class="headline-left-hr">申請資料清理服務</h4>
+            <p>一份好的資料集，必須可以再利用（具互操作性），若能提供越多欄位資料，則資料的品質及價值也能相對地提高，在任何情況下，資料集至少要有下列所述 Darwin Core 欄位</p>
+          </div>
+          <!-- col right end -->
+        </div>
+        <!-- row end -->
+      </div>
+      <!-- container end -->
+  
+{% endblock %}

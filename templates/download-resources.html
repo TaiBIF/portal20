@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}TaiBIF 資源下載專區{% endblock %}
+
+
+{% block main %}
+<!-- topnav begin -->
+<div class="bg-main-pale">
+  <div class="container">
+    <div class="caption-mascot-wrapper">
+      <h1 class="title">TaiBIF 資源下載專區</h1>
+      <img src="{% static 'images/mascot-Mreevesi.png'%}" alt="" class="symbol">
+    </div>
+  </div>
+</div>
+<!-- topnav end -->
+    <!-- container begin -->
+    <div class="container my-5">
+      <!-- breadcrumb begin -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+          <li class="breadcrumb-item">關於我們</li>
+          <li class="breadcrumb-item active" aria-current="page">TaiBIF 資源下載專區</li>
+        </ol>
+      </nav>
+      <!-- breadcrumb end -->
+      <!-- row begin -->
+      <div class="row">
+        <!-- col begin -->
+        <div class="col-12 col-card-asset">
+          <div class="card-asset-img">
+            <img src="{% static 'images/logo-asset-taibif-logotype.png'%}" alt="" class="symbol">
+          </div>
+          <p class="card-asset-link"><a href="#">下載</a></p>
+        </div>
+        <!-- col end -->
+        <!-- col begin -->
+        <div class="col-12 col-card-asset">
+          <div class="card-asset-img">
+            <img src="{% static 'images/logo-asset-taibif.png'%}" alt="" class="symbol">
+          </div>
+          <p class="card-asset-link"><a href="#">下載</a></p>
+        </div>
+        <!-- col end -->
+        <!-- col begin -->
+        <div class="col-12 col-card-asset">
+          <div class="card-asset-img">
+            <img src="{% static 'images/logo-asset-taibif-w.png'%}" alt="" class="symbol">
+
+          </div>
+          <p class="card-asset-link"><a href="#">下載</a></p>
+        </div>
+        <!-- col end -->
+        <!-- col begin -->
+        <div class="col-12 col-card-asset">
+          <div class="card-asset-img">
+            <img src="{% static 'images/logo-asset-sinica.png'%}" alt="" class="symbol">
+          </div>
+          <p class="card-asset-link"><a href="#">下載</a></p>
+
+        </div>
+        <!-- col end -->
+        <!-- col begin -->
+        <div class="col-12 col-card-asset">
+          <div class="card-asset-img">
+            <img src="{% static 'images/logo-asset-brcas.png'%}" alt="" class="symbol">
+
+          </div>
+          <p class="card-asset-link"><a href="#">下載</a></p>
+        </div>
+        <!-- col end -->
+        <!-- col begin -->
+        <div class="col-12 col-card-asset">
+          <div class="card-asset-img">
+            <img src="{% static 'images/logo-asset-gbif.png'%}" alt="" class="symbol">
+          </div>
+          <p class="card-asset-link"><a href="#">下載</a></p>
+        </div>
+        <!-- col end -->
+      </div>
+      <!-- row end -->
+    </div>
+    <!-- container end -->
+{% endblock %}

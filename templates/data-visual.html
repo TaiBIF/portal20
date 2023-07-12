@@ -1,0 +1,401 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}資料視覺化與圖表產出{% endblock %}
+
+
+{% block main %}
+
+
+    <!-- topnav begin -->
+    <div class="bg-main-pale">
+        <div class="container">
+          <div class="caption-mascot-wrapper">
+            <h1 class="title">資料視覺化與圖表產出</h1>
+            <img src="{% static 'images/mascot-flower.png' %}" alt="" class="symbol">
+          </div>
+        </div>
+      </div>
+      <!-- topnav end -->
+  
+      <!-- container begin -->
+      <div class="container my-5">
+  
+        <!-- breadcrumb begin -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+            <li class="breadcrumb-item">資料應用</li>
+            <li class="breadcrumb-item active" aria-current="page">資料視覺化與圖表產出</li>
+          </ol>
+        </nav>
+        <!-- breadcrumb end -->
+  
+        <!-- 資訊視覺化 row begin -->
+        <div class="row justify-content-center">
+          <!-- col begin -->
+          <div class="col col-icon-stat">
+            <a href="#" class="d-block">
+              <span class="myicon icon-species-icon-plantae"></span>
+              <p class="title">植物</p>
+              <p class="amount">319,433</p>
+            </a>
+          </div>
+          <!-- col end -->
+          <!-- col begin -->
+          <div class="col col-icon-stat">
+            <a href="#" class="d-block">
+              <span class="myicon icon-species-icon-fungi"></span>
+              <p class="title">真菌</p>
+              <p class="amount">3,739</p>
+            </a>
+          </div>
+          <!-- col end -->
+          <!-- col begin -->
+          <div class="col col-icon-stat">
+            <a href="#" class="d-block">
+              <span class="myicon icon-species-icon-bacteria"></span>
+              <p class="title">細菌</p>
+              <p class="amount">405</p>
+            </a>
+          </div>
+          <!-- col end -->
+          <!-- col begin -->
+          <div class="col col-icon-stat">
+            <a href="#" class="d-block">
+              <span class="myicon icon-species-icon-Insecta"></span>
+              <p class="title">昆蟲</p>
+              <p class="amount">9,468</p>
+            </a>
+          </div>
+          <!-- col end -->
+          <!-- col begin -->
+          <div class="col col-icon-stat">
+            <a href="#" class="d-block">
+              <span class="myicon icon-species-icon-fish"></span>
+              <p class="title">魚</p>
+              <p class="amount">12,571</p>
+            </a>
+          </div>
+          <!-- col end -->
+          <!-- col begin -->
+          <div class="col col-icon-stat">
+            <a href="#" class="d-block">
+              <span class="myicon icon-species-icon-gecko"></span>
+              <p class="title">爬蟲類</p>
+              <p class="amount">13,721</p>
+            </a>
+          </div>
+          <!-- col end -->
+          <!-- col begin -->
+          <div class="col col-icon-stat">
+            <a href="#" class="d-block">
+              <span class="myicon icon-species-icon-frog"></span>
+              <p class="title">兩棲類</p>
+              <p class="amount">3,657</p>
+            </a>
+          </div>
+          <!-- col end -->
+          <!-- col begin -->
+          <div class="col col-icon-stat">
+            <a href="#" class="d-block">
+              <span class="myicon icon-species-icon-bird"></span>
+              <p class="title">鳥類</p>
+              <p class="amount">21,258</p>
+            </a>
+          </div>
+          <!-- col end -->
+          <!-- col begin -->
+          <div class="col col-icon-stat">
+            <a href="#" class="d-block">
+              <span class="myicon icon-species-icon-muntiacus-reevesi"></span>
+              <p class="title">哺乳類</p>
+              <p class="amount">29,296</p>
+            </a>
+          </div>
+          <!-- col end -->
+          <!-- col begin -->
+          <div class="col col-icon-stat">
+            <a href="#" class="d-block">
+              <span class="myicon icon-species-icon-more"></span>
+              <p class="title">其他</p>
+              <p class="amount">1,834,543</p>
+            </a>
+          </div>
+          <!-- col end -->
+        </div>
+        <!-- 資訊視覺化 row end -->
+  
+        <!-- 有分布資訊的資料 row begin -->
+        <div class="row my-5">
+          <!-- col-search-sidebar begin -->
+          <div class="col-12 col-scatter-filter" >
+            <p class="text">有分布資訊的資料筆數：</p>
+            <p class="amount">123,456</p>
+            <ul class="scatter-icon-list row">
+              <li class="col">
+                <span class="myicon icon-species-icon-plantae disable"></span>
+              </li>
+              <li class="col">
+                <span class="myicon icon-species-icon-fungi"></span>
+              </li>
+              <li class="col">
+                <span class="myicon icon-species-icon-bacteria"></span>
+              </li>
+              <li class="col">
+                <span class="myicon icon-species-icon-Insecta disable"></span>
+              </li>
+              <li class="col">
+                <span class="myicon icon-species-icon-fish"></span>
+              </li>
+              <li class="col">
+                <span class="myicon icon-species-icon-gecko"></span>
+              </li>
+              <li class="col">
+                <span class="myicon icon-species-icon-frog disable"></span>
+              </li>
+              <li class="col">
+                <span class="myicon icon-species-icon-bird disable"></span>
+              </li>
+              <li class="col">
+                <span class="myicon icon-species-icon-muntiacus-reevesi"></span>
+              </li>
+            </ul>
+  
+            <form>
+              <div class="form-group">
+                <label for="select-city" class="sr-only">縣市</label>
+                <select class="form-control custom-select" id="select-city">
+                  <option>縣市</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="select-city" class="sr-only">資料來源</label>
+                <select class="form-control custom-select" id="select-city">
+                  <option>資料來源</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-block btn-sunset-md">送出</button>
+              <a href="#" class="d-block text-center my-3 my-md-2">清除條件</a>
+            </form>
+  
+            <a href="" class="d-block link-chocolate"><span class="myicon icon-download-infographic mr-1"></span>下載地圖PNG</a>
+  
+          </div>
+          <!-- col-search-sidebar end -->
+          <!-- col-search-content begin -->
+          <div class="col-12 col-scatter-map" >
+            <img src="https://fakeimg.pl/400x300/e4dfdb/4A3E3A?text=Map" class="img-fluid">
+          </div>
+          <!-- col-search-content end -->
+        </div>
+        <!-- 有分布資訊的資料 row end -->
+  
+        <!-- 資料集出現紀錄 row begin -->
+        <div class="row mb-n5">
+  
+          <div class="col-12 my-0 my-md-4">
+            <h1 class="headline-center-sm">資料集出現紀錄</h1>
+          </div>
+  
+          <div class="visible-xs">
+            <a href="javascript:void(0)" class="xs-schedule-flow-btn myicon icon-filter" data-toggle="modal" data-target="#flowBtnModal">
+              進階篩選
+            </a>
+          </div>
+  
+          <!-- search sidebar begin -->
+          <div class="col-search-sidebar" >
+  
+            <!-- search modal begin -->
+            <div class="modal modal-search-side-wrapper fade" id="flowBtnModal" tabindex="-1" role="dialog">
+              <!-- modal dialog begin -->
+              <div class="modal-dialog" role="document">
+                <!-- modal content begin -->
+                <div class="modal-content">
+                  <!-- search sidebar header begin -->
+                  <div class="search-sidebar-header">
+                    <button type="button" class="visible-xs close" data-dismiss="modal"><span class="myicon icon-close"></span></button>
+                    <span>資料集</span>
+                    <div class="search-sidebar-header-del" data-toggle="tooltip" data-placement="left" title="清除">
+                      <span class="badge">1</span>
+                      <span class="myicon icon-trash"></span>
+                    </div>
+                  </div>
+                  <!-- search sidebar header end -->
+  
+                  <!-- keyword input begin -->
+                  <div class="input-group search-sidebar-header-kw">
+                    <input class="form-control" placeholder="搜尋關鍵字" name="search-term" id="search-term" type="text" value="">
+                    <div class="input-group-btn">
+                      <button class="btn" type="submit">
+                        <i class="myicon icon-search-lens"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- keyword input end -->
+  
+                  <!-- search sidebar accordion begin -->
+                  <div class="search-sidebar-accordion-wrapper">
+                    <!-- accordion heading begin -->
+                    <div class="search-sidebar-accordion-title">
+                      <a data-toggle="collapse" href="#collapse1" aria-expanded="false">
+                        發布單位 Publisher
+                      </a>
+                    </div>
+                    <!-- accordion heading end -->
+                    <!-- accordion collapse begin -->
+                    <div id="collapse1" class="collapse search-sidebar-accordion-content">
+  
+                      <div class="search-sidebar-checkbox-wrapper">
+                        <label class="custom-input-ctn">
+                          <input type="checkbox">
+                          <span class="checkmark"></span>
+                          <span class="search-sidebar-count-group">
+                            <span class="name">機構名稱</span>
+                            <span class="count">541,193,920</span>
+                          </span>
+                        </label>
+                      </div>
+  
+                    </div>
+                    <!-- accordion collapse end -->
+                  </div>
+                  <!-- search sidebar accordion end -->
+  
+                  <!-- search sidebar accordion begin -->
+                  <div class="search-sidebar-accordion-wrapper">
+                    <!-- accordion heading begin -->
+                    <div class="search-sidebar-accordion-title">
+                      <a data-toggle="collapse" href="#collapse2" aria-expanded="false">
+                        分布地區/國家 Publishing Country or Area
+                      </a>
+                    </div>
+                    <!-- accordion heading end -->
+                    <!-- accordion collapse begin -->
+                    <div id="collapse2" class="collapse search-sidebar-accordion-content">
+  
+                      <div class="search-sidebar-checkbox-wrapper">
+                        <label class="custom-input-ctn">
+                          <input type="checkbox">
+                          <span class="checkmark"></span>
+                          <span class="search-sidebar-count-group">
+                            <span class="name">國家</span>
+                            <span class="count">88</span>
+                          </span>
+                        </label>
+                      </div>
+  
+                    </div>
+                    <!-- accordion collapse end -->
+                  </div>
+                  <!-- search sidebar accordion end -->
+  
+                </div>
+                <!-- modal content end -->
+              </div>
+              <!-- modal dialog end -->
+            </div>
+            <!-- search modal end -->
+  
+          </div>
+          <!-- search sidebar end -->
+  
+  
+          <!-- search content begin -->
+          <div class="col-search-content">
+  
+            <!-- TABS&CONTENT begin -->
+            <div class="table-responsive">
+              <ul class="nav nav-tabs search-content-tab">
+                <li class="nav-item active">
+                  <a class="nav-link active" href="#menu1" data-toggle="tab">出現紀錄</a>
+                </li>
+              </ul>
+            </div>
+  
+            <!-- tab-content begin -->
+            <div class="tab-content">
+              <!-- 出現紀錄 begin -->
+              <div id="menu1" class="tab-pane fade show active">
+                <div class="container-fluid search-content-grid-wrapper">
+  
+                  <!-- row begin -->
+                  <div class="row">
+                    <!-- col begin -->
+                    <div class="col-12">
+                      <!-- card-tools-wrapper begin -->
+                      <div class="card-tools-wrapper">
+                        <div class="title">
+                          長條圖
+                          <a href="#" class="btn-dataicon-downlod"><span class="myicon icon-download-infographic"></span></a>
+                        </div>
+                        <div class="content responsive">
+                          <svg width="920" height="360"><g transform="translate(0,280)" class="axis" fill="none" font-size="10" font-family="sans-serif" text-anchor="middle"><path class="domain" stroke="currentColor" d="M80.5,6V0.5H900.5V6"></path><g class="tick" opacity="1" transform="translate(132.5,0)"><line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9" dy="0.71em">1</text></g><g class="tick" opacity="1" transform="translate(197.5,0)"><line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9" dy="0.71em">2</text></g><g class="tick" opacity="1" transform="translate(262.5,0)"><line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9" dy="0.71em">3</text></g><g class="tick" opacity="1" transform="translate(327.5,0)"><line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9" dy="0.71em">4</text></g><g class="tick" opacity="1" transform="translate(392.5,0)"><line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9" dy="0.71em">5</text></g><g class="tick" opacity="1" transform="translate(457.5,0)"><line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9" dy="0.71em">6</text></g><g class="tick" opacity="1" transform="translate(522.5,0)"><line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9" dy="0.71em">7</text></g><g class="tick" opacity="1" transform="translate(587.5,0)"><line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9" dy="0.71em">8</text></g><g class="tick" opacity="1" transform="translate(652.5,0)"><line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9" dy="0.71em">9</text></g><g class="tick" opacity="1" transform="translate(717.5,0)"><line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9" dy="0.71em">10</text></g><g class="tick" opacity="1" transform="translate(782.5,0)"><line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9" dy="0.71em">11</text></g><g class="tick" opacity="1" transform="translate(847.5,0)"><line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9" dy="0.71em">12</text></g></g><g transform="translate(80,0)" class="axis" fill="none" font-size="10" font-family="sans-serif" text-anchor="end"><path class="domain" stroke="currentColor" d="M-6,280.5H0.5V80.5H-6"></path><g class="tick" opacity="1" transform="translate(0,280.5)"><line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em"></text></g><g class="tick" opacity="1" transform="translate(0,248.66123152356468)"><line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em"></text></g><g class="tick" opacity="1" transform="translate(0,216.82246304712933)"><line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em"></text></g><g class="tick" opacity="1" transform="translate(0,184.983694570694)"><line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em"></text></g><g class="tick" opacity="1" transform="translate(0,153.14492609425866)"><line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em"></text></g><g class="tick" opacity="1" transform="translate(0,121.30615761782335)"><line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em">100K</text></g><g class="tick" opacity="1" transform="translate(0,89.46738914138803)"><line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em"></text></g></g><g><rect x="116" y="280" width="33" height="0" fill="#846C5B"></rect><rect x="181" y="239.19384238217665" width="33" height="40.806157617823345" fill="#846C5B"></rect><rect x="246" y="265.08353696879004" width="33" height="14.916463031209958" fill="#846C5B"></rect><rect x="311" y="269.97556374519434" width="33" height="10.024436254805664" fill="#846C5B"></rect><rect x="376" y="280" width="33" height="0" fill="#846C5B"></rect><rect x="441" y="280" width="33" height="0" fill="#846C5B"></rect><rect x="506" y="280" width="33" height="0" fill="#846C5B"></rect><rect x="571" y="280" width="33" height="0" fill="#846C5B"></rect><rect x="636" y="280" width="33" height="0" fill="#846C5B"></rect><rect x="701" y="280" width="33" height="0" fill="#846C5B"></rect><rect x="766" y="280" width="33" height="0" fill="#846C5B"></rect><rect x="831" y="280" width="33" height="0" fill="#846C5B"></rect></g><g><text x="130" y="275" class="label">0</text><text x="195" y="234.19384238217665" class="label">25,633</text><text x="260" y="260.08353696879004" class="label">9,370</text><text x="325" y="264.97556374519434" class="label">6,297</text><text x="390" y="275" class="label">0</text><text x="455" y="275" class="label">0</text><text x="520" y="275" class="label">0</text><text x="585" y="275" class="label">0</text><text x="650" y="275" class="label">0</text><text x="715" y="275" class="label">0</text><text x="780" y="275" class="label">0</text><text x="845" y="275" class="label">0</text></g><text x="500" y="330" text-anchor="middle" fill="#846C5B" style="font-size: 18px;">月 份</text><text x="-180" y="24" text-anchor="middle" transform="rotate(-90)" fill="#846C5B" style="font-size: 18px;">筆  數</text></svg>
+                        </div>
+                      </div>
+                      <!-- card-tools-wrapper end -->
+                      <!-- card-tools-wrapper begin -->
+                      <div class="card-tools-wrapper">
+                        <div class="title">
+                          線條圖
+                          <a href="#" class="btn-dataicon-downlod"><span class="myicon icon-download-infographic"></span></a>
+                        </div>
+                        <div class="content responsive">
+                          <img src="https://fakeimg.pl/800x300/e4dfdb/4A3E3A?text=Chart">
+                        </div>
+                      </div>
+                      <!-- card-tools-wrapper end -->
+                      <!-- card-tools-wrapper begin -->
+                      <div class="card-tools-wrapper">
+                        <div class="title">
+                          圓餅圖
+                          <a href="#" class="btn-dataicon-downlod"><span class="myicon icon-download-infographic"></span></a>
+                        </div>
+                        <div class="content responsive">
+                          <img src="https://fakeimg.pl/800x300/e4dfdb/4A3E3A?text=Chart">
+                        </div>
+                      </div>
+                      <!-- card-tools-wrapper end -->
+                    </div>
+                    <!-- col end -->
+                  </div>
+                  <!-- row end -->
+                  <!-- pagination begin -->
+                  <ul class="pagination justify-content-center">
+                    <li>
+                      <a href="#" aria-label="Previous">
+                        <span class="myicon icon-arrow-left"></span>
+                      </a>
+                    </li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li>
+                      <a href="#" aria-label="Next">
+                        <span class="myicon icon-arrow-right"></span>
+                      </a>
+                    </li>
+                  </ul>
+                  <!-- pagination end -->
+  
+                </div>            
+              </div>
+              <!-- 出現紀錄 end -->
+  
+            </div>
+            <!-- tab-content end -->
+            <!-- TABS&CONTENT end -->
+  
+          </div>
+          <!-- search content end -->
+  
+        </div>
+        <!-- 資料集出現紀錄 row end -->
+  
+      </div>
+      <!-- container end -->
+
+      
+{% endblock %}
