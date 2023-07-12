@@ -5,12 +5,29 @@
 {% block title %}GBIF 介紹{% endblock %}
 {% get_current_language as LANGUAGE_CODE %}
 {% block main %}
+{% if LANGUAGE_CODE == "zh-hant" %}
 
+<!-- topnav begin -->
+<div class="bg-main-pale">
+ <div class="container">
+   <div class="caption-mascot-wrapper">
+     <h1 class="title">GBIF 介紹</h1>
+     <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
+   </div>
+ </div>
+</div>
+<!-- topnav end -->
 <!-- container begin -->
-<div class="container">
-  {% if LANGUAGE_CODE == "zh-hant" %}
-  {% include "inc_breadcrumb.html" with tab="03" active_label="GBIF 介紹" %}
-
+<div class="container my-5">
+ <!-- breadcrumb begin -->
+ <nav aria-label="breadcrumb">
+   <ol class="breadcrumb">
+     <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+     <li class="breadcrumb-item">關於我們</li>
+     <li class="breadcrumb-item active" aria-current="page">GBIF 簡介</li>
+   </ol>
+ </nav>
+ <!-- breadcrumb end -->
   <h1 class="heading-lg-ul">
     什麼是 GBIF ?
   </h1>
@@ -55,9 +72,10 @@
     <div>
       <small>資料來源: <a href="https://www.gbif.org/zh-tw/what-is-gbif">什麼是 GBIF ?</a></small>
     </div>
+  </div>
 
     {% endif%}
-    {% if LANGUAGE_CODE == "en" %}
+    {% comment %} {% if LANGUAGE_CODE == "en" %}
     {% include "inc_breadcrumb.html" with tab="03" active_label="About GBIF" %}
 
   <h1 class="heading-lg-ul">
@@ -112,5 +130,5 @@
     </div>
     {% endif %}
 </div>
-  <!-- container end -->
+  <!-- container end --> {% endcomment %}
 {% endblock %}
