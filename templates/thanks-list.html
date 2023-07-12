@@ -4,9 +4,30 @@
 
 
 {% block main %}
+
+ <!-- topnav begin -->
+ <div class="bg-main-pale">
+  <div class="container">
+    <div class="caption-mascot-wrapper">
+      <h1 class="title">感謝名單</h1>
+      <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
+    </div>
+  </div>
+</div>
+<!-- topnav end -->
+
  <!-- container begin -->
  <div class="container my-5">
 
+    <!-- breadcrumb begin -->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+        <li class="breadcrumb-item">關於我們</li>
+        <li class="breadcrumb-item active" aria-current="page">感謝名單</li>
+      </ol>
+    </nav>
+    <!-- breadcrumb end -->
     <!-- 致謝名單 begin -->
     <div class="my-5">
       <h1 class="headline-center-sm">TaiBIF 參與人員致謝名單</h1>
@@ -74,53 +95,74 @@
       </div>
     </div>
     <!-- 志工名單 end -->
-    
-    <!-- 專題文章 begin -->
     <div class="my-5">
-      <h1 class="headline-center-sm">指導單位</h1>
+      <h1 class="headline-center-md">指導單位</h1>
       <div class="row justify-content-center align-items-center">
         <div class="col-7 col-md-4 col-supervisor-logo">
-          <img src="{% static 'images/logo-supervisor-nstc.png' %}" alt="" class="img-fluid">
+            <a href="https://www.nstc.gov.tw/" target="_blank">
+                <img src="{% static 'images/logo-supervisor-nstc.png' %}" alt="" class="img-fluid">
+            </a>
         </div>
         <div class="col-5 col-md-3 col-supervisor-logo">
-          <img src="{% static 'images/logo-supervisor-coa.png' %}" alt="" class="img-fluid">
+            <a href="https://www.coa.gov.tw/" target="_blank">
+                <img src="{% static 'images/logo-supervisor-coa.png' %}" alt="" class="img-fluid">
+            </a>
         </div>
         <div class="col-3 col-md-2 col-supervisor-logo">
-          <img src="{% static 'images/logo-supervisor-brcas.png' %}" alt="" class="img-fluid">
+            <a href="https://www.biodiv.tw" target="_blank">
+                <img src="{% static 'images/logo-supervisor-brcas.png' %}" alt="" class="img-fluid">
+            </a>
         </div>
         <div class="col-5 col-md-3 col-supervisor-logo">
-          <img src="{% static 'images/logo-supervisor-sinica.png' %}" alt="" class="img-fluid">
+            <a href="https://www.sinica.edu.tw/ch" target="_blank">
+                <img src="{% static 'images/logo-supervisor-sinica.png' %}" alt="" class="img-fluid">
+            </a>
         </div>
       </div>
     </div>
-    <!-- 專題文章 end -->
     <!-- 夥伴單位 begin -->
     <div class="my-5">
       <h1 class="headline-center-sm">夥伴單位</h1>
       <div class="row justify-content-center align-items-center">
         <div class="col-partner-logo">
-          <img src="{% static 'images/logo-partner-forest.jpg' %}" alt="" class="img-fluid">
+            <a href="https://www.forest.gov.tw/" target="_blank">
+                <img src="{% static 'images/logo-partner-forest.jpg' %}" alt="" class="img-fluid">
+            </a>
         </div>
         <div class="col-partner-logo">
-          <img src="{% static 'images/logo-partner-endemic.jpg' %}" alt="" class="img-fluid">
+            <a href="#">
+                <img src="{% static 'images/logo-partner-endemic.jpg' %}" alt="" class="img-fluid">
+            </a>
         </div>
         <div class="col-partner-logo">
-          <img src="{% static 'images/logo-partner-cpami.jpg' %}" alt="" class="img-fluid">
+            <a href="https://www.cpami.gov.tw" target="_blank">
+                <img src="{% static 'images/logo-partner-cpami.jpg' %}" alt="" class="img-fluid">
+            </a>
         </div>
         <div class="col-partner-logo">
-          <img src="{% static 'images/logo-partner-oca.jpg' %}" alt="" class="img-fluid">
+            <a href="https://www.oca.gov.tw/ch/index.jsp" target="_blank">
+                <img src="{% static 'images/logo-partner-oca.jpg' %}" alt="" class="img-fluid">
+            </a>
         </div>
         <div class="col-partner-logo">
-          <img src="{% static 'images/logo-partner-tfri.jpg' %}" alt="" class="img-fluid">
+            <a href="https://www.tfri.gov.tw" target="_blank">
+                <img src="{% static 'images/logo-partner-tfri.jpg' %}" alt="" class="img-fluid">
+            </a>
         </div>
         <div class="col-partner-logo">
-          <img src="{% static 'images/logo-partner-ntm.jpg' %}" alt="" class="img-fluid">
+            <a href="#">
+                <img src="{% static 'images/logo-partner-ntm.jpg' %}" alt="" class="img-fluid">
+            </a>
         </div>
         <div class="col-partner-logo">
-          <img src="{% static 'images/logo-partner-wra.jpg' %}" alt="" class="img-fluid">
+            <a href="#">
+                <img src="{% static 'images/logo-partner-wra.jpg' %}" alt="" class="img-fluid">
+            </a>
         </div>
         <div class="col-partner-logo">
-          <img src="{% static 'images/logo-partner-depositar.jpg' %}" alt="" class="img-fluid">
+            <a href="#">
+                <img src="{% static 'images/logo-partner-depositar.jpg' %}" alt="" class="img-fluid">
+            </a>
         </div>
       </div>
     </div>

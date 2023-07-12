@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load i18n %}
-{% block title %}簡介{% endblock %}
+{% block title %}TaiBIF 介紹{% endblock %}
 
 {% block main %}
 
@@ -9,16 +9,37 @@
 
 
 <!-- container begin -->
-<div class="container">
 
   {% if LANGUAGE_CODE == "zh-hant" %}
-  {% include "inc_breadcrumb.html" with tab="03" active_label="TaiBIF 簡介" %}
+
+ <!-- topnav begin -->
+ <div class="bg-main-pale">
+  <div class="container">
+    <div class="caption-mascot-wrapper">
+      <h1 class="title">TaiBIF 介紹</h1>
+      <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
+    </div>
+  </div>
+</div>
+<!-- topnav end -->
+<!-- container begin -->
+<div class="container my-5">
+  <!-- breadcrumb begin -->
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+      <li class="breadcrumb-item">關於我們</li>
+      <li class="breadcrumb-item active" aria-current="page">TaiBIF 簡介</li>
+    </ol>
+  </nav>
+  <!-- breadcrumb end -->
+
 
   <h1 class="heading-lg-ul">
     臺灣生物多樣性資訊機構
+  <br>
     (Taiwan Biodiversity Information Facility, TaiBIF)
   </h1>
-
 
   <div class="article-content-wrapper">
     <h3>關於 TaiBIF</h3>
@@ -37,6 +58,8 @@
   {% endif %}
   
   {% if LANGUAGE_CODE == "en" %}
+  <div class="container">
+
   {% include "inc_breadcrumb.html" with tab="03" active_label="About TaiBIF" %}
 
   <h1 class="heading-lg-ul">
@@ -113,6 +136,8 @@
 
   {% endif %}
 
+  {% comment %} </div>   {% endcomment %}
 </div>
+
   <!-- container end -->
 {% endblock %}

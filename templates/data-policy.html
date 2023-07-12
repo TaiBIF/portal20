@@ -7,13 +7,39 @@
 
 {% block main %}
 
+ <!-- topnav begin -->
+ <div class="bg-main-pale">
+  <div class="container">
+    <div class="caption-mascot-wrapper">
+      <h1 class="title">資料使用條款暨隱私權政策</h1>
+      <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
+    </div>
+  </div>
+</div>
+<!-- topnav end -->
+
 <!-- container begin -->
-<div class="container">
-  {% if LANGUAGE_CODE == "zh-hant" %}
-  {% include "inc_breadcrumb.html" with tab="01" active_label="資料使用條款暨隱私權政策" %}
+{% if LANGUAGE_CODE == "zh-hant" %}
+
+<div class="container my-5">
+
+  <!-- breadcrumb begin -->
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+      <li class="breadcrumb-item">關於我們</li>
+      <li class="breadcrumb-item active" aria-current="page">感謝名單</li>
+    </ol>
+  </nav>
+  <!-- breadcrumb end -->
+{% comment %} <div class="container"> {% endcomment %}
+  {% comment %} {% include "inc_breadcrumb.html" with tab="01" active_label="資料使用條款暨隱私權政策" %} {% endcomment %}
 
   <h1 class="heading-lg-ul">
-    臺灣生物多樣性資訊機構(Taiwan Biodiversity Information Facility, TaiBIF)網站及資料使用條款暨隱私權政策
+    臺灣生物多樣性資訊機構
+    <br>
+    (Taiwan Biodiversity Information Facility, TaiBIF)網站
+    <br>及資料使用條款暨隱私權政策
   </h1>
 
 
