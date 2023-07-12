@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}感謝名單{% endblock %}
+
+
+{% block main %}
+ <!-- container begin -->
+ <div class="container my-5">
+
+    <!-- 致謝名單 begin -->
+    <div class="my-5">
+      <h1 class="headline-center-sm">TaiBIF 參與人員致謝名單</h1>
+      <div class="table-responsive mt-3">
+        <table class="table table-ltmilo">
+          <thead>
+            <tr>
+              <th class="col-2 col-md-2">姓名</th>
+              <th class="col-auto col-md-5">單位</th>
+              <th class="col-auto col-md-5">任務</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>何芷蔚</td>
+              <td>國立臺灣大學計算機及資訊網路中心</td>
+              <td>講師與助教、文件翻譯</td>
+            </tr>
+            <tr>
+              <td>何芷蔚</td>
+              <td>國立臺灣大學計算機及資訊網路中心</td>
+              <td>講師與助教、文件翻譯</td>
+            </tr>
+            <tr>
+              <td>何芷蔚</td>
+              <td>國立臺灣大學計算機及資訊網路中心</td>
+              <td>講師與助教、文件翻譯</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- 致謝名單 end -->
+
+    <!-- 志工名單 begin -->
+    <div class="my-5">
+      <h1 class="headline-center-sm">TaiBIF 專業人員/志工名單</h1>
+      <div class="table-responsive mt-3">
+        <table class="table table-ltmilo">
+          <thead>
+            <tr>
+              <th class="col-2 col-md-2">TaiBIFer</th>
+              <th class="col-auto col-md-5">任務種類</th>
+              <th class="col-auto col-md-5">認證</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>何芷蔚</td>
+              <td>助教、文件翻譯</td>
+              <td><a href="#">GitHub 證書連結</a></td>
+            </tr>
+            <tr>
+              <td>何芷蔚</td>
+              <td>助教、文件翻譯</td>
+              <td><a href="#">證書連結</a></td>
+            </tr>
+            <tr>
+              <td>何芷蔚</td>
+              <td>助教、文件翻譯</td>
+              <td><a href="#">連結</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- 志工名單 end -->
+    
+    <!-- 專題文章 begin -->
+    <div class="my-5">
+      <h1 class="headline-center-sm">指導單位</h1>
+      <div class="row justify-content-center align-items-center">
+        <div class="col-7 col-md-4 col-supervisor-logo">
+          <img src="{% static 'images/logo-supervisor-nstc.png' %}" alt="" class="img-fluid">
+        </div>
+        <div class="col-5 col-md-3 col-supervisor-logo">
+          <img src="{% static 'images/logo-supervisor-coa.png' %}" alt="" class="img-fluid">
+        </div>
+        <div class="col-3 col-md-2 col-supervisor-logo">
+          <img src="{% static 'images/logo-supervisor-brcas.png' %}" alt="" class="img-fluid">
+        </div>
+        <div class="col-5 col-md-3 col-supervisor-logo">
+          <img src="{% static 'images/logo-supervisor-sinica.png' %}" alt="" class="img-fluid">
+        </div>
+      </div>
+    </div>
+    <!-- 專題文章 end -->
+    <!-- 夥伴單位 begin -->
+    <div class="my-5">
+      <h1 class="headline-center-sm">夥伴單位</h1>
+      <div class="row justify-content-center align-items-center">
+        <div class="col-partner-logo">
+          <img src="{% static 'images/logo-partner-forest.jpg' %}" alt="" class="img-fluid">
+        </div>
+        <div class="col-partner-logo">
+          <img src="{% static 'images/logo-partner-endemic.jpg' %}" alt="" class="img-fluid">
+        </div>
+        <div class="col-partner-logo">
+          <img src="{% static 'images/logo-partner-cpami.jpg' %}" alt="" class="img-fluid">
+        </div>
+        <div class="col-partner-logo">
+          <img src="{% static 'images/logo-partner-oca.jpg' %}" alt="" class="img-fluid">
+        </div>
+        <div class="col-partner-logo">
+          <img src="{% static 'images/logo-partner-tfri.jpg' %}" alt="" class="img-fluid">
+        </div>
+        <div class="col-partner-logo">
+          <img src="{% static 'images/logo-partner-ntm.jpg' %}" alt="" class="img-fluid">
+        </div>
+        <div class="col-partner-logo">
+          <img src="{% static 'images/logo-partner-wra.jpg' %}" alt="" class="img-fluid">
+        </div>
+        <div class="col-partner-logo">
+          <img src="{% static 'images/logo-partner-depositar.jpg' %}" alt="" class="img-fluid">
+        </div>
+      </div>
+    </div>
+    <!-- 夥伴單位 end -->
+  </div>
+  <!-- container end -->
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}資料期刊與論文{% endblock %}
+
+
+{% block main %}
+    <!-- topnav begin -->
+    <div class="bg-main-pale">
+        <div class="container">
+          <div class="caption-mascot-wrapper">
+            <h1 class="title">資料期刊與論文</h1>
+            <img src="assets/images/mascot-flower.png" alt="" class="symbol">
+          </div>
+        </div>
+      </div>
+      <!-- topnav end -->
+      <!-- container begin -->
+      <div class="container my-5">
+        <!-- breadcrumb begin -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+            <li class="breadcrumb-item">資料應用</li>
+            <li class="breadcrumb-item active" aria-current="page">資料期刊與論文</li>
+          </ol>
+        </nav>
+        <!-- breadcrumb end -->
+        <!-- row begin -->
+        <div class="row">
+          <!-- col left begin -->
+          <div class="col-12 col-md-3">
+  
+            <div class="dropdown dropdown-flexible-wrapper">
+              <a class="btn btn-toggle-flexible visible-xs" href="#" data-toggle="dropdown">
+                資料期刊與論文
+              </a>
+              <div class="dropdown-menu dropdown-menu-flexible">
+                <a class="dropdown-item current-sunset" href="#">關於資料論文</a>
+                <a class="dropdown-item" href="#">資料論文發表指引</a>
+                <a class="dropdown-item" href="#">資料期刊</a>
+                <a class="dropdown-item" href="#">TaiBIF 歷年合作資料論文</a>
+                <a class="dropdown-item" href="#">Call for Data Paper</a>
+              </div>
+            </div>
+  
+          </div>
+          <!-- col left end -->
+          <!-- col right begin -->
+          <div class="col-12 col-md-9">
+            <h4 class="headline-left-hr">資料期刊與論文</h4>
+            <p>一份好的資料集，必須可以再利用（具互操作性），若能提供越多欄位資料，則資料的品質及價值也能相對地提高，在任何情況下，資料集至少要有下列所述 Darwin Core 欄位</p>
+            <h4 class="headline-left">相關參考連結：</h4>
+            <ul>
+              <li>DwC 資料欄位的各集合內容：<a href="https://tools.gbif.org/dwca-validator/extensions.do" target="_blank">Darwin Core Registered Extensions</a>（按 core 和 extension 分類）</li>
+              <li>DwC 資料欄位標準英文定義快速查詢：<a href="https://dwc.tdwg.org/terms/" target="_blank">Darwin Core Quick Reference Guide</a>（按詞條的 class 分類）</li>
+            </ul>
+            <div class="embed-responsive embed-responsive-3by2">
+              <iframe src="https://www.slideshare.net/slideshow/embed_code/key/68wnofrPt4FlcO?hostedIn=slideshare&amp;page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen=""> </iframe>
+            </div>
+            <p class="mt-3">操作流程下載：<a href="/media/article/download/TaiBIF IPT操作說明 2023 v2.6.3.pdf" class="myicon icon-download-document"></a></p>
+          </div>
+          <!-- col right end -->
+        </div>
+        <!-- row end -->
+      </div>
+      <!-- container end -->
+  
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}資料開放與應用工作坊{% endblock %}
+
+
+{% block main %}
+
+    
+    <!-- topnav begin -->
+    <div class="bg-main-pale">
+        <div class="container">
+          <div class="caption-mascot-wrapper">
+            <h1 class="title">資料開放與應用工作坊</h1>
+            <img src="{% static 'images/mascot-frog.png'%}" alt="" class="symbol">
+
+            
+          </div>
+        </div>
+      </div>
+      <!-- topnav end -->
+      <!-- container begin -->
+      <div class="container my-5">
+        <!-- breadcrumb begin -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+            <li class="breadcrumb-item">教育資源</li>
+            <li class="breadcrumb-item active" aria-current="page">資料開放與應用工作坊</li>
+          </ol>
+        </nav>
+        <!-- breadcrumb end -->
+        <!-- row begin -->
+        <div class="row">
+          <!-- col begin -->
+          <div class="col-12 col-md-10 offset-md-1">
+  
+            <p>國科會負責辦理《生物多樣性行動計畫》中 D12010「建立生物多樣性資訊交換機制及各類或各機構資料庫之建置與整合，並定期增修補充各項資料庫之內容」及 D21010「維護及更新生物多樣性監測資料之資訊管理系統」，從 2012 年起要求研究計畫必須在計畫結案三個月內繳交報告的同時，繳交計畫過程產生的生態分布資料（見說明1）。資料繳交之規範經學門召集人於2018年1月17日開會討論後，調整如下</p>
+  
+            <div class="row">
+              <div class="col-12 col-md-6 my-3">
+                <a href="{% url 'tech-online-class' %}" class="btn-cta-learning">
+                  <span class="heading">線上教材包</span>
+                  <img src="{% static 'images/edu-video.png'%}" alt="">
+                  
+                </a>
+              </div>
+              <div class="col-12 col-md-6 my-3">
+                <a href="{% url 'tech-class-license' %}" class="btn-cta-learning">
+                  <span class="heading">課程認證</span>
+                  <img src="{% static 'images/edu-lesson.png'%}" alt="">
+                </a>
+              </div>
+            </div>
+  
+          </div>
+          <!-- col end -->
+        </div>
+        <!-- row end -->
+      </div>
+      <!-- container end -->
+      
+{% endblock %}

@@ -213,34 +213,34 @@ class DatasetTable extends React.Component {
           <div>
             {(language ==='en')? <h3>List of dataset <small><a href="/dataset/search" className="btn btn-default"> 👉 Search dataset</a></small></h3>
             :<h3>資料集列表 <small><a href="/dataset/search" className="btn btn-default"> 👉 搜尋資料集</a></small></h3>}
-          <table className="table table-bordered">
-          <colgroup>
-          <col span="1" style={{'width': '2%'}}/>
-          <col span="1" style={{'width': '15%'}}/>
-          <col span="1" style={{'width': '13%'}}/>
-          <col span="1" style={{'width': '15%'}}/>
-          <col span="1" style={{'width': '10%'}}/>
-          <col span="1" style={{'width': '10%'}}/>
-          <col span="1" style={{'width': '10%'}}/>
-          <col span="1" style={{'width': '10%'}}/>
-          <col span="1" style={{'width': '15%'}}/>
-          </colgroup>
-          <thead>
-          <tr>
-          <th>#</th>
-          {theadItems}
-          </tr>
-          </thead>
-          <tbody>
-          {dataList}
-          </tbody>
-          </table>
-          <nav aria-label="...">
-          <ul className="pager">
-          {paginationList}
-
-          </ul>
-          </nav>
+          
+            <table className="table table-bordered" id="opendata-table">
+              <colgroup>
+                <col span="1" style={{'width': '2%'}}/>
+                <col span="1" style={{'width': '15%'}}/>
+                <col span="1" style={{'width': '13%'}}/>
+                <col span="1" style={{'width': '15%'}}/>
+                <col span="1" style={{'width': '10%'}}/>
+                <col span="1" style={{'width': '10%'}}/>
+                <col span="1" style={{'width': '10%'}}/>
+                <col span="1" style={{'width': '10%'}}/>
+                <col span="1" style={{'width': '15%'}}/>
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  {theadItems}
+                </tr>
+              </thead>
+              <tbody>
+                {dataList}
+              </tbody>
+            </table>
+            <nav aria-label="...">
+              <ul className="pager">
+                {paginationList}
+              </ul>
+            </nav>
           </div>
       )
     }

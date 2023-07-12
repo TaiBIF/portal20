@@ -54,7 +54,6 @@ def index(request):
 
     dataset_num = Dataset.objects.filter(status='PUBLIC').count()
     # taxon_cover = len(occ_result['facets']['taxon_id']['buckets'])
-         
     context = {
         'news_list': news_list,
         'event_list': event_list,
@@ -282,6 +281,98 @@ def export_csv(request):
         writer.writerow(row['match_list'])
 
     return response
+
+
+
+def taibif_achievement(request):
+    context = {}
+    return render(request, 'taibif-achievement.html', context)
+
+def faq(request):
+    context = {}
+    return render(request, 'faq.html', context)
+
+def download_resources(request):
+    context = {}
+    return render(request, 'download-resources.html', context)
+
+def thanks_list(request):
+    context = {}
+    return render(request, 'thanks-list.html', context)
+
+def open_process(request):
+    context = {}
+    return render(request, 'open-process.html', context)
+
+def open_standard(request):
+    context = {}
+    return render(request, 'open-standard.html', context)
+
+def open_metadata(request):
+    context = {}
+    return render(request, 'open-metadata.html', context)
+
+def open_uplaod(request):
+    context = {}
+    return render(request, 'open-uplaod.html', context)
+
+def open_license(request):
+    context = {}
+    return render(request, 'open-license.html', context)
+
+def open_timezone(request):
+    context = {}
+    return render(request, 'open-timezone.html', context)
+
+def tech_open(request):
+    context = {}
+    return render(request, 'tech-open.html', context)
+
+def tech_book(request):
+    context = {}
+    return render(request, 'tech-book.html', context)
+
+def tech_workshop(request):
+    context = {}
+    return render(request, 'tech-workshop.html', context)
+
+def tech_online_class(request):
+    context = {}
+    return render(request, 'tech-online-class.html', context)
+
+def tech_class_license(request):
+    context = {}
+    return render(request, 'tech-class-license.html', context)
+
+def tech_volunteer(request):
+    context = {}
+    return render(request, 'tech-volunteer.html', context)
+
+
+
+def data_paper(request):
+    context = {}
+    return render(request, 'data-paper.html', context)
+
+def data_visual(request):
+    context = {}
+    return render(request, 'data-visual.html', context)
+
+def data_case(request):
+    context = {}
+    return render(request, 'data-case.html', context)
+
+def data_product(request):
+    context = {}
+    return render(request, 'data-product.html', context)
+
+def data_story(request):
+    context = {}
+    return render(request, 'data-story.html', context)
+
+def web_navi(request):
+    context = {}
+    return render(request, 'web-navi.html', context)
 
 def trans(request):
     translate_str = _("這裡放需要翻譯的文字")

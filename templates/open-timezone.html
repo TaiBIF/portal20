@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}計畫資料繳交依據與時程{% endblock %}
+
+
+{% block main %}
+
+    <!-- topnav begin -->
+    <div class="bg-main-pale">
+        <div class="container">
+          <div class="caption-mascot-wrapper">
+            <h1 class="title">計畫資料繳交依據與時程</h1>
+            <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
+          </div>
+        </div>
+      </div>
+      <!-- topnav end -->
+      <!-- container begin -->
+      <div class="container my-5">
+        <!-- breadcrumb begin -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+            <li class="breadcrumb-item">開放資料</li>
+            <li class="breadcrumb-item active" aria-current="page">計畫資料繳交依據與時程</li>
+          </ol>
+        </nav>
+        <!-- breadcrumb end -->
+        <!-- row begin -->
+        <div class="row">
+          <!-- col left begin -->
+          <div class="col-12 col-md-3">
+  
+            <div class="dropdown dropdown-flexible-wrapper">
+              <a class="btn btn-toggle-flexible visible-xs" href="#" data-toggle="dropdown">
+                計畫資料繳交依據與時程
+              </a>
+              <div class="dropdown-menu dropdown-menu-flexible">
+                <a class="dropdown-item current-sunset" href="#">國科會計畫</a>
+                <a class="dropdown-item" href="#">生態檢核計畫</a>
+                <a class="dropdown-item" href="#">LTSER</a>
+              </div>
+            </div>
+  
+          </div>
+          <!-- col left end -->
+          <!-- col right begin -->
+          <div class="col-12 col-md-9">
+            <h4 class="headline-left-hr">申請資料清理服務</h4>
+            <p>依國際資料標準整理及繳交生物多樣性資料，便利學術同儕資料共享及引用，提昇研究水準。</p>
+            <img src="assets/images/workflow-most-ipt.jpg" class="img-fluid">
+            <p class="text-gray-8-sm mt-2">資料管理流程 @TaiBIF，以上依國科會制定「生物多樣性及長期生態研究計畫之物種分布資料釋出作業規範」辦理
+            </p>
+            <p>國科會負責辦理《生物多樣性行動計畫》中 D12010「建立生物多樣性資訊交換機制及各類或各機構資料庫之建置與整合，並定期增修補充各項資料庫之內容」及 D21010「維護及更新生物多樣性監測資料之資訊管理系統」，從 2012 年起要求研究計畫必須在計畫結案三個月內繳交報告的同時，繳交計畫過程產生的生態分布資料（見說明1）。資料繳交之規範經學門召集人於2018年1月17日開會討論後，調整如下：
+            </p>
+            <ol>
+              <li>本規範所指之資料為接受國科會（以下簡稱本部）補助之研究計畫在執行過程所產生的資料，包含（但不限於）物種出現紀錄（見說明2）、形質測量、基因序列、環境因子測量讀數、名錄、測站、樣區、描述及詮釋資訊等等。</li>
+              <li>資料管理及繳交之技術細節，由國科會指定之資料管理單位（以下簡稱資料庫）定期舉辦說明會及更新線上資源說明之。</li>
+              <li>資料繳交至資料庫時，得依計畫主持人意願選擇公開條件，包含保留期限（立即公開、二年後公開、三年後公開）、公開範圍（臺灣或全球）及授權條件。資料庫於條件滿足時即公開。</li>
+              <li>研究資料之管理及繳交為計畫執行的一部分；資料繳交的履行情況及品質（見說明3）將會納入未來研究計畫申請時的審核參考。</li>
+              <li>使用公開之資料之研究成果及論文發表應適當引用所使用之資料（含明確指出資料提供者的貢獻），以持續促進資料公開分享對學門研究的正面影響。</li>
+            </ol>
+            <p>說明：</p>
+            <ol>
+              <li>科學研究成果的資料保存近年間在歐美隨著開放資料、開放政府運動有顯著的進展：美國國家科學基金會從 2011 年起開始要求研究計畫申請案必須寫明資料管理計畫並編列其執行所需經費(NSF 2013)，歐盟也明確定義「開放存取」(open access)為「研究報告及原始資料的免費取得」，且要求研究計畫中的資料管理計畫必須明確說明將會開放何種資料及維護的實際成本(European Union, 2018)。</li>
+              <li>物種出現紀錄定義為：經由 1)人為或自動化採集、觀測而取得，且2)經適當鑑定，且3)載明時間、地點及其它採集相關訊息之資料。</li>
+              <li>上傳資料的流程中，建議可使用 GBIF Data Validator (<a href="https://www.gbif.org/tool/81281/gbif-data-validator" target="_blank">https://www.gbif.org/tool/81281/gbif-data-validator</a>) 進行基本的資料品質檢驗。
+              </li>
+            </ol>
+            <p>參考資料：</p>
+            <p>European Union, 2018. Participant Portal H2020 Online Manual. Available at http://ec.europa.eu/research/participants/docs/h2020-funding-guide/cross-cutting-issues/open-access-dissemination_en.htm [accessed January 19, 2018].</p>
+            <p>NSF, 2013. Dissemination and Sharing of Research Results. Available at: http://www.nsf.gov/bfa/dias/policy/dmp.jsp</p>
+  
+          </div>
+          <!-- col right end -->
+        </div>
+        <!-- row end -->
+      </div>
+      <!-- container end -->
+  
+{% endblock %}

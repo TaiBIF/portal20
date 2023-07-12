@@ -6,11 +6,10 @@
 {% load i18n %}
 
 {% block title %}
-Search
+出現紀錄
 {% endblock %}
 
 {% block head %}
-{#<link rel="stylesheet" href="{% static 'css/search.css' %}" />#}
 <style>
   .loading-overlay {
   position: fixed; /* Sit on top of the page content */
@@ -19,7 +18,7 @@ Search
   height: 100%; /* Full height (cover the whole page) */
   top: 0;
   left: 0;
-  right: 0;
+  right: 0; 
   bottom: 0;
   background-color: rgba(0,0,0,0.5); /* Black background with opacity */
   z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
@@ -27,13 +26,12 @@ Search
 }
 </style>
 {#<link rel="stylesheet" href="{% static 'css/tree.css' %}" />#}
+{% comment %} <link rel="stylesheet" href="{% static 'css/theme.css' %}"> {% endcomment %}
+
 {% endblock %}
 {% get_current_language as LANGUAGE_CODE %}
 
 {% block script %}
-{#<script src="https://code.highcharts.com/highcharts.js"></script>#}
-{#<script src="https://code.highcharts.com/modules/exporting.js"></script>#}
-{#<script src="{% static 'js/test.js' %}"></script>#}
 
 {% if env == "prod" or env == "stag" %}
 
@@ -46,7 +44,19 @@ Search
 {% endif %}
 {% endblock %}
 
-{% block main %}
+{% block main %} 
+
+    <!-- topnav begin -->
+    <div class="bg-main-pale">
+      <div class="container">
+        <div class="caption-mascot-wrapper">
+          <h1 class="title">出現紀錄</h1>
+          <img src="{% static 'images/mascot-flower.png' %}" alt="" class="symbol">
+          
+        </div>
+      </div>
+    </div>
+    <!-- topnav end -->
 <!--div class="container search-container" id="taibif-search-container" data-q="{{ request.GET.q }}"></div-->
 {% if LANGUAGE_CODE == "zh-hant" %}
   <div class="container-fluid search-container-fluid" id="taibif-search-container" data-q="{{ request.GET.q }}"  lang="zh-hant"></div>
