@@ -245,22 +245,7 @@
         <tbody>
           {% for k,v in taxon.items %}
             {% if v.value.0 != None or v.value.1 != None %}
-              {% if k == 'genus'  %}
-                <tr>
-                  <td>{{ v.name_zh }}</td>
-                  <td><I>
-                    {% if v.value.1 != None %}
-                      {{ v.value.1 }}
-                    {% endif %}
-                  </I></td>
-                  <td>
-                    {% if v.value.0 != None %}
-                      {{ v.value.0 }}
-                    {% endif %}
-                  </td>
-                </tr>
-
-                {% elif k == 'scientificNameID' or k == 'acceptedNameUsageID' %}
+                {% if k == 'scientificNameID' or k == 'acceptedNameUsageID' %}
                   <tr><td>{{ v.name_zh }}</td>
                     <td>
                       <a href="https://nametool.taicol.tw/zh-tw/taxon-names/{{ v.value.1 }}">{{ v.value.1 }}</a>

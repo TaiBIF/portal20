@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Parser from 'html-react-parser';
 
 const useStyles = makeStyles({
   occurrenceRow: {
@@ -98,18 +99,12 @@ export default function OccurrenceSearch(props) {
     const country_ch = map2.get(row.taibif_country);
     const countryOrLocality = (props.language === 'zh-hant') ? [country_ch, row.locality].join('/') : [row.taibif_country, row.locality].join('/');
     const bor = bor_allow.includes(row.basisOfRecord) ? row.basisOfRecord : "";
-    let formatted_name_regex = /^<i>.*/;
-    let tmp_name = row.formatted_name;
-    let not_species = false
-    if ( typeof(tmp_name) === 'string' && tmp_name.match(formatted_name_regex)){
-      not_species = true;
-      tmp_name = tmp_name.replace('<i>','').replace('</i>','');
-    }
+
     return (
         <tr key={index} onClick={(e)=>{window.location.href=`/occurrence/${row.taibif_occ_id}`}} className={classes.occurrenceRow}>
         <td>{ sn }</td>
         <td>{ vernacular_name }</td>
-        <td>{  not_species ? <i>{tmp_name}</i> : row.formatted_name }</td>
+        <td>{Parser(row.formatted_name)}</td>
         <td>{ row.eventDate }</td>
         <td>{ countryOrLocality }</td>
         <td><a href={"/dataset/"+row.taibifDatasetID+"/"}>{ row.taibif_dataset_name_zh }</a></td>

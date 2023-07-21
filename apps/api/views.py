@@ -1329,7 +1329,7 @@ def search_dataset(request):
 
         rights_query = []
         for k,v in condiction_menu:
-            if k!= "data_license":
+            if k!= "rights":
                 rights_query.append((k,v))
         rights_menu = DatasetSearch(rights_query) 
         # license
@@ -1363,7 +1363,7 @@ def search_dataset(request):
             },
             {
                 'key': 'country',
-                'label': '分布地區/國家 Publishing Country or Area',
+                'label': '發布地區/國家 Publishing Country or Area',
                 'rows': country_rows
             },
             {
