@@ -35,16 +35,16 @@
   <body>
     <!-- shortcut begin -->
     <div class="shortcut-menu-wrapper dropup">
-      <a class="btn" href="#" data-toggle="dropdown" aria-expanded="false">
+      <a class="btn" href="{% url 'web-navi' %}" data-toggle="dropdown" aria-expanded="false">
         <img src="{% static 'images/mascot-fish.png' %}" alt="" class="stamp">
         網站捷徑
       </a>
       <div class="dropdown-menu">
-        <a href="#" class="dropdown-item">IPT</a>
+        <a href="https://ipt.taibif.tw" class="dropdown-item">IPT</a>
         <a href="{% url 'tools'%}" class="dropdown-item">開放資料工具</a>
         <a href="{% url 'index'%}" class="dropdown-item">資料標準模板</a>
-        <a href="#" class="dropdown-item">TaiCOL</a>
-        <a href="#" class="dropdown-item">TBIA</a>
+        <a href="https://taicol.tw" class="dropdown-item">TaiCOL</a>
+        <a href="https://tbiadata.tw" class="dropdown-item">TBIA</a>
         <a href="{% url 'index'%}" class="dropdown-item">網站導覽</a>
       </div>
     </div>

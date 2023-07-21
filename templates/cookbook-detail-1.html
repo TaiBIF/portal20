@@ -4,7 +4,7 @@
 {% block title %}Cookbook 1 - 介紹{% endblock %}
 
 {% block main %}
-{% include "inc_breadcrumb.html" with tab="02" active_label="Cookbook"%}
+{% comment %} {% include "inc_breadcrumb.html" with tab="02" active_label="Cookbook"%} {% endcomment %}
 
 <style>
   p, li{
@@ -21,6 +21,29 @@
 <!-- container begin -->
 
 
+ <!-- topnav begin -->
+ <div class="bg-main-pale">
+  <div class="container">
+    <div class="caption-mascot-wrapper">
+      <h1 class="title">資料開放與應用工作坊</h1>
+      <img src="{% static 'images/mascot-frog.png'%}" alt="" class="symbol">
+  </div>
+  </div>
+</div>
+<!-- topnav end -->
+  
+<!-- container begin -->
+<div class="container my-5">
+  <!-- breadcrumb begin -->
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+      <li class="breadcrumb-item">教育資源</li>
+      <li class="breadcrumb-item">生物多樣性資訊概論</li>
+      <li class="breadcrumb-item active" aria-current="page">第一章：介紹</li>
+  </ol>
+  </nav>
+  <!-- breadcrumb end -->
 
 <div class="container">
   {% if LANGUAGE_CODE == "zh-hant" %}

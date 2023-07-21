@@ -314,7 +314,7 @@ def open_metadata(request):
 
 def open_uplaod(request):
     context = {}
-    return render(request, 'open-uplaod.html', context)
+    return render(request, 'open-upload.html', context)
 
 def open_license(request):
     context = {}

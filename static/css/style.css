@@ -2806,3 +2806,157 @@ body {
   width: 100%;
   border: #ddd solid 1px;
 }
+
+.panel {
+  border: 1px solid transparent;
+}
+
+
+.panel-main {
+  border-color: #ddd;
+  margin-bottom: 10px !important;
+}
+
+.panel-main > .panel-heading {
+  background-color: #FAF9F9;
+  border-color: #ddd;
+  font-size: 18px;
+  padding: 0;
+}
+.panel-main > .panel-heading .panel-title a {
+  font-size: 18px;
+  padding: 10px 15px;
+  display: block;
+  color: #4A3E3A;
+  font-weight: normal;
+  position: relative;
+}
+.panel-main > .panel-heading .panel-title a[aria-expanded="true"]:after {
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\e937";
+  position: absolute;
+  right: 15px;
+}
+.panel-main > .panel-heading .panel-title a[aria-expanded="false"]:after {
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\e936";
+  position: absolute;
+  right: 15px;
+}
+
+.panel-main > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #ddd;
+  margin: 0;
+  padding: 15px;
+  list-style: none;
+}
+.panel-main > .panel-heading + .panel-collapse > .panel-body li {
+  margin: 2px 0;
+  padding: 0;
+}
+.panel-main > .panel-heading + .panel-collapse > .panel-body li a {
+  color: #846C5B;
+  display: block;
+  padding: 8px 0;
+}
+.panel-main > .panel-heading + .panel-collapse > .panel-body li a:before {
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\e917";
+  font-size: 120%;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+.panel-main > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #ddd;
+}
+
+.pagination {
+  margin: 30px auto;
+  border-radius: 0;
+}
+
+.pagination > li {
+  display: inline;
+}
+
+.pagination > li > a,
+.pagination > li > span {
+  padding: 4px 12px;
+  color: #4A3E3A;
+  background-color: transparent;
+  border: none;
+  margin: 0 3px;
+  border-radius: 30px;
+}
+
+.pagination > li > a:hover,
+.pagination > li > span:hover,
+.pagination > li > a:focus,
+.pagination > li > span:focus {
+  color: #fff;
+  background-color: rgba(187, 153, 139, 0.5);
+  border-color: rgba(187, 153, 139, 0.5);
+  border-radius: 30px;
+}
+
+.pagination > li:first-child > a,
+.pagination > li:first-child > span {
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+
+.pagination > li:last-child > a,
+.pagination > li:last-child > span {
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  background-color: #BB998B;
+  border-color: #BB998B;
+  border-radius: 30px;
+}
+
+.pagination > .disabled > span,
+.pagination > .disabled > span:hover,
+.pagination > .disabled > span:focus,
+.pagination > .disabled > a,
+.pagination > .disabled > a:hover,
+.pagination > .disabled > a:focus {
+  background-color: transparent;
+  border-color: transparent;
+}
