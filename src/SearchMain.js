@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
 import OccurrenceRouter from './occurrence/OccurrenceRouter';
+import Parser from 'html-react-parser';
+
 import {
   filtersToSearch,
   Pagination,
@@ -44,19 +46,20 @@ function SpeciesResult(props) {
     const link = `/species/${row.taicol_taxon_id}/`;
     // TODO species image
       // <a href="05-searchPublisher.html"><img src="images/logo-sinica.jpg" class="img-responsive"></a>
+
     const imgLink = null;
     return (
         <div className="row listbox-img-right-wrapper" key={index}>
           <div className="col-xs-8">
-            <h3 className="listbox-inner-title"><a href={link}><StyledScientificName data={row} /></a></h3>
+            <h3 className="listbox-inner-title"><a href={link}>{Parser(row.formatted_name)}  {row.name_zh}</a></h3>
             <div className="listbox-inner-summary hidden-xs">
               <ul className="scientific-name-wrapper">
               { row.rank_list.map((t)=>
-                <li key={t.taicol_taxon_id}><a href={"/species/"+t.taicol_taxon_id}>{t.formatted_name} {t.name_zh}</a></li>
+                <li key={t.taicol_taxon_id}><a href={"/species/"+t.taicol_taxon_id}> {Parser(t.formatted_name)} {t.name_zh}</a></li>
               )}
-                {/* <li><a href={link}><StyledScientificName data={row} /></a></li> */}
               </ul>
             </div>
+            {/* <span className="listbox-inner-tag">{row.rank}</span> */}
             {row.is_accepted_name
              ? <span className="listbox-inner-tag"><a href="">有效的</a></span>
              : null}
