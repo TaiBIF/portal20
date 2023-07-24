@@ -99,12 +99,11 @@ export default function OccurrenceSearch(props) {
     const country_ch = map2.get(row.taibif_country);
     const countryOrLocality = (props.language === 'zh-hant') ? [country_ch, row.locality].join('/') : [row.taibif_country, row.locality].join('/');
     const bor = bor_allow.includes(row.basisOfRecord) ? row.basisOfRecord : "";
-
     return (
         <tr key={index} onClick={(e)=>{window.location.href=`/occurrence/${row.taibif_occ_id}`}} className={classes.occurrenceRow}>
         <td>{ sn }</td>
         <td>{ vernacular_name }</td>
-        <td>{Parser(row.formatted_name)}</td>
+        <td>{(row.formatted_name ? Parser(row.formatted_name):'')}</td>
         <td>{ row.eventDate }</td>
         <td>{ countryOrLocality }</td>
         <td><a href={"/dataset/"+row.taibifDatasetID+"/"}>{ row.taibif_dataset_name_zh }</a></td>
