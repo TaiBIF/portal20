@@ -6,6 +6,10 @@ import {
   filtersToSearch,
 } from './Utils'
 
+import "./i18n";
+import i18n from "i18next";
+
+i18n.changeLanguage(document.getElementById('taibif-search-container').lang) 
 
 class TaibifSearch extends React.Component {
   constructor(props) {

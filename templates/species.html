@@ -199,23 +199,41 @@
         {{taxon.taieol_desc}}
         {% endif %}
         <hr>
-        <!-- carousel photos begin -->
-          <div class="owl-carousel owl-theme" id="speciesGallery">
-            {% for i in taxon.species_pic %}
-            <div class="article-card-img-wrapper">
-              <div class="article-card-title-ctn">
+
+        <!--carousel photos begin-->
+        {% if taxon.species_pic %}
+          <div id="carousel-postImages" class="carousel slide" data-ride="carousel">
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" style="max-width:70%; max-height:50%; height: auto; width:auto;margin-left:auto;margin-right:auto;display: block;">
+              {% for i in taxon.species_pic %}
+              <div class="item {% if forloop.counter == 1 %} active{% endif %}">
                 {% if i.image_name%}
-                  <p class="article-img-license">{% if i.photographer %}{{i.photographer}}@{% endif %}TaiBIF 臺灣生物多樣性資訊機構-CC BY 4.0</p>
-                  </div>
-                  <img src="/media/{{i.folder}}{{i.image_name}}" style="max-height:400px;" >
+                    <img src="/media/{{i.folder}}{{i.image_name}}" >
+                    <p class="article-img-license">{% if i.photographer %}{{i.photographer}}@{% endif %}TaiBIF 臺灣生物多樣性資訊機構-CC BY 4.0</p> 
+              </div>
                 {% elif i.taieol_pic %}
-                  <p class="article-img-license">{% if i.photographer %}{{i.photographer}}@{% endif %}TaiEOL 生命大百科-CC BY 4.0</p>
+                    <img src="{{i.taieol_pic}}">
+                    <p class="article-img-license">{% if i.photographer %}{{i.photographer}}@{% endif %}TaiEOL 生命大百科-CC BY 4.0</p>
                   </div>
-                  <img src="{{i.taieol_pic}}" style="max-height:400px;" >
                 {% endif%}
-            </div>
-            {% endfor %}
-          </div>
+              {% endfor %} 
+            </div> 
+
+               {% if taxon.species_pic|length > 1 %}
+                <!-- Controls -->
+                <a class="left carousel-control" href="#carousel-postImages" role="button" data-slide="prev">
+                  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+            
+                <a class="right carousel-control" href="#carousel-postImages" role="button" data-slide="next">
+                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+              {% endif %}
+          </div> 
+          {% endif %}
+
       <!-- TaiCol物種描述 end -->
 
 
