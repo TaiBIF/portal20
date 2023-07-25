@@ -7,6 +7,8 @@ import {Delete} from '@material-ui/icons';
 import Slider from '@material-ui/core/Slider';
 import "./SearchKeyword.css";
 
+import { Translation, useTranslation } from 'react-i18next';
+
 function Accordion(props) {
   const {content, onClick, filters} = props;
   const [isOpen, setOpenState] = useState(false);
@@ -43,7 +45,6 @@ function Accordion(props) {
     onClick(event, content.key, yearValue.join(','))
   };
   const clearYearCondition = (event) => {
-    console.log(event, content.key)
     yearSelected = [1795, 2023]
     setYearValue(yearSelected)
     props.clearCondition(event,content.key)
@@ -60,7 +61,7 @@ function Accordion(props) {
               <input type="checkbox" onChange={(e)=> {e.persist(); onClick(e, content.key, x.key)}} checked={itemChecked} />
               <span className="checkmark"></span>
               <span className="search-sidebar-count-group">
-                <span className="name">{x.label}</span>
+              <Translation>{t => <span className="name">{t(x.label)}</span>}</Translation>
                 <span className="count">{count}</span>
               </span>
               </label>
@@ -70,7 +71,6 @@ function Accordion(props) {
   }})
   const menuItems = content.rows.map((x) => {
     if(content.key ===  'year'){
-      console.log(yearValue);
       const handleChange = (event, newValue) => {
         setYearValue(newValue);
         onClick(event, content.key, newValue);
@@ -119,7 +119,7 @@ function Accordion(props) {
             <input type="checkbox" onChange={(e)=> {e.persist(); onClick(e, content.key, x.key)}} checked={itemChecked} />
             <span className="checkmark"></span>
             <span className="search-sidebar-count-group">
-              <span className="name">{x.label}</span>
+            <Translation>{t => <span className="name">{t(x.label)}</span>}</Translation>
               <span className="count">{count}</span>
             </span>
             </label>
@@ -168,7 +168,6 @@ function Accordion(props) {
       });
   };
   
-  console.log('filteredData == ',filteredData)
 
   return (
     <React.Fragment>
@@ -236,7 +235,6 @@ function SearchSidebar(props) {
     } else if (props.language === 'en'){
       searchTypeLabel = 'Occurrence';
     }
-    
     isOccurrence = true;
 
     //const scientificNameContent = <SearchTaxon {...props.taxonProps} />;
@@ -315,7 +313,7 @@ function SearchSidebar(props) {
             <div className="modal-content">
               <div className="search-sidebar-header">
                 <span>{searchTypeLabel}</span>
-                <div className="search-sidebar-header-del" data-toggle="tooltip" data-placement="left" title="清除" onClick={props.onClickClear}>
+                <div className="search-sidebar-header-del" data-toggle="tooltip" data-placement="left" title="清除" onClick={(e)=> {props.onClickClear();}}>
                   {filterCount > 0 ? <span className="badge">{filterCount}</span> : null}
                   <span className="glyphicon glyphicon-trash"></span>
                 </div>
