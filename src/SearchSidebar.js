@@ -103,7 +103,7 @@ function Accordion(props) {
               <input type="checkbox" onChange={(e)=> {e.persist(); onClick(e, content.key, x.key)}} checked={itemChecked} />
               <span className="checkmark"></span>
               <span className="search-sidebar-count-group">
-                <span className="name">{x.label}</span>
+                <Translation>{t => <span className="name">{t(x.label)}</span>}</Translation>
                 <span className="count">{count}</span>
               </span>
               </label>

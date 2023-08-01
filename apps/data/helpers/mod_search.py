@@ -317,7 +317,10 @@ class DatasetSearch(SuperSearch):
                     query = query.filter(data_license__contains='unknown')
                 else:
                     rights_reverse_map = {v: k for k,v in DATA_MAPPING['rights'].items()}
-                    query = query.filter(data_license=rights_reverse_map[values[0]])
+                    rights_list = []
+                    for i in values:
+                        rights_list.append(rights_reverse_map[values[values.index(i)]])
+                    query = query.filter(data_license__in=rights_list)
             if key == 'country':
                 query = query.filter(country__in=values)
             if key == 'is_most_project':
