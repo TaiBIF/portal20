@@ -118,7 +118,10 @@
     "南沙群島":"Spratly Islands",
     "斯里蘭卡":"Sri Lanka",
     "塔吉克":"Tajikistan",
-    "烏茲別克":"Uzbekistan"
+    "烏茲別克":"Uzbekistan",
 
+    "其他":"others",
+    "尚比亞":"Republic of Zambia",
+    "未明確授權":"unknown"
 
  }
