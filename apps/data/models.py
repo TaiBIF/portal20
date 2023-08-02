@@ -413,7 +413,7 @@ class Taxon(models.Model):
 
     @property
     def children(self):
-        return Taxon.objects.filter(parent=self, is_accepted_name=True).all()
+        return Taxon.objects.filter(parent=self, is_accepted_name=True,is_in_taiwan=True).all()
 
     @staticmethod
     def get_tree(rank='', status=''):
