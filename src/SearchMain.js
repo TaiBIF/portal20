@@ -240,7 +240,7 @@ function SearchMain(props) {
     if (language === 'zh-hant'){
       tabNavs = (
         <div className="table-responsive">
-          <ul className="nav nav-tabs nav-justified search-content-tab">
+          <ul className="nav nav-tabs search-content-tab nav-fill">
             <li className={act=="all" ? "active": null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'all')}>全部</a></li>
             <li className={act=="OCCURRENCE" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'OCCURRENCE')}>出現紀錄</a></li>
             <li className={act=="CHECKLIST" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'CHECKLIST')}>物種名錄</a></li>
@@ -313,25 +313,25 @@ function SearchMain(props) {
         <div className="tools-title" >
           <a href='https://www.gbif.org/zh-tw/become-a-publisher'><span data-tip='發布單位已於 GBIF 註冊成為台灣的資料發布者，以單位機構為主，類型可包含公家機關、研究機構、大專院校、NGO組織等。詳情請見：https://www.gbif.org/zh-tw/become-a-publisher'
           className="glyphicon glyphicon-info-sign"> </span></a>
-          <h1 style={{display: 'inline'}} className="heading-lg">{typeLabel} 
-          <span className="heading-footnote"> 共 {countString} 筆資料 ({elapsed} 秒)</span></h1>
+          <h1 style={{display: 'inline'}} className="headline-left">{typeLabel} 
+          <span className="footnote"> 共 {countString} 筆資料 ({elapsed} 秒)</span></h1>
           </div>)
     }else if (language === 'en'){
       tabFilter = (
         <div className="tools-title" >
           <a href='https://www.gbif.org/zh-tw/become-a-publisher'><span data-tip='The dataset publisher is mainly organisation, which includes but not restricted to government institution, research institution, college, university, and NGO organisation. For more information, see https://www.gbif.org/become-a-publisher'
           className="glyphicon glyphicon-info-sign"> </span></a>
-          <h1 style={{display: 'inline'}} className="heading-lg">{Capitalize(typeLabel)} 
-          <span className="heading-footnote">   {countString} Result ({elapsed} sec)</span></h1>
+          <h1 style={{display: 'inline'}} className="headline-left">{Capitalize(typeLabel)} 
+          <span className="footnote">   {countString} Result ({elapsed} sec)</span></h1>
           </div>)
     }
   } else {
     if (language === 'zh-hant'){
       tabFilter = (
-        <h1 className="heading-lg">{typeLabel} <span className="heading-footnote">共 {countString} 筆資料 ({elapsed} 秒)</span></h1>)
+        <h1 className="headline-left">{typeLabel} <span className="footnote">共 {countString} 筆資料 ({elapsed} 秒)</span></h1>)
     }else if (language === 'en'){
       tabFilter = (
-        <h1 className="heading-lg">{Capitalize(typeLabel)} <span className="heading-footnote">{countString} Result ({elapsed} sec)</span></h1>)
+        <h1 className="headline-left">{Capitalize(typeLabel)} <span className="footnote">{countString} Result ({elapsed} sec)</span></h1>)
     }
   }
 
@@ -343,15 +343,23 @@ function SearchMain(props) {
   
   //console.log(pageUrlPrefix);
   return (
-      <div className="search-content">
-          {(language == "en" ) ?
+      <div className="col-search-content">
+          {/* {(language == "en" ) ?
           <ol className="breadcrumb">
             <li><a href="/">Home</a></li><li className="active">Search {typeLabel}</li>
           </ol>
           :<ol className="breadcrumb">
             <li><a href="/">首頁</a></li><li className="active">搜尋{typeLabel}</li>
           </ol>
-          }
+          } */}
+
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+              <li class="breadcrumb-item">找資料</li>
+            </ol>
+          </nav>
+
         <div className="search-content-heading-wrapper">
         {tabFilter}
         

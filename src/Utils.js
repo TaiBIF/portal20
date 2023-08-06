@@ -56,12 +56,11 @@ const Pagination = ({total, offset=0, urlPrefix,limit = 20,handleOnClick = null}
   const nextNumPageDisplayOffset = offset*numPageDisplay+limit > lastPage*limit ? (lastPage-numPageDisplay)*limit : offset+(numPageDisplay*limit);
 
   return (
-      <div className="center-block text-center">
-      <ul className="pagination">
+      <ul className="pagination justify-content-center">
       <li onClick={() => handleOnClick(0)}>
-      <a href={urlPrefix} aria-label="Previous">
-      <span aria-hidden="true">&laquo;</span>
-      </a>
+        <a href={urlPrefix} aria-label="Previous">
+        <span className="myicon icon-arrow-left"></span>
+        </a>
       </li>
       { (offsetStart - limit >= 0) ?
         <li onClick={() => handleOnClick(prevNumPageDisplayOffset)}><a href={appendUrl(urlPrefix, `offset=${prevNumPageDisplayOffset}`)}>...</a></li>
@@ -73,13 +72,12 @@ const Pagination = ({total, offset=0, urlPrefix,limit = 20,handleOnClick = null}
       <li onClick={() => handleOnClick(pageOffset+limit)}>
       { (pageOffset + limit < total ) ?
         <a href={appendUrl(urlPrefix, `offset=${pageOffset+limit}`)}  aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
+          <span className="myicon icon-arrow-right"></span>
         </a>
         : null
       }
       </li>
       </ul>
-      </div>
   );
 }
 

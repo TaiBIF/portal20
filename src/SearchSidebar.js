@@ -168,8 +168,6 @@ function Accordion(props) {
       });
   };
   
-  console.log('filteredData == ',filteredData)
-
   return (
     <React.Fragment>
     <div className="search-sidebar-accordion-wrapper">
@@ -309,23 +307,25 @@ function SearchSidebar(props) {
     formControlPlaceholder = 'Keyword Search';
   }
   return (
-      <div className="search-sidebar">
-        <div className="modal right fade modal-search-side-wrapper" id="flowBtnModal" tabIndex="-1" role="dialog">
+      <div className="col-search-sidebar">
+        <div className="modal modal-search-side-wrapper fade" id="flowBtnModal" tabIndex="-1" role="dialog">
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="search-sidebar-header">
+                
                 <span>{searchTypeLabel}</span>
                 <div className="search-sidebar-header-del" data-toggle="tooltip" data-placement="left" title="清除" onClick={props.onClickClear}>
                   {filterCount > 0 ? <span className="badge">{filterCount}</span> : null}
-                  <span className="glyphicon glyphicon-trash"></span>
+                  <span className="myicon icon-trash"></span>
                 </div>
               </div>
+              
               <div className="input-group search-sidebar-header-kw">
 
-      <input className="form-control" placeholder={formControlPlaceholder} name="search-term" id="search-term" type="text" value={queryKeyword} onChange={handleChangeKeyword} onKeyPress={props.onKeyPressKeyword} />
+                <input className="form-control" placeholder={formControlPlaceholder} name="search-term" id="search-term" type="text" value={queryKeyword} onChange={handleChangeKeyword} onKeyPress={props.onKeyPressKeyword} />
                 <div className="input-group-btn">
-      <button className="btn" type="submit" onClick={(e)=>props.onClickSubmitKeyword(e, queryKeyword)}>
-                    <i className="glyphicon glyphicon-search"></i>
+                  <button className="btn" type="submit" onClick={(e)=>props.onClickSubmitKeyword(e, queryKeyword)}>
+                  <i className="myicon icon-search-lens"></i>
                   </button>
                 </div>
               </div>

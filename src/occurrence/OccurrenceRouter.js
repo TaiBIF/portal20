@@ -62,8 +62,8 @@ const OccurrenceRouter = ({data, filters,urlPrefix, language}) =>  {
     const key = navTabsData[i].key;
     if (!navTabsData[i].disable) {
       navTabs.push(
-          <li key={key} className={activeTab === key ? "active" : null} onClick={(e)=>setActiveTab(key)}>
-          <Link to={navTabsData[i].path+window.location.search}>{language === 'en' ? navTabsData[i].key : navTabsData[i].label}</Link>
+          <li key={key} className= "nav-item" onClick={(e)=>setActiveTab(key)}>
+          <Link className= {activeTab === key ? "nav-link active" : "nav-link"}  to={navTabsData[i].path+window.location.search}>{language === 'en' ? navTabsData[i].key : navTabsData[i].label}</Link>
           </li>
       );
     }
@@ -75,7 +75,7 @@ const OccurrenceRouter = ({data, filters,urlPrefix, language}) =>  {
   return (
       <Router>
       <div className="table-responsive">
-      <ul className="nav nav-tabs nav-justified search-content-tab">
+      <ul className="nav nav-tabs search-content-tab nav-fill">
       {navTabs.map((x) => x)}
       </ul>
       </div>

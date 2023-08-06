@@ -2960,3 +2960,24 @@ body {
   background-color: transparent;
   border-color: transparent;
 }
+
+
+.search-sidebar {
+  float: left;
+  height: 100%;
+  min-height: 100%;
+  width: 350px;
+  min-width: 350px;
+  background-color: #FAF9F9;
+  padding-bottom: 50px;
+}
+
+.search-content {
+  float: left;
+  width: calc(100% - 350px);
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+.search-content .breadcrumb {
+  margin-top: 0;
+}

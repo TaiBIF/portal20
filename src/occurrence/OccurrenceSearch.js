@@ -171,7 +171,7 @@ export default function OccurrenceSearch(props) {
         <button className="btn btn-primary disabled">資料量太大，無法下載，請縮小搜尋範圍</button>; */
   return (
       <div className="table-responsive">
-        <table className="table">
+        <table className="table table-plain-milo">
         
             {columnName}
           

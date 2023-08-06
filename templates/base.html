@@ -11,7 +11,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
   <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
-
+  
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-55MVPTLZ');</script>
+  <!-- End Google Tag Manager -->
+  
   <title>{% block title %}TAIBIF::{% endblock title %}</title>
     <!-- owl carousel -->
     <!-- <link rel="stylesheet" href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.carousel.min.css"> -->
@@ -33,6 +37,10 @@
 </head>
 
   <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-55MVPTLZ"height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
     <!-- shortcut begin -->
     <div class="shortcut-menu-wrapper dropup">
       <a class="btn" href="{% url 'web-navi' %}" data-toggle="dropdown" aria-expanded="false">
@@ -42,10 +50,11 @@
       <div class="dropdown-menu">
         <a href="https://ipt.taibif.tw" class="dropdown-item">IPT</a>
         <a href="{% url 'tools'%}" class="dropdown-item">開放資料工具</a>
+        {% comment %} TODO {% endcomment %}
         <a href="{% url 'index'%}" class="dropdown-item">資料標準模板</a>
         <a href="https://taicol.tw" class="dropdown-item">TaiCOL</a>
         <a href="https://tbiadata.tw" class="dropdown-item">TBIA</a>
-        <a href="{% url 'index'%}" class="dropdown-item">網站導覽</a>
+        <a href="{% url 'web-navi'%}" class="dropdown-item">網站導覽</a>
       </div>
     </div>
     <!-- shortcut end -->
@@ -118,7 +127,7 @@
             <!-- masthead-menu-wrapper end -->
         
             <!-- masthead-search-wrapper begin -->
-            <div class="col-auto masthead-search-wrapper px-shrink">
+            <div class="col-auto masthead-search-wrapper px-fluid">
               <form action="">
                 <div class="row">
                   <input type="text" class="form-control" id="navbar-search-input" placeholder="{% trans "全站搜尋..." %}">
@@ -252,7 +261,7 @@
             <p class="copywrite">Copyright © TaiBIF 臺灣生物多樣性資訊機構</p>
             <ul class="social-btn-wrapper">
               <li><a href="https://www.facebook.com/TaiBIF.tw/" target="_blank" class="btn"><span class="myicon icon-social-fb"></span></a></li>
-              <li><a href="" target="_blank" class="btn"><span class="myicon icon-social-yt"></span></a></li>
+              <li><a href="https://www.youtube.com/@taibif1617" target="_blank" class="btn"><span class="myicon icon-social-yt"></span></a></li>
             </ul>
           </div>
         </div>
