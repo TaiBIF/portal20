@@ -16,11 +16,11 @@ class TaibifSearch extends React.Component {
       searchType = 'dataset';
     }
     else if (window.location.pathname === '/occurrence/search/' ||
-             window.location.pathname === '/occurrence/taxonomy/' ||
-             window.location.pathname === '/occurrence/map/' ||
-             window.location.pathname === '/occurrence/gallery/' ||
-             window.location.pathname === '/occurrence/charts/' ||
-             window.location.pathname === '/occurrence/download/') {
+      window.location.pathname === '/occurrence/taxonomy/' ||
+      window.location.pathname === '/occurrence/map/' ||
+      window.location.pathname === '/occurrence/gallery/' ||
+      window.location.pathname === '/occurrence/charts/' ||
+      window.location.pathname === '/occurrence/download/') {
       searchType = 'occurrence';
     }
     else if (window.location.pathname === '/publisher/search/') {
@@ -30,7 +30,7 @@ class TaibifSearch extends React.Component {
       searchType = 'species';
     }
     let language = document.getElementById('taibif-search-container').lang
- 
+
     this.state = {
       isLoaded: false,
       isLoadedMain: true,
@@ -135,8 +135,8 @@ class TaibifSearch extends React.Component {
     this.setState((prevState) => {
       const taxonData = prevState.taxonData;
       delete taxonData.checked[taicol_taxon_id];
-      const foundTaxonKeys = Array.from(filters).filter((x)=>x.indexOf('path=') >=0);
-      foundTaxonKeys.forEach((x)=> {
+      const foundTaxonKeys = Array.from(filters).filter((x) => x.indexOf('path=') >= 0);
+      foundTaxonKeys.forEach((x) => {
         const klist = x.split('=');
         if (klist[1].indexOf(':') >= 0) {
           if (klist[1].split(':')[1] == tid) {
@@ -153,10 +153,10 @@ class TaibifSearch extends React.Component {
     this.applyFilters(filters);
   }
 
-  handleTabClick(e, core){
+  handleTabClick(e, core) {
     const filters = this.state.filters;
     // only one core (tab)
-    filters.forEach(function(x){
+    filters.forEach(function (x) {
       if (x.indexOf('core=') >= 0) {
         filters.delete(x);
       }
@@ -167,11 +167,11 @@ class TaibifSearch extends React.Component {
     this.applyFilters(filters);
   }
 
-  handleSubmitKeywordClick(e, queryKeyword){
+  handleSubmitKeywordClick(e, queryKeyword) {
     const filters = this.state.filters;
     // only one queryKeyword
     if (queryKeyword != '') {
-      filters.forEach(function(x){
+      filters.forEach(function (x) {
         if (x.indexOf('q=') === 0) {
           filters.delete(x);
         }
@@ -206,7 +206,7 @@ class TaibifSearch extends React.Component {
   }
 
   handleKeywordEnter(e) {
-    if (e.charCode === 13){
+    if (e.charCode === 13) {
       const v = e.target.value;
       this.handleSubmitKeywordClick(e, v);
     }
@@ -216,7 +216,7 @@ class TaibifSearch extends React.Component {
     this.setState((state) => {
       if (newFilters) {
         this.getSearch(newFilters);
-        return {filters: newFilters};
+        return { filters: newFilters };
       }
       else {
         this.getSearch();
@@ -240,8 +240,8 @@ class TaibifSearch extends React.Component {
       filters.delete(`${menuKey}=${itemKey}`);
     }
 
-    if(menuKey == 'year') {
-      filters.forEach(function(x){
+    if (menuKey == 'year') {
+      filters.forEach(function (x) {
         if (x.indexOf('year=') >= 0) {
           filters.delete(x);
         }
@@ -258,11 +258,11 @@ class TaibifSearch extends React.Component {
       isLoadedMain: false,
     });
     const filters = this.state.filters;
-      filters.forEach(function(x){
-        if (x.indexOf('year=') >= 0) {
-          filters.delete(x);
-        }
-      });
+    filters.forEach(function (x) {
+      if (x.indexOf('year=') >= 0) {
+        filters.delete(x);
+      }
+    });
     this.applyFilters(filters);
   }
 
@@ -286,13 +286,13 @@ class TaibifSearch extends React.Component {
     //   isOccurrence = true;
     // }
     // else 
-    if (myRe.exec(pathname)){
+    if (myRe.exec(pathname)) {
       apiUrl = `${window.location.origin}/api/v2/occurrence/search`;
       isOccurrence = true;
-    }else{
+    } else {
       apiUrl = `${window.location.origin}/api${window.location.pathname}`;
     }
-    
+
     // for window.history.pushState
     let url = `${window.location.origin}${window.location.pathname}`;
     /* TODO menu facet */
@@ -307,7 +307,7 @@ class TaibifSearch extends React.Component {
     }
     apiUrl = `${apiUrl}${facetQueryString}`;
 
-    window.history.pushState({stateObj:url}, "", url);
+    window.history.pushState({ stateObj: url }, "", url);
 
     console.log('fetch:', apiUrl)
     //const resp = await fetch(url);
@@ -335,7 +335,7 @@ class TaibifSearch extends React.Component {
             // clear checked taxon
             taxonData.checked = [];
           }
-          console.log("json:",jsonData)
+          console.log("json:", jsonData)
           this.setState({
             isLoaded: true,
             isLoadedMain: true,
@@ -348,7 +348,7 @@ class TaibifSearch extends React.Component {
               elapsed: elapsed,
             },
             menus: jsonData.menus,
-            taxonData:taxonData,
+            taxonData: taxonData,
             serverError: jsonData.error,
           });
         },
@@ -365,14 +365,14 @@ class TaibifSearch extends React.Component {
     if (window.location.search) {
       let filters = new Set();
       // decodeURI 對 %2C 沒作用?
-      let mkeys = window.location.search.replace(/%2C/g,',').replace('?', '').split('&');
+      let mkeys = window.location.search.replace(/%2C/g, ',').replace('?', '').split('&');
       let q = '';
-      mkeys.forEach((m)=>{
+      mkeys.forEach((m) => {
         const mArr = m.split('=');
         if (mArr[0] === 'q') {
           //console.log(mArr[1]);
           filters.add(`q=${decodeURIComponent(mArr[1])}`);
-          this.setState({queryKeyword:decodeURIComponent(mArr[1])});
+          this.setState({ queryKeyword: decodeURIComponent(mArr[1]) });
         } else if (mArr[0] == 'taxon_key') {
           let taxonData = this.state.taxonData
           const kArr = m.split(':');
@@ -412,7 +412,7 @@ class TaibifSearch extends React.Component {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
       return <div className="search-loading"> 🌱 Loading... ⏳ </div>
-    }  else if (serverError) {
+    } else if (serverError) {
       return `[server]: ${serverError}`; // should not shou this on production
     }
     else {
@@ -436,14 +436,14 @@ class TaibifSearch extends React.Component {
       if (!isLoadedMain) {
         // via: https://codepen.io/kingfisher13/pen/vKXwNN
         searchMainContainer = (
-            <div className="col-xs-12 col-md-9">
+          <div className="col-xs-12 col-md-9">
             <div className="container">
-            <div className="loader">
-            <div className="loader-wheel"></div>
-            <div className="loader-text"></div>
+              <div className="loader">
+                <div className="loader-wheel"></div>
+                <div className="loader-text"></div>
+              </div>
             </div>
-            </div>
-            </div>
+          </div>
         );
       } else {
         searchMainContainer = <SearchMain data={mainData} searchType={searchType} language={language} filters={filters} menus={menus} onClickTab={this.handleTabClick} taxonProps={taxonProps} />;
@@ -452,16 +452,16 @@ class TaibifSearch extends React.Component {
       const defaultPage = (this.state.page) ? this.state.page : '1';
 
       return (
-          <div className="container-fluid">
-            <div class="row mb-n5">
-                <div className="visible-xs">
-                  <a href="#" className="xs-schedule-flow-btn myicon icon-filter" data-toggle="modal" data-target="#flowBtnModal">進階篩選</a>
-                </div>
-              <SearchSidebar menus={menus} onClick={this.handleMenuClick} filters={filters} onClickClear={(e)=>this.applyFilters()} queryKeyword={queryKeyword} onChangeKeyword={(e)=>{this.handleKeywordChange(e)}} onKeyPressKeyword={(e)=>{this.handleKeywordEnter(e)}} onClickSubmitKeyword={this.handleSubmitKeywordClick} searchType={searchType} language={language} taxonProps={taxonProps} clearCondition={this.clearCondition} />
-              {searchMainContainer}
-
+        <div className="container-fluid">
+          <div className="row mb-n5">
+            <div className="visible-xs">
+              <a href="#" className="xs-schedule-flow-btn myicon icon-filter" data-toggle="modal" data-target="#flowBtnModal">進階篩選</a>
             </div>
+            <SearchSidebar menus={menus} onClick={this.handleMenuClick} filters={filters} onClickClear={(e) => this.applyFilters()} queryKeyword={queryKeyword} onChangeKeyword={(e) => { this.handleKeywordChange(e) }} onKeyPressKeyword={(e) => { this.handleKeywordEnter(e) }} onClickSubmitKeyword={this.handleSubmitKeywordClick} searchType={searchType} language={language} taxonProps={taxonProps} clearCondition={this.clearCondition} />
+            {searchMainContainer}
+
           </div>
+        </div>
       );
     }
   }
