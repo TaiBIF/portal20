@@ -512,6 +512,7 @@
   <field name="footprintWKT" type="string"/>
   <field name="forest_reserves" type="string"/>
   <field name="formation" type="string"/>
+  <field name="formatted_name" type="string"/>
   <field name="gbif_dataset_uuid" type="string"/>
   <field name="gbif_doi" type="text_general"/>
   <field name="genus" type="string"/>
@@ -555,7 +556,6 @@
   <field name="kingdom" type="string"/>
   <field name="kingdom_key" type="plongs"/>
   <field name="kingdomzh" type="string"/>
-  <field name="formatted_name" type="string"/>
   <field name="language" type="string"/>
   <field name="latitude" type="pdoubles"/>
   <field name="license" type="string"/>
@@ -611,6 +611,7 @@
   <field name="parentEventID" type="string"/>
   <field name="parentEventID_x" type="string"/>
   <field name="parentEventID_y" type="string"/>
+  <field name="path" type="text_general"/>
   <field name="phylum" type="string"/>
   <field name="phylum_key" type="plongs"/>
   <field name="phylumzh" type="string"/>
@@ -635,6 +636,7 @@
   <field name="scientificName" type="string"/>
   <field name="scientificNameAuthorship" type="string"/>
   <field name="scientificNameID" type="string"/>
+  <field name="selfProduced" type="booleans"/>
   <field name="sex" type="string"/>
   <field name="source_id" type="string"/>
   <field name="species_key" type="plongs"/>
@@ -644,23 +646,24 @@
   <field name="status" type="string"/>
   <field name="subfamily" type="string"/>
   <field name="subgenus" type="string"/>
+  <field name="taibifDatasetID" type="string"/>
   <field name="taibif_Latitude" type="plongs"/>
   <field name="taibif_Longitude" type="plongs"/>
   <field name="taibif_accepted_namecode" type="string"/>
   <field name="taibif_basisOfRecord" type="string"/>
   <field name="taibif_ch_county" type="string"/>
+  <field name="taibif_coordinateUncertaintyInMeters" type="pdoubles"/>
   <field name="taibif_country" type="string"/>
   <field name="taibif_countryCode" type="string"/>
   <field name="taibif_county" type="string"/>
   <field name="taibif_created" type="pdates"/>
   <field name="taibif_crs" type="string"/>
+  <field name="taibif_dataset_id" type="string"/>
   <field name="taibif_dataset_name" type="string"/>
   <field name="taibif_dataset_name_zh" type="string"/>
   <field name="taibif_day" type="plongs"/>
   <field name="taibif_error" type="string"/>
   <field name="taibif_event_date" type="string"/>
-  <field name="taibif_dataset_id" type="string"/>
-  <field name="taibifDatasetID" type="string"/>
   <field name="taibif_geodeticDatum" type="string"/>
   <field name="taibif_latitude" type="pdoubles"/>
   <field name="taibif_longitude" type="pdoubles"/>
@@ -669,13 +672,16 @@
   <field name="taibif_occ_id" type="string"/>
   <field name="taibif_occurrenceStatus" type="string"/>
   <field name="taibif_scientificname" type="string"/>
+  <field name="taibif_taxonGroup" type="text_general"/>
   <field name="taibif_taxon_name_zh" type="string"/>
+  <field name="taibif_typeStatus" type="text_general"/>
   <field name="taibif_uuid" type="string"/>
   <field name="taibif_vernacular_name" type="string"/>
   <field name="taibif_year" type="plongs"/>
   <field name="taicol_accepted_namecode" type="string"/>
   <field name="taicol_id" type="string"/>
   <field name="taicol_namecode" type="string"/>
+  <field name="taicol_taxon_id" type="text_general"/>
   <field name="taxonID" type="string"/>
   <field name="taxonRank" type="string"/>
   <field name="taxonRemarks" type="string"/>
@@ -815,4 +821,8 @@
   <copyField source="taibif_scientificname" dest="_text_"/>
   <copyField source="taibif_taxon_name_zh" dest="_text_"/>
   <copyField source="vernacularName" dest="_text_"/>
+  <copyField source="taibif_taxonGroup" dest="taibif_taxonGroup_str" maxChars="256"/>
+  <copyField source="taicol_taxon_id" dest="taicol_taxon_id_str" maxChars="256"/>
+  <copyField source="path" dest="path_str" maxChars="256"/>
+  <copyField source="taibif_typeStatus" dest="taibif_typeStatus_str" maxChars="256"/>
 </schema>
