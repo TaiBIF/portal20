@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 {% block title %}資料視覺化與圖表產出{% endblock %}
 
 
@@ -37,7 +38,11 @@
             <a href="#" class="d-block">
               <span class="myicon icon-species-icon-plantae"></span>
               <p class="title">植物</p>
-              <p class="amount">319,433</p>
+              <p class="amount">
+                {% for k,v in taxonGroup_dict.items %}
+                    {% if k == 'plants' %} {{ v|intcomma:False  }} {% endif %}
+                  {% endfor %}
+              </p>
             </a>
           </div>
           <!-- col end -->
@@ -46,7 +51,11 @@
             <a href="#" class="d-block">
               <span class="myicon icon-species-icon-fungi"></span>
               <p class="title">真菌</p>
-              <p class="amount">3,739</p>
+              <p class="amount">
+                {% for k,v in taxonGroup_dict.items %}
+                  {% if k == 'fungi' %} {{ v|intcomma:False  }} {% endif %}
+                {% endfor %}
+              </p>
             </a>
           </div>
           <!-- col end -->
@@ -55,7 +64,11 @@
             <a href="#" class="d-block">
               <span class="myicon icon-species-icon-bacteria"></span>
               <p class="title">細菌</p>
-              <p class="amount">405</p>
+              <p class="amount">
+                {% for k,v in taxonGroup_dict.items %}
+                  {% if k == 'bacteria' %} {{ v|intcomma:False  }} {% endif %}
+                {% endfor %}
+              </p>
             </a>
           </div>
           <!-- col end -->
@@ -64,7 +77,11 @@
             <a href="#" class="d-block">
               <span class="myicon icon-species-icon-Insecta"></span>
               <p class="title">昆蟲</p>
-              <p class="amount">9,468</p>
+              <p class="amount">
+                {% for k,v in taxonGroup_dict.items %}
+                  {% if k == 'insects' %} {{ v|intcomma:False  }} {% endif %}
+                {% endfor %}
+              </p>
             </a>
           </div>
           <!-- col end -->
@@ -73,7 +90,11 @@
             <a href="#" class="d-block">
               <span class="myicon icon-species-icon-fish"></span>
               <p class="title">魚</p>
-              <p class="amount">12,571</p>
+              <p class="amount">
+                {% for k,v in taxonGroup_dict.items %}
+                  {% if k == 'fishes' %} {{ v|intcomma:False  }} {% endif %}
+                {% endfor %}
+              </p>
             </a>
           </div>
           <!-- col end -->
@@ -82,25 +103,37 @@
             <a href="#" class="d-block">
               <span class="myicon icon-species-icon-gecko"></span>
               <p class="title">爬蟲類</p>
-              <p class="amount">13,721</p>
+              <p class="amount">
+                {% for k,v in taxonGroup_dict.items %}
+                  {% if k == 'reptiles' %} {{ v|intcomma:False  }} {% endif %}
+                {% endfor %}
+              </p>
             </a>
           </div>
           <!-- col end -->
           <!-- col begin -->
           <div class="col col-icon-stat">
-            <a href="#" class="d-block">
-              <span class="myicon icon-species-icon-frog"></span>
-              <p class="title">兩棲類</p>
-              <p class="amount">3,657</p>
-            </a>
-          </div>
+              <a href="#" class="d-block">
+                <span class="myicon icon-species-icon-frog"></span>
+                <p class="title">兩棲類</p>
+                <p class="amount">
+                  {% for k,v in taxonGroup_dict.items %}
+                    {% if k == 'amphibia' %} {{ v|intcomma:False  }} {% endif %}
+                  {% endfor %}
+                </p>
+              </a>
+            </div>
           <!-- col end -->
           <!-- col begin -->
           <div class="col col-icon-stat">
             <a href="#" class="d-block">
               <span class="myicon icon-species-icon-bird"></span>
               <p class="title">鳥類</p>
-              <p class="amount">21,258</p>
+              <p class="amount">
+                {% for k,v in taxonGroup_dict.items %}
+                  {% if k == 'birds' %} {{ v|intcomma:False  }} {% endif %}
+                {% endfor %}
+              </p>
             </a>
           </div>
           <!-- col end -->
@@ -109,7 +142,11 @@
             <a href="#" class="d-block">
               <span class="myicon icon-species-icon-muntiacus-reevesi"></span>
               <p class="title">哺乳類</p>
-              <p class="amount">29,296</p>
+              <p class="amount">
+                {% for k,v in taxonGroup_dict.items %}
+                  {% if k == 'mammals' %} {{ v|intcomma:False  }} {% endif %}
+                {% endfor %}
+              </p>
             </a>
           </div>
           <!-- col end -->
@@ -118,7 +155,11 @@
             <a href="#" class="d-block">
               <span class="myicon icon-species-icon-more"></span>
               <p class="title">其他</p>
-              <p class="amount">1,834,543</p>
+              <p class="amount">
+                {% for k,v in taxonGroup_dict.items %}
+                  {% if k == 'others' %} {{ v|intcomma:False  }} {% endif %}
+                {% endfor %}
+              </p>
             </a>
           </div>
           <!-- col end -->
