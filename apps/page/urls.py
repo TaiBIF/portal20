@@ -47,7 +47,7 @@ urlpatterns = [
     path('open-process',views.open_process, name='open-process'),
     path('open-standard',views.open_standard, name='open-standard'),
     path('open-metadata',views.open_metadata, name='open-metadata'),
-    path('open-uplaod',views.open_uplaod, name='open-uplaod'),
+    path('open-upload',views.open_uplaod, name='open-upload'),
     path('open-license',views.open_license, name='open-license'),
     
     path('open-timezone',views.open_timezone, name='open-timezone'),

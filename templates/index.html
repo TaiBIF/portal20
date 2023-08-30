@@ -1,9 +1,25 @@
 {% extends "base.html" %}
 {% load static %}
 {% load i18n %}
+{% load humanize %}
 
 {% block title %}TaiBIF 首頁{% endblock %}
 
+
+{% block head %}
+
+<style type="text/css">
+  @keyframes owlBgc {
+    0% { background-color: #3a4a47; /* 最後一個輪播圖片的背景色 */ }
+    33% { background-color: #212121; /* 輪播圖片一的背景色 */ }
+    66% { background-color: #8a6853; /* 輪播圖片二的背景色 */ }
+    100% { background-color: #3a4a47; /* 輪播圖片三的背景色 */ }
+  }
+  .openmap-bg-ani {
+    animation: owlBgc 9.3s infinite; /* 動畫秒數為輪播圖片張數乘 3.1 秒 */
+  }
+</style>
+{% endblock %}
 
 {% block main %}
 
@@ -11,13 +27,37 @@
 
   
       <!-- openmap begin -->
-      <div style="background-color: #212121;" class="openmap-wrapper">
+      <div class="openmap-wrapper openmap-bg-ani">
         <div class="container">
           <div class="row no-gutters">
+
+          <!-- col-openmap begin -->
+          <div class="col-12 col-lg-6 col-openmap">
+            <!-- openmap-carousel begin -->
+            <div class="owl-carousel" id="openmap-carousel">
+              <div class="item">
+                <img src="{% static 'images/openmap.jpg' %}" alt="" class="img-fluid">
+                <p class="openmap-cc-post">Muntiacus reevesi (Ogilby, 1839) Observed in Taiwan by Liu JimFood. Photo via iNaturalist (CC BY-NC 4.0)</p>
+              </div>
+              <div class="item">
+                <img src="https://picsum.photos/id/219/570/480" alt="" class="img-fluid">
+                <p class="openmap-cc-post">Muntiacus reevesi (Ogilby, 1839) Observed in Taiwan by Liu JimFood. Photo via iNaturalist (CC BY-NC 4.0)</p>
+              </div>
+              <div class="item">
+                <img src="https://picsum.photos/id/258/570/480" alt="" class="img-fluid">
+                <p class="openmap-cc-post">Muntiacus reevesi (Ogilby, 1839) Observed in Taiwan by Liu JimFood. Photo via iNaturalist (CC BY-NC 4.0)</p>
+              </div>
+            </div>
+            <!-- openmap-carousel end -->
+          </div>
+          {% comment %} <!-- col-openmap end -->
             <div class="col-12 col-lg-6 col-openmap">
               <img src="{% static 'images/openmap.jpg' %}" alt="" class="img-fluid">
               <p class="openmap-cc-post">Muntiacus reevesi (Ogilby, 1839) Observed in Taiwan by Liu JimFood. Photo via iNaturalist (CC BY-NC 4.0)</p>
-            </div>
+            </div> {% endcomment %}
+
+            <!-- col-menu begin -->
+
             <div class="col-12 col-lg-6 col-menu">
               <!-- row-master-menu begin -->
               <div class="row row-master-menu">
@@ -112,7 +152,7 @@
             <div class="col-card-brick">
               <div class="card-brick card-glowing">
                 <p class="title"><span class="myicon icon-data-stats mr-1"></span>出現紀錄</p>
-                <p class="content">6,620,005</p>
+                <p class="content"><a href="/occurrence/search/" >{{occ_num|intcomma:False}}</a></p>
               </div>
             </div>
             <!-- col end -->
@@ -120,7 +160,7 @@
             <div class="col-card-brick">
               <div class="card-brick card-glowing">
                 <p class="title"><span class="myicon icon-data-folder mr-1"></span>資料集</p>
-                <p class="content">147</p>
+                <p class="content"><a href="/dataset/search/">{{dataset_num|intcomma}}</a></p>
               </div>
             </div>
             <!-- col end -->
@@ -128,7 +168,7 @@
             <div class="col-card-brick">
               <div class="card-brick card-glowing">
                 <p class="title"><span class="myicon icon-data-tw mr-1"></span>涵蓋物種數</p>
-                <p class="content">70,234</p>
+                <p class="content"><a href="/species/search/">70,234</a></p>
               </div>
             </div>
             <!-- col end -->
@@ -136,7 +176,7 @@
             <div class="col-card-brick">
               <div class="card-brick card-glowing">
                 <p class="title"><span class="myicon icon-data-org mr-1"></span>資料發布單位</p>
-                <p class="content">19</p>
+                <p class="content"><a href="/publisher/search/">{{publisher_num}}</a></p>
               </div>
             </div>
             <!-- col end -->
@@ -144,7 +184,7 @@
             <div class="col-card-brick">
               <div class="card-brick card-glowing">
                 <p class="title"><span class="myicon icon-data-paper mr-1"></span>資料應用發表</p>
-                <p class="content">150</p>
+                <p class="content">0</p>
               </div>
             </div>
             <!-- col end -->
@@ -163,7 +203,11 @@
               <a href="#" class="d-block">
                 <span class="myicon icon-species-icon-plantae"></span>
                 <p class="title">植物</p>
-                <p class="amount">319,433</p>
+                <p class="amount">
+                  {% for k,v in taxonGroup_dict.items %}
+                    {% if k == 'plants' %} {{ v|intcomma:False  }} {% endif %}
+                  {% endfor %}
+                </p>
               </a>
             </div>
             <!-- col end -->
@@ -172,7 +216,11 @@
               <a href="#" class="d-block">
                 <span class="myicon icon-species-icon-fungi"></span>
                 <p class="title">真菌</p>
-                <p class="amount">3,739</p>
+                <p class="amount">
+                  {% for k,v in taxonGroup_dict.items %}
+                    {% if k == 'fungi' %} {{ v|intcomma:False  }} {% endif %}
+                  {% endfor %}
+                </p>
               </a>
             </div>
             <!-- col end -->
@@ -181,7 +229,11 @@
               <a href="#" class="d-block">
                 <span class="myicon icon-species-icon-bacteria"></span>
                 <p class="title">細菌</p>
-                <p class="amount">405</p>
+                <p class="amount">
+                  {% for k,v in taxonGroup_dict.items %}
+                    {% if k == 'bacteria' %} {{ v|intcomma:False  }} {% endif %}
+                  {% endfor %}
+                </p>
               </a>
             </div>
             <!-- col end -->
@@ -190,7 +242,11 @@
               <a href="#" class="d-block">
                 <span class="myicon icon-species-icon-Insecta"></span>
                 <p class="title">昆蟲</p>
-                <p class="amount">9,468</p>
+                <p class="amount">
+                  {% for k,v in taxonGroup_dict.items %}
+                    {% if k == 'insects' %} {{ v|intcomma:False  }} {% endif %}
+                  {% endfor %}
+                </p>
               </a>
             </div>
             <!-- col end -->
@@ -199,7 +255,11 @@
               <a href="#" class="d-block">
                 <span class="myicon icon-species-icon-fish"></span>
                 <p class="title">魚</p>
-                <p class="amount">12,571</p>
+                <p class="amount">
+                  {% for k,v in taxonGroup_dict.items %}
+                    {% if k == 'fishes' %} {{ v|intcomma:False  }} {% endif %}
+                  {% endfor %}
+                </p>
               </a>
             </div>
             <!-- col end -->
@@ -208,7 +268,11 @@
               <a href="#" class="d-block">
                 <span class="myicon icon-species-icon-gecko"></span>
                 <p class="title">爬蟲類</p>
-                <p class="amount">13,721</p>
+                <p class="amount">
+                  {% for k,v in taxonGroup_dict.items %}
+                    {% if k == 'reptiles' %} {{ v|intcomma:False  }} {% endif %}
+                  {% endfor %}
+                </p>
               </a>
             </div>
             <!-- col end -->
@@ -217,7 +281,11 @@
               <a href="#" class="d-block">
                 <span class="myicon icon-species-icon-frog"></span>
                 <p class="title">兩棲類</p>
-                <p class="amount">3,657</p>
+                <p class="amount">
+                  {% for k,v in taxonGroup_dict.items %}
+                    {% if k == 'amphibia' %} {{ v|intcomma:False  }} {% endif %}
+                  {% endfor %}
+                </p>
               </a>
             </div>
             <!-- col end -->
@@ -226,7 +294,11 @@
               <a href="#" class="d-block">
                 <span class="myicon icon-species-icon-bird"></span>
                 <p class="title">鳥類</p>
-                <p class="amount">21,258</p>
+                <p class="amount">
+                  {% for k,v in taxonGroup_dict.items %}
+                    {% if k == 'birds' %} {{ v|intcomma:False  }} {% endif %}
+                  {% endfor %}
+                </p>
               </a>
             </div>
             <!-- col end -->
@@ -235,7 +307,11 @@
               <a href="#" class="d-block">
                 <span class="myicon icon-species-icon-muntiacus-reevesi"></span>
                 <p class="title">哺乳類</p>
-                <p class="amount">29,296</p>
+                <p class="amount">
+                  {% for k,v in taxonGroup_dict.items %}
+                    {% if k == 'mammals' %} {{ v|intcomma:False  }} {% endif %}
+                  {% endfor %}
+                </p>
               </a>
             </div>
             <!-- col end -->
@@ -244,7 +320,11 @@
               <a href="#" class="d-block">
                 <span class="myicon icon-species-icon-more"></span>
                 <p class="title">其他</p>
-                <p class="amount">1,834,543</p>
+                <p class="amount">
+                  {% for k,v in taxonGroup_dict.items %}
+                    {% if k == 'others' %} {{ v|intcomma:False  }} {% endif %}
+                  {% endfor %}
+                </p>
               </a>
             </div>
             <!-- col end -->
@@ -276,7 +356,7 @@
               <ul class="news-card-list-ctn">
                 {% for i in news_list %}
                     <li>
-                        <a href="{{ i.get_absolute_url }}" class="clamp2row">{{ i.title }}</a>
+                        <a href="{{ i.get_absolute_url }}" class="clamp2row">{{ i.title|truncatechars:40|safe  }}</a>
                         <span>{{ i.created|date:'Y/m/d' }}</span>
                     </li>
                 {% endfor %}
@@ -295,7 +375,7 @@
               <ul class="news-card-list-ctn">
                 {% for i in event_list %}
                     <li>
-                    <a href="{{ i.get_absolute_url }}" >{{ i.title }}</a>
+                    <a href="{{ i.get_absolute_url }}" >{{ i.title|truncatechars:40|safe  }}</a>
                     <span>{{ i.created|date:'Y/m/d' }}</span>
                     </li>
                 {% endfor %}
@@ -314,7 +394,7 @@
               <ul class="news-card-list-ctn">
                 {% for i in update_list %}
                     <li>
-                        <a href="{{ i.get_absolute_url }}" class="clamp2row">{{ i.title }}</a>
+                        <a href="{{ i.get_absolute_url }}" class="clamp2row">{{ i.title|truncatechars:40|safe  }}</a>
                         <span>{{ i.created|date:'Y/m/d' }}</span>
                     </li>
                 {% endfor %}
@@ -339,7 +419,7 @@
             {% for i in topic_list %}
                 <div class="card-plain-article">
                     <a class="tag" href="{% url 'article-list' category=i.category|lower  %}">{{ i.get_category_display }}</a>
-                    <p class="topic-content"><a href="{{ i.get_absolute_url }}">{{ i.title }}</a></p>
+                    <p class="topic-content"><a href="{{ i.get_absolute_url }}">{{ i.title|truncatechars:25|safe }}</a></p>
                 </div>
             {% endfor %}
             <!-- item end -->  

@@ -22,7 +22,7 @@ from django.contrib import messages
 from apps.data.models import (
     Dataset,
     Taxon,
-    #SimpleData,
+    DatasetOrganization,
 )
 from apps.article.models import Article
 from .models import Post, Journal
@@ -52,7 +52,14 @@ def index(request):
     r = requests.get(url).json()   
     occ_num =  r['response']['numFound']
 
+    taxonGroup_url = f'http://solr:8983/solr/taibif_occurrence/select?facet.field=taibif_taxonGroup&facet=true&indent=true&q.op=OR&q=*%3A*&rows=0'
+    taxonGroup_r = requests.get(taxonGroup_url).json()   
+    taibif_taxonGroup =  taxonGroup_r['facet_counts']['facet_fields']['taibif_taxonGroup']
+    taxonGroup_keys_list = taibif_taxonGroup[::2]
+    taxonGroup_values_list = taibif_taxonGroup[1::2]
+    taxonGroup_dict = dict(zip(taxonGroup_keys_list,taxonGroup_values_list))
     dataset_num = Dataset.objects.filter(status='PUBLIC').count()
+    publisher_num = DatasetOrganization.objects.count()
     # taxon_cover = len(occ_result['facets']['taxon_id']['buckets'])
     context = {
         'news_list': news_list,
@@ -61,6 +68,8 @@ def index(request):
         'topic_list': topic_list,
         'stats': get_home_stats(),
         'dataset_num':dataset_num,
+        'publisher_num':publisher_num,
+        'taxonGroup_dict':taxonGroup_dict,
         'occ_num':occ_num,
         # 'taxon_cover':taxon_cover,
     }
@@ -164,12 +173,20 @@ def data_stats(request):
     query = Dataset.objects #.exclude(status='Private')
     if is_most:
         query = query.filter(is_most_project=True)
+    url = f'http://solr:8983/solr/taibif_occurrence/select?indent=true&q.op=OR&q=*%3A*&rows=0'
+    r = requests.get(url).json()   
+    occ_num =  r['response']['numFound']
 
+    dataset_num = Dataset.objects.filter(status='PUBLIC').count()
+    publisher_num = DatasetOrganization.objects.count()
     context = {
         'dataset_list': query.order_by(F('pub_date').desc(nulls_last=True)).all(),
-        'env': settings.ENV
+        'env': settings.ENV,
+        'dataset_num':dataset_num,
+        'publisher_num':publisher_num,
+        'occ_num':occ_num,
     }
-    return render(request, 'data-stats.html', context)
+    return render(request, 'data-stats.html', context) 
 
 def common_name_checker(request):
     global results
@@ -314,7 +331,7 @@ def open_metadata(request):
 
 def open_uplaod(request):
     context = {}
-    return render(request, 'open-uplaod.html', context)
+    return render(request, 'open-upload.html', context)
 
 def open_license(request):
     context = {}
@@ -355,7 +372,15 @@ def data_paper(request):
     return render(request, 'data-paper.html', context)
 
 def data_visual(request):
-    context = {}
+    taxonGroup_url = f'http://solr:8983/solr/taibif_occurrence/select?facet.field=taibif_taxonGroup&facet=true&indent=true&q.op=OR&q=*%3A*&rows=0'
+    taxonGroup_r = requests.get(taxonGroup_url).json()   
+    taibif_taxonGroup =  taxonGroup_r['facet_counts']['facet_fields']['taibif_taxonGroup']
+    taxonGroup_keys_list = taibif_taxonGroup[::2]
+    taxonGroup_values_list = taibif_taxonGroup[1::2]
+    taxonGroup_dict = dict(zip(taxonGroup_keys_list,taxonGroup_values_list))
+    context = {        
+               'taxonGroup_dict':taxonGroup_dict,
+               }
     return render(request, 'data-visual.html', context)
 
 def data_case(request):

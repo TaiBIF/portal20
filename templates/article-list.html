@@ -100,21 +100,34 @@
   </div> {% endcomment %}
   <!-- carousel end -->
 
-  {% include "inc_breadcrumb.html" with tab="04" %}
-
+  <div class="bg-main-pale">
+    <div class="container">
+      <div class="caption-mascot-wrapper">
+        <h1 class="title">文章</h1>
+        <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
+      </div>
+    </div>
+  </div>
+  <!-- topnav end -->
+  {% comment %} {% include "inc_breadcrumb.html" with tab="04" %} {% endcomment %}
+ 
   <!-- container begin -->
   <div class="container">
-    <h1 class="heading-lg-ul">
-      文章
-    </h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+        <li class="breadcrumb-item" aria-current="page">更多資訊</li>
+      </ol>
+    </nav>
+    
     <!-- sort by begin -->
     <div class="heading-sort-ctn">
       <form class="form-inline">
         <span class="heading-sort-name">{% trans "篩選" %}</span>
-        <input type="text" placeholder="關鍵字查詢" name="q" id="article-search-input" value={{ article_search_keyword }}>
-        <button class="head-carousel-search-btn" type="submit">
-          <span class="myicon icon-search"></span>
-        </button>
+          <input type="text" placeholder="關鍵字查詢" name="q" id="article-search-input" value={{ article_search_keyword }}>
+          {% comment %} <button class="btn"type="submit">
+            <span class="myicon icon-search-lens"></span>
+          </button> {% endcomment %}
         <label class="custom-input-ctn">
           <input type="checkbox" class="select-category-sci" data-type="news" {% if "NEWS" in article_cat %} checked="checked"{% endif %}>
           <span class="checkmark"></span>

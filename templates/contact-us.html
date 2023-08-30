@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}聯絡我們{% endblock %}
 
@@ -7,12 +8,27 @@
 {% block script %}
 <script src="https://js.hcaptcha.com/1/api.js?hl=en"></script>
 {% endblock %}
-
+<!-- topnav begin -->
+<div class="bg-main-pale">
+  <div class="container">
+    <div class="caption-mascot-wrapper">
+      <h1 class="title">聯絡我們</h1>
+      <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
+    </div>
+  </div>
+</div>
+<!-- topnav end -->
   <!-- container begin -->
-<div class="container">
+<div class="container my-5">
   {% if LANGUAGE_CODE == "zh-hant" %}
-  {% include "inc_breadcrumb.html" with tab="03" active_label="聯絡我們" %}
-
+  {% comment %} {% include "inc_breadcrumb.html" with tab="03" active_label="聯絡我們" %} {% endcomment %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+      <li class="breadcrumb-item" aria-current="page">聯絡我們</li>
+    </ol>
+  </nav>
+  
   {% if message %}
   <div class="alert alert-warning alert-dismissible" role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -24,63 +40,77 @@
     {% for message in messages %}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <strong>{{ message }}</strong>
-    {% endfor %}
+    {% endfor %} 
   </div>
   {% endif %}
-    <h1 class="heading-lg-ul">
-      聯絡我們
-      <span class="heading-footnote">以下皆為必填</span>
-    </h1>
-    <!-- contact form begin -->
-    <div class="contact-form-wrapper clearfix">
+   
+  <div class="row">
+        
+    <!-- col begin -->
+    <div class="col-12 col-lg-10 offset-lg-1">
+      <h4 class="headline-left-hr">聯絡我們<span class="footnote ml-1">以下皆為必填</span></h4>
+      <div class="contact-us-wrapper">
+        <form method="post" action="{% url 'contact_us' %}">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-12 col-lg-4 mb-4">
+              <div class="customized-select">
+                <select name="cat" required>
+                  <option>請選擇問題分類...</option>
+                  <option value="物種資料相關諮詢">物種資料相關諮詢</option>
+                  <option value="操作問題詢問">操作問題詢問</option>
+                  <option value="錯誤回報">錯誤回報</option>
+                  <option value="其他">其他</option>
+                </select>
+              </div>
+            </div>
 
-      <form method="post" action="{% url 'contact_us' %}">
-        {% csrf_token %}
-        <div class="form-group clearfix">
-          <div class="col-sm-4 col-xs-12">
-            <div class="custom-select">
-              <select name="cat" required>
-                <option>請選擇問題分類...</option>
-                <option value="物種資料相關諮詢">物種資料相關諮詢</option>
-                <option value="操作問題詢問">操作問題詢問</option>
-                <option value="錯誤回報">錯誤回報</option>
-                <option value="其他">其他</option>
-              </select>
+            <div class="col-12 col-lg-4 mb-4">
+              <div class="input-group input-group-addicon">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="myicon icon-user"></i>
+                  </div>
+                </div>
+                <input type="text" class="form-control" placeholder="姓名" name="name" required>
+              </div>
+            </div>
 
+            <div class="col-12 col-lg-4 mb-4">
+              <div class="input-group input-group-addicon">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="myicon icon-mail"></i>
+                  </div>
+                </div>
+                <input type="email" class="form-control" placeholder="Email" name="email" required>
+              </div>
+            </div>
+
+            <div class="col-12 mb-4">
+              <div class="input-group input-group-addicon">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="myicon icon-write"></i>
+                  </div>
+                </div>
+                <textarea class="form-control" placeholder="留言內容" rows="3" name="content" required></textarea>
+              </div>
+            </div>
+
+            <div class="col-auto mx-auto">
+              <div class="h-captcha" data-sitekey="2bf3ce93-dd10-46d6-be61-55a687f72557"><iframe src="https://newassets.hcaptcha.com/captcha/v1/180e565/static/hcaptcha.html#frame=checkbox&amp;id=0ellmt3wsa5u&amp;host=portal.taibif.tw&amp;sentry=true&amp;reportapi=https%3A%2F%2Faccounts.hcaptcha.com&amp;recaptchacompat=true&amp;custom=false&amp;hl=en&amp;tplinks=on&amp;sitekey=2bf3ce93-dd10-46d6-be61-55a687f72557&amp;theme=light&amp;origin=https%3A%2F%2Fportal.taibif.tw" tabindex="0" frameborder="0" scrolling="no" title="Widget containing checkbox for hCaptcha security challenge" data-hcaptcha-widget-id="0ellmt3wsa5u" data-hcaptcha-response="" style="width: 303px; height: 78px; overflow: hidden;"></iframe><textarea id="g-recaptcha-response-0ellmt3wsa5u" name="g-recaptcha-response" style="display: none;"></textarea><textarea id="h-captcha-response-0ellmt3wsa5u" name="h-captcha-response" style="display: none;"></textarea></div>
+              <button type="submit" class="btn btn-block btn-sunset-md mt-3">送出</button>
             </div>
           </div>
 
-          <div class="col-sm-4 col-xs-12">
-            <div class="input-group">
-              <div class="input-group-addon"><i class="myicon icon-user"></i></div>
-              <input type="text" class="form-control" placeholder="姓名" name="name" required>
-            </div>
-          </div>
-
-          <div class="col-sm-4 col-xs-12">
-            <div class="input-group">
-              <div class="input-group-addon"><i class="myicon icon-mail"></i></div>
-              <input type="text" class="form-control" placeholder="Email" name="email" required>
-            </div>
-          </div>
-
-          <div class="col-xs-12">
-            <div class="input-group">
-              <div class="input-group-addon"><i class="myicon icon-write"></i></div>
-              <textarea class="form-control textarea" placeholder="留言內容" rows="3" name="content" required></textarea>
-            </div>
-          </div>
-
-          <div class="col-xs-12 contact-btn-wrapper">
-            <div class="h-captcha" data-sitekey="2bf3ce93-dd10-46d6-be61-55a687f72557"></div>
-            <button type="submit" class="btn btn-sunset">送出</button>
-          </div>
-
-        </div>
-      </form>
+        </form>
+      </div>
 
     </div>
-    <!-- contact form end -->
+    <!-- col end -->
+
+  </div>
 
 
   {% endif %}

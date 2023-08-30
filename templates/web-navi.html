@@ -12,7 +12,7 @@
         <div class="container">
           <div class="caption-mascot-wrapper">
             <h1 class="title">網站導覽</h1>
-            <img src="assets/images/mascot-Mreevesi.png" alt="" class="symbol">
+            <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
           </div>
         </div>
       </div>
@@ -35,15 +35,15 @@
             <div class="card card-ltmilo h-100">
               <div class="title">關於我們</div>
               <ul class="list-sitemap">
-                <li><a href="#">TaiBIF 介紹</a></li>
-                <li><a href="#">GBIF 介紹</a></li>
-                <li><a href="#">TaiBIF 成果</a></li>
-                <li><a href="#">感謝名單</a></li>
-                <li><a href="#">網站導覽</a></li>
-                <li><a href="#">相關連結</a></li>
-                <li><a href="#">FAQ</a></li>
-                <li><a href="#">TaiBIF 資源下載專區</a></li>
-                <li><a href="#">使用條款暨隱私權政策</a></li>
+                <li><a href="{% url 'about_taibif' %}">TaiBIF 介紹</a></li>
+                <li><a href="{% url 'about_gbif' %}">GBIF 介紹</a></li>
+                <li><a href="{% url 'taibif-achievement' %}">TaiBIF 成果</a></li>
+                <li><a href="{% url 'thanks-list' %}">感謝名單</a></li>
+                <li><a href="{% url 'web-navi' %}">網站導覽</a></li>
+                <li><a href="{% url 'links' %}">相關連結</a></li>
+                <li><a href="{% url 'faq' %}">FAQ</a></li>
+                <li><a href="{% url 'download-resources' %}">TaiBIF 資源下載專區</a></li>
+                <li><a href="{% url 'data-policy' %}">使用條款暨隱私權政策</a></li>
               </ul>
             </div>
           </div>
@@ -53,10 +53,10 @@
             <div class="card card-ltmilo h-100">
               <div class="title">開放資料</div>
               <ul class="list-sitemap">
-                <li><a href="#">開放資料流程</a></li>
-                <li><a href="#">計畫資料繳交依據與時程</a></li>
-                <li><a href="#">開放資料工具</a></li>
-                <li><a href="#">資料發布狀況</a></li>
+                <li><a href="{% url 'open-process' %}">開放資料流程</a></li>
+                <li><a href="{% url 'open-timezone' %}">計畫資料繳交依據與時程</a></li>
+                <li><a href="{% url 'tools' %}">開放資料工具</a></li>
+                <li><a href="{% url 'data_stats' %}">資料發布狀況</a></li>
               </ul>
             </div>
           </div>
@@ -66,10 +66,10 @@
             <div class="card card-ltmilo h-100">
               <div class="title">教育資源</div>
               <ul class="list-sitemap">
-                <li><a href="#">什麼是開放資料</a></li>
-                <li><a href="#">生物多樣性資訊概論</a></li>
-                <li><a href="#">資料開放與應用工作坊</a></li>
-                <li><a href="#">參與志工培訓</a></li>
+                <li><a href="{% url 'tech-open' %}">什麼是開放資料</a></li>
+                <li><a href="{% url 'tech-book' %}">生物多樣性資訊概論</a></li>
+                <li><a href="{% url 'tech-workshop' %}">資料開放與應用工作坊</a></li>
+                <li><a href="{% url 'tech-volunteer' %}">參與志工培訓</a></li>
               </ul>
             </div>
           </div>
@@ -79,10 +79,10 @@
             <div class="card card-ltmilo h-100">
               <div class="title">資料應用</div>
               <ul class="list-sitemap">
-                <li><a href="#">資料期刊與論文</a></li>
-                <li><a href="#">資料視覺化與圖表產出</a></li>
-                <li><a href="#">資料應用案例</a></li>
-                <li><a href="#">資料產品</a></li>
+                <li><a href="{% url 'data-paper' %}">資料期刊與論文</a></li>
+                <li><a href="{% url 'data-visual' %}">資料視覺化與圖表產出</a></li>
+                <li><a href="{% url 'data-case' %}">資料應用案例</a></li>
+                <li><a href="{% url 'data-product' %}">資料產品</a></li>
               </ul>
             </div>
           </div>
@@ -92,11 +92,11 @@
             <div class="card card-ltmilo h-100">
               <div class="title">找資料</div>
               <ul class="list-sitemap">
-                <li><a href="#">物種出現紀錄</a></li>
-                <li><a href="#">物種</a></li>
-                <li><a href="#">資料集</a></li>
-                <li><a href="#">資料發布單位</a></li>
-                <li><a href="#">API</a></li>
+                <li><a href="{% url 'search-occurrence' cat='search' %}">物種出現紀錄</a></li>
+                <li><a href="{% url 'search-species' %}">物種</a></li>
+                <li><a href="{% url 'search-dataset' %}">資料集</a></li>
+                <li><a href="{% url 'search-publisher' %}">資料發布單位</a></li>
+                <li><a href="{% url 'taibif-api' %}">API</a></li>
                 <li><a href="#">全站搜尋</a></li>
               </ul>
             </div>
@@ -107,9 +107,9 @@
             <div class="card card-ltmilo h-100">
               <div class="title">最新消息</div>
               <ul class="list-sitemap">
-                <li><a href="#">新聞</a></li>
-                <li><a href="#">活動</a></li>
-                <li><a href="#">更新</a></li>
+                <li><a href="{% url 'article-search' %}?category=news">新聞</a></li>
+                <li><a href="{% url 'article-search' %}?category=event">活動</a></li>
+                <li><a href="{% url 'article-search' %}?category=update">更新</a></li>
               </ul>
             </div>
           </div>
@@ -119,10 +119,10 @@
             <div class="card card-ltmilo h-100">
               <div class="title">專題文章</div>
               <ul class="list-sitemap">
-                <li><a href="#">資料故事</a></li>
-                <li><a href="#">科普文章</a></li>
-                <li><a href="#">技術專欄</a></li>
-                <li><a href="#">出版品</a></li>
+                <li><a href="{% url 'data-story' %}">資料故事</a></li>
+                <li><a href="{% url 'article-search' %}?category=sci">科普文章</a></li>
+                <li><a href="{% url 'article-search' %}?category=tech">技術專欄</a></li>
+                <li><a href="{% url 'article-search' %}?category=pub">出版品</a></li>
               </ul>
             </div>
           </div>

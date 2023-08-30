@@ -1,33 +1,59 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
+{% block head%}
+
+<style>
+  p{
+ line-height: 1.8;
+ }
+
+ hr {
+ border-top: 1px solid;
+   }
+</style>
+
+{% endblock%}
 {% block main %}
-{% include "inc_breadcrumb.html" with tab="02" active_label="工具分享" %}
 
- <style>
-   p{
-  line-height: 1.8;
-  }
+<!-- topnav begin -->
+<div class="bg-main-pale">
+  <div class="container">
+    <div class="caption-mascot-wrapper">
+      <h1 class="title">開放資料工具</h1>
+      <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
+    </div>
+  </div>
+</div>
+<!-- topnav end -->
 
-  hr {
-  border-top: 1px solid;
-    }
- </style>
+{% comment %} {% include "inc_breadcrumb.html" with tab="02" active_label="工具分享" %} {% endcomment %}
 
   <!-- container begin -->
- <div class="container">
-   {% if message %}
-  <div class="alert alert-warning alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <strong>{{ message.head }}</strong> {{ message.content }}
-  </div>
-  {% endif %}
+  <div class="container my-5">
 
-    <h2 class="h2">
-      物種中文名比對
-    </h2>
+<!-- breadcrumb begin -->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+        <li class="breadcrumb-item">開放資料</li>
+        <li class="breadcrumb-item">開放資料工具</li>
+        <li class="breadcrumb-item active" aria-current="page">物種中文名比對</li>
+      </ol>
+    </nav>
 
-    <div class="journals-intro-ctn">
+
+    {% if message %}
+    <div class="alert alert-warning alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>{{ message.head }}</strong> {{ message.content }}
+    </div>
+    {% endif %}
+
+    <h1 class="heading-lg-ul"> 物種中文名比對 </h1>
+
+    <div class="article-content-wrapper">
       <p>此工具提供使用者上傳多筆中文名稱，工具會針對所上傳的物種中文名稱比對出臺灣物種名錄中所對應的物種學名與物種代碼（name code），若比對不到中文名稱則傳回「no match」之訊息。</p>
       <form method="POST" action="{% url 'tools-common_name_checker' %}">
         {% csrf_token %}

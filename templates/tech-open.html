@@ -5,7 +5,96 @@
 
 
 {% block main %}
+{% if LANGUAGE_CODE == "zh-hant" %}
 
-此頁沒有UI
+ <!-- topnav begin -->
+ <div class="bg-main-pale">
+    <div class="container">
+      <div class="caption-mascot-wrapper">
+        <h1 class="title">資料開放與應用工作坊</h1>
+        <img src="{% static 'images/mascot-frog.png'%}" alt="" class="symbol">
+    </div>
+    </div>
+  </div>
+  <!-- topnav end -->
+    
+  <!-- container begin -->
+<div class="container my-5">
+    <!-- breadcrumb begin -->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+        <li class="breadcrumb-item">教育資源</li>
+        <li class="breadcrumb-item active" aria-current="page">什麼是開放資料？</li>
+    </ol>
+    </nav>
+    <!-- breadcrumb end -->
+  
+  
+    <h1 class="heading-lg-ul">什麼是開放資料？</h1>
+  
+    <div class="article-content-wrapper">
+        <h3>開放是在說什麼？</h3>
+    </div>
+
+    <blockquote>Open data is data that can be freely used, reused and redistributed by anyone - subject only, at most, to the requirement to attribute and sharealike. (開放資料指的是資料能被任何人自由地使用，重新使用與散佈 – 我們至多只能要求來源標示，與以相同方式分享)</blockquote>
+    <p>關於「開放資料」的定義在 Open Definition (<a href="https://opendefinition.org/od/2.1/en/" target="_block">full Open Definition</a>) 內有更詳細的說明。在這我們列出其中最重要的幾點：</p>
+    <ul>
+        <li><strong>Availability and Access / 可得性與可讀性 : </strong>資料必須完整釋出，同時只能依照再製的成本徵收適當的費用。最好能提供網路下載。同時提供的資料格式必須是適用和可被修改的。</li>
+        <li><strong>Re-use and Redistribution / 重新使用與散播 :</strong> 資料釋出時必須採用允許資料的重新使用和散播的授權聲明。並允許與其他資料混合使用。</li>
+        <li><strong>Universal Participation/ 分享的普遍性 :</strong> 任何人都可使用，重新使用和散佈這些資料 - 不能限制資料使用的範圍，或是使用者的資格。例如，「非商業使用」將禁止資料在所有「商業性質」的使用，或是限制資料只能使用在某個範圍內 (例如，只能作為教育上使用)。這些限制都是不被允許的。</li>
+    </ul>
+    <br>
+    <p>如果你對於為什麼我們如此執著在「開放」的定義和為什麼會如此定義感到疑惑，最簡單的答案就是：<strong> interoperability – 可互通 (用) 性</strong> 。</p>
+    <p>可互通性指的是不同的系統與組織可以共同運作 (inter-operate) 的能力。在這裡，可互通性意味著讓不同的資料集 (datasets) 可以彼此引用或是相互混用的能力。</p>
+    <p>可互通性的重要性在於，這是讓不同的元件可以一起共同運作的條件。這種將所有事物元件化和讓他們可以彼此 嵌合 的能力，對於建立一個更大更複雜的系統來說是絕對必要的。如果沒有這個可互通性，那就完全不可能達到這樣的結果。一個眾所皆知的例子就是巴別塔的神話故事，因為缺乏彼此溝通（互用）的能力（無能力），最後的結果就是整個塔的崩潰。</p>
+    <p>面對資料我們也有類似的問題。當我們提到資料 (或著程式碼) 共用 (commons) 時，我們指的是「開放」資料中的一部分，可以自由地與其他「開放」資料相互混用。而可互通性就是達到「開放性」(openness) 所帶來的最大好處時最重要條件 : 因為當不同資料集可以更容易地組合在一起，我們就能更容易地發展出更多和更好的產品與服務（這些好處將在「為什麼要開放資料」一章中有更詳細的說明）</p>
+    <p>對「開放性」提出一個清楚的定義可以讓我們在使用資料時，只要所用的資料符合這個開放定義，就能確定資料彼此可混和使用。同時也能確定我們不需面對另一座「巴別塔」 ‘tower of babel’ : 雖然擁有很多資料集，但是只有一小部分可以彼此互用。或更慘的是資料完全無法相互混和來建立一個更大的系統。當然也沒辦法將資料的價值呈現出來。</p>
+    <hr>
+    <small>文字來源: <a href="https://opendatahandbook.org/guide/zh_TW/what-is-open-data/" target="_blank">Open Data Handbook</a></small>
+
+    {% endif %}
+
+    {% comment %} {% if LANGUAGE_CODE == "en" %}
+  
+    {% include "inc_breadcrumb.html" with tab="01" active_label="About Open Data" %}
+  
+    <h2 class="h2">What is Open Data? </h2>
+    <hr>
+    <div class="article-content-wrapper">
+  
+        <blockquote>Open data is data that can be freely used, reused and redistributed by anyone - subject only, at most, to the requirement to attribute and sharealike. </blockquote>
+  
+      <p> Open Definition (<a href="https://opendefinition.org/od/2.1/en/" target="_block">full Open Definition</a>) The full Open Definition gives precise details as to what this means. To summarize the most important:</p>
+  
+      <ul>
+        <li><strong>Availability and Access : </strong>the data must be available as a whole and at no more than a reasonable reproduction cost, preferably by downloading over the internet. The data must also be available in a convenient and modifiable form.</li>
+        <li><strong>Re-use and Redistribution :</strong> the data must be provided under terms that permit re-use and redistribution including the intermixing with other datasets.</li>
+        <li><strong>Universal Participation :</strong> everyone must be able to use, re-use and redistribute - there should be no discrimination against fields of endeavour or against persons or groups. For example, ‘non-commercial’ restrictions that would prevent ‘commercial’ use, or restrictions of use for certain purposes (e.g. only in education), are not allowed.</li>
+      </ul>
+  
+       interoperability.
+  
+  
+  
+      <br>
+        <p>If you’re wondering why it is so important to be clear about what open means and why this definition is used, there’s a simple answer:<strong> interoperability </strong>. </p>
+  
+        <p>Interoperability denotes the ability of diverse systems and organizations to work together (inter-operate). In this case, it is the ability to interoperate - or intermix - different datasets.</p>
+  
+        <p>Interoperability is important because it allows for different components to work together. This ability to componentize and to ‘plug together’ components is essential to building large, complex systems. Without interoperability this becomes near impossible — as evidenced in the most famous myth of the Tower of Babel where the (in)ability to communicate (to interoperate) resulted in the complete breakdown of the tower-building effort.</p>
+  
+        <p>We face a similar situation with regard to data. The core of a “commons” of data (or code) is that one piece of “open” material contained therein can be freely intermixed with other “open” material. This interoperability is absolutely key to realizing the main practical benefits of “openness”: the dramatically enhanced ability to combine different datasets together and thereby to develop more and better products and services (these benefits are discussed in more detail in the section on ‘why’ open data).</p>
+  
+        <p>Providing a clear definition of openness ensures that when you get two open datasets from two different sources, you will be able to combine them together, and it ensures that we <strong>avoid our own ‘tower of babel’: lots of datasets but little or no ability to combine them together into the larger systems where the real value lies.</strong></p>
+        <small>Source: <a href="https://opendatahandbook.org/guide/zh_TW/what-is-open-data/" target="_blank">Open Data Handbook</a></small>
+    </div>
+  
+    <hr>
+  
+    {% endif %} {% endcomment %}
+  
+  </div>
+    <!-- container end -->
 
 {% endblock %}

@@ -39,7 +39,7 @@ function TreeNode({nodeData, onClickSpecies}) {
     return <TreeNode key={child.id} nodeData={child} onClickSpecies={onClickSpecies} />
   });
 
-  const icon = (isToggled) ? '📂': '📁';
+  const icon = (isToggled) ? <span className="myicon icon-triangle-right"></span>: <span className="myicon icon-triangle-down"></span>;
   /*const node = (nodeData.data.rank === 'species') ?
         <div onClick={(e)=>onClickSpecies(e, nodeData.id, nodeData.data.name)} className="taxon-tree-node-item">{nodeData.data.name} </div> :
         <div onClick={toggleTreeNode} className="taxon-tree-node-item">{icon} {nodeData.data.name}👉</div> ;*/
@@ -47,7 +47,9 @@ function TreeNode({nodeData, onClickSpecies}) {
 
   return (
       <div className="taxon-tree-node-wrapper">
-      <div><span onClick={toggleTreeNode} className="taxon-tree-node-item">{icon} {nodeData.data.name}</span> <button onClick={(e)=>onClickSpecies(e, nodeData.id, nodeData.data.name, nodeData.data.rank)} style={{cursor:'pointer',width:'20px', height:'20x',fontSize:'12px',padding:'0px',borderColor:'#eee'}} >+</button></div>
+      {icon}
+      <span onClick={toggleTreeNode} className="taxon-tree-node-item">{nodeData.data.name}</span> 
+      {/* <button onClick={(e)=>onClickSpecies(e, nodeData.id, nodeData.data.name, nodeData.data.rank)} style={{cursor:'pointer',width:'20px', height:'20x',fontSize:'12px',padding:'0px',borderColor:'#eee'}} >+</button> */}
       {childrenNodes}
       </div>
   )
