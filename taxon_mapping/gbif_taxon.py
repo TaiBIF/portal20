@@ -5,7 +5,7 @@ import json
 import datetime
 from datetime import date
 
-def check_higher_taxon(row):
+def update_namecode(row):
     gbif_url = 'http://127.0.0.1:8080/v2/api.php?format=json&source=gbif_backbone_txn&best=yes&names=' + str(row['name'])
 
     # solr 呼叫 nomanmatch 查詢
@@ -63,7 +63,7 @@ print("START TIME === " ,datetime.datetime.now())
 print("START DATE === " ,today )
 
 
-# Step 1 : 查詢 solr 出現紀錄所有學名
+# Step 1 : 查詢出現紀錄(solr)所有學名
 solr_url = 'http://127.0.0.1:8983/solr/taibif_occurrence/select?facet.field=taibif_scientificname&facet.limit=-1&facet.mincount=-1&facet=true&fl=taibif_scientificname&indent=true&q.op=OR&q=*%3A*&rows=0'
 
 inp_post_response = requests.get(solr_url)
@@ -91,10 +91,11 @@ df['taxon_rank'] = ''
 
 # 比對 Taxon backbone
 tmp_nomenMatch_result = df.apply(check_namecode, axis=1)
+
+# 匯出不同backbone 檔案
 taicol = tmp_nomenMatch_result[tmp_nomenMatch_result['taxon_backbone']!='GBIF']
 taicol.to_csv(f'./taicol_taxon.csv')
 
-# 匯出GBIF 檔案
 gbif = tmp_nomenMatch_result[tmp_nomenMatch_result['taxon_backbone']=='GBIF']
 gbif.to_csv(f'./gbif_taxon.csv')
 
@@ -103,7 +104,7 @@ empty = tmp_nomenMatch_result[tmp_nomenMatch_result['taxon_backbone']=='']
 empty.to_csv(f'./empty_taxon.csv')
 
 
-# Step2 : 匯入到Taxon Table 當中
+# Step2 : distinct各階層學名，匯入到Taxon Table 當中
 seperated_file = pd.read_csv('./gbif_taxon.csv')
 kingdomzh = pd.DataFrame({'name': seperated_file['kingdomzh'].unique(),'rank':'Kingdom'})
 phylumzh = pd.DataFrame({'name': seperated_file['phylumzh'].unique(),'rank':'Phylum'})
@@ -119,12 +120,13 @@ taxon_file['backbone'] = 'GBIF'
 taxon_file['taibif_accepted_namecode'] = ''
 taxon_file['taibif_namecode'] = ''
 
-tmp_nomenMatch_result = taxon_file.apply(check_higher_taxon, axis=1)
+tmp_nomenMatch_result = taxon_file.apply(update_namecode, axis=1)
 
 # 合併specie 資訊
 seperated_file = seperated_file.rename(columns={'taibif_scientificname':'name','taxon_backbone':'backbone','taxon_rank':'rank'})
 seperated_file = seperated_file.drop(columns=['Unnamed: 0','nM_name','taibif_vernacular_name','kingdomzh','phylumzh','classzh','orderzh','familyzh','genuszh'])
-print('seperated_file == ',seperated_file)
+# print('seperated_file == ',seperated_file)
+
 taxon_file_final = pd.concat([seperated_file,taxon_file], ignore_index=True)
 # 所需要的欄位 id,rank,name,is_accepted_name,,backbone
 taxon_file_final['is_accepted_name'] = 'true'
@@ -137,7 +139,6 @@ for i in taxon_file_final.index:
 
 
 # 匯入語法
-
 taxon_file_final = taxon_file_final.rename(columns = {'taibif_accepted_namecode':'source_id','taibif_namecode':'accepted_name_id'})
 
 b = taxon_file_final[taxon_file_final['source_id']!='']

@@ -64,7 +64,6 @@ def update_name_api(row):
     name_resp = requests.get(taicol_name_url , json={"test" : "in"})
     data = json.loads(name_resp.content.decode('utf-8'))
     
-    
     try:
         # 有正常回應，且有結果
         if (name_resp.status_code == 200) and (data.get('data')) and (len(data['data']) > 0):
@@ -86,26 +85,22 @@ def update_highertaxon_api(row):
     highertaxon_resp = requests.get(taicol_highertaxon_url , json={"test" : "in"})
     data = json.loads(highertaxon_resp.content.decode('utf-8'))
     
-    
     # 有正常回應，且有結果
     higher_taxon = []
     try: 
         if (highertaxon_resp.status_code == 200) and (data.get('data')) and (len(data['data']) > 0):
-            
             for i in data['data']:
                 if i['taxon_id'] != None:
                     higher_taxon.append(i['taxon_id'])
                 else:
                     un_name = i['simple_name']
                     # a = f"SELECT * FROM data_taxon WHERE name='{un_name}'"
-                    
                     # 確認 地位未定 是否有存入
                     un_id = pd.read_sql(f"SELECT * FROM data_taxon WHERE name='{un_name}'", connection)
                     if not un_id.empty:
                         higher_taxon.append(un_id['taicol_taxon_id'])
                     else:
-                        # 建立新的 不確定值
-                        "IS:incertae sedis"
+                        # 建立新的 不確定值 IS:incertae sedis
                         max_is = pd.read_sql("SELECT * FROM data_taxon WHERE taicol_taxon_id like 'IS-%%' ORDER BY id DESC limit 1", connection)
                         max_id = pd.read_sql("SELECT * FROM data_taxon ORDER BY id DESC limit 1", connection)
                         

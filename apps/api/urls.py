@@ -18,6 +18,7 @@ urlpatterns = [
     path('dataset/export', views.export, name='export'),
     path('v2/occurrence/get_map_species', views.get_map_species, name='get_map_species'),
     
+    # 外部使用的API
     path('v2/dataset', views.dataset_api, name='api_dataset'),
     # path('v1/taxon', views.taxon_api, name='api_taxon'),
     path('v2/publisher', views.publisher_api, name='api_publisher'),
