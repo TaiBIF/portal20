@@ -16,11 +16,13 @@ RUN apt-get update && apt-get install -y \
 
 # install npm from source
 #curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
-RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
-RUN apt-get install -y nodejs
 #RUN curl https://www.npmjs.com/install.sh -o npm-install.sh
 #RUN sh npm-install.sh
 #RUN rm npm-install.sh
+
+##build error
+#RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+#RUN apt-get install -y nodejs
 
 # timezone to Asia/Taipei
 RUN ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime
@@ -36,12 +38,12 @@ COPY Pipfile Pipfile.lock ./
 RUN pipenv install --system
 
 # install frontend packages
-COPY package.json package-lock.json ./
-RUN npm install
+#COPY package.json package-lock.json ./
+#RUN npm install
 
 COPY . .
 
-RUN npm run build
+#RUN npm run build
 #COPY . /taibif-code/
 
 
