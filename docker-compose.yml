@@ -13,6 +13,7 @@ services:
       - db:db
     volumes:
       - .:/taibif-code
+      - ./frontend-data/node_modules:/foo/node_modules
       - ../taibif-volumes/bucket:/taibif-volumes/bucket
       - ../taibif-volumes/media:/taibif-volumes/media
       - ../taibif-volumes/biomap:/biomap

@@ -2,7 +2,8 @@
 
 cd /taibif-code
 
-#npm run build-dev
+cp /frontend/search.dev.js /taibif-code/static/js
+cp /frontend/data-table.dev.js /taibif-code/static/js
 
 python manage.py migrate --no-input
 
