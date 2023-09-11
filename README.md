@@ -19,13 +19,22 @@ docker-compose -f docker-compose.yml -f docker-compose-develop.yml up -d
 
 ### Frontend
 
-Install [nvm](https://github.com/nvm-sh/nvm)
+Include:
+- search.{dev|min}.js (for data-related page)
+- datatable.{dev|min}.js (for dataset status page)
+
+Frontend code (react js) is in folder `frontend-data` will be build and deploy by docker & docker-compose up process.
+
+If develop in localhost:
+
+1. Install [nvm](https://github.com/nvm-sh/nvm)
+2. use lts (node v.18)
 
 ```
-$ nvm install lts/fermium
-$ nvm use lts/fermium
-$ npm install
-$ npm run dev
+$ nvm install lts/hydrogen
+$ nvm use --lts
+$ yarn install
+$ yarn dev
 ```
 
 ## make translate (english)
