@@ -19,6 +19,8 @@ docker-compose -f docker-compose.yml -f docker-compose-develop.yml up -d
 
 ### Frontend
 
+[Frontend Build Process](build-frontend.md)
+
 Include:
 - search.{dev|min}.js (for data-related page)
 - datatable.{dev|min}.js (for dataset status page)
