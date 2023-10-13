@@ -954,7 +954,7 @@ def occurrence_api(request):
     res_list=[] 
     for i in solr.solr_response['response']['docs']:
         backbone = i['taxon_backbone']if 'taxon_backbone' in i else None
-        mediaLicense = i['mediaLicense'] if 'mediaLicense' in i else None
+        mediaLicense = i['taibif_mediaLicense'] if 'taibif_mediaLicense' in i else None
         group = i['taibif_taxonGroup'][0] if 'taibif_taxonGroup' in i else None
         if 'orderzh' in i :
             if i['orderzh'] in ['Accipitriformes','Anseriformes','Apodiformes','Bucerotiformes','Caprimulgiformes','Charadriiformes','Ciconiiformes','Columbiformes','Coraciiformes','Cuculiformes','Falconiformes','Galliformes','Gaviiformes','Gruiformes','Passeriformes','Pelecaniformes','Phaethontiformes','Phoenicopteriformes','Piciformes','Podicipediformes','Procellariiformes','Psittaciformes','Strigiformes','Suliformes','Struthioniformes',]:
@@ -1024,6 +1024,8 @@ def occurrence_api(request):
             'organismQuantityType':i['organismQuantityType'] if 'organismQuantityType' in i else None,
             'associatedMedia':i['associatedMedia']  if mediaLicense else  None,
             'mediaLicense':mediaLicense,
+            # 'associatedReferences':i['associatedReferences']  if 'associatedReferences' else  'test',
+            
         })
 
     res['url'] = solr.solr_url
