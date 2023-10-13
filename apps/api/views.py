@@ -479,7 +479,7 @@ def for_basic_occ(request):
             'recordNumber':i['recordNumber'] if 'recordNumber' in i else None,
             'organismQuantity':i['organismQuantity'] if 'organismQuantity' in i else None,
             'organismQuantityType':i['organismQuantityType'] if 'organismQuantityType' in i else None,
-            'associatedMedia':i['associatedMedia']  if mediaLicense else  None,
+            'associatedMedia':i['associatedMedia']  if 'associatedMedia' else  None,
             'mediaLicense':mediaLicense,
             
         })
@@ -1022,7 +1022,7 @@ def occurrence_api(request):
             'recordNumber':i['recordNumber'] if 'recordNumber' in i else None,
             'organismQuantity':i['organismQuantity'] if 'organismQuantity' in i else None,
             'organismQuantityType':i['organismQuantityType'] if 'organismQuantityType' in i else None,
-            'associatedMedia':i['associatedMedia']  if mediaLicense else  None,
+            'associatedMedia':i['associatedMedia']  if 'associatedMedia' else  None,
             'mediaLicense':mediaLicense,
             # 'associatedReferences':i['associatedReferences']  if 'associatedReferences' else  'test',
             
