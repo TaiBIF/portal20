@@ -1024,7 +1024,7 @@ def occurrence_api(request):
             'organismQuantityType':i['organismQuantityType'] if 'organismQuantityType' in i else None,
             'associatedMedia':i['associatedMedia']  if 'associatedMedia' else  None,
             'mediaLicense':mediaLicense,
-            # 'associatedReferences':i['associatedReferences']  if 'associatedReferences' else  'test',
+            'associatedReferences':i['associatedReferences']  if 'associatedReferences' else  'test',
             
         })
 
