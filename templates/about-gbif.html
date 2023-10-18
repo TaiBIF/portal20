@@ -5,7 +5,7 @@
 {% block title %}GBIF 介紹{% endblock %}
 {% get_current_language as LANGUAGE_CODE %}
 {% block main %}
-{% if LANGUAGE_CODE == "zh-hant" %}
+
 
 <!-- topnav begin -->
 <div class="bg-main-pale">
@@ -74,61 +74,8 @@
     </div>
   </div>
 
-    {% endif%}
-    {% comment %} {% if LANGUAGE_CODE == "en" %}
-    {% include "inc_breadcrumb.html" with tab="03" active_label="About GBIF" %}
-
-  <h1 class="heading-lg-ul">
-    What is GBIF?
-  </h1>
-
-  <div class="article-content-wrapper">
-    <blockquote>
-      GBIF—the Global Biodiversity Information Facility—is an international network and data infrastructure funded by the world’s governments and aimed at providing anyone, anywhere, open access to data about all types of life on Earth.
-    </blockquote>
-
-<p>Coordinated through its Secretariat in Copenhagen, the <a href="https://www.gbif.org/the-gbif-network" target="_blank"> GBIF network of participating countries and organizations</a>, working through participant nodes, provides data-holding institutions around the world with common standards, best practices and open-source tools enabling them to share information about where and when species have been recorded. This knowledge derives from many sources, including everything from museum specimens collected in the 18th and 19th century to geotagged smartphone photos shared by amateur naturalists in recent days and weeks.</p>
-
-<p>The GBIF network draws all these sources together through the use of <a href="https://www.gbif.org/standards" target="_blank" >data standards</a>, including <a href="https://www.gbif.org/darwin-core" target="_blank" >Darwin Core</a>, which forms the basis for the bulk of <a href="http://gbif.org/" target="_blank">GBIF.org</a>’s index of hundreds of millions of <a href="https://www.gbif.org/occurrence/search" target="_blank"> species occurrence records</a>. Publishers provide open access to their datasets using machine-readable Creative Commons licence designations, allowing scientists, researchers and others to apply the data in hundreds of peer-reviewed publications and policy papers each year. Many of these analyses—which cover topics from the impacts of climate change and the spread of invasive and alien pests to priorities for conservation and protected areas, food security and human health— would not be possible without this.</p>
-  </div>
-
-    <div class="article-content-wrapper">
-      <h3>Background and history</h3>
-      <p>
-        GBIF arose from a <a href="http://www.oecd.org/science/inno/2105199.pdf" target="_blank">1999 recommendation by the Biodiversity Informatics Subgroup </a>of the <a href="https://www.oecd.org/" target="_blank">Organization for Economic Cooperation and Development’s Megascience Forum</a>. This report concluded that “An international mechanism is needed to make biodiversity data and information accessible worldwide”, arguing that this mechanism could produce many economic and social benefits and enable sustainable development by providing sound scientific evidence.
-      </p>
-
-      <p>The OECD panel specifically recommended the establishment of a Global Biodiversity Information Facility, to</p>
-      <blockquote>
-        “enable users to navigate and put to use vast quantities of biodiversity information, advancing scientific research … serving the economic and quality-of-life interests of society, and providing a basis from which our knowledge of the natural world can grow rapidly and in a manner that avoids duplication of effort and expenditure.”
-      </blockquote>
-
-      <p>
-        That recommendation was endorsed by OECD science ministers and, in 2001, GBIF was officially established through Memorandum of Understanding between participating governments.
-      </p>
-    </div>
 
 
-    <div class="article-content-wrapper">
-    <p>
-    <h3>About the Secretariat</h3>
-    <p><a href="https://www.gbif.org/contact-us" target="_blank"> The GBIF Secretariat</a> is currently organized into four teams:    </p>
-    <ul>
-      <li><strong>Participation and Engagement</strong> is responsible for operating the network of Participants and publishers, recruiting new members and enhancing the capacity of current ones.</li>
-      <li><strong>Data Products</strong> is responsible for the quality and scientific value of the integrated data products produced by the GBIF network.</li>
-      <li><strong>Informatics</strong> is responsible for data management, software development and the overall operation of the GBIF infrastructure.</li>
-      <li><strong>Administration</strong> is responsible for maintaining both the network and the Secretariat’s underlying operations and processes.</li>
-    </ul>
-    </div>
-    
-     
-     
-    
-    <hr>
-    <div>
-      <small>From: <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a></small>
-    </div>
-    {% endif %}
 </div>
-  <!-- container end --> {% endcomment %}
+  <!-- container end --> 
 {% endblock %}
