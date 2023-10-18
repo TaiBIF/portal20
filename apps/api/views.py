@@ -1023,6 +1023,7 @@ def occurrence_api(request):
             'recordNumber':i['recordNumber'] if 'recordNumber' in i else None,
             'organismQuantity':i['organismQuantity'] if 'organismQuantity' in i else None,
             'organismQuantityType':i['organismQuantityType'] if 'organismQuantityType' in i else None,
+<<<<<<< HEAD
             # 常用資料
             'taibifDatasetID': i['taibifDatasetID'],
             'gbifDatasetID':i['gbif_dataset_uuid'] if 'gbif_dataset_uuid' in i else None,
@@ -1030,6 +1031,12 @@ def occurrence_api(request):
             'issue':','.join(issues) if issues else None,
             # 沒分類
             'modifiedDate':i['modified'] if 'modified' in i else None,
+=======
+            'associatedMedia':i['associatedMedia']  if 'associatedMedia' else  None,
+            'mediaLicense':mediaLicense,
+            'associatedReferences':i['associatedReferences']  if 'associatedReferences' else  'test',
+            
+>>>>>>> 1c8b27c84cafedb9bd40ad118ded7d59b3522a02
         })
 
     res['url'] = solr.solr_url
