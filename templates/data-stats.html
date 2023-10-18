@@ -56,414 +56,229 @@ svg text.label {
 {% endif %}
 
 <script>
-  const checkboxMOST = document.querySelector('.check-most');
-  checkboxMOST.onclick = function(e){
-    let baseURL = `${window.location.origin}${window.location.pathname}`;
-    if (e.target.checked === true) {
-      window.location.href =  `${baseURL}?most=1`
-    }
-    else {
-      window.location.href = baseURL;
-    }
-  }
+const checkboxes = document.querySelectorAll('input[type=checkbox]');
+const checkMostCheckbox = document.querySelector('.check-most');
+const checkTaibifIptCheckbox = document.querySelector('.check-taibif-ipt');
+const checkTaibifAllCheckbox = document.querySelector('.check-all');
+let baseURL = `${window.location.origin}${window.location.pathname}`;
+
+// Set checkTaibifAllCheckbox as default
+if (baseURL === window.location.href) {
+    checkTaibifAllCheckbox.setAttribute('checked', 'checked');
+};
+
+checkboxes.forEach(checkbox => {
+    // Multiple choice function of checkboxes
+    checkbox.addEventListener('change', function() {
+        if (this.checked) {
+            checkboxes.forEach(otherCheckbox => {
+                if (otherCheckbox !== this) {
+                    otherCheckbox.checked = false;
+                }
+            })
+        }
+    })
+
+    // Redrirect to the specific url based on the slelected checkbox
+    checkbox.addEventListener('change', function() {
+        if (this === checkMostCheckbox && this.checked) {
+            window.location.href = `${baseURL}?most=1`
+        } else if (this === checkTaibifIptCheckbox && this.checked) {
+            window.location.href = `${baseURL}?taibif_ipt=1`
+        } else {
+            window.location.href = baseURL;
+        }
+    })
+});
 </script>
 {% endblock %}
 
 {% block main %}
 
-{% if LANGUAGE_CODE == "zh-hant" %}
+
 {% comment %} {% include "inc_breadcrumb.html" with tab="01" active_label="資料發布狀況" %} {% endcomment %}
 
-    <!-- topnav begin -->
-    <div class="bg-main-pale">
-      <div class="container">
-        <div class="caption-mascot-wrapper">
-          <h1 class="title">資料發布狀況</h1>
-          <img src="{% static 'images/mascot-Mreevesi.png'%}" alt="" class="symbol">
-        </div>
-      </div>
+<!-- topnav begin -->
+<div class="bg-main-pale">
+    <div class="container">
+    <div class="caption-mascot-wrapper">
+        <h1 class="title">資料發布狀況</h1>
+        <img src="{% static 'images/mascot-Mreevesi.png'%}" alt="" class="symbol">
     </div>
-    <!-- topnav end -->
-    <!-- container begin -->
-    <div class="container my-5" >
-      <!-- breadcrumb begin -->
-      <nav aria-label="breadcrumb">
+    </div>
+</div>
+<!-- topnav end -->
+<!-- container begin -->
+<div class="container my-5" >
+    <!-- breadcrumb begin -->
+    <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-          <li class="breadcrumb-item">開放資料</li>
-          <li class="breadcrumb-item active" aria-current="page">資料發布狀況</li>
+            <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+            <li class="breadcrumb-item">開放資料</li>
+            <li class="breadcrumb-item active" aria-current="page">資料發布狀況</li>
         </ol>
-      </nav>
-      <!-- breadcrumb end -->
+    </nav>
+    <!-- breadcrumb end -->
 
-      <!-- 資料發布狀況 row begin -->
-      <div class="row justify-content-center mb-4">
-        <!-- col begin -->
-        <div class="col-card-brick">
-          <div class="card-brick card-glowing">
+    <!-- 資料發布狀況 row begin -->
+    <div class="row justify-content-center mb-4">
+    <!-- col begin -->
+    <div class="col-card-brick">
+        <div class="card-brick card-glowing">
             <p class="title"><span class="myicon icon-data-stats mr-1"></span>出現紀錄</p>
             <p class="content"><a href="/occurrence/search/" >{{occ_num|intcomma:False}}</a></p>
-          </div>
         </div>
-        <!-- col end -->
-        <!-- col begin -->
-        <div class="col-card-brick">
-          <div class="card-brick card-glowing">
+    </div>
+    <!-- col end -->
+    <!-- col begin -->
+    <div class="col-card-brick">
+        <div class="card-brick card-glowing">
             <p class="title"><span class="myicon icon-data-folder mr-1"></span>資料集</p>
             <p class="content"><a href="/dataset/search/">{{dataset_num|intcomma}}</a></p>
-          </div>
         </div>
-        <!-- col end -->
-        <!-- col begin -->
-        <div class="col-card-brick">
-          <div class="card-brick card-glowing">
+    </div>
+    <!-- col end -->
+    <!-- col begin -->
+    <div class="col-card-brick">
+        <div class="card-brick card-glowing">
             <p class="title"><span class="myicon icon-data-tw mr-1"></span>涵蓋物種數</p>
             <p class="content">70,234</p>
-          </div>
         </div>
-        <!-- col end -->
-        <!-- col begin -->
-        <div class="col-card-brick">
-          <div class="card-brick card-glowing">
+    </div>
+    <!-- col end -->
+    <!-- col begin -->
+    <div class="col-card-brick">
+        <div class="card-brick card-glowing">
             <p class="title"><span class="myicon icon-data-org mr-1"></span>資料發布單位</p>
             <p class="content"><a href="/publisher/search/">{{publisher_num}}</a></p>
-          </div>
         </div>
-        <!-- col end -->
-        <!-- col begin -->
-        <div class="col-card-brick">
-          <div class="card-brick card-glowing">
+    </div>
+    <!-- col end -->
+    <!-- col begin -->
+    <div class="col-card-brick">
+        <div class="card-brick card-glowing">
             <p class="title"><span class="myicon icon-data-paper mr-1"></span>資料應用發表</p>
             <p class="content">0</p>
-          </div>
         </div>
-        <!-- col end -->
-      </div>
-      <!-- 資料發布狀況 row begin -->
+    </div>
+    <!-- col end -->
+    </div>
+    <!-- 資料發布狀況 row begin -->
 
-      <!-- row begin -->
-      <div class="row">
-        <!-- col begin -->
-        <div class="col-12">
-          <h1 class="headline-left-hr">
-            資料發布狀況
-            <span class="footnote">全部</span>
-          </h1>
-          <div class="heading-sort-ctn">
+    <!-- row begin -->
+    <div class="row">
+    <!-- col begin -->
+    <div class="col-12">
+        <h1 class="headline-left-hr">
+        資料發布狀況
+        <span class="footnote">全部</span>
+        </h1>
+        <div class="heading-sort-ctn">
             <label class="custom-input-ctn">
-              <input type="checkbox">
-              <span class="checkmark"></span>
-              檢視 TaiBIF 裡所有資料的發布狀況（包含有台灣點位的 GBIF 來源資料）
+                <input type="checkbox" class="check-all">
+                <span class="checkmark"></span>
+                檢視 TaiBIF 裡所有資料的發布狀況（包含有台灣點位的 GBIF 來源資料）
             </label>
             <label class="custom-input-ctn">
-              <input type="checkbox">
-              <span class="checkmark"></span>
-              僅檢視 TaiBIF IPT 資料庫的發布狀況
+                <input type="checkbox" class="check-taibif-ipt" {% if request.GET.taibif_ipt %} checked {% endif %}>
+                <span class="checkmark"></span>
+                僅檢視 TaiBIF IPT 資料庫的發布狀況
             </label>
             <label class="custom-input-ctn">
-              <input type="checkbox"  class="check-most" {% if request.GET.most %} checked{% endif %}>
-              <span class="checkmark"></span>
-              僅檢視國科會發布狀況 (TaiBIF 的資料庫及基礎建設乃由國科會之經費及相關計畫支持，勾選此項可了解國科會生物多樣性計畫物種資料開放狀況)
+                <input type="checkbox"  class="check-most" {% if request.GET.most %} checked {% endif %}>
+                <span class="checkmark"></span>
+                僅檢視國科會發布狀況 (TaiBIF 的資料庫及基礎建設乃由國科會之經費及相關計畫支持，勾選此項可了解國科會生物多樣性計畫物種資料開放狀況)
             </label>
-          </div>
+        </div>
 
-          <h3 class="headline-left">統整數據</h3>
+        <h3 class="headline-left">統整數據</h3>
 
-          <div class="card-tools-wrapper">
-            <div class="title">
-              今年度上傳出現紀錄資料筆數
-              <a href="#" class="btn-dataicon-downlod"><span class="myicon icon-download-infographic"></span></a>
-            </div>
-            <div class="content responsive">
-              <div id="taibif-stats__this_year_occurrence"></div>
-            </div>
-          </div>
+        <div class="card-tools-wrapper">
+        <div class="title">
+            今年度上傳出現紀錄資料筆數
+            <a href="#" class="btn-dataicon-downlod"><span class="myicon icon-download-infographic"></span></a>
+        </div>
+        <div class="content responsive">
+            <div id="taibif-stats__this_year_occurrence"></div>
+        </div>
+        </div>
 
-          <div class="card-tools-wrapper">
-            <div class="title">
-              今年度上傳資料集數量
-              <a href="#" class="btn-dataicon-downlod"><span class="myicon icon-download-infographic"></span></a>
-            </div>
-            <div class="content responsive">
-              <div id="taibif-stats__this_year_dataset"></div>
-            </div>
-          </div>
+        <div class="card-tools-wrapper">
+        <div class="title">
+            今年度上傳資料集數量
+            <a href="#" class="btn-dataicon-downlod"><span class="myicon icon-download-infographic"></span></a>
+        </div>
+        <div class="content responsive">
+            <div id="taibif-stats__this_year_dataset"></div>
+        </div>
+        </div>
 
-          <div class="card-tools-wrapper">
-            <div class="title">
-              累積出現紀錄資料筆數
-              <a href="#" class="btn-dataicon-downlod"><span class="myicon icon-download-infographic"></span></a>
-            </div>
-            <div class="content responsive">
-              <div id="taibif-stats__trend_occurrence"></div>
-            </div>
-          </div>
+        <div class="card-tools-wrapper">
+        <div class="title">
+            累積出現紀錄資料筆數
+            <a href="#" class="btn-dataicon-downlod"><span class="myicon icon-download-infographic"></span></a>
+        </div>
+        <div class="content responsive">
+            <div id="taibif-stats__trend_occurrence"></div>
+        </div>
+        </div>
 
-          <div class="card-tools-wrapper">
-            <div class="title">
-              累積資料集數量
-              <a href="#" class="btn-dataicon-downlod"><span class="myicon icon-download-infographic"></span></a>
-            </div>
-            <div class="content responsive">
-              <div id="taibif-stats__trend_dataset"></div>
-            </div>
-          </div>
-          <div id="dataset-table-container" lang="zh-hant"></div>
+        <div class="card-tools-wrapper">
+        <div class="title">
+            累積資料集數量
+            <a href="#" class="btn-dataicon-downlod"><span class="myicon icon-download-infographic"></span></a>
+        </div>
+        <div class="content responsive">
+            <div id="taibif-stats__trend_dataset"></div>
+        </div>
+        </div>
+        <div id="dataset-table-container" lang="zh-hant"></div>
 
-          {% comment %} <h3 class="headline-left">
+        <h3 class="headline-left">
             資料集列表
             <a href="#" class="btn ntn-sm btn-outline-main mx-2"><span class="myicon icon-search-lens mr-2"></span>搜尋資料集</a>
             <a href="#" class="btn-dataicon-downlod float-right mt-2 mr-3"><span class="myicon icon-download-infographic"></span></a>
-          </h3>
+        </h3>
 
-          <div class="table-responsive">
+        <div class="table-responsive">
             <table class="table table-ltmilo" id="opendata-table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>資料集名稱</th>
-                  <th>發布單位</th>
-                  <th>資料類型</th>
-                  <th>資料筆數</th>
-                  <th>出現紀錄</th>
-                  <th>發佈時間</th>
-                  <th>地區</th>
-                  <th>公開狀態</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td><a href="/dataset/af48a08e-f523-443d-9d4d-505a01be11a4">國家公園資料集</a></td>
-                  <td>National Science and Technology Council</td>
-                  <td>出現紀錄</td>
-                  <td>8,001</td>
-                  <td>8,001</td>
-                  <td>2014/09/24</td>
-                  <td>其他</td>
-                  <td>公開<div><small>未註冊至 GBIF</small></div></td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td><a href="/dataset/3a762250-65d9-422b-a004-f74488269901">Endemic Species Research Institute–Herbarium</a></td>
-                  <td>TELDAP</td>
-                  <td>出現紀錄</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>2023/03/02</td>
-                  <td>台灣</td>
-                  <td>公開<div><small>已註冊至 GBIF</small></div></td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td><a href="/dataset/44a761b5-5adf-4b67-adad-c5ae04637fb9">珊瑚健康指標之建立與保護區管理應用: 以墾丁國家公園珊瑚礁生態系為例</a></td>
-                  <td>National Science and Technology Council</td>
-                  <td>出現紀錄</td>
-                  <td>984</td>
-                  <td>984</td>
-                  <td>2016/05/19</td>
-                  <td>台灣</td>
-                  <td>公開<div><small>未註冊至 GBIF</small></div></td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td><a href="/dataset/e2ce5292-0493-4e19-859c-9672430d9db4">taijiang_national_park_mollusca_2020-2021</a></td>
-                  <td></td>
-                  <td>物種名錄</td>
-                  <td>65</td>
-                  <td>0</td>
-                  <td>2023/05/09</td>
-                  <td>台灣</td>
-                  <td>公開<div><small>已註冊至 GBIF</small></div></td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td><a href="/dataset/b8cad6f7-f328-424e-b6c6-caad789f18c9">第四次森林資源調查</a></td>
-                  <td>Taiwan Forestry Bureau</td>
-                  <td>出現紀錄</td>
-                  <td>152,133</td>
-                  <td>152,133</td>
-                  <td>2016/01/19</td>
-                  <td>台灣</td>
-                  <td>公開<div><small>未註冊至 GBIF</small></div></td>
-                </tr>
-                <tr>
-                  <td>6</td>
-                  <td><a href="/dataset/abd145ea-5b33-4383-8e9b-396ce79b858e">成龍溼地鳥類生態紀錄</a></td>
-                  <td>Taiwan Endemic Species Research Institute</td>
-                  <td>調查活動</td>
-                  <td>429</td>
-                  <td>12,581</td>
-                  <td>2022/03/31</td>
-                  <td>台灣</td>
-                  <td>公開<div><small>已註冊至 GBIF</small></div></td>
-                </tr>
-                <tr>
-                  <td>7</td>
-                  <td><a href="/dataset/73281c02-61d4-489e-b1c3-1727026861d0">102年度鰲鼓濕地森林園區鳥類監測及建立監測模式</a></td>
-                  <td>Taiwan Forestry Bureau</td>
-                  <td>出現紀錄</td>
-                  <td>13,913</td>
-                  <td>13,913</td>
-                  <td>2020/07/31</td>
-                  <td>台灣</td>
-                  <td>公開<div><small>未註冊至 GBIF</small></div></td>
-                </tr>
-                <tr>
-                  <td>8</td>
-                  <td><a href="/dataset/34e5a574-5f93-48a4-a445-4d7cb3363927">A Dataset of Deep-Sea Fishes Surveyed by Research Vessels in the Waters around Taiwan</a></td>
-                  <td>Taiwan Biodiversity Information Facility (TaiBIF)</td>
-                  <td>出現紀錄</td>
-                  <td>3,653</td>
-                  <td>3,653</td>
-                  <td>2020/07/16</td>
-                  <td>台灣</td>
-                  <td>公開<div><small>已註冊至 GBIF</small></div></td>
-                </tr>
-                <tr>
-                  <td>9</td>
-                  <td><a href="/dataset/ae6f1c16-b02b-4f0e-877f-f389f2324591">全國森林資源調查計畫</a></td>
-                  <td>Taiwan Forestry Bureau</td>
-                  <td>出現紀錄</td>
-                  <td>27,095</td>
-                  <td>27,095</td>
-                  <td>2020/07/31</td>
-                  <td>台灣</td>
-                  <td>公開<div><small>未註冊至 GBIF</small></div></td>
-                </tr>
-                <tr>
-                  <td>10</td>
-                  <td><a href="/dataset/c2a3524a-15d3-447a-8963-05631b96e242">Worldveg seedkit distribution of traditional vegetables in East Africa</a></td>
-                  <td>World Vegetable Center</td>
-                  <td>出現紀錄</td>
-                  <td>421</td>
-                  <td>421</td>
-                  <td>2020/05/23</td>
-                  <td>台灣</td>
-                  <td>公開<div><small>已註冊至 GBIF</small></div></td>
-                </tr>
-                <tr>
-                  <td>11</td>
-                  <td><a href="/dataset/e6e747fa-a2ff-4bfe-869e-52575f1aae92">Survey of Plankton Diatoms in Nanren Lake</a></td>
-                  <td>Taiwan Endemic Species Research Institute</td>
-                  <td>調查活動</td>
-                  <td>3</td>
-                  <td>48</td>
-                  <td>2020/05/23</td>
-                  <td>台灣</td>
-                  <td>公開<div><small>已註冊至 GBIF</small></div></td>
-                </tr>
-              </tbody>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>資料集名稱</th>
+                        <th>發布單位</th>
+                        <th>資料類型</th>
+                        <th>資料筆數</th>
+                        <th>出現紀錄</th>
+                        <th>發佈時間</th>
+                        <th>地區</th>
+                        <th>公開狀態</th>
+                        <th>MOST</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in dataset %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><a href="#">{{ i.title }}</a></td>
+                        <td>{{ i.organization_name }}</td>
+                        <td>{{ i.dwc_core_type }}</td>
+                        <td>Confirming...</td>
+                        <td>{{ i.num_occurrence }}</td>
+                        <td>{{ i.pub_date|date:"Y-m-d"}}</td>
+                        <td>{{ i.country }}</td>
+                        <td>{{ i.status }}<div><small>未註冊至 GBIF</small></div></td>
+                        <td>{{ i.is_most_project }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
             </table>
-          </div> {% endcomment %}
-
-        </div>
-        <!-- col end -->
-      </div>
-      <!-- row end -->
+        </div> 
+    </div>
+    <!-- col end -->
+    </div>
+    <!-- row end -->
 
     </div>
     <!-- container end -->
-{% comment %} <div class="container" lang="zh-hant" >
-  <div class="row">
-    <h1 class="heading-lg-ul">
-      資料發布狀況
-      <span class="heading-footnote">全部</span>
-    </h1>
-    <div class="heading-sort-ctn">
-      <label class="custom-input-ctn">
-        <input type="checkbox" class="check-most"{% if request.GET.most %} checked{% endif %}>
-        <span class="checkmark"></span>
-        僅檢視國科會發布狀況
-        (TaiBIF 的資料庫及基礎建設乃由國科會之經費及相關計畫支持，勾選此項可了解國科會生物多樣性計畫物種資料開放狀況)
-      </label>
-    </div>
-
-
-    <h3>統整數據</h3>
-
-    <div class="panel panel-default">
-      <div class="panel-heading">今年度上傳出現紀錄資料筆數</div>
-      <div class="panel-body">
-        <div id="taibif-stats__this_year_occurrence"></div>
-      </div>
-    </div>
-
-    <div class="panel panel-default">
-      <div class="panel-heading">今年度上傳資料集數量</div>
-      <div class="panel-body">
-        <div id="taibif-stats__this_year_dataset"></div>
-      </div>
-    </div>
-
-    <div class="panel panel-default">
-      <div class="panel-heading">累積出現紀錄資料筆數</div>
-      <div class="panel-body">
-        <div id="taibif-stats__trend_occurrence"></div>
-      </div>
-    </div>
-
-    <div class="panel panel-default">
-      <div class="panel-heading">累積資料集數量</div>
-      <div class="panel-body">
-        <div id="taibif-stats__trend_dataset"></div>
-      </div>
-    </div>
-
-    <div id="dataset-table-container" lang="zh-hant"></div>
-  </div>
-</div> {% endcomment %}
-{% endif %}
-{% if LANGUAGE_CODE == "en" %}
-{% include "inc_breadcrumb.html" with tab="01" active_label="Data Publishing Status" %}
-<div class="container" lang="en">
-  <div class="row">
-    <h1 class="heading-lg-ul">
-      Data Publishing Status
-      <span class="heading-footnote">All</span>
-    </h1>
-    <div class="heading-sort-ctn">
-      <label class="custom-input-ctn">
-        <input type="checkbox" class="check-most"{% if request.GET.most %} checked{% endif %}>
-        <span class="checkmark"></span>
-        View only the release status of Biodiversity-related projects funded under Taiwan National Science and Technology Council
-      </label>
-    </div>
-
-
-    <h3>Statistics</h3>
-
-    <div class="panel panel-default">
-      <div class="panel-heading">Occurrences uploaded this year</div>
-      <div class="panel-body">
-        <div id="taibif-stats__this_year_occurrence"></div>
-      </div>
-    </div>
-
-    <div class="panel panel-default">
-      <div class="panel-heading">Dataset uploaded this year</div>
-      <div class="panel-body">
-        <div id="taibif-stats__this_year_dataset"></div>
-      </div>
-    </div>
-
-    <div class="panel panel-default">
-      <div class="panel-heading">Accumulative data</div>
-      <div class="panel-body">
-        <div id="taibif-stats__trend_occurrence"></div>
-      </div>
-    </div>
-
-    <div class="panel panel-default">
-      <div class="panel-heading">Accumulative dataset</div>
-      <div class="panel-body">
-        <div id="taibif-stats__trend_dataset"></div>
-      </div>
-    </div>
-
-    <div id="dataset-table-container" lang={{LANGUAGE_CODE}}></div>
-  </div>
-</div>
-
-{% endif %}
 {% endblock %}

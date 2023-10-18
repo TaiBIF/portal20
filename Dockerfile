@@ -1,26 +1,24 @@
-FROM python:3.8.11-slim
+# syntax=docker/dockerfile:1
+FROM node:18-alpine as build
+WORKDIR /code
+COPY ./frontend-data/package*.json ./frontend-data/yarn.lock ./
+COPY ./frontend-data/webpack.config.js ./frontend-data/.babelrc ./
+RUN yarn install
+COPY ./frontend-data/src ./src
+RUN yarn build-dev
+
+##
+# stage 2
+##
+FROM python:3.10-slim-buster as final
 
 # set environment varibles
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# for Pillow to support jpeg/png
-#ENV INCLUDE=/usr/include
-#ENV LIBRARY_PATH=/lib:/usr/lib
-
 # update & install system package
 RUN apt-get update && apt-get install -y \
     gettext
-#nodejs
-#    rm -rf /var/lib/apt/lists/*
-
-# install npm from source
-#curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
-RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
-RUN apt-get install -y nodejs
-#RUN curl https://www.npmjs.com/install.sh -o npm-install.sh
-#RUN sh npm-install.sh
-#RUN rm npm-install.sh
 
 # timezone to Asia/Taipei
 RUN ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime
@@ -35,15 +33,6 @@ RUN pip install --no-cache-dir pipenv
 COPY Pipfile Pipfile.lock ./
 RUN pipenv install --system
 
-# install frontend packages
-COPY package.json package-lock.json ./
-RUN npm install
-
 COPY . .
 
-RUN npm run build
-#COPY . /taibif-code/
-
-
-# remove compiling environment `build-dependencies`
-#RUN apk del build-dependencies
+COPY --from=build /code/dist /frondend

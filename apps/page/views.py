@@ -15,7 +15,9 @@ from django.db.models import (
     Q,
     F,
     Count,
-    Sum
+    Sum, 
+    ExpressionWrapper,
+    fields
 )
 from django.conf import settings
 from django.contrib import messages
@@ -168,10 +170,10 @@ def open_data(request):
 
 # @act_lang
 def data_stats(request):
-    is_most = request.GET.get('most', '')
+    most = request.GET.get('most', '')
 
-    query = Dataset.objects #.exclude(status='Private')
-    if is_most:
+    query = Dataset.objects
+    if most:
         query = query.filter(is_most_project=True)
     url = f'http://solr:8983/solr/taibif_occurrence/select?indent=true&q.op=OR&q=*%3A*&rows=0'
     r = requests.get(url).json()   
@@ -179,12 +181,33 @@ def data_stats(request):
 
     dataset_num = Dataset.objects.filter(status='PUBLIC').count()
     publisher_num = DatasetOrganization.objects.count()
+
+
+    # Grab the content for the table
+    dataset = Dataset.objects.values('title', 'organization_name', 'dwc_core_type', 'num_occurrence', 'pub_date', 'country', 'status', 'is_most_project')
+
+    if most == '1':
+        dataset = dataset.filter(is_most_project=True)
+
+    value_mapping = {
+        'Occurrence': '出現紀錄',
+        'Sampling event': '調查活動',
+        'checklist': '物種名錄',
+    }
+
+    modified_dataset = []
+
+    for item in dataset:
+        item['dwc_core_type'] = value_mapping.get(item['dwc_core_type'], item['dwc_core_type'])
+        modified_dataset.append(item)
+
     context = {
         'dataset_list': query.order_by(F('pub_date').desc(nulls_last=True)).all(),
-        'env': settings.ENV,
         'dataset_num':dataset_num,
         'publisher_num':publisher_num,
         'occ_num':occ_num,
+        'env': settings.ENV,
+        'dataset': modified_dataset,
     }
     return render(request, 'data-stats.html', context) 
 

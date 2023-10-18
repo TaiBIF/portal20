@@ -41,6 +41,7 @@ GOOGLE_RECAPTCHA_SECRET_KEY = env('GOOGLE_RECAPTCHA_SECRET_KEY', default='')
 DEBUG = env.bool('DEBUG', default=False)
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
+# ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = env('MEDIA_ROOT', default=root_path('media'))

@@ -12,7 +12,7 @@ media
 .env.*
 
 # Static files
-node_modules
+./frontend-data/node_modules
 
 # docker volume
 taibif_volumes
