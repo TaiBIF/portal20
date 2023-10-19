@@ -83,7 +83,13 @@ def article_list(request, category):
 def article_detail(request, pk):
     article = get_object_or_404(Article, pk=pk)
     imagesList = PostImage.objects.filter(post=pk)
-    recommended = Article.objects.filter(category=article.category).order_by("?")[0:5]
+
+    recommended = (
+        Article.objects.filter(category=article.category)
+        .exclude(pk=pk)
+        .order_by("-created")[:5]
+    )
+
     category = dict(article.CATEGORY_CHOICE)[article.category]
     return render(
         request,
