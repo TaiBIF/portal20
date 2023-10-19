@@ -994,16 +994,16 @@ def occurrence_api(request):
             'day':i['taibif_day'][0] if 'taibif_day' in i else None,
             'geodeticDatum':i['taibif_geodeticDatum'] if 'taibif_geodeticDatum' in i else None, #對到verbatimCoordinateSystem
             'verbatimSRS':i['taibif_crs'] if 'taibif_crs' in i else None, # verbatimSRS
-            'decimalLatitude':str(i['taibif_latitude'][0]) if 'taibif_latitude' in i  else None,
             'decimalLongitude':str(i['taibif_longitude'][0]) if 'taibif_longitude' in i  else None,
+            'decimalLatitude':str(i['taibif_latitude'][0]) if 'taibif_latitude' in i  else None,
             'coordinateUncertaintyInMeters':i['taibif_coordinateUncertaintyInMeters'][0] if 'taibif_coordinateUncertaintyInMeters' in i else None,
             'countryCode':i['taibif_countryCode'] if 'taibif_countryCode' in i else None,
             'country':i['taibif_country'] if 'taibif_country' in i else None,
             'county':i['taibif_county'] if 'taibif_county' in i else None,
-            'selfProduced':i['selfProduced'][0],
             'habitatReserve':i['forestN'][0] if 'forestN' in i else None,
             'wildlifeReserve':i['wildlifeN'][0] if 'wildlifeN' in i else None,
             'occurrenceStatus':i['taibif_occurrenceStatus'] if 'taibif_occurrenceStatus' in i else None,
+            'selfProduced':i['selfProduced'][0],
             'license':i['license'] if 'license' in i and i['license']!= 'unknown' else 'NA',
             # 基本資料
             'datasetName':i['taibif_dataset_name_zh'] if 'taibif_dataset_name_zh' in i else None,
@@ -1015,28 +1015,21 @@ def occurrence_api(request):
             'dataGeneralizations':i['dataGeneralizations'] if 'dataGeneralizations' in i else None,
             'coordinatePrecision':i['coordinatePrecision'] if 'coordinatePrecision' in i else None,
             'locality':i['locality'] if 'locality' in i  else None,
-            'mediaLicense':mediaLicense,
-            'associatedMedia':i['associatedMedia']  if 'associatedMedia' else  None,
             'preservation':i['preservation'] if 'preservation' in i else None,
             'typeStatus':i['typeStatus'] if 'typeStatus' in i else None,
             'recordedBy':i['recordedBy'] if 'recordedBy' in i else None,
             'recordNumber':i['recordNumber'] if 'recordNumber' in i else None,
             'organismQuantity':i['organismQuantity'] if 'organismQuantity' in i else None,
             'organismQuantityType':i['organismQuantityType'] if 'organismQuantityType' in i else None,
-<<<<<<< HEAD
+            'associatedMedia':i['associatedMedia']  if 'associatedMedia' in i else  None,
+            'mediaLicense':mediaLicense,
             # 常用資料
             'taibifDatasetID': i['taibifDatasetID'],
             'gbifDatasetID':i['gbif_dataset_uuid'] if 'gbif_dataset_uuid' in i else None,
             'establishmentMeans':i['establishmentMeans'] if 'establishmentMeans' in i else None,
             'issue':','.join(issues) if issues else None,
             # 沒分類
-            'modifiedDate':i['modified'] if 'modified' in i else None,
-=======
-            'associatedMedia':i['associatedMedia']  if 'associatedMedia' else  None,
-            'mediaLicense':mediaLicense,
-            'associatedReferences':i['associatedReferences']  if 'associatedReferences' else  'test',
-            
->>>>>>> 1c8b27c84cafedb9bd40ad118ded7d59b3522a02
+            # 'modifiedDate':i['modified'] if 'modified' in i else None,
         })
 
     res['url'] = solr.solr_url
