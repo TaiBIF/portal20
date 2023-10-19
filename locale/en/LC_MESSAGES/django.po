@@ -3,20 +3,20 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-31 15:15+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2023-10-18 18:23+0800\n"
+"PO-Revision-Date: 2023-10-19 10:51+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4\n"
 
 #: apps/page/views.py:287
 msgid "這裡放需要翻譯的文字"
@@ -30,147 +30,155 @@ msgstr ""
 msgid "English"
 msgstr ""
 
-#: templates/article-list.html:90 templates/article-list.html:107
-msgid "全部"
-msgstr "All"
-
-#: templates/article-list.html:95 templates/article-list.html:112
+#: templates/article-list.html:114
 msgid "篩選"
 msgstr "Filtered by "
 
-#: templates/article-list.html:117 templates/base.html:165
-msgid "科普文章"
+#: templates/article-list.html:122 templates/base.html:165
+#: templates/index.html:163
+msgid "新聞"
+msgstr "News"
+
+#: templates/article-list.html:127 templates/base.html:166
+#: templates/index.html:190
+msgid "活動"
+msgstr "Activities & Events"
+
+#: templates/article-list.html:132 templates/base.html:167
+#: templates/index.html:216
+msgid "更新"
+msgstr "Updates"
+
+#: templates/article-list.html:132 templates/base.html:167
+#: templates/index.html:216
+msgid "科普"
 msgstr "Popular Science"
 
-#: templates/article-list.html:123 templates/base.html:166
+#: templates/article-list.html:137 templates/base.html:171
+msgid "科普文章"
+msgstr "Popular Science Article"
+
+#: templates/article-list.html:142 templates/base.html:172
 msgid "技術專欄"
 msgstr "Technical Memo"
 
-#: templates/article-list.html:129 templates/base.html:167
+#: templates/article-list.html:147 templates/base.html:173
 msgid "出版品資料"
 msgstr "Related Publication"
 
-#: templates/article-list.html:134 templates/base.html:168
+#: templates/article-list.html:152 templates/base.html:174
 msgid "TaiBIF發表文章/海報"
 msgstr "TaiBIF Academic Publication"
 
-#: templates/base.html:70 templates/index.html:95 templates/search_all.html:31
+#: templates/base.html:75 templates/index.html:95 templates/search_all.html:31
 msgid "全站搜尋..."
 msgstr "Site Search"
 
-#: templates/base.html:107
+#: templates/base.html:112
 msgid "找資料"
 msgstr "Find Data"
 
-#: templates/base.html:110
+#: templates/base.html:115
 msgid "物種出現紀錄"
 msgstr "Occurrences"
 
-#: templates/base.html:111 templates/index.html:90 templates/search_all.html:25
+#: templates/base.html:116 templates/index.html:90 templates/search_all.html:25
 #: templates/search_all.html:26
 msgid "物種"
 msgstr "Species"
 
-#: templates/base.html:112 templates/index.html:91 templates/index.html:125
+#: templates/base.html:117 templates/index.html:91 templates/index.html:125
 #: templates/search_all.html:27
 msgid "資料集"
 msgstr "Datasets"
 
-#: templates/base.html:113 templates/index.html:92 templates/search_all.html:28
+#: templates/base.html:118 templates/index.html:92 templates/search_all.html:28
 msgid "發布單位"
 msgstr "Publishers"
 
-#: templates/base.html:118
+#: templates/base.html:119
+msgid "API"
+msgstr ""
+
+#: templates/base.html:124
 msgid "資料開放"
 msgstr "Open Data"
 
-#: templates/base.html:121
+#: templates/base.html:127
 msgid "Open Data 概述"
 msgstr "About Open Data"
 
-#: templates/base.html:122 templates/index.html:145
+#: templates/base.html:128 templates/index.html:145
 msgid "資料發布狀況"
 msgstr "Data Publishing Status"
 
-#: templates/base.html:123
+#: templates/base.html:129
 msgid "資料上傳"
 msgstr "Publish Your Data"
 
-#: templates/base.html:124
+#: templates/base.html:130
 msgid "資料論文/期刊"
 msgstr "Data Paper and Journal"
 
-#: templates/base.html:125
+#: templates/base.html:131
 msgid "使用條款暨隱私權政策"
 msgstr "Terms of Use & Privacy Policy"
 
-#: templates/base.html:130
+#: templates/base.html:136
 msgid "工具與文件"
 msgstr "Tools & Documents"
 
-#: templates/base.html:133
+#: templates/base.html:139
 msgid "工具分享"
 msgstr "TaiBIF Tools"
 
-#: templates/base.html:135
+#: templates/base.html:141
 msgid "生物多樣性資訊概論"
 msgstr "Biodiversity Cookbook"
 
-#: templates/base.html:140
+#: templates/base.html:146
 msgid "關於 TaiBIF"
 msgstr "About TaiBIF"
 
-#: templates/base.html:143
+#: templates/base.html:149
 msgid "TaiBIF 簡介"
 msgstr "About Us"
 
-#: templates/base.html:145
+#: templates/base.html:151
 msgid "GBIF 介紹"
 msgstr "About GBIF"
 
-#: templates/base.html:146
+#: templates/base.html:152
 msgid "聯絡我們"
 msgstr "Contact Us"
 
-#: templates/base.html:147
+#: templates/base.html:153
 msgid "相關連結"
 msgstr "Related Links"
 
-#: templates/base.html:153
+#: templates/base.html:159
 msgid "更多資訊"
 msgstr "More Info"
 
-#: templates/base.html:158 templates/index.html:158
+#: templates/base.html:164 templates/index.html:158
 msgid "最新消息"
 msgstr "News & Notices"
 
-#: templates/base.html:159 templates/index.html:163
-msgid "新聞"
-msgstr "News"
-
-#: templates/base.html:160 templates/index.html:190
-msgid "活動"
-msgstr "Activities & Events"
-
-#: templates/base.html:161 templates/index.html:216
-msgid "更新"
-msgstr "Updates"
-
-#: templates/base.html:164
+#: templates/base.html:170
 msgid "專題文章"
 msgstr "Articles"
 
-#: templates/base.html:241
+#: templates/base.html:247
 msgid "11574 台北市南港區研究院路二段70巷28號"
 msgstr ""
 "C301, No. 28, Ln 70, Academia Rd. Sec. 2, Nangang Dist., 11574 Taipei, "
 "TAIWAN."
 
-#: templates/base.html:242
+#: templates/base.html:248
 msgid "跨領域科技研究大樓 C301室"
 msgstr ""
 
-#: templates/base.html:244
+#: templates/base.html:250
 msgid "Copyright © TaiBIF 臺灣生物多樣性資訊機構"
 msgstr "Copyright © Taiwan Biodiversity Information Facility"
 
@@ -211,9 +219,12 @@ msgstr "Advisor"
 msgid "夥伴組織"
 msgstr "Partners"
 
-#: templates/search_all.html:70
+#: templates/search_all.html:72
 msgid "查無資料"
 msgstr "No Data"
+
+#~ msgid "全部"
+#~ msgstr "All"
 
 #~ msgid "發布者"
 #~ msgstr "Publishers"
