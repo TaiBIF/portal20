@@ -42,7 +42,7 @@
     <tbody>
       {% for set in dataset %}
       <tr>
-        <td><a href="{% url 'dataset-detail'  name=set.name %}">{{ set.name_zh }}</a></td>
+        <td><a href="{% url 'dataset-detail'  taibif_dataset_id=set.taibif_dataset_id %}">{{ set.name_zh }}</a></td>
         <td>{{ set.core_type }}</td>
         <td>{{ set.num_record|intcomma:False }}</td>
       </tr>

@@ -450,6 +450,7 @@ def publisher_view(request, pk):
             'name_zh': x.title,
             'core_type':  DATA_MAPPING['publisher_dwc'][x.dwc_core_type],
             'num_record':  x.num_record,
+            'taibif_dataset_id': x.taibif_dataset_id,
         })
 
     context["info"] = {
