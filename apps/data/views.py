@@ -173,10 +173,13 @@ def occurrence_view(request, taibif_id):
     lon = 0
     # intro 
     # TODO
+
     intro['dataset_zh']=result[0].get('taibif_dataset_name_zh')
     intro['publisher']=result[0].get('publisher')
     intro['basisOfRecord']=result[0].get('basisOfRecord')
-    intro['scientificName']=result[0].get('formatted_name')[0]  if result[0].get('formatted_name')[0]  else result[0].get('scientificName')
+    
+    # Fix the error of Nonetype
+    intro['scientificName']=result[0].get('formatted_name')[0]  if result[0].get('formatted_name')  else result[0].get('scientificName')
     intro['scientificName_zh']=result[0].get('taibif_vernacular_name') if result[0].get('taibif_vernacular_name') else ''
     
     intro['dataset']=result[0].get('taibifDatasetID')
