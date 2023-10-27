@@ -179,7 +179,16 @@ def occurrence_view(request, taibif_id):
     intro['basisOfRecord']=result[0].get('basisOfRecord')
     
     # Fix the error of Nonetype
-    intro['scientificName']=result[0].get('formatted_name')[0]  if result[0].get('formatted_name')  else result[0].get('scientificName')
+    original_scientific_name = result[0].get('scientificName')
+    if original_scientific_name:
+        if 'sp' in original_scientific_name:
+            genus_name = original_scientific_name.split(' ')[0]
+            sp = original_scientific_name.split(' ')[1]
+            intro['scientificName'] = f"<em>{genus_name}</em>  {sp}"
+        else: 
+            intro['scientificName']=result[0].get('formatted_name') if result[0].get('formatted_name') else f"<em>{result[0].get('scientificName')}</em>"
+        
+    # intro['scientificName']=result[0].get('formatted_name') if result[0].get('formatted_name') else f"<em>{result[0].get('scientificName')}</em>"
     intro['scientificName_zh']=result[0].get('taibif_vernacular_name') if result[0].get('taibif_vernacular_name') else ''
     
     intro['dataset']=result[0].get('taibifDatasetID')
@@ -211,7 +220,7 @@ def occurrence_view(request, taibif_id):
     record['dataGeneralizations']={'name_zh':'資料模糊化','value':[result[0].get('dataGeneralizations'),result[0].get('taibif_dataGeneralizations')]}
 
     # occ 
-    occ['catalogNumber']={'name_zh':'catalogNumber','value':[result[0].get('catalogNumber'),result[0].get('taibif_catalogNumber')]}
+    occ['catalogNumber']={'name_zh':'館藏號','value':[result[0].get('catalogNumber'),result[0].get('taibif_catalogNumber')]}
     occ['occurrenceID']={'name_zh':'出現紀錄ID','value':[result[0].get('occurrenceID'),result[0].get('taibif_occurrenceID')]}
     occ['recordNumber']={'name_zh':'採集號','value':[result[0].get('recordNumber '),result[0].get('taibif_recordNumber ')]}
     occ['recordedByID']={'name_zh':'記錄者ID','value':[result[0].get('recordedByID'),result[0].get('taibif_recordedByID')]}
@@ -222,17 +231,17 @@ def occurrence_view(request, taibif_id):
     occ['lifeStage']={'name_zh':'生活史階段','value':[result[0].get('lifeStage'),result[0].get('taibif_lifeStage')]}
     occ['sex']={'name_zh':'性別','value':[result[0].get('sex'),result[0].get('taibif_sex')]}
     occ['reproductiveCondition']={'name_zh':'生殖狀態','value':[result[0].get('reproductiveCondition'),result[0].get('taibif_reproductiveCondition')]}
-    occ['establishmentMeans']={'name_zh':'establishmentMeans','value':[result[0].get('establishmentMeans'),result[0].get('taibif_establishmentMeans')]}
+    occ['establishmentMeans']={'name_zh':'原生/外來/入侵等定義','value':[result[0].get('establishmentMeans'),result[0].get('taibif_establishmentMeans')]}
     occ['behavior']={'name_zh':'行為','value':[result[0].get('behavior'),result[0].get('taibif_behavior')]}
-    occ['georeferenceVerificationStatus']={'name_zh':'georeferenceVerificationStatus','value':[result[0].get('georeferenceVerificationStatus'),result[0].get('taibif_georeferenceVerificationStatus')]}
-    occ['occurrenceStatus']={'name_zh':'occurrenceStatus','value':[result[0].get('occurrenceStatus'),result[0].get('taibif_occurrenceStatus')]}
-    occ['preparations']={'name_zh':'preparations','value':[result[0].get('preparations'),result[0].get('taibif_preparations')]}
-    occ['disposition']={'name_zh':'disposition','value':[result[0].get('disposition'),result[0].get('taibif_disposition')]}
-    occ['associatedMedia']={'name_zh':'多媒體URL','value':[result[0].get('associatedMedia'),result[0].get('taibif_associatedMedia')]}
-    occ['associatedReferences']={'name_zh':'associatedReferences','value':[result[0].get('associatedReferences'),result[0].get('taibif_associatedReferences')]}
-    occ['associatedSequences']={'name_zh':'associatedSequences','value':[result[0].get('associatedSequences'),result[0].get('taibif_associatedSequences')]}
-    occ['associatedTaxa']={'name_zh':'associatedTaxa','value':[result[0].get('associatedTaxa'),result[0].get('taibif_associatedTaxa')]}
-    occ['otherCatalogNumbers']={'name_zh':'otherCatalogNumbers','value':[result[0].get('otherCatalogNumbers'),result[0].get('taibif_otherCatalogNumbers')]}
+    occ['georeferenceVerificationStatus']={'name_zh':'位置點位狀態','value':[result[0].get('georeferenceVerificationStatus'),result[0].get('taibif_georeferenceVerificationStatus')]}
+    occ['occurrenceStatus']={'name_zh':'出現狀態','value':[result[0].get('occurrenceStatus'),result[0].get('taibif_occurrenceStatus')]}
+    occ['preparations']={'name_zh':'樣本狀態','value':[result[0].get('preparations'),result[0].get('taibif_preparations')]}
+    occ['disposition']={'name_zh':'樣本處置','value':[result[0].get('disposition'),result[0].get('taibif_disposition')]}
+    occ['associatedMedia']={'name_zh':'相關多媒體資訊','value':[result[0].get('associatedMedia'),result[0].get('taibif_associatedMedia')]}
+    occ['associatedReferences']={'name_zh':'相關參考資料','value':[result[0].get('associatedReferences'),result[0].get('taibif_associatedReferences')]}
+    occ['associatedSequences']={'name_zh':'相關基因序列','value':[result[0].get('associatedSequences'),result[0].get('taibif_associatedSequences')]}
+    occ['associatedTaxa']={'name_zh':'相關物種','value':[result[0].get('associatedTaxa'),result[0].get('taibif_associatedTaxa')]}
+    occ['otherCatalogNumbers']={'name_zh':'其他ID','value':[result[0].get('otherCatalogNumbers'),result[0].get('taibif_otherCatalogNumbers')]}
     occ['occurrenceRemarks']={'name_zh':'出現紀錄註記','value':[result[0].get('occurrenceRemarks'),result[0].get('taibif_occurrenceRemarks')]}
 
     # event
@@ -281,7 +290,7 @@ def occurrence_view(request, taibif_id):
     taxon['taxonID']={'name_zh':'分類編碼','value':[result[0].get('taxonID'),result[0].get('taibif_taxonID')]}
     taxon['scientificNameID']={'name_zh':'學名編碼','value':[result[0].get('scientificNameID'),taxon_obj_name.taicol_name_id if taxon_obj_name != None else '']}
     taxon['acceptedNameUsageID']={'name_zh':'有效學名編碼','value':[acceptedNameUsageID,taxon_obj_accepted_name.taicol_name_id if taxon_obj_accepted_name != None else '']}
-    taxon['scientificNameTaxonID']={'name_zh':'物種編碼','value':['',result[0].get('taicol_taxon_id')[0] if result[0].get('taicol_taxon_id') != None else '']}
+    taxon['scientificNameTaxonID']={'name_zh':'Taicol物種編碼','value':['',result[0].get('taicol_taxon_id')[0] if result[0].get('taicol_taxon_id') != None else '']}
     taxon['scientificName']={'name_zh':'學名','value':[result[0].get('scientificName'),taxon_obj_name.name if taxon_obj_name != None else '']}
     taxon['acceptedNameUsage']={'name_zh':'有效學名','value':[result[0].get('acceptedNameUsage'),taxon_obj_accepted_name.name if taxon_obj_accepted_name != None else '']}
     taxon['originalNameUsage']={'name_zh':'originalNameUsage','value':[result[0].get('originalNameUsage'),result[0].get('taibif_originalNameUsage')]}
@@ -296,11 +305,11 @@ def occurrence_view(request, taibif_id):
     taxon['family']={'name_zh':'科','value':[result[0].get('family'),result[0].get('familyzh')]}
     taxon['genus']={'name_zh':'屬','value':[result[0].get('genus'),result[0].get('genuszh')]}
     taxon['subgenus']={'name_zh':'亞屬','value':[result[0].get('subgenus'),result[0].get('taibif_subgenus')]}
-    taxon['specificEpithet']={'name_zh':'specificEpithet','value':[result[0].get('specificEpithet'),result[0].get('taibif_specificEpithet')]}
-    taxon['infraspecificEpithet']={'name_zh':'infraspecificEpithet','value':[result[0].get('infraspecificEpithet'),result[0].get('taibif_infraspecificEpithet')]}
+    taxon['specificEpithet']={'name_zh':'種小名','value':[result[0].get('specificEpithet'),result[0].get('taibif_specificEpithet')]}
+    taxon['infraspecificEpithet']={'name_zh':'種以下別名','value':[result[0].get('infraspecificEpithet'),result[0].get('taibif_infraspecificEpithet')]}
     taxon['taxonRank']={'name_zh':'分類位階','value':[result[0].get('taxonRank'),result[0].get('taibif_taxonRank')]}
     taxon['verbatimTaxonRank']={'name_zh':'字面上分類位階','value':[result[0].get('verbatimTaxonRank'),result[0].get('taibif_verbatimTaxonRank')]}
-    taxon['scientificNameAuthorship']={'name_zh':'scientificNameAuthorship','value':[result[0].get('scientificNameAuthorship'),result[0].get('taibif_scientificNameAuthorship')]}
+    taxon['scientificNameAuthorship']={'name_zh':'學名命名者','value':[result[0].get('scientificNameAuthorship'),result[0].get('taibif_scientificNameAuthorship')]}
     taxon['vernacularName']={'name_zh':'俗名','value':[result[0].get('vernacularName'),result[0].get('taibif_vernacular_name') if result[0].get('taibif_vernacular_name')!=None else '']}
     taxon['nomenclaturalCode']={'name_zh':'nomenclaturalCode','value':[result[0].get('nomenclaturalCode'),result[0].get('taibif_nomenclaturalCode')]}
     taxon['taxonRemarks']={'name_zh':'分類註記','value':[result[0].get('taxonRemarks'),result[0].get('taibif_taxonRemarks')]}
@@ -322,7 +331,7 @@ def occurrence_view(request, taibif_id):
         lon = result[0].get('decimalLongitude')
         
     # location
-    location['locationID']={'name_zh':'locationID','value':[result[0].get('locationID'),result[0].get('taibif_locationID')]}
+    location['locationID']={'name_zh':'地點ID','value':[result[0].get('locationID'),result[0].get('taibif_locationID')]}
     location['higherGeographyID']={'name_zh':'higherGeographyID','value':[result[0].get('higherGeographyID'),result[0].get('taibif_higherGeographyID')]}
     location['higherGeography']={'name_zh':'higherGeography','value':[result[0].get('higherGeography'),result[0].get('taibif_higherGeography')]}
     location['continent']={'name_zh':'洲','value':[result[0].get('continent'),result[0].get('taibif_continent')]}
@@ -332,8 +341,8 @@ def occurrence_view(request, taibif_id):
     location['country']={'name_zh':'國家','value':[result[0].get('country'),result[0].get('taibif_country')]}
     location['countryCode']={'name_zh':'國家代碼','value':[result[0].get('countryCode'),result[0].get('taibif_countryCode')]}
     location['stateProvince']={'name_zh':'省份/州','value':[result[0].get('stateProvince'),result[0].get('taibif_stateProvince')]}
-    location['county']={'name_zh':'縣市','value':[result[0].get('county'), result[0].get('taibif_ch_county') if result[0].get('taibif_ch_county') else '' +'/'+ result[0].get('taibif_county') if result[0].get('taibif_county') else '']}
-    location['municipality']={'name_zh':'municipality','value':[result[0].get('municipality'),result[0].get('taibif_municipality')]}
+    location['county']={'name_zh':'縣市','value':[result[0].get('county'), result[0].get('taibif_ch_county') if result[0].get('taibif_ch_county') else ('' + '/' + result[0].get('taibif_county') if result[0].get('taibif_county') else '')]}
+    location['municipality']={'name_zh':'市','value':[result[0].get('municipality'),result[0].get('taibif_municipality')]}
     location['locality']={'name_zh':'地區','value':[result[0].get('locality'),result[0].get('taibif_locality')]}
     location['verbatimLocality']={'name_zh':'字面上地區','value':[result[0].get('verbatimLocality'),result[0].get('taibif_verbatimLocality')]}
     location['minimumElevationInMeters']={'name_zh':'最低海拔(公尺)','value':[result[0].get('minimumElevationInMeters'),result[0].get('taibif_minimumElevationInMeters')]}
@@ -343,10 +352,10 @@ def occurrence_view(request, taibif_id):
     location['maximumDepthInMeters']={'name_zh':'最大深度(公尺)','value':[result[0].get('maximumDepthInMeters'),result[0].get('taibif_maximumDepthInMeters')]}
     location['verbatimDepth']={'name_zh':'字面上深度','value':[result[0].get('verbatimDepth'),result[0].get('taibif_verbatimDepth')]}
     location['locationAccordingTo']={'name_zh':'locationAccordingTo','value':[result[0].get('locationAccordingTo'),result[0].get('taibif_locationAccordingTo')]}
-    location['locationRemarks']={'name_zh':'locationRemarks','value':[result[0].get('locationRemarks'),result[0].get('taibif_locationRemarks')]}
+    location['locationRemarks']={'name_zh':'地點註記','value':[result[0].get('locationRemarks'),result[0].get('taibif_locationRemarks')]}
     location['decimalLatitude']={'name_zh':'十進位緯度','value':[result[0].get('decimalLatitude'),lat_d]}
     location['decimalLongitude']={'name_zh':'十進位經度','value':[result[0].get('decimalLongitude'),lon_d]}
-    location['geodeticDatum']={'name_zh':'geodeticDatum','value':[result[0].get('geodeticDatum'),result[0].get('taibif_geodeticDatum')]}
+    location['geodeticDatum']={'name_zh':'大地測量基準','value':[result[0].get('geodeticDatum'),result[0].get('taibif_geodeticDatum')]}
     location['coordinateUncertaintyInMeters']={'name_zh':'座標誤差(公尺)','value':[result[0].get('coordinateUncertaintyInMeters') if result[0].get('coordinateUncertaintyInMeters') != None else '',result[0].get('taibif_coordinateUncertaintyInMeters')[0] if result[0].get('taibif_coordinateUncertaintyInMeters') != None else '']}
     location['coordinatePrecision']={'name_zh':'座標精準度','value':[result[0].get('coordinatePrecision'),result[0].get('taibif_coordinatePrecision')]}
     location['pointRadiusSpatialFit']={'name_zh':'pointRadiusSpatialFit','value':[result[0].get('pointRadiusSpatialFit'),result[0].get('taibif_pointRadiusSpatialFit')]}
@@ -357,11 +366,11 @@ def occurrence_view(request, taibif_id):
     location['verbatimSRS']={'name_zh':'verbatimSRS','value':[result[0].get('verbatimSRS'),result[0].get('verbatimSRS')]}
     location['footprintWKT']={'name_zh':'footprintWKT','value':[result[0].get('footprintWKT'),result[0].get('footprintWKT')]}
     location['footprintSpatialFit']={'name_zh':'footprintSpatialFit','value':[result[0].get('footprintSpatialFit'),result[0].get('taibif_footprintSpatialFit')]}
-    location['georeferencedBy']={'name_zh':'georeferencedBy','value':[result[0].get('georeferencedBy'),result[0].get('taibif_georeferencedBy')]}
-    location['georeferencedDate']={'name_zh':'georeferencedDate','value':[result[0].get('georeferencedDate'),result[0].get('taibif_georeferencedDate')]}
-    location['georeferenceProtocol']={'name_zh':'georeferenceProtocol','value':[result[0].get('georeferenceProtocol'),result[0].get('taibif_georeferenceProtocol')]}
-    location['georeferenceSources']={'name_zh':'georeferenceSources','value':[result[0].get('georeferenceSources'),result[0].get('taibif_georeferenceSources')]}
-    location['georeferenceRemarks']={'name_zh':'georeferenceRemarks','value':[result[0].get('georeferenceRemarks'),result[0].get('taibif_georeferenceRemarks')]}
+    location['georeferencedBy']={'name_zh':'地區紀錄者','value':[result[0].get('georeferencedBy'),result[0].get('taibif_georeferencedBy')]}
+    location['georeferencedDate']={'name_zh':'地區紀錄日期','value':[result[0].get('georeferencedDate'),result[0].get('taibif_georeferencedDate')]}
+    location['georeferenceProtocol']={'name_zh':'地區紀錄方法','value':[result[0].get('georeferenceProtocol'),result[0].get('taibif_georeferenceProtocol')]}
+    location['georeferenceSources']={'name_zh':'地區紀錄平台','value':[result[0].get('georeferenceSources'),result[0].get('taibif_georeferenceSources')]}
+    location['georeferenceRemarks']={'name_zh':'地區紀錄備註','value':[result[0].get('georeferenceRemarks'),result[0].get('taibif_georeferenceRemarks')]}
 
     context = {
         'intro':intro,

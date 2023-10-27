@@ -198,7 +198,7 @@ def dataset_api(request):
         'core' : x['dwc_core_type'] if 'dwc_core_type' in x else None,
         'license' : x['data_license'] if 'data_license' in x and x['data_license'] != None else 'unknown',
         'doi' : x['gbif_doi'] if 'doi' in x and x['gbif_doi'] != None else None,
-        'numRecord' : x['num_record'] if 'num_record' in x and x['num_record'] != None else None,
+        'numberRecord' : x['num_record'] if 'num_record' in x and x['num_record'] != None else None,
         'numberOccurrence' : x['num_occurrence'] if 'num_occurrence' in x and x['num_occurrence'] != None else None,
         # 'citation' : x['citation'] if 'citation' in x else None,
         # 'resource' : x['resource'] if 'resource' in x else None,

@@ -62,6 +62,18 @@
       background-color: #f5cc27;
       display: inline;
     }
+
+    .table {
+      table-layout: fixed !important;
+    }
+
+    .table td {
+      word-wrap: break-word;
+    }
+
+    .table td:last-child {
+      font-size: 14px;
+    }
     
 
 </style>
@@ -92,15 +104,17 @@
   <div class="article-head-wrapper">
     {% if event.eventDate.value %}
     <span class="article-post-date">
-      {% if event.eventDate.value.1 != None %}
+      {% if event.eventDate.value.1 is not None %}
         {{ event.eventDate.value.1 }}
-      {% else %}
+      {% elif event.eventDate.value.0 is not None %}
         {{ event.eventDate.value.0 }}
+      {% else %}
+        {{ '' }}
       {% endif %}
       </span>
     {% endif %}
     <h1 style="margin-top:0px">
-      {% if intro.scientificName%}
+      {% if intro.scientificName %}
           {{ intro.scientificName_zh }} {{ intro.scientificName|safe }}
       {% endif %}
     </h1>
@@ -148,21 +162,34 @@
   </div>
   
   <table class="table">
-    <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th></tr></thead>
+    <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th><th width="10%">備註</th></tr></thead>
     <tbody>
       {% for k,v in record.items %}
           {% if v.value.0 != None or v.value.1 != None %}
             <tr>
               <td>{{ v.name_zh }}</td>
               <td>
-              {% if v.value.1 != None %}
+              {% if v.value.1 is not None %}
                 {{ v.value.1 }}
+              {% elif v.value.1 is None %}
+                {{ v.value.0 }}
               {% endif %}
               </td>
               <td>
               {% if v.value.0 != None %}
                 {{ v.value.0 }}
               {% endif %}
+              </td>
+              <td>
+                {% if v.value.1 is not None %}
+                  {% if v.value.1 == v.value.0 %}
+
+                  {% else %}
+                    Altered
+                  {% endif %}
+                {% elif v.value.1 is None %}
+                  
+                {% endif %}
               </td>
             </tr>
           {% endif %}      
@@ -174,21 +201,34 @@
       <h1 class="heading-lg-ul">出現紀錄 Occurrence</h1>
     </div>
     <table class="table">
-      <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th></tr></thead>
+      <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th><th width="10%">備註</th></tr></thead>
       <tbody>
         {% for k,v in occ.items %}
           {% if v.value.0 != None or v.value.1 != None %}
             <tr>
               <td>{{ v.name_zh }}</td>
               <td>
-                {% if v.value.1 != None%}
+                {% if v.value.1 is not None %}
                   {{ v.value.1 }}
-                {% endif%}
+                {% elif v.value.1 is None %}
+                  {{ v.value.0 }}
+                {% endif %}
               </td>
               <td>
                 {% if v.value.0 != None %}
                   {{ v.value.0 }}
                 {% endif%}
+              </td>
+              <td>
+                {% if v.value.1 is not None %}
+                  {% if v.value.1 == v.value.0 %}
+
+                  {% else %}
+                    Inferred
+                  {% endif %}
+                {% elif v.value.1 is None %}
+                  
+                {% endif %}
               </td>
             </tr>
           {% endif %}      
@@ -204,19 +244,32 @@
         </h1>
       </div>
       <table class="table">
-        <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th></tr></thead>
+        <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th><th width="10%">備註</th></tr></thead>
         <tbody>
           {% for k,v in event.items %}
             {% if v.value.0 != None or v.value.1 != None %}
               <tr><td>{{ v.name_zh }}</td>
                 <td>
-                  {% if v.value.1 != None %}
+                  {% if v.value.1 is not None %}
                     {{ v.value.1 }}
+                  {% elif v.value.1 is None %}
+                    {{ v.value.0 }}
                   {% endif %}
                 </td>
                 <td>
                   {% if v.value.0 != None %}
                     {{ v.value.0 }}
+                  {% endif %}
+                </td>
+                <td>
+                  {% if v.value.1 is not None %}
+                    {% if v.value.1 == v.value.0 %}
+
+                    {% else %}
+                      Altered
+                    {% endif %}
+                  {% elif v.value.1 is None %}
+                    
                   {% endif %}
                 </td>
               </tr>
@@ -241,7 +294,7 @@
       </div>
       
       <table class="table">
-        <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th></tr></thead>
+        <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th><th width="10%">備註</th></tr></thead>
         <tbody>
           {% for k,v in taxon.items %}
             {% if v.value.0 != None or v.value.1 != None %}
@@ -251,8 +304,21 @@
                       <a href="https://nametool.taicol.tw/zh-tw/taxon-names/{{ v.value.1 }}">{{ v.value.1 }}</a>
                     </td>
                     <td>
-                      {% if v.value.0 != None %}
+                      {% if v.value.1 is not None %}
+                        {{ v.value.1 }}
+                      {% elif v.value.1 is None %}
                         {{ v.value.0 }}
+                      {% endif %}
+                    </td>
+                    <td>
+                      {% if v.value.1 is not None %}
+                        {% if v.value.1 == v.value.0 %}
+
+                        {% else %}
+                          Inferred
+                        {% endif %}
+                      {% elif v.value.1 is None %}
+                        
                       {% endif %}
                     </td>
                   </tr>
@@ -266,18 +332,42 @@
                         {{ v.value.0 }}
                       {% endif %}
                     </td>
+                    <td>
+                      {% if v.value.1 is not None %}
+                        {% if v.value.1 == v.value.0 %}
+
+                        {% else %}
+                          Inferred
+                        {% endif %}
+                      {% elif v.value.1 is None %}
+                        
+                      {% endif %}
+                    </td>
                   </tr>
 
               {% else %}
                 <tr><td>{{ v.name_zh }}</td>
                   <td>
-                    {% if v.value.1 != None %}
+                    {% if v.value.1 is not None %}
                       {{ v.value.1 }}
+                    {% elif v.value.1 is None %}
+                      {{ v.value.0 }}
                     {% endif %}
                   </td>
                   <td>
                     {% if v.value.0 != None %}
                       {{ v.value.0 }}
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if v.value.1 is not None %}
+                      {% if v.value.1 == v.value.0 %}
+
+                      {% else %}
+                        Inferred
+                      {% endif %}
+                    {% elif v.value.1 is None %}
+                      
                     {% endif %}
                   </td>
                 </tr>
@@ -295,19 +385,32 @@
         </h1>
       </div>
       <table class="table">
-        <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th></tr></thead>
+        <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th><th width="10%">備註</th></tr></thead>
         <tbody>
           {% for k,v in location.items %}
             {% if v.value.0 != None or  v.value.1 != None %}
             <tr><td>{{ v.name_zh }}</td>
               <td>
-                {% if v.value.1 != None %}
+                {% if v.value.1 is not None %}
                   {{ v.value.1 }}
+                {% elif v.value.1 is None %}
+                  {{ v.value.0 }}
                 {% endif %}
               </td>
               <td>
-                {% if v.value.0 != None %}
+                {% if v.value.0 is not None %}
                   {{ v.value.0 }}
+                {% endif %}
+              </td>
+              <td>
+                {% if v.value.1 is not None %}
+                  {% if v.value.1 == v.value.0 %}
+
+                  {% else %}
+                    Altered
+                  {% endif %}
+                {% elif v.value.1 is None %}
+                  
                 {% endif %}
               </td>
             </tr>
