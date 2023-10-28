@@ -7,6 +7,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
 from django.urls import reverse
+from martor.models import MartorField
 
 from conf import settings
 
@@ -72,7 +73,7 @@ class Article(models.Model):
     )
     title = models.CharField("標題", max_length=500)
     summary = models.TextField("摘要", blank=True)
-    content = models.TextField("內文", blank=True, help_text="新文章預設都是 markdown 顯示")
+    content = MartorField()
     slug = models.SlugField(unique=True, blank=True, max_length=500)
     created = models.DateTimeField("發布時間", default=timezone.now)
     changed = models.DateTimeField("修改時間", default=timezone.now)
@@ -81,9 +82,7 @@ class Article(models.Model):
     )
     is_pinned = models.CharField("置頂", max_length=2, default="N", choices=PINNED_CHOICE)
     is_homepage = models.BooleanField("首頁專題文章", null=True)
-    is_content_markdown = models.BooleanField(
-        "內文是否 markdown", null=True, blank=True, help_text="舊文章要特別勾, 才會有 markdown 顯示"
-    )
+
     cover = models.ImageField(
         upload_to=article_cover_path, blank=True, help_text="注：圖片尺寸誤過長"
     )
