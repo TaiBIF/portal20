@@ -719,6 +719,58 @@
   <field name="year" type="string"/>
   <field name="year_x" type="text_general"/>
   <field name="year_y" type="text_general"/>
+  <field name="taibif_datatsetKey" type="string"/>
+  <field name="taibif_occurrenceID" type="string"/>
+  <field name="taibif_infraspecificEpithet" type="string"/>
+  <field name="taibif_verbatimScientificName" type="string"/>
+  <field name="taibif_verbatimScientificNameAuthorship" type="string"/>
+  <field name="taibif_locality" type="string"/>
+  <field name="taibif_stateProvince" type="string"/>
+  <field name="taibif_individualCount" type="string"/>
+  <field name="taibif_publishingOrgKey" type="string"/>
+  <field name="taibif_depth" type="string"/>
+  <field name="taibif_depthAccuracy" type="string"/>
+  <field name="taibif_institutionCode" type="string"/>
+  <field name="taibif_collectionCode" type="string"/>
+  <field name="taibif_catalogNumber" type="string"/>
+  <field name="taibif_identifiedBy" type="string"/>
+  <field name="taibif_dateIdentified" type="string"/>
+  <field name="taibif_license" type="string"/>
+  <field name="taibif_recordedBy" type="string"/>
+  <field name="taibif_mediaType" type="string"/>
+  <field name="geo_issue" type="string"/>
+  <field name="taibif_county_zh" type="string"/>
+  <field name="taibif_kingdom" type="string"/>
+  <field name="taibif_phylum" type="string"/>
+  <field name="taibif_class" type="string"/>
+  <field name="taibif_family" type="string"/>
+  <field name="taibif_order" type="string"/>
+  <field name="taibif_genus" type="string"/>
+  <field name="taibif_scientificName" type="string"/>
+  <field name="taibif_taicolTaxonID" type="string"/>
+  <field name="taibif_taxonBackbone" type="string"/>
+  <field name="taibif_taxonRank" type="string"/>
+  <field name="taibif_vernacularName" type="string"/>
+  <field name="taxon_issue" type="string"/>
+  <field name="taibif_lastInterpreted" type="string"/>
+  <field name="gbifID" type="string"/>
+  <field name="datasetKey" type="string"/>
+  <field name="species" type="string"/>
+  <field name="verbatimScientificName" type="string"/>
+  <field name="verbatimScientificNameAuthorship" type="string"/>
+  <field name="publishingOrgKey" type="string"/>
+  <field name="depth" type="string"/>
+  <field name="taxonKey" type="string"/>
+  <field name="speciesKey" type="string"/>
+  <field name="lastInterpreted" type="string"/>
+  <field name="issue" type="string"/>
+  <field name="taibif_datasetKey" type="string"/>
+  <field name="taibif_decimalLatitude" type="string"/>
+  <field name="taibif_decimalLongitude" type="string"/>
+  <field name="taibif_issue" type="string"/>
+
+
+
   <dynamicField name="*_txt_en_split_tight" type="text_en_splitting_tight" indexed="true" stored="true"/>
   <dynamicField name="*_descendent_path" type="descendent_path" indexed="true" stored="true"/>
   <dynamicField name="*_ancestor_path" type="ancestor_path" indexed="true" stored="true"/>
