@@ -41,9 +41,19 @@ def act_lang(func):
 
 # @act_lang
 def index(request):
-    news_list = Article.objects.filter(category="NEWS").all()[0:4]
-    event_list = Article.objects.filter(category="EVENT").all()[0:4]
-    update_list = Article.objects.filter(category="PSCIENCE").all()[0:4]
+    news_list = (
+        Article.objects.filter(category="NEWS").order_by("-is_pinned", "-id").all()[0:4]
+    )
+    event_list = (
+        Article.objects.filter(category="EVENT")
+        .order_by("-is_pinned", "-id")
+        .all()[0:4]
+    )
+    update_list = (
+        Article.objects.filter(category="PSCIENCE")
+        .order_by("-is_pinned", "-id")
+        .all()[0:4]
+    )
     # topic_list = Article.objects.filter(category__in=['SCI', 'TECH', 'PUB']).order_by('?').all()[0:10]
     # topic_list = Article.objects.filter(is_homepage=True).order_by("?").all()[0:10]
     # get top newest article 6 records for homepage by category
