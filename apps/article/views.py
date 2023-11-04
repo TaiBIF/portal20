@@ -49,7 +49,12 @@ def article_list(request, category):
 
     if not valid_category:
         raise Http404("category does not exist")
-    query = Article.objects.filter(category=category.upper(), is_pinned="N").all()
+    # query = Article.objects.filter(category=category.upper(), is_pinned="N").all()
+    query = (
+        Article.objects.filter(category=category.upper())
+        .order_by("-is_pinned", "-id")
+        .all()
+    )
     cover_list = Article.objects.filter(category=category.upper(), is_pinned="Y")
 
     rows = []
