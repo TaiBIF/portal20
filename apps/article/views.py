@@ -3,7 +3,7 @@ from django.http import HttpResponse, Http404
 from django.views import generic
 from django.core.paginator import Paginator
 from django.utils.translation import gettext
-
+from django.http import HttpRequest
 
 from .models import Article, PostImage
 from itertools import chain
@@ -19,6 +19,10 @@ CODE_MAPPING = {
         "pos": "TaiBIF發表文章/海報",
     }
 }
+
+
+def get_current_page_url(request: HttpRequest):
+    return request.build_absolute_uri()
 
 
 # DEPRICATED 不合用
@@ -86,6 +90,7 @@ def article_list(request, category):
 
 
 def article_detail(request, pk):
+    current_url = get_current_page_url(request)
     article = get_object_or_404(Article, pk=pk)
     imagesList = PostImage.objects.filter(post=pk)
 
@@ -104,6 +109,7 @@ def article_detail(request, pk):
             "article_type": gettext(category),
             "recommended": recommended,
             "imagesList": imagesList,
+            "current_url": current_url,
         },
     )
 
