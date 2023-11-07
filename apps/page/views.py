@@ -42,16 +42,18 @@ def act_lang(func):
 # @act_lang
 def index(request):
     news_list = (
-        Article.objects.filter(category="NEWS").order_by("-is_pinned", "-id").all()[0:4]
+        Article.objects.filter(category="NEWS")
+        .order_by("-is_pinned", "-created")
+        .all()[0:4]
     )
     event_list = (
         Article.objects.filter(category="EVENT")
-        .order_by("-is_pinned", "-id")
+        .order_by("-is_pinned", "-created")
         .all()[0:4]
     )
     update_list = (
         Article.objects.filter(category="PSCIENCE")
-        .order_by("-is_pinned", "-id")
+        .order_by("-is_pinned", "-created")
         .all()[0:4]
     )
     # topic_list = Article.objects.filter(category__in=['SCI', 'TECH', 'PUB']).order_by('?').all()[0:10]
