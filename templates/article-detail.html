@@ -8,12 +8,12 @@
 {% block meta %}
 <meta property="og:title" content="TaiBIF | 臺灣生物多樣性資訊機構 | {{ article.title }} "/>
 {% if article.cover %}
-<meta property="og:image" content="http://portal.taibif.tw/media/{{ article.cover }}"/>
+<meta property="og:image" content="https://{{domain}}/media/{{ article.cover }}"/>
 {% else %}
 <meta property="og:image" content="{% static 'images/taibif-logo-white-bg.png' %}"/>
 {% endif %}
 <meta property="og:description" content="{{ article.content }}"/>
-<meta property="og:url" content="http://portal.taibif.tw{{article.get_absolute_url}}" />
+<meta property="og:url" content="http://{{domain}}{{article.get_absolute_url}}" />
 <meta property="og:type" content="website" />
 {% endblock %}
 
