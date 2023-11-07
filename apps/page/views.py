@@ -59,12 +59,14 @@ def index(request):
     # topic_list = Article.objects.filter(category__in=['SCI', 'TECH', 'PUB']).order_by('?').all()[0:10]
     # topic_list = Article.objects.filter(is_homepage=True).order_by("?").all()[0:10]
     # get top newest article 6 records for homepage by category
-    topic_news_list = Article.objects.filter(category="NEWS").order_by("-id").all()[0:6]
+    topic_news_list = (
+        Article.objects.filter(category="NEWS").order_by("-created").all()[0:6]
+    )
     topic_event_list = (
-        Article.objects.filter(category="EVENT").order_by("-id").all()[0:6]
+        Article.objects.filter(category="EVENT").order_by("-created").all()[0:6]
     )
     topic_pscience_list = (
-        Article.objects.filter(category="PSCIENCE").order_by("-id").all()[0:6]
+        Article.objects.filter(category="PSCIENCE").order_by("-created").all()[0:6]
     )
 
     # merge 3 category article list to toopic_list
