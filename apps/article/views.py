@@ -25,6 +25,10 @@ def get_current_page_url(request: HttpRequest):
     return request.build_absolute_uri()
 
 
+def get_current_domain(request: HttpRequest):
+    return request.META["HTTP_HOST"]
+
+
 # DEPRICATED 不合用
 class ArticleListView(generic.ListView):
     template_name = "article-list.html"
@@ -91,6 +95,7 @@ def article_list(request, category):
 
 def article_detail(request, pk):
     current_url = get_current_page_url(request)
+    domain = get_current_domain(request)
     article = get_object_or_404(Article, pk=pk)
     imagesList = PostImage.objects.filter(post=pk)
 
@@ -110,6 +115,7 @@ def article_detail(request, pk):
             "recommended": recommended,
             "imagesList": imagesList,
             "current_url": current_url,
+            "domain": domain,
         },
     )
 
