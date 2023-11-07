@@ -104,7 +104,6 @@ def article_detail(request, pk):
         .exclude(pk=pk)
         .order_by("-created")[:5]
     )
-
     category = dict(article.CATEGORY_CHOICE)[article.category]
     return render(
         request,
