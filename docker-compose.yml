@@ -5,8 +5,6 @@ services:
     build: .
     container_name: taibif-web-dev-container
     image: taibif-web-dev-image
-    ports:
-      - 8000:8000
     depends_on:
       - db
     links:

@@ -1,6 +1,9 @@
 version: '3.7'
 
 services:
+  web:
+    ports:
+      - 8000:8000
   adminer:
     image: adminer
     restart: always
