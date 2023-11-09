@@ -200,6 +200,7 @@ def dataset_api(request):
         'doi' : x['gbif_doi'] if 'doi' in x and x['gbif_doi'] != None else None,
         'numberRecord' : x['num_record'] if 'num_record' in x and x['num_record'] != None else None,
         'numberOccurrence' : x['num_occurrence'] if 'num_occurrence' in x and x['num_occurrence'] != None else None,
+        'source' : x['source'] if 'source' in x else None,
         # 'citation' : x['citation'] if 'citation' in x else None,
         # 'resource' : x['resource'] if 'resource' in x else None,
     } for x in result_d ]
@@ -956,7 +957,13 @@ def occurrence_api(request):
     res={}
     res_list=[] 
     for i in solr.solr_response['response']['docs']:
-        backbone = i['taxon_backbone']if 'taxon_backbone' in i else None
+        backbone = i['taxon_backbone']if 'taxon_backbone' in i else (i['taibif_taxonBackbone'] if 'taibif_taxonBackbone' in i else None)
+        if backbone == 'TaiCol':
+            taicolTaxonID = i['taibif_accepted_namecode'] if 'taibif_accepted_namecode' in i else (i['taibif_taicolTaxonID'] if 'taibif_taicolTaxonID' in i else None)
+        elif backbone == 'GBIF':
+            gbifAcceptedID = int(float(i['taibif_accepted_namecode'])) if 'taibif_accepted_namecode' in i else None
+        elif backbone == None:
+            gbifAcceptedID = i['taxonKey'] if 'taxonKey' in i else None
         mediaLicense = i['taibif_mediaLicense'] if 'taibif_mediaLicense' in i else None
         group = i['taibif_taxonGroup'][0] if 'taibif_taxonGroup' in i else None
         if 'orderzh' in i :
@@ -974,21 +981,21 @@ def occurrence_api(request):
             # 轉譯資料
             'taibifOccurrenceID':i['taibif_occ_id'],
             'basisOfRecord':i['taibif_basisOfRecord'] if 'taibif_basisOfRecord' in i else None,
-            'scientificName': i['taibif_scientificname'] if 'taibif_scientificname' in i else None,
+            'scientificName': i['taibif_scientificname'] if 'taibif_scientificname' in i else (i['taibif_scientificName'] if 'taibif_scientificName' in i else None),
             'taxonGroup':group,
-            'taxonRank':i['taxon_rank'] if 'taxon_rank' in i else None,
+            'taxonRank':i['taxon_rank'] if 'taxon_rank' in i else (i['taibif_taxonRank'] if 'taibif_taxonRank' in i else None),
             'scientificNameID':i['taibif_namecode'] if 'taibif_namecode' in i else  None,
             'isPreferredName': i['taibif_vernacular_name'] if 'taibif_vernacular_name' in i else None,
             'taxonBackbone':backbone,
-            'taicolTaxonID': i['taibif_accepted_namecode']  if backbone == "TaiCOL" else  None,
-            'gbifAcceptedID':int(float(i['taibif_accepted_namecode']))  if backbone == "GBIF" else  None ,
+            'taicolTaxonID': taicolTaxonID, 
+            'gbifAcceptedID': gbifAcceptedID ,
             'kingdom':i['kingdomzh'] if 'kingdomzh' in i else None,
             'phylum':i['phylumzh'] if 'phylumzh' in i else None,
             'class':i['classzh'] if 'classzh' in i else None,
             'order':i['orderzh'] if 'orderzh' in i else None,
             'family':i['familyzh'] if 'familyzh' in i else None,
             'genus':i['genuszh'] if 'genuszh' in i else None,
-            'eventDate':i['taibif_event_date'] if 'taibif_event_date' in i else None,
+            'eventDate':i['taibif_event_date'] if 'taibif_event_date' in i else (i['taibif_eventDate'] if 'taibif_eventDate' in i else None),
             'year':i['taibif_year'][0] if 'taibif_year' in i else None,
             'month':i['taibif_month'][0] if 'taibif_month' in i else None,
             'day':i['taibif_day'][0] if 'taibif_day' in i else None,
@@ -1010,8 +1017,8 @@ def occurrence_api(request):
             'datasetShortName':i['taibif_dataset_name'] if 'taibif_dataset_name' in i else None,
             'occurrenceID':i['occurrenceID'] if 'occurrenceID' in i else None,
             'catalogNumber': i['catalogNumber'] if 'catalogNumber' in i else None,
-            'taibifCreatedDate':i['mod_date'][0],
-            'taibifModifiedDate':i['mod_date'][0],
+            'taibifCreatedDate':i['mod_date'][0] if 'mod_date' in i else None,
+            'taibifModifiedDate':i['mod_date'][0] if 'mod_date' in i else None,
             'dataGeneralizations':i['dataGeneralizations'] if 'dataGeneralizations' in i else None,
             'coordinatePrecision':i['coordinatePrecision'] if 'coordinatePrecision' in i else None,
             'locality':i['locality'] if 'locality' in i  else None,
@@ -1024,8 +1031,8 @@ def occurrence_api(request):
             'associatedMedia':i['associatedMedia']  if 'associatedMedia' in i else  None,
             'mediaLicense':mediaLicense,
             # 常用資料
-            'taibifDatasetID': i['taibifDatasetID'],
-            'gbifDatasetID':i['gbif_dataset_uuid'] if 'gbif_dataset_uuid' in i else None,
+            'taibifDatasetID':  i['taibifDatasetID'] if 'taibifDatasetID' in i else (i['taibif_datasetKey'] if 'taibif_datasetKey' in i else None),
+            'gbifDatasetID':i['gbif_dataset_uuid'] if 'gbif_dataset_uuid' in i else (i['taibif_datasetKey'] if 'taibif_datasetKey' in i else None),
             'establishmentMeans':i['establishmentMeans'] if 'establishmentMeans' in i else None,
             'issue':','.join(issues) if issues else None,
             # 沒分類
