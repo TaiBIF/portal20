@@ -957,13 +957,21 @@ def occurrence_api(request):
     res={}
     res_list=[] 
     for i in solr.solr_response['response']['docs']:
-        backbone = i['taxon_backbone']if 'taxon_backbone' in i else (i['taibif_taxonBackbone'] if 'taibif_taxonBackbone' in i else None)
-        if backbone == 'TaiCol':
+        taicolTaxonID = None
+        gbifAcceptedID = None
+        backbone = i['taxon_backbone'] if 'taxon_backbone' in i else (i['taibif_taxonBackbone'] if 'taibif_taxonBackbone' in i else None)
+        if backbone == 'TaiCol' or backbone == 'TaiCOL':
             taicolTaxonID = i['taibif_accepted_namecode'] if 'taibif_accepted_namecode' in i else (i['taibif_taicolTaxonID'] if 'taibif_taicolTaxonID' in i else None)
+            gbifAcceptedID = i['taxonKey'] if 'taxonKey' in i else None
         elif backbone == 'GBIF':
             gbifAcceptedID = int(float(i['taibif_accepted_namecode'])) if 'taibif_accepted_namecode' in i else None
         elif backbone == None:
             gbifAcceptedID = i['taxonKey'] if 'taxonKey' in i else None
+            
+        issue = None
+        if i['geo_issue'] or i['taxon_issue'] or ['time_issue'] in i:
+            issue = ';'.join(filter(None, [i.get('geo_issue'), i.get('taxon_issue'), i.get('time_issue')]))
+        
         mediaLicense = i['taibif_mediaLicense'] if 'taibif_mediaLicense' in i else None
         group = i['taibif_taxonGroup'][0] if 'taibif_taxonGroup' in i else None
         if 'orderzh' in i :
@@ -988,7 +996,7 @@ def occurrence_api(request):
             'isPreferredName': i['taibif_vernacular_name'] if 'taibif_vernacular_name' in i else None,
             'taxonBackbone':backbone,
             'taicolTaxonID': taicolTaxonID, 
-            'gbifAcceptedID': gbifAcceptedID ,
+            'gbifAcceptedID': gbifAcceptedID,
             'kingdom':i['kingdomzh'] if 'kingdomzh' in i else None,
             'phylum':i['phylumzh'] if 'phylumzh' in i else None,
             'class':i['classzh'] if 'classzh' in i else None,
@@ -1001,14 +1009,14 @@ def occurrence_api(request):
             'day':i['taibif_day'][0] if 'taibif_day' in i else None,
             'geodeticDatum':i['taibif_geodeticDatum'] if 'taibif_geodeticDatum' in i else None, #對到verbatimCoordinateSystem
             'verbatimSRS':i['taibif_crs'] if 'taibif_crs' in i else None, # verbatimSRS
-            'decimalLongitude':str(i['taibif_longitude'][0]) if 'taibif_longitude' in i  else None,
-            'decimalLatitude':str(i['taibif_latitude'][0]) if 'taibif_latitude' in i  else None,
-            'coordinateUncertaintyInMeters':i['taibif_coordinateUncertaintyInMeters'][0] if 'taibif_coordinateUncertaintyInMeters' in i else None,
+            'decimalLongitude':str(i['taibif_longitude'][0]) if 'taibif_longitude' in i  else (i['taibif_decimalLongitude'] if 'taibif_decimalLongitude' in i else None),
+            'decimalLatitude':str(i['taibif_latitude'][0]) if 'taibif_latitude' in i  else (i['taibif_decimalLatitude'] if 'taibif_decimalLatitude' in i else None),
+            'coordinateUncertaintyInMeters':i['taibif_coordinateUncertaintyInMeters'][0] if 'taibif_coordinateUncertaintyInMeters' in i else (i['taibif_coordinateUncertaintyInMeters'] if 'taibif_coordinateUncertaintyInMeters' in i else None),
             'countryCode':i['taibif_countryCode'] if 'taibif_countryCode' in i else None,
             'country':i['taibif_country'] if 'taibif_country' in i else None,
             'county':i['taibif_county'] if 'taibif_county' in i else None,
-            'habitatReserve':i['forestN'][0] if 'forestN' in i else None,
-            'wildlifeReserve':i['wildlifeN'][0] if 'wildlifeN' in i else None,
+            'habitatReserve':i['forestN'][0] if 'forestN' in i else (i['forest_reserves'] if 'forest_reserves' in i else None),
+            'wildlifeReserve':i['wildlifeN'][0] if 'wildlifeN' in i else (i['wildlife_refuges'] if 'wildlife_refuges' in i else None),
             'occurrenceStatus':i['taibif_occurrenceStatus'] if 'taibif_occurrenceStatus' in i else None,
             'selfProduced':i['selfProduced'][0],
             'license':i['license'] if 'license' in i and i['license']!= 'unknown' else 'NA',
@@ -1018,12 +1026,12 @@ def occurrence_api(request):
             'occurrenceID':i['occurrenceID'] if 'occurrenceID' in i else None,
             'catalogNumber': i['catalogNumber'] if 'catalogNumber' in i else None,
             'taibifCreatedDate':i['mod_date'][0] if 'mod_date' in i else None,
-            'taibifModifiedDate':i['mod_date'][0] if 'mod_date' in i else None,
+            'taibifModifiedDate':i['mod_date'][0] if 'mod_date' in i else (i['taibif_lastInterpreted'] if 'taibif_lastInterpreted' in i else None),
             'dataGeneralizations':i['dataGeneralizations'] if 'dataGeneralizations' in i else None,
             'coordinatePrecision':i['coordinatePrecision'] if 'coordinatePrecision' in i else None,
             'locality':i['locality'] if 'locality' in i  else None,
             'preservation':i['preservation'] if 'preservation' in i else None,
-            'typeStatus':i['typeStatus'] if 'typeStatus' in i else None,
+            'typeStatus':i['typeStatus'] if 'typeStatus' in i else (i['taibif_typeStatus'] if 'taibif_typeStatus' in i else None),
             'recordedBy':i['recordedBy'] if 'recordedBy' in i else None,
             'recordNumber':i['recordNumber'] if 'recordNumber' in i else None,
             'organismQuantity':i['organismQuantity'] if 'organismQuantity' in i else None,
@@ -1033,8 +1041,8 @@ def occurrence_api(request):
             # 常用資料
             'taibifDatasetID':  i['taibifDatasetID'] if 'taibifDatasetID' in i else (i['taibif_datasetKey'] if 'taibif_datasetKey' in i else None),
             'gbifDatasetID':i['gbif_dataset_uuid'] if 'gbif_dataset_uuid' in i else (i['taibif_datasetKey'] if 'taibif_datasetKey' in i else None),
-            'establishmentMeans':i['establishmentMeans'] if 'establishmentMeans' in i else None,
-            'issue':','.join(issues) if issues else None,
+            'establishmentMeans':i['establishmentMeans'] if 'establishmentMeans' in i else (i['taibif_establishmentMeans'] if 'taibif_establishmentMeans' in i else None),
+            'issue':','.join(issues) if issues else (issue if issue else None),
             # 沒分類
             # 'modifiedDate':i['modified'] if 'modified' in i else None,
         })
