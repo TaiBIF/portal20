@@ -787,11 +787,11 @@ def occurrence_api(request):
         elif key == "occurrenceStatus":
             fq_list.append(('fq', '{}:"{}"'.format('taibif_occurrenceStatus', values[0])))
         elif key == "scientificName":
-            fq_list.append(('fq', '{}:{}'.format('taibif_scientificname', values[0])))
+            fq_list.append(('fq', '(taibif_scientificName:"{}" OR taibif_scientificname:"{}")'.format(values[0], values[0])))
         elif key == "taxonRank":
-            fq_list.append(('fq', '{}:"{}"'.format('taxon_rank', values[0])))
+            fq_list.append(('fq', '(taibif_taxonRank:"{}" OR taxon_rank:"{}")'.format(values[0], values[0])))
         elif key == "taicolTaxonId":
-            fq_list.append(('fq', '{}:"{}"'.format('taicol_taxon_id', values[0])))
+            fq_list.append(('fq', '(taibif_taicolTaxonID:"{}" OR taicol_taxon_id:"{}")'.format(values[0], values[0])))
         elif key == "kingdom":
             fq_list.append(('fq', '{}:"{}"'.format('kingdomzh', values[0])))
         elif key == "phylum":
@@ -848,7 +848,7 @@ def occurrence_api(request):
                 fq_list.append(('fq', f'mod_date:"{values[0]}T00:00:00Z"'))
         elif key == 'gbifDatasetID':
             if values[0]:
-                fq_list.append(('fq', '{}:"{}"'.format('gbif_dataset_uuid', values[0])))
+                fq_list.append(('fq', '(taibif_datasetKey:"{}" OR gbif_dataset_uuid:"{}")'.format(values[0], values[0])))
             else: 
                 fq_list.append(('fq', '{}:{}'.format('gbif_dataset_uuid', '*')))
         elif key == "eventDate":
@@ -902,7 +902,7 @@ def occurrence_api(request):
                 # continue
             fq_list.append(('fq', '{}:"{}"'.format('license', litype)))
         elif key == "taibifDatasetID":
-            fq_list.append(('fq', '{}:"{}"'.format('taibifDatasetID', values[0])))
+            fq_list.append(('fq', '(taibif_datasetKey:"{}" OR taibifDatasetID:"{}")'.format(values[0], values[0])))
 
         elif key == 'selfProduced':
             fq_list.append(('fq', '{}:{}'.format('selfProduced', values[0])))
@@ -1011,7 +1011,7 @@ def occurrence_api(request):
             'verbatimSRS':i['taibif_crs'] if 'taibif_crs' in i else None, # verbatimSRS
             'decimalLongitude':str(i['taibif_longitude'][0]) if 'taibif_longitude' in i  else (i['taibif_decimalLongitude'] if 'taibif_decimalLongitude' in i else None),
             'decimalLatitude':str(i['taibif_latitude'][0]) if 'taibif_latitude' in i  else (i['taibif_decimalLatitude'] if 'taibif_decimalLatitude' in i else None),
-            'coordinateUncertaintyInMeters':i['taibif_coordinateUncertaintyInMeters'][0] if 'taibif_coordinateUncertaintyInMeters' in i else (i['taibif_coordinateUncertaintyInMeters'] if 'taibif_coordinateUncertaintyInMeters' in i else None),
+            'coordinateUncertaintyInMeters':i['taibif_coordinateUncertaintyInMeters'][0] if 'taibif_coordinateUncertaintyInMeters' in i else None,
             'countryCode':i['taibif_countryCode'] if 'taibif_countryCode' in i else None,
             'country':i['taibif_country'] if 'taibif_country' in i else None,
             'county':i['taibif_county'] if 'taibif_county' in i else None,
