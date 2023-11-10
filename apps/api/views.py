@@ -197,7 +197,7 @@ def dataset_api(request):
         'gbifDatasetID' : x['guid'] if 'guid' in x and x['guid'] != None else None,
         'core' : x['dwc_core_type'] if 'dwc_core_type' in x else None,
         'license' : x['data_license'] if 'data_license' in x and x['data_license'] != None else 'unknown',
-        'doi' : x['gbif_doi'] if 'doi' in x and x['gbif_doi'] != None else None,
+        'doi' : x['gbif_doi'] if 'gbif_doi' in x and x['gbif_doi'] != None else 'test',
         'numberRecord' : x['num_record'] if 'num_record' in x and x['num_record'] != None else None,
         'numberOccurrence' : x['num_occurrence'] if 'num_occurrence' in x and x['num_occurrence'] != None else None,
         'source' : x['source'] if 'source' in x else None,

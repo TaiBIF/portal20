@@ -249,7 +249,7 @@
               <tr><th>用途</th><th>參數名稱 {parameter}</th><th>查詢網址</th></tr>
             </thead>
             <tbody>
-            <tr><td>取得資料集資訊</td><td>datasetName, taibifDatasetID, publisherID, publisherName, author, publicationDate, datasetModifiedDate, gbifDatasetID, license, core</td><td>/api/v2/dataset/</td></tr>
+            <tr><td>取得資料集資訊</td><td>datasetName, taibifDatasetID, publisherID, publisherName, author, publicationDate, datasetModifiedDate, gbifDatasetID, license, core, source</td><td>/api/v2/dataset/</td></tr>
             </tbody>
           </table>
 
@@ -273,7 +273,7 @@
             </tbody>
           </table>
           <h4>回傳欄位說明：</h4>
-          使用 Dataset API 回傳欄位包含查詢參數，總共 14 個欄位。
+          使用 Dataset API 回傳欄位包含查詢參數，總共 15 個欄位。
           <table class="table table-striped table-bordered">
             <thead>
               <tr><th>回傳欄位</th><th>說明</th><th>型態</th></tr>
@@ -283,6 +283,7 @@
               <tr><td>doi</td><td>數位物件識別號（Digital Object Identifier）</td><td>String</td></tr>
               <tr><td>numberRecord</td><td>資料集紀錄數量</td><td>String</td></tr>
               <tr><td>numberOccurrence</td><td>資料集出現紀錄筆數</td><td>String</td></tr>
+              <tr><td>source</td><td>資料集來源，無特別標註表示此資料集僅發佈至 IPT</td><td>String</td></tr>
             </tbody>
           </table>
           </div>
