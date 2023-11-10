@@ -969,7 +969,7 @@ def occurrence_api(request):
             gbifAcceptedID = i['taxonKey'] if 'taxonKey' in i else None
             
         issue = None
-        if i['geo_issue'] or i['taxon_issue'] or ['time_issue'] in i:
+        if 'geo_issue' in i and i['geo_issue'] or 'taxon_issue' in i and i['taxon_issue'] or 'time_issue' in i:
             issue = ';'.join(filter(None, [i.get('geo_issue'), i.get('taxon_issue'), i.get('time_issue')]))
         
         mediaLicense = i['taibif_mediaLicense'] if 'taibif_mediaLicense' in i else None
