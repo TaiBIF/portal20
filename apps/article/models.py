@@ -96,11 +96,14 @@ class Article(models.Model):
     def save(self, *args, **kwargs):
         if not self.id:
             if not self.slug:
-                # unique slug with date
-                self.slug = slugify(
-                    self.title + datetime.now().strftime("%Y%m%d%H%M%S"),
-                    allow_unicode=True,
-                )
+                # if title exist in db, create a unique slug with date
+                if Article.objects.filter(title=self.title).exists():
+                    self.slug = slugify(
+                        self.title + datetime.now().strftime("%Y%m%d%H%M%S"),
+                        allow_unicode=True,
+                    )
+                else:
+                    self.slug = slugify(self.title, allow_unicode=True)
 
             # prevent image save no instance.id
             saved_image = self.cover
