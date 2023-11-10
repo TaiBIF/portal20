@@ -959,18 +959,27 @@ def occurrence_api(request):
     for i in solr.solr_response['response']['docs']:
         taicolTaxonID = None
         gbifAcceptedID = None
+        scientificName = None
+        taxonRank = None
         backbone = i['taxon_backbone'] if 'taxon_backbone' in i else (i['taibif_taxonBackbone'] if 'taibif_taxonBackbone' in i else None)
         if backbone == 'TaiCol' or backbone == 'TaiCOL':
             taicolTaxonID = i['taibif_accepted_namecode'] if 'taibif_accepted_namecode' in i else (i['taibif_taicolTaxonID'] if 'taibif_taicolTaxonID' in i else None)
             gbifAcceptedID = i['taxonKey'] if 'taxonKey' in i else None
+            scientificName = i['taibif_scientificname'] if 'taibif_scientificname' in i else (i['taibif_scientificName'] if 'taibif_scientificName' in i else None)
+            taxonRank = i['taxon_rank'] if 'taxon_rank' in i else (i['taibif_taxonRank'] if 'taibif_taxonRank' in i else None)
         elif backbone == 'GBIF':
             gbifAcceptedID = int(float(i['taibif_accepted_namecode'])) if 'taibif_accepted_namecode' in i else None
+            scientificName = i['taibif_scientificname'] if 'taibif_scientificname' in i else None
+            taxonRank = i['taxon_rank'] if 'taxon_rank' in i else None
         elif backbone == None:
             gbifAcceptedID = i['taxonKey'] if 'taxonKey' in i else None
+            scientificName = i['scientificName'] if 'scientificName' in i else None
+            taxonRank = i['taxonRank'] if 'taxonRank' in i else None
             
         issue = None
         if 'geo_issue' in i and i['geo_issue'] or 'taxon_issue' in i and i['taxon_issue'] or 'time_issue' in i:
             issue = ';'.join(filter(None, [i.get('geo_issue'), i.get('taxon_issue'), i.get('time_issue')]))
+        
         
         mediaLicense = i['taibif_mediaLicense'] if 'taibif_mediaLicense' in i else None
         group = i['taibif_taxonGroup'][0] if 'taibif_taxonGroup' in i else None
@@ -989,20 +998,20 @@ def occurrence_api(request):
             # 轉譯資料
             'taibifOccurrenceID':i['taibif_occ_id'],
             'basisOfRecord':i['taibif_basisOfRecord'] if 'taibif_basisOfRecord' in i else None,
-            'scientificName': i['taibif_scientificname'] if 'taibif_scientificname' in i else (i['taibif_scientificName'] if 'taibif_scientificName' in i else None),
+            'scientificName': scientificName,
             'taxonGroup':group,
-            'taxonRank':i['taxon_rank'] if 'taxon_rank' in i else (i['taibif_taxonRank'] if 'taibif_taxonRank' in i else None),
+            'taxonRank': taxonRank,
             'scientificNameID':i['taibif_namecode'] if 'taibif_namecode' in i else  None,
             'isPreferredName': i['taibif_vernacular_name'] if 'taibif_vernacular_name' in i else None,
             'taxonBackbone':backbone,
             'taicolTaxonID': taicolTaxonID, 
             'gbifAcceptedID': gbifAcceptedID,
-            'kingdom':i['kingdomzh'] if 'kingdomzh' in i else None,
-            'phylum':i['phylumzh'] if 'phylumzh' in i else None,
-            'class':i['classzh'] if 'classzh' in i else None,
-            'order':i['orderzh'] if 'orderzh' in i else None,
-            'family':i['familyzh'] if 'familyzh' in i else None,
-            'genus':i['genuszh'] if 'genuszh' in i else None,
+            'kingdom':i['kingdomzh'] if 'kingdomzh' in i else (i['kingdom'] if 'kingdom' in i else None),
+            'phylum':i['phylumzh'] if 'phylumzh' in i else (i['phylum'] if 'phylum' in i else None),
+            'class':i['classzh'] if 'classzh' in i else (i['class'] if 'class' in i else None),
+            'order':i['orderzh'] if 'orderzh' in i else (i['order'] if 'order' in i else None),
+            'family':i['familyzh'] if 'familyzh' in i else (i['family'] if 'family' in i else None),
+            'genus':i['genuszh'] if 'genuszh' in i else (i['genus'] if 'genus' in i else None),
             'eventDate':i['taibif_event_date'] if 'taibif_event_date' in i else (i['taibif_eventDate'] if 'taibif_eventDate' in i else None),
             'year':i['taibif_year'][0] if 'taibif_year' in i else None,
             'month':i['taibif_month'][0] if 'taibif_month' in i else None,
