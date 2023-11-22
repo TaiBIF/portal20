@@ -773,6 +773,8 @@ def occurrence_api(request):
         # fq query 
         elif key == "occurrenceID":
             fq_list.append(('fq', '{}:"{}"'.format('occurrenceID', values[0])))
+        elif key == "gbifID":
+            fq_list.append(('fq', '{}:"{}"'.format('gbifID', values[0])))
         elif key == "taibifOccurrenceID":
             fq_list.append(('fq', '{}:"{}"'.format('taibif_occ_id', values[0])))
         elif key == "basisOfRecord":
