@@ -1048,6 +1048,7 @@ def occurrence_api(request):
             'associatedMedia':i['associatedMedia']  if 'associatedMedia' in i else  None,
             'mediaLicense':mediaLicense,
             # 常用資料
+            'gbifID':  i['gbifID'] if 'gbifID' in i else None,
             'taibifDatasetID':  i['taibifDatasetID'] if 'taibifDatasetID' in i else (i['taibif_datasetKey'] if 'taibif_datasetKey' in i else None),
             'gbifDatasetID':i['gbif_dataset_uuid'] if 'gbif_dataset_uuid' in i else (i['taibif_datasetKey'] if 'taibif_datasetKey' in i else None),
             'establishmentMeans':i['establishmentMeans'] if 'establishmentMeans' in i else (i['taibif_establishmentMeans'] if 'taibif_establishmentMeans' in i else None),
