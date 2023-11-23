@@ -1014,7 +1014,7 @@ def occurrence_api(request):
             'order':i['orderzh'] if 'orderzh' in i else (i['order'] if 'order' in i else None),
             'family':i['familyzh'] if 'familyzh' in i else (i['family'] if 'family' in i else None),
             'genus':i['genuszh'] if 'genuszh' in i else (i['genus'] if 'genus' in i else None),
-            'eventDate':i['taibif_event_date'] if 'taibif_event_date' in i else (i['taibif_eventDate'] if 'taibif_eventDate' in i else None),
+            'eventDate':i['taibif_event_date'] if 'taibif_event_date' in i else (i['eventDate'] if 'eventDate' in i else None),
             'year':i['taibif_year'][0] if 'taibif_year' in i else None,
             'month':i['taibif_month'][0] if 'taibif_month' in i else None,
             'day':i['taibif_day'][0] if 'taibif_day' in i else None,
