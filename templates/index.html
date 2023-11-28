@@ -185,9 +185,9 @@
             ><a href="/dataset/search/">{{dataset_num|intcomma}}</a></span
           >
           <!--手動更改數字{{ stats.num_dataset|intcomma }} -->
-          {#<span class="dtat-wall-name"
+          {% comment %} <span class="dtat-wall-name"
             >於 TaiBIF 公開之資料集（含部分資訊缺漏之資料集）</span
-          >#}
+          > {% endcomment %}
           <span class="data-wall-icon myicon icon-data-folder"></span>
         </div>
         <div style="font-size: 14px; color: #888; margin-top: 10px">
@@ -201,9 +201,9 @@
             ><a href="/species/search/">70,234</a></span
           >
           <!--手動更改數字{{ stats.num_species|intcomma }} -->
-          {#<span class="dtat-wall-name"
+          {% comment %} <span class="dtat-wall-name"
             >出現紀錄涵蓋物種數（包含部分國外資料及同物異名）</span
-          >#}
+          > {% endcomment %}
           <span class="data-wall-icon myicon icon-data-tw"></span>
         </div>
         <div style="font-size: 14px; color: #888; margin-top: 10px">
