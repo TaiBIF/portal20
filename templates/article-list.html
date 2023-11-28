@@ -126,9 +126,9 @@
           {% trans "活動" %}
         </label>
         <label class="custom-input-ctn">
-          <input type="checkbox" class="select-category-sci" data-type="update"{% if "UPDATE" in article_cat%} checked="checked"{% endif %}>
+          <input type="checkbox" class="select-category-sci" data-type="pscience"{% if "PSCIENCE" in article_cat%} checked="checked"{% endif %}>
           <span class="checkmark"></span>
-          {% trans "更新" %}
+          {% trans "科普" %}
         </label>
         <label class="custom-input-ctn">
           <input type="checkbox" class="select-category-sci" data-type="sci"{% if "SCI" in article_cat %} checked="checked"{% endif %}>
@@ -161,7 +161,7 @@
         <p class="listbox-inner-summary hidden-xs">
             {% if article.memo|slice:"0:4" == "nid:" %}
               {# old article content #}
-              {% if article.category == "UPDATE" %}
+              {% if article.category == "PSCIENCE" %}
               {% else %}
                 {{ article.summary|striptags|truncatechars:150 }}
                 <p><a href="{% url 'article-detail-id' pk=article.id %}" target="_blank" rel="noreferrer noopener">閱讀更多</a></p>

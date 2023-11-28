@@ -271,7 +271,7 @@ a:active {
 }
 
 .heading-lg-ul {
-  font-size: 20px;
+  font-size: 26px;
   color: #4A3E3A;
   font-weight: normal;
   padding: 6px 2px;
@@ -1684,7 +1684,7 @@ a.clamp2row {
 }
 
 .news-card-title-ctn .img-title {
-  font-size: 16px;
+  font-size: 20px;
   margin: 2px 0 2px 0;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
   max-height: 3.5em;
@@ -1725,6 +1725,7 @@ a.clamp2row {
 .news-card-list-ctn li a:active,
 .news-card-list-ctn li a:visited {
   color: #4A3E3A;
+  font-size:18px;
 }
 
 .news-card-list-ctn li a:hover {
@@ -1874,6 +1875,7 @@ a.clamp2row {
   color: #4A3E3A !important;
   height: 3.5em;
   overflow: hidden;
+  font-size:20px;
 }
 
 .topic-inner-title:hover {
@@ -1960,6 +1962,7 @@ a.clamp2row {
 .listbox-inner-title a {
   color: #4A3E3A;
   display: block;
+  font-size:20px;
 }
 @media (max-width: 767px) {
   .listbox-inner-title a {
