@@ -6,7 +6,7 @@
 {% block title %}更多資訊 :: {{ article.title }}{% endblock %}
 
 {% block meta %}
-<meta property="og:title" content="TaiBIF | 臺灣生物多樣性資訊機構 | {{ article.title }} "/>
+<meta property="og:title" content="{{ article.title }} "/>
 {% if article.cover %}
 <meta property="og:image" content="https://{{domain}}/media/{{ article.cover }}"/>
 {% else %}
