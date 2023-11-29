@@ -161,7 +161,7 @@
         <p class="listbox-inner-summary hidden-xs">
             {% if article.memo|slice:"0:4" == "nid:" %}
               {# old article content #}
-              {% if article.category == "PSCIENCE" %}
+              {% if article.category == "SCI" %}
               {% else %}
                 {{ article.summary|striptags|truncatechars:150 }}
                 <p><a href="{% url 'article-detail-id' pk=article.id %}" target="_blank" rel="noreferrer noopener">閱讀更多</a></p>

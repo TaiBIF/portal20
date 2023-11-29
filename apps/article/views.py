@@ -74,9 +74,9 @@ def article_list(request, category):
     article_list = paginator.get_page(page)
 
     layout_type = ""
-    if category in ["news", "event", "pscience"]:
+    if category in ["news", "event", "sci"]:
         layout_type = "A1"
-    elif category in ["sci", "tech", "pub", "pos"]:
+    elif category in ["pscience", "tech", "pub", "pos"]:
         layout_type = "A2"
 
     return render(

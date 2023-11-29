@@ -52,7 +52,7 @@ def index(request):
         .all()[0:4]
     )
     update_list = (
-        Article.objects.filter(category="PSCIENCE")
+        Article.objects.filter(category="SCI")
         .order_by("-is_pinned", "-created")
         .all()[0:4]
     )
@@ -72,7 +72,7 @@ def index(request):
     # merge 3 category article list to toopic_list
     # topic_list = list(chain(topic_news_list, topic_event_list, topic_pscience_list))
     topic_list = (
-        Article.objects.filter(category__in=["NEWS", "EVENT", "PSCIENCE"])
+        Article.objects.filter(category__in=["NEWS", "EVENT", "SCI"])
         .order_by("-created")
         .all()[0:6]
     )
