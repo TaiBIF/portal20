@@ -30,8 +30,18 @@ WORKDIR /taibif-code/
 # install python package
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir pipenv
-COPY Pipfile Pipfile.lock ./
-RUN pipenv install --system
+
+# Copy only the requirements file
+COPY requirements.txt ./
+
+# Install dependencies from requirements.txt
+RUN pip install -r requirements.txt
+
+
+##### install with Pipefile (deprecated version) ######
+# COPY Pipfile Pipfile.lock ./
+# RUN pipenv install --system
+
 
 COPY . .
 

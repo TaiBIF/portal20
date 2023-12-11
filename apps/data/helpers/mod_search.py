@@ -69,7 +69,7 @@ class SuperSearch(object):
 
         cursor = connections[query.db].cursor()
         que = qs.query.clone()
-        que.add_annotation(Count('*'), alias='__count', is_summary=True)
+        que.add_annotation(Count('*'), alias='__count')
         que.clear_ordering(True)
         que.select_for_update = False
         que.select_related = False
@@ -328,6 +328,9 @@ class DatasetSearch(SuperSearch):
 
             if key == 'order_by':
                 query = query.order_by(*values)
+                
+            if key == 'source':
+                query = query.filter(source=values[0])
 
         self.query = query
 

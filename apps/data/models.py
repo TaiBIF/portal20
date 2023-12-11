@@ -16,12 +16,18 @@ DATA_MAPPING = {
         'IN':'印度',
         'VN':'越南',
         'unknown':'其他',
+        None: '未知'
     },
     'rights': {
         'Creative Commons Attribution Non Commercial (CC-BY-NC) 4.0 License': 'CC-BY-NC',
         'Creative Commons Attribution (CC-BY) 4.0 License': 'CC-BY',
         'Public Domain (CC0 1.0)': 'CC0',
-        'unknown':'未明確授權',
+        'http://creativecommons.org/licenses/by/4.0/legalcode': 'CC-BY',
+        'http://creativecommons.org/publicdomain/zero/1.0/legalcode': 'CC0',
+        'http://creativecommons.org/licenses/by-nc/4.0/legalcode': 'CC-BY-NC',
+        'Public Domain (CC0 1.0)': 'CC0',
+        'unknown': '未明確授權',
+        None: '未明確授權'
     },
     'core': {
         'occurrence': 'Occurrence',
@@ -91,6 +97,7 @@ class Dataset(models.Model):
     quality = models.CharField('資料集品質', max_length=4, default='')
     has_publish_problem = models.BooleanField('是否有發布問題 (IPT 裡黃色的區塊)', default=False, help_text='有可能 IPT 授權沒填?')
     admin_memo = models.TextField('後台管理註記', blank=True, null=True, help_text='不會在前台出現')
+    source = models.TextField(blank=True, null=True)
     
     pre_released = models.DateTimeField(null=True)
     pre_count = models.BigIntegerField(null=True)

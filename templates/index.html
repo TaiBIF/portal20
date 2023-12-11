@@ -1,360 +1,490 @@
-{% extends "base.html" %}
-
-{% load static %}
-{% load humanize %}
-{% load i18n %}
-
-
-{% block title %}臺灣生物多樣性機構{% endblock %}
-
-{% block script %}
+{% extends "base.html" %} {% load static %} {% load humanize %} {% load i18n %}
+{% block title %}臺灣生物多樣性機構{% endblock %} {% block script %}
 <script>
-  $(document).ready(function() {
+  $(document).ready(function () {
     // TODO why?
-    const ele = document.querySelector('.search-q');
-    ele.addEventListener('change', (event) => {
+    const ele = document.querySelector(".search-q");
+    ele.addEventListener("change", (event) => {
       //const result = document.querySelector('.result');
       //result.textContent = `You like ${event.target.value}`;
       //console.log(event.target);
     });
   });
 </script>
-{% endblock %}
-
-{% block main %}
+{% endblock %} {% block main %}
 <!-- xs-search-modal begin -->
 <script>
   function goSearch(cat) {
-    const q = document.querySelector('#taibif-search-keyword');
+    const q = document.querySelector("#taibif-search-keyword");
     if (q.value) {
-      window.location.href= `/${cat}/search/?q=${q.value}`;
-    }
-    else {
-      window.location.href= `/${cat}/search/`;
+      window.location.href = `/${cat}/search/?q=${q.value}`;
+    } else {
+      window.location.href = `/${cat}/search/`;
     }
   }
 </script>
-  <div class="modal fade xs-modal-wrapper xs-search-modal-pos" data-backdrop="false">
-    <div class="xs-modal-content">
-      <form action="/search/" method="post">
-        {% csrf_token %}
+<div
+  class="modal fade xs-modal-wrapper xs-search-modal-pos"
+  data-backdrop="false"
+>
+  <div class="xs-modal-content">
+    <form action="/search/" method="post">
+      {% csrf_token %}
       <div class="xs-modal-header">
-        <span class="xs-search-modal-close myicon icon-close" data-dismiss="modal" aria-label="Close"></span>
+        <span
+          class="xs-search-modal-close myicon icon-close"
+          data-dismiss="modal"
+          aria-label="Close"
+        ></span>
         <p class="text-center xs-modal-title">搜尋</p>
       </div>
       <div class="xs-modal-body">
         <div class="xs-search-modal-input-group">
-          <input type="text" class="navbar-search-input search-q" placeholder="請輸入關鍵字..." name="q">
+          <input
+            type="text"
+            class="navbar-search-input search-q"
+            placeholder="請輸入關鍵字..."
+            name="q"
+          />
           <button class="navbar-search-btn" type="submit">
             <span class="myicon icon-search"></span>
           </button>
         </div>
       </div>
-      </form>
+    </form>
+  </div>
+</div>
+<!-- xs-search-modal end -->
+
+<!-- xs-lang-modal begin -->
+<div
+  class="modal fade xs-modal-wrapper xs-lang-modal-pos"
+  role="dialog"
+  data-backdrop="false"
+>
+  <div class="xs-modal-content">
+    <div class="xs-modal-header">
+      <span
+        class="xs-search-modal-close myicon icon-close"
+        data-dismiss="modal"
+        aria-label="Close"
+      ></span>
+      <p class="text-center xs-modal-title">Change Lamguage</p>
+    </div>
+    <div class="xs-modal-body">
+      <label class="custom-input-ctn">
+        <input type="radio" name="radio" />
+        <span class="radiomark"></span>
+        English
+      </label>
     </div>
   </div>
-  <!-- xs-search-modal end -->
+</div>
+<!-- xs-lang-modal end -->
 
-  <!-- xs-lang-modal begin -->
-  <div class="modal fade xs-modal-wrapper xs-lang-modal-pos" role="dialog" data-backdrop="false">
-    <div class="xs-modal-content">
-      <div class="xs-modal-header">
-        <span class="xs-search-modal-close myicon icon-close" data-dismiss="modal" aria-label="Close"></span>
-        <p class="text-center xs-modal-title">Change Lamguage</p>
-      </div>
-      <div class="xs-modal-body">
-        <label class="custom-input-ctn">
-          <input type="radio" name="radio">
-          <span class="radiomark"></span>
-          English
-        </label>
-      </div>
-    </div>
-  </div>
-  <!-- xs-lang-modal end -->
+<!-- Header end -->
 
-  <!-- Header end -->
-
-  <!-- carousel begin -->
-  <div id="carousel-example" class="carousel slide" data-ride="carousel">
-    <!-- carousel content wrapper begin -->
-    <div class="carousel-inner" role="listbox">
-      <div class="index-head-carousel-wrapper item active" style="background-image: url('{% static 'images/banner/003.jpg' %}');">
-        <div class="head-carousel-search-wrapper">
-          <h1 class="head-carousel-tagline">{% trans "TaiBIF-生物多樣性資料開放的推手" %}</h1>
-          <div class="head-carousel-search-ctn">
-            <form action="/search/" method="post">
-              {% csrf_token %}
-              <ul class="row head-carousel-search-cate">
-                <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="occurrence" onclick="goSearch('occurrence');">{% trans "出現紀錄" %}</a></li>
-                <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="species" onclick="goSearch('species');">{% trans "物種" %}</a></li>
-                <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="dataset" onclick="goSearch('dataset');">{% trans "資料集" %}</a></li>
-                <li class="col-xs-3"><a href="#" class="search-type-btn" data-type="publisher" data-toggle="tooltip" title="發布單位已於 GBIF 註冊成為台灣的資料發布者，以單位機構為主，類型可包含公家機關、研究機構、大專院校、NGO組織等。詳情請見：https://www.gbif.org/zh-tw/become-a-publisher'" onclick="goSearch('publisher');">{% trans "發布單位" %}</a></li>
-              </ul>
-              <div class="head-carousel-search-form-wrapper">
-              <input type="text" class="head-carousel-search-input search-q" placeholder="{% trans "全站搜尋..." %}" name="q" id="taibif-search-keyword">
+<!-- carousel begin -->
+<div id="carousel-example" class="carousel slide" data-ride="carousel">
+  <!-- carousel content wrapper begin -->
+  <div class="carousel-inner" role="listbox">
+    <div
+      class="index-head-carousel-wrapper item active"
+      style="background-image: url('{% static 'images/banner/003.jpg' %}')"
+    >
+      <div class="head-carousel-search-wrapper">
+        <h1 class="head-carousel-tagline">
+          {% trans "TaiBIF-生物多樣性資料開放的推手" %}
+        </h1>
+        <div class="head-carousel-search-ctn">
+          <form action="/search/" method="post">
+            {% csrf_token %}
+            <ul class="row head-carousel-search-cate">
+              <li class="col-xs-3">
+                <a
+                  href="#"
+                  class="search-type-btn"
+                  data-type="occurrence"
+                  onclick="goSearch('occurrence');"
+                  >{% trans "出現紀錄" %}</a
+                >
+              </li>
+              <li class="col-xs-3">
+                <a
+                  href="#"
+                  class="search-type-btn"
+                  data-type="species"
+                  onclick="goSearch('species');"
+                  >{% trans "物種" %}</a
+                >
+              </li>
+              <li class="col-xs-3">
+                <a
+                  href="#"
+                  class="search-type-btn"
+                  data-type="dataset"
+                  onclick="goSearch('dataset');"
+                  >{% trans "資料集" %}</a
+                >
+              </li>
+              <li class="col-xs-3">
+                <a
+                  href="#"
+                  class="search-type-btn"
+                  data-type="publisher"
+                  data-toggle="tooltip"
+                  title="發布單位已於 GBIF 註冊成為台灣的資料發布者，以單位機構為主，類型可包含公家機關、研究機構、大專院校、NGO組織等。詳情請見：https://www.gbif.org/zh-tw/become-a-publisher'"
+                  onclick="goSearch('publisher');"
+                  >{% trans "發布單位" %}</a
+                >
+              </li>
+            </ul>
+            <div class="head-carousel-search-form-wrapper">
+              <input type="text" class="head-carousel-search-input search-q"
+              placeholder="{% trans "全站搜尋..." %}" name="q"
+              id="taibif-search-keyword">
               <button class="head-carousel-search-btn" type="submit">
                 <span class="myicon icon-search"></span>
               </button>
             </div>
-            </form>
-          </div>
-        </div>
-      </div>
-      <div class="home-banner-cover-license"><em>Muntiacus reevesi </em>(Ogilby, 1839) Observed in Taiwan by Liu JimFood. Photo via iNaturalist (CC BY-NC 4.0)</div>
-    </div>
-    <!-- carousel content wrapper begin -->
-  </div>
-  <!-- carousel end -->
-
-  <!-- data wall begin -->
-  <div class="data-wall-wrapper">
-    <div class="container">
-      <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-3">
-          <div class="data-wall-ctn">
-            <span class="dtat-wall-name">{% trans "出現紀錄" %}</span>
-            <span class="data-wall-numbers"><a href="/occurrence/search/" >{{occ_num|intcomma:False}}</a></span> <!--手動更改數字 {{ stats.num_occurrence|intcomma }}-->
-            {#<span class="dtat-wall-name">於 TaiBIF 公開之資料</span>#}
-            <span class="data-wall-icon myicon icon-data-stats"></span>
-          </div>
-          <div style="font-size: 14px;color: #888; margin-top:10px;">{% trans "於 TaiBIF 公開之資料" %}</div>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-3">
-          <div class="data-wall-ctn">
-            <span class="dtat-wall-name">{% trans "資料集" %}</span>
-            <span class="data-wall-numbers"><a href="/dataset/search/" >{{dataset_num|intcomma}}</a></span> <!--手動更改數字{{ stats.num_dataset|intcomma }} -->
-            {#<span class="dtat-wall-name">於 TaiBIF 公開之資料集（含部分資訊缺漏之資料集）</span>#}
-            <span class="data-wall-icon myicon icon-data-folder"></span>
-          </div>
-          <div style="font-size: 14px;color: #888; margin-top:10px;">{% trans "於 TaiBIF 公開之資料集（含部分資訊缺漏之資料集" %}</div>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-3">
-          <div class="data-wall-ctn">
-            <span class="dtat-wall-name">{% trans "涵蓋物種數" %}</span>
-            <span class="data-wall-numbers"><a href="/species/search/" >70,234</a></span> <!--手動更改數字{{ stats.num_species|intcomma }} -->
-            {#<span class="dtat-wall-name">出現紀錄涵蓋物種數（包含部分國外資料及同物異名）</span>#}
-            <span class="data-wall-icon myicon icon-data-tw"></span>
-          </div>
-          <div style="font-size: 14px;color: #888; margin-top:10px;">{% trans "出現紀錄涵蓋物種數（包含部分國外資料及同物異名）"%}</div>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-3">
-          <div class="data-wall-ctn">
-            <a href="{% url 'data_stats' %}">
-            <span class="dtat-wall-name">{% trans "看更多" %}</span>
-            <span class="data-wall-numbers"><small>{% trans "資料發布狀況" %}</small></span> <!--手動更改數字{{ stats.num_dataset|intcomma }} -->
-            {#<span class="dtat-wall-name"><br/></span>#}
-            <span class="data-wall-icon myicon icon-arrow-right" ></span>
-            </a>
-          </div>
+          </form>
         </div>
       </div>
     </div>
+    <div class="home-banner-cover-license">
+      <em>Muntiacus reevesi </em>(Ogilby, 1839) Observed in Taiwan by Liu
+      JimFood. Photo via iNaturalist (CC BY-NC 4.0)
+    </div>
   </div>
-  <!-- data wall end -->
+  <!-- carousel content wrapper begin -->
+</div>
+<!-- carousel end -->
 
-  <!-- News board begin -->
+<!-- data wall begin -->
+<div class="data-wall-wrapper">
   <div class="container">
-    <h1 class="heading-xlg-center">{% trans "最新消息" %} </h1>
-    <div class="row news-card-parent-flex">
-      <!-- news list begin -->
-      <div class="col-sm-12 col-md-4">
-        <div class="news-card-wrapper">
-          <a href="{% url 'article-list' category='news' %}" class="news-card-cate"><span class="myicon icon-news"></span>{% trans "新聞" %}</a>
-          <div class="news-card-img-wrapper">
-            <a href="{{ news_list.first.get_absolute_url }}">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-md-3">
+        <div class="data-wall-ctn">
+          <span class="dtat-wall-name">{% trans "出現紀錄" %}</span>
+          <span class="data-wall-numbers"
+            ><a href="/occurrence/search/">{{occ_num|intcomma:False}}</a></span
+          >
+          <!--手動更改數字 {{ stats.num_occurrence|intcomma }}-->
+          {#<span class="dtat-wall-name">於 TaiBIF 公開之資料</span>#}
+          <span class="data-wall-icon myicon icon-data-stats"></span>
+        </div>
+        <div style="font-size: 14px; color: #888; margin-top: 10px">
+          {% trans "於 TaiBIF 公開之資料" %}
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3">
+        <div class="data-wall-ctn">
+          <span class="dtat-wall-name">{% trans "資料集" %}</span>
+          <span class="data-wall-numbers"
+            ><a href="/dataset/search/">{{dataset_num|intcomma}}</a></span
+          >
+          <!--手動更改數字{{ stats.num_dataset|intcomma }} -->
+          {% comment %} <span class="dtat-wall-name"
+            >於 TaiBIF 公開之資料集（含部分資訊缺漏之資料集）</span
+          > {% endcomment %}
+          <span class="data-wall-icon myicon icon-data-folder"></span>
+        </div>
+        <div style="font-size: 14px; color: #888; margin-top: 10px">
+          {% trans "於 TaiBIF 公開之資料集（含部分資訊缺漏之資料集" %}
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3">
+        <div class="data-wall-ctn">
+          <span class="dtat-wall-name">{% trans "涵蓋物種數" %}</span>
+          <span class="data-wall-numbers"
+            ><a href="/species/search/">70,234</a></span
+          >
+          <!--手動更改數字{{ stats.num_species|intcomma }} -->
+          {% comment %} <span class="dtat-wall-name"
+            >出現紀錄涵蓋物種數（包含部分國外資料及同物異名）</span
+          > {% endcomment %}
+          <span class="data-wall-icon myicon icon-data-tw"></span>
+        </div>
+        <div style="font-size: 14px; color: #888; margin-top: 10px">
+          {% trans "出現紀錄涵蓋物種數（包含部分國外資料及同物異名）"%}
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3">
+        <div class="data-wall-ctn">
+          <a href="{% url 'data_stats' %}">
+            <span class="dtat-wall-name">{% trans "看更多" %}</span>
+            <span class="data-wall-numbers"
+              ><small>{% trans "資料發布狀況" %}</small></span
+            >
+            <!--手動更改數字{{ stats.num_dataset|intcomma }} -->
+            {#<span class="dtat-wall-name"><br /></span>#}
+            <span class="data-wall-icon myicon icon-arrow-right"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- data wall end -->
+
+<!-- News board begin -->
+<div class="container">
+  <h1 class="heading-xlg-center">{% trans "最新消息" %}</h1>
+  <div class="row news-card-parent-flex">
+    <!-- news list begin -->
+    <div class="col-sm-12 col-md-4">
+      <div class="news-card-wrapper">
+        <a
+          href="{% url 'article-list' category='news' %}"
+          class="news-card-cate"
+          ><span class="myicon icon-news"></span>{% trans "新聞" %}</a
+        >
+        <div class="news-card-img-wrapper">
+          <a href="{{ news_list.first.get_absolute_url }}">
             <div class="news-card-title-ctn">
               <p class="img-date">{{ news_list.first.created|date:'Y/m/d' }}</p>
-              <p class="img-title">{{ news_list.first.title|truncatechars:40 }}</p>
-              <p class="img-license">Fratercula arctica (Linnaeus, 1758) Observed in Canada by crgillette. Photo via iNaturalist (CC BY-NC 4.0)</p>
+              <p class="img-title">
+                {{ news_list.first.title|truncatechars:40 }}
+              </p>
+              <p class="img-license">
+                Fratercula arctica (Linnaeus, 1758) Observed in Canada by
+                crgillette. Photo via iNaturalist (CC BY-NC 4.0)
+              </p>
             </div>
             <div class="news-card-img-overlay"></div>
-            {#<img src="{% static 'images/photo-1.jpg' %}">#}
-            <img src="{% static 'images/banner/002.jpg' %}">
-            </a>
-          </div>
-          <ul class="news-card-list-ctn">
-            {% for i in news_list|slice:"1:4" %}
-            <li>
-              <a href="{{ i.get_absolute_url }}" class="clamp2row">{{ i.title }}</a>
-              <span>{{ i.created|date:'Y/m/d' }}</span>
-            </li>
-            {% endfor %}
-          </ul>
+            {#<img src="{% static 'images/photo-1.jpg' %}" />#}
+            <img src="{% static 'images/banner/002.jpg' %}" />
+          </a>
         </div>
-      </div>
-      <!-- news list end -->
-      <!-- event list begin -->
-      <div class="col-sm-12 col-md-4">
-        <div class="news-card-wrapper">
-          <a href="{% url 'article-list' category='event' %}" class="news-card-cate"><span class="myicon icon-event"></span>{% trans "活動" %}</a>
-          <div class="news-card-img-wrapper">
-            <a href="{{ event_list.first.get_absolute_url }}">
-            <div class="news-card-title-ctn">
-              <p class="img-date">{{ event_list.first.created|date:'Y/m/d' }}</p>
-              <p class="img-title">{{ event_list.first.title|truncatechars:40 }}</p>
-              <p class="img-license">Chelonia mydas (Linnaeus, 1758) Observed in Maldives by Gina. Photo via iNaturalist (CC BY-NC 4.0)</p>
-            </div>
-            <div class="news-card-img-overlay"></div>
-            <img src="{% static 'images/banner/007.jpg' %}">
-            </a>
-          </div>
-          <ul class="news-card-list-ctn">
-            {% for i in event_list|slice:"1:4" %}
-            <li>
-              <a href="{{ i.get_absolute_url }}" class="clamp2row">{{ i.title }}</a>
-              <span>{{ i.created|date:'Y/m/d' }}</span>
-            </li>
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
-      <!-- event list end -->
-      <!-- update list begin -->
-      <div class="col-sm-12 col-md-4">
-        <div class="news-card-wrapper">
-          <a href="{% url 'article-list' category='update' %}" class="news-card-cate"><span class="myicon icon-update"></span>{% trans "更新" %}</a>
-          <div class="news-card-img-wrapper">
-            <a href="{{ update_list.first.get_absolute_url }}">
-            <div class="news-card-title-ctn">
-              <p class="img-date">{{ update_list.first.created|date:'Y/m/d' }}</p>
-              <p class="img-title">{{ update_list.first.title|truncatechars:40 }}</p>
-              <p class="img-license">Lutra lutra (Linnaeus, 1758) Observed in Norway by Bird Explorers. Photo via iNaturalist (CC BY-NC 4.0)</p>
-            </div>
-            <div class="news-card-img-overlay"></div>
-            <img src="{% static 'images/banner/005.jpg' %}">
-            </a>
-          </div>
-          <ul class="news-card-list-ctn">
-            {% for i in update_list|slice:"1:4" %}
-            <li>
-              <a href="{{ i.get_absolute_url }}" class="clamp2row">{{ i.title }}</a>
-              <span>{{ i.created|date:'Y/m/d' }}</span>
-            </li>
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
-      <!-- update list end -->
-    </div>
-  </div>
-  <!-- News board end -->
-
-  <!-- Topic board begin -->
-  <div class="topic-board-wrapper">
-    <h1 class="heading-xlg-center">{% trans 專題文章 %} </h1>
-    <div class="container">
-      <div class="owl-carousel owl-theme" id="topic-board">
-        {% for i in topic_list %}
-        <div class="topic-card-wrapper item">
-          <span class="topic-inner-ctn">
-            <a class="topic-inner-cate" href="{% url 'article-list' category=i.category|lower  %}">{{ i.get_category_display }}</a>
-          </span>
-          <p class="topic-inner-ctn">
-            <a class="topic-inner-title" href="{{ i.get_absolute_url }}">{{ i.title }}</a>
-          </p>
-          {% comment %}{# TODO #}
-          <img src="{% static 'images/photo-1.jpg' %}">
-          <span class="topic-inner-ctn">
-            <a class="topic-inner-tag" href="#">標籤</a>
-            <a class="topic-inner-tag" href="#">標籤</a>
-          </span>
-          {% endcomment %}
-        </div>
-        {% endfor %}
+        <ul class="news-card-list-ctn">
+          {% for i in news_list|slice:"1:4" %}
+          <li>
+            <a href="{{ i.get_absolute_url }}" class="clamp2row"
+              >{{ i.title }}</a
+            >
+            <span>{{ i.created|date:'Y/m/d' }}</span>
+          </li>
+          {% endfor %}
+        </ul>
       </div>
     </div>
+    <!-- news list end -->
+    <!-- event list begin -->
+    <div class="col-sm-12 col-md-4">
+      <div class="news-card-wrapper">
+        <a
+          href="{% url 'article-list' category='event' %}"
+          class="news-card-cate"
+          ><span class="myicon icon-event"></span>{% trans "活動" %}</a
+        >
+        <div class="news-card-img-wrapper">
+          <a href="{{ event_list.first.get_absolute_url }}">
+            <div class="news-card-title-ctn">
+              <p class="img-date">
+                {{ event_list.first.created|date:'Y/m/d' }}
+              </p>
+              <p class="img-title">
+                {{ event_list.first.title|truncatechars:40 }}
+              </p>
+              <p class="img-license">
+                Chelonia mydas (Linnaeus, 1758) Observed in Maldives by Gina.
+                Photo via iNaturalist (CC BY-NC 4.0)
+              </p>
+            </div>
+            <div class="news-card-img-overlay"></div>
+            <img src="{% static 'images/banner/007.jpg' %}" />
+          </a>
+        </div>
+        <ul class="news-card-list-ctn">
+          {% for i in event_list|slice:"1:4" %}
+          <li>
+            <a href="{{ i.get_absolute_url }}" class="clamp2row"
+              >{{ i.title }}</a
+            >
+            <span>{{ i.created|date:'Y/m/d' }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <!-- event list end -->
+    <!-- update list begin -->
+    <div class="col-sm-12 col-md-4">
+      <div class="news-card-wrapper">
+        <a
+          href="{% url 'article-list' category='pscience' %}"
+          class="news-card-cate"
+          ><span class="myicon icon-update"></span>{% trans "科普" %}</a
+        >
+        <div class="news-card-img-wrapper">
+          <a href="{{ update_list.first.get_absolute_url }}">
+            <div class="news-card-title-ctn">
+              <p class="img-date">
+                {{ update_list.first.created|date:'Y/m/d' }}
+              </p>
+              <p class="img-title">
+                {{ update_list.first.title|truncatechars:40 }}
+              </p>
+              <p class="img-license">
+                Lutra lutra (Linnaeus, 1758) Observed in Norway by Bird
+                Explorers. Photo via iNaturalist (CC BY-NC 4.0)
+              </p>
+            </div>
+            <div class="news-card-img-overlay"></div>
+            <img src="{% static 'images/banner/005.jpg' %}" />
+          </a>
+        </div>
+        <ul class="news-card-list-ctn">
+          {% for i in update_list|slice:"1:4" %}
+          <li>
+            <a href="{{ i.get_absolute_url }}" class="clamp2row"
+              >{{ i.title }}</a
+            >
+            <span>{{ i.created|date:'Y/m/d' }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <!-- update list end -->
   </div>
-  <!-- Topic board end -->
+</div>
+<!-- News board end -->
 
-  <!-- Partners board begin -->
+<!-- Topic board begin -->
+<div class="topic-board-wrapper">
+  <h1 class="heading-xlg-center">{% trans 專題文章 %}</h1>
   <div class="container">
-    <h1 class="heading-xlg-center">{% trans "指導單位" %}</h1>
-    <ul class="row advisor-list-ctn">
-      <li class="col-xs-6"   style="width:32%">
-        <a href="https://www.nstc.gov.tw/" target="_blank"><img src="{% static 'images/logo-nstc.png' %}"></a>
-      </li>
-      <li class="col-xs-6"   style="width:25%">
-        <a href="https://www.coa.gov.tw/" target="_blank"><img src="{% static 'images/logo-moa.jpeg' %}"></a>
-      </li>
-      <li class="col-xs-6"   style="width:19%">
-        <a href="https://www.biodiv.tw" target="_blank"><img src="{% static 'images/logo-brcas.png' %}"></a>
-      </li>
-      <li class="col-xs-6"   style="width:22%">
-        <a href="https://www.sinica.edu.tw/ch" target="_blank"><img src="{% static 'images/logo-sinica.png' %}"></a>
-      </li>
-    </ul>
-    <h1 class="heading-xlg-center">{% trans "夥伴組織" %}</h1>
-    <ul class="row partner-list-ctn">
-      <li class="col-xs-6">
-        <a href="https://www.forest.gov.tw/" target="_blank"><img src="{% static 'images/logo-fnca-mark.png' %}" ></a>
-      </li>
-      <li class="col-xs-6">
-        <a href="https://www.tbri.gov.tw" target="_blank"><img src="{% static 'images/logo-tbri.png' %}"></a>
-      </li>
-      <li class="col-xs-6">
-        <a href="https://www.cpami.gov.tw" target="_blank"><img width='80%'src="{% static 'images/logo-cpami.png' %}"></a>
-      </li>
-      <li class="col-xs-6">
-        <a href="https://www.oca.gov.tw/ch/index.jsp" target="_blank"><img src="{% static 'images/logo-oca.jpeg' %}"></a>
-      </li>
-      <li class="col-xs-6">
-        <a href="https://www.tfri.gov.tw" target="_blank"><img src="{% static 'images/logo-tfri.png' %}"></a>
-      </li>
-    </ul>
+    <div class="owl-carousel owl-theme" id="topic-board">
+      {% for i in topic_list %}
+      <div class="topic-card-wrapper item">
+        <span class="topic-inner-ctn">
+          <a
+            class="topic-inner-cate"
+            href="{% url 'article-list' category=i.category|lower  %}"
+            >{{ i.get_category_display }}</a
+          >
+        </span>
+        <p class="topic-inner-ctn">
+          <a class="topic-inner-title" href="{{ i.get_absolute_url }}"
+            >{{ i.title }}</a
+          >
+        </p>
+        {% comment %}{# TODO #}
+        <img src="{% static 'images/photo-1.jpg' %}" />
+        <span class="topic-inner-ctn">
+          <a class="topic-inner-tag" href="#">標籤</a>
+          <a class="topic-inner-tag" href="#">標籤</a>
+        </span>
+        {% endcomment %}
+      </div>
+      {% endfor %}
+    </div>
   </div>
-  <!-- Partners board end -->
-  {% comment %}
-  <!-- full calendar -->
-  <script src="js/fullcalendar/core-main.min.js"></script>
-  <script src="js/fullcalendar/daygrid-main.min.js"></script>
-  {% endcomment %}
+</div>
+<!-- Topic board end -->
 
-  {% comment %}
+<!-- Partners board begin -->
+<div class="container">
+  <h1 class="heading-xlg-center">{% trans "指導單位" %}</h1>
+  <ul class="row advisor-list-ctn">
+    <li class="col-xs-6" style="width: 32%">
+      <a href="https://www.nstc.gov.tw/" target="_blank"
+        ><img src="{% static 'images/logo-nstc.png' %}"
+      /></a>
+    </li>
+    <li class="col-xs-6" style="width: 25%">
+      <a href="https://www.coa.gov.tw/" target="_blank"
+        ><img src="{% static 'images/logo-moa.jpeg' %}"
+      /></a>
+    </li>
+    <li class="col-xs-6" style="width: 19%">
+      <a href="https://www.biodiv.tw" target="_blank"
+        ><img src="{% static 'images/logo-brcas.png' %}"
+      /></a>
+    </li>
+    <li class="col-xs-6" style="width: 22%">
+      <a href="https://www.sinica.edu.tw/ch" target="_blank"
+        ><img src="{% static 'images/logo-sinica.png' %}"
+      /></a>
+    </li>
+  </ul>
+  <h1 class="heading-xlg-center">{% trans "夥伴組織" %}</h1>
+  <ul class="row partner-list-ctn">
+    <li class="col-xs-6">
+      <a href="https://www.forest.gov.tw/" target="_blank"
+        ><img src="{% static 'images/logo-fnca-mark.png' %}"
+      /></a>
+    </li>
+    <li class="col-xs-6">
+      <a href="https://www.tbri.gov.tw" target="_blank"
+        ><img src="{% static 'images/logo-tbri.png' %}"
+      /></a>
+    </li>
+    <li class="col-xs-6">
+      <a href="https://www.cpami.gov.tw" target="_blank"
+        ><img width="80%" src="{% static 'images/logo-cpami.png' %}"
+      /></a>
+    </li>
+    <li class="col-xs-6">
+      <a href="https://www.oca.gov.tw/ch/index.jsp" target="_blank"
+        ><img src="{% static 'images/logo-oca.jpeg' %}"
+      /></a>
+    </li>
+    <li class="col-xs-6">
+      <a href="https://www.tfri.gov.tw" target="_blank"
+        ><img src="{% static 'images/logo-tfri.png' %}"
+      /></a>
+    </li>
+  </ul>
+</div>
+<!-- Partners board end -->
+{% comment %}
+<!-- full calendar -->
+<script src="js/fullcalendar/core-main.min.js"></script>
+<script src="js/fullcalendar/daygrid-main.min.js"></script>
+{% endcomment %} {% comment %}
 <!-- script 4 full calendar begin -->
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
+  document.addEventListener("DOMContentLoaded", function () {
+    var calendarEl = document.getElementById("calendar");
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-      plugins: [ 'dayGrid' ],
-      defaultView: 'dayGridMonth',
+      plugins: ["dayGrid"],
+      defaultView: "dayGridMonth",
       aspectRatio: 3,
       header: {
-        left: '',
-        center: 'title',
-        right: ''
+        left: "",
+        center: "title",
+        right: "",
       },
       footer: {
-        center: 'prev,next',
+        center: "prev,next",
       },
 
       events: [
         {
-          title: '聯合國生物多樣性研討會',
-          start: '2019-03-26',
-          url: 'http://google.com/'
+          title: "聯合國生物多樣性研討會",
+          start: "2019-03-26",
+          url: "http://google.com/",
         },
         {
-          title: '生物多樣性資訊學工作坊',
-          start: '2019-03-26',
-          url: 'http://google.com/'
-        }    
+          title: "生物多樣性資訊學工作坊",
+          start: "2019-03-26",
+          url: "http://google.com/",
+        },
       ],
-      eventClick: function(info) {
+      eventClick: function (info) {
         info.jsEvent.preventDefault(); // don't let the browser navigate
         if (info.event.url) {
           window.open(info.event.url);
         }
-      }
-      
+      },
     });
 
     calendar.render();
-
   });
 </script>
 <!-- script 4 full calendar end -->
-{% endcomment %}
-{% endblock %}
-
+{% endcomment %} {% endblock %}
