@@ -350,7 +350,7 @@ def occurrence_view(request, taibif_id):
     location['country']={'name_zh':'國家','value':[result[0].get('country'),result[0].get('taibif_country')]}
     location['countryCode']={'name_zh':'國家代碼','value':[result[0].get('countryCode'),result[0].get('taibif_countryCode')]}
     location['stateProvince']={'name_zh':'省份/州','value':[result[0].get('stateProvince'),result[0].get('taibif_stateProvince')]}
-    location['county']={'name_zh':'縣市','value':[result[0].get('county'), result[0].get('taibif_county_zh') if result[0].get('taibif_county_zh') else ('' + '/' + result[0].get('taibif_county') if result[0].get('taibif_county') else None)]}
+    location['county']={'name_zh':'縣市','value':[result[0].get('county'), result[0].get('taibif_county_zh') if result[0].get('taibif_county_zh') else (result[0].get('taibif_ch_county') if result[0].get('taibif_ch_county') else None)]}
     location['municipality']={'name_zh':'市','value':[result[0].get('municipality'),result[0].get('taibif_municipality')]}
     location['locality']={'name_zh':'地區','value':[result[0].get('locality'),result[0].get('taibif_locality')]}
     location['verbatimLocality']={'name_zh':'字面上地區','value':[result[0].get('verbatimLocality'),result[0].get('taibif_verbatimLocality')]}
