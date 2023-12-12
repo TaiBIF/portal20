@@ -23,7 +23,19 @@ export default function OccurrenceSearch(props) {
                       "MachineObservation",
                       "Taxon",
                       "Occurrence",
-                      "MaterialCitation"]
+                      "MaterialCitation",
+                      '實體物質',
+                      '保存標本',
+                      '化石標本',
+                      '活體標本',
+                      '人類觀察',
+                      '材料樣本',
+                      '機器觀測',
+                      '調查活動',
+                      '名錄',
+                      '出現紀錄',
+                      '材料引用'
+                    ]
   
   
   const test_row = {
@@ -98,7 +110,10 @@ export default function OccurrenceSearch(props) {
     const vernacular_name = row.taibif_vernacular_name ? row.taibif_vernacular_name : row.vernacularName;
     const country_ch = map2.get(row.taibif_country);
     const countryOrLocality = (props.language === 'zh-hant') ? [country_ch, row.locality].join('/') : [row.taibif_country, row.locality].join('/');
-    const bor = bor_allow.includes(row.basisOfRecord) ? row.basisOfRecord : "";
+    const bor = bor_allow.includes(row.basisOfRecord) ? row.basisOfRecord : (row.taibif_basisOfRecord ? row.taibif_basisOfRecord : "");
+    const datasetKey = row.taibifDatasetID ? row.taibifDatasetID : (row.taibif_datasetKey ? row.taibif_datasetKey : '')
+
+    
     return (
         <tr key={index} onClick={(e)=>{window.location.href=`/occurrence/${row.taibif_occ_id}`}} className={classes.occurrenceRow}>
         <td>{ sn }</td>
@@ -106,7 +121,7 @@ export default function OccurrenceSearch(props) {
         <td>{(row.formatted_name ? Parser(row.formatted_name):'')}</td>
         <td>{ row.eventDate }</td>
         <td>{ countryOrLocality }</td>
-        <td><a href={"/dataset/"+row.taibifDatasetID+"/"}>{ row.taibif_dataset_name_zh }</a></td>
+        <td><a href={"/dataset/"+datasetKey+"/"}>{ row.taibif_dataset_name_zh }</a></td>
         <td>{ bor }</td>
         <td>{ row.kingdomzh }</td>
         <td>{ row.phylumzh }</td>
