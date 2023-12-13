@@ -8,8 +8,8 @@ module.exports = (env) => {
       'dataset-table': './src/dataset-table.js'
     },
     output: {
-      //path: path.join(__dirname, '../static/js'),
-      path: path.join(__dirname, '/dist'),
+      path: path.join(__dirname, '../static/js'),
+      // path: path.join(__dirname, '/dist'),
       filename: `[name]${env_name}`,
     },
     module: {
