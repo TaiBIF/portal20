@@ -167,15 +167,30 @@ function SearchMain(props) {
     const found = props.menus.find((x) => x['key'] === menuKey[0]);
     if (found) {
       let tagLabel;
+
+      // 因應 GBIF 資料集名稱會有空白，request 時會把空白替換成 %20，在這邊替換回來
+      const cleanMenuKey = menuKey[1].replace(/%20/g, ' ');
+      console.log(cleanMenuKey);
+
       if (menuKey[0]=='dataset'){
+        console.log(found);
         for (i = 0; i < found.rows.length; i++) {
-          x = found.rows[i].key.indexOf(menuKey[1]);
+          x = found.rows[i].key.indexOf(cleanMenuKey);
             if (-1 != x) {
-                break;
+              if (found.rows[i]['label']) {
+                tagLabel = found.rows[i]['label'];
+                console.log(" the query ==1= ", found.rows[i]['label']);
+              } else {
+                  console.error("Label not found for dataset row.");
+              }
+              break;
             }
           }
-        tagLabel = found.rows[i]['label']
-        console.log(" the query ==1= ",found.rows[i]['label'])
+          
+          
+        // *deprecated version*
+        // tagLabel = found.rows[i]['label']
+        // console.log(" the query ==1= ",found.rows[i]['label'])
 
       } else {
         console.log(" the query ==2= ",found)
