@@ -106,6 +106,18 @@ JSON_FACET_MAP = {
             'mincount': 0,
             'limit': -1,
         },
+         'datasetKey': {
+            'type':'terms',
+            'field':'datasetKey',
+            'mincount': 0,
+            'limit': -1,
+        },
+          'selfProduced': {
+            'type':'terms',
+            'field':'selfProduced',
+            'mincount': 0,
+            'limit': -1,
+        },
     }
 }
   
@@ -389,6 +401,7 @@ class SolrQuery(object):
                 'label': '資料集 Dataset',
                 'rows': rows,
             })
+            
         if data := resp['facets'].get('publisher', ''):
             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
             menus.append({
@@ -402,6 +415,31 @@ class SolrQuery(object):
             menus.append({
                 'key':'license',
                 'label': '授權類型 Licence',
+                'rows': rows,
+            })
+            
+        # Connect dataset page to occurrence page, using the key datasetKey
+        if data := resp['facets'].get('datasetKey', ''):
+            dataset_id = resp['facets'].get('dataset_id', '')
+            rows = []
+            for x in range(len(data['buckets'])):
+                if x < len(dataset_id['buckets']): # prevent limited dataset_id buckets cause index error
+                    rows.append({
+                        'key': dataset_id['buckets'][x]['val'],
+                        'label': data['buckets'][x]['val'],
+                        'count': data['buckets'][x]['count']
+                    })
+            menus.append({
+                'key': 'datasetKey',
+                'label': '',
+                'rows': rows,
+            })
+        
+        if data := resp['facets'].get('selfProduced', ''):
+            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
+            menus.append({
+                'key':'selfProduced',
+                'label': '資料來源 Source',
                 'rows': rows,
             })
 

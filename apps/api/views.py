@@ -712,32 +712,60 @@ def occurrence_search_v2(request):
     return JsonResponse(resp)
 
 def taxon_tree_node(request, taicol_taxon_id):
-    taxon = Taxon.objects.get(taicol_taxon_id=taicol_taxon_id)
-    children = sorted(
-        [
-            {
-                'id': x.taicol_taxon_id,
+    linnaean = request.GET.get('linnaean', 'no')
+    
+    if linnaean == 'yes':
+        taxon = Taxon.objects.filter(parent_taxon_id_linnaean=taicol_taxon_id).all()
+        children = []
+        for taxa in taxon:
+            children.append({
+                'id': taxa.taicol_taxon_id,
                 'data': {
-                    'name': x.get_name(),
-                    'count': x.count,
-                    'rank': x.rank,
+                    'name': taxa.get_name(),
+                    'count': taxa.count,
+                    'rank': taxa.rank
                 }
-            }
-            for x in taxon.children
-        ],
-        key=lambda x: x['data']['rank']  
-    )
+            })
+        children.sort(key=lambda x: (x['data']['rank'], x['data']['name']))
+        parent = Taxon.objects.get(taicol_taxon_id=taicol_taxon_id)
+        data = {
+            'rank': parent.rank,
+            'id': parent.taicol_taxon_id,
+            'data': {
+                'name': parent.get_name(),
+                'count': parent.count,
+                'rank': parent.rank,
+            },
+            'children': children,
+        }
+    else:
+        taxon = Taxon.objects.get(taicol_taxon_id=taicol_taxon_id)
+        children = sorted(
+            [
+                {
+                    'id': x.taicol_taxon_id,
+                    'data': {
+                        'name': x.get_name(),
+                        'count': x.count,
+                        'rank': x.rank,
+                    }
+                }
+                for x in taxon.children
+            ],
+            key=lambda x: x['data']['rank']  
+        )
 
-    data = {
-        'rank': taxon.rank,
-        'id': taxon.taicol_taxon_id,
-        'data': {
-            'name': taxon.get_name(),
-            'count': taxon.count,
+        data = {
             'rank': taxon.rank,
-        },
-        'children': children,
-    }
+            'id': taxon.taicol_taxon_id,
+            'data': {
+                'name': taxon.get_name(),
+                'count': taxon.count,
+                'rank': taxon.rank,
+            },
+            'children': children,
+        }
+    # return HttpResponse(json.dumps(data), content_type="application/json")
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 def occurrence_api(request):

@@ -170,10 +170,8 @@ function SearchMain(props) {
 
       // 因應 GBIF 資料集名稱會有空白，request 時會把空白替換成 %20，在這邊替換回來
       const cleanMenuKey = menuKey[1].replace(/%20/g, ' ');
-      console.log(cleanMenuKey);
 
       if (menuKey[0]=='dataset'){
-        console.log(found);
         for (i = 0; i < found.rows.length; i++) {
           x = found.rows[i].key.indexOf(cleanMenuKey);
             if (-1 != x) {

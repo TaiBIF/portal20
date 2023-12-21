@@ -9,6 +9,8 @@ import "./SearchKeyword.css";
 
 import { Translation, useTranslation } from 'react-i18next';
 
+
+
 function Accordion(props) {
   const {content, onClick, filters} = props;
   const [isOpen, setOpenState] = useState(false);
@@ -110,6 +112,22 @@ function Accordion(props) {
             </div>
         );
       }
+    } else if (content.key ===  'selfProduced'){   
+      const count = (x.count) >=0 ? x.count.toLocaleString() : null;
+      const itemChecked = filters.has(`${content.key}=${x.key}`);
+      return (
+          <div className="search-sidebar-checkbox-wrapper" key={x.key}>
+            <label className="custom-input-ctn">
+            <input type="checkbox" onChange={(e)=> {e.persist(); onClick(e, content.key, x.key)}} checked={itemChecked} />
+            <span className="checkmark"></span>
+            <span className="search-sidebar-count-group">
+            <Translation>{t => <span className="name">{t(x.label === false ? "有公開至 GBIF" : x.label === true ? "無公開至 GBIF" : x.label)}</span>}</Translation>
+              <span className="count">{count}</span>
+            </span>
+            </label>
+          </div>
+      );
+      
     } else {
       const count = (x.count) >=0 ? x.count.toLocaleString() : null;
       const itemChecked = filters.has(`${content.key}=${x.key}`);
@@ -313,7 +331,7 @@ function SearchSidebar(props) {
             <div className="modal-content">
               <div className="search-sidebar-header">
                 <span>{searchTypeLabel}</span>
-                <div className="search-sidebar-header-del" data-toggle="tooltip" data-placement="left" title="清除" onClick={(e)=> {props.onClickClear();}}>
+                <div className="search-sidebar-header-del" data-toggle="tooltip" data-placement="left" title="清除" onClick={props.onClickClear}>
                   {filterCount > 0 ? <span className="badge">{filterCount}</span> : null}
                   <span className="glyphicon glyphicon-trash"></span>
                 </div>
@@ -337,3 +355,4 @@ function SearchSidebar(props) {
 }
 
 export default SearchSidebar;
+
