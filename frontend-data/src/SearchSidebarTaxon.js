@@ -17,7 +17,6 @@ function TreeNode({nodeData, onClickSpecies, showLinnaeanOnly, treeKey}) {
     }
     else {
       if (showLinnaeanOnly) {
-        console.log('yes')
         const apiUrl = `/api/taxon/tree/node/${nodeData.id}?linnaean=yes`;
         fetch(apiUrl)
           .then(res => res.json())
@@ -77,10 +76,8 @@ function Tree(props) {
   const handleCheckboxChange = () => {
     // Update the state in the Tree component
     setShowLinnaeanOnly((prev) => !prev);
-    console.log('yes');
     const newTreeKey = Date.now();
     setTreeKey(newTreeKey);
-    console.log('New treeKey:', newTreeKey);
   };
   //console.log('<Tree> ', props);
   const treeRootNodes = props.taxonData.tree.map((child) => {

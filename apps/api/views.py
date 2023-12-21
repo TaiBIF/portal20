@@ -1421,6 +1421,28 @@ def search_dataset(request):
             'count': x['count']
         } for x in rights_list]
         rights_rows = sorted(rights_rows, key=lambda d: d['count'], reverse=True) 
+        
+        source_query = []
+        for k,v in condiction_menu:
+            if k != 'source':
+                source_query.append((k,v))
+        source_menu = DatasetSearch(source_query) 
+        
+        source_list = ds_menu.query.values('source').exclude(source__exact='').distinct('source')
+
+        source_count_data = source_menu.query.values('source').exclude(source__exact='').annotate(count=Count('source')).order_by('-count')
+        source_count_dict = {item['source']: item['count'] for item in source_count_data}
+        
+        for source in source_list:
+            source['count'] = source_count_dict.get(source['source'], 0)
+
+        source_rows = [{
+            'key': DATA_MAPPING['source'].get(item['source'], ''),
+            'label': DATA_MAPPING['source'].get(item['source'], ''),
+            'count': item['count']
+        } for item in source_list]
+
+        source_rows = sorted(source_rows, key=lambda d: d['count'], reverse=True)
 
         menu_list = [
             {
@@ -1437,6 +1459,11 @@ def search_dataset(request):
                 'key': 'rights',
                 'label': '授權類型 Licence',
                 'rows': rights_rows
+            },
+            {
+                'key': 'source',
+                'label': '資料來源 Source',
+                'rows': source_rows
             }
         ]
 

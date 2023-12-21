@@ -25,7 +25,6 @@ DATA_MAPPING = {
         'http://creativecommons.org/licenses/by/4.0/legalcode': 'CC-BY',
         'http://creativecommons.org/publicdomain/zero/1.0/legalcode': 'CC0',
         'http://creativecommons.org/licenses/by-nc/4.0/legalcode': 'CC-BY-NC',
-        'Public Domain (CC0 1.0)': 'CC0',
         'unknown': '未明確授權',
         None: '未明確授權'
     },
@@ -41,6 +40,10 @@ DATA_MAPPING = {
         'SAMPLINGEVENT':'調查活動',
         'Metadata-only':'詮釋資料',
         'metadata':'詮釋資料',
+    },
+    'source':{
+        'GBIF':'GBIF',
+        None:'TaiBIF IPT',
     }
 }
 
@@ -281,6 +284,7 @@ class Taxon(models.Model):
     sensitive = models.CharField('sensitive', max_length=32, null=True, blank=True)
     updated_at = models.DateTimeField('updated_at', null=True)
     new_taxon_id = models.CharField('new_taxon_id', max_length=32, null=True, blank=True)
+    parent_taxon_id_linnaean = models.CharField('self', max_length=256, null=True)
 
     
     
@@ -295,22 +299,24 @@ class Taxon(models.Model):
     path = models.TextField('path', null=True)
     
     # could be despacred
+    
     kingdom_id = models.IntegerField('kingdom_id',default=0,null=True)
     phylum_id = models.IntegerField('phylum_id',default=0,null=True)
     class_id = models.IntegerField('class_id',default=0,null=True)
     order_id = models.IntegerField('order_id',default=0,null=True)
     family_id = models.IntegerField('family_id',default=0,null=True)
     genus_id = models.IntegerField('genus_id',default=0,null=True)
-    # hierarchy_string = models.CharField('hierarchy string', max_length=512, default='',null=True)
     kingdom_taxon_id = models.CharField('kingdom_taxon_id', max_length=128, null=True)
     phylum_taxon_id = models.CharField('phylum_taxon_id', max_length=128, null=True)
     class_taxon_id = models.CharField('class_taxon_id', max_length=128, null=True)
     order_taxon_id = models.CharField('order_taxon_id', max_length=128, null=True)
     family_taxon_id = models.CharField('family_taxon_id', max_length=128, null=True)
     genus_taxon_id = models.CharField('genus_taxon_id', max_length=128, null=True)
+    count = models.PositiveIntegerField('count', default=0,null=True)
+    
+    # hierarchy_string = models.CharField('hierarchy string', max_length=512, default='',null=True)
     # parent_taxon_id = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
     # specific_epithet = models.CharField('specific epithet', max_length=128, null=True)
-    count = models.PositiveIntegerField('count', default=0,null=True)
     # tree = models.ForeignKey(TaxonTree, on_delete=models.CASCADE, null=True)
     # verbose = models.CharField('verbose', max_length=1000, default='',null=True)
     
