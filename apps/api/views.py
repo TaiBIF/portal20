@@ -1439,7 +1439,7 @@ def search_dataset(request):
         source_rows = [{
             'key': DATA_MAPPING['source'].get(item['source'], ''),
             'label': DATA_MAPPING['source'].get(item['source'], ''),
-            'count': item['count'],
+            'count': item['count'] if item['count'] is not None else 0,
         } for item in source_list]
 
         source_rows = sorted(source_rows, key=lambda d: d['count'], reverse=True)
