@@ -768,6 +768,8 @@
   <field name="taibif_decimalLatitude" type="string"/>
   <field name="taibif_decimalLongitude" type="string"/>
   <field name="taibif_issue" type="string"/>
+  <field name="taibif_eventDate" type="string" />
+  <field name="taibif_coordinatePrecision" type="string"/>
 
 
 
