@@ -106,9 +106,9 @@ JSON_FACET_MAP = {
             'mincount': 0,
             'limit': -1,
         },
-         'datasetKey': {
+         'taibif_datasetKey': {
             'type':'terms',
-            'field':'datasetKey',
+            'field':'taibif_datasetKey',
             'mincount': 0,
             'limit': -1,
         },
@@ -419,7 +419,7 @@ class SolrQuery(object):
             })
             
         # Connect dataset page to occurrence page, using the key datasetKey
-        if data := resp['facets'].get('datasetKey', ''):
+        if data := resp['facets'].get('taibif_datasetKey', ''):
             dataset_id = resp['facets'].get('dataset_id', '')
             rows = []
             for x in range(len(data['buckets'])):
@@ -430,7 +430,7 @@ class SolrQuery(object):
                         'count': data['buckets'][x]['count']
                     })
             menus.append({
-                'key': 'datasetKey',
+                'key': 'taibif_datasetKey',
                 'label': '',
                 'rows': rows,
             })
