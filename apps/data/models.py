@@ -40,10 +40,6 @@ DATA_MAPPING = {
         'SAMPLINGEVENT':'調查活動',
         'Metadata-only':'詮釋資料',
         'metadata':'詮釋資料',
-    },
-    'source':{
-        'GBIF':'GBIF',
-        None:'TaiBIF IPT',
     }
 }
 
