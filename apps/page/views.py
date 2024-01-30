@@ -77,9 +77,11 @@ def index(request):
         .all()[0:6]
     )
 
-    url = f"http://solr:8983/solr/taibif_occurrence/select?indent=true&q.op=OR&q=*%3A*&rows=0"
+    url = f"http://solr:8983/solr/taibif_occurrence/select?q=grid_x:*&indent=true&q.op=OR&rows=0"
     r = requests.get(url).json()
     occ_num = r["response"]["numFound"]
+    
+    # occ_num = Dataset.objects.aggregate(Sum('num_occurrence'))['num_occurrence__sum']
 
     dataset_num = Dataset.objects.filter(status="PUBLIC").count()
     # taxon_cover = len(occ_result['facets']['taxon_id']['buckets'])
