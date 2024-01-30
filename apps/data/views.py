@@ -175,6 +175,7 @@ def occurrence_view(request, taibif_id):
     # TODO
 
     intro['dataset_zh']=result[0].get('taibif_dataset_name_zh') if result[0].get('taibif_dataset_name_zh') else None
+    intro['taibif_datasetKey']=result[0].get('taibif_datasetKey') if result[0].get('taibif_datasetKey') else None
     intro['publisher']=result[0].get('publisher') if result[0].get('publisher') else None
     intro['basisOfRecord']=result[0].get('basisOfRecord') if result[0].get('basisOfRecord') else None
     
