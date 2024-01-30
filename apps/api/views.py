@@ -1393,13 +1393,12 @@ def search_dataset(request):
         } for x in country_list]
         country_rows = sorted(country_rows, key=lambda d: d['count'], reverse=True) 
 
-
+        # 授權類型 license
         rights_query = []
         for k,v in condiction_menu:
             if k!= "rights":
                 rights_query.append((k,v))
         rights_menu = DatasetSearch(rights_query) 
-        # license
         rights_list = ds_menu.query\
             .values('data_license')\
             .exclude(data_license__exact='')\
@@ -1422,6 +1421,7 @@ def search_dataset(request):
         } for x in rights_list]
         rights_rows = sorted(rights_rows, key=lambda d: d['count'], reverse=True) 
         
+        # 資料來源 Source
         source_query = []
         for k,v in condiction_menu:
             if k != 'source':
@@ -1437,9 +1437,9 @@ def search_dataset(request):
             source['count'] = source_count_dict.get(source['source'])
 
         source_rows = [{
-            'key': DATA_MAPPING['source'].get(item['source'], ''),
-            'label': DATA_MAPPING['source'].get(item['source'], ''),
-            'count': item['count'] if item['count'] is not None else 0,
+            'key': item['source'],
+            'label': item['source'],
+            'count': item['count'] if item['count'] else 0,
         } for item in source_list]
 
         source_rows = sorted(source_rows, key=lambda d: d['count'], reverse=True)
