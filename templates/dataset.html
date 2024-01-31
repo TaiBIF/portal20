@@ -88,6 +88,14 @@
             </div>
           </div>
         {% endif %}
+        {% if dataset.num_record and not dataset.num_occurrence%}
+          <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="data-wall-ctn">
+              <span class="dtat-wall-name">紀錄筆數</span>
+              <span class="data-wall-numbers">{{ dataset.num_record|intcomma }}</span>
+            </div>
+          </div>
+        {% endif %}
         <!-- <div class="col-xs-12 col-sm-6 col-md-3">
           <div class="data-wall-ctn">
             <span class="dtat-wall-name">有對應的分類群</span>
