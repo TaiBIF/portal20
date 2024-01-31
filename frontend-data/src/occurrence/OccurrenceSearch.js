@@ -113,7 +113,6 @@ export default function OccurrenceSearch(props) {
     const bor = bor_allow.includes(row.basisOfRecord) ? row.basisOfRecord : (row.taibif_basisOfRecord ? row.taibif_basisOfRecord : "");
     const datasetKey = row.taibifDatasetID ? row.taibifDatasetID : (row.taibif_datasetKey ? row.taibif_datasetKey : '')
 
-    
     return (
         <tr key={index} onClick={(e)=>{window.location.href=`/occurrence/${row.taibif_occ_id}`}} className={classes.occurrenceRow}>
         <td>{ sn }</td>

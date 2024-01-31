@@ -513,7 +513,7 @@ def occurrence_search_v2(request):
 
     for key, values in request.GET.lists():
         if key in facet_values:
-            facet_selected[key] = values
+                facet_selected[key] = values
 
     solr = SolrQuery('taibif_occurrence', facet_values)
     req = solr.request(query_list)
@@ -551,18 +551,18 @@ def occurrence_search_v2(request):
             #print ('--------', i, facet_selected[key], selected_facet_menu[key], menus[i])
             tmp_menu = selected_facet_menu[key].copy()
             tmp_menu_add = []
-            for selected in facet_selected[key]:
-                filtered = list(filter(lambda x: x['key'] == selected, tmp_menu['rows']))
-                if len(filtered) == 0 and len(tmp_menu['rows']) > 0:
-                    #print(key, selected, tmp_menu)
-                    tmp_menu['rows'].pop()
-                    count = 0
-                    for item in menus[i]['rows']:
-                        #print (key, item['key'], selected, item['count'])
-                        if str(item['key']) == str(selected):
-                            count = item['count']
-                            break
-                    tmp_menu_add.append((selected, count))
+            # for selected in facet_selected[key]:
+            #     filtered = list(filter(lambda x: x['key'] == selected, tmp_menu['rows']))
+            #     if len(filtered) == 0 and len(tmp_menu['rows']) > 0:
+            #         #print(key, selected, tmp_menu)
+            #         tmp_menu['rows'].pop()
+            #         count = 0
+            #         for item in menus[i]['rows']:
+            #             #print (key, item['key'], selected, item['count'])
+            #             if str(item['key']) == str(selected):
+            #                 count = item['count']
+            #                 break
+            #         tmp_menu_add.append((selected, count))
             for x in tmp_menu_add:
                 tmp_menu['rows'].append({
                     'key': x[0],

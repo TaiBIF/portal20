@@ -225,7 +225,10 @@ class SolrQuery(object):
                         self.solr_tuples.append(('fq', f'{key}:[{vlist[0]} TO {vlist[1]}]'))
                     else:
                         if key in JSON_FACET_MAP[self.core]:
-                            self.solr_tuples.append(('fq', '{}:"{}"'.format(field, values[0])))
+                            if key == 'selfProduced': # 布林值搜尋 value 不需要轉成 string
+                                self.solr_tuples.append(('fq', '{}:{}'.format(field, values[0])))
+                            else:
+                                self.solr_tuples.append(('fq', '{}:"{}"'.format(field, values[0])))
                 else:
                     self.solr_tuples.append(('fq', ' OR '.join([f'{field}:"{x}"' for x in values])))
                     #self.solr_tuples.append(('fq', 'taibif_dataset_name:A OR taibif_dataset_name:B'))
@@ -417,26 +420,10 @@ class SolrQuery(object):
                 'label': '授權類型 Licence',
                 'rows': rows,
             })
-            
-        # Connect dataset page to occurrence page, using the key datasetKey
-        if data := resp['facets'].get('taibif_datasetKey', ''):
-            dataset_id = resp['facets'].get('dataset_id', '')
-            rows = []
-            for x in range(len(data['buckets'])):
-                if x < len(dataset_id['buckets']): # prevent limited dataset_id buckets cause index error
-                    rows.append({
-                        'key': dataset_id['buckets'][x]['val'],
-                        'label': data['buckets'][x]['val'],
-                        'count': data['buckets'][x]['count']
-                    })
-            menus.append({
-                'key': 'taibif_datasetKey',
-                'label': '',
-                'rows': rows,
-            })
         
         if data := resp['facets'].get('selfProduced', ''):
             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
+            
             menus.append({
                 'key':'selfProduced',
                 'label': '資料來源 Source',

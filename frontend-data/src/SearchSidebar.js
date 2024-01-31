@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, forwardRef, useImperativeHandle} from 'react';
 //import Accordion from "./components/Accordion";
 //import Tree from "./components/Tree";
 import SearchTaxon from './SearchSidebarTaxon';
@@ -51,6 +51,10 @@ function Accordion(props) {
     setYearValue(yearSelected)
     props.clearCondition(event,content.key)
   };
+  // const handleClearClick = () => {
+  //   yearSelected = [1795, 2023]
+  //   setYearValue(yearSelected);
+  // };
   
   const datasetMenuItems = content.rows.map((x) => {
     if (content.key ===  'dataset'){   
@@ -121,13 +125,12 @@ function Accordion(props) {
             <input type="checkbox" onChange={(e)=> {e.persist(); onClick(e, content.key, x.key)}} checked={itemChecked} />
             <span className="checkmark"></span>
             <span className="search-sidebar-count-group">
-            <Translation>{t => <span className="name">{t(x.label === false ? "GBIF" : x.label === true ? "TaiBIF IPT" : x.label)}</span>}</Translation>
+            <Translation>{t => <span className="name">{t(x.label == false ? 'GBIF' : 'TaiBIF IPT')}</span>}</Translation>
               <span className="count">{count}</span>
             </span>
             </label>
           </div>
       );
-      
     } else {
       const count = (x.count) >=0 ? x.count.toLocaleString() : null;
       const itemChecked = filters.has(`${content.key}=${x.key}`);
@@ -235,7 +238,6 @@ function Accordion(props) {
 }
 
 function SearchSidebar(props) {
-  //console.log(props);
   let isOccurrence = false;
   let searchTypeLabel = '';
   const [queryKeyword, setQueryKeyword] = useState(props.queryKeyword);

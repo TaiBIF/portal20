@@ -251,7 +251,7 @@ class TaibifSearch extends React.Component {
         }
       });
       filters.add(`year=${itemKey}`);
-    }
+    } 
 
     this.applyFilters(filters);
   }
@@ -310,6 +310,10 @@ class TaibifSearch extends React.Component {
       apiUrl = `${apiUrl}?`;
     }
     apiUrl = `${apiUrl}${facetQueryString}`;
+
+    // if (apiUrl.includes('selfProduced=')) {
+    //   apiUrl = apiUrl.replace('selfProduced=', 'selfProduced:')
+    // }
 
     window.history.pushState({stateObj:url}, "", url);
 
