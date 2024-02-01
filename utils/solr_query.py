@@ -417,7 +417,7 @@ class SolrQuery(object):
             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
             menus.append({
                 'key':'license',
-                'label': '授權類型 Licence',
+                'label': '授權類型 License',
                 'rows': rows,
             })
         
@@ -456,7 +456,7 @@ class SolrQuery(object):
                     ]
             menus.append({
                 'key':'issues',
-                'label': '問題 issues',
+                'label': '問題 Issues',
                 'rows': rows,
             })
             
