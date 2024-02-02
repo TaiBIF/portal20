@@ -184,7 +184,7 @@ class SolrQuery(object):
         self.solr_error = ''
         self.solr_response = {}
         self.solr_url = ''
-        self.solr_q = 'grid_x:*' # Only fetch occurrence data, using grid_x to estimate
+        self.solr_q = 'basisOfRecord:*' # Only fetch occurrence data, using basisOfRecord to estimate
 
     def generate_solr_url(self, req_lists=[]):
         map_query = ''
