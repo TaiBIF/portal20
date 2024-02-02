@@ -269,10 +269,10 @@ function SearchMain(props) {
         <div className="table-responsive">
           <ul className="nav nav-tabs nav-justified search-content-tab">
             <li className={act=="all" ? "active": null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'all')}>All</a></li>
-            <li className={act=="occurrence" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'occurrence')}>Occurrence</a></li>
-            <li className={act=="taxon" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'taxon')}>Checklist</a></li>
-            <li className={act=="event" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'event')}>Sampling event</a></li>
-            <li className={act=="meta" ? "active": null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'meta')}>Metadata</a></li>
+            <li className={act=="OCCURRENCE" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'OCCURRENCE')}>Occurrence</a></li>
+            <li className={act=="CHECKLIST" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'CHECKLIST')}>Checklist</a></li>
+            <li className={act=="SAMPLINGEVENT" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'SAMPLINGEVENT')}>Sampling event</a></li>
+            <li className={act=="Metadata-only" ? "active": null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'metadata')}>Metadata</a></li>
           </ul>
         </div>)
     }

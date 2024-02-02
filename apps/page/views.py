@@ -86,7 +86,7 @@ def index(request):
     dataset_num = Dataset.objects.filter(status="PUBLIC").count()
     # taxon_cover = len(occ_result['facets']['taxon_id']['buckets'])
     
-    taxon_num = Taxon.objects.count()
+    taxon_num = Taxon.objects.values('name').distinct().count()
 
     context = {
         "news_list": news_list,

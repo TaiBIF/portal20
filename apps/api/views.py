@@ -1457,7 +1457,7 @@ def search_dataset(request):
             },
             {
                 'key': 'rights',
-                'label': '授權類型 Licence',
+                'label': '授權類型 License',
                 'rows': rights_rows
             },
             {
