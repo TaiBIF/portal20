@@ -185,6 +185,8 @@ class SolrQuery(object):
         self.solr_response = {}
         self.solr_url = ''
         self.solr_q = 'basisOfRecord:*' # Only fetch occurrence data, using basisOfRecord to estimate
+        # Limit the respoense fields
+        self.filter_field = 'taibif_vernacular_name,taibif_country,taibif_locality,basisOfRecord,taibif_datasetKey,formatted_name,taibif_dataset_name_zh,kingdomzh,phylumzh,classzh,orderzh,familyzh,genuszh,taibif_occ_id'
 
     def generate_solr_url(self, req_lists=[]):
         map_query = ''
@@ -267,7 +269,7 @@ class SolrQuery(object):
             self.solr_tuples.append(('json.facet', '{'f'{s}''}'))
             
         query_string = urllib.parse.urlencode(self.solr_tuples)
-        self.solr_url = f'{SOLR_PREFIX}{self.core}/select?{query_string}'
+        self.solr_url = f'{SOLR_PREFIX}{self.core}/select?fl={self.filter_field}&{query_string}'
         return self.solr_url
 
     def request(self, req_lists=[]):
