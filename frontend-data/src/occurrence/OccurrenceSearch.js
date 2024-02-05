@@ -107,7 +107,8 @@ export default function OccurrenceSearch(props) {
  
   const rows = props.data.results.map((row, index) => {
     const sn = props.data.offset + index + 1;
-    const vernacular_name = row.taibif_vernacular_name ? row.taibif_vernacular_name : row.vernacularName;
+    const vernacular_name = row.taibif_vernacularName ? row.taibif_vernacularName : '';
+    const eventDate = row.taibif_eventDate ? row.taibif_eventDate : '';
     const country_ch = map2.get(row.taibif_country);
     const countryOrLocality = (props.language === 'zh-hant') ? [country_ch, row.locality].join('/') : [row.taibif_country, row.locality].join('/');
     const bor = bor_allow.includes(row.basisOfRecord) ? row.basisOfRecord : (row.taibif_basisOfRecord ? row.taibif_basisOfRecord : "");
@@ -117,17 +118,17 @@ export default function OccurrenceSearch(props) {
         <tr key={index} onClick={(e)=>{window.location.href=`/occurrence/${row.taibif_occ_id}`}} className={classes.occurrenceRow}>
         <td>{ sn }</td>
         <td>{ vernacular_name }</td>
-        <td>{(row.formatted_name ? Parser(row.formatted_name):'')}</td>
-        <td>{ row.eventDate }</td>
+        <td>{(row.taibif_formattedName ? Parser(row.taibif_formattedName):'')}</td>
+        <td>{ eventDate }</td>
         <td>{ countryOrLocality }</td>
         <td><a href={"/dataset/"+datasetKey+"/"}>{ row.taibif_dataset_name_zh }</a></td>
         <td>{ bor }</td>
-        <td>{ row.kingdomzh }</td>
-        <td>{ row.phylumzh }</td>
-        <td>{ row.classzh }</td>
-        <td>{ row.orderzh }</td>
-        <td>{ row.familyzh }</td>
-        <td style={{fontStyle: "italic"}}> { row.genuszh }</td>
+        <td>{ row.taibif_kingdom }</td>
+        <td>{ row.taibif_phylum }</td>
+        <td>{ row.taibif_class }</td>
+        <td>{ row.taibif_order }</td>
+        <td>{ row.taibif_family }</td>
+        <td style={{fontStyle: "italic"}}> { row.taibif_genus }</td>
         </tr>
     )
   });
