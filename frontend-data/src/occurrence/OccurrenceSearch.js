@@ -111,7 +111,7 @@ export default function OccurrenceSearch(props) {
     const eventDate = row.taibif_eventDate ? row.taibif_eventDate : '';
     const country_ch = map2.get(row.taibif_country);
     const countryOrLocality = (props.language === 'zh-hant') ? [country_ch, row.locality].join('/') : [row.taibif_country, row.locality].join('/');
-    const bor = bor_allow.includes(row.taibif_basisOfRecord) ? row.taibif_basisOfRecord : '';
+    const bor = bor_allow.includes(row.taibif_basisOfRecord) ? row.taibif_basisOfRecord : row.basisOfRecord;
     const datasetKey = row.taibif_datasetKey ? row.taibif_datasetKey : ''
 
     return (
