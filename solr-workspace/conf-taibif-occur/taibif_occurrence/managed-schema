@@ -694,6 +694,7 @@
   <field name="publishingOrgKey" type="string"/>
   <field name="depth" type="string"/>
   <field name="taxonKey" type="string"/>
+  <field name="speciesKey" type="string"/>
   <field name="lastInterpreted" type="string"/>
   <field name="issue" type="string"/>
   <field name="taibif_datasetKey" type="string"/>
