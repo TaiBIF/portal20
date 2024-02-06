@@ -77,7 +77,7 @@ def index(request):
         .all()[0:6]
     )
 
-    url = f"http://solr:8983/solr/taibif_occurrence/select?q=taibif_basisOfRecord:*&indent=true&q.op=OR&rows=0"
+    url = f"http://solr:8983/solr/taibif_occurrence/select?q=basisOfRecord:*&indent=true&q.op=OR&rows=0"
     r = requests.get(url).json()
     occ_num = r["response"]["numFound"]
     
