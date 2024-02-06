@@ -24,17 +24,17 @@ export default function OccurrenceSearch(props) {
                       "Taxon",
                       "Occurrence",
                       "MaterialCitation",
-                      '實體物質',
+                      '材料實體',
                       '保存標本',
                       '化石標本',
                       '活體標本',
-                      '人類觀察',
+                      '人為觀測',
                       '材料樣本',
                       '機器觀測',
                       '調查活動',
-                      '名錄',
+                      '名錄/分類群',
                       '出現紀錄',
-                      '材料引用'
+                      '文獻紀錄'
                     ]
   
   
@@ -111,8 +111,8 @@ export default function OccurrenceSearch(props) {
     const eventDate = row.taibif_eventDate ? row.taibif_eventDate : '';
     const country_ch = map2.get(row.taibif_country);
     const countryOrLocality = (props.language === 'zh-hant') ? [country_ch, row.locality].join('/') : [row.taibif_country, row.locality].join('/');
-    const bor = bor_allow.includes(row.basisOfRecord) ? row.basisOfRecord : (row.taibif_basisOfRecord ? row.taibif_basisOfRecord : "");
-    const datasetKey = row.taibifDatasetID ? row.taibifDatasetID : (row.taibif_datasetKey ? row.taibif_datasetKey : '')
+    const bor = bor_allow.includes(row.taibif_basisOfRecord) ? row.taibif_basisOfRecord : '';
+    const datasetKey = row.taibif_datasetKey ? row.taibif_datasetKey : ''
 
     return (
         <tr key={index} onClick={(e)=>{window.location.href=`/occurrence/${row.taibif_occ_id}`}} className={classes.occurrenceRow}>

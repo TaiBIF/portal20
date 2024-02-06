@@ -186,7 +186,7 @@ class SolrQuery(object):
         self.solr_url = ''
         self.solr_q = 'basisOfRecord:*' # Only fetch occurrence data, using basisOfRecord to estimate
         # Limit the respoense fields
-        self.filter_field = 'taibif_vernacularName,taibif_country,taibif_locality,basisOfRecord,taibif_datasetKey,taibif_formattedName,taibif_dataset_name_zh,taibif_kingdom,taibif_phylum,taibif_class,taibif_order,taibif_family,taibif_genus,taibif_occ_id,taibif_eventDate'
+        self.filter_field = 'taibif_vernacularName,taibif_country,taibif_locality,taibif_basisOfRecord,taibif_datasetKey,taibif_formattedName,taibif_dataset_name_zh,taibif_kingdom,taibif_phylum,taibif_class,taibif_order,taibif_family,taibif_genus,taibif_occ_id,taibif_eventDate'
 
     def generate_solr_url(self, req_lists=[]):
         map_query = ''
