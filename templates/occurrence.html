@@ -348,9 +348,9 @@
               {% else %}
                 <tr><td>{{ v.name_zh }}</td>
                   <td>
-                    {% if v.value.1 is not None %}
+                    {% if v.value.1 != None and v.value.1 != ''%}
                       {{ v.value.1 }}
-                    {% elif v.value.1 is None %}
+                    {% elif v.value.1 == None %}
                       {{ v.value.0 }}
                     {% endif %}
                   </td>
@@ -360,13 +360,13 @@
                     {% endif %}
                   </td>
                   <td>
-                    {% if v.value.1 is not None %}
-                      {% if v.value.1 == v.value.0 %}
+                    {% if v.value.1 != None %}
+                      {% if v.value.1 == v.value.0 or v.value.1 == '' %}
 
                       {% else %}
                         Inferred
                       {% endif %}
-                    {% elif v.value.1 is None %}
+                    {% elif v.value.1 == None %}
                       
                     {% endif %}
                   </td>
