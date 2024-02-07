@@ -63,7 +63,8 @@ class SuperSearch(object):
         qs = query.model._base_manager.all()
 
         compiler = query.query.get_compiler('default')
-        #print (qs, compiler)
+        # print(f'qs: {qs}')
+        # print(f'complier: {compiler}')
         where, params = compiler.compile(query.query.where)
         qs = qs.extra(where=[where] if where else None, params=params)
 
@@ -136,8 +137,8 @@ class SuperSearch(object):
         ret = {
             'elapsed': self.timed[1] - self.timed[0],
             'count': int(count),
-            'count_estimate1':self._estimate_count_all(),
-            'count_estimate2': self._estimate_count(),
+            # 'count_estimate1':self._estimate_count_all(),
+            # 'count_estimate2': self._estimate_count(),
             'limit': limit,
             'offset': offset,
             'has_more': True if count > 0 and offset + limit <= count else False,
@@ -330,7 +331,7 @@ class DatasetSearch(SuperSearch):
                 query = query.order_by(*values)
                 
             if key == 'source':
-                query = query.filter(source=values[0])
+                query = query.filter(source__in=values)
 
         self.query = query
 
