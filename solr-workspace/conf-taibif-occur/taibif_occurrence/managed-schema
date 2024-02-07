@@ -704,7 +704,7 @@
   <field name="taibif_eventDate" type="string" />
   <field name="taibif_coordinatePrecision" type="string"/>
   <field name="taibif_county_zh" type="string"/>
-  <field name="eventTime" type="string"/>
+  <field name="taibif_eventTime" type="string"/>
 
 
 
