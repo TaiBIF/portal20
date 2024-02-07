@@ -823,23 +823,23 @@ def occurrence_api(request):
         elif key == "occurrenceStatus":
             fq_list.append(('fq', '{}:"{}"'.format('taibif_occurrenceStatus', values[0])))
         elif key == "scientificName":
-            fq_list.append(('fq', '(taibif_scientificName:"{}" OR taibif_scientificname:"{}")'.format(values[0], values[0])))
+            fq_list.append(('fq', '(taibif_scientificName:"{}")'.format(values[0])))
         elif key == "taxonRank":
-            fq_list.append(('fq', '(taibif_taxonRank:"{}" OR taxon_rank:"{}")'.format(values[0], values[0])))
+            fq_list.append(('fq', '(taibif_taxonRank:"{}")'.format(values[0])))
         elif key == "taicolTaxonId":
-            fq_list.append(('fq', '(taibif_taicolTaxonID:"{}" OR taicol_taxon_id:"{}")'.format(values[0], values[0])))
+            fq_list.append(('fq', '(taibif_taicolTaxonID:"{}")'.format(values[0])))
         elif key == "kingdom":
-            fq_list.append(('fq', '{}:"{}"'.format('kingdomzh', values[0])))
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_kingdom', values[0])))
         elif key == "phylum":
-            fq_list.append(('fq', '{}:"{}"'.format('phylumzh', values[0])))
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_phylum', values[0])))
         elif key == "class":
-            fq_list.append(('fq', '{}:"{}"'.format('classzh', values[0])))
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_class', values[0])))
         elif key == "order":
-            fq_list.append(('fq', '{}:"{}"'.format('orderzh', values[0])))
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_order', values[0])))
         elif key == "family":
-            fq_list.append(('fq', '{}:"{}"'.format('familyzh', values[0])))
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_family', values[0])))
         elif key == "genus":
-            fq_list.append(('fq', '{}:"{}"'.format('genuszh', values[0])))
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_genus', values[0])))
         elif key == "taxonGroup":
             if str(values[0]) == 'birds':
                 fq_list.append(('fq', '{}:{}'.format('taibif_taxonGroup', 'Accipitriformes Anseriformes Apodiformes Bucerotiformes Caprimulgiformes Charadriiformes Ciconiiformes Columbiformes Coraciiformes Cuculiformes Falconiformes Galliformes Gaviiformes Gruiformes Passeriformes Pelecaniformes Phaethontiformes Phoenicopteriformes Piciformes Podicipediformes Procellariiformes Psittaciformes Strigiformes Suliformes Struthioniformes')))
@@ -938,7 +938,7 @@ def occurrence_api(request):
                 # continue
             fq_list.append(('fq', '{}:"{}"'.format('license', litype)))
         elif key == "taibifDatasetID":
-            fq_list.append(('fq', '(taibif_datasetKey:"{}" OR taibifDatasetID:"{}")'.format(values[0], values[0])))
+            fq_list.append(('fq', '(taibif_datasetKey:"{}")'.format(values[0])))
 
         elif key == 'selfProduced':
             fq_list.append(('fq', '{}:{}'.format('selfProduced', values[0])))
@@ -997,7 +997,7 @@ def occurrence_api(request):
         gbifAcceptedID = None
         scientificName = None
         taxonRank = None
-        backbone = i['taxon_backbone'] if 'taxon_backbone' in i else (i['taibif_taxonBackbone'] if 'taibif_taxonBackbone' in i else None)
+        backbone = i['taibif_taxonBackbone'] if 'taibif_taxonBackbone' in i else None
         if backbone == 'TaiCol' or backbone == 'TaiCOL':
             taicolTaxonID = i['taibif_accepted_namecode'] if 'taibif_accepted_namecode' in i else (i['taibif_taicolTaxonID'] if 'taibif_taicolTaxonID' in i else None)
             gbifAcceptedID = i['taxonKey'] if 'taxonKey' in i else None
@@ -1038,17 +1038,17 @@ def occurrence_api(request):
             'taxonGroup':group,
             'taxonRank': taxonRank,
             'scientificNameID':i['taibif_namecode'] if 'taibif_namecode' in i else  None,
-            'isPreferredName': i['taibif_vernacular_name'] if 'taibif_vernacular_name' in i else None,
+            'isPreferredName': i['taibif_vernacularName'] if 'taibif_vernacularName' in i else None,
             'taxonBackbone':backbone,
             'taicolTaxonID': taicolTaxonID, 
             'gbifAcceptedID': gbifAcceptedID,
-            'kingdom':i['kingdomzh'] if 'kingdomzh' in i else (i['kingdom'] if 'kingdom' in i else None),
-            'phylum':i['phylumzh'] if 'phylumzh' in i else (i['phylum'] if 'phylum' in i else None),
-            'class':i['classzh'] if 'classzh' in i else (i['class'] if 'class' in i else None),
-            'order':i['orderzh'] if 'orderzh' in i else (i['order'] if 'order' in i else None),
-            'family':i['familyzh'] if 'familyzh' in i else (i['family'] if 'family' in i else None),
-            'genus':i['genuszh'] if 'genuszh' in i else (i['genus'] if 'genus' in i else None),
-            'eventDate':i['taibif_event_date'] if 'taibif_event_date' in i else (i['taibif_eventDate'] if 'taibif_eventDate' in i else None),
+            'kingdom':i['taibif_kingdom'] if 'kingdom' in i else None,
+            'phylum':i['taibif_phylum'] if 'phylum' in i else None,
+            'class':i['taibif_class'] if 'class' in i else None,
+            'order':i['taibif_order'] if 'order' in i else None,
+            'family':i['taibif_family'] if 'family' in i else None,
+            'genus':i['taibif_genus'] if 'genus' in i else None,
+            'eventDate':i['taibif_eventDate'] if 'taibif_eventDate' in i else None,
             'year':i['taibif_year'][0] if 'taibif_year' in i else None,
             'month':i['taibif_month'][0] if 'taibif_month' in i else None,
             'day':i['taibif_day'][0] if 'taibif_day' in i else None,
@@ -1064,7 +1064,7 @@ def occurrence_api(request):
             'wildlifeReserve':i['wildlifeN'][0] if 'wildlifeN' in i else (i['wildlife_refuges'] if 'wildlife_refuges' in i else None),
             'occurrenceStatus':i['taibif_occurrenceStatus'] if 'taibif_occurrenceStatus' in i else None,
             'selfProduced':i['selfProduced'][0],
-            'license':i['license'] if 'license' in i and i['license']!= 'unknown' else 'NA',
+            'license':i['taibif_license'] if 'taibif_license' in i and i['taibif_license']!= 'unknown' else 'NA',
             # 基本資料
             'datasetName':i['taibif_dataset_name_zh'] if 'taibif_dataset_name_zh' in i else None,
             'datasetShortName':i['taibif_dataset_name'] if 'taibif_dataset_name' in i else None,
