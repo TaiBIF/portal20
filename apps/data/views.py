@@ -4,7 +4,7 @@ import re
 import datetime
 import csv
 import requests
-
+import json
 
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
@@ -187,10 +187,10 @@ def occurrence_view(request, taibif_id):
             sp = original_scientific_name.split(' ')[1]
             intro['scientificName'] = f"<em>{genus_name}</em>  {sp}"
         else: 
-            intro['scientificName']=result[0].get('formatted_name') if result[0].get('formatted_name') else f"<em>{result[0].get('scientificName')}</em>"
+            intro['scientificName']=result[0].get('taibif_formattedName') if result[0].get('taibif_formattedName') else f"<em>{result[0].get('scientificName')}</em>"
         
     # intro['scientificName']=result[0].get('formatted_name') if result[0].get('formatted_name') else f"<em>{result[0].get('scientificName')}</em>"
-    intro['scientificName_zh']=result[0].get('taibif_vernacular_name') if result[0].get('taibif_vernacular_name') else ''
+    intro['scientificName_zh']=result[0].get('taibif_vernacularName') if result[0].get('taibif_vernacularName') else ''
     
     intro['dataset']=result[0].get('taibifDatasetID')
     issues = []
@@ -211,7 +211,7 @@ def occurrence_view(request, taibif_id):
     }
 
     record['language']={'name_zh':'語言','value':[result[0].get('language'),result[0].get('taibif_language')]}
-    record['license']={'name_zh':'授權標示','value':[result[0].get('license'),result[0].get('taibif_license')]}
+    record['license']={'name_zh':'授權標示','value':[result[0].get('taibif_license'),result[0].get('taibif_license')]}
     record['rightsHolder']={'name_zh':'所有權','value':[result[0].get('rightsHolder'),result[0].get('taibif_rightsHolder')]}
     record['references']={'name_zh':'參考資料','value':[result[0].get('references'),result[0].get('taibif_references')]}
     record['institutionID']={'name_zh':'機構ID','value':[result[0].get('institutionID'),result[0].get('taibif_institutionID')]}
@@ -254,9 +254,9 @@ def occurrence_view(request, taibif_id):
 
     # event
     event['eventID']={'name_zh':'調查活動ID','value':[result[0].get('eventID'),result[0].get('taibif_eventID')]}
-    event['parentEventID']={'name_zh':'parentEventID','value':[result[0].get(' parentEventID'),result[0].get(' taibif_parentEventID')]}
+    event['parentEventID']={'name_zh':'parentEventID','value':[result[0].get('parentEventID'),result[0].get(' taibif_parentEventID')]}
     event['fieldNumber']={'name_zh':'野外調查編號','value':[result[0].get('fieldNumber'),result[0].get('taibif_fieldNumber')]}
-    event['eventDate']={'name_zh':'調查活動日期','value':[result[0].get('eventDate'),result[0].get('taibif_event_date')]} 
+    event['eventDate']={'name_zh':'調查活動日期','value':[result[0].get('eventDate'),result[0].get('taibif_eventDate')]} 
     event['eventTime']={'name_zh':'調查活動時間','value':[result[0].get('eventTime'),result[0].get('taibif_eventTime')]}
     event['startDayOfYear']={'name_zh':'起始年份','value':[result[0].get('startDayOfYear'),result[0].get('staibif_startDayOfYear')]}
     event['endDayOfYear']={'name_zh':'結束年份','value':[result[0].get('endDayOfYear'),result[0].get('taibif_endDayOfYear')]}
@@ -307,20 +307,20 @@ def occurrence_view(request, taibif_id):
     taxon['nameAccordingTo']={'name_zh':'nameAccordingTo','value':[result[0].get('nameAccordingTo'),result[0].get('taibif_nameAccordingTo')]}
     taxon['namePublishedIn']={'name_zh':'namePublishedIn','value':[result[0].get('namePublishedIn'),result[0].get('taibif_namePublishedIn')]}
     taxon['higherClassification']={'name_zh':'高階分類階層','value':[result[0].get('higherClassification'),result[0].get('taibif_higherClassification')]}
-    taxon['kingdom']={'name_zh':'界','value':[result[0].get('kingdom'),result[0].get('kingdomzh')]}
+    taxon['kingdom']={'name_zh':'界','value':[result[0].get('kingdom'),result[0].get('taibif_kingdom') if result[0].get('taibif_kingdom') else None]}
     taxon['taxon_backbone']=result[0].get('taxon_backbone') 
-    taxon['phylum']={'name_zh':'門','value':[result[0].get('phylum'),result[0].get('phylumzh')]}
-    taxon['class']={'name_zh':'綱','value':[result[0].get('class'),result[0].get('classzh')]}
-    taxon['order']={'name_zh':'目','value':[result[0].get('order'),result[0].get('orderzh')]}
-    taxon['family']={'name_zh':'科','value':[result[0].get('family'),result[0].get('familyzh')]}
-    taxon['genus']={'name_zh':'屬','value':[result[0].get('genus'),result[0].get('genuszh')]}
+    taxon['phylum']={'name_zh':'門','value':[result[0].get('phylum'),result[0].get('taibif_phylum') if result[0].get('taibif_phylum') else None]}
+    taxon['class']={'name_zh':'綱','value':[result[0].get('class'),result[0].get('taibif_class') if result[0].get('taibif_class') else None]}
+    taxon['order']={'name_zh':'目','value':[result[0].get('order'),result[0].get('taibif_order') if result[0].get('taibif_order') else None]}
+    taxon['family']={'name_zh':'科','value':[result[0].get('family'),result[0].get('taibif_family') if result[0].get('taibif_family') else None]}
+    taxon['genus']={'name_zh':'屬','value':[result[0].get('genus'),result[0].get('taibif_genus') if result[0].get('taibif_genus') else None]}
     taxon['subgenus']={'name_zh':'亞屬','value':[result[0].get('subgenus'),result[0].get('taibif_subgenus')]}
     taxon['specificEpithet']={'name_zh':'種小名','value':[result[0].get('specificEpithet'),result[0].get('taibif_specificEpithet')]}
     taxon['infraspecificEpithet']={'name_zh':'種以下別名','value':[result[0].get('infraspecificEpithet'),result[0].get('taibif_infraspecificEpithet')]}
     taxon['taxonRank']={'name_zh':'分類位階','value':[result[0].get('taxonRank'),result[0].get('taibif_taxonRank')]}
     taxon['verbatimTaxonRank']={'name_zh':'字面上分類位階','value':[result[0].get('verbatimTaxonRank'),result[0].get('taibif_verbatimTaxonRank')]}
     taxon['scientificNameAuthorship']={'name_zh':'學名命名者','value':[result[0].get('scientificNameAuthorship'),result[0].get('taibif_scientificNameAuthorship')]}
-    taxon['vernacularName']={'name_zh':'俗名','value':[result[0].get('vernacularName'),result[0].get('taibif_vernacular_name') if result[0].get('taibif_vernacular_name')!=None else '']}
+    taxon['vernacularName']={'name_zh':'俗名','value':[result[0].get('vernacularName'),result[0].get('taibif_vernacularName') if result[0].get('taibif_vernacularName')!=None else '']}
     taxon['nomenclaturalCode']={'name_zh':'nomenclaturalCode','value':[result[0].get('nomenclaturalCode'),result[0].get('taibif_nomenclaturalCode')]}
     taxon['taxonRemarks']={'name_zh':'分類註記','value':[result[0].get('taxonRemarks'),result[0].get('taibif_taxonRemarks')]}
 
@@ -328,15 +328,15 @@ def occurrence_view(request, taibif_id):
     lon = None
     lat_d = None
     lon_d = None
-    if result[0].get('taibif_latitude'):
-        lat = result[0].get('taibif_latitude')[0]
-        lat_d = result[0].get('taibif_latitude')[0]
+    if result[0].get('taibif_decimalLatitude'):
+        lat = result[0].get('taibif_decimalLatitude')
+        lat_d = result[0].get('taibif_decimalLatitude')
     elif result[0].get('decimalLatitude'):
         lat = result[0].get('decimalLatitude')
 
-    if result[0].get('taibif_longitude'):
-        lon = result[0].get('taibif_longitude')[0]
-        lon_d = result[0].get('taibif_longitude')[0]
+    if result[0].get('taibif_decimalLongitude'):
+        lon = result[0].get('taibif_decimalLongitude')
+        lon_d = result[0].get('taibif_decimalLongitude')
     elif result[0].get('decimalLongitude'):
         lon = result[0].get('decimalLongitude')
         
@@ -351,7 +351,7 @@ def occurrence_view(request, taibif_id):
     location['country']={'name_zh':'國家','value':[result[0].get('country'),result[0].get('taibif_country')]}
     location['countryCode']={'name_zh':'國家代碼','value':[result[0].get('countryCode'),result[0].get('taibif_countryCode')]}
     location['stateProvince']={'name_zh':'省份/州','value':[result[0].get('stateProvince'),result[0].get('taibif_stateProvince')]}
-    location['county']={'name_zh':'縣市','value':[result[0].get('county'), result[0].get('taibif_county_zh') if result[0].get('taibif_county_zh') else (result[0].get('taibif_ch_county') if result[0].get('taibif_ch_county') else None)]}
+    location['county']={'name_zh':'縣市','value':[result[0].get('county'), result[0].get('taibif_county_zh') if result[0].get('taibif_county_zh') else None]}
     location['municipality']={'name_zh':'市','value':[result[0].get('municipality'),result[0].get('taibif_municipality')]}
     location['locality']={'name_zh':'地區','value':[result[0].get('locality'),result[0].get('taibif_locality')]}
     location['verbatimLocality']={'name_zh':'字面上地區','value':[result[0].get('verbatimLocality'),result[0].get('taibif_verbatimLocality')]}
@@ -413,6 +413,12 @@ def dataset_view(request, taibif_dataset_id):
         keyword = []
         for x in Dataset_Contact.objects.filter(dataset=dataset.id).values():
             del x['id'],x['dataset_id']
+            
+            for key, value in x.items():
+                if value == '[]':
+                    x[key] = None
+                elif isinstance(value, str) and value.startswith('[') and value.endswith(']'):
+                    x[key] = value[2:-2] # Tricky part: eliminate '[' and ']'
             contacts.append(x)
             
         for x in Dataset_citation.objects.filter(dataset=dataset.id).values():
