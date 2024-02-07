@@ -78,7 +78,7 @@ class Dataset(models.Model):
     )
     taibif_dataset_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     title = models.CharField('title', max_length=300)
-    name = models.CharField('name', max_length=128) # ipt shortname
+    name = models.CharField('name', max_length=300) # ipt shortname
     author = models.CharField('author', max_length=128, null=True)
     pub_date = models.DateTimeField('Publish Date', null=True)
     mod_date = models.DateTimeField('Modified Date', null=True)
