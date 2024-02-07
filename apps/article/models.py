@@ -59,7 +59,7 @@ class Article(models.Model):
     CATEGORY_CHOICE = (
         ("NEWS", "新聞"),
         ("EVENT", "活動"),
-        ("PSCIENCE", "科普"),
+        # ("PSCIENCE", "科普"),
         ("SCI", "科普文章"),
         ("TECH", "技術專欄"),
         ("PUB", "出版品資料"),
