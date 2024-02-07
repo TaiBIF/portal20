@@ -1002,15 +1002,15 @@ def occurrence_api(request):
             taicolTaxonID = i['taibif_accepted_namecode'] if 'taibif_accepted_namecode' in i else (i['taibif_taicolTaxonID'] if 'taibif_taicolTaxonID' in i else None)
             gbifAcceptedID = i['taxonKey'] if 'taxonKey' in i else None
             scientificName = i['taibif_scientificname'] if 'taibif_scientificname' in i else (i['taibif_scientificName'] if 'taibif_scientificName' in i else None)
-            taxonRank = i['taxon_rank'] if 'taxon_rank' in i else (i['taibif_taxonRank'] if 'taibif_taxonRank' in i else None)
+            taxonRank = i['taibif_taxonRank'] if 'taibif_taxonRank' in i else None
         elif backbone == 'GBIF':
             gbifAcceptedID = int(float(i['taibif_accepted_namecode'])) if 'taibif_accepted_namecode' in i else None
             scientificName = i['taibif_scientificname'] if 'taibif_scientificname' in i else None
-            taxonRank = i['taxon_rank'] if 'taxon_rank' in i else None
+            taxonRank = i['taibif_taxonRank'] if 'taibif_taxonRank' in i else None
         elif backbone == None:
             gbifAcceptedID = i['taxonKey'] if 'taxonKey' in i else None
             scientificName = i['scientificName'] if 'scientificName' in i else None
-            taxonRank = i['taxonRank'] if 'taxonRank' in i else None
+            taxonRank = i['taibif_taxonRank'] if 'taibif_taxonRank' in i else None
             
         issue = None
         if 'geo_issue' in i and i['geo_issue'] or 'taxon_issue' in i and i['taxon_issue'] or 'time_issue' in i:
@@ -1018,10 +1018,10 @@ def occurrence_api(request):
         
         
         mediaLicense = i['taibif_mediaLicense'] if 'taibif_mediaLicense' in i else None
-        group = i['taibif_taxonGroup'][0] if 'taibif_taxonGroup' in i else None
-        if 'orderzh' in i :
-            if i['orderzh'] in ['Accipitriformes','Anseriformes','Apodiformes','Bucerotiformes','Caprimulgiformes','Charadriiformes','Ciconiiformes','Columbiformes','Coraciiformes','Cuculiformes','Falconiformes','Galliformes','Gaviiformes','Gruiformes','Passeriformes','Pelecaniformes','Phaethontiformes','Phoenicopteriformes','Piciformes','Podicipediformes','Procellariiformes','Psittaciformes','Strigiformes','Suliformes','Struthioniformes',]:
-                group = 'Birds'
+        group = i['taibif_taxonGroup'] if 'taibif_taxonGroup' in i else None
+        # if 'orderzh' in i :
+        #     if i['orderzh'] in ['Accipitriformes','Anseriformes','Apodiformes','Bucerotiformes','Caprimulgiformes','Charadriiformes','Ciconiiformes','Columbiformes','Coraciiformes','Cuculiformes','Falconiformes','Galliformes','Gaviiformes','Gruiformes','Passeriformes','Pelecaniformes','Phaethontiformes','Phoenicopteriformes','Piciformes','Podicipediformes','Procellariiformes','Psittaciformes','Strigiformes','Suliformes','Struthioniformes',]:
+        #         group = 'Birds'
         issues = []
         if 'TaxonMatchNone' in i and i['TaxonMatchNone'][0] == True:
             issues.append('TaxonMatchNone')
@@ -1042,12 +1042,12 @@ def occurrence_api(request):
             'taxonBackbone':backbone,
             'taicolTaxonID': taicolTaxonID, 
             'gbifAcceptedID': gbifAcceptedID,
-            'kingdom':i['taibif_kingdom'] if 'kingdom' in i else None,
-            'phylum':i['taibif_phylum'] if 'phylum' in i else None,
-            'class':i['taibif_class'] if 'class' in i else None,
-            'order':i['taibif_order'] if 'order' in i else None,
-            'family':i['taibif_family'] if 'family' in i else None,
-            'genus':i['taibif_genus'] if 'genus' in i else None,
+            'kingdom':i['taibif_kingdom'] if 'taibif_kingdom' in i else None,
+            'phylum':i['taibif_phylum'] if 'taibif_phylum' in i else None,
+            'class':i['taibif_class'] if 'taibif_class' in i else None,
+            'order':i['taibif_order'] if 'taibif_order' in i else None,
+            'family':i['taibif_family'] if 'taibif_family' in i else None,
+            'genus':i['taibif_genus'] if 'taibif_genus' in i else None,
             'eventDate':i['taibif_eventDate'] if 'taibif_eventDate' in i else None,
             'year':i['taibif_year'][0] if 'taibif_year' in i else None,
             'month':i['taibif_month'][0] if 'taibif_month' in i else None,
