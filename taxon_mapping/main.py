@@ -8,21 +8,21 @@ from pandarallel import pandarallel
 import multiprocessing
 from datetime import date
 
-
+# git push
 
 # Update TaiCOL Taxon [Basic] Information
 def update_taicol_taxon(row):
-    taicol_taxon_url = 'https://api.taicol.tw/v2/taxon?taxon_id='+str(row['taicol_taxon_id'])
-    taxon_resp = requests.get(taicol_taxon_url , json={"test" : "in"})
-    data = json.loads(taxon_resp.content.decode('utf-8'))
+    taicol_url = 'https://api.taicol.tw/v2/taxon?taxon_id='+str(row['taicol_taxon_id'])
+    response = requests.get(taicol_url)
+    data = response.json()
     
     try:
         # 有正常回應，可接受，且有結果大於一筆
-        if (taxon_resp.status_code == 200) and (data.get('data')) and (len(data['data']) > 0):
+        if (response.status_code == 200) and (data.get('data')) and (len(data['data']) > 0):
             is_accepted_name = False
-            if data['data'][0]['status'] == 'Accepted':
+            if data['status']['message'] == 'Success':
                 is_accepted_name = True
-            row['rank'] = data['data'][0]['rank']
+            # row['rank'] = data['data'][0]['rank'] *duplicated*
             row['is_accepted_name'] = is_accepted_name
             row['taicol_name_id'] = data['data'][0]['name_id']
             row['name'] = data['data'][0]['simple_name']
@@ -53,20 +53,20 @@ def update_taicol_taxon(row):
             row['new_taxon_id'] = data['data'][0]['new_taxon_id']
             
     except Exception as e :
-        row['mapping_error'] = "taxon api error == " + e
+        row['mapping_error'] = f'taxon API error: {e}'
         
     return pd.Series(row) 
 
 
 # Update TaiCOL Taxon [name_author/protologue] Information
 def update_name_api(row):
-    taicol_name_url = 'https://api.taicol.tw/v2/name?name_id='+str(row['taicol_name_id'])
-    name_resp = requests.get(taicol_name_url , json={"test" : "in"})
-    data = json.loads(name_resp.content.decode('utf-8'))
+    taicol_url = 'https://api.taicol.tw/v2/name?name_id='+str(row['taicol_name_id'])
+    response = requests.get(taicol_url)
+    data = response.json()
     
     try:
         # 有正常回應，且有結果
-        if (name_resp.status_code == 200) and (data.get('data')) and (len(data['data']) > 0):
+        if (response.status_code == 200) and (data.get('data')) and (len(data['data']) > 0):
             row['name_author'] = data['data'][0]['name_author']
             row['reference'] = data['data'][0]['protologue']
     
@@ -74,21 +74,21 @@ def update_name_api(row):
         if row['mapping_error']:
             row['mapping_error'] = str(row['mapping_error'])  if row['mapping_error']  != None else '' + ". Name api error == " + e
         else:
-            row['mapping_error'] = "name api error == " + e
+            row['mapping_error'] = f'name API error: {e}'
         
     return pd.Series(row) 
 
 
 # Update TaiCOL [path] Information
 def update_highertaxon_api(row):
-    taicol_highertaxon_url = 'https://api.taicol.tw/v2/higherTaxa?taxon_id='+str(row['taicol_taxon_id'])
-    highertaxon_resp = requests.get(taicol_highertaxon_url , json={"test" : "in"})
-    data = json.loads(highertaxon_resp.content.decode('utf-8'))
+    taicol_url = 'https://api.taicol.tw/v2/higherTaxa?taxon_id='+str(row['taicol_taxon_id'])
+    response = requests.get(taicol_url)
+    data = response.json()
     
     # 有正常回應，且有結果
     higher_taxon = []
     try: 
-        if (highertaxon_resp.status_code == 200) and (data.get('data')) and (len(data['data']) > 0):
+        if (response.status_code == 200) and (data.get('data')) and (len(data['data']) > 0):
             for i in data['data']:
                 if i['taxon_id'] != None:
                     higher_taxon.append(i['taxon_id'])
@@ -151,7 +151,7 @@ def update_highertaxon_api(row):
                 print(e)
 
     except Exception as e:
-        print("!!! Exception === !!! ",e )
+        print("!!! Exception === !!! ", e)
         print()
         if row['mapping_error']:
             row['mapping_error'] = str(row['mapping_error'])  if row['mapping_error']  != None else '' + ". highertaxon api error == " + e
