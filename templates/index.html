@@ -182,7 +182,7 @@
         <div class="data-wall-ctn">
           <span class="dtat-wall-name">{% trans "資料集" %}</span>
           <span class="data-wall-numbers"
-            ><a href="/dataset/search/">{{dataset_num|intcomma}}</a></span
+            ><a href="/dataset/search/">{{dataset_num|intcomma:False}}</a></span
           >
           <!--手動更改數字{{ stats.num_dataset|intcomma }} -->
           {% comment %} <span class="dtat-wall-name"
@@ -198,7 +198,7 @@
         <div class="data-wall-ctn">
           <span class="dtat-wall-name">{% trans "涵蓋物種數" %}</span>
           <span class="data-wall-numbers"
-            ><a href="/species/search/">70,234</a></span
+            ><a href="/species/search/">{{taxon_num|intcomma:False}}</a></span
           >
           <!--手動更改數字{{ stats.num_species|intcomma }} -->
           {% comment %} <span class="dtat-wall-name"
@@ -313,9 +313,9 @@
     <div class="col-sm-12 col-md-4">
       <div class="news-card-wrapper">
         <a
-          href="{% url 'article-list' category='pscience' %}"
+          href="{% url 'article-list' category='sci' %}"
           class="news-card-cate"
-          ><span class="myicon icon-update"></span>{% trans "科普" %}</a
+          ><span class="myicon icon-update"></span>{% trans "科普文章" %}</a
         >
         <div class="news-card-img-wrapper">
           <a href="{{ update_list.first.get_absolute_url }}">

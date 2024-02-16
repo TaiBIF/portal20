@@ -513,7 +513,7 @@ def occurrence_search_v2(request):
 
     for key, values in request.GET.lists():
         if key in facet_values:
-            facet_selected[key] = values
+                facet_selected[key] = values
 
     solr = SolrQuery('taibif_occurrence', facet_values)
     req = solr.request(query_list)
@@ -551,18 +551,18 @@ def occurrence_search_v2(request):
             #print ('--------', i, facet_selected[key], selected_facet_menu[key], menus[i])
             tmp_menu = selected_facet_menu[key].copy()
             tmp_menu_add = []
-            for selected in facet_selected[key]:
-                filtered = list(filter(lambda x: x['key'] == selected, tmp_menu['rows']))
-                if len(filtered) == 0 and len(tmp_menu['rows']) > 0:
-                    #print(key, selected, tmp_menu)
-                    tmp_menu['rows'].pop()
-                    count = 0
-                    for item in menus[i]['rows']:
-                        #print (key, item['key'], selected, item['count'])
-                        if str(item['key']) == str(selected):
-                            count = item['count']
-                            break
-                    tmp_menu_add.append((selected, count))
+            # for selected in facet_selected[key]:
+            #     filtered = list(filter(lambda x: x['key'] == selected, tmp_menu['rows']))
+            #     if len(filtered) == 0 and len(tmp_menu['rows']) > 0:
+            #         #print(key, selected, tmp_menu)
+            #         tmp_menu['rows'].pop()
+            #         count = 0
+            #         for item in menus[i]['rows']:
+            #             #print (key, item['key'], selected, item['count'])
+            #             if str(item['key']) == str(selected):
+            #                 count = item['count']
+            #                 break
+            #         tmp_menu_add.append((selected, count))
             for x in tmp_menu_add:
                 tmp_menu['rows'].append({
                     'key': x[0],
@@ -712,26 +712,60 @@ def occurrence_search_v2(request):
     return JsonResponse(resp)
 
 def taxon_tree_node(request, taicol_taxon_id):
-    taxon = Taxon.objects.get(taicol_taxon_id=taicol_taxon_id)
-    children = [{
-        'id':x.taicol_taxon_id,
-        'data': {
-            'name': x.get_name(),
-            'count': x.count,
-            'rank': x.rank,
+    linnaean = request.GET.get('linnaean', 'no')
+    
+    if linnaean == 'yes':
+        taxon = Taxon.objects.filter(parent_taxon_id_linnaean=taicol_taxon_id).all()
+        children = []
+        for taxa in taxon:
+            children.append({
+                'id': taxa.taicol_taxon_id,
+                'data': {
+                    'name': taxa.get_name(),
+                    'count': taxa.count,
+                    'rank': taxa.rank
+                }
+            })
+        children.sort(key=lambda x: (x['data']['rank'], x['data']['name']))
+        parent = Taxon.objects.get(taicol_taxon_id=taicol_taxon_id)
+        data = {
+            'rank': parent.rank,
+            'id': parent.taicol_taxon_id,
+            'data': {
+                'name': parent.get_name(),
+                'count': parent.count,
+                'rank': parent.rank,
+            },
+            'children': children,
         }
-    } for x in taxon.children]
+    else:
+        taxon = Taxon.objects.get(taicol_taxon_id=taicol_taxon_id)
+        children = sorted(
+            [
+                {
+                    'id': x.taicol_taxon_id,
+                    'data': {
+                        'name': x.get_name(),
+                        'count': x.count,
+                        'rank': x.rank,
+                    }
+                }
+                for x in taxon.children
+            ],
+            key=lambda x: x['data']['rank']  
+        )
 
-    data = {
-        'rank': taxon.rank,
-        'id': taxon.taicol_taxon_id,
-        'data': {
-            'name': taxon.get_name(),
-            'count': taxon.count,
+        data = {
             'rank': taxon.rank,
-        },
-        'children': children,
-    }
+            'id': taxon.taicol_taxon_id,
+            'data': {
+                'name': taxon.get_name(),
+                'count': taxon.count,
+                'rank': taxon.rank,
+            },
+            'children': children,
+        }
+    # return HttpResponse(json.dumps(data), content_type="application/json")
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 def occurrence_api(request):
@@ -789,23 +823,23 @@ def occurrence_api(request):
         elif key == "occurrenceStatus":
             fq_list.append(('fq', '{}:"{}"'.format('taibif_occurrenceStatus', values[0])))
         elif key == "scientificName":
-            fq_list.append(('fq', '(taibif_scientificName:"{}" OR taibif_scientificname:"{}")'.format(values[0], values[0])))
+            fq_list.append(('fq', '(taibif_scientificName:"{}")'.format(values[0])))
         elif key == "taxonRank":
-            fq_list.append(('fq', '(taibif_taxonRank:"{}" OR taxon_rank:"{}")'.format(values[0], values[0])))
+            fq_list.append(('fq', '(taibif_taxonRank:"{}")'.format(values[0])))
         elif key == "taicolTaxonId":
-            fq_list.append(('fq', '(taibif_taicolTaxonID:"{}" OR taicol_taxon_id:"{}")'.format(values[0], values[0])))
+            fq_list.append(('fq', '(taibif_taicolTaxonID:"{}")'.format(values[0])))
         elif key == "kingdom":
-            fq_list.append(('fq', '{}:"{}"'.format('kingdomzh', values[0])))
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_kingdom', values[0])))
         elif key == "phylum":
-            fq_list.append(('fq', '{}:"{}"'.format('phylumzh', values[0])))
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_phylum', values[0])))
         elif key == "class":
-            fq_list.append(('fq', '{}:"{}"'.format('classzh', values[0])))
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_class', values[0])))
         elif key == "order":
-            fq_list.append(('fq', '{}:"{}"'.format('orderzh', values[0])))
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_order', values[0])))
         elif key == "family":
-            fq_list.append(('fq', '{}:"{}"'.format('familyzh', values[0])))
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_family', values[0])))
         elif key == "genus":
-            fq_list.append(('fq', '{}:"{}"'.format('genuszh', values[0])))
+            fq_list.append(('fq', '{}:"{}"'.format('taibif_genus', values[0])))
         elif key == "taxonGroup":
             if str(values[0]) == 'birds':
                 fq_list.append(('fq', '{}:{}'.format('taibif_taxonGroup', 'Accipitriformes Anseriformes Apodiformes Bucerotiformes Caprimulgiformes Charadriiformes Ciconiiformes Columbiformes Coraciiformes Cuculiformes Falconiformes Galliformes Gaviiformes Gruiformes Passeriformes Pelecaniformes Phaethontiformes Phoenicopteriformes Piciformes Podicipediformes Procellariiformes Psittaciformes Strigiformes Suliformes Struthioniformes')))
@@ -904,7 +938,7 @@ def occurrence_api(request):
                 # continue
             fq_list.append(('fq', '{}:"{}"'.format('license', litype)))
         elif key == "taibifDatasetID":
-            fq_list.append(('fq', '(taibif_datasetKey:"{}" OR taibifDatasetID:"{}")'.format(values[0], values[0])))
+            fq_list.append(('fq', '(taibif_datasetKey:"{}")'.format(values[0])))
 
         elif key == 'selfProduced':
             fq_list.append(('fq', '{}:{}'.format('selfProduced', values[0])))
@@ -963,20 +997,20 @@ def occurrence_api(request):
         gbifAcceptedID = None
         scientificName = None
         taxonRank = None
-        backbone = i['taxon_backbone'] if 'taxon_backbone' in i else (i['taibif_taxonBackbone'] if 'taibif_taxonBackbone' in i else None)
+        backbone = i['taibif_taxonBackbone'] if 'taibif_taxonBackbone' in i else None
         if backbone == 'TaiCol' or backbone == 'TaiCOL':
             taicolTaxonID = i['taibif_accepted_namecode'] if 'taibif_accepted_namecode' in i else (i['taibif_taicolTaxonID'] if 'taibif_taicolTaxonID' in i else None)
             gbifAcceptedID = i['taxonKey'] if 'taxonKey' in i else None
             scientificName = i['taibif_scientificname'] if 'taibif_scientificname' in i else (i['taibif_scientificName'] if 'taibif_scientificName' in i else None)
-            taxonRank = i['taxon_rank'] if 'taxon_rank' in i else (i['taibif_taxonRank'] if 'taibif_taxonRank' in i else None)
+            taxonRank = i['taibif_taxonRank'] if 'taibif_taxonRank' in i else None
         elif backbone == 'GBIF':
             gbifAcceptedID = int(float(i['taibif_accepted_namecode'])) if 'taibif_accepted_namecode' in i else None
             scientificName = i['taibif_scientificname'] if 'taibif_scientificname' in i else None
-            taxonRank = i['taxon_rank'] if 'taxon_rank' in i else None
+            taxonRank = i['taibif_taxonRank'] if 'taibif_taxonRank' in i else None
         elif backbone == None:
             gbifAcceptedID = i['taxonKey'] if 'taxonKey' in i else None
             scientificName = i['scientificName'] if 'scientificName' in i else None
-            taxonRank = i['taxonRank'] if 'taxonRank' in i else None
+            taxonRank = i['taibif_taxonRank'] if 'taibif_taxonRank' in i else None
             
         issue = None
         if 'geo_issue' in i and i['geo_issue'] or 'taxon_issue' in i and i['taxon_issue'] or 'time_issue' in i:
@@ -984,10 +1018,10 @@ def occurrence_api(request):
         
         
         mediaLicense = i['taibif_mediaLicense'] if 'taibif_mediaLicense' in i else None
-        group = i['taibif_taxonGroup'][0] if 'taibif_taxonGroup' in i else None
-        if 'orderzh' in i :
-            if i['orderzh'] in ['Accipitriformes','Anseriformes','Apodiformes','Bucerotiformes','Caprimulgiformes','Charadriiformes','Ciconiiformes','Columbiformes','Coraciiformes','Cuculiformes','Falconiformes','Galliformes','Gaviiformes','Gruiformes','Passeriformes','Pelecaniformes','Phaethontiformes','Phoenicopteriformes','Piciformes','Podicipediformes','Procellariiformes','Psittaciformes','Strigiformes','Suliformes','Struthioniformes',]:
-                group = 'Birds'
+        group = i['taibif_taxonGroup'] if 'taibif_taxonGroup' in i else None
+        # if 'orderzh' in i :
+        #     if i['orderzh'] in ['Accipitriformes','Anseriformes','Apodiformes','Bucerotiformes','Caprimulgiformes','Charadriiformes','Ciconiiformes','Columbiformes','Coraciiformes','Cuculiformes','Falconiformes','Galliformes','Gaviiformes','Gruiformes','Passeriformes','Pelecaniformes','Phaethontiformes','Phoenicopteriformes','Piciformes','Podicipediformes','Procellariiformes','Psittaciformes','Strigiformes','Suliformes','Struthioniformes',]:
+        #         group = 'Birds'
         issues = []
         if 'TaxonMatchNone' in i and i['TaxonMatchNone'][0] == True:
             issues.append('TaxonMatchNone')
@@ -1004,17 +1038,17 @@ def occurrence_api(request):
             'taxonGroup':group,
             'taxonRank': taxonRank,
             'scientificNameID':i['taibif_namecode'] if 'taibif_namecode' in i else  None,
-            'isPreferredName': i['taibif_vernacular_name'] if 'taibif_vernacular_name' in i else None,
+            'isPreferredName': i['taibif_vernacularName'] if 'taibif_vernacularName' in i else None,
             'taxonBackbone':backbone,
             'taicolTaxonID': taicolTaxonID, 
             'gbifAcceptedID': gbifAcceptedID,
-            'kingdom':i['kingdomzh'] if 'kingdomzh' in i else (i['kingdom'] if 'kingdom' in i else None),
-            'phylum':i['phylumzh'] if 'phylumzh' in i else (i['phylum'] if 'phylum' in i else None),
-            'class':i['classzh'] if 'classzh' in i else (i['class'] if 'class' in i else None),
-            'order':i['orderzh'] if 'orderzh' in i else (i['order'] if 'order' in i else None),
-            'family':i['familyzh'] if 'familyzh' in i else (i['family'] if 'family' in i else None),
-            'genus':i['genuszh'] if 'genuszh' in i else (i['genus'] if 'genus' in i else None),
-            'eventDate':i['taibif_event_date'] if 'taibif_event_date' in i else (i['eventDate'] if 'eventDate' in i else None),
+            'kingdom':i['taibif_kingdom'] if 'taibif_kingdom' in i else None,
+            'phylum':i['taibif_phylum'] if 'taibif_phylum' in i else None,
+            'class':i['taibif_class'] if 'taibif_class' in i else None,
+            'order':i['taibif_order'] if 'taibif_order' in i else None,
+            'family':i['taibif_family'] if 'taibif_family' in i else None,
+            'genus':i['taibif_genus'] if 'taibif_genus' in i else None,
+            'eventDate':i['taibif_eventDate'] if 'taibif_eventDate' in i else None,
             'year':i['taibif_year'][0] if 'taibif_year' in i else None,
             'month':i['taibif_month'][0] if 'taibif_month' in i else None,
             'day':i['taibif_day'][0] if 'taibif_day' in i else None,
@@ -1030,7 +1064,7 @@ def occurrence_api(request):
             'wildlifeReserve':i['wildlifeN'][0] if 'wildlifeN' in i else (i['wildlife_refuges'] if 'wildlife_refuges' in i else None),
             'occurrenceStatus':i['taibif_occurrenceStatus'] if 'taibif_occurrenceStatus' in i else None,
             'selfProduced':i['selfProduced'][0],
-            'license':i['license'] if 'license' in i and i['license']!= 'unknown' else 'NA',
+            'license':i['taibif_license'] if 'taibif_license' in i and i['taibif_license']!= 'unknown' else 'NA',
             # 基本資料
             'datasetName':i['taibif_dataset_name_zh'] if 'taibif_dataset_name_zh' in i else None,
             'datasetShortName':i['taibif_dataset_name'] if 'taibif_dataset_name' in i else None,
@@ -1359,13 +1393,12 @@ def search_dataset(request):
         } for x in country_list]
         country_rows = sorted(country_rows, key=lambda d: d['count'], reverse=True) 
 
-
+        # 授權類型 license
         rights_query = []
         for k,v in condiction_menu:
             if k!= "rights":
                 rights_query.append((k,v))
         rights_menu = DatasetSearch(rights_query) 
-        # license
         rights_list = ds_menu.query\
             .values('data_license')\
             .exclude(data_license__exact='')\
@@ -1387,6 +1420,29 @@ def search_dataset(request):
             'count': x['count']
         } for x in rights_list]
         rights_rows = sorted(rights_rows, key=lambda d: d['count'], reverse=True) 
+        
+        # 資料來源 Source
+        source_query = []
+        for k,v in condiction_menu:
+            if k != 'source':
+                source_query.append((k,v))
+        source_menu = DatasetSearch(source_query) 
+        
+        source_list = ds_menu.query.values('source').distinct('source')
+
+        source_count_data = source_menu.query.values('source').annotate(count=Count('*')).order_by('-count')
+        source_count_dict = {item['source']: item['count'] for item in source_count_data}
+        
+        for source in source_list:
+            source['count'] = source_count_dict.get(source['source'])
+
+        source_rows = [{
+            'key': item['source'],
+            'label': item['source'],
+            'count': item['count'] if item['count'] else 0,
+        } for item in source_list]
+
+        source_rows = sorted(source_rows, key=lambda d: d['count'], reverse=True)
 
         menu_list = [
             {
@@ -1401,8 +1457,13 @@ def search_dataset(request):
             },
             {
                 'key': 'rights',
-                'label': '授權類型 Licence',
+                'label': '授權類型 License',
                 'rows': rights_rows
+            },
+            {
+                'key': 'source',
+                'label': '資料來源 Source',
+                'rows': source_rows
             }
         ]
 

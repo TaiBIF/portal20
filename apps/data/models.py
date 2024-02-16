@@ -25,7 +25,6 @@ DATA_MAPPING = {
         'http://creativecommons.org/licenses/by/4.0/legalcode': 'CC-BY',
         'http://creativecommons.org/publicdomain/zero/1.0/legalcode': 'CC0',
         'http://creativecommons.org/licenses/by-nc/4.0/legalcode': 'CC-BY-NC',
-        'Public Domain (CC0 1.0)': 'CC0',
         'unknown': '未明確授權',
         None: '未明確授權'
     },
@@ -79,8 +78,8 @@ class Dataset(models.Model):
     )
     taibif_dataset_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     title = models.CharField('title', max_length=300)
-    name = models.CharField('name', max_length=128) # ipt shortname
-    author = models.CharField('author', max_length=128)
+    name = models.CharField('name', max_length=300) # ipt shortname
+    author = models.CharField('author', max_length=128, null=True)
     pub_date = models.DateTimeField('Publish Date', null=True)
     mod_date = models.DateTimeField('Modified Date', null=True)
     guid = models.CharField('GUID', max_length=40,null=True)
@@ -94,7 +93,7 @@ class Dataset(models.Model):
     organization = models.ForeignKey('DatasetOrganization', null=True, blank=True, on_delete=models.SET_NULL, related_name='datasets')
     num_occurrence = models.PositiveIntegerField(default=0)
     is_most_project = models.BooleanField('是否為國科會計畫', default=False)
-    quality = models.CharField('資料集品質', max_length=4, default='')
+    quality = models.CharField('資料集品質', max_length=4, default='', null=True)
     has_publish_problem = models.BooleanField('是否有發布問題 (IPT 裡黃色的區塊)', default=False, help_text='有可能 IPT 授權沒填?')
     admin_memo = models.TextField('後台管理註記', blank=True, null=True, help_text='不會在前台出現')
     source = models.TextField(blank=True, null=True)
@@ -103,8 +102,8 @@ class Dataset(models.Model):
     pre_count = models.BigIntegerField(null=True)
     # pub_released = models.DateTimeField(null=True)
     # pub_count = models.BigIntegerField(null=True)
-    num_checklist = models.PositiveIntegerField(default=0)
-    num_event = models.PositiveIntegerField(default=0)
+    num_checklist = models.PositiveIntegerField(default=0, null=True)
+    num_event = models.PositiveIntegerField(default=0, null=True)
     # recordsPublished = models.PositiveIntegerField(default=0)
     metadataModified = models.DateTimeField(null=True)
     mappingsModified = models.DateTimeField(null=True)
@@ -281,6 +280,7 @@ class Taxon(models.Model):
     sensitive = models.CharField('sensitive', max_length=32, null=True, blank=True)
     updated_at = models.DateTimeField('updated_at', null=True)
     new_taxon_id = models.CharField('new_taxon_id', max_length=32, null=True, blank=True)
+    parent_taxon_id_linnaean = models.CharField('self', max_length=256, null=True)
 
     
     
@@ -295,22 +295,24 @@ class Taxon(models.Model):
     path = models.TextField('path', null=True)
     
     # could be despacred
+    
     kingdom_id = models.IntegerField('kingdom_id',default=0,null=True)
     phylum_id = models.IntegerField('phylum_id',default=0,null=True)
     class_id = models.IntegerField('class_id',default=0,null=True)
     order_id = models.IntegerField('order_id',default=0,null=True)
     family_id = models.IntegerField('family_id',default=0,null=True)
     genus_id = models.IntegerField('genus_id',default=0,null=True)
-    # hierarchy_string = models.CharField('hierarchy string', max_length=512, default='',null=True)
     kingdom_taxon_id = models.CharField('kingdom_taxon_id', max_length=128, null=True)
     phylum_taxon_id = models.CharField('phylum_taxon_id', max_length=128, null=True)
     class_taxon_id = models.CharField('class_taxon_id', max_length=128, null=True)
     order_taxon_id = models.CharField('order_taxon_id', max_length=128, null=True)
     family_taxon_id = models.CharField('family_taxon_id', max_length=128, null=True)
     genus_taxon_id = models.CharField('genus_taxon_id', max_length=128, null=True)
+    count = models.PositiveIntegerField('count', default=0,null=True)
+    
+    # hierarchy_string = models.CharField('hierarchy string', max_length=512, default='',null=True)
     # parent_taxon_id = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
     # specific_epithet = models.CharField('specific epithet', max_length=128, null=True)
-    count = models.PositiveIntegerField('count', default=0,null=True)
     # tree = models.ForeignKey(TaxonTree, on_delete=models.CASCADE, null=True)
     # verbose = models.CharField('verbose', max_length=1000, default='',null=True)
     

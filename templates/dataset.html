@@ -38,21 +38,25 @@
         <!-- 詮釋資料最後修改於：{{ dataset.mod_date|date:'Y/m/d' }}<br> -->
         {% if  organization_name %}
           發布單位：{{ organization_name }}<br>
+        {% endif %} 
+        {% if dataset.mod_date %}
+          發布日期：{{ dataset.mod_date|date:'Y/m/d' }}<br>
         {% endif %}
-        發布日期：{{ dataset.mod_date|date:'Y/m/d' }}<br>
         <!-- 資料最後上傳日：{{ dataset.pub_date|date:'Y/m/d'}}<br> -->
         資料授權引用格式：{{ dataset.data_license }}<br>
         {% if dataset.gbif_doi %} DOI:  <a href="{{ dataset.doi_link }}"  target="_blank" >{{ dataset.gbif_doi }}</a>{% endif %}
       
-        {% if dataset.status == "PUBLIC" %}資料集下載：<a href="{{ dataset.dwca_link }}">DwC-A</a><br>{% endif %}
+        {% if dataset.status == "PUBLIC" and dataset.source == 'TaiBIF IPT' %}資料集下載：<a href="{{ dataset.dwca_link }}">DwC-A</a><br>{% endif %}
         {% if dataset.status == "PUBLIC" and not dataset.guid %}<div class="alert alert-warning" role="alert">This resource has not been registered with GBIF</div><br>{% endif %}
         
+        {% if keyword %}
         關鍵字：
         <ul class="article-keyword-wrapper">
           {% for i in keyword %}
             <li> {{i.keyword}}</li>
           {% endfor%}
         </ul>
+        {% endif %}
       </p>
 
       
@@ -65,8 +69,8 @@
           <div class="col-xs-12 col-sm-6 col-md-3">
             <div class="data-wall-ctn">
               <span class="dtat-wall-name">出現紀錄筆數</span>
-                <a href="{% url 'search-occurrence' cat='search' %}?dataset={{ dataset.name }}"> 
-                  <span class="data-wall-numbers">{{ dataset.num_occurrence|intcomma }}</span>
+                <a href="{% url 'search-occurrence' cat='search' %}?taibif_datasetKey={{ dataset.taibif_dataset_id }}"> 
+                  <span class="data-wall-numbers">{{ dataset.num_occurrence|intcomma:False }}</span>
                 </a>
             </div>
           </div>
@@ -76,7 +80,7 @@
           <div class="col-xs-12 col-sm-6 col-md-3">
             <div class="data-wall-ctn">
               <span class="dtat-wall-name">checklist筆數</span>
-              <span class="data-wall-numbers">{{ dataset.num_checklist|intcomma }}</span>
+              <span class="data-wall-numbers">{{ dataset.num_checklist|intcomma:False }}</span>
             </div>
           </div>
         {% endif %}
@@ -84,7 +88,15 @@
           <div class="col-xs-12 col-sm-6 col-md-3">
             <div class="data-wall-ctn">
               <span class="dtat-wall-name">event筆數</span>
-              <span class="data-wall-numbers">{{ dataset.num_event|intcomma }}</span>
+              <span class="data-wall-numbers">{{ dataset.num_event|intcomma:False }}</span>
+            </div>
+          </div>
+        {% endif %}
+        {% if dataset.num_record and not dataset.num_occurrence%}
+          <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="data-wall-ctn">
+              <span class="dtat-wall-name">紀錄筆數</span>
+              <span class="data-wall-numbers">{{ dataset.num_record|intcomma:False }}</span>
             </div>
           </div>
         {% endif %}

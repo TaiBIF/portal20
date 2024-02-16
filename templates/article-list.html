@@ -125,11 +125,11 @@
           <span class="checkmark"></span>
           {% trans "活動" %}
         </label>
-        <label class="custom-input-ctn">
+        {% comment %} <label class="custom-input-ctn">
           <input type="checkbox" class="select-category-sci" data-type="pscience"{% if "PSCIENCE" in article_cat%} checked="checked"{% endif %}>
           <span class="checkmark"></span>
           {% trans "科普" %}
-        </label>
+        </label> {% endcomment %}
         <label class="custom-input-ctn">
           <input type="checkbox" class="select-category-sci" data-type="sci"{% if "SCI" in article_cat %} checked="checked"{% endif %}>
           <span class="checkmark"></span>

@@ -454,20 +454,16 @@
   <field name="_root_" type="string" docValues="false" indexed="true" stored="false"/>
   <field name="_text_" type="text_general" multiValued="true" indexed="true" stored="false"/>
   <field name="_version_" type="plong" indexed="false" stored="false"/>
-  <field name="acceptedNameUsage" type="string"/>
-  <field name="acceptedNameUsageID" type="string"/>
-  <field name="admin_memo" type="text_general"/>
   <field name="associatedMedia" type="string"/>
   <field name="associatedReferences" type="string"/>
   <field name="associatedSequences" type="string"/>
   <field name="associatedTaxa" type="string"/>
-  <field name="author" type="text_general"/>
+  <field name="acceptedNameUsage" type="string"/>
+  <field name="acceptedNameUsageID" type="string"/>
   <field name="basisOfRecord" type="string"/>
   <field name="behavior" type="string"/>
   <field name="catalogNumber" type="string"/>
   <field name="class" type="string"/>
-  <field name="class_key" type="plongs"/>
-  <field name="classzh" type="string"/>
   <field name="collectionCode" type="string"/>
   <field name="collectionID" type="string"/>
   <field name="continent" type="string"/>
@@ -479,45 +475,30 @@
   <field name="county" type="string"/>
   <field name="created" type="pdates"/>
   <field name="dataGeneralizations" type="string"/>
-  <field name="data_license" type="text_general"/>
   <field name="datasetID" type="string"/>
   <field name="datasetName" type="string"/>
-  <field name="dataset_name" type="string"/>
   <field name="dateIdentified" type="string"/>
   <field name="day" type="string"/>
   <field name="decimalLatitude" type="string"/>
-  <field name="decimalLatitude_x" type="string"/>
-  <field name="decimalLatitude_y" type="string"/>
   <field name="decimalLongitude" type="string"/>
-  <field name="decimalLongitude_x" type="string"/>
-  <field name="decimalLongitude_y" type="string"/>
   <field name="degreeOfEstablishment" type="string"/>
   <field name="disposition" type="string"/>
-  <field name="dwc_core_type" type="text_general"/>
   <field name="dynamicProperties" type="text_general"/>
   <field name="endDayOfYear" type="string"/>
   <field name="establishmentMeans" type="string"/>
   <field name="eventDate" type="string"/>
-  <field name="eventDate_x" type="text_general"/>
-  <field name="eventDate_y" type="text_general"/>
   <field name="eventID" type="string"/>
   <field name="eventRemarks" type="string"/>
   <field name="eventTime" type="string"/>
   <field name="family" type="string"/>
-  <field name="family_key" type="plongs"/>
-  <field name="familyzh" type="string"/>
   <field name="fieldNotes" type="string"/>
   <field name="fieldNumber" type="string"/>
   <field name="footprintSpatialFit" type="string"/>
   <field name="footprintWKT" type="string"/>
   <field name="forest_reserves" type="string"/>
   <field name="formation" type="string"/>
-  <field name="formatted_name" type="string"/>
-  <field name="gbif_dataset_uuid" type="string"/>
-  <field name="gbif_doi" type="text_general"/>
+  <field name="gbif_datasetKey" type="string"/>
   <field name="genus" type="string"/>
-  <field name="genus_key" type="plongs"/>
-  <field name="genuszh" type="string"/>
   <field name="geo_error" type="string"/>
   <field name="geodeticDatum" type="string"/>
   <field name="geologicalContextID" type="text_general"/>
@@ -531,7 +512,6 @@
   <field name="georeferencedDate" type="string"/>
   <field name="grid_x" type="pint" uninvertible="false" docValues="true" indexed="true" stored="true"/>
   <field name="grid_y" type="pint" uninvertible="false" docValues="true" indexed="true" stored="true"/>
-  <field name="guid" type="text_general"/>
   <field name="habitat" type="string"/>
   <field name="higherClassification" type="string"/>
   <field name="higherGeography" type="string"/>
@@ -544,8 +524,6 @@
   <field name="identificationVerificationStatus" type="string"/>
   <field name="identifiedBy" type="string"/>
   <field name="identifiedByID" type="text_general"/>
-  <field name="import_date" type="pdates"/>
-  <field name="index" type="plongs"/>
   <field name="individualCount" type="string"/>
   <field name="informationWithheld" type="string"/>
   <field name="infraspecificEpithet" type="string"/>
@@ -554,24 +532,14 @@
   <field name="island" type="string"/>
   <field name="islandGroup" type="string"/>
   <field name="kingdom" type="string"/>
-  <field name="kingdom_key" type="plongs"/>
-  <field name="kingdomzh" type="string"/>
   <field name="language" type="string"/>
-  <field name="latitude" type="pdoubles"/>
   <field name="license" type="string"/>
   <field name="lifeStage" type="string"/>
   <field name="locality" type="string"/>
-  <field name="locality_x" type="string"/>
-  <field name="locality_y" type="string"/>
   <field name="locationAccordingTo" type="string"/>
   <field name="locationID" type="string"/>
-  <field name="locationID_x" type="string"/>
-  <field name="locationID_y" type="string"/>
   <field name="locationRemarks" type="string"/>
-  <field name="locationRemarks_x" type="string"/>
-  <field name="locationRemarks_y" type="string"/>
   <field name="location_rpt" type="location_rpt"/>
-  <field name="longtitude" type="pdoubles"/>
   <field name="materialSampleID" type="string"/>
   <field name="maximumDepthInMeters" type="string"/>
   <field name="maximumElevationInMeters" type="string"/>
@@ -581,46 +549,31 @@
   <field name="mod_date" type="pdates"/>
   <field name="modified" type="string"/>
   <field name="month" type="string"/>
-  <field name="month_x" type="plongs"/>
-  <field name="month_y" type="pdoubles"/>
   <field name="municipality" type="string"/>
   <field name="name" type="string"/>
   <field name="nameAccordingTo" type="string"/>
   <field name="namePublishedIn" type="string"/>
-  <field name="name_taicol" type="string"/>
-  <field name="namecode" type="plongs"/>
   <field name="nomenclaturalCode" type="string"/>
   <field name="nomenclaturalStatus" type="string"/>
-  <field name="occID" type="plongs"/>
   <field name="occurrenceID" type="string"/>
   <field name="occurrenceRemarks" type="string"/>
   <field name="occurrenceStatus" type="string"/>
   <field name="order" type="string"/>
-  <field name="order_key" type="plongs"/>
-  <field name="orderzh" type="string"/>
   <field name="organismID" type="string"/>
   <field name="organismName" type="string"/>
   <field name="organismQuantity" type="string"/>
   <field name="organismQuantityType" type="string"/>
   <field name="organismRemarks" type="string"/>
-  <field name="organization_id" type="pdoubles"/>
-  <field name="organization_name" type="string"/>
   <field name="originalNameUsage" type="string"/>
   <field name="otherCatalogNumbers" type="string"/>
   <field name="ownerInstitutionCode" type="string"/>
   <field name="parentEventID" type="string"/>
-  <field name="parentEventID_x" type="string"/>
-  <field name="parentEventID_y" type="string"/>
   <field name="path" type="text_general"/>
   <field name="phylum" type="string"/>
-  <field name="phylum_key" type="plongs"/>
-  <field name="phylumzh" type="string"/>
   <field name="pointRadiusSpatialFit" type="string"/>
   <field name="preparations" type="string"/>
   <field name="previousIdentifications" type="string"/>
-  <field name="pub_date" type="pdates"/>
   <field name="publisher" type="string" uninvertible="false" indexed="false" stored="false"/>
-  <field name="quality" type="string"/>
   <field name="recordNumber" type="string"/>
   <field name="recordedBy" type="string"/>
   <field name="references" type="string"/>
@@ -631,24 +584,17 @@
   <field name="sampleSizeValue" type="string"/>
   <field name="samplingEffort" type="string"/>
   <field name="samplingProtocol" type="string"/>
-  <field name="samplingProtocol_x" type="string"/>
-  <field name="samplingProtocol_y" type="string"/>
   <field name="scientificName" type="string"/>
   <field name="scientificNameAuthorship" type="string"/>
   <field name="scientificNameID" type="string"/>
   <field name="selfProduced" type="booleans"/>
   <field name="sex" type="string"/>
-  <field name="source_id" type="string"/>
-  <field name="species_key" type="plongs"/>
   <field name="specificEpithet" type="string"/>
   <field name="startDayOfYear" type="string"/>
   <field name="stateProvince" type="string"/>
   <field name="status" type="string"/>
   <field name="subfamily" type="string"/>
   <field name="subgenus" type="string"/>
-  <field name="taibifDatasetID" type="string"/>
-  <field name="taibif_Latitude" type="plongs"/>
-  <field name="taibif_Longitude" type="plongs"/>
   <field name="taibif_accepted_namecode" type="string"/>
   <field name="taibif_basisOfRecord" type="string"/>
   <field name="taibif_ch_county" type="string"/>
@@ -672,33 +618,24 @@
   <field name="taibif_occ_id" type="string"/>
   <field name="taibif_occurrenceStatus" type="string"/>
   <field name="taibif_scientificname" type="string"/>
-  <field name="taibif_taxonGroup" type="text_general"/>
+  <field name="taibif_taxonGroup" type="string"/>
   <field name="taibif_taxon_name_zh" type="string"/>
-  <field name="taibif_typeStatus" type="text_general"/>
+  <field name="taibif_typeStatus" type="string"/>
+  <field name="taibif_formattedName" type="string"/>
   <field name="taibif_uuid" type="string"/>
-  <field name="taibif_vernacular_name" type="string"/>
   <field name="taibif_year" type="plongs"/>
   <field name="taicol_accepted_namecode" type="string"/>
   <field name="taicol_id" type="string"/>
   <field name="taicol_namecode" type="string"/>
-  <field name="taicol_taxon_id" type="text_general"/>
   <field name="taxonID" type="string"/>
   <field name="taxonRank" type="string"/>
   <field name="taxonRemarks" type="string"/>
-  <field name="taxon_backbone" type="string"/>
   <field name="taxon_error" type="string"/>
   <field name="taxon_id" type="pint"/>
-  <field name="taxon_rank" type="string"/>
   <field name="taxonomicStatus" type="string"/>
   <field name="time_error" type="string"/>
   <field name="time_issue" type="string"/>
   <field name="title" type="string"/>
-  <field name="tmp_event_Date" type="pdates"/>
-  <field name="tmp_event_day" type="plongs"/>
-  <field name="tmp_event_month" type="plongs"/>
-  <field name="tmp_event_year" type="plongs"/>
-  <field name="tmp_geodeticDatum" type="string"/>
-  <field name="tmp_sN" type="string"/>
   <field name="type" type="string"/>
   <field name="typeStatus" type="string"/>
   <field name="verbatimCoordinateSystem" type="string"/>
@@ -717,8 +654,6 @@
   <field name="waterBody" type="string"/>
   <field name="wildlife_refuges" type="string"/>
   <field name="year" type="string"/>
-  <field name="year_x" type="text_general"/>
-  <field name="year_y" type="text_general"/>
   <field name="taibif_datatsetKey" type="string"/>
   <field name="taibif_occurrenceID" type="string"/>
   <field name="taibif_infraspecificEpithet" type="string"/>
@@ -739,7 +674,6 @@
   <field name="taibif_recordedBy" type="string"/>
   <field name="taibif_mediaType" type="string"/>
   <field name="geo_issue" type="string"/>
-  <field name="taibif_county_zh" type="string"/>
   <field name="taibif_kingdom" type="string"/>
   <field name="taibif_phylum" type="string"/>
   <field name="taibif_class" type="string"/>
@@ -755,7 +689,6 @@
   <field name="taibif_lastInterpreted" type="string"/>
   <field name="gbifID" type="string"/>
   <field name="datasetKey" type="string"/>
-  <field name="species" type="string"/>
   <field name="verbatimScientificName" type="string"/>
   <field name="verbatimScientificNameAuthorship" type="string"/>
   <field name="publishingOrgKey" type="string"/>
@@ -768,6 +701,10 @@
   <field name="taibif_decimalLatitude" type="string"/>
   <field name="taibif_decimalLongitude" type="string"/>
   <field name="taibif_issue" type="string"/>
+  <field name="taibif_eventDate" type="string" />
+  <field name="taibif_coordinatePrecision" type="string"/>
+  <field name="taibif_county_zh" type="string"/>
+  <field name="taibif_eventTime" type="string"/>
 
 
 
@@ -842,25 +779,25 @@
   <dynamicField name="*_p" type="location" indexed="true" stored="true"/>
   <copyField source="basisOfRecord" dest="_text_"/>
   <copyField source="class" dest="_text_"/>
-  <copyField source="classzh" dest="_text_"/>
+  <copyField source="taibif_class" dest="_text_"/>
   <copyField source="country" dest="_text_"/>
   <copyField source="countryCode" dest="_text_"/>
   <copyField source="county" dest="_text_"/>
   <copyField source="datasetName" dest="_text_"/>
   <copyField source="family" dest="_text_"/>
-  <copyField source="familyzh" dest="_text_"/>
+  <copyField source="taibif_family" dest="_text_"/>
   <copyField source="genus" dest="_text_"/>
-  <copyField source="genuszh" dest="_text_"/>
+  <copyField source="taibif_genus" dest="_text_"/>
   <copyField source="habitat" dest="_text_"/>
   <copyField source="island" dest="_text_"/>
   <copyField source="kingdom" dest="_text_"/>
-  <copyField source="kingdomzh" dest="_text_"/>
+  <copyField source="taibif_kingdom" dest="_text_"/>
   <copyField source="license" dest="_text_"/>
   <copyField source="locality" dest="_text_"/>
   <copyField source="order" dest="_text_"/>
-  <copyField source="orderzh" dest="_text_"/>
+  <copyField source="taibif_order" dest="_text_"/>
   <copyField source="phylum" dest="_text_"/>
-  <copyField source="phylumzh" dest="_text_"/>
+  <copyField source="taibif_phylum" dest="_text_"/>
   <copyField source="publisher" dest="_text_"/>
   <copyField source="rights" dest="_text_"/>
   <copyField source="scientificName" dest="_text_"/>
@@ -870,11 +807,11 @@
   <copyField source="taibif_county" dest="_text_"/>
   <copyField source="taibif_dataset_name" dest="_text_"/>
   <copyField source="taibif_dataset_name_zh" dest="_text_"/>
-  <copyField source="taibif_scientificname" dest="_text_"/>
+  <copyField source="taibif_scientificName" dest="_text_"/>
   <copyField source="taibif_taxon_name_zh" dest="_text_"/>
   <copyField source="vernacularName" dest="_text_"/>
   <copyField source="taibif_taxonGroup" dest="taibif_taxonGroup_str" maxChars="256"/>
-  <copyField source="taicol_taxon_id" dest="taicol_taxon_id_str" maxChars="256"/>
+  <copyField source="taibif_taicolTaxonID" dest="taibif_taicolTaxonID_str" maxChars="256"/>
   <copyField source="path" dest="path_str" maxChars="256"/>
   <copyField source="taibif_typeStatus" dest="taibif_typeStatus_str" maxChars="256"/>
 </schema>

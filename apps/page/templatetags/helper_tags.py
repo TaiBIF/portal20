@@ -31,16 +31,32 @@ def get_pagination_info(object_list, args):
     else:
         page_range = object_list.paginator.page_range
 
-    # query_string
     query_string = ''
-    qs_list = ['{}={}'.format(i, args[i]) for i in args if i != 'page']
+    qs_list = []
+    key_list = []
+    value_list = []
+
+    for key, value in args.lists():
+        key_list.append(key)
+        value_list.append(value)
+        
+        if key != 'page' and isinstance(value, list):
+            for item in value:
+                qs_list.append(f'{key}={item}')
+        elif key != 'page':
+            qs_list.append(f'{key}={value}')
+
     if qs_list:
-        query_string = '&{}'.format('&'.join(qs_list))
+        query_string = '&' + '&'.join(qs_list)
 
     return {
+        'arg': args,
+        'key_list': key_list,
+        'value_list': value_list,
         'page_range': page_range,
         'append_query_string': query_string
     }
+
 
 @register.simple_tag
 def get_taibif_env():

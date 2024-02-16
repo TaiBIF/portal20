@@ -12,7 +12,7 @@ CODE_MAPPING = {
     "cat": {
         "news": "新聞",
         "event": "活動",
-        "pscience": "科普",
+        # "pscience": "科普",
         "sci": "科普文章",
         "tech": "技術專欄",
         "pub": "出版品資料",

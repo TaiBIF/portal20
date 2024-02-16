@@ -106,6 +106,18 @@ JSON_FACET_MAP = {
             'mincount': 0,
             'limit': -1,
         },
+         'taibif_datasetKey': {
+            'type':'terms',
+            'field':'taibif_datasetKey',
+            'mincount': 0,
+            'limit': -1,
+        },
+          'selfProduced': {
+            'type':'terms',
+            'field':'selfProduced',
+            'mincount': 0,
+            'limit': -1,
+        },
     }
 }
   
@@ -172,7 +184,9 @@ class SolrQuery(object):
         self.solr_error = ''
         self.solr_response = {}
         self.solr_url = ''
-        self.solr_q = '*:*'
+        self.solr_q = 'basisOfRecord:*' # Only fetch occurrence data, using basisOfRecord to estimate
+        # Limit the respoense fields
+        self.filter_field = 'taibif_vernacularName,taibif_country,taibif_locality,taibif_basisOfRecord,basisOfRecord,taibif_datasetKey,taibif_formattedName,taibif_dataset_name_zh,taibif_kingdom,taibif_phylum,taibif_class,taibif_order,taibif_family,taibif_genus,taibif_occ_id,taibif_eventDate'
 
     def generate_solr_url(self, req_lists=[]):
         map_query = ''
@@ -213,7 +227,10 @@ class SolrQuery(object):
                         self.solr_tuples.append(('fq', f'{key}:[{vlist[0]} TO {vlist[1]}]'))
                     else:
                         if key in JSON_FACET_MAP[self.core]:
-                            self.solr_tuples.append(('fq', '{}:"{}"'.format(field, values[0])))
+                            if key == 'selfProduced': # 布林值搜尋 value 不需要轉成 string
+                                self.solr_tuples.append(('fq', '{}:{}'.format(field, values[0])))
+                            else:
+                                self.solr_tuples.append(('fq', '{}:"{}"'.format(field, values[0])))
                 else:
                     self.solr_tuples.append(('fq', ' OR '.join([f'{field}:"{x}"' for x in values])))
                     #self.solr_tuples.append(('fq', 'taibif_dataset_name:A OR taibif_dataset_name:B'))
@@ -252,7 +269,7 @@ class SolrQuery(object):
             self.solr_tuples.append(('json.facet', '{'f'{s}''}'))
             
         query_string = urllib.parse.urlencode(self.solr_tuples)
-        self.solr_url = f'{SOLR_PREFIX}{self.core}/select?{query_string}'
+        self.solr_url = f'{SOLR_PREFIX}{self.core}/select?fl={self.filter_field}&{query_string}'
         return self.solr_url
 
     def request(self, req_lists=[]):
@@ -389,6 +406,7 @@ class SolrQuery(object):
                 'label': '資料集 Dataset',
                 'rows': rows,
             })
+            
         if data := resp['facets'].get('publisher', ''):
             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
             menus.append({
@@ -401,7 +419,16 @@ class SolrQuery(object):
             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
             menus.append({
                 'key':'license',
-                'label': '授權類型 Licence',
+                'label': '授權類型 License',
+                'rows': rows,
+            })
+        
+        if data := resp['facets'].get('selfProduced', ''):
+            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
+            
+            menus.append({
+                'key':'selfProduced',
+                'label': '資料來源 Source',
                 'rows': rows,
             })
 
@@ -431,7 +458,7 @@ class SolrQuery(object):
                     ]
             menus.append({
                 'key':'issues',
-                'label': '問題 issues',
+                'label': '問題 Issues',
                 'rows': rows,
             })
             
