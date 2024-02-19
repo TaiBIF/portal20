@@ -6,11 +6,13 @@ import datetime
 from datetime import date
 
 def update_namecode(row):
-    gbif_url = 'http://127.0.0.1:8080/v2/api.php?format=json&source=gbif_backbone_txn&best=yes&names=' + str(row['name'])
+    gbif_url = 'http://127.0.0.1:8081/api.php?format=json&source=gbif_backbone_txn&best=yes&names=' + str(row['name'])
 
     # solr 呼叫 nomanmatch 查詢
-    gbif_response = requests.post(gbif_url, json={"test": "in"})
-    gbif_data = json.loads(gbif_response.content.decode('utf-8'))
+    # gbif_response = requests.post(gbif_url, json={"test": "in"})
+    # gbif_data = json.loads(gbif_response.content.decode('utf-8'))
+    gbif_response = requests.get(gbif_url)
+    gbif_data = gbif_response.json()
 
     try:
         if gbif_data['data'][0][0]['results'][0]['match_type'] == 'Full match':
@@ -22,9 +24,11 @@ def update_namecode(row):
 
 
 def check_namecode(row):
-    taicol_url = 'http://127.0.0.1:8080/v2/api.php?format=json&source=taicol&best=yes&names=' + str(row['nM_name'])
-    taicol_response = requests.post(taicol_url, json={"test": "in"})
-    taicol_data = json.loads(taicol_response.content.decode('utf-8'))
+    taicol_url = 'http://127.0.0.1:8081/api.php?format=json&source=taicol&best=yes&names=' + str(row['nM_name'])
+    # taicol_response = requests.post(taicol_url, json={"test": "in"})
+    # taicol_data = json.loads(taicol_response.content.decode('utf-8'))
+    taicol_response = requests.get(taicol_url)
+    taicol_data = taicol_response.json()
 
 
     # taicol_data 無資料會報錯後去查詢GBIF
@@ -33,9 +37,12 @@ def check_namecode(row):
             row['taxon_backbone'] = 'TaiCOL'
     except:
         
-        gbif_url = 'http://127.0.0.1:8080/v2/api.php?format=json&source=gbif_backbone_txn&best=yes&names='+str(row['nM_name'])
-        gbif_response = requests.post(gbif_url, json={"test": "in"})
-        gbif_data = json.loads(gbif_response.content.decode('utf-8'))
+        gbif_url = 'http://127.0.0.1:8080/api.php?format=json&source=gbif_backbone_txn&best=yes&names='+str(row['nM_name'])
+        # gbif_response = requests.post(gbif_url, json={"test": "in"})
+        # gbif_data = json.loads(gbif_response.content.decode('utf-8'))
+        
+        gbif_response = requests.get(gbif_url)
+        gbif_data = gbif_response.json()
         
         try:
             if gbif_data['data'][0][0]['results'][0]['match_type'] == 'Full match':
@@ -122,7 +129,7 @@ taxon_file['taibif_namecode'] = ''
 
 tmp_nomenMatch_result = taxon_file.apply(update_namecode, axis=1)
 
-# 合併specie 資訊
+# 合併species 資訊
 seperated_file = seperated_file.rename(columns={'taibif_scientificname':'name','taxon_backbone':'backbone','taxon_rank':'rank'})
 seperated_file = seperated_file.drop(columns=['Unnamed: 0','nM_name','taibif_vernacular_name','kingdomzh','phylumzh','classzh','orderzh','familyzh','genuszh'])
 # print('seperated_file == ',seperated_file)

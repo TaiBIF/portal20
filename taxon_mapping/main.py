@@ -160,21 +160,21 @@ def update_highertaxon_api(row):
     return pd.Series(row) 
 
 
-# 前置準備 - 建立 Postgres 資料庫於本地端，目前設置port為 9432
+# 前置準備 - 建立 Postgres 資料庫於本地端，目前設置port為 5432
 
 # 1. 原本 TaiCOL 更新
 # 2. 新 TaiCOL 加入
 
 print("==== STEP 0 = Load Database Information ====")
 
-engine = db.create_engine('postgresql://postgres:example@127.0.0.1:9432/taibif') 
+engine = db.create_engine('postgresql://postgres:example@127.0.0.1:5432/taibif') 
 connection = engine.connect()
 df_taxon = pd.read_sql('SELECT * FROM data_taxon', connection)
 
 # ---- update Taxon information 
-sql_delete_temp_taxon =  "DELETE FROM temp_taxon"
-with engine.begin() as conn:    
-    conn.execute(sql_delete_temp_taxon)
+# sql_delete_temp_taxon =  "DELETE FROM temp_taxon"
+# with engine.begin() as conn:    
+#     conn.execute(sql_delete_temp_taxon)
 
 df_taxon['mapping_error'] = ''
 df_taicolid_notnull = df_taxon[df_taxon.taicol_taxon_id.notnull()]
