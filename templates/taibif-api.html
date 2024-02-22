@@ -61,7 +61,7 @@
                   <li>{version}：API 版本，此版本為 v2 。</li>
                   <li>{type}：查詢資料種類，目前提供 occurrence、dataset 與 publisher 。</li>
 
-                  <li>{mode}：<strong>限出現紀錄 (occurrence) 資料類型查詢</strong>，目前提供 detail_occ（轉譯欄位 + 基本欄位 + 常用欄位資料回傳）與 raw_occ（原始資料回傳）。
+                  <li>{mode}：<strong>限出現紀錄 (occurrence) 資料類型查詢</strong>，目前提供 detail_occ（轉釋欄位 + 基本欄位 + 常用欄位資料回傳）與 raw_occ（原始資料回傳）。
                     <br>各自的差別請看<a href="#" data-cat="occurrence_api" class="pub-data-nav-item">出現紀錄查詢類型</a>說明。</li>
 
                   <li>{parameter}：查詢參數</li>
@@ -120,8 +120,8 @@
           <table class="table table-striped table-bordered">
             <thead><tr><th>定義名稱</th><th>描述</th><th>欄位名稱</th></tr></thead>
             <tbody>
-            <tr><td>轉譯資料</td><td>TaiBIF 針對特定欄位資料做清理 (例如統一格式等)</td><td>共 33 個欄位：taibifOccurrenceID、basisOfRecord、scientificName、taxonGroup、taxonRank、scientificNameID、isPreferredName、taxonBackbone、taicolTaxonID、gbifAcceptedID、kingdom、phylum、class、order、family、genus、eventDate、year、month、day、geodeticDatum、verbatimSRS、decimalLongitude、decimalLatitude、coordinateUncertaintyInMeters、countryCode、country、county、habitatReserve、wildlifeReserve、occurrenceStatus、selfProduced、license</td></tr>
-            <tr><td>基本資料</td><td>出現紀錄相關的重要欄位</td><td>共 17 個欄位：occurrenceID、dataGeneralizations、coordinatePrecision、locality、organismQuantity、organismQuantityType、datasetName、datasetShortName、typeStatus、recordedBy、recordNumber、preservation、catalogNumber、taibifCreatedDate、taibifModifiedDate、associatedMedia、mediaLicense</td></tr>
+            <tr><td>轉釋資料</td><td>TaiBIF 針對特定欄位資料做清理 (例如統一格式等)</td><td>共 33 個欄位：taibifOccurrenceID、basisOfRecord、scientificName、taxonGroup、taxonRank、scientificNameID、isPreferredName、taxonBackbone、taicolTaxonID、gbifAcceptedID、kingdom、phylum、class、order、family、genus、eventDate、year、month、day、geodeticDatum、verbatimSRS、decimalLongitude、decimalLatitude、coordinateUncertaintyInMeters、countryCode、country、county、habitatReserve、wildlifeReserve、occurrenceStatus、selfProduced、license</td></tr>
+            <tr><td>基本資料</td><td>出現紀錄相關的重要欄位</td><td>共 18 個欄位：originalScientificName、occurrenceID、dataGeneralizations、coordinatePrecision、locality、organismQuantity、organismQuantityType、datasetName、datasetShortName、typeStatus、recordedBy、recordNumber、preservation、catalogNumber、taibifCreatedDate、taibifModifiedDate、associatedMedia、mediaLicense</td></tr>
             <tr><td>常用資料</td><td>出現紀錄相關的次要欄位</td><td>共 5 個欄位：
               {% comment %} modifiedDate、 {% endcomment %}
               gbifID、taibifDatasetID、gbifDatasetID、establishmentMeans、issue</td></tr>
@@ -132,7 +132,7 @@
           <table class="table table-striped table-bordered">
             <thead><tr><th>類型 {mode}</th><th>回傳內容</th><th>回傳欄位</th></tr></thead>
             <tbody>
-            <tr><td>detail_occ</td><td>轉譯資料 + 基本資料 + 常用資料</td><td>共回傳 55 個欄位</td></tr>
+            <tr><td>detail_occ</td><td>轉釋資料 + 基本資料 + 常用資料</td><td>共回傳 56 個欄位</td></tr>
             <tr><td>raw_occ</td><td>原始資料</td><td>資料上傳者所提供的所有資料</td></tr>
             </tbody>
           </table>
@@ -194,6 +194,7 @@
             <thead><tr><th>回傳欄位</th><th>說明</th><th>型態</th></tr></thead>
             <tbody>
               <tr><td colspan="3">基本資訊</td></tr>
+              <tr><td>originalScientificName</td><td>原始紀錄物種</td><td>String</td></tr>
               <tr><td>taibifCreatedDate</td><td>資料建立日期</td><td>String</td></tr>
               <tr><td>datasetShortName</td><td>資料集名稱</td><td>String</td></tr>
               <tr><td colspan="3">物種資訊</td></tr>

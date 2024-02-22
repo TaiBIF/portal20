@@ -1002,14 +1002,17 @@ def occurrence_api(request):
             taicolTaxonID = i['taibif_accepted_namecode'] if 'taibif_accepted_namecode' in i else (i['taibif_taicolTaxonID'] if 'taibif_taicolTaxonID' in i else None)
             gbifAcceptedID = i['taxonKey'] if 'taxonKey' in i else None
             scientificName = i['taibif_scientificname'] if 'taibif_scientificname' in i else (i['taibif_scientificName'] if 'taibif_scientificName' in i else None)
+            originalScientificName = i['scientificName'] if 'scientificName' in i else None
             taxonRank = i['taibif_taxonRank'] if 'taibif_taxonRank' in i else None
         elif backbone == 'GBIF':
             gbifAcceptedID = int(float(i['taibif_accepted_namecode'])) if 'taibif_accepted_namecode' in i else None
             scientificName = i['taibif_scientificname'] if 'taibif_scientificname' in i else None
+            originalScientificName = i['scientificName'] if 'scientificName' in i else None
             taxonRank = i['taibif_taxonRank'] if 'taibif_taxonRank' in i else None
         elif backbone == None:
             gbifAcceptedID = i['taxonKey'] if 'taxonKey' in i else None
-            scientificName = i['scientificName'] if 'scientificName' in i else None
+            scientificName = ''
+            originalScientificName = i['scientificName'] if 'scientificName' in i else None
             taxonRank = i['taibif_taxonRank'] if 'taibif_taxonRank' in i else None
             
         issue = None
@@ -1031,10 +1034,11 @@ def occurrence_api(request):
             issues.append('RecordedDateInvalid')
         
         res_list.append({
-            # 轉譯資料
+            # 轉釋資料
             'taibifOccurrenceID':i['taibif_occ_id'],
             'basisOfRecord':i['taibif_basisOfRecord'] if 'taibif_basisOfRecord' in i else None,
             'scientificName': scientificName,
+            'originalScientificName': originalScientificName,
             'taxonGroup':group,
             'taxonRank': taxonRank,
             'scientificNameID':i['taibif_namecode'] if 'taibif_namecode' in i else  None,
