@@ -2210,10 +2210,19 @@ a.clamp2row {
   margin-right: 2px;
 }
 
-.article-content-wrapper > p > img {
+.article-content-wrapper p img {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  height: 560px;
+}
+
+.article-content-wrapper p img[alt~="small-size"] {
+  height: 380px;
+}
+
+.article-content-wrapper p img[alt~="large-size"] {
+  height: 640px;
 }
 
 .article-img-wrapper {
