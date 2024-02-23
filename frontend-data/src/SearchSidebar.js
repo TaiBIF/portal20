@@ -1,4 +1,4 @@
-import React, {useState, useRef, forwardRef, useImperativeHandle} from 'react';
+import React, {useState} from 'react';
 //import Accordion from "./components/Accordion";
 //import Tree from "./components/Tree";
 import SearchTaxon from './SearchSidebarTaxon';
@@ -17,8 +17,7 @@ function Accordion(props) {
   const [filteredData, setFilteredData] = useState([]);
   const [taxonFiltedData, setTaxonFiltedData] = useState([]);
 
-  const yearRange = [1795, 2023];// TODO: hard-coded
-  let yearSelected = yearRange;
+  let yearSelected = props.yearValue;
   filters.forEach((x) => {
     const [key, values] = x.split('=');
     if (key == 'year') {
@@ -26,7 +25,7 @@ function Accordion(props) {
       yearSelected = [parseInt(vlist[0]), parseInt(vlist[1])];
     }
   });
-  const [yearValue, setYearValue] = useState(yearSelected);
+
   const long_term = new Set(['country',"taibif_county","dataset","publisher","highertaxon","rank"])
   let isLong = false;
   if (long_term.has(content.key)){
@@ -44,17 +43,11 @@ function Accordion(props) {
   }
 
   const handleSliderCommitted = (event) => {
-    onClick(event, content.key, yearValue.join(','))
+    onClick(event, content.key, props.yearValue.join(','))
   };
   const clearYearCondition = (event) => {
-    yearSelected = [1795, 2023]
-    setYearValue(yearSelected)
     props.clearCondition(event,content.key)
   };
-  // const handleClearClick = () => {
-  //   yearSelected = [1795, 2023]
-  //   setYearValue(yearSelected);
-  // };
   
   const datasetMenuItems = content.rows.map((x) => {
     if (content.key ===  'dataset'){   
@@ -89,11 +82,11 @@ function Accordion(props) {
           
           <Slider 
             style={{width:'90%',color: "#846C5B"}}
-            value={yearValue}
-            onChange={(e, newRange) => setYearValue(newRange)}
+            value={props.yearValue}
+            onChange={(e, newRange) => props.onSilderChange(newRange)}
             onChangeCommitted={handleSliderCommitted}
-            max={yearRange[1]}
-            min={yearRange[0]}
+            max={props.defaultYearRange[1]}
+            min={props.defaultYearRange[0]}
             valueLabelDisplay="auto"
             aria-labelledby="range-slider"
           />
@@ -238,6 +231,18 @@ function Accordion(props) {
 }
 
 function SearchSidebar(props) {
+  const currentYear = new Date().getFullYear();
+  const defaultYearRange = [1795, currentYear];
+  const [yearValue, setYearValue] = useState(defaultYearRange);
+
+  const handleSilderOnChange = (newYearRange) => {
+    setYearValue(newYearRange);
+  }
+
+  const handleCleanupOnClick = ()=> {
+    setYearValue(defaultYearRange);
+  }
+
   let isOccurrence = false;
   let searchTypeLabel = '';
   const [queryKeyword, setQueryKeyword] = useState(props.queryKeyword);
@@ -314,10 +319,15 @@ function SearchSidebar(props) {
       {searchTaxonContainer}
       {menuList}
       </div>)*/
+
+
   let accordionList = [];
   if (props.menus) {
     props.menus.forEach((m) => {
-      accordionList.push(<Accordion key={m.key} content={m} onClick={props.onClick} filters={props.filters} clearCondition={props.clearCondition}/>);
+      accordionList.push(<Accordion key={m.key} content={m} onClick={props.onClick} filters={props.filters} clearCondition={props.clearCondition} 
+                                    defaultYearRange={ defaultYearRange } 
+                                    yearValue={ yearValue }
+                                    onSilderChange={ handleSilderOnChange }/>);
     });
   }
   let formControlPlaceholder = '';
@@ -326,6 +336,7 @@ function SearchSidebar(props) {
   } else if (props.language === 'en'){
     formControlPlaceholder = 'Keyword Search';
   }
+
   return (
       <div className="search-sidebar">
         <div className="modal right fade modal-search-side-wrapper" id="flowBtnModal" tabIndex="-1" role="dialog">
@@ -333,7 +344,7 @@ function SearchSidebar(props) {
             <div className="modal-content">
               <div className="search-sidebar-header">
                 <span>{searchTypeLabel}</span>
-                <div className="search-sidebar-header-del" data-toggle="tooltip" data-placement="left" title="清除" onClick={props.onClickClear}>
+                <div className="search-sidebar-header-del" data-toggle="tooltip" data-placement="left" title="清除" onClick={() => {props.onClickClear(); handleCleanupOnClick()}}>
                   {filterCount > 0 ? <span className="badge">{filterCount}</span> : null}
                   <span className="glyphicon glyphicon-trash"></span>
                 </div>
