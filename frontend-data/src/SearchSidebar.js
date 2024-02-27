@@ -46,6 +46,7 @@ function Accordion(props) {
     onClick(event, content.key, props.yearValue.join(','))
   };
   const clearYearCondition = (event) => {
+    props.onSilderChange(props.defaultYearRange);
     props.clearCondition(event,content.key)
   };
   
