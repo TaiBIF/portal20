@@ -15,6 +15,7 @@ DATA_MAPPING = {
         'CN': '中國',
         'IN':'印度',
         'VN':'越南',
+        'AU': '澳洲',
         'unknown':'其他',
         None: '未知'
     },
