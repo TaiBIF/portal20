@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path, include
 from django.views.static import serve
+from django.conf.urls.i18n import i18n_patterns
 
 from conf import settings
 from apps.data.views import (
@@ -58,14 +59,18 @@ urlpatterns = [
     path('',  include('apps.page.urls')),
     path('admin/', admin.site.urls),
     path('500', response_error_handler),
-    path('400', page_not_found_view),
-
     ##Kuan-Yu added for API hichart function
     # path('test_y/', ChartYear, name='ChartYear'),
     # path('test_m/', ChartMonth, name='ChartMonth'),
     # path('taxon_bar/', taxon_bar, name='taxon_bar'),
+    path("i18n/", include("django.conf.urls.i18n")),
+]
 
-    ]
+urlpatterns += i18n_patterns(
+    path("i18n/", include("django.conf.urls.i18n")),
+    path('',  include('apps.page.urls')),
+)
+
 
 # AWS SES
 #urlpatterns += (path(r'^admin/django-ses/', include('django_ses.urls')),)

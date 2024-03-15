@@ -2,119 +2,115 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}生物多樣性資訊概論{% endblock %}
+{% block title %}{% trans "生物多樣性資訊概論" %}{% endblock %}
 
 
 {% block main %}
 
 
- <!-- topnav begin -->
- <div class="bg-main-pale">
+<!-- topnav begin -->
+<div class="bg-main-pale">
     <div class="container">
         <div class="caption-mascot-wrapper">
-            <h1 class="title">生物多樣性資訊概論</h1>
+            <h1 class="title">{% trans "生物多樣性資訊概論" %}</h1>
             <img src="{% static 'images/mascot-frog.png'%}" alt="" class="symbol">
         </div>
     </div>
 </div>
-  <!-- topnav end -->
- 
+<!-- topnav end -->
+
     
-  <!-- container begin -->
+<!-- container begin -->
 <div class="container my-5">
     <!-- breadcrumb begin -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-            <li class="breadcrumb-item">教育資源</li>
-            <li class="breadcrumb-item active" aria-current="page">生物多樣性資訊概論</li>
+            <li class="breadcrumb-item"><a href="index.html">{% trans "首頁" %}</a></li>
+            <li class="breadcrumb-item">{% trans "教育資源" %}</li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans "生物多樣性資訊概論" %}</li>
         </ol>
     </nav>
     <!-- breadcrumb end -->
 
     <h1 class="heading-lg-ul">
-        生物多樣性資訊概論
+        {% trans "生物多樣性資訊概論" %}
     </h1>
 
     <!-- panel-group begin -->
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
         <!-- 1st accordion-panel begin -->
         <div class="panel panel-main">
-          <!-- accordion heading begin -->
-          <div class="panel-heading" role="tab" id="headingOne">
-            <h4 class="panel-title">
-              <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                第一章：介紹
-              </a>
-            </h4>
-          </div>
-          <!-- accordion heading end -->
-          <!-- accordion collapse begin -->
-          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-            <ul class="panel-body">
-              <li><a href="{% url 'cookbook_detail_1' %}#section1">1.1 生物多樣性是什麼？</a></li>
-              <li><a href="{% url 'cookbook_detail_1' %}#section2">1.2 生物多樣性的層級</a></li>
-              <li><a href="{% url 'cookbook_detail_1' %}#section3">1.3 生物多樣性資訊學是什麼？</a></li>
-              <li><a href="{% url 'cookbook_detail_1' %}#section3">1.4 聚焦於物種生物多樣性</a></li>
-              <li><a href="{% url 'cookbook_detail_1' %}#section3">1.5 生物多樣性資料 / 資訊</a></li>
-            </ul>
-          </div>
-          <!-- accordion collapse end -->
+            <!-- accordion heading begin -->
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                    {% trans "第一章：介紹" %}
+                </a>
+                </h4>
+            </div>
+            <!-- accordion heading end -->
+            <!-- accordion collapse begin -->
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <ul class="panel-body">
+                    <li><a href="{% url 'cookbook_detail_1' %}#section1">1.1 {% trans "生物多樣性是什麼？" %}</a></li>
+                    <li><a href="{% url 'cookbook_detail_1' %}#section2">1.2 {% trans "生物多樣性的層級" %}</a></li>
+                    <li><a href="{% url 'cookbook_detail_1' %}#section3">1.3 {% trans "生物多樣性資訊學是什麼？" %}</a></li>
+                    <li><a href="{% url 'cookbook_detail_1' %}#section3">1.4 {% trans "聚焦於物種生物多樣性" %}</a></li>
+                    <li><a href="{% url 'cookbook_detail_1' %}#section3">1.5 {% trans "生物多樣性資料 / 資訊" %}</a></li>
+                </ul>
+            </div>
+            <!-- accordion collapse end -->
         </div>
         <!-- 1st accordion-panel begin -->
-  
+
         <!-- 2nd accordion-panel begin -->
         <div class="panel panel-main">
-          <!-- accordion heading begin -->
-          <div class="panel-heading" role="tab" id="headingTwo">
-            <h4 class="panel-title">
-              <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                第二章：資料標準化
-              </a>
-            </h4>
-          </div>
-          <!-- accordion heading end -->
-          <!-- accordion collapse begin -->
-          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-            <ul class="panel-body">
-              <li><a href="{% url 'cookbook_detail_2' %}#section1">2.1 使用通用的原始資料格式</a></li>
-              <li><a href="{% url 'cookbook_detail_2' %}#section2">2.2 使用達爾文核心集作為主要標準</a></li>
-              <li><a href="{% url 'cookbook_detail_2' %}#section3">2.3 使用純文字檔而非Excel檔</a></li>
-              <li><a href="{% url 'cookbook_detail_2' %}#section4">2.4 使用UTF-8進行字元編碼</a></li>
-            </ul>
-          </div>
-          <!-- accordion collapse end -->
+            <!-- accordion heading begin -->
+            <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    {% trans "第二章：資料標準化" %}
+                </a>
+                </h4>
+            </div>
+            <!-- accordion heading end -->
+            <!-- accordion collapse begin -->
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <ul class="panel-body">
+                    <li><a href="{% url 'cookbook_detail_2' %}#section1">2.1 {% trans "使用通用的原始資料格式" %}</a></li>
+                    <li><a href="{% url 'cookbook_detail_2' %}#section2">2.2 {% trans "使用達爾文核心集作為主要標準" %}</a></li>
+                    <li><a href="{% url 'cookbook_detail_2' %}#section3">2.3 {% trans "使用純文字檔而非Excel檔" %}</a></li>
+                    <li><a href="{% url 'cookbook_detail_2' %}#section4">2.4 {% trans "使用UTF-8進行字元編碼" %}</a></li>
+                </ul>
+            </div>
+            <!-- accordion collapse end -->
         </div>
         <!-- 2nd accordion-panel begin -->
-  
+
         <!-- 3rd accordion-panel begin -->
         <div class="panel panel-main">
-          <!-- accordion heading begin -->
-          <div class="panel-heading" role="tab" id="headingThree">
-            <h4 class="panel-title">
-              <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                第三章：準備用於發布的資料集
-              </a>
-            </h4>
-          </div>
-          <!-- accordion heading end -->
-          <!-- accordion collapse begin -->
-          <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-            <ul class="panel-body">
-              <li><a href="{% url 'cookbook_detail_3' %}#section1">3.1 透過GBIF發布生物多樣性資料集</a></li>
-              <li><a href="{% url 'cookbook_detail_3' %}#section2">3.2 什麼是調查活動資料？</a></li>
-              <li><a href="{% url 'cookbook_detail_3' %}#section3">3.3 達爾文核心集—資料的星型結構</a></li>
-              <li><a href="{% url 'cookbook_detail_3' %}#section4">3.4 使用Excel模板準備調查活動資料構</a></li>
-            </ul>
-          </div>
-          <!-- accordion collapse end -->
+            <!-- accordion heading begin -->
+            <div class="panel-heading" role="tab" id="headingThree">
+                <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    {% trans "第三章：準備用於發布的資料集" %}
+                </a>
+                </h4>
+            </div>
+            <!-- accordion heading end -->
+            <!-- accordion collapse begin -->
+            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                <ul class="panel-body">
+                    <li><a href="{% url 'cookbook_detail_3' %}#section1">3.1 {% trans "透過GBIF發布生物多樣性資料集" %}</a></li>
+                    <li><a href="{% url 'cookbook_detail_3' %}#section2">3.2 {% trans "什麼是調查活動資料？"%}</a></li>
+                    <li><a href="{% url 'cookbook_detail_3' %}#section3">3.3 {% trans "達爾文核心集—資料的星型結構" %}</a></li>
+                    <li><a href="{% url 'cookbook_detail_3' %}#section4">3.4 {% trans "使用Excel模板準備調查活動資料構" %}</a></li>
+                </ul>
+            </div>
+            <!-- accordion collapse end -->
         </div>
         <!-- 3rd accordion-panel begin -->
-      </div>
-      <!-- panel-group end -->
-
-
+    </div>
+    <!-- panel-group end -->
 </div>
-
-
 {% endblock %}

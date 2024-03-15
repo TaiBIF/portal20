@@ -1,14 +1,14 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
-{% block title %}資料期刊與論文{% endblock %}
-
+{% block title %}{% trans "資料期刊與論文" %}{% endblock %}
 
 {% block main %}
 <!-- topnav begin -->
 <div class="bg-main-pale">
     <div class="container">
       <div class="caption-mascot-wrapper">
-        <h1 class="title">資料期刊與論文</h1>
+        <h1 class="title">{% trans "資料期刊與論文" %}</h1>
         <img src="{% static 'images/mascot-flower.png' %}" alt="" class="symbol">
       </div>
     </div>
@@ -19,9 +19,9 @@
 <!-- breadcrumb begin -->
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-    <li class="breadcrumb-item">資料應用</li>
-    <li class="breadcrumb-item active" aria-current="page">資料期刊與論文</li>
+    <li class="breadcrumb-item"><a href="index.html">{% trans "首頁" %}</a></li>
+    <li class="breadcrumb-item">{% trans "資料應用" %}</li>
+    <li class="breadcrumb-item active" aria-current="page">{% trans "資料期刊與論文" %}</li>
     </ol>
 </nav>
 <!-- breadcrumb end -->
@@ -31,33 +31,162 @@
     <div class="col-12 col-md-3">
 
     <div class="dropdown dropdown-flexible-wrapper">
-        <a class="btn btn-toggle-flexible visible-xs" href="#" data-toggle="dropdown">
-        資料期刊與論文
+        <a class="btn btn-toggle-flexible visible-xs" href="#" data-toggle="dropdown" aria-expanded="false">
+            資料期刊與論文
         </a>
-        <div class="dropdown-menu dropdown-menu-flexible">
-        <a class="dropdown-item current-sunset" href="#">關於資料論文</a>
-        <a class="dropdown-item" href="#">資料論文發表指引</a>
-        <a class="dropdown-item" href="#">資料期刊</a>
-        <a class="dropdown-item" href="#">TaiBIF 歷年合作資料論文</a>
-        <a class="dropdown-item" href="#">Call for Data Paper</a>
+        <div class="dropdown-menu dropdown-menu-flexible d-md-block">
+            <a data-cat="about" class="dropdown-item nav-item current-sunset" href="#">{% trans "關於資料論文" %}</a>
+            <a data-cat="guide" class="dropdown-item nav-item" href="#">{% trans "資料論文發表指引" %}</a>
+            <a data-cat="journal" class="dropdown-item nav-item" href="#">{% trans "資料期刊" %}</a>
+            <a data-cat="history" class="dropdown-item nav-item" href="#">{% trans "TaiBIF 歷年合作資料論文" %}</a>
+            <a data-cat="call" class="dropdown-item nav-item" href="#">{% trans "資料論文徵稿" %}</a>
         </div>
     </div>
 
     </div>
     <!-- col left end -->
     <!-- col right begin -->
-    <div class="col-12 col-md-9">
-    <h4 class="headline-left-hr">資料期刊與論文</h4>
-    <p>一份好的資料集，必須可以再利用（具互操作性），若能提供越多欄位資料，則資料的品質及價值也能相對地提高，在任何情況下，資料集至少要有下列所述 Darwin Core 欄位</p>
-    <h4 class="headline-left">相關參考連結：</h4>
-    <ul>
-        <li>DwC 資料欄位的各集合內容：<a href="https://tools.gbif.org/dwca-validator/extensions.do" target="_blank">Darwin Core Registered Extensions</a>（按 core 和 extension 分類）</li>
-        <li>DwC 資料欄位標準英文定義快速查詢：<a href="https://dwc.tdwg.org/terms/" target="_blank">Darwin Core Quick Reference Guide</a>（按詞條的 class 分類）</li>
-    </ul>
-    <div class="embed-responsive embed-responsive-3by2">
-        <iframe src="https://www.slideshare.net/slideshow/embed_code/key/68wnofrPt4FlcO?hostedIn=slideshare&amp;page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen=""> </iframe>
+    <div data-cat="about" class="col-12 col-md-9 nav-item-content">
+        <h1 class="heading-lg-ul">{% trans "關於資料論文" %}</h1>
+        <div class="article-content-wrapper">
+            <h3>{% trans "什麼是資料論文？" %}</h3>
+        </div>
+        <p>
+            {% trans "資料論文（Data paper）是一個透過同儕審查（Peer reviewed）的論文形式發表於相關的期刊上。" %}
+            {% trans "與傳統的研究論文不同，資料論文不提假設和結論，" %}
+            {% trans "內容主要為描述作者所開放的資料集相關資訊，" %}
+            {% trans "包含如何產生及收集資料、資料類型、涵蓋的物種、資料開放於何處及此資料集背景資訊（Metadata）等等，" %}
+            {% trans "透過作者於此資料集所開放的資料授權方式，可作為日後學術論文應用其資料時所引用的依據。" %}
+        </p>
+        <br>
+        <p>{% trans "發表資料論文的好處與目的包括：" %}</p>
+        <ul>
+            <li>{% trans "提供可引用的期刊出版物（如DOI），為資料發布者帶來學術上的認可" %}</li>
+            <li>{% trans "人類可讀的結構化資料描述" %}</li>
+            <li>{% trans "增加您發布的資料資源的可見性、可用性和可信度" %}</li>
+            <li>{% trans "更有效地追蹤您發布的資料的使用情況和引用情況" %}</li>
+        </ul>
     </div>
-    <p class="mt-3">操作流程下載：<a href="/media/article/download/TaiBIF IPT操作說明 2023 v2.6.3.pdf" class="myicon icon-download-document"></a></p>
+
+    <div data-cat="guide" class="col-12 col-md-9 nav-item-content hide">
+        <h1 class="heading-lg-ul">{% trans "資料論文發表指引" %}</h1>
+        <p>
+            {% trans "大致上，您的資料集將決定您適合投稿的主題性資料期刊。" %}
+            {% blocktrans %}
+                您也可以選擇主題範圍較廣泛且與生物多樣性領域相關的資料期刊「<a href="https://bdj.pensoft.net/" target="_blank">Biodiversity Data Journal</a>」，
+                或則不限領域限制的「<a href="https://www.sciencedirect.com/journal/data-in-brief" target="_blank">Data in Brief</a>」或「<a href="https://www.nature.com/sdata/" target="_blank">Scientific Data</a>」等期刊（更多期刊資訊請參閱資料期刊）。
+                此頁將特別介紹<a href="https://arpha.pensoft.net/" target="_blank">arpha Writing Tool</a>的資料論文撰寫與發表工具。
+            {% endblocktrans %}
+        </p>        
+        <br>
+        <p>
+            {% blocktrans %}
+            <a href="https://arpha.pensoft.net/" target="_blank">arpha Writing Tool</a>是由<a href="https://pensoft.net/" target="_blank">Pensoft</a>出版社開發的文章發表工具，幫助簡化了發表資料論文的流程。
+            {% endblocktrans %}
+            {% trans "當您透過TaiBIF的資料發布工具IPT上傳您的資料並發布後，可下載其自動產生的RTF/EML檔案（含GBIF資料集metadata資訊）並上傳至工具裡，此工具會自動將相關資訊填補到適合的文章章節裡。" %}
+            {% blocktrans %}
+            整個合作撰寫、建議、修改、提交、同儕審查以及發布的動作都能在此線上工具中完成。arpha Writing Tool目前支持直接將資料論文提交至<a href="https://bdj.pensoft.net/" target="_blank">Biodiversity Data Journal</a>。
+            {% endblocktrans %}
+            {% trans "下列的PDF講義帶領大家一步一步的操作了解資料集如何通過此工具發布資料文章。" %}
+        </p>
+        <br>
+        <iframe src="https://www.slideshare.net/slideshow/embed_code/key/lksdo5DtgvAK2c?hostedIn=slideshare&page=upload"  width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen=""></iframe>
+        {% blocktrans %}
+        <p class="mt-3">PDF講義下載（一）：<a href="/media/20230513-datapaper-何芷蔚.pdf" target="_blank" class="myicon icon-download-document"></a></p>
+        {% endblocktrans %}
+        <iframe src="https://www.slideshare.net/slideshow/embed_code/key/gBXcQDuBlL8TST?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen=""></iframe>
+        {% blocktrans %}
+        <p class="mt-3">PDF講義下載（二）：<a href="/media/Data paper 資料論文 EN.pdf" target="_blank" class="myicon icon-download-document"></a></p>
+        {% endblocktrans %}
+    </div>
+
+    <div data-cat="journal" class="col-12 col-md-9 nav-item-content hide">
+        <h1 class="heading-lg-ul">{% trans "資料期刊" %}</h1>
+        <p>
+            {% blocktrans %}
+            GBIF會在其<a href="https://www.gbif.org/data-papers" target="_blank">資料期刊頁面</a>不定時更新與生物多樣性相關的資料期刊資訊，
+            包括開放授權方式、投稿費以及期刊點數等。我們也推薦以下期刊：
+            {% endblocktrans %}
+        </p>
+        <ul>
+            <li><a href="https://www.tbri.gov.tw/A15_2" target="_blank">台灣生物多樣性研究</a></li>
+            <li><a href="https://bdj.pensoft.net/" target="_blank">Biodiversity Data Journal</a></li>
+            <li><a href="https://www.sciencedirect.com/journal/data-in-brief" target="_blank">Data in Brief</a></li>
+            <li><a href="https://www.nature.com/sdata/" target="_blank">Scientific Data</a></li>
+            <li><a href="https://zookeys.pensoft.net/" target="_blank">ZooKeys</a></li>
+            <li><a href="https://academic.oup.com/gigascience" target="_blank">GigaScience</a></li>
+        </ul>
+    </div>
+
+    <div data-cat="history" class="col-12 col-md-9 nav-item-content hide">
+        <h1 class="heading-lg-ul">{% trans "TaiBIF 歷年合作資料論文" %}</h1>
+        <small>{% trans "更新日期：" %}2023/02/29</small>
+        <div class="table-responsive mt-3">
+            <table class="table table-ltmilo">
+                <thead>
+                    <tr>
+                        <th class="col-md">{% trans "文章" %}</th>
+                        <th class="col-md">{% trans "發表期刊" %}</th>
+                        <th class="col-md">{% trans "文章DOI" %}</th>
+                        <th class="col-md">{% trans "相關資料集" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            Lin CP, Huang CH, Padgett T, Bucay MA, Chen CW, Shen ZY, Chiu L, Tseng YC, Yu JK, J Wang, MC Wang, Hoh DZ (2024) 
+                            Environmental DNA-based biodiversity profiling along Houdong River in northeastern Taiwan.
+                        </td>
+                        <td>Biodiversity Data Journal</td>
+                        <td>In revision</td>
+                        <td><a href="https://doi.org/10.15468/66x9xh" target="_blank">DOI: 10.15468/66x9xh</a></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Hu C-H, Yu HY, Hoh DZ, Lin DL (2023) The observation records from whale and dolphin watching inshore of Hualien, eastern Taiwan.
+                        </td>
+                        <td>Biodiversity Data Journal</td>
+                        <td><a href="https://doi.org/10.3897/BDJ.11.e109649" target="_blank">DOI: 10.3897/BDJ.11.e109649</a></td>
+                        <td><a href="https://doi.org/10.15468/rg87xx" target="_blank">DOI: 10.15468/rg87xx</a></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Yeh Y-H, Kirschner R (2023) The diversity of cultivable endophytic fungi of the sand coast plant Ipomoea pes-caprae in Taiwan.
+                        </td>
+                        <td>Biodiversity Data Journal</td>
+                        <td><a href="https://doi.org/10.3897/BDJ.11.e98878" target="_blank">DOI: 10.3897/BDJ.11.e98878</a></td>
+                        <td><a href="https://doi.org/10.15468/9h9rcg" target="_blank">DOI: 10.15468/9h9rcg</a></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Hoh DZ, Fong C-L, Su H, Chen P, Tsai C-C, Tseng KWH, Liu MJY (2022) A dataset of sea turtle occurrences around the Taiwan coast.
+                        </td>
+                        <td>Biodiversity Data Journal</td>
+                        <td><a href="https://doi.org/10.3897/BDJ.10.e90196" target="_blank">DOI: 10.3897/BDJ.10.e90196</a></td>
+                        <td><a href="https://doi.org/10.15468/43z4mj" target="_blank">DOI: 10.15468/43z4mj</a></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Huang JCC, Hsieh YC, Lu SS, Yeh WC, Liang JY, Lin CJ, Tung GS (2021) 
+                            Flower-visiting insects of genus Melastoma (Myrtales: Melastomataceae) at the Fushan Botanical Garden, Taiwan.
+                        </td>
+                        <td>Biodiversity Data Journal</td>
+                        <td><a href="https://doi.org/10.3897/BDJ.9.e60315" target="_blank">DOI: 10.3897/BDJ.9.e60315</a></td>
+                        <td><a href="https://doi.org/10.15468/64ufkd" target="_blank">DOI: 10.15468/64ufkd</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div data-cat="call" class="col-12 col-md-9 nav-item-content hide">
+        <h1 class="heading-lg-ul">{% trans "資料論文徵稿" %}</h1>
+        <p>
+            {% url 'contact_us' as contact_us %}
+            {% blocktrans %}
+            TaiBIF每年皆有固定經費來贊助與生物多樣性相關之主題的資料論文發表，欲知詳情如合作模式與適用條件，歡迎<a href="{{ contact_us }}">聯繫我們</a>。
+            {% endblocktrans %}
+        </p>
     </div>
     <!-- col right end -->
 </div>

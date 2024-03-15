@@ -1,69 +1,127 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 {% block title %}資料產品{% endblock %}
 
 
 {% block main %}
-
-
-    <!-- topnav begin -->
-    <div class="bg-main-pale">
-        <div class="container">
-          <div class="caption-mascot-wrapper">
-            <h1 class="title">資料產品</h1>
-            <img src="assets/images/mascot-flower.png" alt="" class="symbol">
-          </div>
+<!-- topnav begin -->
+<div class="bg-main-pale">
+    <div class="container">
+        <div class="caption-mascot-wrapper">
+            <h1 class="title">{% trans "資料產品" %}</h1>
+            <img src="{% static 'images/mascot-flower.png' %}" alt="" class="symbol">
         </div>
-      </div>
-      <!-- topnav end -->
-      <!-- container begin -->
-      <div class="container my-5">
-        <!-- breadcrumb begin -->
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-            <li class="breadcrumb-item">資料應用</li>
-            <li class="breadcrumb-item active" aria-current="page">資料產品</li>
-          </ol>
-        </nav>
-        <!-- breadcrumb end -->
-        <!-- row begin -->
-        <div class="row">
-          <!-- col left begin -->
-          <div class="col-12 col-md-3">
-  
+    </div>
+</div>
+ <!-- topnav end -->
+<!-- container begin -->
+<div class="container my-5">
+    <!-- breadcrumb begin -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">{% trans "首頁" %}</a></li>
+            <li class="breadcrumb-item">{% trans "資料應用" %}</li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans "資料產品" %}</li>
+        </ol>
+    </nav>
+    <!-- breadcrumb end -->
+    <!-- row begin -->
+    <div class="row">
+        <!-- col left begin -->
+        <div class="col-12 col-md-3">
             <div class="dropdown dropdown-flexible-wrapper">
-              <a class="btn btn-toggle-flexible visible-xs" href="#" data-toggle="dropdown">
-                資料產品
-              </a>
-              <div class="dropdown-menu dropdown-menu-flexible">
-                <a class="dropdown-item current-sunset" href="#">什麼是「資料產品」？</a>
-                <a class="dropdown-item" href="#">物種分布模型地圖</a>
-                <a class="dropdown-item" href="#">典藏資料集</a>
-              </div>
+                <a class="btn btn-toggle-flexible visible-xs" href="#" data-toggle="dropdown" aria-expanded="false">
+                {% trans "資料產品" %}
+                </a>
+                <div class="dropdown-menu dropdown-menu-flexible d-md-block">
+                    <a data-cat="about" class="dropdown-item nav-item current-sunset" href="#">{% trans "什麼是「資料產品」？" %}</a>
+                    <a data-cat="map" class="dropdown-item nav-item" href="#">{% trans "資料下載API" %}</a>
+                    <a data-cat="collection" class="dropdown-item nav-item" href="#">{% trans "典藏資料集" %}</a>
+                </div>
             </div>
-  
-          </div>
-          <!-- col left end -->
-          <!-- col right begin -->
-          <div class="col-12 col-md-9">
-            <h4 class="headline-left-hr">什麼是「資料產品」？</h4>
-            <p>一份好的資料集，必須可以再利用（具互操作性），若能提供越多欄位資料，則資料的品質及價值也能相對地提高，在任何情況下，資料集至少要有下列所述 Darwin Core 欄位</p>
-            <h4 class="headline-left">相關參考連結：</h4>
-            <ul>
-              <li>DwC 資料欄位的各集合內容：<a href="https://tools.gbif.org/dwca-validator/extensions.do" target="_blank">Darwin Core Registered Extensions</a>（按 core 和 extension 分類）</li>
-              <li>DwC 資料欄位標準英文定義快速查詢：<a href="https://dwc.tdwg.org/terms/" target="_blank">Darwin Core Quick Reference Guide</a>（按詞條的 class 分類）</li>
-            </ul>
-            <div class="embed-responsive embed-responsive-3by2">
-              <iframe src="https://www.slideshare.net/slideshow/embed_code/key/68wnofrPt4FlcO?hostedIn=slideshare&amp;page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen=""> </iframe>
-            </div>
-            <p class="mt-3">操作流程下載：<a href="/media/article/download/TaiBIF IPT操作說明 2023 v2.6.3.pdf" class="myicon icon-download-document"></a></p>
-          </div>
-          <!-- col right end -->
         </div>
-        <!-- row end -->
-      </div>
-      <!-- container end -->
-  
-  
+        <!-- col left end -->
+        <!-- col right begin -->
+        <div data-cat="about" class="col-12 col-md-9 nav-item-content">
+            <h1 class="heading-lg-ul">{% trans "什麼是「資料產品」？" %}</h1>
+            <p>
+                {% trans "TL;DR 最直接，簡短的定義：" %}<br>
+                <strong>{% trans "主要目的為使用資料來實現特定目標的產品" %}</strong>
+            </p>
+            <p>
+                {% trans "長一點的定義是：" %}<br>
+                {% trans "資料產品是使用資料處理、分析或技術製作以資料為核心的成果，其設計目的是為了提供具有價值的資訊或見解來實現目標。" %}
+            </p>
+            <p>
+                {% blocktrans %}
+                為什麼需要資料產品呢？ 在TaiBIF團隊進行授課的過程中，發現許多學員對於如何應用開放資料很有興趣，但是！在開始應用之前，你真的充分了解你所下載的資料嗎？
+                所以，資料產品的開發是<strong>為了降低資料使用者在使用資料時的門檻</strong>，這包括協助資料使用者加強理解、支持決策的制定或優化工作上的流程。
+                而在生物多樣性資訊學領域中，資料產品是利用資料的力量來理解並引導管理與保護工作，而資料產品可以是以下的形式：
+                生物多樣性資料庫（如出現紀錄或基因資訊等）、遙感探測圖、生物多樣性指標計算工具、物種分布模型、資料分析與視覺化工具等等，絕對是保護地球上生命多樣性的重要工具們！
+                {% endblocktrans %}
+            </p>
+            <p>
+                <ol>
+                    <li>
+                        {% blocktrans %}
+                        <a href="https://taicol.tw/" target="_blank">臺灣物種名錄資訊</a> — 持續彙整及更新的名錄讓使用者做參考及應用
+                        {% endblocktrans %}
+                    </li>
+                    <li>
+                        {% blocktrans %}
+                        <a href="https://www.tbn.org.tw/data/species_map" target="_blank">TBN臺灣生物地圖</a> — 透過專家意見與物種分布模型推測出的物種分布彙整成網格資料提供下載
+                        {% endblocktrans %}
+                    </li>
+                    <li>
+                        {% blocktrans %}
+                        國土生態綠網各種<a href="https://conservation.forest.gov.tw/0002178" target="_blank">實用圖資</a>
+                        {% endblocktrans %}
+                    </li>
+                    <li>
+                        {% blocktrans %}
+                        <a href="https://www.gbif.org/tool/81747/rgbif" target="_blank">rgbif</a> — 透過GBIF API在R更便利的下載資料及做分析
+                        {% endblocktrans %}
+                    </li>
+                    <li>
+                        {% blocktrans %}
+                        GBIF物種在地區的年度觀察次數的<a href="https://www.gbif.org/tools/observation-trends/about" target="_blank">增減統計</a>
+                        {% endblocktrans %}
+                    </li>
+                    <li>
+                        {% blocktrans %}
+                        <a href="https://beikolab.cs.dal.ca/gengis/Main_Page" target="_blank">GenGIS</a>地理資訊圖層與基因資料的視覺化製作工具
+                        {% endblocktrans %}
+                    </li>
+                    <li>
+                        {% blocktrans %}
+                        <a href="https://i-marine.d4science.org/home" target="_blank">iMarine</a>永續漁業的資源管理、分析與視覺化工具
+                        {% endblocktrans %}
+                    </li>
+                    <li>
+                        {% blocktrans %}
+                        <a href="https://obis.org/indicators/" target="_blank">OBIS Indicator</a>海洋生物多樣性信息系統資料與物種指標圖資
+                        {% endblocktrans %}
+                    </li>
+                </ol>
+            </p>
+        </div>
+
+        <div data-cat="map" class="col-12 col-md-9 nav-item-content hide">
+            <h1 class="heading-lg-ul">{% trans "資料下載API" %}</h1>
+            {% url 'taibif-api' as api %}
+            {% blocktrans %}
+            <p>下載資料歡迎使用 <a href="{{ api }}" target="_blank">TaiBIF API</a></p>
+            {% endblocktrans %}
+        </div>
+
+        <div data-cat="collection" class="col-12 col-md-9 nav-item-content hide">
+            <h1 class="heading-lg-ul">{% trans "典藏資料集" %}</h1>
+            <p>{% trans "敬請期待" %}</p>
+        </div>
+        <!-- col right end -->
+    </div>
+    <!-- row end -->
+</div>
+<!-- container end -->
 {% endblock %}

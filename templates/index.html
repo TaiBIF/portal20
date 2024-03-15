@@ -1,521 +1,728 @@
-{% extends "base.html" %}
-{% load static %}
-{% load i18n %}
-{% load humanize %}
-
-{% block title %}TaiBIF 首頁{% endblock %}
-
-
-{% block head %}
+{% extends "base.html" %} {% load static %} {% load i18n %} {% load humanize %}
+{% block title %}TaiBIF 首頁{% endblock %} {% block head %}
 
 <style type="text/css">
-  @keyframes owlBgc {
-    0% { background-color: #3a4a47; /* 最後一個輪播圖片的背景色 */ }
-    33% { background-color: #212121; /* 輪播圖片一的背景色 */ }
-    66% { background-color: #8a6853; /* 輪播圖片二的背景色 */ }
-    100% { background-color: #3a4a47; /* 輪播圖片三的背景色 */ }
-  }
-  .openmap-bg-ani {
-    animation: owlBgc 9.3s infinite; /* 動畫秒數為輪播圖片張數乘 3.1 秒 */
-  }
+    @keyframes owlBgc {
+        0% {
+            background-color: #3a4a47; /* 最後一個輪播圖片的背景色 */
+        }
+        33% {
+            background-color: #212121; /* 輪播圖片一的背景色 */
+        }
+        66% {
+            background-color: #8a6853; /* 輪播圖片二的背景色 */
+        }
+        100% {
+            background-color: #3a4a47; /* 輪播圖片三的背景色 */
+        }
+    }
+    .openmap-bg-ani {
+        animation: owlBgc 9.3s infinite; /* 動畫秒數為輪播圖片張數乘 3.1 秒 */
+    }
 </style>
+{% endblock %} 
+
+{% block navbar %}
+    {# 這個頁面不顯示 nav #}
 {% endblock %}
 
 {% block main %}
-
-
-
-  
-      <!-- openmap begin -->
-      <div class="openmap-wrapper openmap-bg-ani">
-        <div class="container">
-          <div class="row no-gutters">
-
-          <!-- col-openmap begin -->
-          <div class="col-12 col-lg-6 col-openmap">
-            <!-- openmap-carousel begin -->
-            <div class="owl-carousel" id="openmap-carousel">
-              <div class="item">
-                <img src="{% static 'images/openmap.jpg' %}" alt="" class="img-fluid">
-                <p class="openmap-cc-post">Muntiacus reevesi (Ogilby, 1839) Observed in Taiwan by Liu JimFood. Photo via iNaturalist (CC BY-NC 4.0)</p>
-              </div>
-              <div class="item">
-                <img src="https://picsum.photos/id/219/570/480" alt="" class="img-fluid">
-                <p class="openmap-cc-post">Muntiacus reevesi (Ogilby, 1839) Observed in Taiwan by Liu JimFood. Photo via iNaturalist (CC BY-NC 4.0)</p>
-              </div>
-              <div class="item">
-                <img src="https://picsum.photos/id/258/570/480" alt="" class="img-fluid">
-                <p class="openmap-cc-post">Muntiacus reevesi (Ogilby, 1839) Observed in Taiwan by Liu JimFood. Photo via iNaturalist (CC BY-NC 4.0)</p>
-              </div>
-            </div>
-            <!-- openmap-carousel end -->
-          </div>
-          {% comment %} <!-- col-openmap end -->
+<!-- openmap begin -->
+<div class="openmap-wrapper openmap-bg-ani">
+    <div class="container">
+        <div class="row no-gutters">
+            <!-- col-openmap begin -->
             <div class="col-12 col-lg-6 col-openmap">
-              <img src="{% static 'images/openmap.jpg' %}" alt="" class="img-fluid">
-              <p class="openmap-cc-post">Muntiacus reevesi (Ogilby, 1839) Observed in Taiwan by Liu JimFood. Photo via iNaturalist (CC BY-NC 4.0)</p>
-            </div> {% endcomment %}
+                <!-- openmap-carousel begin -->
+                <div class="owl-carousel" id="openmap-carousel">
+                    <div class="item">
+                        <img
+                            src="{% static 'images/openmap.jpg' %}"
+                            alt=""
+                            class="img-fluid"
+                        />
+                        <p class="openmap-cc-post">
+                            Muntiacus reevesi (Ogilby, 1839) Observed in Taiwan
+                            by Liu JimFood. Photo via iNaturalist (CC BY-NC 4.0)
+                        </p>
+                    </div>
+                    <div class="item">
+                        <img
+                            src="https://picsum.photos/id/219/570/480"
+                            alt=""
+                            class="img-fluid"
+                        />
+                        <p class="openmap-cc-post">
+                            Muntiacus reevesi (Ogilby, 1839) Observed in Taiwan
+                            by Liu JimFood. Photo via iNaturalist (CC BY-NC 4.0)
+                        </p>
+                    </div>
+                    <div class="item">
+                        <img
+                            src="https://picsum.photos/id/258/570/480"
+                            alt=""
+                            class="img-fluid"
+                        />
+                        <p class="openmap-cc-post">
+                            Muntiacus reevesi (Ogilby, 1839) Observed in Taiwan
+                            by Liu JimFood. Photo via iNaturalist (CC BY-NC 4.0)
+                        </p>
+                    </div>
+                </div>
+                <!-- openmap-carousel end -->
+            </div>
+            {% comment %}
+            <!-- col-openmap end -->
+            <div class="col-12 col-lg-6 col-openmap">
+                <img
+                    src="{% static 'images/openmap.jpg' %}"
+                    alt=""
+                    class="img-fluid"
+                />
+                <p class="openmap-cc-post">
+                    Muntiacus reevesi (Ogilby, 1839) Observed in Taiwan by Liu
+                    JimFood. Photo via iNaturalist (CC BY-NC 4.0)
+                </p>
+            </div>
+            {% endcomment %}
 
             <!-- col-menu begin -->
 
             <div class="col-12 col-lg-6 col-menu">
-              <!-- row-master-menu begin -->
-              <div class="row row-master-menu">
-                <!-- col-master-menu begin -->
-                <div class="col-master-menu">
-                  <div class="block-btn-ctn">
-                    <h1 class="heading">開放資料</h1>
-                    <ul class="menu-items">
-                      <li><a href="{% url 'open-process'%}">開放資料流程</a></li>
-                      <li><a href="{% url 'open-timezone'%}">計畫資料繳交依據與時程</a></li>
-                      <li><a href="{% url 'tools'%}">開放資料工具</a></li>
-                      <li><a href="{% url 'data_stats'%}">資料發布狀況</a></li>
-                    </ul>
-                    <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="stamp">
-                    <div class="overlay"></div>
-                  </div>
+                <!-- row-master-menu begin -->
+                <div class="row row-master-menu">
+                    <!-- col-master-menu begin -->
+                    <div class="col-master-menu">
+                        <div class="block-btn-ctn">
+                            <h1 class="heading">{% trans "開放資料" %}</h1>
+                            <ul class="menu-items">
+                                <li>
+                                    <a href="{% url 'open-process'%}">{% trans "開放資料流程" %}</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'open-timezone'%}">{% trans "計畫資料繳交依據與時程" %}</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'tools'%}">{% trans "開放資料工具" %}</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'data_stats'%}">{% trans "資料發布狀況" %}</a>
+                                </li>
+                            </ul>
+                            <img
+                                src="{% static 'images/mascot-Mreevesi.png' %}"
+                                alt=""
+                                class="stamp"
+                            />
+                            <div class="overlay"></div>
+                        </div>
+                    </div>
+                    <!-- col-master-menu end -->
+                    <!-- col-master-menu begin -->
+                    <div class="col-master-menu">
+                        <div class="block-btn-ctn">
+                            <h1 class="heading">{% trans "教育資源" %}</h1>
+                            <ul class="menu-items">
+                                <li>
+                                    <a href="{% url 'tech-open'%}">{% trans "什麼是開放資料" %}</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'tech-book'%}">{% trans "生物多樣性資訊概論" %}</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'tech-workshop'%}">{% trans "資料開放與應用工作坊" %}</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'tech-volunteer'%}">{% trans "參與志工培訓" %}</a>
+                                </li>
+                            </ul>
+                            <img
+                                src="{% static 'images/mascot-frog.png' %}"
+                                alt=""
+                                class="stamp"
+                            />
+                            <div class="overlay"></div>
+                        </div>
+                    </div>
+                    <!-- col-master-menu end -->
+                    <!-- col-master-menu begin -->
+                    <div class="col-master-menu">
+                        <div class="block-btn-ctn">
+                            <h1 class="heading">{% trans "資料應用" %}</h1>
+                            <ul class="menu-items">
+                                <li>
+                                    <a href="{% url 'data-paper' %}">{% trans "資料期刊與論文" %}</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'data-visual' %}">{% trans "資料視覺化與圖表產出" %}</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'data-case' %}">{% trans "資料應用案例" %}</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'data-product' %}">{% trans "資料產品" %}</a>
+                                </li>
+                            </ul>
+                            <img
+                                src="{% static 'images/mascot-flower.png' %}"
+                                alt=""
+                                class="stamp"
+                            />
+                            <div class="overlay"></div>
+                        </div>
+                    </div>
+                    <!-- col-master-menu end -->
+                    <!-- col-master-menu begin -->
+                    <div class="col-master-menu">
+                        <div class="block-btn-ctn">
+                            <h1 class="heading">{% trans "找資料" %}</h1>
+                            <ul class="menu-items">
+                                <li>
+                                    <a href="{%  url 'search-occurrence' cat='search' %}">{% trans "物種出現紀錄" %}</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'search-species' %}">{% trans "物種" %}</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'search-dataset' %}">{% trans "資料集" %}</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'search-publisher'%}">{% trans "資料發布單位" %}</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'taibif-api' %}">API</a>
+                                </li>
+                            </ul>
+                            <img
+                                src="{% static 'images/mascot-butterfly.png' %}"
+                                alt=""
+                                class="stamp"
+                            />
+                            <div class="overlay"></div>
+                        </div>
+                    </div>
+                    <!-- col-master-menu end -->
                 </div>
-                <!-- col-master-menu end -->
-                <!-- col-master-menu begin -->
-                <div class="col-master-menu">
-                  <div class="block-btn-ctn">
-                    <h1 class="heading">教育資源</h1>
-                    <ul class="menu-items">
-                      <li><a href="{% url 'tech-open'%}">什麼是開放資料</a></li>
-                      <li><a href="{% url 'tech-book'%}">生物多樣性資訊概論</a></li>
-                      <li><a href="{% url 'tech-workshop'%}">資料開放與應用工作坊</a></li>
-                      <li><a href="{% url 'tech-volunteer'%}">參與志工培訓</a></li>
-                    </ul>
-                    <img src="{% static 'images/mascot-frog.png' %}" alt="" class="stamp">
-                    <div class="overlay"></div>
-                  </div>
-                </div>
-                <!-- col-master-menu end -->
-                <!-- col-master-menu begin -->
-                <div class="col-master-menu">
-                  <div class="block-btn-ctn">
-                    <h1 class="heading">資料應用</h1>
-                    <ul class="menu-items">
-                      <li><a href="{% url 'data-paper' %}">資料期刊與論文</a></li>
-                      <li><a href="{% url 'data-visual' %}">資料視覺化與圖表產出</a></li>
-                      <li><a href="{% url 'data-case' %}">資料應用案例</a></li>
-                      <li><a href="{% url 'data-product' %}">資料產品</a></li>
-                    </ul>
-                    <img src="{% static 'images/mascot-flower.png' %}" alt="" class="stamp">
-                    <div class="overlay"></div>
-                  </div>
-                </div>
-                <!-- col-master-menu end -->
-                <!-- col-master-menu begin -->
-                <div class="col-master-menu">
-                  <div class="block-btn-ctn">
-                    <h1 class="heading">找資料</h1>
-                    <ul class="menu-items">
-                      <li><a href="{%  url 'search-occurrence' cat='search' %}">物種出現紀錄</a></li>
-                      <li><a href="{% url 'search-species' %}">物種</a></li>
-                      <li><a href="{% url 'search-dataset' %}">資料集</a></li>
-                      <li><a href="{% url 'search-publisher'%}">資料發布單位</a></li>
-                      <li><a href="{% url 'taibif-api' %}">API</a></li>
-                    </ul>
-                    <img src="{% static 'images/mascot-butterfly.png' %}" alt="" class="stamp">
-                    <div class="overlay"></div>
-                  </div>
-                </div>
-                <!-- col-master-menu end -->
-              </div>
-              <!-- row-master-menu end -->
+                <!-- row-master-menu end -->
             </div>
-          </div>
         </div>
-      </div>
-      <!-- openmap end -->
-  
-      <!-- taiBIF slogan begin -->
-      <div class="container">
-        <div class="slogan-wrapper">
-          <p class="quote-content">
+    </div>
+</div>
+<!-- openmap end -->
+
+<!-- taiBIF slogan begin -->
+<div class="container">
+    <div class="slogan-wrapper">
+        <p class="quote-content">
             <span class="segment-eng">TaiBIF —</span>
-            <span class="segment-main">生物多樣性資料開放的推手</span>
-          </p>
-        </div>
-      </div>
-      <!-- taiBIF slogan end -->
-  
-      <!-- data wall begin -->
-      <div class="bg-main-pale">
-        <!-- container begin -->
-        <div class="container py-5">
-          <h1 class="headline-center-md">資料發布狀況</h1>
-          <!-- 資料發布狀況 row begin -->
-          <div class="row justify-content-center">
+            <span class="segment-main">{% trans "生物多樣性資料開放的推手" %}</span>
+        </p>
+    </div>
+</div>
+<!-- taiBIF slogan end -->
+
+<!-- data wall begin -->
+<div class="bg-main-pale">
+    <!-- container begin -->
+    <div class="container py-5">
+        <h1 class="headline-center-md">{% trans "資料發布狀況" %}</h1>
+        <!-- 資料發布狀況 row begin -->
+        <div class="row justify-content-center">
             <!-- col begin -->
             <div class="col-card-brick">
-              <div class="card-brick card-glowing">
-                <p class="title"><span class="myicon icon-data-stats mr-1"></span>出現紀錄</p>
-                <p class="content"><a href="/occurrence/search/" >{{occ_num|intcomma:False}}</a></p>
-              </div>
+                <div class="card-brick card-glowing">
+                    <p class="title">
+                        <span class="myicon icon-data-stats mr-1"></span>{% trans "物種出現紀錄" %}
+                    </p>
+                    <p class="content">
+                        <a href="/occurrence/search/">{{occ_num|intcomma:False}}</a>
+                    </p>
+                </div>
             </div>
             <!-- col end -->
             <!-- col begin -->
             <div class="col-card-brick">
-              <div class="card-brick card-glowing">
-                <p class="title"><span class="myicon icon-data-folder mr-1"></span>資料集</p>
-                <p class="content"><a href="/dataset/search/">{{dataset_num|intcomma}}</a></p>
-              </div>
+                <div class="card-brick card-glowing">
+                    <p class="title">
+                        <span class="myicon icon-data-folder mr-1"></span>{% trans "資料集" %}
+                    </p>
+                    <p class="content">
+                        <a href="/dataset/search/">{{dataset_num|intcomma}}</a>
+                    </p>
+                </div>
             </div>
             <!-- col end -->
             <!-- col begin -->
             <div class="col-card-brick">
-              <div class="card-brick card-glowing">
-                <p class="title"><span class="myicon icon-data-tw mr-1"></span>涵蓋物種數</p>
-                <p class="content"><a href="/species/search/">70,234</a></p>
-              </div>
+                <div class="card-brick card-glowing">
+                    <p class="title">
+                        <span class="myicon icon-data-tw mr-1"></span>{% trans "涵蓋物種數" %}
+                    </p>
+                    <p class="content"><a href="/species/search/">70,234</a></p>
+                </div>
             </div>
             <!-- col end -->
             <!-- col begin -->
             <div class="col-card-brick">
-              <div class="card-brick card-glowing">
-                <p class="title"><span class="myicon icon-data-org mr-1"></span>資料發布單位</p>
-                <p class="content"><a href="/publisher/search/">{{publisher_num}}</a></p>
-              </div>
+                <div class="card-brick card-glowing">
+                    <p class="title">
+                        <span class="myicon icon-data-org mr-1"></span>{% trans "資料發布單位" %}
+                    </p>
+                    <p class="content">
+                        <a href="/publisher/search/">{{publisher_num}}</a>
+                    </p>
+                </div>
             </div>
             <!-- col end -->
             <!-- col begin -->
             <div class="col-card-brick">
-              <div class="card-brick card-glowing">
-                <p class="title"><span class="myicon icon-data-paper mr-1"></span>資料應用發表</p>
-                <p class="content">0</p>
-              </div>
+                <div class="card-brick card-glowing">
+                    <p class="title">
+                        <span class="myicon icon-data-paper mr-1"></span>{% trans "資料應用發表" %}
+                    </p>
+                    <p class="content">0</p>
+                </div>
             </div>
             <!-- col end -->
             <!-- btn begin -->
             <div class="col-12 text-center my-4">
-                <a href="{% url 'data_stats'%}" class="btn btn-outline-main">看更多發布狀況<span class="myicon icon-indicator-right ml-1"></span></a>
+                <a href="{% url 'data_stats'%}" class="btn btn-outline-main">{% trans "看更多發布狀況" %}
+                    <span class="myicon icon-indicator-right ml-1"></span>
+                </a>
             </div>
             <!-- btn end -->
-          </div>
-          <!-- 資料發布狀況 row end -->
-  
-          <!-- 資訊視覺化 row begin -->
-          <div class="row justify-content-center">
+        </div>
+        <!-- 資料發布狀況 row end -->
+
+        <!-- 資訊視覺化 row begin -->
+        <div class="row justify-content-center">
             <!-- col begin -->
             <div class="col col-icon-stat">
-              <a href="#" class="d-block">
-                <span class="myicon icon-species-icon-plantae"></span>
-                <p class="title">植物</p>
-                <p class="amount">
-                  {% for k,v in taxonGroup_dict.items %}
-                    {% if k == 'plants' %} {{ v|intcomma:False  }} {% endif %}
-                  {% endfor %}
-                </p>
-              </a>
+                <a href="#" class="d-block">
+                    <span class="myicon icon-species-icon-plantae"></span>
+                    <p class="title">{% trans "植物" %}</p>
+                    <p class="amount">
+                        {% for k,v in taxonGroup_dict.items %} 
+                            {% if k == 'plants' %} 
+                                {{ v|intcomma:False }} 
+                            {% endif %} 
+                        {% endfor %}
+                    </p>
+                </a>
             </div>
             <!-- col end -->
             <!-- col begin -->
             <div class="col col-icon-stat">
-              <a href="#" class="d-block">
-                <span class="myicon icon-species-icon-fungi"></span>
-                <p class="title">真菌</p>
-                <p class="amount">
-                  {% for k,v in taxonGroup_dict.items %}
-                    {% if k == 'fungi' %} {{ v|intcomma:False  }} {% endif %}
-                  {% endfor %}
-                </p>
-              </a>
+                <a href="#" class="d-block">
+                    <span class="myicon icon-species-icon-fungi"></span>
+                    <p class="title">{% trans "真菌" %}</p>
+                    <p class="amount">
+                        {% for k,v in taxonGroup_dict.items %} 
+                            {% if k == 'fungi' %} 
+                                {{ v|intcomma:False }} 
+                            {% endif %} 
+                        {% endfor %}
+                    </p>
+                </a>
             </div>
             <!-- col end -->
             <!-- col begin -->
             <div class="col col-icon-stat">
-              <a href="#" class="d-block">
-                <span class="myicon icon-species-icon-bacteria"></span>
-                <p class="title">細菌</p>
-                <p class="amount">
-                  {% for k,v in taxonGroup_dict.items %}
-                    {% if k == 'bacteria' %} {{ v|intcomma:False  }} {% endif %}
-                  {% endfor %}
-                </p>
-              </a>
+                <a href="#" class="d-block">
+                    <span class="myicon icon-species-icon-bacteria"></span>
+                    <p class="title">{% trans "細菌" %}</p>
+                    <p class="amount">
+                        {% for k,v in taxonGroup_dict.items %} 
+                            {% if k == 'bacteria' %} 
+                                {{ v|intcomma:False }}
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                </a>
             </div>
             <!-- col end -->
             <!-- col begin -->
             <div class="col col-icon-stat">
-              <a href="#" class="d-block">
-                <span class="myicon icon-species-icon-Insecta"></span>
-                <p class="title">昆蟲</p>
-                <p class="amount">
-                  {% for k,v in taxonGroup_dict.items %}
-                    {% if k == 'insects' %} {{ v|intcomma:False  }} {% endif %}
-                  {% endfor %}
-                </p>
-              </a>
+                <a href="#" class="d-block">
+                    <span class="myicon icon-species-icon-Insecta"></span>
+                    <p class="title">{% trans "昆蟲" %}</p>
+                    <p class="amount">
+                        {% for k,v in taxonGroup_dict.items %} 
+                            {% if k == 'insects' %} 
+                                {{ v|intcomma:False }} 
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                </a>
             </div>
             <!-- col end -->
             <!-- col begin -->
             <div class="col col-icon-stat">
-              <a href="#" class="d-block">
-                <span class="myicon icon-species-icon-fish"></span>
-                <p class="title">魚</p>
-                <p class="amount">
-                  {% for k,v in taxonGroup_dict.items %}
-                    {% if k == 'fishes' %} {{ v|intcomma:False  }} {% endif %}
-                  {% endfor %}
-                </p>
-              </a>
+                <a href="#" class="d-block">
+                    <span class="myicon icon-species-icon-fish"></span>
+                    <p class="title">{% trans "魚" %}</p>
+                    <p class="amount">
+                        {% for k,v in taxonGroup_dict.items %} 
+                            {% if k == 'fishes' %} 
+                                {{ v|intcomma:False }}
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                </a>
             </div>
             <!-- col end -->
             <!-- col begin -->
             <div class="col col-icon-stat">
-              <a href="#" class="d-block">
-                <span class="myicon icon-species-icon-gecko"></span>
-                <p class="title">爬蟲類</p>
-                <p class="amount">
-                  {% for k,v in taxonGroup_dict.items %}
-                    {% if k == 'reptiles' %} {{ v|intcomma:False  }} {% endif %}
-                  {% endfor %}
-                </p>
-              </a>
+                <a href="#" class="d-block">
+                    <span class="myicon icon-species-icon-gecko"></span>
+                    <p class="title">{% trans "爬蟲類" %}</p>
+                    <p class="amount">
+                        {% for k,v in taxonGroup_dict.items %} 
+                            {% if k == 'reptiles' %} 
+                                {{ v|intcomma:False }}
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                </a>
             </div>
             <!-- col end -->
             <!-- col begin -->
             <div class="col col-icon-stat">
-              <a href="#" class="d-block">
-                <span class="myicon icon-species-icon-frog"></span>
-                <p class="title">兩棲類</p>
-                <p class="amount">
-                  {% for k,v in taxonGroup_dict.items %}
-                    {% if k == 'amphibia' %} {{ v|intcomma:False  }} {% endif %}
-                  {% endfor %}
-                </p>
-              </a>
+                <a href="#" class="d-block">
+                    <span class="myicon icon-species-icon-frog"></span>
+                    <p class="title">{% trans "兩棲類" %}</p>
+                    <p class="amount">
+                        {% for k,v in taxonGroup_dict.items %} 
+                            {% if k == 'amphibia' %} 
+                                {{ v|intcomma:False }} 
+                            {% endif %} 
+                        {% endfor %}
+                    </p>
+                </a>
             </div>
             <!-- col end -->
             <!-- col begin -->
             <div class="col col-icon-stat">
-              <a href="#" class="d-block">
-                <span class="myicon icon-species-icon-bird"></span>
-                <p class="title">鳥類</p>
-                <p class="amount">
-                  {% for k,v in taxonGroup_dict.items %}
-                    {% if k == 'birds' %} {{ v|intcomma:False  }} {% endif %}
-                  {% endfor %}
-                </p>
-              </a>
+                <a href="#" class="d-block">
+                    <span class="myicon icon-species-icon-bird"></span>
+                    <p class="title">{% trans "鳥類" %}</p>
+                    <p class="amount">
+                        {% for k,v in taxonGroup_dict.items %} 
+                            {% if k == 'birds' %} 
+                                {{ v|intcomma:False }}
+                            {% endif %} 
+                        {% endfor %}
+                    </p>
+                </a>
             </div>
             <!-- col end -->
             <!-- col begin -->
             <div class="col col-icon-stat">
-              <a href="#" class="d-block">
-                <span class="myicon icon-species-icon-muntiacus-reevesi"></span>
-                <p class="title">哺乳類</p>
-                <p class="amount">
-                  {% for k,v in taxonGroup_dict.items %}
-                    {% if k == 'mammals' %} {{ v|intcomma:False  }} {% endif %}
-                  {% endfor %}
-                </p>
-              </a>
+                <a href="#" class="d-block">
+                    <span
+                        class="myicon icon-species-icon-muntiacus-reevesi"
+                    ></span>
+                    <p class="title">{% trans "哺乳類" %}</p>
+                    <p class="amount">
+                        {% for k,v in taxonGroup_dict.items %} 
+                            {% if k == 'mammals' %} 
+                                {{ v|intcomma:False }} 
+                            {% endif %} 
+                        {% endfor %}
+                    </p>
+                </a>
             </div>
             <!-- col end -->
             <!-- col begin -->
             <div class="col col-icon-stat">
-              <a href="#" class="d-block">
-                <span class="myicon icon-species-icon-more"></span>
-                <p class="title">其他</p>
-                <p class="amount">
-                  {% for k,v in taxonGroup_dict.items %}
-                    {% if k == 'others' %} {{ v|intcomma:False  }} {% endif %}
-                  {% endfor %}
-                </p>
-              </a>
+                <a href="#" class="d-block">
+                    <span class="myicon icon-species-icon-more"></span>
+                    <p class="title">{% trans "其他" %}</p>
+                    <p class="amount">
+                        {% for k,v in taxonGroup_dict.items %}
+                            {% if k == 'others' %} 
+                                {{ v|intcomma:False }} 
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                </a>
             </div>
             <!-- col end -->
             <!-- btn begin -->
             <div class="col-12 text-center mt-3">
-              <a href="{% url 'data-visual' %} " class="btn btn-outline-main">看更多資訊視覺化<span class="myicon icon-indicator-right ml-1"></span></a>
+                <a href="{% url 'data-visual' %} " class="btn btn-outline-main">{% trans "看更多資訊視覺化" %}
+                    <span class="myicon icon-indicator-right ml-1" ></span>
+                </a>
             </div>
             <!-- btn end -->
-          </div>
-          <!-- 資訊視覺化 row end -->
         </div>
-        <!-- container end -->
-      </div>
-      <!-- data wall end -->
-  
-      <!-- 最新消息 container begin -->
-      <div class="container my-5">
-        <h1 class="headline-center-md">最新消息</h1>
-        <!-- row begin -->
-        <div class="row">
-          <!-- news list begin -->
-          <div class="col-12 col-md-4">
+        <!-- 資訊視覺化 row end -->
+    </div>
+    <!-- container end -->
+</div>
+<!-- data wall end -->
+
+<!-- 最新消息 container begin -->
+<div class="container my-5">
+    <h1 class="headline-center-md">{% trans "最新消息" %}</h1>
+    <!-- row begin -->
+    <div class="row">
+        <!-- news list begin -->
+        <div class="col-12 col-md-4">
             <div class="news-card-wrapper">
-              <div class="news-card-img-wrapper">
-                <a class="tag" href="{% url 'article-search' %}?category=news">{% trans "新聞" %}</a>
-                <img src="{% static 'images/002.jpg' %}" >
-                <p class="img-cc-post">Fratercula arctica (Linnaeus, 1758) Observed in Canada by crgillette. Photo via iNaturalist (CC BY-NC 4.0)</p>
-              </div>
-              <ul class="news-card-list-ctn">
-                {% for i in news_list %}
+                <div class="news-card-img-wrapper">
+                    <a
+                        class="tag"
+                        href="{% url 'article-search' %}?category=news"
+                        >{% trans "新聞" %}</a
+                    >
+                    <img src="{% static 'images/002.jpg' %}" />
+                    <p class="img-cc-post">
+                        Fratercula arctica (Linnaeus, 1758) Observed in Canada
+                        by crgillette. Photo via iNaturalist (CC BY-NC 4.0)
+                    </p>
+                </div>
+                <ul class="news-card-list-ctn">
+                    {% for i in news_list %}
                     <li>
-                        <a href="{{ i.get_absolute_url }}" class="clamp2row">{{ i.title|truncatechars:40|safe  }}</a>
+                        <a href="{{ i.get_absolute_url }}" class="clamp2row"
+                            >{{ i.title|truncatechars:40|safe }}</a
+                        >
                         <span>{{ i.created|date:'Y/m/d' }}</span>
                     </li>
-                {% endfor %}
-              </ul>
+                    {% endfor %}
+                </ul>
             </div>
-          </div>
-          <!-- news list end -->
-          <!-- event list begin -->
-          <div class="col-12 col-md-4">
+        </div>
+        <!-- news list end -->
+        <!-- event list begin -->
+        <div class="col-12 col-md-4">
             <div class="news-card-wrapper">
-              <div class="news-card-img-wrapper">
-                <a class="tag" href="{% url 'article-list' category='event' %}">{% trans "活動" %}</a>
-                <img src="{% static 'images/005.jpg' %}">
-                <p class="img-cc-post">Fratercula arctica (Linnaeus, 1758) Observed in Canada by crgillette. Photo via iNaturalist (CC BY-NC 4.0)</p>
-              </div>
-              <ul class="news-card-list-ctn">
-                {% for i in event_list %}
+                <div class="news-card-img-wrapper">
+                    <a
+                        class="tag"
+                        href="{% url 'article-list' category='event' %}"
+                        >{% trans "活動" %}</a
+                    >
+                    <img src="{% static 'images/005.jpg' %}" />
+                    <p class="img-cc-post">
+                        Fratercula arctica (Linnaeus, 1758) Observed in Canada
+                        by crgillette. Photo via iNaturalist (CC BY-NC 4.0)
+                    </p>
+                </div>
+                <ul class="news-card-list-ctn">
+                    {% for i in event_list %}
                     <li>
-                    <a href="{{ i.get_absolute_url }}" >{{ i.title|truncatechars:40|safe  }}</a>
-                    <span>{{ i.created|date:'Y/m/d' }}</span>
-                    </li>
-                {% endfor %}
-              </ul>
-            </div>
-          </div>
-          <!-- event list end -->
-          <!-- update list begin -->
-          <div class="col-12 col-md-4">
-            <div class="news-card-wrapper">
-              <div class="news-card-img-wrapper">
-                <a class="tag" href="{% url 'article-list' category='update' %}">{% trans "更新" %}</a>
-                <img src="{% static 'images/007.jpg' %}">
-                <p class="img-cc-post">Fratercula arctica (Linnaeus, 1758) Observed in Canada by crgillette. Photo via iNaturalist (CC BY-NC 4.0)</p>
-              </div>
-              <ul class="news-card-list-ctn">
-                {% for i in update_list %}
-                    <li>
-                        <a href="{{ i.get_absolute_url }}" class="clamp2row">{{ i.title|truncatechars:40|safe  }}</a>
+                        <a href="{{ i.get_absolute_url }}"
+                            >{{ i.title|truncatechars:40|safe }}</a
+                        >
                         <span>{{ i.created|date:'Y/m/d' }}</span>
                     </li>
-                {% endfor %}
-              </ul>
+                    {% endfor %}
+                </ul>
             </div>
-          </div>
-          <!-- update list end -->
         </div>
-        <!-- row end -->
-      </div>
-      <!-- 最新消息 container end -->
-  
-      <!-- div bg-main-pale begin -->
-      <div class="bg-main-pale">
-        <!-- container begin -->
-        <div class="container py-5">
-          <h1 class="headline-center-md">{% trans '專題文章' %}</h1>
-  
-          <!-- owl-carousel begin -->
-          <div class="owl-carousel owl-theme" id="article-carousel">
+        <!-- event list end -->
+        <!-- update list begin -->
+        <div class="col-12 col-md-4">
+            <div class="news-card-wrapper">
+                <div class="news-card-img-wrapper">
+                    <a
+                        class="tag"
+                        href="{% url 'article-list' category='update' %}"
+                        >{% trans "更新" %}</a
+                    >
+                    <img src="{% static 'images/007.jpg' %}" />
+                    <p class="img-cc-post">
+                        Fratercula arctica (Linnaeus, 1758) Observed in Canada
+                        by crgillette. Photo via iNaturalist (CC BY-NC 4.0)
+                    </p>
+                </div>
+                <ul class="news-card-list-ctn">
+                    {% for i in update_list %}
+                    <li>
+                        <a href="{{ i.get_absolute_url }}" class="clamp2row"
+                            >{{ i.title|truncatechars:40|safe }}</a
+                        >
+                        <span>{{ i.created|date:'Y/m/d' }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <!-- update list end -->
+    </div>
+    <!-- row end -->
+</div>
+<!-- 最新消息 container end -->
+
+<!-- div bg-main-pale begin -->
+<div class="bg-main-pale">
+    <!-- container begin -->
+    <div class="container py-5">
+        <h1 class="headline-center-md">{% trans "專題文章" %}</h1>
+
+        <!-- owl-carousel begin -->
+        <div class="owl-carousel owl-theme" id="article-carousel">
             <!-- item begin -->
             {% for i in topic_list %}
-                <div class="card-plain-article">
-                    <a class="tag" href="{% url 'article-list' category=i.category|lower  %}">{{ i.get_category_display }}</a>
-                    <p class="topic-content"><a href="{{ i.get_absolute_url }}">{{ i.title|truncatechars:25|safe }}</a></p>
-                </div>
+            <div class="card-plain-article">
+                <a
+                    class="tag"
+                    href="{% url 'article-list' category=i.category|lower  %}"
+                    >{{ i.get_category_display }}</a
+                >
+                <p class="topic-content">
+                    <a href="{{ i.get_absolute_url }}"
+                        >{{ i.title|truncatechars:25|safe }}</a
+                    >
+                </p>
+            </div>
             {% endfor %}
-            <!-- item end -->  
-          </div>
-          <!-- owl-carousel end -->
-  
+            <!-- item end -->
         </div>
-        <!-- container end -->
-      </div>
-      <!-- div bg-main-pale end -->
-  
-      <!-- container begin -->
-      <div class="container my-5">
-        <!-- embed-responsive begin -->
-        <div class="embed-responsive embed-responsive-2by1">
-          <iframe src="https://calendar.google.com/calendar/embed?height=353&wkst=1&bgcolor=%23ffffff&ctz=Asia%2FTaipei&showTz=0&showCalendars=0&showTabs=0&showPrint=0&showDate=0&showNav=0&showTitle=0&src=emgtdHcudGFpd2FuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%230B8043" width="706" height="353" frameborder="0" scrolling="no"></iframe>
-        </div>
-        <!-- embed-responsive end -->
-        <!-- 專題文章 begin -->
-        <div class="my-5">
-          <h1 class="headline-center-md">指導單位</h1>
-          <div class="row justify-content-center align-items-center">
+        <!-- owl-carousel end -->
+    </div>
+    <!-- container end -->
+</div>
+<!-- div bg-main-pale end -->
+
+<!-- container begin -->
+<div class="container my-5">
+    <!-- embed-responsive begin -->
+    <div class="embed-responsive embed-responsive-2by1">
+        <iframe
+            src="https://calendar.google.com/calendar/embed?height=353&wkst=1&bgcolor=%23ffffff&ctz=Asia%2FTaipei&showTz=0&showCalendars=0&showTabs=0&showPrint=0&showDate=0&showNav=0&showTitle=0&src=emgtdHcudGFpd2FuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%230B8043"
+            width="706"
+            height="353"
+            frameborder="0"
+            scrolling="no"
+        ></iframe>
+    </div>
+    <!-- embed-responsive end -->
+    <!-- 專題文章 begin -->
+    <div class="my-5">
+        <h1 class="headline-center-sm">{% trans "指導單位" %}</h1>
+        <div class="row justify-content-center align-items-center">
             <div class="col-7 col-md-4 col-supervisor-logo">
                 <a href="https://www.nstc.gov.tw/" target="_blank">
-                    <img src="{% static 'images/logo-supervisor-nstc.png' %}" alt="" class="img-fluid">
+                    <img
+                        src="{% static 'images/logo-supervisor-nstc.png' %}"
+                        alt=""
+                        class="img-fluid"
+                    />
                 </a>
             </div>
             <div class="col-5 col-md-3 col-supervisor-logo">
                 <a href="https://www.coa.gov.tw/" target="_blank">
-                    <img src="{% static 'images/logo-supervisor-coa.png' %}" alt="" class="img-fluid">
+                    <img
+                        src="{% static 'images/logo-supervisor-coa.png' %}"
+                        alt=""
+                        class="img-fluid"
+                    />
                 </a>
             </div>
             <div class="col-3 col-md-2 col-supervisor-logo">
                 <a href="https://www.biodiv.tw" target="_blank">
-                    <img src="{% static 'images/logo-supervisor-brcas.png' %}" alt="" class="img-fluid">
+                    <img
+                        src="{% static 'images/logo-supervisor-brcas.png' %}"
+                        alt=""
+                        class="img-fluid"
+                    />
                 </a>
             </div>
             <div class="col-5 col-md-3 col-supervisor-logo">
                 <a href="https://www.sinica.edu.tw/ch" target="_blank">
-                    <img src="{% static 'images/logo-supervisor-sinica.png' %}" alt="" class="img-fluid">
+                    <img
+                        src="{% static 'images/logo-supervisor-sinica.png' %}"
+                        alt=""
+                        class="img-fluid"
+                    />
                 </a>
             </div>
-          </div>
         </div>
-        <!-- 專題文章 end -->
-        <!-- 夥伴單位 begin -->
-        <div class="my-5">
-          <h1 class="headline-center-sm">夥伴單位</h1>
-          <div class="row justify-content-center align-items-center">
+    </div>
+    <!-- 專題文章 end -->
+    <!-- 夥伴單位 begin -->
+    <div class="my-5">
+        <h1 class="headline-center-sm">{% trans "夥伴單位" %}</h1>
+        <div class="row justify-content-center align-items-center">
             <div class="col-partner-logo">
                 <a href="https://www.forest.gov.tw/" target="_blank">
-                    <img src="{% static 'images/logo-partner-forest.jpg' %}" alt="" class="img-fluid">
+                    <img
+                        src="{% static 'images/logo-partner-forest.png' %}"
+                        alt=""
+                        class="img-fluid"
+                    />
                 </a>
             </div>
             <div class="col-partner-logo">
                 <a href="#">
-                    <img src="{% static 'images/logo-partner-endemic.jpg' %}" alt="" class="img-fluid">
+                    <img
+                        src="{% static 'images/logo-partner-tbri.png' %}"
+                        alt=""
+                        class="img-fluid"
+                    />
                 </a>
             </div>
             <div class="col-partner-logo">
                 <a href="https://www.cpami.gov.tw" target="_blank">
-                    <img src="{% static 'images/logo-partner-cpami.jpg' %}" alt="" class="img-fluid">
+                    <img
+                        src="{% static 'images/logo-partner-cpami.jpg' %}"
+                        alt=""
+                        class="img-fluid"
+                    />
                 </a>
             </div>
             <div class="col-partner-logo">
                 <a href="https://www.oca.gov.tw/ch/index.jsp" target="_blank">
-                    <img src="{% static 'images/logo-partner-oca.jpg' %}" alt="" class="img-fluid">
+                    <img
+                        src="{% static 'images/logo-partner-oca.jpg' %}"
+                        alt=""
+                        class="img-fluid"
+                    />
                 </a>
             </div>
             <div class="col-partner-logo">
                 <a href="https://www.tfri.gov.tw" target="_blank">
-                    <img src="{% static 'images/logo-partner-tfri.jpg' %}" alt="" class="img-fluid">
+                    <img
+                        src="{% static 'images/logo-partner-tfri.jpg' %}"
+                        alt=""
+                        class="img-fluid"
+                    />
                 </a>
             </div>
             <div class="col-partner-logo">
                 <a href="#">
-                    <img src="{% static 'images/logo-partner-ntm.jpg' %}" alt="" class="img-fluid">
+                    <img
+                        src="{% static 'images/logo-partner-ntm.jpg' %}"
+                        alt=""
+                        class="img-fluid"
+                    />
                 </a>
             </div>
             <div class="col-partner-logo">
                 <a href="#">
-                    <img src="{% static 'images/logo-partner-wra.jpg' %}" alt="" class="img-fluid">
+                    <img
+                        src="{% static 'images/logo-partner-wra.png' %}"
+                        alt=""
+                        class="img-fluid"
+                    />
                 </a>
             </div>
             <div class="col-partner-logo">
                 <a href="#">
-                    <img src="{% static 'images/logo-partner-depositar.jpg' %}" alt="" class="img-fluid">
+                    <img
+                        src="{% static 'images/logo-partner-depositar.jpg' %}"
+                        alt=""
+                        class="img-fluid"
+                    />
                 </a>
             </div>
-          </div>
         </div>
-        <!-- 夥伴單位 end -->
-      </div>
-      <!-- container end -->
+    </div>
+    <!-- 夥伴單位 end -->
+</div>
+<!-- container end -->
 
-      
-{% endblock %}
-
-{% block script %}{% endblock %}
+{% endblock %} {% block script %}{% endblock %}

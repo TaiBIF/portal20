@@ -19,7 +19,6 @@ sitemaps = {
     'dataset': DatasetSitemap,
 }
 
-
 urlpatterns = [
     path('', views.index, name='index'),
     path('publishing-data', views.publishing_data, name='publishing_data'),
@@ -75,6 +74,5 @@ urlpatterns = [
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     # path("robots.txt", robots_txt),
     path('taibif-api', views.taibif_api, name='taibif-api'),
-
 ]
 

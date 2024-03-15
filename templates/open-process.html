@@ -1,84 +1,92 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
-{% block title %}開放資料流程{% endblock %}
+{% block title %}{% endblock %}
 
 
 {% block main %}
 
-    <!-- topnav begin -->
-    <div class="bg-main-pale">
-        <div class="container">
-          <div class="caption-mascot-wrapper">
-            <h1 class="title">開放資料流程</h1>
-            <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
-          </div>
+<!-- topnav begin -->
+<div class="bg-main-pale">
+    <div class="container">
+        <div class="caption-mascot-wrapper">
+        <h1 class="title">{% trans "開放資料流程" %}</h1>
+        <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
         </div>
-      </div>
-      <!-- topnav end -->
-      <!-- container begin -->
-      <div class="container my-5">
-        <!-- breadcrumb begin -->
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-            <li class="breadcrumb-item">開放資料</li>
-            <li class="breadcrumb-item active" aria-current="page">開放資料流程</li>
-          </ol>
-        </nav>
-        <!-- breadcrumb end -->
-        <!-- row begin -->
-        <p class="opendata-md-text">請點選步驟按鈕進入詳細說明頁，文字說明法的優點是可以對調查對象做出比較深入和具體的描述，可以描述內部控制制度中的任何特殊情況。 其缺點是採用文字說明法進行描述時，文字敘述較為冗長，對業務處理</p>
-        <div class="row opendata-flow-wrapper">
-          <!-- col begin -->
-          <div class="col-12 col-md-4" data-order="order-1">
+    </div>
+</div>
+
+<!-- topnav end -->
+<!-- container begin -->
+<div class="container my-5">
+    <!-- breadcrumb begin -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">{% trans "首頁" %}</a></li>
+        <li class="breadcrumb-item">{% trans "開放資料" %}</li>
+        <li class="breadcrumb-item active" aria-current="page">{% trans "開放資料流程" %}</li>
+        </ol>
+    </nav>
+    <!-- breadcrumb end -->
+    <!-- row begin -->
+    <p class="opendata-md-text">
+        {% blocktrans %}
+        請點選步驟按鈕進入詳細說明頁，文字說明法的優點是可以對調查對象做出比較深入和具體的描述，可以描述內部控制制度中的任何特殊情況。其缺點是採用文字說明法進行描述時，文字敘述較為冗長，對業務處理
+        {% endblocktrans %}
+    </p>
+    <div class="row opendata-flow-wrapper">
+        <!-- col begin -->
+        <div class="col-12 col-md-4" data-order="order-1">
             <div class="card card-opendata-flow">
-              <a href="#" class="btn btn-outline-chocolate">清理資料</a>
-              <a href="{% url 'open-standard' %}" class="btn btn-outline-chocolate">資料標準化 (DwC)</a>
+                <a href="#" class="btn btn-outline-chocolate">{% trans "清理資料" %}</a>
+                <a href="{% url 'open-standard' %}" class="btn btn-outline-chocolate">{% trans "資料標準化 (DwC)" %}</a>
             </div>
-          </div>
-          <!-- col end -->
-          <!-- col begin -->
-          <div class="col-12 col-md-4" data-order="order-2">
-            <div class="card card-opendata-flow">
-              <a href="#" class="btn btn-outline-chocolate">檢核資料</a>
-            </div>
-          </div>
-          <!-- col end -->
-          <!-- col begin -->
-          <div class="col-12 col-md-4" data-order="order-3">
-            <div class="card card-opendata-flow">
-              <a href="{% url 'open-metadata' %}" class="btn btn-outline-chocolate">寫詮釋資料</a>
-              <a href="{% url 'open-upload' %}" class="btn btn-outline-chocolate">資料上傳 TaiBIF IPT</a>
-            </div>
-          </div>
-          <!-- col end -->
-          <!-- col begin -->
-          <div class="col-12 col-md-4" data-order="order-4">
-            <div class="card card-opendata-flow">
-              <a href="{% url 'open-license' %}" class="btn btn-outline-chocolate">開放 CC 授權</a>
-            </div>
-          </div>
-          <!-- col end -->
-          <!-- col begin -->
-          <div class="col-12 col-md-4" data-order="order-5">
-            <div class="card card-opendata-flow">
-              <a href="#" class="btn btn-outline-chocolate">發表資料論文</a>
-            </div>
-          </div>
-          <!-- col end -->
-          <!-- col begin -->
-          <div class="col-12 col-md-4" data-order="order-6">
-            <div class="card card-opendata-flow">
-              <a href="#" class="btn btn-outline-chocolate">資料再利用</a>
-            </div>
-          </div>
-          <!-- col end -->
         </div>
-        <!-- row end -->
-        <p class="opendata-md-text">請點選步驟按鈕進入詳細說明頁，文字說明法的優點是可以對調查對象做出比較深入和具體的描述，可以描述內部控制制度中的任何特殊情況。 其缺點是採用文字說明法進行描述時，文字敘述較為冗長，對業務處理</p>
-      </div>
-      <!-- container end -->
-  
-  
-  
+        <!-- col end -->
+        <!-- col begin -->
+        <div class="col-12 col-md-4" data-order="order-2">
+            <div class="card card-opendata-flow">
+                <a href="#" class="btn btn-outline-chocolate">{% trans "檢核資料" %}</a>
+            </div>
+        </div>
+        <!-- col end -->
+        <!-- col begin -->
+        <div class="col-12 col-md-4" data-order="order-3">
+            <div class="card card-opendata-flow">
+                <a href="{% url 'open-metadata' %}" class="btn btn-outline-chocolate">{% trans "寫詮釋資料" %}</a>
+                <a href="{% url 'open-upload' %}" class="btn btn-outline-chocolate">{% trans "資料上傳 TaiBIF IPT" %}</a>
+            </div>
+        </div>
+        <!-- col end -->
+        <!-- col begin -->
+        <div class="col-12 col-md-4" data-order="order-4">
+            <div class="card card-opendata-flow">
+                <a href="{% url 'open-license' %}" class="btn btn-outline-chocolate">{% trans "開放 CC 授權" %}</a>
+            </div>
+        </div>
+        <!-- col end -->
+        <!-- col begin -->
+        <div class="col-12 col-md-4" data-order="order-5">
+            <div class="card card-opendata-flow">
+                <a href="{% url 'data-paper' %}" class="btn btn-outline-chocolate">{% trans "發表資料論文" %}</a>
+            </div>
+        </div>
+        <!-- col end -->
+        <!-- col begin -->
+        <div class="col-12 col-md-4" data-order="order-6">
+            <div class="card card-opendata-flow">
+                <a href="#" class="btn btn-outline-chocolate">{% trans "資料再利用" %}</a>
+            </div>
+        </div>
+        <!-- col end -->
+    </div>
+    <!-- row end -->
+    <p class="opendata-md-text">
+        {% blocktrans %}
+        請點選步驟按鈕進入詳細說明頁，文字說明法的優點是可以對調查對象做出比較深入和具體的描述，可以描述內部控制制度中的任何特殊情況。 其缺點是採用文字說明法進行描述時，文字敘述較為冗長，對業務處理
+        {% endblocktrans %}
+    </p>
+</div>
+<!-- container end -->
+
 {% endblock %}

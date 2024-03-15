@@ -4,27 +4,6 @@
 {% block title %}API{% endblock %}
 
 {% block head %}
-<style type="text/css">
-    .hide {
-        display: none !important;
-    }
-</style>
-{% endblock %}
-{% block script %}
-<script>
-$(document).ready(function() {
-    $('.pub-data-nav-item').click(function(){
-        const cat = $(this).data()['cat'];
-        console.log(cat);
-        $('.pub-data-nav-item').removeClass('active');
-        $(this).addClass('active');
-
-        $('.pub-data-content').addClass('hide');
-        $(`.pub-data-content[data-cat="${cat}"]`).removeClass('hide');
-    });
-});
-</script>
-
 {% endblock %}
 
 {% block main %}
@@ -45,14 +24,20 @@ $(document).ready(function() {
             <li class="breadcrumb-item active" aria-current="page">API</li>
         </ol>
     </nav>
+
     <div class="row">
         <div class="col-sm-3 hidden-xs">
-            <ul class="schedule-flow-nav-wrapper">
-                {% include "taibif-api-nav-items.html" %}
-            </ul>
+            <div class="dropdown dropdown-flexible-wrapper">
+                <div class="dropdown-menu dropdown-menu-flexible d-md-block">
+                  <a data-cat="usage" class="dropdown-item nav-item current-sunset" href="#">說明</a>
+                  <a data-cat="occurrence" class="dropdown-item nav-item" href="#">出現紀錄</a>
+                  <a data-cat="dataset" class="dropdown-item nav-item" href="#">資料集</a>
+                  <a data-cat="publisher" class="dropdown-item nav-item" href="#">發布單位</a>
+                </div>
+            </div>
         </div>
     
-        <div class="col-xs-12 col-sm-9 pub-data-content" data-cat="usage_api">
+        <div class="col-xs-12 col-sm-9 nav-item-content" data-cat="usage">
             <h1 class="heading-lg-ul">說明 Usage</h1>
             最後修改：2023/10/19
             <div class="pub-data-section">
@@ -108,7 +93,7 @@ $(document).ready(function() {
         </div>
     
     
-        <div class="col-xs-12 col-sm-9 pub-data-content hide" data-cat="occurrence_api">
+        <div class="col-xs-12 col-sm-9 nav-item-content hide" data-cat="occurrence">
             <h1 class="heading-lg-ul">
             出現紀錄 Occurrence API
             </h1>
@@ -241,7 +226,7 @@ $(document).ready(function() {
             </table>
         </div>
         
-        <div class="col-xs-12 col-sm-9 pub-data-content hide" data-cat="dataset_api">
+        <div class="col-xs-12 col-sm-9 nav-item-content hide" data-cat="dataset">
             <h1 class="heading-lg-ul">
             資料集 Datset API
             </h1>
@@ -291,7 +276,7 @@ $(document).ready(function() {
             </div>
         </div>
     
-        <div class="col-xs-12 col-sm-9 pub-data-content hide" data-cat="publisher_api">
+        <div class="col-xs-12 col-sm-9 nav-item-content hide" data-cat="publisher">
             <h1 class="heading-lg-ul">
             發布單位 Publisher API
             </h1>
@@ -336,4 +321,4 @@ $(document).ready(function() {
     </div>
         
 </div>
-{% endblock %}
+{% endblock main %}

@@ -11,7 +11,7 @@
       <div class="container">
         <div class="caption-mascot-wrapper">
           <h1 class="title">線上教材包</h1>
-          <img src="assets/images/mascot-frog.png" alt="" class="symbol">
+          <img src="{% static 'images/mascot-frog.png'%}" alt="" class="symbol">
         </div>
       </div>
     </div>
@@ -33,10 +33,10 @@
         <div class="col-12 col-md-3">
 
           <div class="dropdown dropdown-flexible-wrapper">
-            <a class="btn btn-toggle-flexible visible-xs" href="#" data-toggle="dropdown">
+            <a class="btn btn-toggle-flexible visible-xs" href="#" data-toggle="dropdown" aria-expanded="false">
               線上教材包
             </a>
-            <div class="dropdown-menu dropdown-menu-flexible">
+            <div class="dropdown-menu dropdown-menu-flexible d-md-block">
               <a class="dropdown-item current-sunset" href="#">01-開放資料流程</a>
               <a class="dropdown-item" href="#">02-資料發布類型</a>
               <a class="dropdown-item" href="#">03-資料標準及共通欄位</a>

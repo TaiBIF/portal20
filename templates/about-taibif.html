@@ -11,11 +11,11 @@
 <!-- container begin -->
 
 
- <!-- topnav begin -->
- <div class="bg-main-pale">
+<!-- topnav begin -->
+<div class="bg-main-pale">
   <div class="container">
     <div class="caption-mascot-wrapper">
-      <h1 class="title">TaiBIF 介紹</h1>
+      <h1 class="title">{% trans "TaiBIF 介紹" %}</h1>
       <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
     </div>
   </div>
@@ -26,9 +26,9 @@
   <!-- breadcrumb begin -->
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-      <li class="breadcrumb-item">關於我們</li>
-      <li class="breadcrumb-item active" aria-current="page">TaiBIF 簡介</li>
+      <li class="breadcrumb-item"><a href="index.html">{% trans "首頁" %}</a></li>
+      <li class="breadcrumb-item">{% trans "關於我們" %}</li>
+      <li class="breadcrumb-item active" aria-current="page">{% trans "TaiBIF 介紹" %}</li>
     </ol>
   </nav>
   <!-- breadcrumb end -->
@@ -41,24 +41,55 @@
   </h1>
 
   <div class="article-content-wrapper">
-    <h3>關於 TaiBIF</h3>
+    <h3>{% trans "關於 TaiBIF" %}</h3>
       <p>  
-      臺灣生物多樣性資訊機構 (Taiwan Biodiversity Information Facility, TaiBIF) 是全球生物多樣性資訊機構 (GBIF) 在臺灣的國家節點，也是臺灣生物多樣性資訊與國際平台接軌之窗口。在 GBIF.org 國際平台上，所有授權條件明確之公開生物多樣性資料，均提供全球科學研究、政策制定以及公共建設使用。TaiBIF 於 2004 年由國科會委託中央研究院生物多樣性研究中心成立及運作，主要任務為推動、建置臺灣生物多樣性資訊相關基礎建設，包含生物多樣性資訊的開放分享、研究資料管理流程的建置與交流，以及資訊服務的設計與開發。2008 年 3 月，TaiBIF 於中央研究院成立全球生物多樣性資訊機構中華民國委員會 (GBIF-ROC)，促進跨部會在生物多樣性資訊議題上的對話，以推動資訊的流通與整合。</p>
+      {% url 'about_gbif' as about_gbif %}
+      {% blocktrans %}
+      臺灣生物多樣性資訊機構 (Taiwan Biodiversity Information Facility, TaiBIF) 是<a href="{{ about_gbif }}" target="_blank">全球生物多樣性資訊機構 (GBIF) </a>在臺灣的國家節點，也是臺灣生物多樣性資訊與國際平台接軌之窗口。
+       GBIF.org 國際平台上，所有授權條件明確之公開生物多樣性資料，均提供全球科學研究、政策制定以及公共建設使用。
+      TaiBIF 於 2004 年由國科會委託中央研究院生物多樣性研究中心成立及運作，主要任務為推動、建置臺灣生物多樣性資訊相關基礎建設，
+      包含生物多樣性資訊的開放分享、研究資料管理流程的建置與交流，以及資訊服務的設計與開發。
+      2008 年 3 月，TaiBIF 於中央研究院成立全球生物多樣性資訊機構中華民國委員會 (GBIF-ROC)，促進跨部會在生物多樣性資訊議題上的對話，以推動資訊的流通與整合。
+      {% endblocktrans %}
+    </p>
   </div>
 
     <div class="article-content-wrapper">
-      <h3>TaiBIF 工作目標</h3>
+      <h3>{% trans "目標及任務" %}</h3>
       <p>
-        TaiBIF 所推動的生物多樣性資訊整合包含兩個層面。首先是資料共享的文化，透過與各主管單位及研究團隊討論資料管理的觀念和方法，提昇研究人員對於資料價值的認同，從而願意將資料的整理、備份，以及資料標準化、加強資料可讀與重複利用性等工作，納入日常研究活動當中。其次是生物多樣性資訊服務及基礎建設的開發，透過制度的建立及軟體工程方法，確保資料的發布和取用流程中，均有合適的軟體解決方案協助。</p>
+        {% trans "我們致力於推動生物多樣性資訊的整合、管理、流通及應用，並包含兩個層面：" %}
+        <ol>
+          <li>
+            {% blocktrans %}
+            <strong>生物多樣性資訊服務及基礎建設的開發</strong>，透過制度、流程的建立及軟體工程方法，確保資料的發布和取用流程中，均有合適的軟體協助解決方案。
+            {% endblocktrans %}
+          </li>
+          <li>
+            {% blocktrans %}
+            <strong>資料共享的文化</strong>，透過與各主管單位及研究團隊討論資料管理的觀念和方法，提升相關人員對於資料開放價值的認同，從而願意將資料的整理、備份，以及資料標準化、加強資料可讀與再利用性等工作，納入日常研究活動當中。
+            {% endblocktrans %}
+          </li>
+        </ol>
+      </p>
       <p>
-      此外，TaiBIF 亦推動標準化資料之公開授權，供任何使用者合理使用。目前 TaiBIF 所流通的資料是採用 CC 授權 (Creative Common License)，包含 CC0，即作者不保留任何權利，允許任何人將資料做任何使用；CC-BY，雖亦允許任何人做任何使用，但需按照授權人指定的方式標示其姓名；CC-BY-NC 則代表使用時除了需標示授權人之姓名外，亦不得有商業目的性的使用。</p>
+        {% trans "根據上述的目標，本專題中心主要有下列任務：" %}
+        <ul>
+          <li>{% trans "建置生物多樣性資訊基礎建設" %}</li>
+          <li>{% trans "推廣開放資料的概念" %}</li>
+          <li>{% trans "促進生物多樣性資料的開放與整合" %}</li>
+          <li>{% trans "支持生物多樣性科學研究與政策制定" %}</li>
+          <li>{% trans "連結臺灣與國際的生物多樣性資訊" %}</li>
+        </ul>
+      </p>
     </div>
 
-  
-  
-
-  
+    <div class="article-content-wrapper">
+      <h3>{% trans "團隊成員" %}</h3>
+      <p>
+        <img src="{% static 'images/taibif-members.png' %}" alt="taibif-team-members" class="member-structure"/>
+      </p>
+    </div>
 </div>
 
-  <!-- container end -->
+<!-- container end -->
 {% endblock %}

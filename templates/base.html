@@ -2,296 +2,270 @@
 {% load helper_tags %}
 {% load i18n %}
   
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-  <head>
+    <head>
 
     <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
-  
-  
-  <title>{% block title %}TAIBIF::{% endblock title %}</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>{% block title %}TAIBIF::{% endblock title %}</title>
+
+    {% block style %}{% endblock style %}
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
     <!-- owl carousel -->
-    <!-- <link rel="stylesheet" href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.carousel.min.css"> -->
-    <!-- <link rel="stylesheet" href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.theme.default.min.css"> -->
     <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
-
     <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
-
     <!-- Data Table -->
-    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"> -->
     <link rel="stylesheet" href="{% static 'css/jquery.dataTables.min.css' %}">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+    <!-- owl carousel JS -->
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <!-- data table JS -->
+    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+    <!-- Optional JavaScript -->
+    <script src="{% static 'js/all.js' %}"></script>
+    <script src="{% static 'js/base.js' %}"></script>
 
-  {% block head %}
-  
-  <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-55MVPTLZ');</script>
-  <!-- End Google Tag Manager -->
-  {% endblock head %}
-  {% block style %}{% endblock style %}
-</head>
+    {% block head %}
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-55MVPTLZ');</script>
+    <!-- End Google Tag Manager -->
+    {% endblock head %}
+    </head>
 
-  <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-55MVPTLZ"height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-    
-    <!-- shortcut begin -->
-    <div class="shortcut-menu-wrapper dropup">
-      <a class="btn" href="{% url 'web-navi' %}" data-toggle="dropdown" aria-expanded="false">
-        <img src="{% static 'images/mascot-fish.png' %}" alt="" class="stamp">
-        網站捷徑
-      </a>
-      <div class="dropdown-menu">
-        <a href="https://ipt.taibif.tw" class="dropdown-item">IPT</a>
-        <a href="{% url 'tools'%}" class="dropdown-item">開放資料工具</a>
-        {% comment %} TODO {% endcomment %}
-        <a href="{% url 'index'%}" class="dropdown-item">資料標準模板</a>
-        <a href="https://taicol.tw" class="dropdown-item">TaiCOL</a>
-        <a href="https://tbiadata.tw" class="dropdown-item">TBIA</a>
-        <a href="{% url 'web-navi'%}" class="dropdown-item">網站導覽</a>
-      </div>
-    </div>
-    <!-- shortcut end -->
-        <!-- masthead begin -->
+    <body>
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-55MVPTLZ"height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+
+        <!-- shortcut begin -->
+        <div class="shortcut-menu-wrapper dropup">
+            <a class="btn" href="{% url 'web-navi' %}" data-toggle="dropdown" aria-expanded="false">
+                <img src="{% static 'images/mascot-fish.png' %}" alt="" class="stamp">
+                {% trans "網站捷徑" %}
+            </a>
+            <div class="dropdown-menu">
+                <a href="https://ipt.taibif.tw" class="dropdown-item">TaiBIF IPT</a>
+                <a href="{% url 'tools' %}" class="dropdown-item">{% trans "開放資料工具" %}</a>
+                <a href="{% url 'index' %}" class="dropdown-item">{% trans "資料標準模板" %}</a>
+                <a href="https://taicol.tw" class="dropdown-item">TaiCOL</a>
+                <a href="https://tbiadata.tw" class="dropdown-item">TBIA</a>
+                <a href="{% url 'web-navi' %}" class="dropdown-item">{% trans "網站導覽" %}</a>
+            </div>
+        </div>
+
         <div class="container">
-          <div class="row masthead-wrapper">
-            <!-- masthead-brand-wrapper begin -->
-            <div class="col-auto masthead-brand-wrapper">
-              <a href="{% url 'index'%}" class="header-brand pc">
-                <img src="{% static 'images/taibif-logo.png' %}">
-              </a>
-              <a href="{% url 'index'%}" class="header-brand mobile">
-                <img src="{% static 'images/taibif-logotype.png' %}">
-              </a>
-            </div>
-            <!-- masthead-brand-wrapper end -->
-        
-            <!-- masthead-menu-wrapper begin -->
-            <div class="col-auto masthead-menu-wrapper">
-              <!-- masthead-dropdown begin -->
-              <div class="masthead-dropdown">
-                <a class="masthead-block-menu" href="#">
-                  <span class="myicon icon-info-about"></span>
-                  <span class="menu-title">關於我們</span>
-                </a>
-                <div class="dropdown-content">
-                  <div class="dropdown-row about">
-                    <ul class="dropdown-col">
-                      <li><a href="{% url 'about_taibif' %}" class="item">{% trans "TaiBIF 介紹" %}</a></li>
-                      <li><a href="{% url 'about_gbif' %}" class="item">{% trans "GBIF 介紹" %}</a></li>
-                      <li><a href="{% url 'taibif-achievement' %}" class="item">{% trans "TaiBIF 成果" %}</a></li>
-                      <li><a href="{% url 'thanks-list' %}" class="item">{% trans "感謝名單" %}</a></li>
-                      <li><a href="{% url 'web-navi' %}" class="item">{% trans "網站導覽" %}</a></li>
-                    </ul>
-                    <ul class="dropdown-col">
-                      <li><a href="{% url 'links' %}" class="item">{% trans "相關連結" %}</a></li>
-                      <li><a href="{% url 'faq' %}" class="item">{% trans "FAQ" %}</a></li>
-                      <li><a href="{% url 'download-resources' %}" class="item">{% trans "TaiBIF 資源下載專區" %}</a></li>
-                      <li><a href="{% url 'data-policy' %}" class="item">{% trans "使用條款暨隱私權政策" %}</a></li>
-                    </ul>
-                  </div>
+            <div class="row masthead-wrapper">
+                <div class="col-auto masthead-brand-wrapper">
+                    <a href="{% url 'index'%}" class="header-brand pc">
+                        <img src="{% static 'images/taibif-logo.png' %}">
+                    </a>
+                    <a href="{% url 'index'%}" class="header-brand mobile">
+                        <img src="{% static 'images/taibif-logotype.png' %}">
+                    </a>
                 </div>
-              </div>
-              <!-- masthead-dropdown end -->
-        
-              <a class="masthead-block-menu" href="{% url 'contact_us' %}">
-                <span class="myicon icon-contact-mail"></span>
-                <span class="menu-title">{% trans "聯絡我們" %}</span>
-              </a>
-        
-              <!-- masthead-dropdown begin -->
-              <div class="masthead-dropdown">
-                <a class="masthead-block-menu" href="#">
-                  <span class="myicon icon-lang-switch"></span>
-                  <span class="menu-title">選擇語言</span>
-                </a>
-                <div class="dropdown-content">
-                  <div class="dropdown-row lang">
-                    <ul class="dropdown-col">
-                      <li><a href="#" class="item">中文</a></li>
-                    </ul>
-                    <ul class="dropdown-col">
-                      <li><a href="#" class="item">English</a></li>
-                    </ul>
-                  </div>
+
+                <div class="col-auto masthead-menu-wrapper">
+                    <div class="masthead-dropdown">
+                        <a class="masthead-block-menu" href="#">
+                            <span class="myicon icon-info-about"></span>
+                            <span class="menu-title">{% trans "關於我們" %}</span>
+                        </a>
+                        <div class="dropdown-content">
+                            <div class="dropdown-row about">
+                                <ul class="dropdown-col">
+                                    <li><a href="{% url 'about_taibif' %}" class="item">{% trans "TaiBIF 介紹" %}</a></li>
+                                    <li><a href="{% url 'about_gbif' %}" class="item">{% trans "GBIF 介紹" %}</a></li>
+                                    <li><a href="{% url 'taibif-achievement' %}" class="item">{% trans "TaiBIF 成果" %}</a></li>
+                                    <li><a href="{% url 'thanks-list' %}" class="item">{% trans "感謝名單" %}</a></li>
+                                    <li><a href="{% url 'web-navi' %}" class="item">{% trans "網站導覽" %}</a></li>
+                                </ul>
+                                <ul class="dropdown-col">
+                                    <li><a href="{% url 'links' %}" class="item">{% trans "相關連結" %}</a></li>
+                                    <li><a href="{% url 'faq' %}" class="item">FAQ</a></li>
+                                    <li><a href="{% url 'download-resources' %}" class="item">{% trans "TaiBIF 資源下載專區" %}</a></li>
+                                    <li><a href="{% url 'data-policy' %}" class="item">{% trans "使用條款暨隱私權政策" %}</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <a class="masthead-block-menu" href="{% url 'contact_us' %}">
+                        <span class="myicon icon-contact-mail"></span>
+                        <span class="menu-title">{% trans "聯絡我們" %}</span>
+                    </a>
+            
+                    <div class="masthead-dropdown">
+                        <a class="masthead-block-menu" href="#">
+                            <span class="myicon icon-lang-switch"></span>
+                            <span class="menu-title">{% trans "選擇語言" %}</span>
+                        </a>
+                        <div class="dropdown-content">
+                            <div class="dropdown-row lang">            
+                                <form action="{% url 'set_language' %}" method="post" id="lang_form">{% csrf_token %}
+                                    <input name="next" type="hidden" value="{{ redirect_to }}">
+                                    {% get_current_language as LANGUAGE_CODE %}
+                                    {% get_available_languages as LANGUAGES %}
+                                    {% get_language_info_list for LANGUAGES as languages %}
+                                    {% for language in languages %}
+                                    <ul class="dropdown-col"></ul>
+                                        <li class="item">
+                                            <button type="submit" name="language" value="{{ language.code }}" class="{% if language.code == LANGUAGE_CODE %}selected{% else %}demo-text-black{% endif %}">
+                                                {{ language.name_local }}
+                                            </button>
+                                        </li>
+                                    </ul>
+                                    {% endfor %}  
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <!-- masthead-dropdown end -->
+
+                <div class="col-auto masthead-search-wrapper px-fluid">
+                    <form action="">
+                        <div class="row">
+                            <input type="text" class="form-control" id="navbar-search-input" placeholder="{% trans "全站搜尋..." %}">
+                            <button id="navbar-search-btn" class="btn"><span class="myicon icon-search-lens"></span></button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <!-- masthead-menu-wrapper end -->
+        </div>
         
-            <!-- masthead-search-wrapper begin -->
-            <div class="col-auto masthead-search-wrapper px-fluid">
-              <form action="">
+        {% block navbar %}
+        <!-- navbar begin -->
+        <nav class="navbar navbar-expand-lg navbar-caption">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                    <div class="dropdown dropdown-caption">
+                        <a class="btn-caption dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
+                        {% trans "開放資料" %}
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{% url 'open-process' %}">{% trans "開放資料流程" %}</a>
+                            <a class="dropdown-item" href="{% url 'open-timezone' %}">{% trans "計畫資料繳交依據與時程" %}</a>
+                            <a class="dropdown-item" href="{% url 'tools' %}">{% trans "開放資料工具" %}</a>
+                            <a class="dropdown-item" href="{% url 'data_stats' %}">{% trans "資料發布狀況" %}</a>
+                        </div>
+                    </div> 
+                    </li>
+
+                    <li class="nav-item">
+                    <div class="dropdown dropdown-caption">
+                        <a class="btn-caption dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
+                        {% trans "教育資源" %}
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{% url 'tech-open' %}">{% trans "什麼是開放資料" %}</a>
+                            <a class="dropdown-item" href="{% url 'tech-book' %}">{% trans "生物多樣性資訊概論" %}</a>
+                            <a class="dropdown-item" href="{% url 'tech-workshop' %}">{% trans "資料開放與應用工作坊" %}</a>
+                            <a class="dropdown-item" href="{% url 'tech-volunteer' %}">{% trans "參與志工培訓" %}</a>
+                        </div>
+                    </div>
+                    </li>
+
+                    <li class="nav-item">
+                    <div class="dropdown dropdown-caption">
+                        <a class="btn-caption dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
+                        {% trans "資料應用" %}
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{% url 'data-paper' %}">{% trans "資料期刊與論文" %}</a>
+                            <a class="dropdown-item" href="{% url 'data-visual' %}">{% trans "資料視覺化與圖表產出" %}</a>
+                            <a class="dropdown-item" href="{% url 'data-case' %}">{% trans "資料應用案例" %}</a>
+                            <a class="dropdown-item" href="{% url 'data-product' %}">{% trans "資料產品" %}</a>
+                        </div>
+                    </div>
+                    </li>
+
+                    <li class="nav-item">
+                    <div class="dropdown dropdown-caption">
+                        <a class="btn-caption dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
+                        {% trans "找資料" %}
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{% url 'search-occurrence' cat='search' %}">{% trans "物種出現紀錄" %}</a>
+                            <a class="dropdown-item" href="{% url 'search-species' %}">{% trans "物種" %}</a>
+                            <a class="dropdown-item" href="{% url 'search-dataset' %}">{% trans "資料集" %}</a>
+                            <a class="dropdown-item" href="{% url 'search-publisher' %}">{% trans "資料發布單位" %}</a>
+                            <a class="dropdown-item" href="{% url 'taibif-api' %}">API</a>
+                        </div>
+                    </div>
+                    </li>
+
+                    <li class="nav-item">
+                    <div class="dropdown dropdown-caption">
+                        <a class="btn-caption dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
+                        {% trans "最新消息" %}
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">{% trans "新聞" %}</a>
+                            <a class="dropdown-item" href="#">{% trans "活動" %}</a>
+                            <a class="dropdown-item" href="#">{% trans "更新" %}</a>
+                        </div>
+                    </div>
+                    </li>
+
+                    <li class="nav-item">
+                    <div class="dropdown dropdown-caption">
+                        <a class="btn-caption dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
+                        {% trans "專題文章" %}
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">{% trans "資料故事" %}</a>
+                            <a class="dropdown-item" href="#">{% trans "科普文章" %}</a>
+                            <a class="dropdown-item" href="#">{% trans "技術專欄" %}</a>
+                            <a class="dropdown-item" href="#">{% trans "出版品" %}</a>
+                        </div>
+                    </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- navbar end -->
+        {% endblock %}
+
+        {% block main %}
+        {% endblock %}
+        
+        <div class="footer-wrapper">
+            <div class="container">
                 <div class="row">
-                  <input type="text" class="form-control" id="navbar-search-input" placeholder="{% trans "全站搜尋..." %}">
-                  <button id="navbar-search-btn" class="btn"><span class="myicon icon-search-lens"></span></button>
+                    <div class="col-12 col-md-4 col-lg-5">
+                        <img src="{% static 'images/footer-mreevesi.jpg' %}" alt="" class="img-fluid">
+                        <p class="footer-cc-post">Muntiacus reevesi (Ogilby, 1839) Observed in Taiwan by Liu JimFood. Photo via iNaturalist (CC BY-NC 4.0)</p>
+                    </div>
+                    <div class="col-12 col-md-8 col-lg-7">
+                        <div class="footer-info-ctn">
+                            <img src="{% static 'images/taibif-logo-w.png' %}" alt="" class="footer-brand">
+                            <p class="contact-info">
+                                <span class="myicon icon-pin-stroke mr-1">{% trans "11574 台北市南港區研究院路二段70巷28號 跨領域科技研究大樓 C301室" %}</span>
+                            </p>
+                            <p class="copywrite">{% trans "Copyright © TaiBIF 臺灣生物多樣性資訊機構" %}</p>
+                            <ul class="social-btn-wrapper">
+                                <li><a href="https://www.facebook.com/TaiBIF.tw/" target="_blank" class="btn"><span class="myicon icon-social-fb"></span></a></li>
+                                <li><a href="https://www.youtube.com/@taibif1617" target="_blank" class="btn"><span class="myicon icon-social-yt"></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-              </form>
             </div>
-            <!-- masthead-search-wrapper end -->
-          </div>
         </div>
-    <!-- masthead end -->
 
-    <!-- navbar begin -->
-    <!-- <nav class="navbar navbar-expand-lg navbar-caption">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav mx-auto">
-    
-          <li class="nav-item">
-            <div class="dropdown dropdown-caption">
-              <a class="btn-caption dropdown-toggle" href="{% url 'open-data' %}" data-toggle="dropdown" aria-expanded="false">
-                開放資料
-              </a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="{% url 'open-process' %}">開放資料流程</a>
-                <a class="dropdown-item" href="{% url 'open-timezone' %}">計畫資料繳交依據與時程</a>
-                <a class="dropdown-item" href="{% url 'tools' %}">{% trans "開放資料工具" %}</a>
-                <a class="dropdown-item" href="{% url 'data_stats' %}">{% trans "資料發布狀況" %}</a>
-              </div>
-            </div> 
-          </li>
-    
-          <li class="nav-item">
-            <div class="dropdown dropdown-caption">
-              <a class="btn-caption dropdown-toggle" href="TODO" data-toggle="dropdown" aria-expanded="false">
-                教育資源
-              </a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="{% url 'tech-open' %}">什麼是開放資料</a>
-                <a class="dropdown-item" href="{% url 'tech-book' %}">生物多樣性資訊概論</a>
-                <a class="dropdown-item" href="{% url 'tech-workshop' %}">資料開放與應用工作坊</a>
-                <a class="dropdown-item" href="{% url 'tech-volunteer' %}">參與志工培訓</a>
-              </div>
-            </div>
-          </li>
-    
-          <li class="nav-item">
-            <div class="dropdown dropdown-caption">
-              <a class="btn-caption dropdown-toggle" href="TODO" data-toggle="dropdown" aria-expanded="false">
-                資料應用
-              </a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="{% url 'data-paper' %}">資料期刊與論文</a>
-                <a class="dropdown-item" href="{% url 'data-visual' %}">資料視覺化與圖表產出</a>
-                <a class="dropdown-item" href="{% url 'data-case' %}">資料應用案例</a>
-                <a class="dropdown-item" href="{% url 'data-product' %}">資料產品</a>
-              </div>
-            </div>
-          </li>
-    
-          <li class="nav-item">
-            <div class="dropdown dropdown-caption">
-              <a class="btn-caption dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                找資料
-              </a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="{% url 'search-occurrence' cat='search' %}">{% trans "物種出現紀錄" %}</a>
-                <a class="dropdown-item" href="{% url 'search-species' %}">{% trans "物種" %}</a>
-                <a class="dropdown-item" href="{% url 'search-dataset' %}">{% trans "資料集" %}</a>
-                <a class="dropdown-item" href="{% url 'search-publisher' %}">{% trans "資料發布單位" %}</a>
-                <a class="dropdown-item" href="{% url 'taibif-api' %}">{% trans "API" %}</a>
-              </div>
-            </div>
-          </li>
-    
-          <li class="nav-item">
-            <div class="dropdown dropdown-caption">
-              <a class="btn-caption dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                {% trans "最新消息" %}
-              </a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="{% url 'article-search' %}?category=news">{% trans "新聞" %}</a>
-                <a class="dropdown-item" href="{% url 'article-search' %}?category=event">{% trans "活動" %}</a>
-                <a class="dropdown-item" href="{% url 'article-search' %}?category=update">{% trans "更新" %}</a>
-              </div>
-            </div>
-          </li>
-    
-          <li class="nav-item">
-            <div class="dropdown dropdown-caption">
-              <a class="btn-caption dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                {% trans "專題文章" %}
-              </a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="{% url 'data-story' %}">資料故事</a>
-                <a class="dropdown-item" href="{% url 'article-search' %}?category=sci">{% trans "科普文章" %}</a>
-                <a class="dropdown-item" href="{% url 'article-search' %}?category=tech">{% trans "技術專欄" %}</a>
-                <a class="dropdown-item" href="{% url 'article-search' %}?category=pub">{% trans "出版品" %}</a>
-              </div>
-            </div>
-          </li>
-    
-        </ul>
-      </div>
-    </nav> -->
-    <!-- navbar end -->
-
-    {% comment %} {% block body %}
-    {% endblock %} {% endcomment %}
-    {% block main%}
-    {% endblock %}
-    
-
-  <!-- footer begin -->
-  <div class="footer-wrapper">
-    <div class="container">
-      <div class="row">
-        <div class="col-12 col-md-4 col-lg-5">
-          <img src="{% static 'images/footer-mreevesi.jpg' %}" alt="" class="img-fluid">
-          <p class="footer-cc-post">Muntiacus reevesi (Ogilby, 1839) Observed in Taiwan by Liu JimFood. Photo via iNaturalist (CC BY-NC 4.0)</p>
-        </div>
-        <div class="col-12 col-md-8 col-lg-7">
-          <div class="footer-info-ctn">
-            <img src="{% static 'images/taibif-logo-w.png' %}" alt="" class="footer-brand">
-            <p class="contact-info">
-              <span class="myicon icon-pin-stroke mr-1">11574 台北市南港區研究院路二段70巷28號</span>
-              <span class="xs-block">跨領域科技研究大樓 C301室</span>
-            </p>
-            <p class="copywrite">Copyright © TaiBIF 臺灣生物多樣性資訊機構</p>
-            <ul class="social-btn-wrapper">
-              <li><a href="https://www.facebook.com/TaiBIF.tw/" target="_blank" class="btn"><span class="myicon icon-social-fb"></span></a></li>
-              <li><a href="https://www.youtube.com/@taibif1617" target="_blank" class="btn"><span class="myicon icon-social-yt"></span></a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  <div>
-  <!-- footer end -->
-
-
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
-
-  <!-- owl carousel JS -->
-  <script src="{% static 'js/owl.carousel.min.js' %}"></script>
-  
-  
-  <!-- data table JS -->
-  <!-- <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script> -->
-  <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
-  <!-- Optional JavaScript -->
-  <script src="{% static 'js/all.js' %}"></script>
-  <script src="{% static 'js/base.js' %}"></script>
-  
-{% block script %}{% endblock %}
-</body>
-
+        {% block script %}{% endblock %}
+    </body>
 </html>
-

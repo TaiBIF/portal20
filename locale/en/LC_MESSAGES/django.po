@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-31 15:15+0800\n"
+"POT-Creation-Date: 2024-03-12 10:40+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,205 +18,3017 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: apps/page/views.py:287
+#: apps/page/views.py:426
 msgid "這裡放需要翻譯的文字"
 msgstr ""
 
-#: conf/settings.py:157
+#: conf/settings.py:158
 msgid "Traditional Chinese"
 msgstr ""
 
-#: conf/settings.py:158
+#: conf/settings.py:159
 msgid "English"
 msgstr ""
 
-#: templates/article-list.html:90 templates/article-list.html:107
-msgid "全部"
-msgstr "All"
-
-#: templates/article-list.html:95 templates/article-list.html:112
-msgid "篩選"
-msgstr "Filtered by "
-
-#: templates/article-list.html:117 templates/base.html:165
-msgid "科普文章"
-msgstr "Popular Science"
-
-#: templates/article-list.html:123 templates/base.html:166
-msgid "技術專欄"
-msgstr "Technical Memo"
-
-#: templates/article-list.html:129 templates/base.html:167
-msgid "出版品資料"
-msgstr "Related Publication"
-
-#: templates/article-list.html:134 templates/base.html:168
-msgid "TaiBIF發表文章/海報"
-msgstr "TaiBIF Academic Publication"
-
-#: templates/base.html:70 templates/index.html:95 templates/search_all.html:31
-msgid "全站搜尋..."
-msgstr "Site Search"
-
-#: templates/base.html:107
-msgid "找資料"
-msgstr "Find Data"
-
-#: templates/base.html:110
-msgid "物種出現紀錄"
-msgstr "Occurrences"
-
-#: templates/base.html:111 templates/index.html:90 templates/search_all.html:25
-#: templates/search_all.html:26
-msgid "物種"
-msgstr "Species"
-
-#: templates/base.html:112 templates/index.html:91 templates/index.html:125
-#: templates/search_all.html:27
-msgid "資料集"
-msgstr "Datasets"
-
-#: templates/base.html:113 templates/index.html:92 templates/search_all.html:28
-msgid "發布單位"
-msgstr "Publishers"
-
-#: templates/base.html:118
-msgid "資料開放"
-msgstr "Open Data"
-
-#: templates/base.html:121
-msgid "Open Data 概述"
-msgstr "About Open Data"
-
-#: templates/base.html:122 templates/index.html:145
-msgid "資料發布狀況"
-msgstr "Data Publishing Status"
-
-#: templates/base.html:123
-msgid "資料上傳"
-msgstr "Publish Your Data"
-
-#: templates/base.html:124
-msgid "資料論文/期刊"
-msgstr "Data Paper and Journal"
-
-#: templates/base.html:125
-msgid "使用條款暨隱私權政策"
-msgstr "Terms of Use & Privacy Policy"
-
-#: templates/base.html:130
-msgid "工具與文件"
-msgstr "Tools & Documents"
-
-#: templates/base.html:133
-msgid "工具分享"
-msgstr "TaiBIF Tools"
-
-#: templates/base.html:135
-msgid "生物多樣性資訊概論"
-msgstr "Biodiversity Cookbook"
-
-#: templates/base.html:140
-msgid "關於 TaiBIF"
-msgstr "About TaiBIF"
-
-#: templates/base.html:143
-msgid "TaiBIF 簡介"
-msgstr "About Us"
-
-#: templates/base.html:145
+#: templates/about-gbif.html:14 templates/base.html:87
+#: templates/base_new.html:62
 msgid "GBIF 介紹"
 msgstr "About GBIF"
 
-#: templates/base.html:146
-msgid "聯絡我們"
-msgstr "Contact Us"
+#: templates/about-gbif.html:25 templates/about-taibif.html:29
+#: templates/cookbook-detail-1.html:41 templates/cookbook-detail-3.html:38
+#: templates/data-paper.html:22 templates/data-policy.html:29
+#: templates/data-product.html:24 templates/open-process.html:25
+#: templates/tech-book.html:28
+msgid "首頁"
+msgstr ""
 
-#: templates/base.html:147
-msgid "相關連結"
-msgstr "Related Links"
+#: templates/about-gbif.html:26 templates/about-taibif.html:30
+#: templates/base.html:81 templates/data-policy.html:30
+msgid "關於我們"
+msgstr "About Us"
 
-#: templates/base.html:153
-msgid "更多資訊"
-msgstr "More Info"
+#: templates/about-gbif.html:27
+#, fuzzy
+#| msgid "GBIF 介紹"
+msgid "GBIF 簡介"
+msgstr "About GBIF"
 
-#: templates/base.html:158 templates/index.html:158
-msgid "最新消息"
-msgstr "News & Notices"
+#: templates/about-gbif.html:32 templates/about-gbif.html:91
+msgid "什麼是 GBIF ?"
+msgstr "What is GBIF?"
 
-#: templates/base.html:159 templates/index.html:163
+#: templates/about-gbif.html:37
+msgid ""
+"\n"
+"      全球生物多樣性資訊機構，簡稱 GBIF，是一個由全球政府資助而成立的跨國合作"
+"網絡及研究基礎建設，成立宗旨在於提供大眾無論何時、何地均能公開且自由存取的、"
+"各種地球上的生物資料。\n"
+"      "
+msgstr ""
+"\n"
+"GBIF—the Global Biodiversity Information Facility—is an international "
+"network and data infrastructure funded by the world’s governments and aimed "
+"at providing anyone, anywhere, open access to data about all types of life "
+"on Earth. "
+
+#: templates/about-gbif.html:43
+msgid ""
+"\n"
+"      位於哥本哈根的GBIF祕書處負責統整機構的運作，以參與國、合作組織作為節點"
+"(Node)，各節點收集的資料以共同標準、開源格式提供給全球的資料中心，使得這些包"
+"含記錄地點、時間的生物資訊得以公開分享。這些生物資訊來源不一，有自 18 至 19 "
+"世紀時期博物館的標本典藏，到近年來業餘自然學家們發布附有地理標記的手機拍攝照"
+"片。\n"
+"      "
+msgstr ""
+"\n"
+"Coordinated through its Secretariat in Copenhagen, the GBIF network of "
+"participating countries and organizations</a>, working through participant "
+"nodes, provides data-holding institutions around the world with common "
+"standards, best practices and open-source tools enabling them to share "
+"information about where and when species have been recorded. This knowledge "
+"derives from many sources, including everything from museum specimens "
+"collected in the 18th and 19th century to geotagged smartphone photos shared "
+"by amateur naturalists in recent days and weeks."
+
+#: templates/about-gbif.html:49
+msgid ""
+"\n"
+"      GBIF以達爾文核心集（Darwin Core）標準格式彙整所有不同來源的資料，形成 "
+"GBIF.org 上億萬筆的物種出現記錄資料索引的基礎。彙整的資料在創用 CC 授權條款"
+"下，供科學家、研究人員及民眾公開自由存取，可運用於同儕審查論文發表及政策文件"
+"中，研究運用的主題涵蓋氣候變遷的衝擊、外來入侵害蟲的擴散、保育與保護區的優先"
+"順序、食品安全及人類健康等。\n"
+"      "
+msgstr ""
+"\n"
+"The GBIF network draws all these sources together through the use of data "
+"standards, including Darwin Core, which forms the basis for the bulk of GBIF."
+"org’s index of hundreds of millions of species occurrence records. "
+"Publishers provide open access to their datasets using machine-readable "
+"Creative Commons licence designations, allowing scientists, researchers and "
+"others to apply the data in hundreds of peer-reviewed publications and "
+"policy papers each year. Many of these analyses—which cover topics from the "
+"impacts of climate change and the spread of invasive and alien pests to "
+"priorities for conservation and protected areas, food security and human "
+"health would not be possible without this."
+
+#: templates/about-gbif.html:56
+msgid "背景與歷史沿革"
+msgstr "Background and history"
+
+#: templates/about-gbif.html:58
+msgid ""
+"\n"
+"        GBIF 的創立，起始於 1999 年經濟合作暨發展組織(OECD)大科學論壇中，生物"
+"多樣性資訊小組的建議報告。這份報告提出：國際間需要建立可以自由存取生物多樣性"
+"資料、資訊的機制，藉由提供可靠正確的科學證據，可為經濟、社會帶來益處並促進永"
+"續發展。\n"
+"        "
+msgstr ""
+"\n"
+"GBIF arose from a 1999 recommendation by the Biodiversity Informatics "
+"Subgroup of the Organization for Economic Cooperation and Development’s "
+"Megascience Forum. This report concluded that “An international mechanism is "
+"needed to make biodiversity data and information accessible worldwide”, "
+"arguing that this mechanism could produce many economic and social benefits "
+"and enable sustainable development by providing sound scientific evidence."
+
+#: templates/about-gbif.html:64
+msgid ""
+"\n"
+"        OECD 的專家小組明確地建議設立一個全球生物多樣性資訊機構，讓全球大眾能"
+"瀏覽且使用大量的生物多樣性資訊、促進科學研究、提升經濟、生活品質等社會利益、"
+"提供自然知識快速成長的基礎，同時避免重覆的勞力和花費。\n"
+"        "
+msgstr ""
+"\n"
+"The OECD panel specifically recommended the establishment of a Global "
+"Biodiversity Information Facility, to “enable users to navigate and put to "
+"use vast quantities of biodiversity information, advancing scientific "
+"research … serving the economic and quality-of-life interests of society, "
+"and providing a basis from which our knowledge of the natural world can grow "
+"rapidly and in a manner that avoids duplication of effort and expenditure.”"
+
+#: templates/about-gbif.html:70
+msgid ""
+"\n"
+"        2001 年，該項建議被 OECD 科學部首長們採納，參與的各國政府於合作備忘錄"
+"(MOU)簽署下正式成立 GBIF。TaiBIF 所推動的生物多樣性資訊整合包含兩個層面。首先"
+"是資料共享的文化，透過與各主管單位及研究團隊討論資料管理的觀念和方法，提昇研"
+"究人員對於資料價值的認同，從而願意將資料的整理、備份，以及資料標準化、加強資"
+"料可讀與重複利用性等工作，納入日常研究活動當中。其次是生物多樣性資訊服務及基"
+"礎建設的開發，透過制度的建立及軟體工程方法，確保資料的發布和取用流程中，均有"
+"合適的軟體解決方案協助。\n"
+"        "
+msgstr ""
+"\n"
+"That recommendation was endorsed by OECD science ministers and, in 2001, "
+"GBIF was officially established through Memorandum of Understanding between "
+"participating governments."
+
+#: templates/about-gbif.html:79
+msgid "關於秘書處"
+msgstr "About the Secretariat"
+
+#: templates/about-gbif.html:80
+msgid "GBIF 秘書處目前規劃為四個團隊："
+msgstr "which is currently organized into four teams: "
+
+#: templates/about-gbif.html:82
+msgid ""
+"參與合作部門：推動組織成員間的合作、招募新合作夥伴、並增進既有成員的運作能"
+"量。"
+msgstr ""
+"Participation and Engagement is responsible for operating the network of "
+"Participants and publishers, recruiting new members and enhancing the "
+"capacity of current ones."
+
+#: templates/about-gbif.html:83
+msgid "資料產品部門：確保GBIF所提供彙整資料的品質與其科學價值。"
+msgstr ""
+"Data Products is responsible for the quality and scientific value of the "
+"integrated data products produced by the GBIF network."
+
+#: templates/about-gbif.html:84
+msgid "資訊部門：執行資料管理、軟體開發及GBIF基礎設施運作。"
+msgstr ""
+"Informatics is responsible for data management, software development and the "
+"overall operation of the GBIF infrastructure."
+
+#: templates/about-gbif.html:85
+msgid "行政事務部門：聯繫 GBIF 網絡間合作及秘書處的行政事務處理。"
+msgstr ""
+"Administration is responsible for maintaining both the network and the "
+"Secretariat’s underlying operations and processes."
+
+#: templates/about-gbif.html:91
+msgid "資料來源:"
+msgstr "From: "
+
+#: templates/about-taibif.html:18 templates/about-taibif.html:31
+#: templates/base.html:86 templates/base_new.html:61
+msgid "TaiBIF 介紹"
+msgstr "About TaiBIF"
+
+#: templates/about-taibif.html:44
+msgid "關於 TaiBIF"
+msgstr "About Us"
+
+#: templates/about-taibif.html:47
+#, python-format
+msgid ""
+"\n"
+"      臺灣生物多樣性資訊機構 (Taiwan Biodiversity Information Facility, "
+"TaiBIF) 是<a href=\"%(about_gbif)s\" target=\"_blank\">全球生物多樣性資訊機"
+"構 (GBIF) </a>在臺灣的國家節點，也是臺灣生物多樣性資訊與國際平台接軌之窗"
+"口。\n"
+"       GBIF.org 國際平台上，所有授權條件明確之公開生物多樣性資料，均提供全球"
+"科學研究、政策制定以及公共建設使用。\n"
+"      TaiBIF 於 2004 年由國科會委託中央研究院生物多樣性研究中心成立及運作，主"
+"要任務為推動、建置臺灣生物多樣性資訊相關基礎建設，\n"
+"      包含生物多樣性資訊的開放分享、研究資料管理流程的建置與交流，以及資訊服"
+"務的設計與開發。\n"
+"      2008 年 3 月，TaiBIF 於中央研究院成立全球生物多樣性資訊機構中華民國委員"
+"會 (GBIF-ROC)，促進跨部會在生物多樣性資訊議題上的對話，以推動資訊的流通與整"
+"合。\n"
+"      "
+msgstr ""
+"\n"
+"Taiwan Biodiversity Information Facility (TaiBIF) was established in 2001 "
+"and signed a memorandum of understanding to become one of the nodes of the "
+"<a href=\"%(about_gbif)s\" target=\"_blank\">Global Biodiversity Information "
+"Facility (GBIF)</a> in Taiwan."
+
+#: templates/about-taibif.html:58
+msgid "目標及任務"
+msgstr "Purpose & Mission"
+
+#: templates/about-taibif.html:60
+msgid "我們致力於推動生物多樣性資訊的整合、管理、流通及應用，並包含兩個層面："
+msgstr ""
+"We are promoting the integration, management, mobilization, and application "
+"of biodiversity information, including two parts: "
+
+#: templates/about-taibif.html:63
+msgid ""
+"\n"
+"            <strong>生物多樣性資訊服務及基礎建設的開發</strong>，透過制度、流"
+"程的建立及軟體工程方法，確保資料的發布和取用流程中，均有合適的軟體協助解決方"
+"案。\n"
+"            "
+msgstr ""
+"\n"
+"The development of biodiversity information services and infrastructure "
+"through the establishment of processes, system, and software engineering "
+"methods, to ensure that appropriate software-assisted solutions are "
+"available in the process of data release and access. "
+
+#: templates/about-taibif.html:68
+msgid ""
+"\n"
+"            <strong>資料共享的文化</strong>，透過與各主管單位及研究團隊討論資"
+"料管理的觀念和方法，提升相關人員對於資料開放價值的認同，從而願意將資料的整"
+"理、備份，以及資料標準化、加強資料可讀與再利用性等工作，納入日常研究活動當"
+"中。\n"
+"            "
+msgstr ""
+"\n"
+"The culture of data sharing, through discussing the concepts and methods of "
+"data management with various supervisory units and research teams, enhances "
+"relevant personal recognition of the value of open data, so that they are "
+"willing to organize, backup and standardize data, and strengthen readability "
+"reusability of data within their daily research life."
+
+#: templates/about-taibif.html:75
+msgid "根據上述的目標，本專題中心主要有下列任務："
+msgstr "Based on the goals, we have the following tasks:"
+
+#: templates/about-taibif.html:77
+msgid "建置生物多樣性資訊基礎建設"
+msgstr "Building biodiversity information infrastructure."
+
+#: templates/about-taibif.html:78
+msgid "推廣開放資料的概念"
+msgstr "Promoting the concept of open data."
+
+#: templates/about-taibif.html:79
+msgid "促進生物多樣性資料的開放與整合"
+msgstr "Promoting the openness and integration of biodiversity data"
+
+#: templates/about-taibif.html:80
+msgid "支持生物多樣性科學研究與政策制定"
+msgstr "Support biodiversity-related research and policy making."
+
+#: templates/about-taibif.html:81
+msgid "連結臺灣與國際的生物多樣性資訊"
+msgstr "Connecting Taiwan and international biodiversity information"
+
+#: templates/about-taibif.html:87
+msgid "團隊成員"
+msgstr "Team members"
+
+#: templates/article-list.html:128
+msgid "篩選"
+msgstr ""
+
+#: templates/article-list.html:137 templates/base.html:216
+#: templates/base_new.html:189 templates/index.html:478
 msgid "新聞"
 msgstr "News"
 
-#: templates/base.html:160 templates/index.html:190
+#: templates/article-list.html:142 templates/base.html:217
+#: templates/base_new.html:190 templates/index.html:506
 msgid "活動"
 msgstr "Activities & Events"
 
-#: templates/base.html:161 templates/index.html:216
+#: templates/article-list.html:147 templates/base.html:218
+#: templates/base_new.html:191 templates/index.html:534
 msgid "更新"
 msgstr "Updates"
 
-#: templates/base.html:164
+#: templates/article-list.html:152 templates/base.html:230
+#: templates/base_new.html:203
+msgid "科普文章"
+msgstr "Popular Science"
+
+#: templates/article-list.html:157 templates/base.html:231
+#: templates/base_new.html:204
+msgid "技術專欄"
+msgstr "Technical Memo"
+
+#: templates/article-list.html:162
+msgid "出版品資料"
+msgstr "Related Publication"
+
+#: templates/article-list.html:167
+msgid "TaiBIF發表文章/海報"
+msgstr "TaiBIF Academic Publication"
+
+#: templates/base.html:54
+msgid "網站捷徑"
+msgstr ""
+
+#: templates/base.html:58 templates/base.html:161 templates/base_new.html:134
+#: templates/index.html:107
+msgid "開放資料工具"
+msgstr ""
+
+#: templates/base.html:59
+msgid "資料標準模板"
+msgstr ""
+
+#: templates/base.html:62 templates/base.html:90 templates/base_new.html:65
+msgid "網站導覽"
+msgstr ""
+
+#: templates/base.html:88 templates/base_new.html:63
+msgid "TaiBIF 成果"
+msgstr ""
+
+#: templates/base.html:89 templates/base_new.html:64
+msgid "感謝名單"
+msgstr ""
+
+#: templates/base.html:93 templates/base_new.html:68
+#: templates/cookbook-detail-2.html:379
+msgid "相關連結"
+msgstr "Related Links"
+
+#: templates/base.html:95 templates/base_new.html:70
+msgid "TaiBIF 資源下載專區"
+msgstr ""
+
+#: templates/base.html:96 templates/base_new.html:71
+msgid "使用條款暨隱私權政策"
+msgstr "Terms of Use & Privacy Policy"
+
+#: templates/base.html:104 templates/base_new.html:80
+msgid "聯絡我們"
+msgstr "Contact Us"
+
+#: templates/base.html:110
+msgid "選擇語言"
+msgstr ""
+
+#: templates/base.html:137 templates/base_new.html:108
+#: templates/search_all.html:31
+msgid "全站搜尋..."
+msgstr "Site Search"
+
+#: templates/base.html:156 templates/index.html:98
+#: templates/open-process.html:26
+msgid "開放資料"
+msgstr ""
+
+#: templates/base.html:159 templates/index.html:101
+#: templates/open-process.html:13 templates/open-process.html:27
+msgid "開放資料流程"
+msgstr ""
+
+#: templates/base.html:160 templates/index.html:104
+msgid "計畫資料繳交依據與時程"
+msgstr ""
+
+#: templates/base.html:162 templates/base_new.html:135 templates/index.html:110
+#: templates/index.html:229
+msgid "資料發布狀況"
+msgstr ""
+
+#: templates/base.html:170 templates/cookbook-detail-1.html:42
+#: templates/cookbook-detail-2.html:45 templates/cookbook-detail-3.html:39
+#: templates/index.html:125 templates/tech-book.html:29
+msgid "教育資源"
+msgstr ""
+
+#: templates/base.html:173 templates/index.html:128
+msgid "什麼是開放資料"
+msgstr ""
+
+#: templates/base.html:174 templates/cookbook-detail-1.html:29
+#: templates/cookbook-detail-1.html:43 templates/cookbook-detail-2.html:46
+#: templates/cookbook-detail-3.html:40 templates/index.html:131
+#: templates/tech-book.html:5 templates/tech-book.html:15
+#: templates/tech-book.html:30 templates/tech-book.html:36
+msgid "生物多樣性資訊概論"
+msgstr ""
+
+#: templates/base.html:175 templates/cookbook-detail-2.html:34
+#: templates/cookbook-detail-3.html:26 templates/index.html:134
+msgid "資料開放與應用工作坊"
+msgstr ""
+
+#: templates/base.html:176 templates/index.html:137
+msgid "參與志工培訓"
+msgstr ""
+
+#: templates/base.html:184 templates/data-paper.html:23
+#: templates/data-product.html:25 templates/index.html:152
+msgid "資料應用"
+msgstr ""
+
+#: templates/base.html:187 templates/data-paper.html:4
+#: templates/data-paper.html:11 templates/data-paper.html:24
+#: templates/index.html:155
+msgid "資料期刊與論文"
+msgstr ""
+
+#: templates/base.html:188 templates/index.html:158
+msgid "資料視覺化與圖表產出"
+msgstr ""
+
+#: templates/base.html:189 templates/index.html:161
+msgid "資料應用案例"
+msgstr ""
+
+#: templates/base.html:190 templates/data-product.html:13
+#: templates/data-product.html:26 templates/data-product.html:36
+#: templates/index.html:164
+msgid "資料產品"
+msgstr "Data Product"
+
+#: templates/base.html:198 templates/index.html:179
+msgid "找資料"
+msgstr "Find Data"
+
+#: templates/base.html:201 templates/base_new.html:174 templates/index.html:182
+#: templates/index.html:236
+msgid "物種出現紀錄"
+msgstr "Occurrences"
+
+#: templates/base.html:202 templates/base_new.html:175 templates/index.html:185
+#: templates/search_all.html:25 templates/search_all.html:26
+msgid "物種"
+msgstr "Species"
+
+#: templates/base.html:203 templates/base_new.html:176 templates/index.html:188
+#: templates/index.html:248 templates/search_all.html:27
+msgid "資料集"
+msgstr "Datasets"
+
+#: templates/base.html:204 templates/base_new.html:177 templates/index.html:191
+#: templates/index.html:270
+msgid "資料發布單位"
+msgstr "Publishers"
+
+#: templates/base.html:213 templates/base_new.html:186 templates/index.html:468
+msgid "最新消息"
+msgstr "News & Notices"
+
+#: templates/base.html:226 templates/base_new.html:199 templates/index.html:564
 msgid "專題文章"
 msgstr "Articles"
 
-#: templates/base.html:241
-msgid "11574 台北市南港區研究院路二段70巷28號"
+#: templates/base.html:229
+msgid "資料故事"
+msgstr ""
+
+#: templates/base.html:232 templates/base_new.html:205
+msgid "出版品"
+msgstr ""
+
+#: templates/base.html:256
+msgid "11574 台北市南港區研究院路二段70巷28號 跨領域科技研究大樓 C301室"
 msgstr ""
 "C301, No. 28, Ln 70, Academia Rd. Sec. 2, Nangang Dist., 11574 Taipei, "
 "TAIWAN."
 
-#: templates/base.html:242
-msgid "跨領域科技研究大樓 C301室"
-msgstr ""
-
-#: templates/base.html:244
+#: templates/base.html:258
 msgid "Copyright © TaiBIF 臺灣生物多樣性資訊機構"
 msgstr "Copyright © Taiwan Biodiversity Information Facility"
 
-#: templates/index.html:84
-msgid "TaiBIF-生物多樣性資料開放的推手"
-msgstr "TaiBIF - The Facilitator of Biodiversity Open Data"
+#: templates/base_new.html:69
+msgid "FAQ"
+msgstr ""
 
-#: templates/index.html:89 templates/index.html:116
+#: templates/base_new.html:178
+msgid "API"
+msgstr ""
+
+#: templates/cookbook-detail-1.html:4
+#, fuzzy
+#| msgid "GBIF 介紹"
+msgid "介紹"
+msgstr "About GBIF"
+
+#: templates/cookbook-detail-1.html:44 templates/cookbook-detail-1.html:62
+#: templates/tech-book.html:47
+msgid "第一章：介紹"
+msgstr "Chapter 1: Introduction"
+
+#: templates/cookbook-detail-1.html:64
+msgid "作者：Tsuyoshi Hosoya 細矢 剛/ 譯者：何宣慶"
+msgstr "Author: Tsuyoshi Hosoya"
+
+#: templates/cookbook-detail-1.html:71 templates/tech-book.html:55
+msgid "生物多樣性是什麼？"
+msgstr "What is Biodiversity?"
+
+#: templates/cookbook-detail-1.html:73
+msgid ""
+"\n"
+"            沒有任何一個生物可以獨自存活，任何生物都與其他生物息息相關。例如"
+"鳥類需要仰賴昆蟲為食、昆蟲需要仰賴植物維生、而植物有時候需要微生物的協助才可"
+"以生存。任何生物體死亡後，其屍體一定會被微生物（如真菌或細菌）所分解。這樣的"
+"關係存在於許多各式各樣的生物體之間，也就是我們所知的食物鏈 (food chain)，或是"
+"被視為存在於各種環境中的食物網 (food web)。\n"
+"            "
+msgstr ""
+"\n"
+"No single organism live all alone. Any organism is related with other "
+"organisms. For example, birds live on insects as their food, some insects "
+"live on plants, and plants’ lives are sometimes supported by microorganisms. "
+"It is certain that any organisms die, and their dead bodies are decomposed "
+"by microorganisms such as fungi and bacteria. These relationships in which "
+"diverse organisms are involved, well known as food chain, or more recently "
+"recognized as food webs exist in various environment."
+
+#: templates/cookbook-detail-1.html:78
+msgid ""
+"\n"
+"            生物有所變異的範圍稱為「生物多樣性」。生物多樣性除了支持生物彼此"
+"間的生存，也對自然界的平衡有所貢獻。換句話說，生物多樣性是自然界中必要的特"
+"性。生物多樣性也撐起了我們的日常生活。\n"
+"            "
+msgstr ""
+"\n"
+"The range of variation of organisms is termed “biodiversity” or “biological "
+"diversity”. Biodiversity supports the lives of organisms each other, and "
+"contributes in keeping the balance in nature. In other words, biodiversity "
+"is a necessary feature of the nature. Our daily life is also supported by "
+"biodiversity."
+
+#: templates/cookbook-detail-1.html:83
+msgid ""
+"\n"
+"            設想在生物之間形成了類似網絡的系統，當越多樣的生物存在於其中，生"
+"物間的關係所形成的網目就會變得更緻密（緊密連結）。其複雜的程度會使系統更加穩"
+"定，假使其中一個元素（生物）死光（或者說, 滅絕），該網絡仍可透過其複雜度而得"
+"以維繫之。\n"
+"            "
+msgstr ""
+"\n"
+"Imagine the relationships between organisms form network-like systems. When "
+"more diverse organisms are included, the mesh formed by the relationships "
+"between the organisms become more condensed (densely connected). The "
+"complication stabilizes the system, because if one of the element (organism) "
+"die out (by e.g. extinction), the network still holds due to the complexity."
+
+#: templates/cookbook-detail-1.html:88 templates/tech-book.html:56
+msgid "生物多樣性的層級"
+msgstr "Levels of Biodiversity"
+
+#: templates/cookbook-detail-1.html:89
+msgid "仔細深思生物多樣性，我們認為生物多樣性可透過三種不同角度切入與探討："
+msgstr ""
+"Thinking more deeply about biodiversity, we recognize that biodiversity can "
+"be described in three different viewpoints."
+
+#: templates/cookbook-detail-1.html:91
+msgid "物種多樣性 (species diversity)，"
+msgstr "The first one is species diversity. "
+
+#: templates/cookbook-detail-1.html:91
+msgid ""
+"這可能是了解生物多樣性最直觀的一個概念。可以簡單地用”有多少種物種”來理解。物"
+"種多樣性也是其餘兩個觀點的基礎。"
+msgstr ""
+"This concept may be the most intuitive to understand biodiversity. It is "
+"simply understood that “there are a number of species”. The species "
+"diversity is the basis of the two other concept of biodiversity."
+
+#: templates/cookbook-detail-1.html:92
+msgid "基因多樣性 (genetic diversity)，"
+msgstr ""
+"The second one is termed genetic diversity referring to the genetic "
+"variation within a single species. "
+
+#: templates/cookbook-detail-1.html:92
+msgid ""
+"指單一物種之內的基因變異。基因變異的多樣性提供生物不同性狀（例如形態、生理以"
+"及行為等等），是族群在不斷改變的環境中適應與演化的基礎。"
+msgstr ""
+"The variety in genetic traits provides different biological characters (e.g. "
+"morphology, physiology, and behavior, etc.), which is the basis of "
+"adaptation of populations and evolution in the changing environment."
+
+#: templates/cookbook-detail-1.html:93
+msgid "生態系多樣性 (ecosystem diversity)，"
+msgstr "The third one is termed ecosystem diversity, "
+
+#: templates/cookbook-detail-1.html:93
+msgid ""
+"指物種多樣性所依附之生態系的各種不同類型。簡單想像一下，海洋中的生物體一定跟"
+"森林中的不一樣，他們分別屬於不同種類的生物體所構成的不同生態系統。然而，各個"
+"生態系統之間是接續的，海洋與森林生態系中間有著許多像河流、湖泊、以及河口區域"
+"（半淡鹹水）等交界區的生態系。"
+msgstr ""
+"referring to the variety of ecological system where the species diversity is "
+"found. You can easily imagine the organisms in ocean are different from "
+"those in the forest. They belong to different ecosystem where different "
+"kinds of organisms form a system. However, ecosystems form a continuum "
+"having intermediate environment like rivers, lakes and brackish water bodies "
+"in between marine and forest environment."
+
+#: templates/cookbook-detail-1.html:98 templates/tech-book.html:57
+msgid "生物多樣性資訊學是什麼？"
+msgstr "What is Biodiversity Informatics?"
+
+#: templates/cookbook-detail-1.html:100
+msgid ""
+"\n"
+"            為了要知道物種的生物多樣性，我們必須要先知道哪個物種會在什麼時候"
+"出現在什麼地方，這兩件事都被定義為「資料 data」。換句話說，資料被定義為某種公"
+"認的標準下的個體觀測紀錄、測量或其他事實。另一方面，資訊則為來自於資料分析及"
+"解釋的一種知識（產品）。藉由累積生物多樣性資料，我們可以在已知棲地、區域或生"
+"態系統的狀況下，提取出其物種多樣性。一旦累積了一定的生物多樣性資料，我們可以"
+"將其與其他資料分析、評估或比較，以便開發或保育生物資源。例如，我們可能可以透"
+"過現有的發現找到可以使用的生物資源；物種分布資料可以被應用在決定保護區的範"
+"圍。整套流程藉由Busby於1996年發表了處理、策劃與管理各式資料的研究而有了新的資"
+"訊技術的狀況下發展出來。生物多樣性資訊學就是這樣的一個科學領域，換句話說，生"
+"物多樣性資訊學可以被定義為一個科學領域，其中資訊學應用於改善生物多樣性資訊的"
+"管理、展示、發現、探索和分析。\n"
+"            "
+msgstr ""
+"\n"
+"To know the species biodiversity, we have to know which species occurs in "
+"where and when. Each of these facts are defined as data. In other words, "
+"data is defined as individual observation, measurements or facts referenced "
+"to some kind of accepted standards. On the other hand, information is a "
+"knowledge (product) derived from the analysis and interpretation of data. By "
+"accumulating biodiversity data, we can recognize the species diversity "
+"within a given habitat, area or ecosystem. Once the biodiversity data are "
+"cumulated, we can analyze, estimate, or compare with other data for "
+"exploitation or conservation of the biological resource. For example, we may "
+"be able to find biological resources based on the current discovery. "
+"Distribution of the species data are applicable to determine protected "
+"areas. This process is facilitated by using the techniques developed in "
+"informatics where processing, engineering and management of various "
+"information is studied (Busby, 1996). Such a field of science is referred to "
+"as biodiversity informatics. In other words, biodiversity informatics may be "
+"defined as a field of science where informatics is applied for improved "
+"management, presentation, discovery, exploration and analysis in "
+"biodiversity information."
+
+#: templates/cookbook-detail-1.html:106
+msgid ""
+"\n"
+"            參照：維基百科 <a href=\"https://en.wikipedia.org/wiki/"
+"Biodiversity_informatics\" class=\"myicon icon-link\" target=\"_blank\">生物"
+"多樣性資訊學</a>\n"
+"            "
+msgstr ""
+"\n"
+"Wikipedia <a href=\"https://en.wikipedia.org/wiki/Biodiversity_informatics\" "
+"class=\"myicon icon-link\" target=\"_blank\">Biodiversity informatics</a>"
+
+#: templates/cookbook-detail-1.html:112 templates/cookbook-detail-1.html:198
+msgid "參考文獻："
+msgstr "Reference:"
+
+#: templates/cookbook-detail-1.html:115 templates/tech-book.html:58
+msgid "聚焦於物種生物多樣性"
+msgstr "Focus on species biodiversity"
+
+#: templates/cookbook-detail-1.html:117
+msgid ""
+"\n"
+"            三種不同的生物多樣性層級對於了解整體的生物多樣性都是重要的，但物"
+"種多樣性會是了解基因及生態系統多樣性的基礎。物種同時是生物學的基礎單元，了解"
+"一個物種出現在何處及其數量也扮演著生態學研究的基礎。因此，在下面的章節中，我"
+"們會更深入探討物種多樣性。\n"
+"            "
+msgstr ""
+"\n"
+"All three levels of biodiversity is important in understanding the "
+"biodiversity as a whole, but species diversity may serves the basis to "
+"understand both genetic and ecosystem diversity, because species diversity "
+"intermediates the genetic and ecosystem biodiversity. Species is also the "
+"fundamental unit in biology, and knowing which species in where and how many "
+"serves the fundamentals in ecological studies. So, in the subsequent text, "
+"we will think more deeply about species biodiversity."
+
+#: templates/cookbook-detail-1.html:122
+msgid ""
+"\n"
+"            藉由了解生物多樣性以及他們的出現紀錄，我們可以將這些資料應用在保"
+"育、人類衝擊以及入侵種等議題上。\n"
+"            "
+msgstr ""
+"\n"
+"By knowing the species diversity accompanied with their occurrence data, we "
+"can apply the data to conservation, human impact, invasive species, etc."
+
+#: templates/cookbook-detail-1.html:127 templates/tech-book.html:59
+msgid "生物多樣性資料 / 資訊"
+msgstr "Where are the resources of biodiversity data / information?"
+
+#: templates/cookbook-detail-1.html:128
+msgid "特徵及形態描述"
+msgstr "Traits / Morphological description"
+
+#: templates/cookbook-detail-1.html:130
+msgid ""
+"\n"
+"            當一個新的分類單元（任何分類的階級，例如科、屬、種等）被以種的方"
+"式描述時，一定會對該分類單元的分類特徵有所著墨。一般描述通常為一個物種長什麼"
+"樣子及該物種跟其他已知物種的差異。主要的資訊都是形態上的，但有時候也會包含生"
+"態上的資訊，其描述包含模式標本的資訊，即該物種一切描述的根本。\n"
+"            "
+msgstr ""
+"\n"
+"When a new taxon (any rank of taxonomic entity, e.g. species, genus, "
+"families, etc.) is described as a species, its taxonomic characteristics is "
+"always provided. The description usually provides how the species look like, "
+"and how the species are different from other previously known species. The "
+"majority of these information is morphological, but sometimes ecological "
+"information may be included. The description includes the information about "
+"type specimen, on which the description of the species is based. "
+
+#: templates/cookbook-detail-1.html:135
+msgid ""
+"\n"
+"            「由於這樣的描述可能散落在各種不同的期刊或書籍中，且先前已知物種"
+"的原始描述存在於古老的文獻中，因此這些描述的蒐集是必需的。生命大百科 (EOL) 蒐"
+"集這些描述，讓大眾可以了解這些物種看起來長什麼樣子。」\n"
+"            "
+msgstr ""
+"\n"
+"Since the description is scattered in wide range of journals and books, and "
+"descriptions are given in old literatures in most of the previously known "
+"species their accumulation is being wanted. Encyclopedia of Life (EOL) "
+"accumulates the description so that people can obtain the information "
+"regarding how the species look like."
+
+#: templates/cookbook-detail-1.html:140 templates/cookbook-detail-1.html:174
+#: templates/cookbook-detail-1.html:185 templates/cookbook-detail-2.html:284
+msgid "相關連結："
+msgstr "Related Links:"
+
+#: templates/cookbook-detail-1.html:147
+msgid "分類學 / 文獻"
+msgstr "Taxonomy / Literature"
+
+#: templates/cookbook-detail-1.html:149
+msgid ""
+"\n"
+"            在物種的分類特徵首次被描述之後，可能還會有後續的分類學修訂工作，"
+"新的資訊會被加入，其分類也有可能會被修改（例如屬名合併到其他物種等）。我們應"
+"該要關注這些提供在文獻中的資訊，以了解物種或其他分類單元的現況。\n"
+"            "
+msgstr ""
+"\n"
+"After the first description, taxonomic revisions may be carried out. New "
+"information may be added, and their taxonomy may be revised (e.g. transfer "
+"to other genera, merged into other species, etc.). These information are "
+"provided in the literature, and should be followed to know the current "
+"position of the species or other taxon."
+
+#: templates/cookbook-detail-1.html:154
+msgid ""
+"\n"
+"            分類學文獻也提供了各種不同的其他資料。特定主題或地區的物種清單通"
+"稱為名錄。這些可以提供先前已經確認的植物相、動物相或真菌相的一些基礎資訊。名"
+"錄整合某個特定主題的知識，例如瀕危物種或入侵物種。\n"
+"            "
+msgstr ""
+"\n"
+"Literature also provides various other data. List of species in a given area "
+"or theme is usually called check list, and various checks are available. "
+"These provides the fundamental information of flora, fauna, or mycobiota "
+"previously recognized. Check list sums up a certain thematic knowledge, like "
+"endangered species, or invasive species."
+
+#: templates/cookbook-detail-1.html:158
+msgid "觀察 / 調查"
+msgstr "Observation / surveys"
+
+#: templates/cookbook-detail-1.html:160
+msgid ""
+"\n"
+"            一旦物種被辨識，即成為認識生物多樣性的基礎。走進大自然，我們可以"
+"收集到不一樣的生物多樣性資訊。想像你正在一個森林中，正在辨識花、昆蟲、鳥類、"
+"蕈類等。第一個觀察生物多樣性資訊的步驟應該是將你所看到的每一個物種記錄下來，"
+"也就是透過觀察來認識大自然。\n"
+"            "
+msgstr ""
+"\n"
+"Once the species are recognized, they become the basis to recognize the "
+"biodiversity. Going into the nature, we can obtain various biodiversity "
+"information. Imagine that you are in the forest, and recognize flowers, "
+"insects, birds, mushrooms, etc. The first step to obtain the biodiversity "
+"information may be to memorize the species you saw in the notebook. In other "
+"words, recognizing the nature by observation."
+
+#: templates/cookbook-detail-1.html:165
+msgid ""
+"\n"
+"            很多賞鳥人士很有系統性地提供鳥類調查的結果，因此累積了大量的採集"
+"資訊。如果我們以時間來分析這些訊息，我們可以推估出鳥類的遷徙路徑，即可協助估"
+"算由鳥類所攜帶之病原體的擴散狀況。\n"
+"            "
+msgstr ""
+"\n"
+"A number of bird watchers provide the result of bird survey systematically, "
+"and huge collective information has been cumulated. If we analyze these "
+"information temporally, we can assume the migration route of birds, which "
+"may help estimating the spread of the pathogen carried by birds. "
+
+#: templates/cookbook-detail-1.html:170
+msgid ""
+"\n"
+"            如果相對短時間內收集了巨大的資料，這些觀測資料的弱點可能是無法被"
+"客觀地被重新檢視。\n"
+"            "
+msgstr ""
+"\n"
+"While great number of data may be accumulated in relatively short period of "
+"time, the weak point for the observation data may be that they cannot be re-"
+"examined objectively."
+
+#: templates/cookbook-detail-1.html:179
+msgid "標本"
+msgstr "Specimens"
+
+#: templates/cookbook-detail-1.html:181
+msgid ""
+"\n"
+"            相對於觀測資料並未伴隨著實體證據，標本是可以在往後重新被檢視的物"
+"證。當對資料有所懷疑時，我們永遠可以回去檢視標本並修正可能存在的錯誤。很多標"
+"本的資料都已經被數位化並儲存。既然標本是支持生物多樣性資料最強的證據，典藏這"
+"些標本可能需要花費許多人力及金錢。相對於大量的觀察或調查資料，收集大量的標本"
+"是不容易的。\n"
+"            "
+msgstr ""
+"\n"
+"While observation data do not accompany with physical evidence, specimens "
+"are physical evidence that allows subsequent re-examination. When in doubt, "
+"we can always go back to the specimens, and re-examine to correct errors, if "
+"any. A number of specimen data have been digitized and stored. While "
+"specimens are the strongest evidence to support biodiversity data, "
+"collecting and keeping them may be laborious and costly. Also, collecting "
+"larger numbers of specimens are not easy compared to observation or survey."
+
+#: templates/cookbook-detail-1.html:191
+msgid "生態資料"
+msgstr "Ecological data"
+
+#: templates/cookbook-detail-1.html:193
+msgid ""
+"\n"
+"            會需要生物多樣性資料的其中一個領域應該就是生態學了，其資料會應用"
+"於生物的消長、物種分布的限制因子及生物間的交互作用等研究。這些研究需要一定數"
+"量的觀測以及測量，不僅限於物種出現紀錄，亦需要更多的環境資料。例如，物種出現"
+"資料及經緯度、樹高與時間資料、生活史的氣候變化、溫度及降雨變化等。有些觀測可"
+"能是由肉眼所觀察，但也有資料是由機器透過規劃、隨機或偶然機會下自動收集的。不"
+"幸的是，儘管過去二十年來越來越多人提倡資料共享，讓資料可以被重複利用，很多這"
+"類的資料仍舊散落於個人的隨身電腦、桌上型電腦或各個伺服器中。\n"
+"            "
+msgstr ""
+"\n"
+"Probably, one of the areas that requires biodiversity data is ecology, "
+"because a number of studies on succession of occurrence, factors that limits "
+"distribution, and biological interactions are being carried out. These "
+"studies requires a number of observations and measurements, not limited to "
+"species occurrence, but to more environmental data. For example, occurrence "
+"data of species with coordinates, tree heights with temporal data, changes "
+"of life stage with climates, temperature, precipitations, etc. A number of "
+"observation may be done by human eyes, but a number of data are now "
+"collected automatically by machines based on planned or opportunistic or "
+"serendipitous occasions. Unfortunately such data are still scattered "
+"everywhere in personal notebooks or personal computers or local servers, "
+"although data sharing for reuse have been increasingly claimed especially in "
+"the last two decades."
+
+#: templates/cookbook-detail-2.html:47 templates/cookbook-detail-2.html:64
+#: templates/tech-book.html:72
+msgid "第二章：資料標準化"
+msgstr "Chapter 2: Standardize data"
+
+#: templates/cookbook-detail-2.html:66
+msgid "作者：Tsuyoshi Hosoya 細矢 剛/ 譯者：雲翻譯公司"
+msgstr "Author: Tsuyoshi Hosoya"
+
+#: templates/cookbook-detail-2.html:72 templates/tech-book.html:80
+msgid "使用通用的原始資料格式"
+msgstr "Use common raw data format"
+
+#: templates/cookbook-detail-2.html:74
+msgid ""
+"\n"
+"            如前一章所述，生物多樣性資料無所不在，只是以不同格式、不同媒介的"
+"方式存在著。 可能以Excel或Word檔案的方式儲存於筆電或電腦中，或者透過PDF檔案印"
+"出來以紙本方式儲存。\n"
+"            "
+msgstr ""
+"\n"
+"As described in the previous chapter, biodiversity data are everywhere, and "
+"in different format in different media. They may be fixed in notebooks, in "
+"PC as Excel or Word files, or already printed on papers with available PDF."
+
+#: templates/cookbook-detail-2.html:79
+msgid ""
+"\n"
+"            為了避免造成混淆，我們先將詞彙進行定義。 如你所見，一組生物多樣資"
+"料是由許多數據所組成，用於顯示物種在何時何地發現，以及如何識別物種。 這種單次"
+"的觀察或描述稱之為「紀錄」。 如果你去野外考察，可以使用特定方法獲得多筆紀"
+"錄。 這組紀錄稱之為「資料集」（例如「藉由穿越線調查法記錄在玉山中觀察到的樹"
+"種」）。\n"
+"            "
+msgstr ""
+"\n"
+"To avoid confusion, let’s define some words. As you see, a set of "
+"biodiversity data is a combination of data to show what species occurred in "
+"where and when, and how it was recognized. A single description of such "
+"observation or description is termed “record”. If you go to a field research "
+"multiple records can be obtained by a certain methodology. These set of "
+"record are termed “dataset” (e.g. “tree species observed in Mt. MM by line "
+"transect”)."
+
+#: templates/cookbook-detail-2.html:84
+msgid ""
+"\n"
+"            想像一下你取得一份資料表，可能是一個包含了數十行和數百列的文字串"
+"或數字的Excel檔或純文字檔案。 為了理解這份資料檔案的內容，首先你會怎麼做呢？ "
+"如果沒有其他額外的資訊來說明這份資料，你可能會先嘗試閱讀表格內的第一列資料"
+"（表頭）。\n"
+"            "
+msgstr ""
+"\n"
+"Imagine that if you get a data table, maybe an Excel file or a text file "
+"with tens of columns and hundreds of rows filled with text-strings or "
+"numbers. What will you do first to understand the meaning of this data file? "
+"If there is no extra information to explain the data, probably you will try "
+"to read the first row, the header, of this data table."
+
+#: templates/cookbook-detail-2.html:89
+msgid "表2.1 資料表的範例"
+msgstr "Table 2.1 An example of dataset"
+
+#: templates/cookbook-detail-2.html:151
+msgid ""
+"\n"
+"            舉例來說，「id」、「plot」、「zone」、「common name」、「sp」、"
+"「x」、「y」分別是什麼意思呢？ 如果你是植物學家或植物生態學家，且也看得懂中"
+"文，你可能很容易猜到這可能是關於植物野外調查的資料檔，包含了紀錄編號、樣區編"
+"號、調查區域、植物的中文俗名、學名以及樣區的座標。 資料表的欄位命名方式會因人"
+"而異。 如果你取得一個資料表卻無法理解其表頭的意思，會浪費許多時間去猜測它的含"
+"意。 或者更糟糕的情況，如果你必須去整合許多來源不一且沒有被標準化規範的資料"
+"表，你會很快地感到崩潰。 因此，為了便於資料的交流與整合，為何不用一個標準規範"
+"來記錄資料以節省大家的時間呢？ 所以接下來要做的第一步就是欄位名稱的標準化！\n"
+"            "
+msgstr ""
+"\n"
+"For example, what are the meaning of “id”, “plot”, “zone”, “common name”, "
+"“sp”, “x”, “y”? If you are a botanist or a plant ecologist and you also can "
+"read Chinese characters, you may easily guess this probably a data file "
+"about a field survey of plant, with record number, plot number, survey area, "
+"Chinese common name of plant, scientific name, coordinates of plot location."
+"Different people may use different ways to name the column titles of their "
+"data table. If you get a data table that you don’t understand the meaning of "
+"its header it will wastes you a lot of time to guess. Even worse, if you "
+"have to integrate many data tables from different people without common way "
+"or standardization. Soon you will be crazy. Therefore, to facilitate data "
+"exchange and integration, why don’t we have a standard for documenting the "
+"data to save everybody’s life? The first step is to adopt standardized "
+"column names!Take a look at Fig. 2.1, representing a concept of merging data "
+"based on literature, observation, and specimens. The three data sets "
+"obtained from each of these data source all includes taxonomy (name of the "
+"species), when (date, time), where (location), and additional information. "
+"However, it is not possible just appending one record after another, because "
+"of the following reason."
+
+#: templates/cookbook-detail-2.html:157
+msgid ""
+"\n"
+"            圖 2.1 顯示了文獻、觀察和標本資料整併的概念。 這三個資料集從每個"
+"資料來源中取得的資訊包含了分類（物種名）、何時（日期、時間）、何處（位置）及"
+"其他資訊， 但由於下列原因而無法於紀錄後直接附加其他紀錄：\n"
+"            "
+msgstr ""
+"\n"
+"Fig 2.1 Consolidation concept of document, observation, and specimen data. "
+"The information obtained from each data source in these three datasets "
+"includes taxonomy (species name), when (date, time), where (location) and "
+"other information, but cannot be directly appended to the record for the "
+"following reasons:"
+
+#: templates/cookbook-detail-2.html:161
+msgid "觀察紀錄 表A"
+msgstr "Observation Table A"
+
+#: templates/cookbook-detail-2.html:165 templates/cookbook-detail-2.html:211
+msgid "名稱"
+msgstr "Name"
+
+#: templates/cookbook-detail-2.html:166
+msgid "時間"
+msgstr "When"
+
+#: templates/cookbook-detail-2.html:167 templates/cookbook-detail-2.html:187
+#: templates/cookbook-detail-2.html:213
+msgid "地點"
+msgstr "Where"
+
+#: templates/cookbook-detail-2.html:179
+msgid "標本 表B"
+msgstr "Specimen Table B"
+
+#: templates/cookbook-detail-2.html:183
+msgid "屬"
+msgstr "Genus"
+
+#: templates/cookbook-detail-2.html:184
+msgid "種"
+msgstr "Species"
+
+#: templates/cookbook-detail-2.html:185
+msgid "命名者"
+msgstr "Author"
+
+#: templates/cookbook-detail-2.html:186 templates/cookbook-detail-2.html:212
+msgid "日期"
+msgstr "Date"
+
+#: templates/cookbook-detail-2.html:188
+msgid "採集者"
+msgstr "Collector"
+
+#: templates/cookbook-detail-2.html:189
+msgid "鑑定者"
+msgstr "Identified"
+
+#: templates/cookbook-detail-2.html:190
+msgid "基質"
+msgstr "by"
+
+#: templates/cookbook-detail-2.html:207
+msgid "文獻 表C"
+msgstr "Literature Table C"
+
+#: templates/cookbook-detail-2.html:214
+msgid "緯度"
+msgstr "Latitute"
+
+#: templates/cookbook-detail-2.html:215
+msgid "經度"
+msgstr "Longitude"
+
+#: templates/cookbook-detail-2.html:231
+msgid ""
+"\n"
+"                每一格的紀錄的呈現方式不盡相同。 舉例來說，在表Ａ中該物種在"
+"「名稱」的地方寫下的是它的俗名（麻雀），而物種名則以學名（拉丁文名稱）呈現在"
+"表B，且分別使用了三個格子來說明其屬、種和命名者，但在表C則僅使用一個格子。要"
+"注意的是，同樣是指「名稱」但在表A和表C中有不同的含意（表A中的名稱指的是俗名而"
+"在另一個表格中指的是學名）。\n"
+"                "
+msgstr ""
+"\n"
+"The property of each record in the cell is indicated differently. For "
+"instance, the name of the species is shown under “Name” written in common "
+"name (House sparrow) in Table 1, while species name is given in scientific "
+"name (Latin name) and separated into three cells (Genus, Species, and "
+"Author) in Table B, but in one cell in Table 3. It should be noted that the "
+"same word “Name” shows different meaning in Table A and Table C (Name in "
+"Table 1 indicates common name while the same word indicates the scientific "
+"name) ."
+
+#: templates/cookbook-detail-2.html:236
+msgid ""
+"\n"
+"                每個欄位都有其各自不同的定義。\n"
+"                "
+msgstr ""
+"\n"
+"The definition of each column is different from each other."
+
+#: templates/cookbook-detail-2.html:241
+msgid ""
+"\n"
+"                每個資料格式都遵循著不同的規則。 舉例來說，表C中的位置（表示"
+"為「何處」）並不附加國家名稱，但另外兩個表格則剛好相反。 相同的日期（2015年4"
+"月1日）在三個表格中以不同的方式呈現。\n"
+"                "
+msgstr ""
+"\n"
+"The format of the data is not following the same rule. For example, The "
+"locality in Table C (indicated as “Where”) is not accompanied with the name "
+"of the country, while the other two are. The same date (April 1, 2015) is "
+"indicated differently in the three tables)."
+
+#: templates/cookbook-detail-2.html:248
+msgid "從上面的分析中，我們瞭解到要注意表格的合併方式："
+msgstr ""
+"From above analyses, we recognize the following caution must be drawn to "
+"merge the table."
+
+#: templates/cookbook-detail-2.html:250
+msgid "每一個欄位必須使用一致性的術語，且有適當的定義。"
+msgstr ""
+"Each column must be consistent in terminology, and appropriately defined."
+
+#: templates/cookbook-detail-2.html:251
+msgid "資料的格式必須遵守標準化的規範。"
+msgstr "The format of the data must follow a standardized rule."
+
+#: templates/cookbook-detail-2.html:253
+msgid ""
+"那麼有沒有標準化的資料格式規範呢？ 實際上是有的！ 在本章我們介紹 GBIF所用的國"
+"際標準，稱之為「達爾文核心集」(DwC)。"
+msgstr ""
+"Then, is there any standardized data format? Actually, there is! It is "
+"called “Darwin Core” (DwC)."
+
+#: templates/cookbook-detail-2.html:255 templates/tech-book.html:81
+msgid "使用達爾文核心集作為主要標準"
+msgstr "Use Darwin Core as the main standard"
+
+#: templates/cookbook-detail-2.html:257
+msgid ""
+"\n"
+"                達爾文核心集是由一群科學家所建立（生物分類學資料庫工作小組，"
+"<a href=\"http://www.tdwg.org/\" target=\"_blank\">TDWG</a>，現為生物多樣性資"
+"訊標準）。 簡單來說，達爾文核心集是一組具有特定定義的術語詞彙表，且建議用於記"
+"錄生物多樣性資料。它最初是文獻中的都柏林核心延伸集，現在則成為用於分享生物多"
+"樣性資訊且廣為人知的穩定準則參考。 達爾文核心集允許建立超過150個項目的資料集"
+"（在資料庫術語中稱為「欄位」）。 每個欄位都有嚴格定義，且需遵循格式規則。 由"
+"於DwC是由許多不同的欄位所組成，因此會依照欄位的性質進行分組。 這樣的分組稱之"
+"為「類別 Class」（這邊的「Class」的意思和分類學中的「Class（綱）」的意思不一"
+"樣）。\n"
+"                "
+msgstr ""
+"\n"
+"Darwin core was developed by a group of scientist (Taxonomic Databases "
+"Working Group, or <a href=\"http://www.tdwg.org/\" target=\"_blank\">TDWG</"
+"a>, now known as Biodiversity Information Standards). In a simple "
+"explanation, you may say it’s a collection of vocabularies of terms with "
+"predefined meaning and suggested usage used to document biodiversity data. "
+"It was originally developed as an extension of Dublin Core for literature, "
+"and now world widely known as stable standard reference for sharing "
+"information on biodiversity. DwC allows us to make a stable dataset based on "
+"more than 150 items (termed “fields” in database jargon). Each field is "
+"strictly defined and follow a rule in format. Some of the representative "
+"fields are listed in Table #. Since DwC is consisted of wide range of "
+"fields, some fields are grouped based on their common nature. This group is "
+"called “Class” (Note they are different from the word “Class” used in "
+"taxonomy). DwC are maintained and being revised and expanded by TDWG."
+
+#: templates/cookbook-detail-2.html:262
+msgid ""
+"\n"
+"            以下是DwC中一些類別的列表和一些欄位的例子。 相關完整說明，請參閱"
+"網站<a href=\"http://rs.tdwg.org/dwc/terms/\">http://rs.tdwg.org/dwc/terms/</"
+"a> 或 <a href=\"http://tools.gbif.org/dwca-assistant/\">http://tools.gbif."
+"org/dwca-assistant/</a>。\n"
+"            "
+msgstr ""
+"\n"
+"Below is the list of classes and some examples of the fields in DwC. For "
+"full descriptions, visit <a href=\"http://rs.tdwg.org/dwc/terms/\">http://rs."
+"tdwg.org/dwc/terms/</a> or <a href=\"http://tools.gbif.org/dwca-assistant/"
+"\">http://tools.gbif.org/dwca-assistant/</a>."
+
+#: templates/cookbook-detail-2.html:267
+msgid ""
+"[ 類別 ] Record-Level（紀錄等級）提供管理每筆資料的資訊，此分類的欄位可以提供"
+"與其他資料庫資料的連結。"
+msgstr ""
+"The Class Record-level Terms provides the information to manage each data. "
+"This fields in this class may provide links with data in other databases."
+
+#: templates/cookbook-detail-2.html:268
+msgid "[ 類別 ] Occurrence（出現紀錄）提供了資料被記錄的時間和地點的基本資訊。"
+msgstr ""
+"The Class Occurrence provides the fundamental information when and where the "
+"data were recorded."
+
+#: templates/cookbook-detail-2.html:269
+msgid ""
+"[ 類別 ] Organism（生物體）提供了該生物體性質的資訊，例如文字名稱或標籤、該生"
+"物體屬於無性生殖或菌落等。 此類別是為了描述更多非正式的分類學資訊，而從類別"
+"Taxon分出來的（見下方）。"
+msgstr ""
+"The Class Organism provides the information regarding the nature of the "
+"given organisms, such as textual names or labels, whether the organism was "
+"recognized as a clone or colony, etc. This class is distinguished from the "
+"Class Taxon (see below) in describing more informal taxonomic information."
+
+#: templates/cookbook-detail-2.html:270
+msgid ""
+"[ 類別 ] MaterialSample（樣本材料）可依據標本被典藏的具體性質來選擇及區分。"
+msgstr ""
+"The Classes MaterialSample, LivingSpecimen, PreservedSpecimen may be chosen "
+"based on the nature of the basis of the record. It gives distinction whether "
+"the record is based on sampled materials or living specimens or preserved "
+"specimens."
+
+#: templates/cookbook-detail-2.html:271
+msgid "[ 類別 ] Event（活動）在某段時間發生在某個地點的行動。"
+msgstr ""
+"The Classes Event, HumanObservation, MachineObservation gives the "
+"information whether the record was obtained by any kind of sampling activity "
+"or observation made by human or machines. Like the previous class, one of "
+"these should be chosen on necessary basis."
+
+#: templates/cookbook-detail-2.html:272
+msgid "[ 類別 ] Location（地點）可提供紀錄取得的地點資訊。"
+msgstr ""
+"The Class Location provides information regarding the location where the "
+"record was obtained."
+
+#: templates/cookbook-detail-2.html:273
+msgid ""
+"[ 類別 ] GeologicalContext（地質狀況）可提供關於採集地點之地質環境資訊，舉例"
+"來說，可藉由地層學來確認一個地方或區域。 因這個類別是使用於達爾文核心集，故化"
+"石資訊也可被納入其中。"
+msgstr ""
+"The Class GeologicalContext provides the geological information, such as "
+"stratigraphy, that qualifies a region or place. Since this class is in DwC, "
+"fossil information can be incorporated."
+
+#: templates/cookbook-detail-2.html:274
+msgid ""
+"[ 類別 ] Identification（鑑定資訊）提供了分類判定的資訊，例如當初這分類是由何"
+"人何時鑑定的，以及鑑定的參考來源等。"
+msgstr ""
+"The Class Identification provides information for taxonomic determination, "
+"such as who and when identified, references for the identification, etc."
+
+#: templates/cookbook-detail-2.html:275
+msgid ""
+"[ 類別 ] Taxon（分類資訊）提供了分類學相關資訊，例如學名、更高階層的分類等級"
+"等。"
+msgstr ""
+"The Class Taxon provides taxonomic information, such as scientific names, "
+"higher taxonomic ranks, etc."
+
+#: templates/cookbook-detail-2.html:276
+msgid ""
+"[ 輔助類別 ] MeasurementOrFact（測量或事實）提供該筆紀錄的量測資料或事實。"
+msgstr ""
+"[Auxiliary Terms] The Class MeasurementOrFact provides data if the record "
+"describes the measurment or the fact."
+
+#: templates/cookbook-detail-2.html:277
+msgid ""
+"[ 輔助類別 ] ResourceRelationship（資源關係）可提供關於紀錄間或標本間的關係資"
+"訊。"
+msgstr "The Class ResourceRelationship provides XXXXXXXXXXXX"
+
+#: templates/cookbook-detail-2.html:280
+msgid ""
+"\n"
+"            為了簡化適用於記錄生物多樣性資料的欄位名稱，全球生物多樣性資訊機"
+"構（GBIF）提供了Excel模板，用於記錄物種名錄和出現紀錄，以及任何有關於此資料表"
+"的其他資訊細節（亦稱為「詮釋資料」）。  我們之後會討論「詮釋資料」。 你可以從"
+"這裡<a href=\"https://github.com/gbif/ipt/wiki/checklistData\">（https://"
+"github.com/gbif/ipt/wiki/checklistData）</a>下載用於記錄物種名錄資料的Excel模"
+"板，從這裡下載物種出現紀錄資料模板<a href=\"https://github.com/gbif/ipt/wiki/"
+"occurrenceData\">（https://github.com/gbif/ipt/wiki/occurrenceData）</a>， 以"
+"及從這裡下載調查活動資料模板<a href=\"https://github.com/gbif/ipt/wiki/"
+"sampleEventData\">（https://github.com/gbif/ipt/wiki/sampleEventData）</a>。 "
+"但要注意的是，有些欄位是必填的，而有些是選擇性提供即可。 若你需要更多的選擇性"
+"欄位詞彙來描述你的資料，你可以從達爾文核心延伸集找到更多的選項<a href="
+"\"http://tools.gbif.org/dwca-validator/extensions.do\">（http://tools.gbif."
+"org/dwca-validator/extensions.do）</a>，再從中選取適合的詞彙。\n"
+"            "
+msgstr ""
+"\n"
+"To simplify choosing suitable terms as the column names of tables for "
+"documenting your biodiversity data, Global Biodiversity Information Facility "
+"(GBIF) kindly prepares Excel templates for documenting checklists and "
+"occurrence of organisms as well as extra detailed information about the data "
+"table, called “metadata”. We will talk about “metadata” later. You can "
+"download the Excel templates for documenting species checklist data <a href="
+"\"https://github.com/gbif/ipt/wiki/checklistData\">（https://github.com/gbif/"
+"ipt/wiki/checklistData）</a>, species occurrences data <a href=\"https://"
+"github.com/gbif/ipt/wiki/occurrenceData\">（https://github.com/gbif/ipt/wiki/"
+"occurrenceData）</a>, and sampling-event data <a href=\"https://github.com/"
+"gbif/ipt/wiki/sampleEventData\">（https://github.com/gbif/ipt/wiki/"
+"sampleEventData）</a>. But you have to notice that some of the fields "
+"(columns) are mandatory, some may be optional. If you need more optional "
+"terms to describe your data you can look up the extended vocabularies, "
+"called Darwin Core extensions <a href=\"http://tools.gbif.org/dwca-validator/"
+"extensions.do\">（http://tools.gbif.org/dwca-validator/extensions.do）</a>, "
+"and pick up suitable terms."
+
+#: templates/cookbook-detail-2.html:292
+msgid "說明1：六十進位制和十進位制的座標資料轉換"
+msgstr ""
+"BOX1: Converting data between sexagesimal and decimal system in coordinates"
+
+#: templates/cookbook-detail-2.html:294
+msgid ""
+"\n"
+"                許多讀者會使用經度和緯度來標示座標，他們通常使用度、分和秒來"
+"表示。 度，分和秒皆遵循著六十進位制，但有時候秒是代表1/100。 只要習慣了這樣的"
+"表示方式，即可便利地於地圖上對特定地點進行定位。 但事實上這是一個較複雜的定位"
+"方式，因為我們需要用到三組數字來表示緯度和經度。 近年來有些地圖繪製軟體開始採"
+"用十進位制。這兩種進位制是可互相兼容換算的。由於十進位制的系統僅需兩組數字即"
+"可標示出地點，故其越來越常應用於標示經緯度。\n"
+"                "
+msgstr ""
+"\n"
+"Many of the readers may have used longitude and latitude to indicate the "
+"coordinates. They are usually indicated by degrees, minutes, and seconds. "
+"Degrees, minutes, and seconds follow sexagesimal system, but seconds are "
+"sometimes indicated to 1/100. Once getting used to it, the system is "
+"convenient to indicate a certain point on the map. However, it is "
+"complicated because we need a set of three figures to indicate latitude/"
+"longitude. Recently a number of map drawing software adopt decimal systems. "
+"Both systems is compatible based on the calculations indicated in Fig. X. "
+"Since only a set of two figures are required to indicate a point, decimal "
+"systems is more increasingly applied to indicate longitude and latitude."
+
+#: templates/cookbook-detail-2.html:299
+msgid ""
+"\n"
+"                從上述中我們學到重要的一課，那就是我們可以根據DwC的標準預先設"
+"計好表格，這樣可以提高效率，並避免因資料描述而導致的混淆和變動。\n"
+"                "
+msgstr ""
+"\n"
+"From the above experience, we can learn an important lesson. We should "
+"design the table beforehand based on DwC. This increases the efficiency and "
+"avoid confusion and fluctuation in description of the data."
+
+#: templates/cookbook-detail-2.html:305 templates/tech-book.html:82
+msgid "使用純文字檔而非Excel檔"
+msgstr "Use plain text instead of Excel file"
+
+#: templates/cookbook-detail-2.html:307
+msgid ""
+"\n"
+"                若你之前有整理資料的經驗，第一個會想到要使用的程式可能是"
+"Excel。 Excel是一個不錯的試算表軟體，它不僅可以計算資料，還可以做資料分析和利"
+"用。\n"
+"                "
+msgstr ""
+"\n"
+"If you have any experience in gathering data of any kind, the first thing "
+"that comes in your mind may be using “Excel”. Excel is a nice spreadsheet "
+"software that allows not only the accumulation of data, but also analysis "
+"and exploitation."
+
+#: templates/cookbook-detail-2.html:312
+msgid ""
+"\n"
+"                下一個會遇到的問題就是儲存資料。 我們現在要將數位化的資料合併"
+"於一個表格中，以便進行後續的分析。 為了儲存資料，我們需要選擇適當的檔案格"
+"式。 大多數讀者可能會使用Microsoft Excel或其他試算表作為使用軟體， 因此自然而"
+"然會選擇Excel格式（.xls或 .xlsx），但Excel格式對於紀錄的數量有一定的限制。 "
+"Excel格式檔案的另一個缺點就是該檔案無法直接於更高階的資料庫軟體內使用。 此"
+"外，Excel格式有時會導致資料產生亂碼。 因此，會建議將文件另存為純文字格式（."
+"csv或 .tsv）。 上述格式被稱之為逗號分隔值格式（CSV），欄位與欄位之間使用逗號"
+"分隔，資料與資料之間則是使用換行（CR）分隔。 因此，當Excel資料如以下所示"
+"時：\n"
+"                "
+msgstr ""
+"\n"
+"The next question is to save the data. We now have a merged digitized data "
+"in a single table, which enables us to analyze. To save the data, we need to "
+"select a file format. Most of the readers may use Microsoft Excel or other "
+"spreadsheet software as a standard software. It is therefore natural to "
+"choose Excel format (.xls or .xlsx), but there is a certain limitation for "
+"the numbers of records in Excel format. Another disadvantage may be that "
+"Excel format file is not directly incorporated in database software with "
+"higher capability. Besides, Excel format sometimes causes garbling up of the "
+"data. Therefore, it is recommended for you to save the file as a plain text "
+"format (.csv or .tsv). In the former format known as Comma-separated Values "
+"Format (CSV), comma are inserted between the field, and line break (CR) is "
+"inserted between the data. Therefore, when the excel data looked like below"
+
+#: templates/cookbook-detail-2.html:320 templates/cookbook-detail-2.html:321
+#: templates/cookbook-detail-2.html:322 templates/cookbook-detail-2.html:323
+#: templates/cookbook-detail-2.html:343
+msgid "欄位"
+msgstr "Column"
+
+#: templates/cookbook-detail-2.html:342
+msgid "編輯器軟體中呈現的方式如下："
+msgstr "may be seen like below under editor software"
+
+#: templates/cookbook-detail-2.html:346
+msgid ""
+"在CSV和TSV文件中， [,/tab] 代表的是逗號 (,) 或者tab代碼，而 [CR] 是換行代碼。"
+msgstr ""
+"where [,/tab] is a comma (,) or tab code, respectively in CSV and TSV, and "
+"[CR] is a line break code."
+
+#: templates/cookbook-detail-2.html:347
+msgid ""
+"制表符分隔值格式（TSV）最不一樣的地方在於TSV檔案是使用 [Tab] 分隔而非逗號 "
+"[,]。 上述兩種檔案格式皆可在編輯器中閱讀，並且可於其他資料庫軟體中使用。"
+msgstr ""
+"The difference of Tab-separated Value Format (TSV) is that TSV files use "
+"[Tab] instead of comma [,]. Both file format are readable in editors, and "
+"usually supported by various database software."
+
+#: templates/cookbook-detail-2.html:350 templates/tech-book.html:83
+msgid "使用UTF-8進行字元編碼"
+msgstr "Adopt UTF-8 character encoding"
+
+#: templates/cookbook-detail-2.html:352
+msgid ""
+"\n"
+"            最後，在儲存資料時還需要記住的一件事就是，當你在處理資料時記得使"
+"用UTF-8進行字元編碼。 一般在教科書中，不會針對使用UTF-8進行字元編碼的原因進行"
+"詳細說明，因為這關係到更深層的技術和資訊。\n"
+"            "
+msgstr ""
+"\n"
+"Finally, one more thing to remember as a tip when saving the data. Use UTF-8 "
+"character encoding when you deal with the data. In the present textbook, "
+"detailed reason for this will not be described because it is highly "
+"technical and informatician directed."
+
+#: templates/cookbook-detail-2.html:357
+msgid ""
+"\n"
+"            簡單地說，UTF-8是一種被廣泛使用的字元編碼方式，幾乎可以避免所有程"
+"式語言產生亂碼，並確保可從任一台電腦上讀取資料。 它是一種全球性的標準字元編碼"
+"方式，而近年來許多網站也普遍採用UTF-8這種編碼方式。 即使Excel不支持UTF-8的編"
+"碼方式，但編輯器大多支持UTF-8的編碼方式（通常可以從字元編碼選單中選擇"
+"UTF-8）。 因此，若你是使用英文字母和數字以外的文字，建議使用UTF-8字元編碼並以"
+"純文字（CSV或TSV）格式儲存資料。\n"
+"            "
+msgstr ""
+"\n"
+"Simply, UTF-8 is a universally applicable character encoding that avoids "
+"garble up for almost all the languages, and to ensure data readability in "
+"almost any computers. It is currently taken as a global standard character "
+"encoding, and recent websites generally adopt UTF-8. Excel does not support "
+"UTF-8, but usually editors support UTF-8 (Usually you can choose UTF-8 from "
+"“character encoding” menu). So, it is advisable to save the data in plain "
+"text (CSV or TSV) format with UTF-8 encoding, if you are using letters other "
+"than alphabets and digits."
+
+#: templates/cookbook-detail-2.html:363
+msgid "說明2：如何產生唯一的識別碼？"
+msgstr "BOX2: How to generate unique identifiers?"
+
+#: templates/cookbook-detail-2.html:365
+msgid ""
+"\n"
+"            在生物多樣性資訊學下，資料藉由識別碼（ID）來進行區分。 任何的資料"
+"都需要一組ID，其必須具有獨特性以便能夠區別。 通常在任一資料集中，針對特定的資"
+"料必須給予一個唯一的ID。 舉例來說，如果將學名「X」賦予「101」這個ID，則每當在"
+"該資料集中使用X時必須要提及101這個ID，從而將X與其他學名區分。 在出現紀錄的資"
+"料集中，必須提供出現紀錄ID（occurrence ID）。 在這種情況下，為了區分資料，ID"
+"只能出現一次（唯一值）。\n"
+"            "
+msgstr ""
+"\n"
+"In the context of biodiversity informatics, a number of data are to be "
+"distinguished by identifiers (ID). IDs are supposed to be given to any data "
+"that should be uniquely distinguished. Naturally, an ID must be uniquely "
+"given to a specific data in the given dataset. For instance, if “101” is "
+"given to a scientific name “X”, 101 should be always used when X is used "
+"throughout the given database, thus distinguishing X from other scientific "
+"name. In the database of occurrence, occurrence ID may be given. In that "
+"case, given ID must appear only once to distinguish the data."
+
+#: templates/cookbook-detail-2.html:370
+msgid ""
+"\n"
+"            如果是同樣的資料，則可以接受複製其他資料集的ID。 然而，出現紀錄ID"
+"必須為全球唯一且可以被解析。 在這裡，「可解析」的意思是ID也可以作為一個鏈接，"
+"使資料的使用者（或機器）能夠透過該ID找到所有關於該事物的實用資訊。\n"
+"            "
+msgstr ""
+"\n"
+"Duplication of the IDs with other database may be acceptable, if they mean "
+"the same data. However, in case of occurrence ID, it should be globally "
+"unique and resolvable. Here, “resolvable” means the ID also works as a link "
+"to enable a data user (or a machine) to find the useful information about "
+"the thing that is identified."
+
+#: templates/cookbook-detail-2.html:375
+msgid ""
+"\n"
+"            為了產生這樣的ID，可以透過使用UUID（通用唯一識別碼）來取得。 UUID"
+"是隨機產生的字串（包含英文字母和數字），例如8612280c-f762-11e1-"
+"a439-00145eb45e92。 現在已經建立了產生UUID的方法，並且可以透過許多方式獲得。 "
+"舉例來說，“uuidgen command” 適用於LINUX和macOS (OS X)；Windows系統可以下載"
+"Microsoft GUID Generator； 也有線上的UUID 產生器服務，例如UUID Generator。這"
+"樣的雲端服務讓您可以產生一系列的UUID。 為了讓數位資料和UUID之間建立鏈接，還需"
+"要PURL（永久性統一資源定位器）。\n"
+"            "
+msgstr ""
+"\n"
+"To generate such an ID, UUID (Universally Unique Identifier) is applicable. "
+"UUID is a strings (a line of digits and letters) generated at random (e.g. "
+"8612280c-f762-11e1-a439-00145eb45e92). The methodology of generating UUID is "
+"established, and can be obtained through various ways. For example, “uuidgen "
+"command” is available for LINUX and macOS (OS X); Microsoft GUID Generator "
+"can be downloaded for windows; and online UUID generator services are also "
+"available such as UUID Generator."
+
+#: templates/cookbook-detail-3.html:41 templates/cookbook-detail-3.html:55
+#: templates/tech-book.html:96
+msgid "第三章：準備用於發布的資料集"
+msgstr "Chapter 3: Prepare datasets for publishing"
+
+#: templates/cookbook-detail-3.html:57
+msgid "作者：王豫煌 博士/ 譯者：雲翻譯公司"
+msgstr "Author: Yu-Huang Wang, Modified: Melissa Liu"
+
+#: templates/cookbook-detail-3.html:63 templates/tech-book.html:104
+msgid "透過GBIF發布生物多樣性資料集"
+msgstr "Overview of publishing biodiversity dataset through GBIF"
+
+#: templates/cookbook-detail-3.html:65
+msgid ""
+"\n"
+"            資料集包括了詮釋資料和原始資料。最簡單的資料集可以只包含詮釋資"
+"料。目前GBIF支持發布的資料集有以下四種：1） 僅詮釋資料 metadata-only，2） 物"
+"種名錄 cheklist，3） 出現紀錄 occurrence，以及4） 調查活動資料集 sampling "
+"event，依照資料內容的豐富性及資料結構的複雜性而定。 為了維持一個資料集的完整"
+"性，我們建議資料提供者盡可能發布現有最完整的資料集。\n"
+"            "
+msgstr ""
+"\n"
+"A dataset includes metadata and raw data. The simplest dataset can just only "
+"include metadata. Currently, there are four types of datasets GBIF supported "
+"to publish: 1) metadata-only, 2) checklist, 3) occurrence, and 4) sampling-"
+"event datasets, with increasing richness in data content and complexity in "
+"data structure. To preserve the completeness of a dataset we suggest data "
+"providers publish the richest datasets as possible as they can."
+
+#: templates/cookbook-detail-3.html:70
+msgid ""
+"\n"
+"            在網站上發布資料集就像是生產資料產品；而詮釋資料就像產品專屬的使"
+"用手冊，用來告訴使用者產品的內容、產品的使用方法以及客服相關資訊等。換句話"
+"說，詮釋資料可以告訴你資料的來源、如何使用該資料，以及如果對資料有任何疑問時"
+"可以聯繫誰等。一個產品就是一種資源，因此，資料集也是網路的資源。在GBIF的概念"
+"中，資料集是一種資源，要透過GBIF發布資料集（或資源），必須使用符合達爾文核心"
+"延伸集中一連串的專有名詞作為資料欄位標準名稱，包含物種名錄、出現紀錄、調查活"
+"動資料集的資訊都要按照此標準呈現。\n"
+"            "
+msgstr ""
+"\n"
+"To publish a dataset on the web is just like to produce a data product. "
+"Metadata is just like the specification and manual of a product. It tells "
+"the users about the content, usage of the product, information for customer "
+"services, etc. In other words, metadata may tell you how the data came from, "
+"how to use the data, whom you can contact with if you have any question "
+"about the data, etc. A product is a kind of resource, therefore, a dataset "
+"is also a resource on the web. In context of GBIF, dataset is one kind of "
+"resource. For publishing a dataset (or resource) via GBIF, you have to "
+"prepare resource metadata with checklist, occurrence, or sampling-event data "
+"using a collection of terms in the DarwinCore Extensions as the standardized "
+"column names in the data tables of your checklist, occurrence, or sampling-"
+"event data."
+
+#: templates/cookbook-detail-3.html:75
+msgid ""
+"\n"
+"            準備資料集最簡單的方法是使用預定格式的Excel模板來填寫詮釋資料和原"
+"始資料。這將協助你輕鬆地將資料整理後輸入到GBIF接受的標準化資料結構中。GBIF提"
+"供簡單的Excel模板，其中包括達爾文核心集所採用的標準化資料欄位名稱。\n"
+"            "
+msgstr ""
+"\n"
+"The simple way to prepare your dataset is to use an Excel template with "
+"predefined format to fill in the metadata and raw data. This will help you "
+"easily organize your data into the standardized data structure accepted by "
+"GBIF. GBIF provides simple Excel templates, which include DarwinCore terms "
+"as the standardized column names."
+
+#: templates/cookbook-detail-3.html:80
+msgid ""
+"\n"
+"            但是，當你的資料表中有大量的資料時（例如超過一萬筆以上的紀錄），"
+"你會發現使用Excel處理這些紀錄很困難。在這種情況下，我們建議可以使用R，R是一種"
+"提供統計和資料處理的開源軟體。如果你是R的新手，我們鼓勵你學習使用R，因為它是"
+"目前最受歡迎的資料分析工具之一。在本章節中，我們將向你說明如何使用Excel模板和"
+"R script來準備調查活動資料集。\n"
+"            "
+msgstr ""
+"\n"
+"However, when you have a huge data table, for example, more ten thousand "
+"records, you will find it is not easy to handle too many records using "
+"Excel. In that situation, we will suggest you use R, an open source "
+"statistical and data-processing software. If you are new to R, we encourage "
+"you learn R because it is one of the most popular tools for data analysis. "
+"In this chapter, we will show you how to use Excel template and R-scripts to "
+"prepare a sampling-event dataset."
+
+#: templates/cookbook-detail-3.html:85 templates/tech-book.html:105
+msgid "什麼是調查活動資料？"
+msgstr "What is sampling-event data?"
+
+#: templates/cookbook-detail-3.html:87
+msgid ""
+"\n"
+"            有時資料集可提供的資訊遠超乎你想像，不僅僅可提供發現物種的地點、"
+"日期，也有機會去觸及更廣泛的物種分類群的群落組成或者不同時間、地點的物種豐"
+"度。這些資料集通常來自測量和監測生物多樣性的標準作業程序，如植物群落穿越線採"
+"樣調查、鳥類調查計畫以及淡水和海水採樣。藉由指出記錄樣本時所使用的方法、事件"
+"和物種相對豐度，這些資料集可以強化在同樣標準作業程序下，但在不同時間不同地點"
+"所收集的資料之間的比較，有時候甚至可以讓研究員發現某些特定地點物種缺失的狀"
+"況。\n"
+"            "
+msgstr ""
+"\n"
+"Sometimes datasets can provide far more information than you might imagine, "
+"not just where and when a species was discovered, but also the opportunity "
+"to discover the community composition of a broader taxonomic group or "
+"species abundance at different times and places. These datasets typically "
+"come from standard operating procedures for measuring and monitoring "
+"biodiversity, such as transect surveys of plant communities, bird survey "
+"programs, freshwater and marine sampling. By indicating the methods, events, "
+"and relative abundances of species used to record the samples, these "
+"datasets can enhance comparisons between data collected at different times "
+"and locations under the same standard operating procedures, and sometimes "
+"even allow researchers to discover the absence of species in certain "
+"locations."
+
+#: templates/cookbook-detail-3.html:90
+msgid "原文參照："
+msgstr "Original reference: "
+
+#: templates/cookbook-detail-3.html:91
+msgid "調查活動（Event）+ 位置（Location）之核心（Core）詞彙"
+msgstr "Selected core terms for Sampling Event + Location"
+
+#: templates/cookbook-detail-3.html:91
+msgid "**為必填欄位"
+msgstr "**Required"
+
+#: templates/cookbook-detail-3.html:154 templates/cookbook-detail-3.html:169
+#: templates/cookbook-detail-3.html:233
+msgid "參照："
+msgstr "Reference: "
+
+#: templates/cookbook-detail-3.html:156
+msgid "測量或事實（MeasurementOrFact）之核心詞彙"
+msgstr "MeasurementOrFact Core Terms"
+
+#: templates/cookbook-detail-3.html:171
+msgid "選擇出現紀錄（Occurrence）+ 分類（Taxon）之核心詞彙"
+msgstr "Selected core terms for Occurrence + Taxon"
+
+#: templates/cookbook-detail-3.html:235 templates/tech-book.html:106
+msgid "達爾文核心集—資料的星型結構"
+msgstr "Darwin Core - Sampling-event Star Schema"
+
+#: templates/cookbook-detail-3.html:238
+msgid "資料的星型結構 (Star schema)"
+msgstr "Star schema"
+
+#: templates/cookbook-detail-3.html:240
+msgid ""
+"\n"
+"            GBIF 的發布資料結構如上圖所示（以調查活動為例），在發布資料前，先"
+"確認你的研究資料類型是屬於名錄、出現紀錄還是調查活動，並以該類型資料結構為基"
+"礎（Core核心集）去設定資料表的欄位名稱（參照 Darwin Core），而其他未被包含於"
+"核心集的資料，則可以選擇其他類型的欄位名稱，整理成延伸集（可視為核心集的補充"
+"說明）。所有的延伸集都必須能有一個欄位（強烈建議為唯一識別碼ID）與核心集相"
+"同，才能相互對應，追溯到同一批次的資料。可以把這些想像成一個excel表，主頁資料"
+"就是核心集，其他分頁都是延伸集，內容皆與主頁有關。\n"
+"            "
+msgstr ""
+
+#: templates/cookbook-detail-3.html:245
+msgid "如何發布資料呢？"
+msgstr "How to publish data?"
+
+#: templates/cookbook-detail-3.html:247
+msgid "先準備好原始資料"
+msgstr "Prepare raw data"
+
+#: templates/cookbook-detail-3.html:248
+msgid "檢查並清理資料（修正學名或其他的錯誤）"
+msgstr "Check and Clean the data (correct scientific names or other errors)"
+
+#: templates/cookbook-detail-3.html:249
+msgid "採用達爾文核心調查活動、出現紀錄等詞彙集，作為資料表的欄位名稱"
+msgstr ""
+"Adopt terms of Darwin Core Event vocabulary and MeasureOrFacts. Occurrence, "
+"… extensions as the column names of your data table"
+
+#: templates/cookbook-detail-3.html:250
+msgid ""
+"將資料結構轉成獨立的表格，並將資料套入達爾文核心星型結構中，區分核心集"
+"（Core）和延伸集（Extension），接著將此表格儲存為以UTF-8編碼的CSV文本檔案"
+msgstr ""
+"Transform data structure innto separate tables fitted into DarwinCore star-"
+"schema and save the tables as UTF-8 encoded CSV text files"
+
+#: templates/cookbook-detail-3.html:251
+msgid "準備詮釋資料"
+msgstr "Prepare metadata"
+
+#: templates/cookbook-detail-3.html:252
+msgid ""
+"在由節點管理的IPT工具（如TaiBIF IPT）上申請帳號資料，節點將確認你的組織成為資"
+"料發布組織（須先於GBIF註冊申請成為資料發布者）"
+msgstr ""
+"Register an account on the IPT hosted by the node (such as TaiBIF), which "
+"endorse your orgainzation as a data publishing orgainzation"
+
+#: templates/cookbook-detail-3.html:253
+msgid "登入IPT，建立新的資料來源，上傳你的資料表並與Darwin Core進行欄位對應"
+msgstr ""
+"Log into the IPT, create a new resource, upload your data tables and do "
+"DarwinCore mappings"
+
+#: templates/cookbook-detail-3.html:254
+msgid "提供詮釋資料"
+msgstr "Provide metadata"
+
+#: templates/cookbook-detail-3.html:255
+msgid "發布資料"
+msgstr "Publish the data"
+
+#: templates/cookbook-detail-3.html:261
+msgid "如何發布調查活動資料？"
+msgstr "What is sampling-event data?"
+
+#: templates/cookbook-detail-3.html:263
+msgid "大致流程："
+msgstr ""
+
+#: templates/cookbook-detail-3.html:263
+msgid "確認資料的種類"
+msgstr ""
+
+#: templates/cookbook-detail-3.html:263
+msgid "轉換資料"
+msgstr ""
+
+#: templates/cookbook-detail-3.html:263
+msgid "上傳資料至IPT"
+msgstr ""
+
+#: templates/cookbook-detail-3.html:263
+msgid "將資料對應至調查活動及出現紀錄"
+msgstr ""
+
+#: templates/cookbook-detail-3.html:263
+msgid "填入詮釋資料"
+msgstr ""
+
+#: templates/cookbook-detail-3.html:263
+msgid "發布資料集"
+msgstr ""
+
+#: templates/cookbook-detail-3.html:263
+msgid "完成資料集註冊"
+msgstr ""
+
+#: templates/cookbook-detail-3.html:265
+msgid "使用Excel模板準備調查活動資料"
+msgstr "Prepare sampling-event data using Excel template"
+
+#: templates/cookbook-detail-3.html:266
+msgid "範例：準備資料所使用的資料集與工具"
+msgstr "Example dataset annd tools for preparing data"
+
+#: templates/cookbook-detail-3.html:268
+msgid "範例表格"
+msgstr "Data file: "
+
+#: templates/cookbook-detail-3.html:268
+msgid "（範例:外來種植物調查）"
+msgstr " "
+
+#: templates/cookbook-detail-3.html:269
+msgid "試算表軟體"
+msgstr " "
+
+#: templates/cookbook-detail-3.html:270
+msgid "純文字編輯器"
+msgstr "Text editor: "
+
+#: templates/cookbook-detail-3.html:271
+msgid "臺灣生物多樣性資訊機構學名比對工具"
+msgstr "TaiBIF Scientific names matching service (Nomenmatch): "
+
+#: templates/cookbook-detail-3.html:275
+msgid "範例：資料檔案"
+msgstr "Example data file"
+
+#: templates/cookbook-detail-3.html:277
+msgid "（範例：外來種植物調查）"
+msgstr " "
+
+#: templates/cookbook-detail-3.html:278
+msgid "7個表格："
+msgstr "7 tables"
+
+#: templates/cookbook-detail-3.html:295
+msgid "資料清理和轉換之工作流程："
+msgstr "Data cleaning and transformation workflow"
+
+#: templates/cookbook-detail-3.html:297
+msgid "檢查並研讀原始資料結構"
+msgstr "Check and study the original data structure"
+
+#: templates/cookbook-detail-3.html:298
+msgid "使用學名比對工具檢查輸入的學名拼法是否正確，並將配對結果儲存為CSV文字檔"
+msgstr ""
+"Check the spelling of the input scientific name using matching service and "
+"get the matching results CSV text file"
+
+#: templates/cookbook-detail-3.html:299
+msgid "使用NotePad ++打開上述文件，複製所有內容並貼到試算表"
+msgstr ""
+"Using the Notepad++ to open the matching results file and copy all text and "
+"paste into an spreadsheet table"
+
+#: templates/cookbook-detail-3.html:300
+msgid "根據配對結果整理名稱，獲取分類階層的資訊以及更高分類階層名稱"
+msgstr ""
+"Cleaning names based on the matching results and get data of taxonRank and "
+"names for higher taxonomic ranks"
+
+#: templates/cookbook-detail-3.html:301
+msgid "分別創建調查活動、測量或事實以及出現紀錄的表格"
+msgstr "Create Event, MeasurementOrFacts, and Occurrence tables"
+
+#: templates/cookbook-detail-3.html:302
+msgid "將原始欄位名稱對應到達爾文核心詞彙"
+msgstr "Mapping original column names to Darwin Core terms"
+
+#: templates/cookbook-detail-3.html:303
+msgid ""
+"分別複製調查活動、測量、出現紀錄表格的資料到Notepad++，以UTF-8編碼，接著再存"
+"成CSV文字檔"
+msgstr ""
+"Copy data of Event, Measurement, Occurrence tables respectively into Notepad+"
+"+, encoded in UTF-8, then save as CSV text files"
+
+#: templates/data-paper.html:38 templates/data-paper.html:50
+msgid "關於資料論文"
+msgstr "About Data Paper"
+
+#: templates/data-paper.html:39 templates/data-paper.html:72
+msgid "資料論文發表指引"
+msgstr "Data Paper Publication Process"
+
+#: templates/data-paper.html:40 templates/data-paper.html:102
+msgid "資料期刊"
+msgstr "Data Journals"
+
+#: templates/data-paper.html:41 templates/data-paper.html:120
+msgid "TaiBIF 歷年合作資料論文"
+msgstr "TaiBIF Data Paper Publication"
+
+#: templates/data-paper.html:42 templates/data-paper.html:181
+msgid "資料論文徵稿"
+msgstr "Call for Data Paper"
+
+#: templates/data-paper.html:52
+msgid "什麼是資料論文？"
+msgstr "What is a data paper?"
+
+#: templates/data-paper.html:55
+msgid ""
+"資料論文（Data paper）是一個透過同儕審查（Peer reviewed）的論文形式發表於相關"
+"的期刊上。"
+msgstr ""
+"A data paper is a form of academic paper published in relevant data journals "
+"through peer review."
+
+#: templates/data-paper.html:56
+msgid "與傳統的研究論文不同，資料論文不提假設和結論，"
+msgstr ""
+"Unlike traditional research papers, data papers do not present hypotheses "
+"and conclusions."
+
+#: templates/data-paper.html:57
+msgid "內容主要為描述作者所開放的資料集相關資訊，"
+msgstr ""
+"Instead, they primarily describe relevant information about the dataset(s) "
+"the author has made publicly available."
+
+#: templates/data-paper.html:58
+msgid ""
+"包含如何產生及收集資料、資料類型、涵蓋的物種、資料開放於何處及此資料集背景資"
+"訊（Metadata）等等，"
+msgstr ""
+"This includes details on how the data was generated and collected, data "
+"types, species covered, where is the location of the data resources, and "
+"background information about the dataset (metadata)."
+
+#: templates/data-paper.html:59
+msgid ""
+"透過作者於此資料集所開放的資料授權方式，可作為日後學術論文應用其資料時所引用"
+"的依據。"
+msgstr ""
+"Through the licensing of data provided by the author, data papers serve as a "
+"basis for citing data in future academic papers."
+
+#: templates/data-paper.html:62
+msgid "發表資料論文的好處與目的包括："
+msgstr "The benefits and purposes of publishing data papers include:"
+
+#: templates/data-paper.html:64
+msgid "提供可引用的期刊出版物（如DOI），為資料發布者帶來學術上的認可"
+msgstr ""
+"Providing citable journal publications (e.g., with a DOI) to bring scholarly "
+"credit to the data publishers"
+
+#: templates/data-paper.html:65
+msgid "人類可讀的結構化資料描述"
+msgstr "Structured, human-readable data descriptions"
+
+#: templates/data-paper.html:66
+msgid "增加您發布的資料資源的可見性、可用性和可信度"
+msgstr ""
+"Increasing the visibility, usability, and credibility of the data resources "
+"you publish"
+
+#: templates/data-paper.html:67
+msgid "更有效地追蹤您發布的資料的使用情況和引用情況"
+msgstr ""
+"More effectively tracking the usage and citation of the data you publish"
+
+#: templates/data-paper.html:74
+msgid "大致上，您的資料集將決定您適合投稿的主題性資料期刊。"
+msgstr ""
+"In general, your dataset will determine the thematic-focused data journals "
+"that are suitable for submission."
+
+#: templates/data-paper.html:75
+msgid ""
+"\n"
+"                您也可以選擇主題範圍較廣泛且與生物多樣性領域相關的資料期刊"
+"「<a href=\"https://bdj.pensoft.net/\" target=\"_blank\">Biodiversity Data "
+"Journal</a>」，\n"
+"                或則不限領域限制的「<a href=\"https://www.sciencedirect.com/"
+"journal/data-in-brief\" target=\"_blank\">Data in Brief</a>」或「<a href="
+"\"https://www.nature.com/sdata/\" target=\"_blank\">Scientific Data</a>」等期"
+"刊（更多期刊資訊請參閱資料期刊）。\n"
+"                此頁將特別介紹<a href=\"https://arpha.pensoft.net/\" target="
+"\"_blank\">arpha Writing Tool</a>的資料論文撰寫與發表工具。\n"
+"            "
+msgstr ""
+"\n"
+"                You can also choose from a broader range of thematic data "
+"journals related to the field of biodiversity, such as the「<a href="
+"\"https://bdj.pensoft.net/\" target=\"_blank\">Biodiversity Data Journal</"
+"a>」\n"
+"                or journals without specific domain restrictions like「<a "
+"href=\"https://www.sciencedirect.com/journal/data-in-brief\" target=\"_blank"
+"\">Data in Brief</a>」or「<a href=\"https://www.nature.com/sdata/\" target="
+"\"_blank\">Scientific Data</a>」(for more data journal information, please "
+"refer to Data Journals).\n"
+"                This page will specifically introduce the <a href=\"https://"
+"arpha.pensoft.net/\" target=\"_blank\">arpha Writing Tool</a> for writing "
+"and publishing data papers.\n"
+"            "
+
+#: templates/data-paper.html:83
+msgid ""
+"\n"
+"            <a href=\"https://arpha.pensoft.net/\" target=\"_blank\">arpha "
+"Writing Tool</a>是由<a href=\"https://pensoft.net/\" target=\"_blank"
+"\">Pensoft</a>出版社開發的文章發表工具，幫助簡化了發表資料論文的流程。\n"
+"            "
+msgstr ""
+"\n"
+"            The <a href=\"https://arpha.pensoft.net/\" target=\"_blank"
+"\">arpha Writing Tool</a>is and article publishing tool developed by <a href="
+"\"https://pensoft.net/\" target=\"_blank\">Pensoft</a>, designed to "
+"streamline the process of publishing data papers.\n"
+"            "
+
+#: templates/data-paper.html:86
+msgid ""
+"當您透過TaiBIF的資料發布工具IPT上傳您的資料並發布後，可下載其自動產生的RTF/"
+"EML檔案（含GBIF資料集metadata資訊）並上傳至工具裡，此工具會自動將相關資訊填補"
+"到適合的文章章節裡。"
+msgstr ""
+"Once you upload your data through TaiBIF's data publishing tool IPT and "
+"publish it, you can download the automatically generated RTF/EML files "
+"(containing GBIF dataset metadata information) and upload them to the tool."
+
+#: templates/data-paper.html:87
+msgid ""
+"\n"
+"            整個合作撰寫、建議、修改、提交、同儕審查以及發布的動作都能在此線"
+"上工具中完成。arpha Writing Tool目前支持直接將資料論文提交至<a href="
+"\"https://bdj.pensoft.net/\" target=\"_blank\">Biodiversity Data Journal</"
+"a>。\n"
+"            "
+msgstr ""
+"\n"
+"            This tool will automatically populate relevant information into "
+"appropriate sections of the article. The entire process of collaborative "
+"writing, suggesting, editing, submitting, peer reviewing, and publishing can "
+"be completed using this online tool. The arpha Writing Tool currently "
+"supports direct submission of data papers to the <a href=\"https://bdj."
+"pensoft.net/\" target=\"_blank\">Biodiversity Data Journal</a>\n"
+"            "
+
+#: templates/data-paper.html:90
+msgid ""
+"下列的PDF講義帶領大家一步一步的操作了解資料集如何通過此工具發布資料文章。"
+msgstr ""
+"The following PDF tutorial will guide you step by step on how to use this "
+"tool to publish data articles."
+
+#: templates/data-paper.html:93
+msgid ""
+"\n"
+"        <p class=\"mt-3\">PDF講義下載（一）：<a href=\"/media/20230513-"
+"datapaper-何芷蔚.pdf\" target=\"_blank\" class=\"myicon icon-download-"
+"document\"></a></p>\n"
+"        "
+msgstr ""
+"\n"
+"        <p class=\"mt-3\">PDF Lecture Download (Part One): <a href=\"/"
+"media/20230513-datapaper-何芷蔚.pdf\" target=\"_blank\" class=\"myicon icon-"
+"download-document\"></a></p>\n"
+"        "
+
+#: templates/data-paper.html:96
+msgid ""
+"\n"
+"        <p class=\"mt-3\">PDF講義下載（二）：<a href=\"/media/Data paper 資料"
+"論文 EN.pdf\" target=\"_blank\" class=\"myicon icon-download-document\"></"
+"a></p>\n"
+"        "
+msgstr ""
+"\n"
+"        <p class=\"mt-3\">PDF Lecture Download (Part Two): <a href=\"/media/"
+"Data paper 資料論文 EN.pdf\" target=\"_blank\" class=\"myicon icon-download-"
+"document\"></a></p>\n"
+"        "
+
+#: templates/data-paper.html:104
+msgid ""
+"\n"
+"            GBIF會在其<a href=\"https://www.gbif.org/data-papers\" target="
+"\"_blank\">資料期刊頁面</a>不定時更新與生物多樣性相關的資料期刊資訊，\n"
+"            包括開放授權方式、投稿費以及期刊點數等。我們也推薦以下期刊：\n"
+"            "
+msgstr ""
+"\n"
+"            GBIF periodically updates information related to biodiversity "
+"data journals on its <a href=\"https://www.gbif.org/data-papers\" target="
+"\"_blank\">data paper page</a> including information on open-access "
+"licenses, article publishing fees, and journal metrics. We also recommend "
+"the following journals:\n"
+"            "
+
+#: templates/data-paper.html:121 templates/data-policy.html:49
+#: templates/data-policy.html:156
+msgid "更新日期："
+msgstr "last update: "
+
+#: templates/data-paper.html:126
+msgid "文章"
+msgstr "Article"
+
+#: templates/data-paper.html:127
+msgid "發表期刊"
+msgstr "Data Journal"
+
+#: templates/data-paper.html:128
+msgid "文章DOI"
+msgstr "Article DOI"
+
+#: templates/data-paper.html:129
+msgid "相關資料集"
+msgstr "Associated Dataset"
+
+#: templates/data-paper.html:184
+#, python-format
+msgid ""
+"\n"
+"            TaiBIF每年皆有固定經費來贊助與生物多樣性相關之主題的資料論文發"
+"表，欲知詳情如合作模式與適用條件，歡迎<a href=\"%(contact_us)s\">聯繫我們</"
+"a>。\n"
+"            "
+msgstr ""
+"\n"
+"            TaiBIF provides fixed funding annually to sponsor the "
+"publication of data papers related to biodiversity. For details regarding "
+"collaboration methods and applicable terms, please feel free to <a href="
+"\"%(contact_us)s\">contact us</a>.\n"
+"            "
+
+#: templates/data-policy.html:14 templates/data-policy.html:31
+msgid "資料使用條款暨隱私權政策"
+msgstr "Terms of Use & Privacy Policy"
+
+#: templates/data-policy.html:37
+msgid ""
+"\n"
+"    臺灣生物多樣性資訊機構\n"
+"    <br>\n"
+"    (Taiwan Biodiversity Information Facility, TaiBIF)網站\n"
+"    <br>及資料使用條款暨隱私權政策\n"
+"    "
+msgstr ""
+"\n"
+"Taiwan Biodiversity Information Facility (TaiBIF) Website and Data Terms of "
+"Use & Privacy Policy"
+
+#: templates/data-policy.html:47
+msgid "網站及資料使用條款"
+msgstr "TaiBIF Terms of Use and Copyright Policy"
+
+#: templates/data-policy.html:48
+msgid ""
+"臺灣生物多樣性資訊機構 (Taiwan Biodiversity Information Facility, TaiBIF) 網"
+"站及資料使用條款"
+msgstr "TaiBIF Website & Data Terms of Use"
+
+#: templates/data-policy.html:50 templates/data-policy.html:157
+msgid "適用範圍"
+msgstr "Scope"
+
+#: templates/data-policy.html:53
+msgid ""
+"\n"
+"          本網站由中央研究院生物多樣性研究中心負責維運。本站其上資料與素材，"
+"依貢獻者提交時指定之授權或聲明方式發布，未標示貢獻者資訊之資料與素材，則歸維"
+"運單位所有。\n"
+"          "
+msgstr ""
+"\n"
+"This website is maintained and operated by the Biodiversity Research Center "
+"of Academia Sinica. The data and materials on this site are published "
+"according to the license or dedication specified by the contributor during "
+"submission, other data and materials without contributor labels are owned by "
+"the maintenance and operating organization."
+
+#: templates/data-policy.html:58
+msgid ""
+"\n"
+"          本頁面的著作權政策，適用於您於 TaiBIF 網站活動時，所涉及之著作授權"
+"與被授權關係。\n"
+"          "
+msgstr ""
+"\n"
+"The copyright policy on this page is applied to your activities on the "
+"TaiBIF website."
+
+#: templates/data-policy.html:63
+msgid ""
+"\n"
+"          使用者繼續使用 TaiBIF 網站服務之作為，視為當事人明示同意下述之使用"
+"條款，包括使用行為之拘束與技術規範之遵守，以及本使用條款之更新適用。\n"
+"          "
+msgstr ""
+"\n"
+"By subsequently using TaiBIF website service, a user indicates his/her "
+"acceptance of the terms of use as listed below to do so, including use "
+"restriction and compliance of technical specifications, as well as the "
+"updating policy applied to these terms of use."
+
+#: templates/data-policy.html:68
+msgid "資料的授權與分享方式"
+msgstr "Data Licensing and Sharing Method"
+
+#: templates/data-policy.html:71
+msgid ""
+"\n"
+"        TaiBIF 網站刊載之所有資料，依貢獻者提交時之指定，採下列三者擇一之公眾"
+"授權或聲明方式提供使用，包括：\n"
+"        "
+msgstr ""
+"\n"
+"All data and materials published on the TaiBIF website are provided for "
+"exploitation in accordance with the designation of the contributors during "
+"submission and by one of the following public copyright licenses and "
+"dedication, including: "
+
+#: templates/data-policy.html:75
+msgid ""
+"\n"
+"        1. CC0(公眾領域貢獻宣告)：透過採用公眾領域貢獻宣告，貢獻者將於符合法"
+"律規定的最大範圍內，宣告拋棄其對著作擁有之權利，以使公眾能不受限制地自由使用"
+"該著作，這是使用幅度最寬鬆的素材提供方式。\n"
+"        "
+msgstr ""
+"\n"
+"1. <strong>CC0</strong> (public domain dedication): By adopting the public "
+"domain dedication, the contributor declares to waive his/her copyright onto "
+"the work to the fullest extent allowed by law, so that the public can use "
+"the work freely without any restriction, which is the most permissive way to "
+"provide material."
+
+#: templates/data-policy.html:80
+msgid ""
+"\n"
+"        2. CC BY(CC授權 姓名標示)：本授權條款允許使用者重製、散布、傳輸以及修"
+"改著作(包括商業性利用)，惟使用時必須按照貢獻者所指定的方式，表彰其姓名。說"
+"明：使用者可以把照片用在任何地方，包括營利用途的使用，但不論任何方式的使用，"
+"都必須同步標示貢獻者的姓名、筆名，或其他指定的顯名資訊；使用者也可以使用貢獻"
+"者提供的資料及素材產出新的作品。\n"
+"        "
+msgstr ""
+"\n"
+"2. <strong>CC BY</strong> (Attribution): This license allows users to "
+"reproduce, distribute, transmit and modify the work (including commercial "
+"use), however the exploitation must be in accordance with the attribution "
+"condition specified by the contributor. For example: Users can use photos "
+"anywhere, including for-profit purposes, but no matter how they are used, "
+"the users must indicate the contributor’s name, pseudonym, or other "
+"designated authorship information. Users can also exploit the data and "
+"materials provided by the contributor to reproduce new work."
+
+#: templates/data-policy.html:85
+msgid ""
+"\n"
+"        3. CC BY-NC(CC授權 姓名標示-非商業性)：本授權條款允許使用者重製、散"
+"布、傳輸以及修改著作，但不得為商業目的之使用。使用時必須按照貢獻者指定的方式"
+"表彰其姓名。\n"
+"        "
+msgstr ""
+"\n"
+"3. <strong>CC BY-NC</strong> (Attribution-NonCommercial): This license "
+"allows users to reproduce, distribute, transmit and modify the work, but not "
+"for commercial purposes. User must attribute the contributor’s name in the "
+"manner specified by the contributor."
+
+#: templates/data-policy.html:91
+msgid ""
+"\n"
+"        除個別純粹事實性紀錄資訊，依法不受著作權利保護，或另有聲明者外，本網"
+"站其餘資料與素材，皆採前列三者擇一之授權或聲明方式提供予公眾使用。依CC0、CC "
+"BY、或CC BY-NC，使用者得於商業目的或非商業目的上，不限時間、地域，對所提供之"
+"資料進行重製、改作、編輯、公開傳輸，或為其他依法需取得著作授權方可行之之利"
+"用。此一授權或宣告行為不會嗣後撤回，使用者亦毋須取得書面或其他方式授權，相關"
+"資料與素材亦得依所擇定之授權或聲明方式，經重製、散布，轉至其他託管平台進行公"
+"開演播模式之使用，包括但不限於轉引或轉載至全球生物多樣性資訊機構(GBIF)之主資"
+"料庫或其他節點提供利用。依CC BY、CC BY-NC授權方式提供者，後續使用時必須註明貢"
+"獻者姓名及原始出處，採CC0聲明方式提供者，該公眾領域貢獻宣告並不要求任何顯名義"
+"務，然基於學術倫理及科研考據之立場，仍建議使用者於可行狀況，盡量採下列中英文"
+"擇一之格式，註解相關資料及素材之貢獻者姓名及原始出處：\n"
+"        "
+msgstr ""
+"\n"
+"Except for some purely factual record information, which is not protected by "
+"copyright at law, or otherwise stated, the rest of the data and materials on "
+"this website are provided to the public by one of the three aforementioned "
+"licenses and dedication which is CC0, CC BY, and CC BY-NC. Users may "
+"reproduce, modify, compile, publicly transmit, and perform other "
+"exploitation activities based on the premise of the copyright grant to the "
+"data provided for commercial purposes or non-commercial purposes, perpetual "
+"and worldwide. This license or dedication is irrevocable, and users do not "
+"need to obtain a license deed in writing or otherwise. The provided data and "
+"materials can also be reproduced, distributed and transferred to other "
+"hosting platforms for public performing utilization under the selected "
+"license or dedication method. The granted exploitation includes, but is not "
+"limited to, transmitting or transferring to Global Biodiversity data "
+"Facility (GBIF) or other nodes for further utilization. If provided under a "
+"CC BY or CC BY-NC license method, the contributor’s name and data paternity "
+"must be indicated in the subsequent exploitation as recommended format "
+"listed below. And if provided under a CC0 dedication method, the public "
+"domain dedication does not require any attribution obligation, but it is "
+"still encouraged that users can retain the contributor’s name and data "
+"paternity as recommended format listed below based on the standpoint of "
+"research ethics and scientific accountability. The attribution information "
+"can be annotated either in Chinese or English:"
+
+#: templates/data-policy.html:95
+msgid ""
+"\n"
+"          1. 資料集或資料庫名稱-貢獻者顯名資訊@TaiBIF 臺灣生物多樣性資訊機構-"
+"CC BY / CC BY-NC / CC0\n"
+"          "
+msgstr ""
+
+#: templates/data-policy.html:100
+msgid ""
+"\n"
+"          2. Title of the Dataset or Database-Contributor’s "
+"Attribution@TaiBIF-CC BY / CC BY-NC / CC0\n"
+"          "
+msgstr ""
+
+#: templates/data-policy.html:106
+msgid ""
+"\n"
+"        本網站所採用之CC授權條款及CC0公眾領域貢獻宣告未指定版本，意即採前列之"
+"公眾授權或聲明方式提供使用時，使用者得自行選擇任何 Creative Commons 組織發布"
+"之授權條款及貢獻宣告版本進行適用，以CC BY為例，使用者得任擇CC BY 3.0 TW或CC "
+"BY 4.0授權條款進行利用，若未來CC授權條款或貢獻宣告版本再有更新，使用者亦得採"
+"行具同樣授權元素，更新的授權方式進行利用。\n"
+"        "
+msgstr ""
+"\n"
+"The CC license suites and CC0 public domain dedication adopted by this "
+"website is not version specified, which means that when the public license "
+"or dedication method has been invoked, users can choose any version of the "
+"license and dedication published by the Creative Commons organization for "
+"applying. Take CC BY as an example, users can choose CC BY 3.0 TW or CC BY "
+"4.0 license to apply. And when the CC license suite or dedication is updated "
+"on version in the future, users may use the data under the new subsequent "
+"license with the same licensing elements."
+
+#: templates/data-policy.html:111
+msgid ""
+"\n"
+"        本網站對於CC非商業性元素之限制範圍，尊重資料或素材貢獻者及使用者之獨"
+"立判斷與自主解釋，並無任何擴大、限縮，或引導之解釋意向。然提醒非商業性元素於"
+"不同立場間，或存有寬嚴不一的認定標準與灰色地帶，倘發生司法爭議，本網站當主張"
+"法律上網路服務提供者之免責地位，不參與任何一方發動之實體訴訟程序。\n"
+"        "
+msgstr ""
+"\n"
+"This website is not intended to expand, limit, or lead the explanation of "
+"limitation scope defined by CC non-commercial element, the independent "
+"judgment and self-interpretation of the contributors and users of the data "
+"or materials shall be equally respected. However, it is reminded that non-"
+"commercial element might have different recognition standards in existence "
+"and understanding in gray area. In the event of judicial disputes, this "
+"website shall assert the exemption status of Internet service providers in "
+"the law, and will not participate in any substantive legal proceedings "
+"initiated by either party."
+
+#: templates/data-policy.html:116
+msgid "相關事項說明"
+msgstr "Miscellaneous"
+
+#: templates/data-policy.html:119
+msgid ""
+"\n"
+"          除依照本網站主動提供或應申請提供之資料介接 API 及其使用規範者外，本"
+"網站相關服務僅提供自然人使用，禁止其他各種型態或頻率之機械自動化操作。當流量"
+"監控管理程式，發現網站系統資源有不正常耗用，並可合理推估其為機械自動化資料或"
+"素材捉取行為所致時，本網站將可能中斷或終止對該帳號之後續使用服務。\n"
+"          "
+msgstr ""
+"\n"
+"Except for data that provided initiatively by this website or those who can "
+"get access through the API upon permission, the services of this website are "
+"only for natural persons use. Other types or frequently mechanical "
+"automation operations are prohibited. When the traffic monitoring and "
+"management program finds that the website system resources are being used "
+"abnormally, and it can be reasonably estimated that it is caused by "
+"mechanical automatic data or material extraction, this website may interrupt "
+"or terminate the subsequent service of that account."
+
+#: templates/data-policy.html:124
+msgid ""
+"\n"
+"          本網站對提交之貢獻資料與素材，不負永久露出的維護責任；除此之外，當"
+"涉及生物多樣性敏感資料及相近狀況，該資料與素材內含的物種資訊可能造成物種受"
+"害，或其他相關環境損害時，本網站得要求貢獻者對資料進行適當遮蔽之後再次上傳，"
+"或由本平台協助進行遮蔽濾除之後另行更換。\n"
+"          "
+msgstr ""
+"\n"
+"This website is not responsible for maintaining the submitted and "
+"contributed materials on public transmitting status permanently. When it "
+"comes to biodiversity-sensitive materials or similar situations, in which "
+"the species data contained in the materials may cause species damage or "
+"related environmental damage, this website may require contributors to "
+"properly cover the sensitive data and then upload it again, or the platform "
+"may assist in masking and filtering then has the sensitive data replaced."
+
+#: templates/data-policy.html:129
+msgid ""
+"\n"
+"          本網站於部分頁面提供資料及素材下載功能。關於下載資料與素材之保存，"
+"本網站會力求完整維護，惟資料與素材可能因其他因素，如天災、系統錯誤等，而滅"
+"失，本網站與維運單位不對前述滅失負任何責任。為避免前述滅失，貢獻者及使用者應"
+"自行保留資料與素材之複本。\n"
+"          "
+msgstr ""
+"\n"
+"This website provides download function of data and materials on some pages. "
+"Regarding the preservation of download function enabled data and materials, "
+"this website shall perform due diligence to maintain it completely, but the "
+"data and materials may still be lost due to other unexpected causes, such as "
+"natural disasters, system errors, and etc … This website and the maintenance "
+"unit are not responsible for the aforementioned loss. To avoid the loss "
+"explained above, contributors and users should keep copies of the data and "
+"materials actively by themselves."
+
+#: templates/data-policy.html:134
+msgid ""
+"\n"
+"          本網站不會對使用者上傳的貢獻資料與素材進行個案監督，然若該等資料或"
+"素材事後為第三方提報檢舉為不合法或不適當，本網站得於合理通知原貢獻者之後，移"
+"除相關爭議資料或素材，然當爭議資料與素材涉及侵害他人權利、違反法令、或有公然"
+"污辱、謾罵等人身攻擊等不適當資訊嵌入的狀況，本網站得不待通知原貢獻者，立即移"
+"除相關資料與素材。\n"
+"          "
+msgstr ""
+"\n"
+"This website will not monitor the contributed data and materials uploaded by "
+"users on case surveillance. However, if such a data and materials are later "
+"reported as unlawful or inappropriate by a third party, this site may remove "
+"them in a reasonable time after notification to the original contributors. "
+"And when the relevant data and materials in dispute are involving in lawful "
+"rights infringement to others, legislation violations, public offense "
+"against reputation and credit, personal attack in improper language, and "
+"inappropriate information embedded to do so, this website shall immediately "
+"remove them without prior notification to the original contributors."
+
+#: templates/data-policy.html:139
+msgid ""
+"\n"
+"          TaiBIF 網站授權範圍僅及於著作權及其相關權利保護之範圍，不及於其他智"
+"慧財產權利，包括但不限於專利、商標、及機關標誌或商號圖示之提供。\n"
+"          "
+msgstr ""
+"\n"
+"The scope of license of TaiBIF website is limited to copyright and related "
+"rights protection, not extended to other intellectual property rights, which "
+"means including but not limited to patent, trademark, organization logo or "
+"business mark is not provided."
+
+#: templates/data-policy.html:144
+msgid ""
+"\n"
+"          使用 TaiBIF 網站提供之各項資料與素材，不論其受著作權利保護與否，使"
+"用者不得惡意變更其相關資訊，若編輯、改作後所展示之資訊與原不符而造成損害，使"
+"用者須自負民事、刑事上之法律責任。\n"
+"          "
+msgstr ""
+"\n"
+"When using the data and materials provided by the TaiBIF website, whether "
+"they are protected by copyright or not, the user shall not maliciously alter "
+"the relevant information. If the compiled or adapted information causes "
+"damage due to the inconsistency with the original information disclosed, the "
+"users shall bear the legal responsibility by themselves in civil and "
+"criminal matters."
+
+#: templates/data-policy.html:149
+msgid ""
+"\n"
+"          本網站並不擔保所提供資料與素材之正確性及合用性，使用者利用本網站無"
+"償提供之各項資料與素材，受有損害或損失，或致第三人受有損害或損失，除法令另有"
+"規定外，本網站及其維運單位，依CC授權條款及CC0公眾領域宣告之免責聲明，主張法律"
+"容許限度下最高的免責範圍，不負任何賠償或補償之責。\n"
+"          "
+msgstr ""
+"\n"
+"This website does not guarantee correctness and fitness of the data and "
+"materials provided. If users suffer damage or loss, or cause damage or loss "
+"to a third party due to the utilization of data and materials provided by "
+"this website on a free-of-charge basis, unless otherwise stipulated at law, "
+"this website and its maintenance unit, complying with the Disclaimer of "
+"Warranties and Limitation of Liability statement of CC license and CC0 "
+"public domain dedication, claim to the maximum extent permitted by "
+"applicable law a disclaimer, to not liable for any indemnification or "
+"compensation thereof."
+
+#: templates/data-policy.html:155
+msgid ""
+"臺灣生物多樣性資訊機構 (Taiwan Biodiversity Information Facility, TaiBIF) 隱"
+"私權政策"
+msgstr "TaiBIF Privacy Policy"
+
+#: templates/data-policy.html:160
+msgid ""
+"\n"
+"          本處所述隱私權政策，適用於貢獻者及使用者在 TaiBIF 網站活動時，所涉"
+"及有關個人資料的蒐集、處理及利用，包括但不限於會員註冊服務、洽詢維運團隊進行"
+"意見互動、資料與素材貢獻，以及網路資訊瀏覽等使用行為。\n"
+"          "
+msgstr ""
+"\n"
+"The privacy policy stated here applies to the personal data collection, "
+"processing, and utilization for the contributors and users’ activities "
+"involved in the usage of the TaiBIF website, including but not limited to "
+"membership registration services, consultation with the maintenance team for "
+"opinions exchange, contribution of data and materials, and website "
+"information browsing."
+
+#: templates/data-policy.html:165
+msgid ""
+"\n"
+"          使用者持續使用 TaiBIF 網站服務，即視為當事人明示同意下述之資料蒐"
+"集、處理，及利用方式。\n"
+"          "
+msgstr ""
+"\n"
+"Users who continue to use TaiBIF website services are deemed to have agreed "
+"to the following data collection, processing, and utilization methods."
+
+#: templates/data-policy.html:173
+msgid "TaiBIF 蒐集使用者資料"
+msgstr "Personal Data collected"
+
+#: templates/data-policy.html:176
+msgid ""
+"\n"
+"        使用者登錄本網站服務之相關帳號時，自主填註的各項個人識別資料，包括姓"
+"名、電郵、以及服務單位，僅作為認證、授權標示，與相關通知、聯繫之用。\n"
+"        "
+msgstr ""
+"\n"
+"When a user logs into the relevant account of this website service, the "
+"personal data being provided initiatively shall be collected, including "
+"name, email, and service unit, however will only be used for membership "
+"identification, contribution license labeling for authorship, and for "
+"related notification and contact."
+
+#: templates/data-policy.html:181
+msgid ""
+"\n"
+"        若使用者未自設資訊屏蔽機制，TaiBIF 或將自動紀錄使用者連線時使用之IP位"
+"址、登入時間，及其他瀏覽器依其安全層級調校得提供之數據資訊，此等數據資訊之收"
+"集，僅供管理端分析流量及觀測網站服務之用。Cookies 的收集僅用於協助網站操作介"
+"面中英語系（繁體中文/ English）的轉換紀錄，使用者亦可調校瀏覽界的管理層級，將"
+"所有 cookies 收集的允許逕行關閉。\n"
+"        "
+msgstr ""
+"\n"
+"If a user does not set up an information shielding mechanism actively, "
+"TaiBIF may automatically record the IP address, the login time, and other "
+"digital information that can be getting access according to the browser "
+"security level that user sets when connecting. The digital information "
+"collected is only for traffic analysis and website service observation "
+"purpose only by the management authority. The cookies of that is only for "
+"conversion record of the website interface translation between Traditional "
+"Chinese and English language. However, a user can also adjust the protection "
+"level of browser to turn off all the collection permission by cookies."
+
+#: templates/data-policy.html:186
+msgid ""
+"\n"
+"        貢獻者提供資料與素材，所記錄或內嵌之地理位置，相關資訊僅用於生物資訊"
+"之顯示、分析與彙整。\n"
+"        "
+msgstr ""
+"\n"
+"The related information of geographic locations, which is recorded or "
+"embedded in the contributed data and materials, shall be collected, and is "
+"only used for the display, analysis and compilation purpose of biological "
+"data."
+
+#: templates/data-policy.html:191
+msgid ""
+"\n"
+"        本網站採CC授權條款及CC0公眾領域貢獻宣告來吸納貢獻，當貢獻者提供資料或"
+"素材之顯名資訊，涉及個人資料之描述時，該等個人資料視為當事人自行公開之個人資"
+"料，依個人資料相關法令之規範，後續蒐集處理毋須再經當事人書面同意，該等資料之"
+"提供使用範圍，將用於支持科學資料有效驗證之公益目的。\n"
+"        "
+msgstr ""
+"\n"
+"This website adopts CC license and CC0 public domain dedication to receive "
+"contributions. When contributors provide data or materials involving the "
+"personal data description in the authorship attribution, such personal data "
+"shall be regarded as making public by the data subjects themselves. "
+"According to the personal data protection act and regulations, the "
+"subsequent collection and processing for those personal data does not "
+"require an additional written consent of the data subjects, and hence "
+"rendering those personal data utilization scope as being reached for the "
+"purpose of scientific data verification support for public good."
+
+#: templates/data-policy.html:196
+msgid ""
+"\n"
+"        本網站得將貢獻者提交之內容，依其指定之授權或宣告方式推送至其他平台，"
+"包括但不限於轉引或轉載至全球生物多樣性資訊機構(GBIF)之主資料庫或其他節點，或"
+"推送至臉書、推特等社群網路平台，此一推送模式涉及個人資料之國際傳輸，於推送後"
+"就該平台之個人資料使用事宜，轉依該平台依其隱私權政策進行處理。\n"
+"        "
+msgstr ""
+"\n"
+"This website may push the content submitted by contributors forward to other "
+"platforms under the designated license or dedication methods selected by the "
+"contributors, including but not limited to transmitting or transferring to "
+"Global Biodiversity data Facility (GBIF) or other nodes, or push forward to "
+"other social media network platforms such as Facebook and Twitter. This push "
+"mode might involve the cross-border transfer of personal data, and when the "
+"personal data has been pushed, the further use of those transferred personal "
+"data shall be managed in accordance with the received platform’s privacy "
+"policy."
+
+#: templates/data-policy.html:201
+msgid "TaiBIF 對相關資料之去識別化與量化處理"
+msgstr ""
+"TaiBIF’s de-identification and quantification of relevant personal data"
+
+#: templates/data-policy.html:204
+msgid ""
+"\n"
+"          貢獻者同意 TaiBIF 得以對其回報資料與素材，進行合理妥適之去識別化或"
+"相關數據量化的處理。\n"
+"          "
+msgstr ""
+"\n"
+"Contributors agree that TaiBIF shall be able to process the de-"
+"identification or quantification disposal to the personal data involving in "
+"the data and materials they reported, in a reasonable and appropriate manner."
+
+#: templates/data-policy.html:209
+msgid ""
+"\n"
+"          處理後的資料、素材，與其貢獻者或其他當事人個人識別狀態無法產生連結"
+"者，便不再屬於個人資料，後續將得以不受回報目的之限制，被進行利用。\n"
+"          "
+msgstr ""
+"\n"
+"The processed data and materials, which cannot be linked to the personal "
+"identification of their contributors or other data subjects, are no longer "
+"personal data, and shall be able to use in the subsequent exploitation "
+"without restriction within the reported purpose."
+
+#: templates/data-policy.html:214
+msgid "隱私權保護政策修訂"
+msgstr "Privacy Policy Amendment"
+
+#: templates/data-policy.html:217
+msgid ""
+"\n"
+"          TaiBIF 將不定時修訂本項政策，以符合最新的個人資料與相關法定權利之保"
+"護規範。\n"
+"          "
+msgstr ""
+"\n"
+"TaiBIF shall revise this policy from time to time to comply with the latest "
+"personal data act and related lawful rights protection regulations."
+
+#: templates/data-policy.html:222
+msgid ""
+"\n"
+"          隱私權政策經修訂後，將透過 IPT 資料發布工具的會員註冊時提供的聯繫電"
+"郵主動通知，亦會於本網站「最新消息」分類項下進行公告。\n"
+"          "
+msgstr ""
+"\n"
+"When the Privacy Policy is updated, it will be proactively notified through "
+"the contact email provided by members of the IPT data Publishing Tool when "
+"registering, and will also be announced under the “Latest News” category of "
+"this website."
+
+#: templates/data-policy.html:227
+msgid ""
+"\n"
+"          使用者對 TaiBIF 網站服務的繼續使用，視為明示同意更新版本的隱私權政"
+"策。\n"
+"          "
+msgstr ""
+"\n"
+"By subsequently using TaiBIF website service, a user indicates his/her "
+"acceptance of the updated version of the privacy policy."
+
+#: templates/data-policy.html:232
+msgid "回報機制"
+msgstr "Request Mechanism"
+
+#: templates/data-policy.html:235
+msgid ""
+"\n"
+"          TaiBIF 對於相關資料的收集，已踐履個人資料保護法及其相關法規的基礎要"
+"求，並在資料的處理及利用上，透過彙整或去識別化流程，以強化使用者的隱私防護。"
+"相關資料在處理之後，將提供科學研究目的之分享。\n"
+"          "
+msgstr ""
+"\n"
+"TaiBIF has fulfilled the fundamental requirements of the Personal Data "
+"Protection Act and related regulations for the collection of relevant data, "
+"and has enhanced the privacy protection of users through the procedures of "
+"compilation or de-identification in the processing and utilization practice "
+"of data. When the relevant data has been well processed, it will be shared "
+"for scientific research purposes."
+
+#: templates/data-policy.html:240
+msgid ""
+"\n"
+"          若網站服務的使用者或資料素材之貢獻者，對於當事人自身之個人資料有隱"
+"私疑慮，請透過網站公告資訊聯絡維運團隊，相關當事人若對自身之個人資料有進行查"
+"閱、更正、停止利用，以及刪除的意見與要求，亦可透過網站回報機制進行提報，本網"
+"站之維運團隊，將於確認收受提交意見，並完成人別確認後，三十日內進行妥善處"
+"理。\n"
+"          "
+msgstr ""
+"\n"
+"If the user of the website service or the contributor of the data and "
+"material has privacy concerns about the personal data of him/her as the data "
+"subject, please contact the maintenance team through the website contact "
+"information. Opinions and requests for reviewing, correcting, cessation of "
+"utilization, and erasing to the data subject’s own personal data involved, "
+"can also be reported through the website Request Mechanism. The maintenance "
+"team of this website shall properly manage the request within 30 days, after "
+"the submitted opinions has been further clarified and the data subject "
+"identity has been well confirmed."
+
+#: templates/data-product.html:39 templates/data-product.html:48
+msgid "什麼是「資料產品」？"
+msgstr "What is Data Product?"
+
+#: templates/data-product.html:40 templates/data-product.html:112
+msgid "資料下載API"
+msgstr "TaiBIF API"
+
+#: templates/data-product.html:41 templates/data-product.html:120
+msgid "典藏資料集"
+msgstr "Curated Datasets"
+
+#: templates/data-product.html:50
+msgid "TL;DR 最直接，簡短的定義："
+msgstr "TL;DR, the most direct and concise definition:"
+
+#: templates/data-product.html:51
+msgid "主要目的為使用資料來實現特定目標的產品"
+msgstr "A data product is a product designed to achieve specific goals through the use of data."
+
+#: templates/data-product.html:54
+msgid "長一點的定義是："
+msgstr "A longer definition is:"
+
+#: templates/data-product.html:55
+msgid ""
+"資料產品是使用資料處理、分析或技術製作以資料為核心的成果，其設計目的是為了提"
+"供具有價值的資訊或見解來實現目標。"
+msgstr "A data product is a data-centric output created using data processing, analysis, or technology. "
+"Its primary purpose is to provide valuable information or insights to achieve objectives."
+
+#: templates/data-product.html:58
+msgid ""
+"\n"
+"                為什麼需要資料產品呢？ 在TaiBIF團隊進行授課的過程中，發現許多"
+"學員對於如何應用開放資料很有興趣，但是！在開始應用之前，你真的充分了解你所下"
+"載的資料嗎？\n"
+"                所以，資料產品的開發是<strong>為了降低資料使用者在使用資料時"
+"的門檻</strong>，這包括協助資料使用者加強理解、支持決策的制定或優化工作上的流"
+"程。\n"
+"                而在生物多樣性資訊學領域中，資料產品是利用資料的力量來理解並"
+"引導管理與保護工作，而資料產品可以是以下的形式：\n"
+"                生物多樣性資料庫（如出現紀錄或基因資訊等）、遙感探測圖、生物"
+"多樣性指標計算工具、物種分布模型、資料分析與視覺化工具等等，絕對是保護地球上"
+"生命多樣性的重要工具們！\n"
+"                "
+msgstr ""
+"\n"
+"Why do we need data products? Data products are essential tools for protecting the diversity of life on Earth. "
+"TaiBIF's teaching experiences indicate that many students are interested in data applications. "
+"However, it is crucial to understand the data you downloaded before using it. "
+"The development of data products aims to reduce the barriers for data users by assisting them in enhancing their understanding, supporting decision-making, or optimizing workflow processes. "
+"In the field of biodiversity informatics, data products utilize the power of data to understand and guide management and conservation efforts. "
+"Data products can take various forms, including biodiversity databases (such as occurrence records or genetic information), remote sensing maps, biodiversity indicator calculation tools, species distribution models, data analysis and visualization tools, etc. "
+"They are essential tools for protecting the diversity of life on Earth!"
+
+#: templates/data-product.html:68
+msgid ""
+"\n"
+"                        <a href=\"https://taicol.tw/\" target=\"_blank\">臺灣"
+"物種名錄資訊</a> — 持續彙整及更新的名錄讓使用者做參考及應用\n"
+"                        "
+msgstr ""
+"\n"
+"<a href=\"https://taicol.tw/\" target=\"_blank\">Taiwan Catalogue of Life (TaiCOL)</a>"
+" - Continuous update of species list for users as a reference and utilization."
+
+#: templates/data-product.html:73
+msgid ""
+"\n"
+"                        <a href=\"https://www.tbn.org.tw/data/species_map\" "
+"target=\"_blank\">TBN臺灣生物地圖</a> — 透過專家意見與物種分布模型推測出的物"
+"種分布彙整成網格資料提供下載\n"
+"                        "
+msgstr ""
+"\n"
+"<a href=\"https://www.tbn.org.tw/data/species_map\" target=\"_blank\">TBN Taiwan Biodiversity Map</a>"
+" - Species distribution inferred by expert opinions and species distribution models are aggregated into grid data for download."
+
+#: templates/data-product.html:78
+msgid ""
+"\n"
+"                        國土生態綠網各種<a href=\"https://conservation."
+"forest.gov.tw/0002178\" target=\"_blank\">實用圖資</a>\n"
+"                        "
+msgstr ""
+"\n"
+"Various practical map layer data on the "
+"<a href=\"https://conservationforest.gov.tw/0002178\" target=\"_blank\">Taiwan Ecological Network (TEN)</a>"
+
+#: templates/data-product.html:83
+msgid ""
+"\n"
+"                        <a href=\"https://www.gbif.org/tool/81747/rgbif\" "
+"target=\"_blank\">rgbif</a> — 透過GBIF API在R更便利的下載資料及做分析\n"
+"                        "
+msgstr ""
+"\n"
+"<a href=\"https://www.gbif.org/tool/81747/rgbif\" target=\"_blank\">rgbif</a>"
+" - Facilitates data download and analysis in R via the GBIF API."
+
+#: templates/data-product.html:88
+msgid ""
+"\n"
+"                        GBIF物種在地區的年度觀察次數的<a href=\"https://www."
+"gbif.org/tools/observation-trends/about\" target=\"_blank\">增減統計</a>\n"
+"                        "
+msgstr ""
+"\n"
+"<a href=\"https://www.gbif.org/tools/observation-trends/about\" target=\"_blank\">GBIF Observation Trends</a>"
+" - Statistics of the annual observation counts of species in specific regions."
+
+#: templates/data-product.html:93
+msgid ""
+"\n"
+"                        <a href=\"https://beikolab.cs.dal.ca/gengis/Main_Page"
+"\" target=\"_blank\">GenGIS</a>地理資訊圖層與基因資料的視覺化製作工具\n"
+"                        "
+msgstr ""
+"\n"
+"<a href=\"https://beikolab.cs.dal.ca/gengis/Main_Page\" target=\"_blank\">GenGIS</a>"
+" - Visualization tool for geographic information layers and genetic data."
+
+#: templates/data-product.html:98
+msgid ""
+"\n"
+"                        <a href=\"https://i-marine.d4science.org/home\" "
+"target=\"_blank\">iMarine</a>永續漁業的資源管理、分析與視覺化工具\n"
+"                        "
+msgstr ""
+"\n"
+"<a href=\"https://i-marine.d4science.org/home\" target=\"_blank\">iMarine</a>"
+" - Sustainable Fisheries Resource Management, Analysis, and Visualization Tools."
+
+#: templates/data-product.html:103
+msgid ""
+"\n"
+"                        <a href=\"https://obis.org/indicators/\" target="
+"\"_blank\">OBIS Indicator</a>海洋生物多樣性信息系統資料與物種指標圖資\n"
+"                        "
+msgstr ""
+"\n"
+"<a href=\"https://obis.org/indicators/\" target=\"_blank\">OBIS Indicator</a>"
+" - Ocean Biodiversity Information System data and species indicator maps."
+
+#: templates/data-product.html:114
+#, python-format
+msgid ""
+"\n"
+"            <p>下載資料歡迎使用 <a href=\"%(api)s\" target=\"_blank\">TaiBIF "
+"API</a></p>\n"
+"            "
+msgstr ""
+"\n"
+"<p>In downloading data, we welcome the use of the <a href=\"%(api)s\" target=\"_blank\">TaiBIF API</a></p>"
+
+#: templates/data-product.html:121
+msgid "敬請期待"
+msgstr "We appreciate your anticipation and look forward to unveiling. Stay tuned for further updates and announcements. Thank you for your patience."
+
+#: templates/index.html:219
+msgid "生物多樣性資料開放的推手"
+msgstr "The Facilitator of Biodiversity Open Data"
+
+#: templates/index.html:260
+msgid "涵蓋物種數"
+msgstr ""
+
+#: templates/index.html:282
+msgid "資料應用發表"
+msgstr ""
+
+#: templates/index.html:290
+msgid "看更多發布狀況"
+msgstr ""
+
+#: templates/index.html:304
+msgid "植物"
+msgstr ""
+
+#: templates/index.html:319
+msgid "真菌"
+msgstr ""
+
+#: templates/index.html:334
+msgid "細菌"
+msgstr ""
+
+#: templates/index.html:349
+msgid "昆蟲"
+msgstr ""
+
+#: templates/index.html:364
+msgid "魚"
+msgstr ""
+
+#: templates/index.html:379
+msgid "爬蟲類"
+msgstr ""
+
+#: templates/index.html:394
+msgid "兩棲類"
+msgstr ""
+
+#: templates/index.html:409
+msgid "鳥類"
+msgstr ""
+
+#: templates/index.html:426
+msgid "哺乳類"
+msgstr ""
+
+#: templates/index.html:441
+msgid "其他"
+msgstr ""
+
+#: templates/index.html:454
+msgid "看更多資訊視覺化"
+msgstr ""
+
+#: templates/index.html:606
+msgid "指導單位"
+msgstr ""
+
+#: templates/index.html:649
+msgid "夥伴單位"
+msgstr ""
+
+#: templates/open-process.html:33
+msgid ""
+"\n"
+"        請點選步驟按鈕進入詳細說明頁，文字說明法的優點是可以對調查對象做出比"
+"較深入和具體的描述，可以描述內部控制制度中的任何特殊情況。其缺點是採用文字說"
+"明法進行描述時，文字敘述較為冗長，對業務處理\n"
+"        "
+msgstr ""
+
+#: templates/open-process.html:41
+msgid "清理資料"
+msgstr ""
+
+#: templates/open-process.html:42
+msgid "資料標準化 (DwC)"
+msgstr ""
+
+#: templates/open-process.html:49
+msgid "檢核資料"
+msgstr ""
+
+#: templates/open-process.html:56
+msgid "寫詮釋資料"
+msgstr ""
+
+#: templates/open-process.html:57
+msgid "資料上傳 TaiBIF IPT"
+msgstr ""
+
+#: templates/open-process.html:64
+msgid "開放 CC 授權"
+msgstr ""
+
+#: templates/open-process.html:71
+#, fuzzy
+#| msgid "關於資料論文"
+msgid "發表資料論文"
+msgstr "About Data Paper"
+
+#: templates/open-process.html:78
+msgid "資料再利用"
+msgstr ""
+
+#: templates/open-process.html:85
+msgid ""
+"\n"
+"        請點選步驟按鈕進入詳細說明頁，文字說明法的優點是可以對調查對象做出比"
+"較深入和具體的描述，可以描述內部控制制度中的任何特殊情況。 其缺點是採用文字說"
+"明法進行描述時，文字敘述較為冗長，對業務處理\n"
+"        "
+msgstr ""
+
 #: templates/search_all.html:24
 msgid "出現紀錄"
-msgstr "Occurrences"
+msgstr ""
 
-#: templates/index.html:121
-msgid "於 TaiBIF 公開之資料"
-msgstr "Records published via TaiBIF"
+#: templates/search_all.html:28
+msgid "發布單位"
+msgstr ""
 
-#: templates/index.html:130
-msgid "於 TaiBIF 公開之資料集（含部分資訊缺漏之資料集"
-msgstr "Records published via TaiBIF, including incomplete dataset"
-
-#: templates/index.html:134
-msgid "涵蓋物種數"
-msgstr "Recorded Species"
-
-#: templates/index.html:139
-msgid "出現紀錄涵蓋物種數（包含部分國外資料及同物異名）"
-msgstr "Recorded species appeared in the datasets"
-
-#: templates/index.html:144
-msgid "看更多"
-msgstr "More"
-
-#: templates/index.html:273
-msgid "指導單位"
-msgstr "Advisor"
-
-#: templates/index.html:288
-msgid "夥伴組織"
-msgstr "Partners"
-
-#: templates/search_all.html:70
+#: templates/search_all.html:72
 msgid "查無資料"
-msgstr "No Data"
+msgstr ""
 
-#~ msgid "發布者"
-#~ msgstr "Publishers"
+#: templates/tech-book.html:107
+msgid "使用Excel模板準備調查活動資料構"
+msgstr "Prepare sampling-event data using Excel template"
 
-#~ msgid "Cookbook"
-#~ msgstr "Cookbook"
+#, fuzzy
+#~| msgid "生物多樣性資料開放的推手"
+#~ msgid "Levels of Biodiversity"
+#~ msgstr "The Facilitator of Biodiversity Open Data"

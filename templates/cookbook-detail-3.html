@@ -23,7 +23,7 @@ hr {
 <div class="bg-main-pale">
     <div class="container">
         <div class="caption-mascot-wrapper">
-            <h1 class="title">資料開放與應用工作坊</h1>
+            <h1 class="title">{% trans "資料開放與應用工作坊" %}</h1>
             <img src="{% static 'images/mascot-frog.png'%}" alt="" class="symbol">
         </div>
     </div>
@@ -35,10 +35,10 @@ hr {
     <!-- breadcrumb begin -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-            <li class="breadcrumb-item">教育資源</li>
-            <li class="breadcrumb-item">生物多樣性資訊概論</li>
-            <li class="breadcrumb-item active" aria-current="page">第三章：準備用於發佈的資料集</li>
+            <li class="breadcrumb-item"><a href="index.html">{% trans "首頁" %}</a></li>
+            <li class="breadcrumb-item">{% trans "教育資源" %}</li>
+            <li class="breadcrumb-item">{% trans "生物多樣性資訊概論" %}</li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans "第三章：準備用於發布的資料集" %}</li>
         </ol>
     </nav>
     <!-- breadcrumb end -->
@@ -52,32 +52,43 @@ hr {
     <div class="article-head-wrapper">
         {#<span class="article-post-date">2018/12/08</span>#}
         <h2 class="h2">
-        第三章 準備用於發布的資料集
-        <span class="article-author">作者：王豫煌 博士/ 譯者：雲翻譯公司</span>
+        {% trans "第三章：準備用於發布的資料集" %}
         </h2>
+        <span class="article-author">{% trans "作者：王豫煌 博士/ 譯者：雲翻譯公司" %}</span>
         <hr>
     </div>
-    {% comment %}
-    <div class="article-share-btn-wrapper">
-        分享文章
-        <a href="#" class="navbar-oval-btn"><span class="myicon icon-social-fb"></span></a>
-        <a href="#" class="navbar-oval-btn"><span class="myicon icon-social-twitter"></span></a>
-        <a href="#" class="navbar-oval-btn"><span class="myicon icon-social-line"></span></a>
-        <a href="#" class="navbar-oval-btn"><span class="myicon icon-mail"></span></a>
-    </div>
-    {% endcomment %}
+
     <!-- article content begin -->
     <div class="article-content-wrapper">
-        <h4 class="heading-md" id="section1" style="font-weight:bold">3.1 透過GBIF發布生物多樣性資料集</h4>
-        <p>資料集包括了詮釋資料和原始資料。最簡單的資料集可以只包含詮釋資料。目前GBIF支持發布的資料集有以下四種：1） 僅詮釋資料 metadata-only，2） 物種名錄 cheklist，3） 出現紀錄 occurrence，以及4） 調查活動資料集 sampling event，依照資料內容的豐富性及資料結構的複雜性而定。 為了維持一個資料集的完整性，我們建議資料提供者盡可能發布現有最完整的資料集。</p>
-        <p>在網站上發布資料集就像是生產資料產品；而詮釋資料就像產品專屬的使用手冊，用來告訴使用者產品的內容、產品的使用方法以及客服相關資訊等。換句話說，詮釋資料可以告訴你資料的來源、如何使用該資料，以及如果對資料有任何疑問時可以聯繫誰等。一個產品就是一種資源，因此，資料集也是網路的資源。在GBIF的概念中，資料集是一種資源，要透過GBIF發布資料集（或資源），必須使用符合達爾文核心延伸集中一連串的專有名詞作為資料欄位標準名稱，包含物種名錄、出現紀錄、調查活動資料集的資訊都要按照此標準呈現。</p>
-        <p>準備資料集最簡單的方法是使用預定格式的Excel模板來填寫詮釋資料和原始資料。這將協助你輕鬆地將資料整理後輸入到GBIF接受的標準化資料結構中。GBIF提供簡單的Excel模板，其中包括達爾文核心集所採用的標準化資料欄位名稱。</p>
-        <p>但是，當你的資料表中有大量的資料時（例如超過一萬筆以上的紀錄），你會發現使用Excel處理這些紀錄很困難。在這種情況下，我們建議可以使用R，R是一種提供統計和資料處理的開源軟體。如果你是R的新手，我們鼓勵你學習使用R，因為它是目前最受歡迎的資料分析工具之一。在本章節中，我們將向你說明如何使用Excel模板和R script來準備調查活動資料集。</p>
+        <h4 class="heading-md" id="section1" style="font-weight:bold">3.1 {% trans "透過GBIF發布生物多樣性資料集" %}</h4>
+        <p>
+            {% blocktrans %}
+            資料集包括了詮釋資料和原始資料。最簡單的資料集可以只包含詮釋資料。目前GBIF支持發布的資料集有以下四種：1） 僅詮釋資料 metadata-only，2） 物種名錄 cheklist，3） 出現紀錄 occurrence，以及4） 調查活動資料集 sampling event，依照資料內容的豐富性及資料結構的複雜性而定。 為了維持一個資料集的完整性，我們建議資料提供者盡可能發布現有最完整的資料集。
+            {% endblocktrans %}
+        </p>
+        <p>
+            {% blocktrans %}
+            在網站上發布資料集就像是生產資料產品；而詮釋資料就像產品專屬的使用手冊，用來告訴使用者產品的內容、產品的使用方法以及客服相關資訊等。換句話說，詮釋資料可以告訴你資料的來源、如何使用該資料，以及如果對資料有任何疑問時可以聯繫誰等。一個產品就是一種資源，因此，資料集也是網路的資源。在GBIF的概念中，資料集是一種資源，要透過GBIF發布資料集（或資源），必須使用符合達爾文核心延伸集中一連串的專有名詞作為資料欄位標準名稱，包含物種名錄、出現紀錄、調查活動資料集的資訊都要按照此標準呈現。
+            {% endblocktrans %}
+        </p>
+        <p>
+            {% blocktrans %}
+            準備資料集最簡單的方法是使用預定格式的Excel模板來填寫詮釋資料和原始資料。這將協助你輕鬆地將資料整理後輸入到GBIF接受的標準化資料結構中。GBIF提供簡單的Excel模板，其中包括達爾文核心集所採用的標準化資料欄位名稱。
+            {% endblocktrans %}
+        </p>
+        <p>
+            {% blocktrans %}
+            但是，當你的資料表中有大量的資料時（例如超過一萬筆以上的紀錄），你會發現使用Excel處理這些紀錄很困難。在這種情況下，我們建議可以使用R，R是一種提供統計和資料處理的開源軟體。如果你是R的新手，我們鼓勵你學習使用R，因為它是目前最受歡迎的資料分析工具之一。在本章節中，我們將向你說明如何使用Excel模板和R script來準備調查活動資料集。
+            {% endblocktrans %}
+        </p>
 
-        <h4 class="heading-md" id="section2" style="font-weight:bold">3.2 什麼是調查活動資料？</h4>
-        <p>有時資料集可提供的資訊遠超乎你想像，不僅僅可提供發現物種的地點、日期，也有機會去觸及更廣泛的物種分類群的群落組成或者不同時間、地點的物種豐度。這些資料集通常來自測量和監測生物多樣性的標準作業程序，如植物群落穿越線採樣調查、鳥類調查計畫以及淡水和海水採樣。藉由指出記錄樣本時所使用的方法、事件和物種相對豐度，這些資料集可以強化在同樣標準作業程序下，但在不同時間不同地點所收集的資料之間的比較，有時候甚至可以讓研究員發現某些特定地點物種缺失的狀況。
-        （原文參照：<a href="http://www.gbif.org/publishing-data/summary">http://www.gbif.org/publishing-data/summary）</a></p>
-        <h4 class="heading-md">3.2.1 調查活動（Event）+ 位置（Location）之核心（Core）詞彙</h4><span sryle="font-size:12px">（**為必填欄位)</span>
+        <h4 class="heading-md" id="section2" style="font-weight:bold">3.2 {% trans "什麼是調查活動資料？" %}</h4>
+        <p>
+            {% blocktrans %}
+            有時資料集可提供的資訊遠超乎你想像，不僅僅可提供發現物種的地點、日期，也有機會去觸及更廣泛的物種分類群的群落組成或者不同時間、地點的物種豐度。這些資料集通常來自測量和監測生物多樣性的標準作業程序，如植物群落穿越線採樣調查、鳥類調查計畫以及淡水和海水採樣。藉由指出記錄樣本時所使用的方法、事件和物種相對豐度，這些資料集可以強化在同樣標準作業程序下，但在不同時間不同地點所收集的資料之間的比較，有時候甚至可以讓研究員發現某些特定地點物種缺失的狀況。
+            {% endblocktrans %}
+            （{% trans "原文參照：" %}<a href="http://www.gbif.org/publishing-data/summary">http://www.gbif.org/publishing-data/summary）</a></p>
+        <h4 class="heading-md">3.2.1 {% trans "調查活動（Event）+ 位置（Location）之核心（Core）詞彙" %}</h4><span sryle="font-size:12px">（{% trans "**為必填欄位" %}）</span>
         <br>
         <table class="table table-bordered">
             <tbody>
@@ -140,9 +151,9 @@ hr {
                 </tr>
             </tbody>
         </table>
-        <p>參照：<a href="http://tools.gbif.org/dwca-validator/extension.do?id=dwc:Event">http://tools.gbif.org/dwca-validator/extension.do?id=dwc:Event</a></p>
+        <p>{% trans "參照：" %}<a href="http://tools.gbif.org/dwca-validator/extension.do?id=dwc:Event">http://tools.gbif.org/dwca-validator/extension.do?id=dwc:Event</a></p>
 
-        <h4 class="heading-md">3.2.2 測量或事實（MeasurementOrFact）之核心詞彙</h4>
+        <h4 class="heading-md">3.2.2 {% trans "測量或事實（MeasurementOrFact）之核心詞彙" %}</h4>
         <ul>
             <li>調查活動識別碼（eventID**) </li>
             <li>測量識別碼（measurementID </li>
@@ -155,9 +166,9 @@ hr {
             <li>測量方法（measurementMethod）</li>
             <li>測量備註（measurementRemarks）</li>
         </ul>
-        <p>參照：<a href="http://tools.gbif.org/dwca-validator/extension.do?id=dwc:MeasurementOrFact">http://tools.gbif.org/dwca-validator/extension.do?id=dwc:MeasurementOrFact</a></p>
+        <p>{% trans "參照：" %}<a href="http://tools.gbif.org/dwca-validator/extension.do?id=dwc:MeasurementOrFact">http://tools.gbif.org/dwca-validator/extension.do?id=dwc:MeasurementOrFact</a></p>
 
-        <h4 class="heading-md">3.2.3 選擇出現紀錄（Occurrence）+ 分類（Taxon）之核心詞彙</h4>
+        <h4 class="heading-md">3.2.3 {% trans "選擇出現紀錄（Occurrence）+ 分類（Taxon）之核心詞彙" %}</h4>
         <br>
         <table class="table table-bordered">
             <tbody>
@@ -219,48 +230,52 @@ hr {
                 </tr>
             </tbody>
         </table>
-        <p>參照：<a href="http://tools.gbif.org/dwca-validator/extension.do?id=dwc:Occurrence">http://tools.gbif.org/dwca-validator/extension.do?id=dwc:Occurrence</a></p>
+        <p>{% trans "參照：" %}<a href="http://tools.gbif.org/dwca-validator/extension.do?id=dwc:Occurrence">http://tools.gbif.org/dwca-validator/extension.do?id=dwc:Occurrence</a></p>
 
-        <h4 class="heading-md" id="section3" style="font-weight:bold">3.3 達爾文核心集—資料的星型結構</h4>
+        <h4 class="heading-md" id="section3" style="font-weight:bold">3.3 {% trans "達爾文核心集—資料的星型結構" %}</h4>
         <img src="{% static 'images/cookbook-3-flow.png' %}" >
 
-        <h4 class="heading-md">3.3.1 資料的星型結構 (Star schema)</h4>
-        <p>GBIF 的發布資料結構如上圖所示（以調查活動為例），在發布資料前，先確認你的研究資料類型是屬於名錄、出現紀錄還是調查活動，並以該類型資料結構為基礎（Core核心集）去設定資料表的欄位名稱（參照 Darwin Core），而其他未被包含於核心集的資料，則可以選擇其他類型的欄位名稱，整理成延伸集（可視為核心集的補充說明）。所有的延伸集都必須能有一個欄位（強烈建議為唯一識別碼ID）與核心集相同，才能相互對應，追溯到同一批次的資料。可以把這些想像成一個excel表，主頁資料就是核心集，其他分頁都是延伸集，內容皆與主頁有關。</p>
+        <h4 class="heading-md">3.3.1 {% trans "資料的星型結構 (Star schema)" %}</h4>
+        <p>
+            {% blocktrans %}
+            GBIF 的發布資料結構如上圖所示（以調查活動為例），在發布資料前，先確認你的研究資料類型是屬於名錄、出現紀錄還是調查活動，並以該類型資料結構為基礎（Core核心集）去設定資料表的欄位名稱（參照 Darwin Core），而其他未被包含於核心集的資料，則可以選擇其他類型的欄位名稱，整理成延伸集（可視為核心集的補充說明）。所有的延伸集都必須能有一個欄位（強烈建議為唯一識別碼ID）與核心集相同，才能相互對應，追溯到同一批次的資料。可以把這些想像成一個excel表，主頁資料就是核心集，其他分頁都是延伸集，內容皆與主頁有關。
+            {% endblocktrans %}
+        </p>
 
-        <h4 class="heading-md">3.3.2 如何發布資料呢？</h4>
+        <h4 class="heading-md">3.3.2 {% trans "如何發布資料呢？" %}</h4>
         <ol>
-            <li>先準備好原始資料</li>
-            <li>檢查並清理資料（修正學名或其他的錯誤)</li>
-            <li>採用達爾文核心調查活動、出現紀錄等詞彙集，作為資料表的欄位名稱</li>
-            <li>將資料結構轉成獨立的表格，並將資料套入達爾文核心星型結構中，區分核心集（Core）和延伸集（Extension），接著將此表格儲存為以UTF-8編碼的CSV文本檔案</li>
-            <li>準備詮釋資料</li>
-            <li>在由節點管理的IPT工具（如TaiBIF IPT）上申請帳號資料，節點將確認你的組織成為資料發布組織（須先於GBIF註冊申請成為資料發布者）</li>
-            <li>登入IPT，建立新的資料來源，上傳你的資料表並與Darwin Core進行欄位對應</li>
-            <li>提供詮釋資料</li>
-            <li>發布資料</li>
+            <li>{% trans "先準備好原始資料" %}</li>
+            <li>{% trans "檢查並清理資料（修正學名或其他的錯誤）" %}</li>
+            <li>{% trans "採用達爾文核心調查活動、出現紀錄等詞彙集，作為資料表的欄位名稱" %}</li>
+            <li>{% trans "將資料結構轉成獨立的表格，並將資料套入達爾文核心星型結構中，區分核心集（Core）和延伸集（Extension），接著將此表格儲存為以UTF-8編碼的CSV文本檔案" %}</li>
+            <li>{% trans "準備詮釋資料" %}</li>
+            <li>{% trans "在由節點管理的IPT工具（如TaiBIF IPT）上申請帳號資料，節點將確認你的組織成為資料發布組織（須先於GBIF註冊申請成為資料發布者）" %}</li>
+            <li>{% trans "登入IPT，建立新的資料來源，上傳你的資料表並與Darwin Core進行欄位對應" %}</li>
+            <li>{% trans "提供詮釋資料" %}</li>
+            <li>{% trans "發布資料" %}</li>
         </ol>
 
         <p><img src="{% static 'images/cookbook-3-1.png' %}" ></p>
         <br>
         <p><img src="{% static 'images/cookbook-3-2.png' %}" ></p>
-        <p>如何發布調查活動資料？<br><a href="http://github.com/gbif/ipt/wiki/samplingEventData#exemplar-datasets">http://github.com/gbif/ipt/wiki/samplingEventData#exemplar-datasets</a></p>
+        <p>{% trans "如何發布調查活動資料？" %}<br><a href="http://github.com/gbif/ipt/wiki/samplingEventData#exemplar-datasets">http://github.com/gbif/ipt/wiki/samplingEventData#exemplar-datasets</a></p>
 
-        <p>大致流程：<br>確認資料的種類 >> 轉換資料 >> 上傳資料至IPT >> 將資料對應至調查活動及出現紀錄 >> 填入詮釋資料 >> 發布資料集 >> 完成資料集註冊</p>
+        <p>{% trans "大致流程：" %}<br>{% trans "確認資料的種類" %} >> {% trans "轉換資料" %} >> {% trans "上傳資料至IPT" %} >> {% trans "將資料對應至調查活動及出現紀錄" %} >> {% trans "填入詮釋資料" %} >> {% trans "發布資料集" %} >> {% trans "完成資料集註冊" %}</p>
 
-        <h4 class="heading-md" id="section4" style="font-weight:bold">3.4使用Excel模板準備調查活動資料</h4>
-        <p>範例：準備資料所使用的資料集與工具
+        <h4 class="heading-md" id="section4" style="font-weight:bold">3.4 {% trans "使用Excel模板準備調查活動資料" %}</h4>
+        <p>{% trans "範例：準備資料所使用的資料集與工具" %}
         <ul>
-            <li>範例表格 1_AlienPlantSurvey.xlsx （範例:外來種植物調查）</li>
-            <li>試算表軟體 MS Excel / LibreOffice Calc</li>
-            <li>純文字編輯器 Notepad++ / PSPad / … </li>
-            <li>臺灣生物多樣性資訊機構學名比對工具 <a href="http://match.taibif.tw">(http://match.taibif.tw)</a></li>
+            <li>{% trans "範例表格" %} 1_AlienPlantSurvey.xlsx {% trans "（範例:外來種植物調查）" %}</li>
+            <li>{% trans "試算表軟體" %} MS Excel / LibreOffice Calc</li>
+            <li>{% trans "純文字編輯器" %} Notepad++ / PSPad / … </li>
+            <li>{% trans "臺灣生物多樣性資訊機構學名比對工具" %} <a href="http://match.taibif.tw">(http://match.taibif.tw)</a></li>
         </ul>
         </p>
 
-        <p>範例：資料檔案
+        <p>{% trans "範例：資料檔案" %}
         <ul>
-            <li>1_AlienPlantSurvey.xlsx （範例：外來種植物調查）</li>
-            <li>7個表格：
+            <li>1_AlienPlantSurvey.xlsx {% trans "（範例：外來種植物調查）" %}</li>
+            <li>{% trans "7個表格：" %}
                 <ol>
                     <li>部分調查樣區（partialSurveyPlot）</li>
                     <li>部分植物出現紀錄（partialplantOccurrence）</li>
@@ -277,15 +292,15 @@ hr {
         <br>
         <p><img src="{% static 'images/cookbook-3-3.png' %}" ></p>
         <br>
-        <p>資料清理和轉換之工作流程：
+        <p>{% trans "資料清理和轉換之工作流程：" %}
         <ol>
-            <li>檢查並研讀原始資料結構</li>
-            <li>使用學名比對工具檢查輸入的學名拼法是否正確，並將配對結果儲存為CSV文字檔</li>
-            <li>使用NotePad ++打開上述文件，複製所有內容並貼到試算表</li>
-            <li>根據配對結果整理名稱，獲取分類階層的資訊以及更高分類階層名稱</li>
-            <li>分別創建調查活動、測量或事實以及出現紀錄的表格</li>
-            <li>將原始欄位名稱對應到達爾文核心詞彙</li>
-            <li>分別複製調查活動、測量、出現紀錄表格的資料到Notepad++，以UTF-8編碼，接著再存成CSV文字檔</li>
+            <li>{% trans "檢查並研讀原始資料結構" %}</li>
+            <li>{% trans "使用學名比對工具檢查輸入的學名拼法是否正確，並將配對結果儲存為CSV文字檔" %}</li>
+            <li>{% trans "使用NotePad ++打開上述文件，複製所有內容並貼到試算表" %}</li>
+            <li>{% trans "根據配對結果整理名稱，獲取分類階層的資訊以及更高分類階層名稱" %}</li>
+            <li>{% trans "分別創建調查活動、測量或事實以及出現紀錄的表格" %}</li>
+            <li>{% trans "將原始欄位名稱對應到達爾文核心詞彙" %}</li>
+            <li>{% trans "分別複製調查活動、測量、出現紀錄表格的資料到Notepad++，以UTF-8編碼，接著再存成CSV文字檔" %}</li>
         </ol>
 
         </p>

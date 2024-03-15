@@ -9,7 +9,7 @@
         <div class="container">
           <div class="caption-mascot-wrapper">
             <h1 class="title">參與志工培訓</h1>
-            <img src="assets/images/mascot-frog.png" alt="" class="symbol">
+            <img src="{% static 'images/mascot-frog.png'%}" alt="" class="symbol">
           </div>
         </div>
       </div>
@@ -31,27 +31,32 @@
           <div class="col-12 col-md-3">
   
             <div class="dropdown dropdown-flexible-wrapper">
-              <a class="btn btn-toggle-flexible visible-xs" href="#" data-toggle="dropdown">
+              <a class="btn btn-toggle-flexible visible-xs" href="#" data-toggle="dropdown" aria-expanded="false">
                 參與志工培訓
               </a>
-              <div class="dropdown-menu dropdown-menu-flexible">
-                <a class="dropdown-item current-sunset" href="#">TaiBIFer 志工培訓制度</a>
-                <a class="dropdown-item" href="#">申請成為 TaiBIFer 志工 </a>
-                <a class="dropdown-item" href="#">TaiBIFer 志工名單</a>
+              <div class="dropdown-menu dropdown-menu-flexible d-md-block">
+                <a data-cat="training" class="dropdown-item nav-item current-sunset" href="#">TaiBIFer 志工培訓制度</a>
+                <a data-cat="application" class="dropdown-item nav-item" href="#">申請成為 TaiBIFer 志工</a>
+                <a data-cat="list" class="dropdown-item nav-item" href="#">TaiBIFer 志工名單</a>
               </div>
             </div>
   
           </div>
           <!-- col left end -->
           <!-- col right begin -->
-          <div class="col-12 col-md-9">
-            <h4 class="headline-left-hr">志工培訓制度說明：</h4>
-            <p>一份好的資料集，必須可以再利用（具互操作性），若能提供越多欄位資料，則資料的品質及價值也能相對地提高，在任何情況下，資料集至少要有下列所述 Darwin Core 欄位</p>
-            <h4 class="headline-left">相關參考連結：</h4>
-            <ul>
-              <li>DwC 資料欄位的各集合內容：<a href="https://tools.gbif.org/dwca-validator/extensions.do" target="_blank">Darwin Core Registered Extensions</a>（按 core 和 extension 分類）</li>
-              <li>DwC 資料欄位標準英文定義快速查詢：<a href="https://dwc.tdwg.org/terms/" target="_blank">Darwin Core Quick Reference Guide</a>（按詞條的 class 分類）</li>
-            </ul>
+          <div data-cat="training" class="col-12 col-md-9 nav-item-content">
+            <h4 class="headline-left-hr">志工培訓制度說明</h4>
+            <p>敬請期待</p>
+          </div>
+
+          <div data-cat="application" class="col-12 col-md-9 nav-item-content hide">
+            <h4 class="headline-left-hr">申請成為 TaiBIFer 志工</h4>
+            <p>敬請期待</p>
+          </div>
+
+          <div data-cat="list" class="col-12 col-md-9 nav-item-content hide">
+            <h4 class="headline-left-hr">TaiBIFer 志工名單</h4>
+            <p>敬請期待</p>
           </div>
           <!-- col right end -->
         </div>
