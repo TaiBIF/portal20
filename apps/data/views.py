@@ -176,7 +176,7 @@ def occurrence_view(request, taibif_id):
     intro['dataset_zh']=result[0].get('taibif_dataset_name_zh')
     intro['publisher']=result[0].get('publisher')
     intro['basisOfRecord']=result[0].get('basisOfRecord')
-    intro['scientificName']=result[0].get('formatted_name')  if result[0].get('formatted_name')  else result[0].get('scientificName')
+    intro['scientificName']=result[0].get('formatted_name')[0]  if result[0].get('formatted_name')[0]  else result[0].get('scientificName')
     intro['scientificName_zh']=result[0].get('taibif_vernacular_name') if result[0].get('taibif_vernacular_name') else ''
     
     intro['dataset']=result[0].get('taibifDatasetID')
@@ -272,7 +272,6 @@ def occurrence_view(request, taibif_id):
     if result[0].get('taxon_backbone') =='TaiCOL':
         if result[0].get('taibif_namecode'):
             taxon_obj_name = Taxon.objects.get(taicol_taxon_id = result[0].get('taibif_namecode'))
-            print("taxon_obj_name.name === ",taxon_obj_name.name)
         if result[0].get('taibif_accepted_namecode'):
             taxon_obj_accepted_name = Taxon.objects.get(taicol_taxon_id = result[0].get('taibif_accepted_namecode')) 
         

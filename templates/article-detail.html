@@ -79,17 +79,16 @@
     {% if imagesList %}
       <div id="carousel-postImages" class="carousel slide" data-ride="carousel">
         <!-- Wrapper for slides -->
-        <div class="carousel-inner" role="listbox">
+        <div class="carousel-inner">
             {% for image in imagesList %}
-              <div class="head-carousel-wrapper item {% if forloop.counter == 1 %} active{% endif %}">
-                <img src="/media/{{ image.images }}">
-                <div class="carousel-caption">
-                  <p>{{image.cover_license_text}}</p> 
-                </div>
+              <div class="item {% if forloop.counter == 1 %} active{% endif %}">
+                <img src="/media/{{ image.images }}" style="max-height:560px;margin-left:auto;margin-right:auto;display: block;">
+                <p>{{image.cover_license_text}}</p> 
               </div>
             {% endfor %}
-        </div>
+        </div> 
         
+        {% if imagesList|length > 1 %}
         <!-- Controls -->
         <a class="left carousel-control" href="#carousel-postImages" role="button" data-slide="prev">
           <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -100,17 +99,10 @@
           <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
           <span class="sr-only">Next</span>
         </a>
-    </div>
+        {% endif %}
+     </div> 
     {% endif %}
-    {% comment %}
-    <!-- attachment info begin -->
-    <ul class="article-attachment-wrapper">
-      <li>資料來源：GBIF</li>
-      <li>原文連結：Tracing the migration of flowering plants from continents to islands</li>
-      <li>附件下載：<a href="#" class="myicon icon-download-document">Species count for specimen records</a></li>
-    </ul>
-    <!-- attachment info end -->
-    {% endcomment %}
+    
 
     {% if article.category == "PUB" and article.memo_text|slice:"0:9" == "__files__" %}
     <ul class="article-attachment-wrapper">

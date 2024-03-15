@@ -9,6 +9,8 @@ To install project, please follow these steps:
 prepare the environment:
 mv dotenv.example .env
 
+prepare the initial sql file to ./postgres
+
 Development:
 ```
 docker-compose -f docker-compose.yml -f docker-compose-develop.yml build
@@ -17,13 +19,24 @@ docker-compose -f docker-compose.yml -f docker-compose-develop.yml up -d
 
 ### Frontend
 
-Install [nvm](https://github.com/nvm-sh/nvm)
+[Frontend Build Process](build-frontend.md)
+
+Include:
+- search.{dev|min}.js (for data-related page)
+- datatable.{dev|min}.js (for dataset status page)
+
+Frontend code (react js) is in folder `frontend-data` will be build and deploy by docker & docker-compose up process.
+
+If develop in localhost:
+
+1. Install [nvm](https://github.com/nvm-sh/nvm)
+2. use lts (node v.18)
 
 ```
-$ nvm install lts/fermium
-$ nvm use lts/fermium
-$ npm install
-$ npm run dev
+$ nvm install lts/hydrogen
+$ nvm use --lts
+$ yarn install
+$ yarn dev
 ```
 
 ## make translate (english)
@@ -40,9 +53,14 @@ $ docker-compose exec solr bash
 
 # In solr docker
 $ bin/solr create_core -c taibif_occurrence
+$ exit
+
+# Re-enter solr docker
+$ docker-compose exec -u 0 solr bash
 $ cp /workspace/conf-taibif-occur/taibif_occurrence/managed-schema /var/solr/data/taibif_occurrence/conf/
 $ cp /workspace/conf-taibif-occur/taibif_occurrence/solrconfig.xml /var/solr/data/taibif_occurrence/conf/
 $ cp /workspace/jts-core-1.18.1.jar /opt/solr-8.11.1/server/solr-webapp/webapp/WEB-INF/lib
+$ exit
 
 # In project repo directory
 $ docker-compose restart solr

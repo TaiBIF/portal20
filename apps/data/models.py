@@ -372,7 +372,6 @@ class Taxon(models.Model):
         
         name = {}
         if self.taicol_taxon_id:
-            # request.META['HTTP_HOST']+settings.MEDIA_URL 
             name['url'] = '/species/{}'.format(self.taicol_taxon_id)
         
         if self.formatted_name:
@@ -414,7 +413,7 @@ class Taxon(models.Model):
 
     @property
     def children(self):
-        return Taxon.objects.filter(parent=self, is_accepted_name=True).all()
+        return Taxon.objects.filter(parent=self, is_accepted_name=True,is_in_taiwan=True).all()
 
     @staticmethod
     def get_tree(rank='', status=''):

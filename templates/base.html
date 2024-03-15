@@ -20,6 +20,13 @@
     <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
     <!-- Data Table -->
     <link rel="stylesheet" href="{% static 'css/jquery.dataTables.min.css' %}">
+    <link href="{%  static 'favicon.ico' %}" rel="icon" type="image/x-icon" />
+    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-55MVPTLZ');</script>
+    <!-- End Google Tag Manager -->
+    {% block meta %}
+    {% endblock %}
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -47,6 +54,7 @@
         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-55MVPTLZ"height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!-- End Google Tag Manager (noscript) -->
 
+<<<<<<< HEAD
         <!-- shortcut begin -->
         <div class="shortcut-menu-wrapper dropup">
             <a class="btn" href="{% url 'web-navi' %}" data-toggle="dropdown" aria-expanded="false">
@@ -60,6 +68,31 @@
                 <a href="https://taicol.tw" class="dropdown-item">TaiCOL</a>
                 <a href="https://tbiadata.tw" class="dropdown-item">TBIA</a>
                 <a href="{% url 'web-navi' %}" class="dropdown-item">{% trans "網站導覽" %}</a>
+=======
+  <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-55MVPTLZ"height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <button onclick="topFunction()" id="top" title="Return to top" class="btn-2top myicon icon-arrow-up"></button>
+  <!-- Header begin -->
+  <div class="header-fluid">
+    <nav class="navbar-main navbar-fixed-top">
+      <div class="container">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'images/taibif-logo.png' %}" class="hidden-xs navbar-brand-l" style="margin-top:8px"><img src= "{% static 'images/taibif-logo-rgb-s.jpg' %}" class="visible-xs navbar-brand-s"></a>
+        <div class="row">
+          <!-- hidden xs begin -->
+          <div class="hidden-xs col-xs-6 navbar-hidden-xs">
+            <div class="navbar-search-wrapper">
+              <input type="text" class="navbar-search-input" id="navbar-search-input" placeholder="{% trans "全站搜尋..." %}">
+              <button class="navbar-search-btn" id="navbar-search-btn" type="button">
+                <span class="myicon icon-search"></span>
+              </button>
+>>>>>>> develop
             </div>
         </div>
 
