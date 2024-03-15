@@ -805,7 +805,6 @@ def occurrence_api(request):
             'recordNumber':i['recordNumber'] if 'recordNumber' in i else None,
             'organismQuantity':i['organismQuantity'] if 'organismQuantity' in i else None,
             'organismQuantityType':i['organismQuantityType'] if 'organismQuantityType' in i else None,
-<<<<<<< HEAD
             'associatedMedia':i['associatedMedia']  if 'associatedMedia' in i else  None,
             'mediaLicense':mediaLicense,
             # 常用資料
@@ -815,12 +814,6 @@ def occurrence_api(request):
             'issue':','.join(issues) if issues else None,
             # 沒分類
             # 'modifiedDate':i['modified'] if 'modified' in i else None,
-=======
-            'associatedMedia':i['associatedMedia']  if 'associatedMedia' else  None,
-            'mediaLicense':mediaLicense,
-            'associatedReferences':i['associatedReferences']  if 'associatedReferences' else  'test',
-            
->>>>>>> develop
         })
 
     res['url'] = solr.solr_url
