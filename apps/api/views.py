@@ -1077,7 +1077,7 @@ def occurrence_api(request):
             'taibifCreatedDate':i['mod_date'][0] if 'mod_date' in i else None,
             'taibifModifiedDate':i['mod_date'][0] if 'mod_date' in i else (i['taibif_lastInterpreted'] if 'taibif_lastInterpreted' in i else None),
             'dataGeneralizations':i['dataGeneralizations'] if 'dataGeneralizations' in i else None,
-            'coordinatePrecision':i['coordinatePrecision'] if 'coordinatePrecision' in i else None,
+            'coordinatePrecision':i['taibif_coordinatePrecision'] if 'taibif_coordinatePrecision' in i else None,
             'locality':i['locality'] if 'locality' in i  else None,
             'preservation':i['preservation'] if 'preservation' in i else None,
             'typeStatus':i['typeStatus'] if 'typeStatus' in i else (i['taibif_typeStatus'] if 'taibif_typeStatus' in i else None),
