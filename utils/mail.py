@@ -55,7 +55,7 @@ Email: {}
 感謝您的寶貴意見
 
 TaiBIF
-臺灣生物多樣性機構
+臺灣生物多樣性資訊機構
 '''.format(data['name'], data['cat'], data['name'], data['email'], data['content'])
     try:
         msg = EmailMessage(
