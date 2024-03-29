@@ -884,9 +884,9 @@ def occurrence_api(request):
                 fq_list.append(('fq', f'mod_date:"{values[0]}T00:00:00Z"'))
         elif key == 'gbifDatasetID':
             if values[0]:
-                fq_list.append(('fq', '(taibif_datasetKey:"{}" OR gbif_dataset_uuid:"{}")'.format(values[0], values[0])))
+                fq_list.append(('fq', '(taibif_datasetKey:"{}" OR gbif_datasetKey:"{}")'.format(values[0], values[0])))
             else: 
-                fq_list.append(('fq', '{}:{}'.format('gbif_dataset_uuid', '*')))
+                fq_list.append(('fq', '{}:{}'.format('gbif_datasetKey', '*')))
         elif key == "eventDate":
             if ',' in values[0]:
                 vlist = values[0].split(',')
@@ -1090,7 +1090,7 @@ def occurrence_api(request):
             # 常用資料
             'gbifID':  i['gbifID'] if 'gbifID' in i else None,
             'taibifDatasetID':  i['taibifDatasetID'] if 'taibifDatasetID' in i else (i['taibif_datasetKey'] if 'taibif_datasetKey' in i else None),
-            'gbifDatasetID':i['gbif_dataset_uuid'] if 'gbif_dataset_uuid' in i else (i['taibif_datasetKey'] if 'taibif_datasetKey' in i else None),
+            'gbifDatasetID':i['gbif_datasetKey'] if 'gbif_datasetKey' in i else None,
             'establishmentMeans':i['establishmentMeans'] if 'establishmentMeans' in i else (i['taibif_establishmentMeans'] if 'taibif_establishmentMeans' in i else None),
             'issue':','.join(issues) if issues else (issue if issue else None),
             # 沒分類
@@ -1223,9 +1223,9 @@ def raw_occ_api(request):
                 fq_list.append(('fq', f'mod_date:"{values[0]}T00:00:00Z"'))
         elif key == 'gbifDatasetID':
             if values[0]:
-                fq_list.append(('fq', '{}:"{}"'.format('gbif_dataset_uuid', values[0])))
+                fq_list.append(('fq', '{}:"{}"'.format('gbif_datasetKey', values[0])))
             else: 
-                fq_list.append(('fq', '{}:{}'.format('gbif_dataset_uuid', '*')))
+                fq_list.append(('fq', '{}:{}'.format('gbif_datasetKey', '*')))
         elif key == "eventDate":
             if ',' in values[0]:
                 vlist = values[0].split(',')
