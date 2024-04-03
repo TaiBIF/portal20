@@ -106,6 +106,24 @@ JSON_FACET_MAP = {
             'mincount': 0,
             'limit': -1,
         },
+         'taibif_datasetKey': {
+            'type':'terms',
+            'field':'taibif_datasetKey',
+            'mincount': 0,
+            'limit': -1,
+        },
+          'selfProduced': {
+            'type':'terms',
+            'field':'selfProduced',
+            'mincount': 0,
+            'limit': -1,
+        },
+        'taibif_taxonGroup': {
+            'type':'terms',
+            'field':'taibif_taxonGroup',
+            'mincount': 0,
+            'limit': -1,
+        }
     }
 }
   
@@ -136,6 +154,20 @@ CODE_MAPPING ={
         'Lienchiang County' : '連江縣',
     }
     
+}
+
+TAXONGROUP_MAPPING = {
+    'taibif_taxonGroup': {
+        'Plants': '植物 Plants',
+        'Fungi': '真菌 Fungi',
+        'Bacteria': '細菌 Bacteria',
+        'Insects': '昆蟲 Insects',
+        'Fishes': '魚 Fishes',
+        'Reptiles': '爬蟲類 Reptiles',
+        'Amphibia': '兩棲類 Amphibia',
+        'Birds': '鳥類 Birds',
+        'Mammals': '哺乳類 Mammals'
+    }
 }
 
 
@@ -200,7 +232,11 @@ class SolrQuery(object):
                 #fq=(cat1:val1 OR cat2:val2 OR (cat3:(val3 AND val4)))
                 self.solr_tuples.append(('fq', ' OR '.join(taxon_key_list)))
             elif key == 'path':
-                self.solr_tuples.append(('fq', 'path:*{}*'.format(values[0])))
+                if isinstance(values, list):
+                    path_queries = [f'path:*{v}*' for v in values]
+                    self.solr_tuples.append(('fq', ' OR '.join(path_queries)))
+                else:
+                    self.solr_tuples.append(('fq', 'path:*{}*'.format(values[0])))
             elif key == 'issues':
                 self.solr_tuples.append(('fq', '{}:"{}"'.format(values[0], 'true')))
             elif key in JSON_FACET_MAP[self.core]:
@@ -389,6 +425,7 @@ class SolrQuery(object):
                 'label': '資料集 Dataset',
                 'rows': rows,
             })
+            
         if data := resp['facets'].get('publisher', ''):
             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
             menus.append({
@@ -401,7 +438,25 @@ class SolrQuery(object):
             rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
             menus.append({
                 'key':'license',
-                'label': '授權類型 Licence',
+                'label': '授權類型 License',
+                'rows': rows,
+            })
+        
+        if data := resp['facets'].get('selfProduced', ''):
+            rows = [{'key': x['val'], 'label': x['val'], 'count': x['count']} for x in data['buckets']]
+            
+            menus.append({
+                'key':'selfProduced',
+                'label': '資料來源 Source',
+                'rows': rows,
+            })
+
+        if data := resp['facets'].get('taibif_taxonGroup', ''):
+            rows = [{'key': x['val'], 'label': TAXONGROUP_MAPPING['taibif_taxonGroup'][x['val']], 'count': x['count']} for x in data['buckets']]
+            
+            menus.append({
+                'key':'taibif_taxonGroup',
+                'label': '物種類群 Taxon Group',
                 'rows': rows,
             })
 
@@ -431,7 +486,7 @@ class SolrQuery(object):
                     ]
             menus.append({
                 'key':'issues',
-                'label': '問題 issues',
+                'label': '問題 Issues',
                 'rows': rows,
             })
             

@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState} from 'react';
 //import Accordion from "./components/Accordion";
 //import Tree from "./components/Tree";
 import SearchTaxon from './SearchSidebarTaxon';
@@ -9,14 +9,15 @@ import "./SearchKeyword.css";
 
 import { Translation, useTranslation } from 'react-i18next';
 
+
+
 function Accordion(props) {
   const {content, onClick, filters} = props;
   const [isOpen, setOpenState] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
   const [taxonFiltedData, setTaxonFiltedData] = useState([]);
 
-  const yearRange = [1795, 2023];// TODO: hard-coded
-  let yearSelected = yearRange;
+  let yearSelected = props.yearValue;
   filters.forEach((x) => {
     const [key, values] = x.split('=');
     if (key == 'year') {
@@ -24,7 +25,7 @@ function Accordion(props) {
       yearSelected = [parseInt(vlist[0]), parseInt(vlist[1])];
     }
   });
-  const [yearValue, setYearValue] = useState(yearSelected);
+
   const long_term = new Set(['country',"taibif_county","dataset","publisher","highertaxon","rank"])
   let isLong = false;
   if (long_term.has(content.key)){
@@ -42,11 +43,10 @@ function Accordion(props) {
   }
 
   const handleSliderCommitted = (event) => {
-    onClick(event, content.key, yearValue.join(','))
+    onClick(event, content.key, props.yearValue.join(','))
   };
   const clearYearCondition = (event) => {
-    yearSelected = [1795, 2023]
-    setYearValue(yearSelected)
+    props.onSilderChange(props.defaultYearRange);
     props.clearCondition(event,content.key)
   };
   
@@ -83,11 +83,11 @@ function Accordion(props) {
           
           <Slider 
             style={{width:'90%',color: "#846C5B"}}
-            value={yearValue}
-            onChange={(e, newRange) => setYearValue(newRange)}
+            value={props.yearValue}
+            onChange={(e, newRange) => props.onSilderChange(newRange)}
             onChangeCommitted={handleSliderCommitted}
-            max={yearRange[1]}
-            min={yearRange[0]}
+            max={props.defaultYearRange[1]}
+            min={props.defaultYearRange[0]}
             valueLabelDisplay="auto"
             aria-labelledby="range-slider"
           />
@@ -110,6 +110,21 @@ function Accordion(props) {
             </div>
         );
       }
+    } else if (content.key ===  'selfProduced'){   
+      const count = (x.count) >=0 ? x.count.toLocaleString() : null;
+      const itemChecked = filters.has(`${content.key}=${x.key}`);
+      return (
+          <div className="search-sidebar-checkbox-wrapper" key={x.key}>
+            <label className="custom-input-ctn">
+            <input type="checkbox" onChange={(e)=> {e.persist(); onClick(e, content.key, x.key)}} checked={itemChecked} />
+            <span className="checkmark"></span>
+            <span className="search-sidebar-count-group">
+            <Translation>{t => <span className="name">{t(x.label == false ? 'GBIF' : 'TaiBIF IPT')}</span>}</Translation>
+              <span className="count">{count}</span>
+            </span>
+            </label>
+          </div>
+      );
     } else {
       const count = (x.count) >=0 ? x.count.toLocaleString() : null;
       const itemChecked = filters.has(`${content.key}=${x.key}`);
@@ -178,7 +193,8 @@ function Accordion(props) {
         </a>
       </div>
       { isOpen ?
-      <div className={isLong ? "search-sidebar-accordion-content-scroll collapse in": "search-sidebar-accordion-content collapse in"}>
+      // <div className={isLong ? "search-sidebar-accordion-content": "search-sidebar-accordion-content"}>
+      <div className="search-sidebar-accordion-content">
         {content.label == '資料集 Dataset'?
         <div className="searchInputs">
         <input type="text" placeholder="Search..." onChange={handleFilter} />
@@ -217,7 +233,24 @@ function Accordion(props) {
 }
 
 function SearchSidebar(props) {
-  //console.log(props);
+  const currentYear = new Date().getFullYear();
+  const defaultYearRange = [1795, currentYear];
+  const [yearValue, setYearValue] = useState(defaultYearRange);
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleSilderOnChange = (newYearRange) => {
+    setYearValue(newYearRange);
+  }
+
+  const handleCleanupOnClick = ()=> {
+    setYearValue(defaultYearRange);
+    setIsChecked(false);
+  }
+
+  const handleCheckboxState = () => {
+    setIsChecked(!isChecked);
+  };
+
   let isOccurrence = false;
   let searchTypeLabel = '';
   const [queryKeyword, setQueryKeyword] = useState(props.queryKeyword);
@@ -294,10 +327,15 @@ function SearchSidebar(props) {
       {searchTaxonContainer}
       {menuList}
       </div>)*/
+
+
   let accordionList = [];
   if (props.menus) {
     props.menus.forEach((m) => {
-      accordionList.push(<Accordion key={m.key} content={m} onClick={props.onClick} filters={props.filters} clearCondition={props.clearCondition}/>);
+      accordionList.push(<Accordion key={m.key} content={m} onClick={props.onClick} filters={props.filters} clearCondition={props.clearCondition} 
+                                    defaultYearRange={ defaultYearRange } 
+                                    yearValue={ yearValue }
+                                    onSilderChange={ handleSilderOnChange }/>);
     });
   }
   let formControlPlaceholder = '';
@@ -306,6 +344,7 @@ function SearchSidebar(props) {
   } else if (props.language === 'en'){
     formControlPlaceholder = 'Keyword Search';
   }
+
   return (
       <div className="search-sidebar">
         <div className="modal right fade modal-search-side-wrapper" id="flowBtnModal" tabIndex="-1" role="dialog">
@@ -313,7 +352,7 @@ function SearchSidebar(props) {
             <div className="modal-content">
               <div className="search-sidebar-header">
                 <span>{searchTypeLabel}</span>
-                <div className="search-sidebar-header-del" data-toggle="tooltip" data-placement="left" title="清除" onClick={(e)=> {props.onClickClear();}}>
+                <div className="search-sidebar-header-del" data-toggle="tooltip" data-placement="left" title="清除" onClick={() => {props.onClickClear(); handleCleanupOnClick()}}>
                   {filterCount > 0 ? <span className="badge">{filterCount}</span> : null}
                   <span className="glyphicon glyphicon-trash"></span>
                 </div>
@@ -327,7 +366,7 @@ function SearchSidebar(props) {
                   </button>
                 </div>
               </div>
-              {isOccurrence === true ? <SearchTaxon {...props.taxonProps} />: null}
+              {isOccurrence === true ? <SearchTaxon {...props.taxonProps}/>: null}
               {accordionList}
             </div>
           </div>
@@ -337,3 +376,4 @@ function SearchSidebar(props) {
 }
 
 export default SearchSidebar;
+

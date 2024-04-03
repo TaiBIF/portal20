@@ -169,28 +169,29 @@ export default function OccurrenceMap(props) {
             
             const featureGroupRef = useRef()
 
-            return <div className="App">
-            <MapContainer center={[0, 0]} zoom={2}>
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; <a href=&quot;https://www.openstreetmap.org/copyright&quot;>OpenStreetMap</a> contributors" />
-            <GeoJSON data={props.data.map_geojson} pointToLayer={pointToLayer}/>
-            <FeatureGroup ref={featureGroupRef}>
-                <EditControl
-                position="topright"
-                draw={{
-                marker: false,
-                polygon: false,
-                polyline: false,
-                rectangle: {"showArea": false},
-                circle: false,
-                circlemarker: false
-                }}
-                edit={{edit: false}}
-                onCreated={onCreated}
-                />
-                {/* {(L.drawLocal.draw.handlers.rectangle.tooltip.start = "hola")} */}
-                </FeatureGroup> 
-            </MapContainer>
-        </div>
+            return (
+                <div className="App">
+                    <MapContainer center={[0, 0]} zoom={2}>
+                        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; <a href=&quot;https://www.openstreetmap.org/copyright&quot;>OpenStreetMap</a> contributors" />
+                        <GeoJSON data={props.data.map_geojson} pointToLayer={pointToLayer}/>
+                        <FeatureGroup ref={featureGroupRef}>
+                            <EditControl
+                            position="topright"
+                            draw={{
+                            marker: false,
+                            polygon: false,
+                            polyline: false,
+                            rectangle: {"showArea": false},
+                            circle: false,
+                            circlemarker: false
+                            }}
+                            edit={{edit: false}}
+                            onCreated={onCreated}
+                            />
+                        </FeatureGroup> 
+                    </MapContainer>
+                </div>
+            )
     }
 
     

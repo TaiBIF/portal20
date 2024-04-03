@@ -11,59 +11,69 @@
     .ghbtns { position: relative; top: 4px; margin-left: 5px; }
     a { color: #0077ff; }
     .taxonbackbone {
-      position: relative;
-      display: inline-block;
-      margin-top: 20px;
+        position: relative;
+        display: inline-block;
+        margin-top: 20px;
     }
     .taxonbackbone[alt]:hover::after {
-      content: attr(alt);
-      white-space: pre;
-      position: absolute;
-      top: -120%;
-      padding: 7px;
-      border-radius: 5px;
-      color: white;
-      background-color: #4A3E3A ;
+        content: attr(alt);
+        white-space: pre;
+        position: absolute;
+        top: -120%;
+        padding: 7px;
+        border-radius: 5px;
+        color: white;
+        background-color: #4A3E3A ;
     }
 
     .rcorners1 {
-      border-radius: 8px;
-      background: #f5cc27;
-      padding: 1px;
-      width: 10px;
-      height: 10px;
-      position: relative;
-      display: inline-block;
+        border-radius: 8px;
+        background: #f5cc27;
+        padding: 1px;
+        width: 10px;
+        height: 10px;
+        position: relative;
+        display: inline-block;
     }
 
     .rcorners1[alt]:hover::after {
-      content: attr(alt);
-      white-space: pre;
-      position: absolute;
-      top: -120%;
-      padding: 7px;
-      border-radius: 5px;
-      background-color: #f5cc27 ;
+        content: attr(alt);
+        white-space: pre;
+        position: absolute;
+        top: -120%;
+        padding: 7px;
+        border-radius: 5px;
+        background-color: #f5cc27 ;
     }
 
     .balanced-row{
-      display: flex;
-      justify-content: space-around;
-      background-color: #EEEEEE;
-      padding: 2.142857142855rem;
-      
+        display: flex;
+        justify-content: space-around;
+        background-color: #EEEEEE;
+        padding: 2.142857142855rem;
     }
+
     .occurrence-info{
-      padding: 2.142857142855rem 0;
+        padding: 2.142857142855rem 0;
     }
     
     .occurrence-warning{
-      border-radius: 10px;
-      background-color: #f5cc27;
-      display: inline;
+        border-radius: 10px;
+        background-color: #f5cc27;
+        display: inline;
     }
-    
 
+    .table {
+        table-layout: fixed !important;
+    }
+
+    .table td {
+        word-wrap: break-word;
+    }
+
+    .table td:last-child {
+        font-size: 14px;
+    }
 </style>
 {% endblock %}
 
@@ -71,252 +81,344 @@
 {% if map_view %}
 
 <script>
+var map = L.map('map').setView([{{ map_view.0 }}, {{ map_view.1}} ], 13);
 
-  var map = L.map('map').setView([{{ map_view.0 }}, {{ map_view.1}} ], 13);
-  
-  const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-  }).addTo(map);  
-  
-  L.marker([{{ map_view.0 }}, {{ map_view.1}}]).addTo(map);
+const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+}).addTo(map);  
+
+L.marker([{{ map_view.0 }}, {{ map_view.1}}]).addTo(map);
 </script>
 
 {% endif %}
 {% endblock %}
 
 {% block main %}
-{% include "inc_breadcrumb.html" with tab="0501" active_label="" %}
-
 <!-- container begin -->
-<div class="container">
-  <div class="article-head-wrapper">
-    {% if event.eventDate.value %}
-    <span class="article-post-date">
-      {% if event.eventDate.value.1 != None %}
-        {{ event.eventDate.value.1 }}
-      {% else %}
-        {{ event.eventDate.value.0 }}
-      {% endif %}
-      </span>
-    {% endif %}
-    <h1 style="margin-top:0px">
-      {% if intro.scientificName%}
-          {{ intro.scientificName_zh }} {{ intro.scientificName|safe }}
-      {% endif %}
-    </h1>
-  </div>
-  <section class="occurrence-info">
-    <div class="balanced-row">   
-      <div>
-        <dl>
-          <dt>物種 - 原始資料</dt>
-          <dd>
-            {% if taxon.vernacularName.value.0 %}
-              {{ taxon.vernacularName.value.0 }}
-            {% endif %} 
-              {{ taxon.scientificName.value.0}}
-          </dd>
+<div class="container my-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+            <li class="breadcrumb-item">物種出現紀錄</li>
+        </ol>
+    </nav>
 
-          {% if taxon.vernacularName.value.1 %}
-          <dt>物種 - 轉譯資料</dt>
-          <dd>
-            {{ taxon.vernacularName.value.1 }}
-            {{ taxon.scientificName.value.1}}
-          </dd>
-          {% endif %} 
-        </dl>
-      </div>
-      <div>
-        <dl>              
-          <dt>資料集</dt>
-          <dd><a href="/dataset/{{ intro.dataset}}">{{ intro.dataset_zh }}</a></dd>
-          <dt>發布單位</dt>
-          <dd>{%if intro.publisher_id%}<a href="/dataset/{{ intro.publisher}}">{% endif %}{{ intro.publisher }}</a></dd>
-          <dt >問題</dt>
-          {% for i in intro.issues %}
-            <dd class="occurrence-warning">{{ i }}</dd>
-          {% endfor%}
-        </dl>
-      </div>
-    </div>
-  </section>
-  {% if map_view %}<div id="map"></div>{% endif %}
-
-
-  <div class="article-head-wrapper">
-    <h1 class="heading-lg-ul">基本資料 Record</h1>
-  </div>
-  
-  <table class="table">
-    <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th></tr></thead>
-    <tbody>
-      {% for k,v in record.items %}
-          {% if v.value.0 != None or v.value.1 != None %}
-            <tr>
-              <td>{{ v.name_zh }}</td>
-              <td>
-              {% if v.value.1 != None %}
-                {{ v.value.1 }}
-              {% endif %}
-              </td>
-              <td>
-              {% if v.value.0 != None %}
-                {{ v.value.0 }}
-              {% endif %}
-              </td>
-            </tr>
-          {% endif %}      
-      {% endfor %}
-    </tbody>
-    </table>
-    
     <div class="article-head-wrapper">
-      <h1 class="heading-lg-ul">出現紀錄 Occurrence</h1>
-    </div>
-    <table class="table">
-      <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th></tr></thead>
-      <tbody>
-        {% for k,v in occ.items %}
-          {% if v.value.0 != None or v.value.1 != None %}
-            <tr>
-              <td>{{ v.name_zh }}</td>
-              <td>
-                {% if v.value.1 != None%}
-                  {{ v.value.1 }}
-                {% endif%}
-              </td>
-              <td>
-                {% if v.value.0 != None %}
-                  {{ v.value.0 }}
-                {% endif%}
-              </td>
-            </tr>
-          {% endif %}      
-        {% endfor %}
-      </tbody>
-      </table>
-     
-      <div class="article-head-wrapper">
-        <h1 class="heading-lg-ul">調查活動 Event
-          {% if  "Recorded Date Invalid" in intro.issues %}
-          <div class = "rcorners1" alt="Issue:Recorded Date Invalid"></div>
-          {% endif %}
+        {% if event.eventDate.value %}
+        <span class="article-post-date">
+            {% if event.eventDate.value.1 is not None %}
+            {{ event.eventDate.value.1 }}
+            {% elif event.eventDate.value.0 is not None %}
+            {{ event.eventDate.value.0 }}
+            {% else %}
+            {{ '' }}
+            {% endif %}
+            </span>
+        {% endif %}
+        <h1 style="margin-top:0px">
+            {% if intro.scientificName %}
+                {{ intro.scientificName_zh }} {{ intro.scientificName|safe }}
+            {% endif %}
         </h1>
-      </div>
-      <table class="table">
-        <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th></tr></thead>
+    </div>
+
+    <section class="occurrence-info">
+        <div class="balanced-row">   
+            <div>
+                <dl>
+                    <dt>物種 - 原始資料</dt>
+                    <dd>
+                    {% if taxon.vernacularName.value.0 %}
+                        {{ taxon.vernacularName.value.0 }}
+                    {% endif %} 
+                        {{ taxon.scientificName.value.0}}
+                    </dd>
+
+                    {% if taxon.vernacularName.value.1 %}
+                    <dt>物種 - 轉釋資料</dt>
+                    <dd>
+                    {{ taxon.vernacularName.value.1 }}
+                    {{ taxon.scientificName.value.1}}
+                    </dd>
+                    {% endif %} 
+                </dl>
+            </div>
+            <div>
+                <dl>              
+                    <dt>資料集</dt>
+                    <dd><a href="/dataset/{{ intro.taibif_datasetKey }}">{{ intro.dataset_zh }}</a></dd>
+                    <dt>發布單位</dt>
+                    <dd>{%if intro.publisher_id%}<a href="/dataset/{{ intro.publisher}}">{% endif %}{{ intro.publisher }}</a></dd>
+                    <dt >問題</dt>
+                    {% for i in intro.issues %}
+                    <dd class="occurrence-warning">{{ i }}</dd>
+                    {% endfor%}
+                </dl>
+            </div>
+        </div>
+    </section>
+    {% if map_view %}<div id="map"></div>{% endif %}
+
+    <div class="article-head-wrapper">
+        <h1 class="heading-lg-ul occurrence-heading">基本資料 Record</h1>
+    </div>
+
+    <table class="table occurrence-table">
+        <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th><th width="10%">備註</th></tr></thead>
         <tbody>
-          {% for k,v in event.items %}
-            {% if v.value.0 != None or v.value.1 != None %}
-              <tr><td>{{ v.name_zh }}</td>
-                <td>
-                  {% if v.value.1 != None %}
+            {% for k,v in record.items %}
+                {% if v.value.0 != None or v.value.1 != None %}
+                <tr>
+                    <td>{{ v.name_zh }}</td>
+                    <td>
+                    {% if v.value.1 is not None %}
                     {{ v.value.1 }}
-                  {% endif %}
+                    {% elif v.value.1 is None %}
+                    {{ v.value.0 }}
+                    {% endif %}
+                    </td>
+                    <td>
+                    {% if v.value.0 != None %}
+                    {{ v.value.0 }}
+                    {% endif %}
+                    </td>
+                    <td>
+                    {% if v.value.1 is not None %}
+                        {% if v.value.1 == v.value.0 %}
+
+                        {% else %}
+                        Altered
+                        {% endif %}
+                    {% elif v.value.1 is None %}
+                        
+                    {% endif %}
+                    </td>
+                </tr>
+                {% endif %}      
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="article-head-wrapper">
+        <h1 class="heading-lg-ul occurrence-heading">出現紀錄 Occurrence</h1>
+    </div>
+    <table class="table occurrence-table">
+        <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th><th width="10%">備註</th></tr></thead>
+        <tbody>
+        {% for k,v in occ.items %}
+            {% if v.value.0 != None or v.value.1 != None %}
+            <tr>
+                <td>{{ v.name_zh }}</td>
+                <td>
+                {% if v.value.1 is not None %}
+                    {{ v.value.1 }}
+                {% elif v.value.1 is None %}
+                    {{ v.value.0 }}
+                {% endif %}
                 </td>
                 <td>
-                  {% if v.value.0 != None %}
+                {% if v.value.0 != None %}
                     {{ v.value.0 }}
-                  {% endif %}
+                {% endif%}
                 </td>
-              </tr>
-            {% endif %}  
-          {% endfor %}
+                <td>
+                {% if v.value.1 is not None %}
+                    {% if v.value.1 == v.value.0 %}
+
+                    {% else %}
+                    Inferred
+                    {% endif %}
+                {% elif v.value.1 is None %}
+                    
+                {% endif %}
+                </td>
+            </tr>
+            {% endif %}      
+        {% endfor %}
         </tbody>
-        </table>
+    </table>
+        
+    <div class="article-head-wrapper">
+        <h1 class="heading-lg-ul occurrence-heading">調查活動 Event
+            {% if  "Recorded Date Invalid" in intro.issues %}
+            <div class = "rcorners1" alt="Issue:Recorded Date Invalid"></div>
+            {% endif %}
+        </h1>
+    </div>
+    <table class="table occurrence-table">
+        <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th><th width="10%">備註</th></tr></thead>
+        <tbody>
+            {% for k,v in event.items %}
+            {% if v.value.0 != None or v.value.1 != None %}
+                <tr><td>{{ v.name_zh }}</td>
+                <td>
+                    {% if v.value.1 is not None %}
+                    {{ v.value.1 }}
+                    {% elif v.value.1 is None %}
+                    {{ v.value.0 }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if v.value.0 != None %}
+                    {{ v.value.0 }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if v.value.1 is not None %}
+                    {% if v.value.1 == v.value.0 %}
+
+                    {% else %}
+                        Altered
+                    {% endif %}
+                    {% elif v.value.1 is None %}
+                    
+                    {% endif %}
+                </td>
+                </tr>
+            {% endif %}  
+            {% endfor %}
+        </tbody>
+    </table>
 
 
-      <div class="article-head-wrapper">
-        <h1 class="heading-lg-ul">分類 Taxon 
+    <div class="article-head-wrapper">
+        <h1 class="heading-lg-ul occurrence-heading">分類 Taxon 
         {% if  taxon.taxon_backbone != None %}
-          <div class="taxonbackbone" alt="Backbone: {{ taxon.taxon_backbone }}">
-            <span class="glyphicon glyphicon-info-sign"></span>
-          </div>
+            <div class="taxonbackbone" alt="Backbone: {{ taxon.taxon_backbone }}">
+                <span class="glyphicon glyphicon-info-sign"></span>
+            </div>
         {% endif %}
         {% if  "Taxon Match None" in intro.issues %}
         <div class = "rcorners1" alt="Issue:Taxon Match None"></div>
         {% endif %}
         </h1>
+    </div>
         
-      </div>
-      
-      <table class="table">
-        <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th></tr></thead>
+    <table class="table occurrence-table">
+        <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th><th width="10%">備註</th></tr></thead>
         <tbody>
-          {% for k,v in taxon.items %}
+            {% for k,v in taxon.items %}
             {% if v.value.0 != None or v.value.1 != None %}
                 {% if k == 'scientificNameID' or k == 'acceptedNameUsageID' %}
-                  <tr><td>{{ v.name_zh }}</td>
+                    <tr><td>{{ v.name_zh }}</td>
                     <td>
-                      <a href="https://nametool.taicol.tw/zh-tw/taxon-names/{{ v.value.1 }}">{{ v.value.1 }}</a>
+                        <a href="https://nametool.taicol.tw/zh-tw/taxon-names/{{ v.value.1 }}">{{ v.value.1 }}</a>
                     </td>
                     <td>
-                      {% if v.value.0 != None %}
+                        {% if v.value.1 is not None %}
+                        {{ v.value.1 }}
+                        {% elif v.value.1 is None %}
                         {{ v.value.0 }}
-                      {% endif %}
-                    </td>
-                  </tr>
-                  {% elif k == 'scientificNameTaxonID' %}
-                  <tr><td>{{ v.name_zh }}</td>
-                    <td>
-                      <a href="https://taicol.tw/taxon/{{ v.value.1 }}">{{ v.value.1 }}</a>
+                        {% endif %}
                     </td>
                     <td>
-                      {% if v.value.0 != None %}
-                        {{ v.value.0 }}
-                      {% endif %}
-                    </td>
-                  </tr>
+                        {% if v.value.1 is not None %}
+                        {% if v.value.1 == v.value.0 %}
 
-              {% else %}
+                        {% else %}
+                            Inferred
+                        {% endif %}
+                        {% elif v.value.1 is None %}
+                        
+                        {% endif %}
+                    </td>
+                    </tr>
+                    {% elif k == 'scientificNameTaxonID' %}
+                    <tr><td>{{ v.name_zh }}</td>
+                    <td>
+                        <a href="https://taicol.tw/taxon/{{ v.value.1 }}">{{ v.value.1 }}</a>
+                    </td>
+                    <td>
+                        {% if v.value.0 != None %}
+                        {{ v.value.0 }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if v.value.1 is not None %}
+                        {% if v.value.1 == v.value.0 %}
+
+                        {% else %}
+                            Inferred
+                        {% endif %}
+                        {% elif v.value.1 is None %}
+                        
+                        {% endif %}
+                    </td>
+                    </tr>
+
+                {% else %}
                 <tr><td>{{ v.name_zh }}</td>
-                  <td>
-                    {% if v.value.1 != None %}
-                      {{ v.value.1 }}
+                    <td>
+                    {% if v.value.1 != None and v.value.1 != ''%}
+                        {{ v.value.1 }}
+                    {% elif v.value.1 == None %}
+                        {{ v.value.0 }}
                     {% endif %}
-                  </td>
-                  <td>
+                    </td>
+                    <td>
                     {% if v.value.0 != None %}
-                      {{ v.value.0 }}
+                        {{ v.value.0 }}
                     {% endif %}
-                  </td>
+                    </td>
+                    <td>
+                    {% if v.value.1 != None %}
+                        {% if v.value.1 == v.value.0 or v.value.1 == '' %}
+
+                        {% else %}
+                        Inferred
+                        {% endif %}
+                    {% elif v.value.1 == None %}
+                        
+                    {% endif %}
+                    </td>
                 </tr>
-              {% endif %}
+                {% endif %}
             {% endif %}
-          {% endfor %}
+            {% endfor %}
         </tbody>
-        </table>
+    </table>
 
 
-      <div class="article-head-wrapper">
-        <h1 class="heading-lg-ul">地理資訊 Location{% if  "Coordinate Invalid" in intro.issues %}
-          <div class = "rcorners1" alt="Issue:Coordinate Invalid"></div>
-          {% endif %}
+    <div class="article-head-wrapper">
+        <h1 class="heading-lg-ul occurrence-heading">地理資訊 Location{% if  "Coordinate Invalid" in intro.issues %}
+            <div class = "rcorners1" alt="Issue:Coordinate Invalid"></div>
+            {% endif %}
         </h1>
-      </div>
-      <table class="table">
-        <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th></tr></thead>
+    </div>
+    <table class="table occurrence-table">
+        <thead><tr><th width="25%">欄位名稱</th><th width="25%">轉釋資料</th><th width="25%">原始資料</th><th width="10%">備註</th></tr></thead>
         <tbody>
-          {% for k,v in location.items %}
+            {% for k,v in location.items %}
             {% if v.value.0 != None or  v.value.1 != None %}
             <tr><td>{{ v.name_zh }}</td>
-              <td>
-                {% if v.value.1 != None %}
-                  {{ v.value.1 }}
+                <td>
+                {% if v.value.1 is not None %}
+                    {{ v.value.1 }}
+                {% elif v.value.1 is None %}
+                    {{ v.value.0 }}
                 {% endif %}
-              </td>
-              <td>
-                {% if v.value.0 != None %}
-                  {{ v.value.0 }}
+                </td>
+                <td>
+                {% if v.value.0 is not None %}
+                    {{ v.value.0 }}
                 {% endif %}
-              </td>
+                </td>
+                <td>
+                {% if v.value.1 is not None %}
+                    {% if v.value.1 == v.value.0 %}
+
+                    {% else %}
+                    Altered
+                    {% endif %}
+                {% elif v.value.1 is None %}
+                    
+                {% endif %}
+                </td>
             </tr>
             {% endif %}
-          {% endfor %}
+            {% endfor %}
         </tbody>
-        </table>
-
-
+    </table>
 </div>
-  <!-- container end -->
+<!-- container end -->
 {% endblock %}

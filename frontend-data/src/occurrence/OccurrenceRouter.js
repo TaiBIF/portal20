@@ -17,7 +17,7 @@ import {
 
 const navTabsData = [
   {
-    'key': 'Search',
+    'key': 'search',
     'label': '資料列表',
     'path': '/occurrence/search/',
   },
@@ -62,7 +62,7 @@ const OccurrenceRouter = ({data, filters,urlPrefix, language}) =>  {
     const key = navTabsData[i].key;
     if (!navTabsData[i].disable) {
       navTabs.push(
-          <li key={key} className={activeTab === key ? "active" : null} onClick={(e)=>setActiveTab(key)}>
+          <li key={key} className={activeTab === key ? "search-nav-active" : null} onClick={(e)=>setActiveTab(key)}>
           <Link to={navTabsData[i].path+window.location.search}>{language === 'en' ? navTabsData[i].key : navTabsData[i].label}</Link>
           </li>
       );

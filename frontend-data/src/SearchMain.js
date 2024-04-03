@@ -167,15 +167,28 @@ function SearchMain(props) {
     const found = props.menus.find((x) => x['key'] === menuKey[0]);
     if (found) {
       let tagLabel;
+
+      // 因應 GBIF 資料集名稱會有空白，request 時會把空白替換成 %20，在這邊替換回來
+      const cleanMenuKey = menuKey[1].replace(/%20/g, ' ');
+
       if (menuKey[0]=='dataset'){
         for (i = 0; i < found.rows.length; i++) {
-          x = found.rows[i].key.indexOf(menuKey[1]);
+          x = found.rows[i].key.indexOf(cleanMenuKey);
             if (-1 != x) {
-                break;
+              if (found.rows[i]['label']) {
+                tagLabel = found.rows[i]['label'];
+                console.log(" the query ==1= ", found.rows[i]['label']);
+              } else {
+                  console.error("Label not found for dataset row.");
+              }
+              break;
             }
           }
-        tagLabel = found.rows[i]['label']
-        console.log(" the query ==1= ",found.rows[i]['label'])
+          
+          
+        // *deprecated version*
+        // tagLabel = found.rows[i]['label']
+        // console.log(" the query ==1= ",found.rows[i]['label'])
 
       } else {
         console.log(" the query ==2= ",found)
@@ -217,7 +230,7 @@ function SearchMain(props) {
   if (props.taxonProps && props.taxonProps.taxonData) {
     for (let tid in props.taxonProps.taxonData.checked) {
       const name = props.taxonProps.taxonData.checked[tid];
-      filterTags.push((<span key="taxon" className="search-content-sort-tag">{name}</span>));
+      filterTags.push((<span key={props.taxonProps.taxonData.checked[tid]} className="search-content-sort-tag">{name}</span>));
     }
   }
 
@@ -244,11 +257,11 @@ function SearchMain(props) {
       tabNavs = (
         <div className="table-responsive">
           <ul className="nav nav-tabs nav-justified search-content-tab">
-            <li className={act=="all" ? "active": null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'all')}>全部</a></li>
-            <li className={act=="OCCURRENCE" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'OCCURRENCE')}>出現紀錄</a></li>
-            <li className={act=="CHECKLIST" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'CHECKLIST')}>物種名錄</a></li>
-            <li className={act=="SAMPLINGEVENT" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'SAMPLINGEVENT')}>調查活動</a></li>
-            <li className={act=="Metadata-only" ? "active": null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'metadata')}>詮釋資料</a></li>
+            <li className={act=="all" ? "search-nav-active": null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'all')}>全部</a></li>
+            <li className={act=="OCCURRENCE" ? "search-nav-active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'OCCURRENCE')}>出現紀錄</a></li>
+            <li className={act=="CHECKLIST" ? "search-nav-active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'CHECKLIST')}>物種名錄</a></li>
+            <li className={act=="SAMPLINGEVENT" ? "search-nav-active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'SAMPLINGEVENT')}>調查活動</a></li>
+            <li className={act=="Metadata-only" ? "search-nav-active": null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'metadata')}>詮釋資料</a></li>
           </ul>
         </div>)
     } else if (language === 'en'){
@@ -256,10 +269,10 @@ function SearchMain(props) {
         <div className="table-responsive">
           <ul className="nav nav-tabs nav-justified search-content-tab">
             <li className={act=="all" ? "active": null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'all')}>All</a></li>
-            <li className={act=="occurrence" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'occurrence')}>Occurrence</a></li>
-            <li className={act=="taxon" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'taxon')}>Checklist</a></li>
-            <li className={act=="event" ? "active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'event')}>Sampling event</a></li>
-            <li className={act=="meta" ? "active": null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'meta')}>Metadata</a></li>
+            <li className={act=="OCCURRENCE" ? "search-nav-active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'OCCURRENCE')}>Occurrence</a></li>
+            <li className={act=="CHECKLIST" ? "search-nav-active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'CHECKLIST')}>Checklist</a></li>
+            <li className={act=="SAMPLINGEVENT" ? "search-nav-active" : null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'SAMPLINGEVENT')}>Sampling event</a></li>
+            <li className={act=="Metadata-only" ? "search-nav-active": null}><a data-toggle="tab" onClick={(e)=>props.onClickTab(e, 'metadata')}>Metadata</a></li>
           </ul>
         </div>)
     }
@@ -269,9 +282,9 @@ function SearchMain(props) {
       tabNavs = (
         <div className="table-responsive">
           <ul className="nav nav-tabs search-content-tab">
-            <li className={tabActive == "menu1" ? "active": null}><a data-toggle="tab" onClick={(e)=>toggleTab(e, 'menu1')}>資料列表</a></li>
+            <li className={tabActive == "menu1" ? "search-nav-active": null}><a data-toggle="tab" onClick={(e)=>toggleTab(e, 'menu1')}>資料列表</a></li>
             {q
-             ? <li className={tabActive == "menu2" ? "active" : null}><a data-toggle="tab" onClick={(e)=>toggleTab(e, 'menu2')}>瀏覽其他資料庫</a></li>
+             ? <li className={tabActive == "menu2" ? "search-nav-active" : null}><a data-toggle="tab" onClick={(e)=>toggleTab(e, 'menu2')}>瀏覽其他資料庫</a></li>
              : null
             }
           </ul>
@@ -280,9 +293,9 @@ function SearchMain(props) {
       tabNavs = (
         <div className="table-responsive">
           <ul className="nav nav-tabs search-content-tab">
-            <li className={tabActive == "menu1" ? "active": null}><a data-toggle="tab" onClick={(e)=>toggleTab(e, 'menu1')}>Table</a></li>
+            <li className={tabActive == "menu1" ? "search-nav-active": null}><a data-toggle="tab" onClick={(e)=>toggleTab(e, 'menu1')}>Table</a></li>
             {q
-             ? <li className={tabActive == "menu2" ? "active" : null}><a data-toggle="tab" onClick={(e)=>toggleTab(e, 'menu2')}>Others</a></li>
+             ? <li className={tabActive == "menu2" ? "search-nav-active" : null}><a data-toggle="tab" onClick={(e)=>toggleTab(e, 'menu2')}>Others</a></li>
              : null
             }
           </ul>

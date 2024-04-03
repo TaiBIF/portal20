@@ -142,10 +142,8 @@ class TaibifSearch extends React.Component {
       const foundTaxonKeys = Array.from(filters).filter((x)=>x.indexOf('path=') >=0);
       foundTaxonKeys.forEach((x)=> {
         const klist = x.split('=');
-        if (klist[1].indexOf(':') >= 0) {
-          if (klist[1].split(':')[1] == tid) {
-            filters.delete(x);
-          }
+        if (klist[1] == taicol_taxon_id) {
+          filters.delete(x);
         }
       });
 
@@ -251,7 +249,7 @@ class TaibifSearch extends React.Component {
         }
       });
       filters.add(`year=${itemKey}`);
-    }
+    } 
 
     this.applyFilters(filters);
   }
@@ -300,7 +298,7 @@ class TaibifSearch extends React.Component {
     // for window.history.pushState
     let url = `${window.location.origin}${window.location.pathname}`;
     /* TODO menu facet */
-    const facetQueryString = (isOccurrence === true) ? 'facet=year&facet=month&facet=dataset&facet=dataset_id&facet=publisher&facet=country&facet=license&facet=taibif_county&facet=CoordinateInvalid&facet=TaxonMatchNone&facet=RecordedDateInvalid&facet=wildlife_refuges&facet=forest_reserves' : 'menu=1';
+    const facetQueryString = (isOccurrence === true) ? 'facet=year&facet=month&facet=dataset&facet=dataset_id&facet=publisher&facet=country&facet=license&facet=taibif_county&facet=CoordinateInvalid&facet=TaxonMatchNone&facet=RecordedDateInvalid&facet=wildlife_refuges&facet=forest_reserves&facet=selfProduced&facet=taibif_taxonGroup' : 'menu=1';
     if (filters) {
       let queryString = filtersToSearch(filters);
       apiUrl = `${apiUrl}?${queryString}&`;
@@ -310,6 +308,10 @@ class TaibifSearch extends React.Component {
       apiUrl = `${apiUrl}?`;
     }
     apiUrl = `${apiUrl}${facetQueryString}`;
+
+    // if (apiUrl.includes('selfProduced=')) {
+    //   apiUrl = apiUrl.replace('selfProduced=', 'selfProduced:')
+    // }
 
     window.history.pushState({stateObj:url}, "", url);
 

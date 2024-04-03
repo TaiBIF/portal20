@@ -63,13 +63,14 @@ class SuperSearch(object):
         qs = query.model._base_manager.all()
 
         compiler = query.query.get_compiler('default')
-        #print (qs, compiler)
+        # print(f'qs: {qs}')
+        # print(f'complier: {compiler}')
         where, params = compiler.compile(query.query.where)
         qs = qs.extra(where=[where] if where else None, params=params)
 
         cursor = connections[query.db].cursor()
         que = qs.query.clone()
-        que.add_annotation(Count('*'), alias='__count', is_summary=True)
+        que.add_annotation(Count('*'), alias='__count')
         que.clear_ordering(True)
         que.select_for_update = False
         que.select_related = False
@@ -136,8 +137,8 @@ class SuperSearch(object):
         ret = {
             'elapsed': self.timed[1] - self.timed[0],
             'count': int(count),
-            'count_estimate1':self._estimate_count_all(),
-            'count_estimate2': self._estimate_count(),
+            # 'count_estimate1':self._estimate_count_all(),
+            # 'count_estimate2': self._estimate_count(),
             'limit': limit,
             'offset': offset,
             'has_more': True if count > 0 and offset + limit <= count else False,
@@ -328,6 +329,9 @@ class DatasetSearch(SuperSearch):
 
             if key == 'order_by':
                 query = query.order_by(*values)
+                
+            if key == 'source':
+                query = query.filter(source__in=values)
 
         self.query = query
 

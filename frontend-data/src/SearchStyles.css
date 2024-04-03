@@ -53,17 +53,25 @@
   }
 }
 
-.taxon-tree-container {
+/* .taxon-tree-container {
     margin: 14px 0 0 -30px;
+    padding: 1rem;
+} */
+.selected-box {
+  padding: 0.5rem 0.75rem;
+  background-color: #FAF9F9;
+  border: 1px dashed rgba(74, 62, 58, 0.25);
+  border-radius: 0.25rem;
+  margin: 0.75rem 1rem 0.75rem 1rem;
 }
 
 .taxon-tree-node-wrapper{
-    margin-left: 20px;
+    /* margin-left: 20px; */
     border-left: unset;
 }
 .taxon-tree-node-wrapper .taxon-tree-node-wrapper {
     position: relative;
-    border-left: 1px solid #a9a9a9;
+    /* border-left: 1px solid #a9a9a9; */
     margin-left: 20px;
 }
 
@@ -74,16 +82,41 @@
     display: inline;
     /*background-color: #efefef;*/
     /*border-left: 4px solid #836c5a;*/
-    margin: -3px 0 0 10px;
-}
-.taxon-tree-node-item:before {
-    position: absolute;
-    /* left: 0px; */
-    /* top: -2px; */
-    content: '';
-    display: block;
-    height: 20px;
-    /* border-bottom: 1px solid #a9a9a9; */
-    width: 10px;
+    /* margin: -3px 0 0 10px; */
 }
 
+.rank-marker {
+  font-size: 12px;
+  color: #846C5B;
+  font-weight: bold;
+  /* padding: 4px 4px 4px 4px; */
+  /* border-radius: 20px; */
+  /* color: #fff; */
+}
+
+.taxon-tree-title {
+  margin: 0 0 20px 40px;
+  color: #4A3E3A;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 15px;
+  /* padding-left: 15px; */
+}
+
+.taxon-tree-rank {
+  font-weight: 700;
+  color: #846C5B;
+  font-size: 1.25rem;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+.taxon-tree-name {
+  font-weight: normal;
+}
+
+.form-check-label {
+  margin-bottom: 0;
+}

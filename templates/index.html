@@ -154,7 +154,7 @@
                                     <a href="{% url 'data-paper' %}">{% trans "資料期刊與論文" %}</a>
                                 </li>
                                 <li>
-                                    <a href="{% url 'data-visual' %}">{% trans "資料視覺化與圖表產出" %}</a>
+                                    <a href="{% url 'data-visual' %}">{% trans "資料視覺化" %}</a>
                                 </li>
                                 <li>
                                     <a href="{% url 'data-case' %}">{% trans "資料應用案例" %}</a>
@@ -211,7 +211,7 @@
 <!-- openmap end -->
 
 <!-- taiBIF slogan begin -->
-<div class="container">
+<div class="container hero-container">
     <div class="slogan-wrapper">
         <p class="quote-content">
             <span class="segment-eng">TaiBIF —</span>
@@ -227,7 +227,7 @@
     <div class="container py-5">
         <h1 class="headline-center-md">{% trans "資料發布狀況" %}</h1>
         <!-- 資料發布狀況 row begin -->
-        <div class="row justify-content-center">
+        <div class="row justify-content-center wrap">
             <!-- col begin -->
             <div class="col-card-brick">
                 <div class="card-brick card-glowing">
@@ -247,7 +247,7 @@
                         <span class="myicon icon-data-folder mr-1"></span>{% trans "資料集" %}
                     </p>
                     <p class="content">
-                        <a href="/dataset/search/">{{dataset_num|intcomma}}</a>
+                        <a href="/dataset/search/">{{dataset_num|intcomma:False}}</a>
                     </p>
                 </div>
             </div>
@@ -295,15 +295,15 @@
         <!-- 資料發布狀況 row end -->
 
         <!-- 資訊視覺化 row begin -->
-        <div class="row justify-content-center">
+        <div class="row justify-content-center wrap">
             <!-- col begin -->
             <div class="col col-icon-stat">
-                <a href="#" class="d-block">
+                <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Plants" class="d-block">
                     <span class="myicon icon-species-icon-plantae"></span>
                     <p class="title">{% trans "植物" %}</p>
                     <p class="amount">
                         {% for k,v in taxonGroup_dict.items %} 
-                            {% if k == 'plants' %} 
+                            {% if k == 'Plants' %} 
                                 {{ v|intcomma:False }} 
                             {% endif %} 
                         {% endfor %}
@@ -313,12 +313,12 @@
             <!-- col end -->
             <!-- col begin -->
             <div class="col col-icon-stat">
-                <a href="#" class="d-block">
+                <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Fungi" class="d-block">
                     <span class="myicon icon-species-icon-fungi"></span>
                     <p class="title">{% trans "真菌" %}</p>
                     <p class="amount">
                         {% for k,v in taxonGroup_dict.items %} 
-                            {% if k == 'fungi' %} 
+                            {% if k == 'Fungi' %} 
                                 {{ v|intcomma:False }} 
                             {% endif %} 
                         {% endfor %}
@@ -328,12 +328,12 @@
             <!-- col end -->
             <!-- col begin -->
             <div class="col col-icon-stat">
-                <a href="#" class="d-block">
+                <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Bacteria" class="d-block">
                     <span class="myicon icon-species-icon-bacteria"></span>
                     <p class="title">{% trans "細菌" %}</p>
                     <p class="amount">
                         {% for k,v in taxonGroup_dict.items %} 
-                            {% if k == 'bacteria' %} 
+                            {% if k == 'Bacteria' %} 
                                 {{ v|intcomma:False }}
                             {% endif %}
                         {% endfor %}
@@ -343,12 +343,12 @@
             <!-- col end -->
             <!-- col begin -->
             <div class="col col-icon-stat">
-                <a href="#" class="d-block">
+                <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Insects" class="d-block">
                     <span class="myicon icon-species-icon-Insecta"></span>
                     <p class="title">{% trans "昆蟲" %}</p>
                     <p class="amount">
                         {% for k,v in taxonGroup_dict.items %} 
-                            {% if k == 'insects' %} 
+                            {% if k == 'Insects' %} 
                                 {{ v|intcomma:False }} 
                             {% endif %}
                         {% endfor %}
@@ -358,12 +358,12 @@
             <!-- col end -->
             <!-- col begin -->
             <div class="col col-icon-stat">
-                <a href="#" class="d-block">
+                <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Fishes" class="d-block">
                     <span class="myicon icon-species-icon-fish"></span>
                     <p class="title">{% trans "魚" %}</p>
                     <p class="amount">
                         {% for k,v in taxonGroup_dict.items %} 
-                            {% if k == 'fishes' %} 
+                            {% if k == 'Fishes' %} 
                                 {{ v|intcomma:False }}
                             {% endif %}
                         {% endfor %}
@@ -373,12 +373,12 @@
             <!-- col end -->
             <!-- col begin -->
             <div class="col col-icon-stat">
-                <a href="#" class="d-block">
+                <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Reptiles" class="d-block">
                     <span class="myicon icon-species-icon-gecko"></span>
                     <p class="title">{% trans "爬蟲類" %}</p>
                     <p class="amount">
                         {% for k,v in taxonGroup_dict.items %} 
-                            {% if k == 'reptiles' %} 
+                            {% if k == 'Reptiles' %} 
                                 {{ v|intcomma:False }}
                             {% endif %}
                         {% endfor %}
@@ -388,12 +388,12 @@
             <!-- col end -->
             <!-- col begin -->
             <div class="col col-icon-stat">
-                <a href="#" class="d-block">
+                <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Amphibia" class="d-block">
                     <span class="myicon icon-species-icon-frog"></span>
                     <p class="title">{% trans "兩棲類" %}</p>
                     <p class="amount">
                         {% for k,v in taxonGroup_dict.items %} 
-                            {% if k == 'amphibia' %} 
+                            {% if k == 'Amphibia' %} 
                                 {{ v|intcomma:False }} 
                             {% endif %} 
                         {% endfor %}
@@ -403,12 +403,12 @@
             <!-- col end -->
             <!-- col begin -->
             <div class="col col-icon-stat">
-                <a href="#" class="d-block">
+                <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Birds" class="d-block">
                     <span class="myicon icon-species-icon-bird"></span>
                     <p class="title">{% trans "鳥類" %}</p>
                     <p class="amount">
                         {% for k,v in taxonGroup_dict.items %} 
-                            {% if k == 'birds' %} 
+                            {% if k == 'Birds' %} 
                                 {{ v|intcomma:False }}
                             {% endif %} 
                         {% endfor %}
@@ -418,14 +418,14 @@
             <!-- col end -->
             <!-- col begin -->
             <div class="col col-icon-stat">
-                <a href="#" class="d-block">
+                <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Mammals" class="d-block">
                     <span
                         class="myicon icon-species-icon-muntiacus-reevesi"
                     ></span>
                     <p class="title">{% trans "哺乳類" %}</p>
                     <p class="amount">
                         {% for k,v in taxonGroup_dict.items %} 
-                            {% if k == 'mammals' %} 
+                            {% if k == 'Mammals' %} 
                                 {{ v|intcomma:False }} 
                             {% endif %} 
                         {% endfor %}
@@ -435,12 +435,12 @@
             <!-- col end -->
             <!-- col begin -->
             <div class="col col-icon-stat">
-                <a href="#" class="d-block">
+                <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Others" class="d-block">
                     <span class="myicon icon-species-icon-more"></span>
                     <p class="title">{% trans "其他" %}</p>
                     <p class="amount">
                         {% for k,v in taxonGroup_dict.items %}
-                            {% if k == 'others' %} 
+                            {% if k == 'Others' %} 
                                 {{ v|intcomma:False }} 
                             {% endif %}
                         {% endfor %}
@@ -449,7 +449,7 @@
             </div>
             <!-- col end -->
             <!-- btn begin -->
-            <div class="col-12 text-center mt-3">
+            <div class="col-12 text-center mt-3 mb-6">
                 <a href="{% url 'data-visual' %} " class="btn btn-outline-main">{% trans "看更多資訊視覺化" %}
                     <span class="myicon icon-indicator-right ml-1" ></span>
                 </a>
@@ -484,7 +484,7 @@
                 </div>
                 <ul class="news-card-list-ctn">
                     {% for i in news_list %}
-                    <li>
+                    <li class="news-card-list-ctn-li">
                         <a href="{{ i.get_absolute_url }}" class="clamp2row"
                             >{{ i.title|truncatechars:40|safe }}</a
                         >
@@ -501,7 +501,7 @@
                 <div class="news-card-img-wrapper">
                     <a
                         class="tag"
-                        href="{% url 'article-list' category='event' %}"
+                        href="{% url 'article-search' %}?category=event"
                         >{% trans "活動" %}</a
                     >
                     <img src="{% static 'images/005.jpg' %}" />
@@ -512,7 +512,7 @@
                 </div>
                 <ul class="news-card-list-ctn">
                     {% for i in event_list %}
-                    <li>
+                    <li class="news-card-list-ctn-li">
                         <a href="{{ i.get_absolute_url }}"
                             >{{ i.title|truncatechars:40|safe }}</a
                         >
@@ -529,8 +529,8 @@
                 <div class="news-card-img-wrapper">
                     <a
                         class="tag"
-                        href="{% url 'article-list' category='update' %}"
-                        >{% trans "更新" %}</a
+                        href="{% url 'article-search' %}?category=sci"
+                        >{% trans "科普文章" %}</a
                     >
                     <img src="{% static 'images/007.jpg' %}" />
                     <p class="img-cc-post">
@@ -540,7 +540,7 @@
                 </div>
                 <ul class="news-card-list-ctn">
                     {% for i in update_list %}
-                    <li>
+                    <li class="news-card-list-ctn-li">
                         <a href="{{ i.get_absolute_url }}" class="clamp2row"
                             >{{ i.title|truncatechars:40|safe }}</a
                         >
@@ -574,7 +574,7 @@
                 >
                 <p class="topic-content">
                     <a href="{{ i.get_absolute_url }}"
-                        >{{ i.title|truncatechars:25|safe }}</a
+                        >{{ i.title }}</a
                     >
                 </p>
             </div>
@@ -602,7 +602,7 @@
     <!-- embed-responsive end -->
     <!-- 專題文章 begin -->
     <div class="my-5">
-        <h1 class="headline-center-sm">{% trans "指導單位" %}</h1>
+        <h1 class="headline-center-md">{% trans "指導單位" %}</h1>
         <div class="row justify-content-center align-items-center">
             <div class="col-7 col-md-4 col-supervisor-logo">
                 <a href="https://www.nstc.gov.tw/" target="_blank">
@@ -645,8 +645,8 @@
     <!-- 專題文章 end -->
     <!-- 夥伴單位 begin -->
     <div class="my-5">
-        <h1 class="headline-center-sm">{% trans "夥伴單位" %}</h1>
-        <div class="row justify-content-center align-items-center">
+        <h1 class="headline-center-md">{% trans "夥伴單位" %}</h1>
+        <div class="row justify-content-center align-items-center wrap">
             <div class="col-partner-logo">
                 <a href="https://www.forest.gov.tw/" target="_blank">
                     <img

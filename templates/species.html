@@ -8,18 +8,17 @@
 <script src="{% static 'js/leaflet.js' %}"></script>
 <script src="{% static 'js/leaflet-heat.js' %}"></script>
 
-    <style>
-        #map { height: 600px; }
-        body { font: 16px/1.4 "Helvetica Neue", Arial, sans-serif; }
-        .ghbtns { position: relative; top: 4px; margin-left: 5px; }
-        a { color: #0077ff; }
-    </style>
+<style>
+    #map { height: 600px; }
+    body { font: 16px/1.4 "Helvetica Neue", Arial, sans-serif; }
+    .ghbtns { position: relative; top: 4px; margin-left: 5px; }
+    a { color: #0077ff; }
+</style>
 {% endblock %}
 
 {% block script %}
-
- <!-- script 4 owl carousel begin -->
-  <script>
+<!-- script 4 owl carousel begin -->
+<script>
     $(document).ready(function() {
       var owl = $('#speciesGallery');
       owl.owlCarousel({
@@ -42,10 +41,10 @@
         }
       })
     })
-  </script>
-  <!-- script 4 owl carousel end -->
+</script>
+<!-- script 4 owl carousel end -->
 
-  <!-- script 4 data table begin -->
+<!-- script 4 data table begin -->
   <script>
     $(function () {
       $('#dataset-table').DataTable({
@@ -59,10 +58,10 @@
 
     })
   </script>
-  <!-- script 4 data table end -->
+<!-- script 4 data table end -->
 
-  <!-- script 4 adjust Anchor begin -->
-  <script type="text/javascript">
+<!-- script 4 adjust Anchor begin -->
+<script type="text/javascript">
     function adjustAnchor() {
       const $anchor = $(':target');
       const fixedElementHeight = $('.navbar-fixed-top').outerHeight() + 30;
@@ -76,210 +75,173 @@
         adjustAnchor();
       }
     });
-  </script>
-  {% if map_view %}
-  <script src="{% static 'js/species.js' %}" crossorigin="anonymous"  taxon_id = {{ taxon.taicol_taxon_id }}></script>
+</script>
+{% if map_view %}
+<script src="{% static 'js/species.js' %}" crossorigin="anonymous"  taxon_id={{ taxon.taicol_taxon_id }}></script>
 {% endif %}
-  {% endblock %}
+{% endblock %}
 
 {% block main %}
-{% include "inc_breadcrumb.html" with tab="0502" active_label="" %}
-
 <!-- container begin -->
-  <div class="container">
+<div class="container my-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+            <li class="breadcrumb-item">物種</li>
+        </ol>
+    </nav>
+
     <!-- amchor btns begin -->
-    
     <ul class="article-scroll-nav-wrapper">
-      {% if taxon.synonyms %}
-      <li><a href="#section1">同物異名</a></li>
-      {% endif %}
-      <li><a href="#section2">地理分佈</a></li>
-      <li><a href="#section3">資料集出現次數</a></li>
-      <li><a href="#section4">物種描述</a></li>
-      {% if taxon.reference %}
-      <li><a href="#section5">文獻</a></li>
-      {% endif %}
+        {% if taxon.synonyms %}
+        <li><a href="#section1">同物異名</a></li>
+        {% endif %}
+        <li><a href="#section2">地理分佈</a></li>
+        <li><a href="#section3">資料集出現次數</a></li>
+        <li><a href="#section4">物種描述</a></li>
+        {% if taxon.reference %}
+        <li><a href="#section5">文獻</a></li>
+        {% endif %}
     </ul>
     <!-- amchor btns begin -->
 
     <!-- story title begin -->
     <div class="article-head-wrapper">
-      <h1 class="heading-lg">
-        {{ taxon.scientific_name_full.formatted_name|safe }}
-        {% if taxon.name_zh %} {{ taxon.name_zh }}{% endif %} 
-        {% if not taxon.is_accepted_name %}<small><span class="label label-warning">同物異名</span></small>{% endif %}
-      </h1>
+        <h1 class="heading-lg">
+            {{ taxon.scientific_name_full.formatted_name|safe }}
+            {% if taxon.name_zh %} {{ taxon.name_zh }}{% endif %} 
+            {% if not taxon.is_accepted_name %}<small><span class="label label-warning">同物異名</span></small>{% endif %}
+        </h1>
     </div>
     <!-- story title end -->
 
-
     <!-- article content begin -->
     <div class="article-content-wrapper">
+        <!-- 學名 begin -->
+        <!-- <h4 class="heading-md-ul">學名</h4> -->
+        <ul class="scientific-name-wrapper">
+            {% for i in taxon.rank_list %}
+            <li><a href={{ i.scientific_name_full.url }} >{{ i.scientific_name_full.formatted_name|safe }} {% if i.name_zh %} {{ i.name_zh }}{% endif %}</a></li>
+            {% endfor %}
+        </ul>
+        <!-- 學名 end -->
 
-      <!-- 學名 begin -->
-      <!-- <h4 class="heading-md-ul">學名</h4> -->
-      <ul class="scientific-name-wrapper">
-        {% for i in taxon.rank_list %}
-        <li><a href={{ i.scientific_name_full.url }} >{{ i.scientific_name_full.formatted_name|safe }} {% if i.name_zh %} {{ i.name_zh }}{% endif %}</a></li>
-        {% endfor %}
-      </ul>
-      <!-- 學名 end -->
+        <!-- 同物異名 begin -->
+        <div id="section1">
+            {% if not taxon.is_accepted_name %}
+            <h4 class="heading-md-ul">有效學名</h4>
+            <p><i>{{ taxon.accepted_name.name }}</i>{% if taxon.accepted_name.name_zh %} {{ taxon.accepted_name.name_zh }}{% endif %}</p>
+            {% endif %}
+            {% if taxon.synonyms %}
+            <h4 class="heading-md-ul">同物異名</h4>
+            {% for i in taxon.synonyms %}
+            <p><i>{{ i.name }}</i>{% if i.name_zh %} {{ i.name_zh }}{% endif %}</p>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <!-- 同物異名 end -->
 
-      <!-- 同物異名 begin -->
-      <div id="section1">
-        {% if not taxon.is_accepted_name %}
-        <h4 class="heading-md-ul">有效學名</h4>
-        <p><i>{{ taxon.accepted_name.name }}</i>{% if taxon.accepted_name.name_zh %} {{ taxon.accepted_name.name_zh }}{% endif %}</p>
-        {% endif %}
-        {% if taxon.synonyms %}
-        <h4 class="heading-md-ul">同物異名</h4>
-        {% for i in taxon.synonyms %}
-        <p><i>{{ i.name }}</i>{% if i.name_zh %} {{ i.name_zh }}{% endif %}</p>
-        {% endfor %}
-      </div>
-      <!-- 同物異名 end -->
+        <!-- TaiCoL編號 begin -->
+        <p align="right"><a href="{{ taxon.taicol_namecode_link }}"><span class="myicon icon-link"></span>來源：TaiCOL</a></p>
+        <!-- TaiCoL編號 end -->
 
-      {% endif %}
-      <!-- TaiCoL編號 begin -->
-      <p align="right"><a href="{{ taxon.taicol_namecode_link }}"><span class="myicon icon-link"></span>來源：TaiCOL</a></p>
-      <!-- TaiCoL編號 end -->
+        <!-- 地理分佈 begin -->
+        <div id="section2">
+            <h3>地理分佈</h3>
 
-      <!-- 地理分佈 begin -->
-      <div id="section2">
-        <h4 class="heading-md-ul">地理分佈</h4>
-
-        {% if map_view %}
-          <div id="map"></div>
-        {% else %}
-          No data available
-        {% endif %}
-      </div>
-      <!-- 地理分佈 end -->
+            {% if map_view %}
+                <div id="map"></div>
+            {% else %}
+                No data available
+            {% endif %}
+        </div>
+        <!-- 地理分佈 end -->
 
 
-      <!-- 資料集出現次數 begin -->
-      <div id="section3">
-        <h4 class="heading-md-ul">資料集出現次數</h4>
-        <table id="dataset-table" class="table table-bordered">
-          <thead>
-            <tr>
-              <th>資料集</th>
-              <th>紀錄筆數</th>
-              <!-- <th>&nbsp;</th> -->
-            </tr>
-          </thead>
-          <tbody>
+        <!-- 資料集出現次數 begin -->
+        <div id="section3">
+            <h3>資料集出現次數</h3>
+            <table id="dataset-table" class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>資料集</th>
+                    <th>紀錄筆數</th>
+                    <!-- <th>&nbsp;</th> -->
+                </tr>
+                </thead>
+                <tbody>
+                {% for set in dataset %}
+                    <tr>
+                        <td><a href="{% url 'dataset-detail' taibif_dataset_id=set.taibifDatasetID %}">{{ set.name_zh }}</a></td>
+                        <td><a href="{% url 'search-occurrence' cat='search'  %}?path={{ taxon.taicol_taxon_id }}&dataset={{set.name}}">{{ set.count|intcomma:False }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- 資料集出現次數 end -->
 
-            {% for set in dataset %}
+        <!-- TaiCol物種描述 begin -->
+        <div id="section4">
+            <h3>物種描述</h3>
             
-            <tr>
-              <td><a href="{% url 'dataset-detail' taibif_dataset_id=set.taibifDatasetID %}">{{ set.name_zh }}</a></td>
-              <td><a href="{% url 'search-occurrence' cat='search'  %}?path={{ taxon.taicol_taxon_id }}&dataset={{set.name}}">{{ set.count|intcomma:False }}</td>
-              <!-- <td> -->
-<!-- 占比 -->
-                <!-- <div class="chart-bar-h-bg">
-                  <span class="chart-value-bg" style="width: {{ set.ratio }}%"></span>
-                </div>
+            {% if taxon.taieol_desc %}
+            {{taxon.taieol_desc}}
+            {% endif %}
 
-              </td> -->
-            </tr>
+            <!--carousel photos begin-->
+            {% if taxon.species_pic %}
+            <div id="carousel-postImages" class="carousel slide" data-ride="carousel">
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" style="max-width:70%; max-height:50%; height: auto; width:auto;margin-left:auto;margin-right:auto;display: block;">
+                    {% for i in taxon.species_pic %}
+                    <div class="item {% if forloop.counter == 1 %} active{% endif %}">
+                    {% if i.image_name%}
+                        <img src="/media/{{i.folder}}{{i.image_name}}" >
+                        <p class="article-img-license">{% if i.photographer %}{{i.photographer}}@{% endif %}TaiBIF 臺灣生物多樣性資訊機構-CC BY 4.0</p> 
+                    </div>
+                    {% elif i.taieol_pic %}
+                        <img src="{{i.taieol_pic}}">
+                        <p class="article-img-license">{% if i.photographer %}{{i.photographer}}@{% endif %}TaiEOL 生命大百科-CC BY 4.0</p>
+                    {% endif%}
+                    {% endfor %} 
+                </div> 
 
+                    {% if taxon.species_pic|length > 1 %}
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#carousel-postImages" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-postImages" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                    {% endif %}
+            </div> 
+            {% endif %}
+            <!-- TaiCol物種描述 end -->
+
+
+            <!-- Kuan Yu added for taieol discription -->
+            {% for i in species_info.taieol_desc %}
+            <div id="section9">
+                <h4 class="heading-md-ul">{{ i.title }}</h4>
+                {{ i.content | striptags }}
+            </div>
             {% endfor %}
 
-          </tbody>
-        </table>
-      </div>
-      <!-- 資料集出現次數 end -->
-
-      <!-- TaiCol物種描述 begin -->
-      <div id="section4">
-        <h4 class="heading-md-ul">物種描述</h4>
-        
-        {% if taxon.taieol_desc %}
-        {{taxon.taieol_desc}}
-        {% endif %}
-        <hr>
-
-        <!--carousel photos begin-->
-        {% if taxon.species_pic %}
-          <div id="carousel-postImages" class="carousel slide" data-ride="carousel">
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner" style="max-width:70%; max-height:50%; height: auto; width:auto;margin-left:auto;margin-right:auto;display: block;">
-              {% for i in taxon.species_pic %}
-              <div class="item {% if forloop.counter == 1 %} active{% endif %}">
-                {% if i.image_name%}
-                    <img src="/media/{{i.folder}}{{i.image_name}}" >
-                    <p class="article-img-license">{% if i.photographer %}{{i.photographer}}@{% endif %}TaiBIF 臺灣生物多樣性資訊機構-CC BY 4.0</p> 
-              </div>
-                {% elif i.taieol_pic %}
-                    <img src="{{i.taieol_pic}}">
-                    <p class="article-img-license">{% if i.photographer %}{{i.photographer}}@{% endif %}TaiEOL 生命大百科-CC BY 4.0</p>
-                  </div>
-                {% endif%}
-              {% endfor %} 
-            </div> 
-
-               {% if taxon.species_pic|length > 1 %}
-                <!-- Controls -->
-                <a class="left carousel-control" href="#carousel-postImages" role="button" data-slide="prev">
-                  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                  <span class="sr-only">Previous</span>
-                </a>
-            
-                <a class="right carousel-control" href="#carousel-postImages" role="button" data-slide="next">
-                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                  <span class="sr-only">Next</span>
-                </a>
-              {% endif %}
-          </div> 
-          {% endif %}
-
-      <!-- TaiCol物種描述 end -->
-
-
-      <!-- Kuan Yu added for taieol discription -->
-      {% for i in species_info.taieol_desc %}
-       <div id="section9">
-         <h4 class="heading-md-ul">{{ i.title }}</h4>
-         {{ i.content | striptags }}
-       </div>
-      {% endfor %}
-      <!-- <p><a href="{{ taxon. }}"><span class="myicon icon-link"></span>來源：生命大百科</a></p> -->
-
-       <!-- 文獻 begin -->
-       {% if  taxon.reference %}
-        <div id="section5">
-          <h4 class="heading-md-ul">文獻</h4>
-          {{taxon.reference}}
-          <!-- literature info begin >
-          <div class="ref-literature-wrapper">
-            <p><a href="#"><span class="myicon icon-link"></span> 臺灣維管束植物簡誌 (楊遠波, 劉和義, 呂勝由)</a></p>
-            <dl class="ref-literature-dl">
-              <dt>出版年</dt>
-              <dd>1980</dd>
-              <dt>作者</dt>
-              <dd>劉培槐、張惠珠、呂勝由、楊遠波等</dd>
-              <dt>出版者</dt>
-              <dd>臺灣省政府教育廳</dd>
-            </dl>
-          </div>
-
-          <div class="ref-literature-wrapper">
-            <p><a href="#"><span class="myicon icon-link"></span> 臺灣維管束植物簡誌 (楊遠波, 劉和義, 呂勝由)</a></p>
-            <dl class="ref-literature-dl">
-              <dt>出版年</dt>
-              <dd>1980</dd>
-              <dt>作者</dt>
-              <dd>劉培槐、張惠珠、呂勝由、楊遠波等</dd>
-              <dt>出版者</dt>
-              <dd>臺灣省政府教育廳</dd>
-            </dl>
-          </div>
-          < literature info end -->
+            <!-- 文獻 begin -->
+            {% if  taxon.reference %}
+            <div id="section5">
+                <h4 class="heading-md-ul">文獻</h4>
+                {{taxon.reference}}
+            </div>
+            {% endif %}
+            <!-- 文獻 end -->
         </div>
-      {% endif %}
-      <!-- 文獻 end -->
-
+    </div>
+</div>
 
 {% endblock %}
 

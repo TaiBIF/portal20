@@ -1,6 +1,19 @@
 "use strict";
 
 $(document).ready(function () {
+  $('#multiple-publisher').multiselect({
+    includeSelectAllOption: true,
+    nonSelectedText: '發布單位 Publisher'
+  });
+  $('#multiple-nation').multiselect({
+    includeSelectAllOption: true,
+    nonSelectedText: '國家/區域 Country or Area'
+  });
+  $('#multiple-name').multiselect({
+    includeSelectAllOption: true,
+    nonSelectedText: '資料集名稱 Dataset'
+  });
+
   $('#openmap-carousel').owlCarousel({
     loop: true,
     margin: 10,

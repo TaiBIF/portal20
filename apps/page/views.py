@@ -44,15 +44,52 @@ def act_lang(func):
 
 # @act_lang
 def index(request):
-    news_list = Article.objects.filter(category='NEWS').all()[0:4]
-    event_list = Article.objects.filter(category='EVENT').all()[0:4]
-    update_list = Article.objects.filter(category='UPDATE').all()[0:4]
-    #topic_list = Article.objects.filter(category__in=['SCI', 'TECH', 'PUB']).order_by('?').all()[0:10]
-    topic_list = Article.objects.filter(is_homepage=True).order_by('?').all()[0:10]
+    news_list = (
+        Article.objects.filter(category="NEWS")
+        .order_by("-is_pinned", "-created")
+        .all()[0:4]
+    )
+    event_list = (
+        Article.objects.filter(category="EVENT")
+        .order_by("-is_pinned", "-created")
+        .all()[0:4]
+    )
+    update_list = (
+        Article.objects.filter(category="SCI")
+        .order_by("-is_pinned", "-created")
+        .all()[0:4]
+    )
+    # topic_list = Article.objects.filter(category__in=['SCI', 'TECH', 'PUB']).order_by('?').all()[0:10]
+    # topic_list = Article.objects.filter(is_homepage=True).order_by("?").all()[0:10]
+    # get top newest article 6 records for homepage by category
+    topic_news_list = (
+        Article.objects.filter(category="NEWS").order_by("-created").all()[0:6]
+    )
+    topic_event_list = (
+        Article.objects.filter(category="EVENT").order_by("-created").all()[0:6]
+    )
+    topic_pscience_list = (
+        Article.objects.filter(category="PSCIENCE").order_by("-created").all()[0:6]
+    )
 
-    url = f'http://solr:8983/solr/taibif_occurrence/select?indent=true&q.op=OR&q=*%3A*&rows=0'
-    r = requests.get(url).json()   
-    occ_num =  r['response']['numFound']
+    # merge 3 category article list to toopic_list
+    # topic_list = list(chain(topic_news_list, topic_event_list, topic_pscience_list))
+    topic_list = (
+        Article.objects.filter(category__in=["NEWS", "EVENT", "SCI"])
+        .order_by("-created")
+        .all()[0:6]
+    )
+
+    url = f"http://solr:8983/solr/taibif_occurrence/select?q=basisOfRecord:*&indent=true&q.op=OR&rows=0"
+    r = requests.get(url).json()
+    occ_num = r["response"]["numFound"]
+    
+    # occ_num = Dataset.objects.aggregate(Sum('num_occurrence'))['num_occurrence__sum']
+
+    dataset_num = Dataset.objects.filter(status="PUBLIC").count()
+    # taxon_cover = len(occ_result['facets']['taxon_id']['buckets'])
+    
+    taxon_num = Taxon.objects.values('name').distinct().count()
 
     taxonGroup_url = f'http://solr:8983/solr/taibif_occurrence/select?facet.field=taibif_taxonGroup&facet=true&indent=true&q.op=OR&q=*%3A*&rows=0'
     taxonGroup_r = requests.get(taxonGroup_url).json()   
@@ -60,23 +97,25 @@ def index(request):
     taxonGroup_keys_list = taibif_taxonGroup[::2]
     taxonGroup_values_list = taibif_taxonGroup[1::2]
     taxonGroup_dict = dict(zip(taxonGroup_keys_list,taxonGroup_values_list))
-    dataset_num = Dataset.objects.filter(status='PUBLIC').count()
     publisher_num = DatasetOrganization.objects.count()
-    # taxon_cover = len(occ_result['facets']['taxon_id']['buckets'])
+
     context = {
-        'news_list': news_list,
-        'event_list': event_list,
-        'update_list': update_list,
-        'topic_list': topic_list,
-        'stats': get_home_stats(),
-        'dataset_num':dataset_num,
-        'publisher_num':publisher_num,
+        "news_list": news_list,
+        "event_list": event_list,
+        "update_list": update_list,
+        "topic_list": topic_list,
+        "stats": get_home_stats(),
+        "dataset_num": dataset_num,
+        "occ_num": occ_num,
+        'taxon_num': taxon_num,
         'taxonGroup_dict':taxonGroup_dict,
-        'occ_num':occ_num,
+        'publisher_num': publisher_num
         # 'taxon_cover':taxon_cover,
     }
 
-    return render(request, 'index.html', context)
+    print(context)
+
+    return render(request, "index.html", context)
 
 # @act_lang
 def publishing_data(request):
