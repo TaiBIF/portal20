@@ -330,7 +330,7 @@ class TaibifSearch extends React.Component {
             return
           }
           const results = isOccurrence ? jsonData.results : jsonData.search.results;
-          const map_geojson = isOccurrence ? jsonData.map_geojson : '';
+          // const map_geojson = isOccurrence ? jsonData.map_geojson : '';
           const limit = isOccurrence ? jsonData.limit : jsonData.search.limit;
           const offset = isOccurrence ? jsonData.offset : jsonData.search.offset;
           const count = isOccurrence ? jsonData.count : jsonData.search.count;
@@ -347,7 +347,7 @@ class TaibifSearch extends React.Component {
             isLoadedMain: true,
             search: {
               results: results,
-              map_geojson: map_geojson,
+              // map_geojson: map_geojson,
               limit: limit,
               offset: offset,
               count: count,

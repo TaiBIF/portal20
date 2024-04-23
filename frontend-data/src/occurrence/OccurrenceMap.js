@@ -9,8 +9,6 @@ import { EditControl } from "react-leaflet-draw"
 import "./CustomMapTooltip"
 import {fetchData, filtersToSearch} from '../Utils';
 
-const API_URL_PREFIX = `/api/v2/occurrence/map`;
-
     /* marker style */
     function getColor(d) {
         return d > 1000 ? '#800026' :
@@ -74,9 +72,34 @@ const API_URL_PREFIX = `/api/v2/occurrence/map`;
     }
 
 export default function OccurrenceMap(props) {
-   
-    const {filters} = props;
-    const search = filtersToSearch(filters);
+    const API_URL_PREFIX = `/api/v2/occurrence/map`;
+    const { filters } = props;
+    const [mapGeoJSON, setMapGeoJSON] = useState(null);
+
+    useEffect(() => {
+        const search = filtersToSearch(filters);
+        const apiURL = `${API_URL_PREFIX}?${search}`;
+        
+        fetch(apiURL)
+            .then(res => res.json())
+            .then(
+                (jsonData) => {
+                    // console.log('resp: ', jsonData);
+                    if (jsonData.solr_error_msg) {
+                        alert(jsonData.solr_error_msg); // TODO: need better UI
+                        return;
+                    }
+                    const mapGeoJSON = jsonData.map_geojson;
+                    // console.log('map: ', mapGeoJSON);
+                    setMapGeoJSON(mapGeoJSON); 
+                },
+                (error) => {
+                    console.error('Error fetching map data:', error);
+                }
+            );
+    }, [filters]);
+
+
     // const [jsonObject, setGeoJSON] = useState([false, []]);
     // const [isLoaded, setLoading] = useState(false);
     // useEffect(() => {
@@ -88,7 +111,7 @@ export default function OccurrenceMap(props) {
     //     });
     // }, [filters]);
 
-    function App(){
+    function App(search){
         const onCreated = e => {
 
             // get current lat & lon
@@ -173,7 +196,7 @@ export default function OccurrenceMap(props) {
                 <div className="App">
                     <MapContainer center={[0, 0]} zoom={2}>
                         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; <a href=&quot;https://www.openstreetmap.org/copyright&quot;>OpenStreetMap</a> contributors" />
-                        <GeoJSON data={props.data.map_geojson} pointToLayer={pointToLayer}/>
+                        <GeoJSON data={mapGeoJSON} pointToLayer={pointToLayer}/>
                         <FeatureGroup ref={featureGroupRef}>
                             <EditControl
                             position="topright"

@@ -17,12 +17,12 @@ import {
 
 const navTabsData = [
   {
-    'key': 'search',
+    'key': 'Search',
     'label': '資料列表',
     'path': '/occurrence/search/',
   },
   {
-    'key': 'gallery',
+    'key': 'Gallery',
     'label': '影像集',
     'path': '/occurrence/gallery/',
     'disable': true,
@@ -34,13 +34,13 @@ const navTabsData = [
     //'disable': true,
   },
   {
-    'key': 'taxonomy',
+    'key': 'Taxonomy',
     'label': '分類系統',
     'path': '/occurrence/taxonomy/',
     'disable': true,
   },
   {
-    'key': 'charts',
+    'key': 'Charts',
     'label': '指標',
     'path': '/occurrence/charts/',
   },

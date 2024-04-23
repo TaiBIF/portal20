@@ -497,6 +497,8 @@ for_basic_occ 2023-10 棄用，和 occurrence_api 合併 by JJJ
 #     return JsonResponse(res)
 
 def occurrence_search_v2(request):
+    current_path = request.path
+    # print(f'current_path:{current_path}')
     time_start = time.time()
     facet_values = []
     facet_selected = {}
@@ -697,16 +699,18 @@ def occurrence_search_v2(request):
 
     #--------------- map ---------------#
     # check if solr data has been updated
-    solr_updated = False if cache.get('default_solr_count') == resp['count'] else True
-    if query_list: # 如果有帶篩選條件
-        resp['map_geojson'] = get_geojson(solr.solr_url)
-    elif solr_updated or not cache.get('default_map_geojson'):
-        # 如果沒有篩選條件且solr資料有更新 或 如果沒有篩選條件且cache沒有default_map_geojson
-        resp['map_geojson'] = get_geojson(solr.solr_url)
-        cache.set('default_map_geojson', resp['map_geojson'])
-        cache.set('default_solr_count', resp['count'])
-    else: # 如果沒有篩選條件且solr沒更新且cache有default_map_geojson
-        resp['map_geojson'] = default_map_geojson
+    if current_path == '/api/v2/occurrence/map':
+        solr_updated = False if cache.get('default_solr_count') == resp['count'] else True
+        if query_list: # 如果有帶篩選條件
+            resp['map_geojson'] = get_geojson(solr.solr_url)
+        elif solr_updated or not cache.get('default_map_geojson'):
+            # 如果沒有篩選條件且solr資料有更新 或 如果沒有篩選條件且cache沒有default_map_geojson
+            resp['map_geojson'] = get_geojson(solr.solr_url)
+            cache.set('default_map_geojson', resp['map_geojson'])
+            cache.set('default_solr_count', resp['count'])
+        else: # 如果沒有篩選條件且solr沒更新且cache有default_map_geojson
+            resp['map_geojson'] = default_map_geojson
+
     resp['elapsed'] = time.time() - time_start
     #print('final', time.time() - time_start)
     return JsonResponse(resp)
