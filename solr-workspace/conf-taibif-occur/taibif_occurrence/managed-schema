@@ -707,7 +707,7 @@
   <field name="taibif_eventTime" type="string"/>
   <field name="parentNameUsageID" type="string"/>
   <field name="taibif_recordNumber" type="string"/>
-  <field name="mediaReference" type="string"/>
+  <field name="mediaReferences" type="string"/>
   <field name="taibif_mediaReferences" type="string"/>
   <field name="mediaLicense" type="string"/>
   <field name="taibif_mediaLicense" type="string"/>

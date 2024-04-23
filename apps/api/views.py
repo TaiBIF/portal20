@@ -1084,7 +1084,7 @@ def occurrence_api(request):
             'recordNumber':i['recordNumber'] if 'recordNumber' in i else None,
             'organismQuantity':i['organismQuantity'] if 'organismQuantity' in i else None,
             'organismQuantityType':i['organismQuantityType'] if 'organismQuantityType' in i else None,
-            'associatedMedia':i['taibif_mediaReferences']  if 'taibif_mediaReferences' in i else  None,
+            'associatedMedia':i['taibif_mediaReferences']  if 'taibif_mediaReferences' in i else (i['mediaReferences'] if 'mediaReferences' in i else None),
             'mediaLicense': i['taibif_mediaLicense'] if 'taibif_mediaLicense' in i else None,
             # 常用資料
             'gbifID':  i['gbifID'] if 'gbifID' in i else None,
