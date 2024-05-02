@@ -7,4 +7,4 @@ cp /frontend/data-table.dev.js /taibif-code/static/js
 
 python manage.py migrate --no-input
 
-python manage.py runserver 0.0.0.0:8003
+python manage.py runserver 0.0.0.0:8001
