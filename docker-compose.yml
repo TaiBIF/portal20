@@ -49,4 +49,6 @@ services:
     command:
       - solr-precreate
       - gettingstarted
+    environment:
+      - SOLR_JAVA_MEM=-Xms2g -Xms2g
   

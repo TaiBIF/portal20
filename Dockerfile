@@ -35,4 +35,4 @@ RUN pipenv install --system
 
 COPY . .
 
-COPY --from=build /code/dist /frondend
+# COPY --from=build /code/dist /frondend
