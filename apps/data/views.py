@@ -187,7 +187,7 @@ def occurrence_view(request, taibif_id):
             sp = original_scientific_name.split(' ')[1]
             intro['scientificName'] = f"<em>{genus_name}</em>  {sp}"
         else: 
-            intro['scientificName']=result[0].get('taibif_formattedName') if result[0].get('taibif_formattedName') else f"<em>{result[0].get('scientificName')}</em>"
+            intro['scientificName'] = result[0].get('taibif_formattedName') if result[0].get('taibif_formattedName') else result[0].get('taibif_scientificName')
         
     # intro['scientificName']=result[0].get('formatted_name') if result[0].get('formatted_name') else f"<em>{result[0].get('scientificName')}</em>"
     intro['scientificName_zh']=result[0].get('taibif_vernacularName') if result[0].get('taibif_vernacularName') else ''
@@ -226,6 +226,13 @@ def occurrence_view(request, taibif_id):
     record['dataGeneralizations']={'name_zh':'資料模糊化','value':[result[0].get('dataGeneralizations'),result[0].get('taibif_dataGeneralizations')]}
 
     # occ 
+    
+    # 相關多媒體資訊
+    raw_associated_media = result[0].get('mediaReferences')
+    parsed_associated_media = result[0].get('taibif_mediaReferences') if result[0].get('taibif_mediaReferences') else (
+        result[0].get('mediaReferences') if result[0].get('mediaReferences') else None
+    )
+    
     occ['catalogNumber']={'name_zh':'館藏號','value':[result[0].get('catalogNumber'),result[0].get('taibif_catalogNumber')]}
     occ['occurrenceID']={'name_zh':'出現紀錄ID','value':[result[0].get('occurrenceID'),result[0].get('taibif_occurrenceID')]}
     occ['recordNumber']={'name_zh':'採集號','value':[result[0].get('recordNumber '),result[0].get('taibif_recordNumber ')]}
@@ -243,9 +250,10 @@ def occurrence_view(request, taibif_id):
     occ['occurrenceStatus']={'name_zh':'出現狀態','value':[result[0].get('occurrenceStatus'),result[0].get('taibif_occurrenceStatus')]}
     occ['preparations']={'name_zh':'樣本狀態','value':[result[0].get('preparations'),result[0].get('taibif_preparations')]}
     occ['disposition']={'name_zh':'樣本處置','value':[result[0].get('disposition'),result[0].get('taibif_disposition')]}
-    occ['associatedMedia']={'name_zh':'相關多媒體資訊','value':[result[0].get('associatedMedia'),result[0].get('taibif_associatedMedia')]}
+    occ['associatedMedia']={'name_zh':'相關多媒體資訊','value':[raw_associated_media, parsed_associated_media]}
     occ['associatedReferences']={'name_zh':'相關參考資料','value':[result[0].get('associatedReferences'),result[0].get('taibif_associatedReferences')]}
     occ['associatedSequences']={'name_zh':'相關基因序列','value':[result[0].get('associatedSequences'),result[0].get('taibif_associatedSequences')]}
+    occ['associatedLicense']={'name_zh':'相關多媒體授權標示','value':[result[0].get('mediaLicense'),result[0].get('taibif_mediaLicense')]}
     occ['associatedTaxa']={'name_zh':'相關物種','value':[result[0].get('associatedTaxa'),result[0].get('taibif_associatedTaxa')]}
     occ['otherCatalogNumbers']={'name_zh':'其他ID','value':[result[0].get('otherCatalogNumbers'),result[0].get('taibif_otherCatalogNumbers')]}
     occ['occurrenceRemarks']={'name_zh':'出現紀錄註記','value':[result[0].get('occurrenceRemarks'),result[0].get('taibif_occurrenceRemarks')]}
@@ -481,7 +489,6 @@ def publisher_view(request, pk):
             'num_record':  x.num_record,
             'taibif_dataset_id': x.taibif_dataset_id,
         })
-    print(dataset)
 
     context["info"] = {
         'dataset_num' : Dataset.objects.filter(organization__id=pk).count(),
