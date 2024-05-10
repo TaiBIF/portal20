@@ -29,16 +29,23 @@
     </nav>
     <!-- breadcrumb end -->
     <!-- row begin -->
-    <p class="opendata-md-text">
-        {% blocktrans %}
-        請點選步驟按鈕進入詳細說明頁，文字說明法的優點是可以對調查對象做出比較深入和具體的描述，可以描述內部控制制度中的任何特殊情況。其缺點是採用文字說明法進行描述時，文字敘述較為冗長，對業務處理
-        {% endblocktrans %}
+    <p>
+        一份好的開放資料，應符合 2016年Wilkinson及Mons等人發表於Scientific Data期刊內的論文中所定義的「FAIR原則」：
+        意即資料若要符合開放的概念，必須要<strong>找得到(Findable)、拿得到(Accessible)、可互用 (Interoperable)、可再用(Reusable)</strong>。
+        詳細地說，就是資料能在網路上被搜尋並可下載，同時提供的資料格式是有依據標準且可與其他來源的資料整合，也有開放授權聲明允許任何人將資料重新再利用；
+        而全球資訊網（World Wide Web）發明者和鏈結資料的創始者，提姆．柏納-李 (Tim Berners-Lee)也建議了一個<a href="https://5stardata.info/zh-TW/" target="_blank">開放資料五顆星</a>的分類架構，
+        來判斷該份資料開放的程度為何。
     </p>
+    <div id="fair-principle" >
+        <img src="{% static 'images/FAIR_principle.png'%}"/>
+        <small>圖：資料的FAIR原則。 by SangyaPundir (採CC-BY-SA 4.0授權)</small>
+    </div>
+    <p>根據這些開放資料的要素，我們提供資料開放者如下的開放資料步驟做參考，點選每個步驟即可檢視詳細的說明和指引，讓開放資料能更容易上手：</p>
     <div class="opendata-flow-wrapper">
         <!-- col begin -->
         <div class="col-12 col-md-4" data-order="order-1">
             <div class="card card-opendata-flow">
-                <a href="#" class="btn btn-outline-chocolate">{% trans "清理資料" %}</a>
+                <a href="{% url 'data-clean' %}" class="btn btn-outline-chocolate">{% trans "清理資料" %}</a>
                 <a href="{% url 'open-standard' %}" class="btn btn-outline-chocolate">{% trans "資料標準化 (DwC)" %}</a>
             </div>
         </div>
@@ -46,14 +53,14 @@
         <!-- col begin -->
         <div class="col-12 col-md-4" data-order="order-2">
             <div class="card card-opendata-flow">
-                <a href="#" class="btn btn-outline-chocolate">{% trans "檢核資料" %}</a>
+                <a href="{% url 'tools' %}" class="btn btn-outline-chocolate">{% trans "檢核資料" %}</a>
             </div>
         </div>
         <!-- col end -->
         <!-- col begin -->
         <div class="col-12 col-md-4" data-order="order-3">
             <div class="card card-opendata-flow">
-                <a href="{% url 'open-metadata' %}" class="btn btn-outline-chocolate">{% trans "寫詮釋資料" %}</a>
+                <a href="https://docs.google.com/document/d/1Bj6gi6igKphUM7ISIkfASAiHM_je5YXHRT3WvhwQ3dA/edit" target="_blank"class="btn btn-outline-chocolate">{% trans "寫詮釋資料" %}</a>
                 <a href="{% url 'open-upload' %}" class="btn btn-outline-chocolate">{% trans "資料上傳 TaiBIF IPT" %}</a>
             </div>
         </div>
@@ -75,18 +82,12 @@
         <!-- col begin -->
         <div class="col-12 col-md-4" data-order="order-6">
             <div class="card card-opendata-flow">
-                <a href="#" class="btn btn-outline-chocolate">{% trans "資料再利用" %}</a>
+                <a href="{% url 'data-case' %}" class="btn btn-outline-chocolate">{% trans "資料再利用" %}</a>
             </div>
         </div>
         <!-- col end -->
     </div>
     <!-- row end -->
-    <p class="opendata-md-text">
-        {% blocktrans %}
-        請點選步驟按鈕進入詳細說明頁，文字說明法的優點是可以對調查對象做出比較深入和具體的描述，可以描述內部控制制度中的任何特殊情況。 其缺點是採用文字說明法進行描述時，文字敘述較為冗長，對業務處理
-        {% endblocktrans %}
-    </p>
 </div>
 <!-- container end -->
-
 {% endblock %}

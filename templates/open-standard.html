@@ -4,91 +4,314 @@
 
 
 {% block main %}
-
-    
-    <!-- topnav begin -->
-    <div class="bg-main-pale">
-        <div class="container">
-          <div class="caption-mascot-wrapper">
+<!-- topnav begin -->
+<div class="bg-main-pale">
+    <div class="container">
+        <div class="caption-mascot-wrapper">
             <h1 class="title">資料標準化</h1>
             <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
-          </div>
         </div>
-      </div>
-      <!-- topnav end -->
-      <!-- container begin -->
-      <div class="container my-5">
-        <!-- breadcrumb begin -->
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-            <li class="breadcrumb-item">開放資料</li>
-            <li class="breadcrumb-item active" aria-current="page">資料標準化</li>
-          </ol>
-        </nav>
-        <!-- breadcrumb end -->
-        <!-- row begin -->
-        <div class="row">
-          <!-- col left begin -->
-          <div class="col-12 col-md-3">
-  
+    </div>
+</div>
+<!-- topnav end -->
+<!-- container begin -->
+<div class="container my-5">
+    <!-- breadcrumb begin -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+        <li class="breadcrumb-item">開放資料</li>
+        <li class="breadcrumb-item active" aria-current="page">資料標準化</li>
+        </ol>
+    </nav>
+    <!-- breadcrumb end -->
+    <!-- row begin -->
+    <div class="row">
+        <!-- col left begin -->
+        <div class="col-12 col-md-3">
             <div class="dropdown dropdown-flexible-wrapper">
-              <a class="btn btn-toggle-flexible" href="#">
+                <a data-cat="open-standard" class="btn btn-toggle-flexible current-green toggle-item" href="#">
                 資料標準與模板
-              </a>
-              <div class="dropdown-menu dropdown-menu-flexible show">
-                <a data-cat="dwc" class="dropdown-item toggle-item current-green" href="#">達爾文核心標準 Darwin Core</a>
-                <a data-cat="eco-survey" class="dropdown-item toggle-item" href="#">生態檢核資料模板</a>
-                <a data-cat="natural-history" class="dropdown-item toggle-item" href="#">自然史典藏資料模板</a>
-                <a data-cat="virus" class="dropdown-item toggle-item" href="#">病媒介資料模板</a>
-              </div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-flexible show">
+                <a data-cat="dwc" class="dropdown-item toggle-item" href="#">達爾文核心標準 Darwin Core</a>
+                <a data-cat="meta-data" class="dropdown-item toggle-item" href="#">詮釋資料 EML 標準</a>
+                <a data-cat="concept" class="dropdown-item toggle-item" href="#">資料標準概念介紹</a>
+                </div>
             </div>
-  
+
             <div class="dropdown dropdown-flexible-wrapper">
-              <a class="btn btn-toggle-flexible" href="#" data-toggle="dropdown">
+                <a data-cat="topic-guide" class="btn btn-toggle-flexible toggle-item" href="#" data-toggle="dropdown">
                 主題資料發布指引
-              </a>
-              <div class="dropdown-menu dropdown-menu-flexible">
-                <a data-cat="dna-guide" class="dropdown-item toggle-item" href="#">DNA 資料發布指引</a>
-                <a data-cat="principal" class="dropdown-item toggle-item" href="#">敏感物種資料處理原則？</a>
-              </div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-flexible">
+                    <a data-cat="dna-guide" class="dropdown-item toggle-item" href="#">DNA 資料發布指引</a>
+                    <a data-cat="event" class="dropdown-item toggle-item" href="#">調查活動資料發布</a>
+                </div>
             </div>
-  
-          </div>
-          <!-- col left end -->
-          <!-- col right begin -->
-          <div data-cat="dwc" class="col-12 col-md-9 toggle-item-content">
-            <h4 class="headline-left-hr">達爾文核心標準 Darwin Core</h4>
-            <p>敬請期待</p>
-          </div>
-
-          <div data-cat="eco-survey" class="col-12 col-md-9 toggle-item-content hide">
-            <h4 class="headline-left-hr">生態檢核資料模板</h4>
-            <p>敬請期待</p>
-          </div>
-
-          <div data-cat="natural-history" class="col-12 col-md-9 toggle-item-content hide">
-            <h4 class="headline-left-hr">自然史典藏資料模板</h4>
-            <p>敬請期待</p>
-          </div>
-
-          <div data-cat="virus" class="col-12 col-md-9 toggle-item-content hide">
-            <h4 class="headline-left-hr">病媒介資料模板</h4>
-            <p>敬請期待</p>
-          </div>
-
-          <div data-cat="dna-guide" class="col-12 col-md-9 toggle-item-content hide">
-            <h4 class="headline-left-hr">DNA 資料發布指引</h4>
-            <p>敬請期待</p>
-          </div>
-
-          <div data-cat="principal" class="col-12 col-md-9 toggle-item-content hide">
-            <h4 class="headline-left-hr">敏感物種資料處理原則？</h4>
-            <p>敬請期待</p>
-          </div>
-          <!-- col right end -->
         </div>
-        <!-- row end -->
-      </div>
-      <!-- container end -->
+        <!-- col left end -->
+
+        <!-- col right begin -->
+        <div data-cat="open-standard" class="col-12 col-md-9 toggle-item-content">
+            <h4 class="headline-left-hr">資料標準與模板</h4>
+            <p>
+                在生物多樣性的領域，主要負責開發及維護資料標準的是<a href="http://www.tdwg.org/" target="_blank">生物多樣性資訊標準</a>組織。
+                作為<a href="http://www.iubs.org/" target="_blank">國際生命科學聯盟</a>的附屬機構，該非營利的科學及教育協會專注於開發生物及生物多樣性資料的交換標準。
+                生物多樣性的社群成員一般將此組織稱為<strong>TDWG</strong>（音同 Tad-Wig），因其前身為分類學資料庫工作小組（Taxonomic Databases Working Group）。
+            </p>
+            <p>
+                <a href="https://dwc.tdwg.org/" target="_blank">Darwin Core Standard</a><strong> 達爾文核心標準</strong>(簡稱 DwC)，是目前國際通用的生物多樣性資料標準，也是TaiBIF和GBIF體系在推廣並提供的資料架構及概念。
+            </p>
+            <p>
+                <a href="https://eml.ecoinformatics.org/" target="_blank">Ecological Metadata Language</a><strong> 生態詮釋資料語言</strong>（簡稱 EML），則是一種詮釋資料(metadata)規範。
+                它使用一系列模組化、可擴展的 XML 文件類型來記錄生態資料集的資訊。 所有資料集的描述都依賴詮釋資料；
+                也就是說，關於資料的資訊都使用此開源 EML 標準—它是由生物複雜性知識網絡所管理及維護。
+                每個達爾文核心集資料檔案的組成部件中都包含一個 EML 文件（以XML 格式撰寫）。
+            </p>
+        </div>
+
+        <div data-cat="dwc" class="col-12 col-md-9 toggle-item-content hide">
+            <h4 class="headline-left-hr">達爾文核心標準 Darwin Core</h4>
+            <p>
+                一份好的資料集，必須可以再利用（具互操作性），若能提供越多欄位資料，則資料的品質及價值也能相對地提高，在任何情況下，資料集至少要有下列所述的 Darwin Core 欄位
+            </p>
+            <div class="sub-heading-2">相關參考連結：</div>
+            <ul>
+                <li>DwC 資料欄位的各集合內容：<a href="https://rs.gbif.org/extensions.html" target="_blank">Darwin Core Registered Extensions</a>（按核心資料表 core 和延伸資料表 extension 分類</li>
+                <li>DwC 資料欄位標準英文定義快速查詢：<a href="https://dwc.tdwg.org/terms/" target="_blank"></a>Darwin core quick reference guide（按詞條的類別 Category 分類）</li>
+            </ul>
+            
+            <div class="article-content-wrapper">
+                <h3>物種名錄 Checklist</h3>
+            </div>
+            <table class="table table-ltmilo">
+                <thead>
+                    <tr>
+                        <th class="col-md">DwC 欄位名稱</th>
+                        <th class="col-md">所屬類別</th>
+                        <th class="col-md">定義</th>
+                        <th class="col-md">常見對應名稱</th>
+                        <th class="col-md">範例</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>taxonID</td>
+                        <td>Taxon</td>
+                        <td>分類識別碼，可設定有意義的組合格式，或使用全球唯一辨識碼(GUID)或通用唯一辨識碼(UUID)，序號不可有重複。</td>
+                        <td>ID、編號</td>
+                        <td>32567</td>
+                    </tr>
+                    <tr>
+                        <td>scientificName</td>
+                        <td>Taxon</td>
+                        <td>完整的學名，包括已知的作者和日期資訊。若是作為鑑定的一部分，應是可確定的最低分類階層的名稱。</td>
+                        <td>學名、Name、名字</td>
+                        <td>"Coleoptera" (目), "Vespertilionidae"(科), "Manis" (屬), "Ctenomys sociabilis" (屬 + 種小名),"Ambystoma tigrinum diaboli" (屬 +種小名 + 亞種小名), "Roptrocerus typographi (Györfi, 1952)" (屬 + 種小名 + 學名命名者), "Quercus agrifolia var. oxyadenia (Torr.) J.T.</td>
+                    </tr>
+                    <tr>
+                        <td>taxonRank</td>
+                        <td>Taxon</td>
+                        <td>物種的分類階層</td>
+                        <td>分類階層</td>
+                        <td>"genus", "species", "subspecies", "family"</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="article-content-wrapper">
+                <h3>出現紀錄 Occurrence</h3>
+            </div>
+            <table class="table table-ltmilo">
+                <thead>
+                    <tr>
+                        <th class="col-md">DwC 欄位名稱</th>
+                        <th class="col-md">所屬類別</th>
+                        <th class="col-md">定義</th>
+                        <th class="col-md">常見對應名稱</th>
+                        <th class="col-md">範例</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>occurrenceID</td>
+                        <td>Occurrence</td>
+                        <td>出現紀錄識別碼，可設定有意義的組合格式，或使用全球唯一辨識碼(GUID)或通用唯一辨識碼(UUID)，序號在此資料集中不可有重複。</td>
+                        <td>ID、編號</td>
+                        <td>32567</td>
+                    </tr>
+                    <tr>
+                        <td>basisOfRecord</td>
+                        <td>Record-level</td>
+                        <td>資料紀錄的特定性質、類型，建議使用 Darwin Core 的控制詞彙</td>
+                        <td>紀錄類型、樣本來源</td>
+                        <td>保存標本 PreservedSpecimen, 化石標本 FossilSpecimen, 活體標本 LivingSpecimen, 人為觀測 HumanObservation, 材料樣本 MaterialSample, 機器觀測 MachineObservation</td>
+                    </tr>
+                    <tr>
+                        <td>eventDate</td>
+                        <td>Event</td>
+                        <td>該筆資料被記錄的日期。</td>
+                        <td>調查日期、Date、日期</td>
+                        <td>「1994-11-05」代表單日；「1996-06」代表 1996 年 6 月；「2022-01/02」代表2022年1-2月(以 "/" 區分)；「2023-05-06/12」代表2023年5月6-12日；「1989/1993」代表1989-1993年</td>
+                    </tr>
+                    <tr>
+                        <td>individualCount</td>
+                        <td>Occurrence</td>
+                        <td>出現紀錄被記錄時存在的個體數量。</td>
+                        <td>數量、個體數</td>
+                        <td>0, 1, 25</td>
+                    </tr>
+                    <tr>
+                        <td>locality</td>
+                        <td>Location</td>
+                        <td>採集或觀測地點的明確描述。</td>
+                        <td>地點</td>
+                        <td>"觀音山", "Caribbean Sea", "Florida"</td>
+                    </tr>
+                    <tr>
+                        <td>verbatimLatitude</td>
+                        <td>Location</td>
+                        <td>字面緯度，採集或觀測取得紀錄的緯度，任何座標系統皆可。</td>
+                        <td>緯度</td>
+                        <td>41d 16'N</td>
+                    </tr>
+                    <tr>
+                        <td>verbatimLongitude</td>
+                        <td>Location</td>
+                        <td>字面經度，採集或觀測取得紀錄的緯度，任何座標系統皆可。</td>
+                        <td>經度</td>
+                        <td>121d 10' 34" W</td>
+                    </tr>
+                    <tr>
+                        <td>verbatimCoordinateSystem</td>
+                        <td>Location</td>
+                        <td>紀錄的座標單位</td>
+                        <td>座標單位</td>
+                        <td>"decimal degrees", "degrees decimal minutes", "degrees minutes seconds"</td>
+                    </tr>
+                    <tr>
+                        <td>decimalLatitude</td>
+                        <td>Location</td>
+                        <td>十進位緯度</td>
+                        <td>十進位緯度</td>
+                        <td>-41.0983423</td>
+                    </tr>
+                    <tr>
+                        <td>decimalLongitude</td>
+                        <td>Location</td>
+                        <td>十進位經度</td>
+                        <td>十進位經度</td>
+                        <td>-121.1761111</td>
+                    </tr>
+                    <tr>
+                        <td>geodeticDatum</td>
+                        <td>Location</td>
+                        <td>座標的大地基準。建議使用控制詞彙；若全未知，則填入"未知(unknown)"。</td>
+                        <td>大地基準、大地系統</td>
+                        <td>"EPSG:4326", "WGS84", "EPSG:3826" (TWD97 / TM2 臺灣), "EPSG:3828"（TWD67 / TM2 臺灣）</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="article-content-wrapper">
+                <h3>調查活動 Sampling event</h3>
+            </div>
+            <table class="table table-ltmilo">
+                <thead>
+                    <tr>
+                        <th class="col-md">DwC 欄位名稱</th>
+                        <th class="col-md">所屬類別</th>
+                        <th class="col-md">定義</th>
+                        <th class="col-md">常見對應名稱</th>
+                        <th class="col-md">範例</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>eventID</td>
+                        <td>Event</td>
+                        <td>調查活動識別碼，可設定有意義的組合格式，或使用全球唯一辨識碼(GUID)或通用唯一辨識碼(UUID)，序號不可有重複。</td>
+                        <td>ID、編號</td>
+                        <td>32567</td>
+                    </tr>
+                    <tr>
+                        <td>eventDate</td>
+                        <td>Event</td>
+                        <td>該筆資料被記錄的日期。</td>
+                        <td>調查日期、Date、日期</td>
+                        <td>「1994-11-05」代表單日；「1996-06」代表 1996 年 6 月；「2022-01/02」代表2022年1-2月(以 "/" 區分)；「2023-05-06/12」代表2023年5月6-12日；「1989/1993」代表1989-1993年</td>
+                    </tr>
+                    <tr>
+                        <td>samplingProtocol</td>
+                        <td>Event</td>
+                        <td>調查方法或流程的名稱、描述，或其參考文獻。</td>
+                        <td>調查方法、材料方法、Method、Sampling method</td>
+                        <td>"UV light trap", "mist net", "bottom trawl", "ad hoc observation",https://doi.org/10.1111/j.1466-8238.2009.00467.x, "Takats et al. 2001. Guidelines for Nocturnal Owl Monitoring in North America."</td>
+                    </tr>
+                    <tr>
+                        <td>sampleSizeValue</td>
+                        <td>Event</td>
+                        <td>採樣調查中單次採樣的大小數值(時間間隔、長度、範圍，或體積)</td>
+                        <td>採樣量、取樣大小</td>
+                        <td>5 (sampleSizeValue) with metre (sampleSizeUnit)</td>
+                    </tr>
+                    <tr>
+                        <td>sampleSizeUnit</td>
+                        <td>Event</td>
+                        <td>採樣大小的量測單位</td>
+                        <td>採樣量單位</td>
+                        <td>"minute", "day", "metre", "square metre"</td>
+                    </tr>
+                    <tr>
+                        <td>samplingEffort</td>
+                        <td>Event</td>
+                        <td>一次調查的努力量</td>
+                        <td>調查努力量</td>
+                        <td>"40 trap-nights", "10 observer-hours", "10 km by foot"</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div data-cat="meta-data" class="col-12 col-md-9 toggle-item-content hide">
+            <h4 class="headline-left-hr">詮釋資料 EML 標準</h4>
+            <p><a href="https://docs.google.com/document/d/1Bj6gi6igKphUM7ISIkfASAiHM_je5YXHRT3WvhwQ3dA/edit" target="_blank">填寫說明</a></p>
+        </div>
+
+        <div data-cat="concept" class="col-12 col-md-9 toggle-item-content hide">
+            <h4 class="headline-left-hr">資料標準概念介紹</h4>
+            <iframe src="https://www.slideshare.net/slideshow/embed_code/key/leS5VyHXNiaqlL?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+            <p class="mt-3">PDF講義下載：<a href="/media/資料標準概念介紹.pdf" target="_blank" class="myicon icon-download-document"></a></p>
+        </div>
+
+        <div data-cat="topic-guide" class="col-12 col-md-9 toggle-item-content hide">
+            <h4 class="headline-left-hr">主題資料發布指引</h4>
+            <p>
+                <a href="https://dwc.tdwg.org/" target="_blank">Darwin Core</a> 達爾文核心標準(簡稱 DwC)，是目前國際通用的生物多樣性資料標準，
+                也是TaiBIF和GBIF體系在推廣並提供的資料架構及概念。由於DwC根據不同類型的資料需求，提供自由且彈性的欄位及格式參考，
+                卻也讓資料發布初學者不易上手，無法快速了解自己的資料符合或可用哪些DwC欄位；
+                加上近年有越來越多新興主題的生物多樣性資料加入開放資料的行列，需求越趨多樣化，因此GBIF開始規劃不同主題的資料發布指引，
+                並與社群合作設計不同的主題資料架構，希望能更精準地對應不同生物多樣性背景的資料發布者的需求。
+            </p>
+            <p>
+                目前大多指引文件為英文版，TaiBIF及翻譯協作者們繁體中文翻譯完成將陸續列於下列清單，
+                更多英文資訊請見<a href="https://www.gbif.org/zh-tw/composition/HjlTr705BctcnaZkcjRJq/gbif-new-data-model" target="_blank">GBIF New Data Model</a>
+            </p>
+        </div>
+        
+        <div data-cat="dna-guide" class="col-12 col-md-9 toggle-item-content hide">
+            <h4 class="headline-left-hr">DNA 資料發布指引</h4>
+            <p><a href="https://docs.gbif-uat.org/publishing-dna-derived-data/zh-TW/" target="_blank">說明文件</a></p>
+        </div>
+
+        <div data-cat="event" class="col-12 col-md-9 toggle-item-content hide">
+            <h4 class="headline-left-hr">調查活動資料發布</h4>
+            <p><a href="https://www.gbif.org/zh-tw/sampling-event-data" target="_blank">說明文件</a></p>
+        </div>
+        <!-- col right end -->
+    </div>
+    <!-- row end -->
+</div>
+<!-- container end -->
 {% endblock %}

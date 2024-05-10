@@ -2527,9 +2527,9 @@ a.btn-dataicon-downlod {
     position: relative;
 }
 
-.customized-select select {
+/* .customized-select select {
     display: none;
-}
+} */
 
 .select-selected {
     background-color: #fff;
@@ -2553,8 +2553,8 @@ a.btn-dataicon-downlod {
     -moz-osx-font-smoothing: grayscale;
     content: "\e938";
     font-size: 18px;
-    top: 10px;
-    right: 12px;
+    top: 12px;
+    right: 25px;
 }
 
 .select-selected.select-arrow-active:after {
@@ -4358,6 +4358,10 @@ body {
     margin-bottom: 30px;
 }
 
+.mt-6 {
+    margin-top: 60px;
+}
+
 @media (max-width: 767.98px) {
     .web-navi-container {
         display: block;
@@ -4379,4 +4383,185 @@ body {
 .links-container {
     display: flex;
     flex-wrap: wrap;
+}
+
+.workflow {
+    width: 100%;
+}
+
+.sub-heading {
+    font-size: 20px;
+    font-weight: 500 !important;
+    margin-top: 50px
+}
+
+.dt-button {
+    border: none !important;
+    background-color: rgba(132, 108, 91, 0.6) !important;
+    background: rgba(132, 108, 91, 0.6) !important;
+    color: #fff !important;
+    padding: 0.5rem 0.75rem !important;
+    border-radius: 0.25rem !important;
+    font-size: 16px !important;
+}
+
+.custom-select select {
+    display: none;
+}
+
+.custom-select {
+    position: relative;
+}
+
+.contact-form-wrapper {
+    margin-top: -10px;
+    margin-bottom: 20px;
+    padding: 50px 25px;
+    background-color: #FAF9F9;
+    color: #888;
+}
+
+.contact-form-wrapper .col-xs-12 {
+    margin-top: 15px;
+   
+    margin-bottom: 15px;
+}
+.contact-form-wrapper .select-selected,
+.contact-form-wrapper .select-items div,
+.contact-form-wrapper .form-control {
+    font-size: 14px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    height: auto;
+    border: #ddd solid 1px;
+}
+
+.contact-form-wrapper .form-control,
+.contact-form-wrapper .form-control:focus {
+    border-left: 0;
+    padding-left: 8px;
+}
+
+.contact-form-wrapper .select-selected:after {
+    top: 16px;
+}
+
+.contact-form-wrapper .input-group-addon {
+    color: #888;
+    font-size: 110%;
+    background-color: #fff;
+    border: #ddd solid 1px;
+    border-right: 0;
+    vertical-align: top;
+    padding: 13px 0 0 12px;
+}
+
+.contact-form-wrapper .textarea,
+.contact-form-wrapper .textarea:focus {
+    width: 100%;
+    min-height: 10em;
+    box-sizing: border-box;
+    resize: none;
+}
+
+.contact-form-wrapper .form-control:focus,
+.contact-form-wrapper button:focus {
+    outline: none;
+}
+
+.contact-form-wrapper .contact-btn-wrapper {
+    padding: 20px 0 0;
+    text-align: center;
+}
+
+.contact-info-wrapper {
+    border-radius: 4px;
+    padding: 0;
+    margin-bottom: 20px;
+    border: #ddd solid 1px;
+}
+
+.contact-info-wrapper .heading-md-ul {
+    margin: 0;
+    padding: 10px 20px;
+}
+
+.contact-info-wrapper ul {
+    margin: 8px 0;
+    padding: 10px 20px;
+    list-style: none;
+}
+
+.contact-info-wrapper li {
+    margin: 5px 0;
+    padding: 0 0 0 24px;
+}
+
+.contact-info-wrapper .myicon {
+    margin-left: -24px;
+}
+
+.sub-heading-2 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.highlight-box-primary {
+    background-color: #cd7745;
+    padding: 3px 6px;
+    border-radius: 4px;
+    color: #fff;
+}
+
+.highlight-box-secondary {
+    background-color: rgba(132, 108, 91, 0.6);
+    padding: 3px 6px;
+    border-radius: 4px;
+    color: #fff;
+}
+
+.volunteer-mechanism-list li {
+    margin-bottom: 5px;
+}
+
+.highlight-box-small {
+    font-size: 14px;
+}
+
+.certification-container {
+    display: flex;
+}
+
+.certification-container img {
+    width: 50%;
+}
+
+.certification-volunteer-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.certification-volunteer-container img {
+    width: 80%;
+}
+
+#fair-principle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+#fair-principle img {
+    width: 50%;
+}
+
+#home-page-calendar {
+    filter: invert(.01) saturate(2) hue-rotate(150deg);
 }

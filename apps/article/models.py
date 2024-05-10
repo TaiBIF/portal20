@@ -55,11 +55,12 @@ class Article(models.Model):
         ('NEWS', '新聞'),
         ('EVENT', '活動'),
         ('UPDATE', '更新'),
-        ('SCI', '科普文章'),
+        ('SCI', '科普'),
         ('TECH', '技術專欄'),
         ('PUB', '出版品資料'),
         ('POS', 'TaiBIF發表文章/海報'),
-        ('STATIC', '靜態頁面')
+        ('STATIC', '靜態頁面'),
+        ('STORY', '資料故事')
     )
 
     PINNED_CHOICE = (

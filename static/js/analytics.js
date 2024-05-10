@@ -6,7 +6,8 @@ var padding = 80;
 
 const colorPrimary = '#846C5B';
 const colorSecondary = '#BB998B';
-const language = document.getElementById('dataset-table-container').lang;
+// const language = document.getElementById('dataset-table-container').lang;
+const language = 'zh-hant'
 // console.log("language ==== ", language)
 
 function renderBarChart(selector, dataset) {

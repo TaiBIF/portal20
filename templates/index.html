@@ -530,7 +530,7 @@
                     <a
                         class="tag"
                         href="{% url 'article-search' %}?category=sci"
-                        >{% trans "科普文章" %}</a
+                        >{% trans "科普" %}</a
                     >
                     <img src="{% static 'images/007.jpg' %}" />
                     <p class="img-cc-post">
@@ -591,13 +591,7 @@
 <div class="container my-5">
     <!-- embed-responsive begin -->
     <div class="embed-responsive embed-responsive-2by1">
-        <iframe
-            src="https://calendar.google.com/calendar/embed?height=353&wkst=1&bgcolor=%23ffffff&ctz=Asia%2FTaipei&showTz=0&showCalendars=0&showTabs=0&showPrint=0&showDate=0&showNav=0&showTitle=0&src=emgtdHcudGFpd2FuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%230B8043"
-            width="706"
-            height="353"
-            frameborder="0"
-            scrolling="no"
-        ></iframe>
+        <iframe id="home-page-calendar" src="https://calendar.google.com/calendar/embed?height=353&wkst=2&ctz=Asia%2FTaipei&bgcolor=%23ffffff&showTitle=0&showNav=0&showDate=0&showPrint=0&showTabs=0&showCalendars=0&showTz=0&hl=zh_TW&src=ZDZkNTBmNmQwYWYxYzNmZjFmZjk2YzA0MjkyNDdmMjZhNjE4ZGM2MThiMWEwZjdhNjZjZGFkZDk0MWQxZDg1ZEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23AD1457" width="706" height="353" frameborder="0" scrolling="no"></iframe>
     </div>
     <!-- embed-responsive end -->
     <!-- 專題文章 begin -->
@@ -616,7 +610,7 @@
             <div class="col-5 col-md-3 col-supervisor-logo">
                 <a href="https://www.coa.gov.tw/" target="_blank">
                     <img
-                        src="{% static 'images/logo-supervisor-coa.png' %}"
+                        src="{% static 'images/logo-supervisor-coa.jpeg' %}"
                         alt=""
                         class="img-fluid"
                     />

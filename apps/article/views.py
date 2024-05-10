@@ -15,6 +15,7 @@ CODE_MAPPING ={
         'tech':'技術專欄',
         'pub':'出版品資料',
         'pos':'TaiBIF發表文章/海報',
+        'story':'資料故事'
     }
 }
 #DEPRICATED 不合用
@@ -119,6 +120,7 @@ def article_search(request):
         'article_cat': article_cat,
         'article_search_keyword': article_search_keyword,
     })
+
 def article_tag_list(request, tag_name):
     page = request.GET.get('page', '')
     rows = Article.objects.filter(tags__name=tag_name).all()

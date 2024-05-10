@@ -146,7 +146,12 @@
         <label class="custom-input-ctn">
           <input type="checkbox" class="select-category-sci" data-type="sci"{% if "SCI" in article_cat %} checked="checked"{% endif %}>
           <span class="checkmark"></span>
-          {% trans "科普文章" %}
+          {% trans "科普" %}
+        </label> 
+        <label class="custom-input-ctn">
+          <input type="checkbox" class="select-category-sci" data-type="sci"{% if "STORY" in article_cat %} checked="checked"{% endif %}>
+          <span class="checkmark"></span>
+          {% trans "資料故事" %}
         </label>  
         <label class="custom-input-ctn">
           <input type="checkbox" class="select-category-sci" data-type="tech"{% if "TECH" in article_cat %} checked="checked"{% endif %}>
@@ -156,7 +161,7 @@
         <label class="custom-input-ctn">
           <input type="checkbox" class="select-category-sci" data-type="pub"{% if "PUB" in article_cat%} checked="checked"{% endif %}>
           <span class="checkmark"></span>
-          {% trans "出版品資料" %}
+          {% trans "出版品" %}
         </label>
         <label class="custom-input-ctn">
           <input type="checkbox" class="select-category-sci" data-type="pos"{% if "POS"  in article_cat%} checked="checked"{% endif %}>

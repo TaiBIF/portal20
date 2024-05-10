@@ -210,28 +210,35 @@ def open_data(request):
 # @act_lang
 def data_stats(request):
     most = request.GET.get('most', '')
+    search_query = request.GET.get('search_query', '')
+    print(f'search_query:{search_query}')
 
     query = Dataset.objects
     if most:
         query = query.filter(is_most_project=True)
-    url = f'http://solr:8983/solr/taibif_occurrence/select?indent=true&q.op=OR&q=*%3A*&rows=0'
+    url = f'http://solr:8983/solr/taibif_occurrence/select?q=basisOfRecord:*&indent=true&q.op=OR&rows=0'
     r = requests.get(url).json()   
     occ_num =  r['response']['numFound']
 
     dataset_num = Dataset.objects.filter(status='PUBLIC').count()
     publisher_num = DatasetOrganization.objects.count()
 
-
+    dataset_orm = Dataset.objects.filter(source='TaiBIF IPT', status='PUBLIC')
     # Grab the content for the table
-    dataset = Dataset.objects.values('title', 'organization_name', 'dwc_core_type', 'num_occurrence', 'pub_date', 'country', 'status', 'is_most_project')
+    if search_query:
+        print('yes')
+        dataset = dataset_orm.filter(Q(title__contains=search_query) | Q(dwc_core_type__contains=search_query)).values('title', 'organization_name', 'dwc_core_type', 'num_occurrence', 'num_record', 'pub_date', 'country', 'status', 'is_most_project', 'taibif_dataset_id')
+    else:
+        dataset = dataset_orm.values('title', 'organization_name', 'dwc_core_type', 'num_occurrence', 'num_record', 'pub_date', 'country', 'status', 'is_most_project', 'taibif_dataset_id')
 
     if most == '1':
         dataset = dataset.filter(is_most_project=True)
 
     value_mapping = {
-        'Occurrence': '出現紀錄',
-        'Sampling event': '調查活動',
-        'checklist': '物種名錄',
+        'OCCURRENCE': '出現紀錄',
+        'SAMPLINGEVENT': '調查活動',
+        'CHECKLIST': '物種名錄',
+        'metadata': '詮釋資料'
     }
 
     modified_dataset = []
@@ -239,6 +246,8 @@ def data_stats(request):
     for item in dataset:
         item['dwc_core_type'] = value_mapping.get(item['dwc_core_type'], item['dwc_core_type'])
         modified_dataset.append(item)
+
+    print(f'modified_dataset:{modified_dataset}')
 
     context = {
         'dataset_list': query.order_by(F('pub_date').desc(nulls_last=True)).all(),
@@ -456,6 +465,9 @@ def data_product(request):
 def data_story(request):
     context = {}
     return render(request, 'data-story.html', context)
+
+def data_clean(request):
+    return render(request, 'data-clean.html',)
 
 def web_navi(request):
     context = {}

@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
     <!-- Data Table -->
     <!-- <link rel="stylesheet" href="{% static 'css/jquery.dataTables.min.css' %}"> -->
+    <link href="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.7/b-3.0.2/datatables.min.css" rel="stylesheet">
     <link href="{%  static 'favicon.ico' %}" rel="icon" type="image/x-icon" />
     
     <!-- Google Tag Manager -->
@@ -51,7 +52,17 @@
     <!-- owl carousel JS -->
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
     <!-- data table JS -->
-    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+    <!-- <script src="{% static 'js/jquery.dataTables.min.js' %}"></script> -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.colVis.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.flash.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
+    
     <!-- Optional JavaScript -->
     <script src="{% static 'js/all.js' %}"></script>
     <script src="{% static 'js/base.js' %}"></script>
@@ -77,7 +88,7 @@
             <div class="dropdown-menu">
                 <a href="https://ipt.taibif.tw" class="dropdown-item">TaiBIF IPT</a>
                 <a href="{% url 'tools' %}" class="dropdown-item">{% trans "開放資料工具" %}</a>
-                <a href="{% url 'index' %}" class="dropdown-item">{% trans "資料標準模板" %}</a>
+                <a href="{% url 'open-standard' %}" class="dropdown-item">{% trans "資料標準模板" %}</a>
                 <a href="https://taicol.tw" class="dropdown-item">TaiCOL</a>
                 <a href="https://tbiadata.tw" class="dropdown-item">TBIA</a>
                 <a href="{% url 'web-navi' %}" class="dropdown-item">{% trans "網站導覽" %}</a>
@@ -236,7 +247,7 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{% url 'article-search' %}?category=news">{% trans "新聞" %}</a>
                             <a class="dropdown-item" href="{% url 'article-search' %}?category=event">{% trans "活動" %}</a>
-                            <a class="dropdown-item" href="{% url 'article-search' %}?category=sci">{% trans "科普文章" %}</a>
+                            <a class="dropdown-item" href="{% url 'article-search' %}?category=sci">{% trans "科普" %}</a>
                         </div>
                     </div>
                     </li>
@@ -247,10 +258,10 @@
                         {% trans "專題文章" %}
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">{% trans "資料故事" %}</a>
-                            <a class="dropdown-item" href="#">{% trans "科普文章" %}</a>
-                            <a class="dropdown-item" href="#">{% trans "技術專欄" %}</a>
-                            <a class="dropdown-item" href="#">{% trans "出版品" %}</a>
+                            <a class="dropdown-item" href="{% url 'article-search' %}?category=story">{% trans "資料故事" %}</a>
+                            <!-- <a class="dropdown-item" href="#">{% trans "科普文章" %}</a> -->
+                            <a class="dropdown-item" href="{% url 'article-search' %}?category=tech">{% trans "技術專欄" %}</a>
+                            <a class="dropdown-item" href="{% url 'article-search' %}?category=pub">{% trans "出版品" %}</a>
                         </div>
                     </div>
                     </li>
@@ -274,7 +285,8 @@
                         <div class="footer-info-ctn">
                             <img src="{% static 'images/taibif-logo-w.png' %}" alt="" class="footer-brand">
                             <p class="contact-info">
-                                <span class="myicon icon-pin-stroke mr-1">{% trans "11574 台北市南港區研究院路二段70巷28號 跨領域科技研究大樓 C301室" %}</span>
+                                <span class="myicon icon-pin-stroke mr-1"></span>
+                                <span>{% trans "11574 台北市南港區研究院路二段70巷28號 跨領域科技研究大樓 C301室" %}</span>
                             </p>
                             <p class="copywrite">{% trans "Copyright © TaiBIF 臺灣生物多樣性資訊機構" %}</p>
                             <ul class="social-btn-wrapper">

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block title %}{% trans "資料期刊與論文" %}{% endblock %}
+
+{% block main %}
+<!-- topnav begin -->
+<div class="bg-main-pale">
+    <div class="container">
+        <div class="caption-mascot-wrapper">
+        <h1 class="title">{% trans "清理資料" %}</h1>
+        <img src="{% static 'images/mascot-flower.png' %}" alt="" class="symbol">
+        </div>
+    </div>
+</div>
+<!-- topnav end -->
+
+<!-- container begin -->
+<div class="container my-5">
+    <!-- breadcrumb begin -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">{% trans "首頁" %}</a></li>
+        <li class="breadcrumb-item">{% trans "開放資料" %}</li>
+        <li class="breadcrumb-item active" aria-current="page">{% trans "清理資料" %}</li>
+        </ol>
+    </nav>
+    <!-- breadcrumb end -->
+    <!-- row begin -->
+    <div class="row">
+        <!-- col left begin -->
+        <div class="col-12 col-md-3">
+            <div class="dropdown dropdown-flexible-wrapper">
+                <a class="btn btn-toggle-flexible visible-xs" href="#" data-toggle="dropdown" aria-expanded="false">
+                    清理資料
+                </a>
+                <div class="dropdown-menu-flexible d-md-block">
+                    <a data-cat="principle" class="dropdown-item nav-item current-sunset" href="#">{% trans "通則" %}</a>
+                    <a data-cat="sensitive-data" class="dropdown-item nav-item" href="#">{% trans "敏感資料處理原則" %}</a>
+                </div>
+            </div>
+        </div>
+        <!-- col left end -->
+        <!-- col right begin -->
+        <div data-cat="principle" class="col-12 col-md-9 nav-item-content">
+            <h1 class="heading-lg-ul">{% trans "通則" %}</h1>
+            <iframe src="https://www.slideshare.net/slideshow/embed_code/key/Kbxxix0B5hZQz9?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+            <p class="mt-3">PDF講義下載：<a href="/media/開放資料流程-清理資料01-通則.pdf" target="_blank" class="myicon icon-download-document"></a></p>
+        </div>
+
+        <div data-cat="sensitive-data" class="col-12 col-md-9 nav-item-content hide">
+            <h1 class="heading-lg-ul">{% trans "敏感資料處理原則" %}</h1>
+            <iframe src="https://www.slideshare.net/slideshow/embed_code/key/EtPvWuXkzRSxnj?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+            <p class="mt-3">PDF講義下載：<a href="/media/開放資料流程-清理資料02-敏感資料處理原則.pdf" target="_blank" class="myicon icon-download-document"></a></p>
+        </div>
+        <!-- col right end -->
+    </div>
+    <!-- row end -->
+</div>
+<!-- container end -->
+{% endblock %}

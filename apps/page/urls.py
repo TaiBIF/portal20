@@ -37,6 +37,7 @@ urlpatterns = [
     path('about-gbif', views.about_gbif, name='about_gbif'),
     path('open-data', views.open_data, name='open_data'),
     path('data-stats', views.data_stats, name='data_stats'),
+    path('data-clean', views.data_clean, name='data-clean'),
     path('export_csv',views.export_csv, name='export_csv'),
     path('taibif-achievement',views.taibif_achievement, name='taibif-achievement'),
     path('faq',views.faq, name='faq'),

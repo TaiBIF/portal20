@@ -71,7 +71,7 @@ $(document).ready(function () {
   });
   $('#opendata-table').DataTable({
     lengthChange: false,
-    searching: false,
+    searching: true,
     ordering: false,
     info: false,
     pageLength: 5,
@@ -80,8 +80,20 @@ $(document).ready(function () {
       paginate: {
         previous: "<span class='myicon icon-arrow-left'></span>",
         next: "<span class='myicon icon-arrow-right'></span>"
-      }
-    }
+      },
+      search: "搜尋關鍵字："
+    },
+    dom: 'Bfrtip',
+    buttons: [
+      {
+        extend: 'excel',
+        text: '下載 excel 格式'
+      },
+      {
+        extend: 'csv',
+        text: '下載 csv 格式'
+      },
+    ]
   });
   $('#casestudy-table').DataTable({
     lengthChange: false,
