@@ -16,7 +16,7 @@
       {% endif %}
     {% endfor %}
     {% if object_list.has_next %}
-    <li><a href="?page={{ object_list.next_page_number }}{{page_info.append_querystring }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+    <li><a href="?page={{ object_list.next_page_number }}{{page_info.append_query_string }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
     {% endif %}
   </ul>
 </div>
