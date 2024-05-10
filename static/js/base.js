@@ -1,8 +1,8 @@
 $(document).ready(function() {
   //navbar-search
-  $('#navbar-search-btn').click(function(){
+  $('#navbar-search-btn').click(function () {
     const q = $('#navbar-search-input').val();
-    window.location.href = `/search/?q=${q}`
+    window.location.href = `/search/?q=${q}`;
   });
 
   // 單層 nav

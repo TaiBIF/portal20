@@ -4565,3 +4565,103 @@ body {
 #home-page-calendar {
     filter: invert(.01) saturate(2) hue-rotate(150deg);
 }
+
+.head-carousel-search-ctn {
+    background-color: #846C5B;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.head-carousel-search-cate {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+}
+.head-carousel-search-cate li {
+    padding: 0;
+}
+.head-carousel-search-cate li a {
+    padding: 6px;
+    color: #fff;
+    display: block;
+    text-align: center;
+}
+.head-carousel-search-cate li a:hover {
+    background-color: rgba(74, 62, 58, 0.3);
+}
+.head-carousel-search-cate li a:after {
+    content: "";
+    border-right: rgba(74, 62, 58, 0.6) solid 1px;
+    height: 16px;
+    display: inline-block;
+    position: absolute;
+    top: 9px;
+    right: 0;
+}
+.head-carousel-search-cate li:last-child a:after {
+    border-right: none;
+}
+
+.head-carousel-search-form-wrapper {
+    position: relative;
+    width: 100%;
+    margin: 0;
+}
+
+.head-carousel-search-input {
+    border: #846C5B solid 1px;
+    font-size: 14px;
+    color: #888;
+    padding: 12px 16px;
+    width: 100%;
+    border-radius: 4px;
+}
+
+.head-carousel-search-input:focus {
+    color: #4A3E3A;
+    outline: 0;
+}
+
+.head-carousel-search-btn {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    background: transparent;
+    border: 0;
+    font-size: 24px;
+    color: #846C5B;
+}
+
+.carousel-caption {
+    text-align: left;
+    bottom: 20px;
+}
+
+.head-carousel-cate {
+    font-size: 14px;
+    color: #fff;
+    background-color: #CE7746;
+    padding: 3px 6px;
+    display: inline-block;
+    border-radius: 3px;
+    text-shadow: none;
+}
+
+.head-carousel-title {
+    font-size: 18px;
+    margin: 10px 0 0;
+    line-height: 1.2em;
+    max-height: 2.4em;
+    overflow: hidden;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
+}
+
+.head-carousel-btn {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 210px;
+}
