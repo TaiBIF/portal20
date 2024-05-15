@@ -118,12 +118,6 @@ JSON_FACET_MAP = {
             'mincount': 0,
             'limit': -1,
         },
-        'taibif_taxonGroup': {
-            'type':'terms',
-            'field':'taibif_taxonGroup',
-            'mincount': 0,
-            'limit': -1,
-        }
     }
 }
   
@@ -154,20 +148,6 @@ CODE_MAPPING ={
         'Lienchiang County' : '連江縣',
     }
     
-}
-
-TAXONGROUP_MAPPING = {
-    'taibif_taxonGroup': {
-        'Plants': '植物 Plants',
-        'Fungi': '真菌 Fungi',
-        'Bacteria': '細菌 Bacteria',
-        'Insects': '昆蟲 Insects',
-        'Fishes': '魚 Fishes',
-        'Reptiles': '爬蟲類 Reptiles',
-        'Amphibia': '兩棲類 Amphibia',
-        'Birds': '鳥類 Birds',
-        'Mammals': '哺乳類 Mammals'
-    }
 }
 
 
@@ -204,7 +184,9 @@ class SolrQuery(object):
         self.solr_error = ''
         self.solr_response = {}
         self.solr_url = ''
-        self.solr_q = '*:*'
+        self.solr_q = 'basisOfRecord:*' # Only fetch occurrence data, using basisOfRecord to estimate
+        # Limit the respoense fields
+        self.filter_field = 'taibif_vernacularName,taibif_country,taibif_locality,taibif_basisOfRecord,basisOfRecord,taibif_datasetKey,taibif_formattedName,taibif_dataset_name_zh,taibif_kingdom,taibif_phylum,taibif_class,taibif_order,taibif_family,taibif_genus,taibif_occ_id,taibif_eventDate'
 
     def generate_solr_url(self, req_lists=[]):
         map_query = ''
@@ -232,11 +214,7 @@ class SolrQuery(object):
                 #fq=(cat1:val1 OR cat2:val2 OR (cat3:(val3 AND val4)))
                 self.solr_tuples.append(('fq', ' OR '.join(taxon_key_list)))
             elif key == 'path':
-                if isinstance(values, list):
-                    path_queries = [f'path:*{v}*' for v in values]
-                    self.solr_tuples.append(('fq', ' OR '.join(path_queries)))
-                else:
-                    self.solr_tuples.append(('fq', 'path:*{}*'.format(values[0])))
+                self.solr_tuples.append(('fq', 'path:*{}*'.format(values[0])))
             elif key == 'issues':
                 self.solr_tuples.append(('fq', '{}:"{}"'.format(values[0], 'true')))
             elif key in JSON_FACET_MAP[self.core]:
@@ -249,7 +227,10 @@ class SolrQuery(object):
                         self.solr_tuples.append(('fq', f'{key}:[{vlist[0]} TO {vlist[1]}]'))
                     else:
                         if key in JSON_FACET_MAP[self.core]:
-                            self.solr_tuples.append(('fq', '{}:"{}"'.format(field, values[0])))
+                            if key == 'selfProduced': # 布林值搜尋 value 不需要轉成 string
+                                self.solr_tuples.append(('fq', '{}:{}'.format(field, values[0])))
+                            else:
+                                self.solr_tuples.append(('fq', '{}:"{}"'.format(field, values[0])))
                 else:
                     self.solr_tuples.append(('fq', ' OR '.join([f'{field}:"{x}"' for x in values])))
                     #self.solr_tuples.append(('fq', 'taibif_dataset_name:A OR taibif_dataset_name:B'))
@@ -288,7 +269,7 @@ class SolrQuery(object):
             self.solr_tuples.append(('json.facet', '{'f'{s}''}'))
             
         query_string = urllib.parse.urlencode(self.solr_tuples)
-        self.solr_url = f'{SOLR_PREFIX}{self.core}/select?{query_string}'
+        self.solr_url = f'{SOLR_PREFIX}{self.core}/select?fl={self.filter_field}&{query_string}'
         return self.solr_url
 
     def request(self, req_lists=[]):
@@ -448,15 +429,6 @@ class SolrQuery(object):
             menus.append({
                 'key':'selfProduced',
                 'label': '資料來源 Source',
-                'rows': rows,
-            })
-
-        if data := resp['facets'].get('taibif_taxonGroup', ''):
-            rows = [{'key': x['val'], 'label': TAXONGROUP_MAPPING['taibif_taxonGroup'][x['val']], 'count': x['count']} for x in data['buckets']]
-            
-            menus.append({
-                'key':'taibif_taxonGroup',
-                'label': '物種類群 Taxon Group',
                 'rows': rows,
             })
 
