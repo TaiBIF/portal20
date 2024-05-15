@@ -5,6 +5,12 @@ $(document).ready(function() {
     window.location.href = `/search/?q=${q}`;
   });
 
+  $('.head-carousel-search-btn').click(function (event) {
+    event.preventDefault();
+    const q = $('.head-carousel-search-input').val();
+    window.location.href = `/search/?q=${q}`;
+  });
+
   // 單層 nav
   $('.nav-item').click(function() {
     const cat = $(this).data('cat');
