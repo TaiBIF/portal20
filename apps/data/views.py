@@ -65,27 +65,6 @@ def search_all(request):
             })
         count += len(article_rows)
 
-        # occurrence
-        occur_rows = []
-        solr = SolrQuery('taibif_occurrence')
-        req = solr.request(list(request.GET.lists()))
-        resp = solr.get_response()
-        
-        if resp != None:
-            for x in resp['results']:
-                name=''
-                name_zh=''
-                if 'scientificName' in x.keys():
-                    name = x['scientificName']
-                if  'vernacularName' in x.keys():
-                    name_zh = x['vernacularName']
-                occur_rows.append({
-                    'title': '{} {}'.format(name, name_zh),
-                    'content': '資料集: {}'.format(x['taibif_dataset_name_zh']),
-                    'url': '/occurrence/{}'.format(x['taibif_occ_id']) 
-                })
-            count += len(occur_rows)
-
         # dataset
         dataset_rows = []
         for x in Dataset.objects.values('title', 'name','id','taibif_dataset_id').filter(Q(title__icontains=q)).exclude(status='PRIVATE').all()[:5]:
@@ -106,7 +85,7 @@ def search_all(request):
         for x in Taxon.objects.filter(Q(name__icontains=q) | Q(name_zh__icontains=q)).all()[:5]:
             species_rows.append({
                 'title': '[{}] {}'.format(x.get_rank_display(), x.get_name()),
-                'content': '物種數: {}'.format(x.count),
+                # 'content': '物種數: {}'.format(x.count),
                 'url': '/species/{}'.format(x.taicol_taxon_id),
             })
         count += len(species_rows)
@@ -130,11 +109,6 @@ def search_all(request):
                     'rows': article_rows
                 },
                 {
-                    'cat': 'occurrence',
-                    'label': '出現紀錄',
-                    'rows': occur_rows
-                },
-                {
                     'cat': 'species',
                     'label': '物種',
                     'rows': species_rows
@@ -151,6 +125,7 @@ def search_all(request):
                 },
             ]
         }
+
         return render(request, 'search_all.html', context)
 
 
