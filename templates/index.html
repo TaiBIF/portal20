@@ -570,7 +570,7 @@
                 <a
                     class="tag"
                     href="{% url 'article-list' category=i.category|lower  %}"
-                    >{{ i.get_category_display }}</a
+                    >{% trans i.get_category_display %}</a
                 >
                 <p class="topic-content">
                     <a href="{{ i.get_absolute_url }}"
