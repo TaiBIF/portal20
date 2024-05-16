@@ -1610,12 +1610,7 @@ a.btn-sunset-lg.focus {
 }
 
 .col-partner-logo {
-    -ms-flex: 0 0 16.6666%;
-    -webkit-box-flex: 0;
-    flex: 0 0 16.6666%;
-    max-width: 16.6666%;
-    margin-bottom: 1rem;
-    padding: 10px 40px;
+    max-width: 20%;
 }
 @media (max-width: 991.98px) {
     .col-partner-logo {
@@ -4664,4 +4659,23 @@ body {
     left: 0;
     width: 100%;
     height: 210px;
+}
+
+.partner-logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px
+}
+
+.supervisor-logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.partner-logo-container .img-fluid {
+    max-width: 90% !important;
+    width: 90% !important;
 }
