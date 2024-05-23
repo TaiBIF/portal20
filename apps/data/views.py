@@ -43,6 +43,13 @@ from apps.data.models import DATA_MAPPING
 
 from conf.settings import ENV
 
+DWC_CORE_TYPE_MAP = {
+    'MEATADATA': '詮釋資料',
+    'CHECKLIST': '物種名錄',
+    'OCCURRENCE': '出現紀錄',
+    'SAMPLINGEVENT': '調查活動',
+}
+
 def search_all(request):
     if request.method == 'POST':
         q = request.POST.get('q', '')
@@ -67,14 +74,16 @@ def search_all(request):
 
         # dataset
         dataset_rows = []
-        for x in Dataset.objects.values('title', 'name','id','taibif_dataset_id').filter(Q(title__icontains=q)).exclude(status='PRIVATE').all()[:5]:
+        for x in Dataset.objects.values('title', 'name','id','taibif_dataset_id', 'dwc_core_type').filter(Q(title__icontains=q) | Q(name__icontains=q)).exclude(status='PRIVATE').all()[:5]:
             tmp_content = Dataset_description.objects.filter(dataset=x['id']).order_by('seq')
             if len(tmp_content) > 0:
                 tmp_content = Dataset_description.objects.filter(dataset=x['id']).order_by('seq')[0].description
             else:
                 tmp_content = ''
+            dwc_core_type = DWC_CORE_TYPE_MAP.get(x['dwc_core_type'], 'Unknown')
             dataset_rows.append({
                 'title': x['title'] if x['title'] != '' else x['name'],
+                'dwc_core_type': dwc_core_type,
                 'content':tmp_content, 
                 'url': '/dataset/{}'.format(x['taibif_dataset_id'])
             })
@@ -84,8 +93,8 @@ def search_all(request):
         species_rows = []
         for x in Taxon.objects.filter(Q(name__icontains=q) | Q(name_zh__icontains=q)).all()[:5]:
             species_rows.append({
-                'title': '[{}] {}'.format(x.get_rank_display(), x.get_name()),
-                # 'content': '物種數: {}'.format(x.count),
+                'title':  x.get_name(),
+                'species_rank': x.get_rank_display(),
                 'url': '/species/{}'.format(x.taicol_taxon_id),
             })
         count += len(species_rows)
@@ -125,6 +134,8 @@ def search_all(request):
                 },
             ]
         }
+
+        print(f'context: {context}')
 
         return render(request, 'search_all.html', context)
 

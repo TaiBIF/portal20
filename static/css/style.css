@@ -1438,6 +1438,17 @@ a.btn-sunset-lg.focus {
     border-top-right-radius: 0.45rem;
     border-top-left-radius: 0.45rem;
 }
+
+.tag {
+    color: #fff;
+    font-size: 1.5rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    background-color: rgba(132, 108, 91, 0.6);
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
 .news-card-img-wrapper .tag {
     position: absolute;
     top: 1.5rem;
@@ -4678,4 +4689,9 @@ body {
 .partner-logo-container .img-fluid {
     max-width: 90% !important;
     width: 90% !important;
+}
+
+.list-group-item-text {
+    color: #4a3e3a !important;
+    font-size: 14px !important;
 }
