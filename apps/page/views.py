@@ -94,9 +94,16 @@ def index(request):
     taxonGroup_url = f'http://solr:8983/solr/taibif_occurrence/select?facet.field=taibif_taxonGroup&facet=true&indent=true&q.op=OR&q=*%3A*&rows=0'
     taxonGroup_r = requests.get(taxonGroup_url).json()   
     taibif_taxonGroup =  taxonGroup_r['facet_counts']['facet_fields']['taibif_taxonGroup']
+
     taxonGroup_keys_list = taibif_taxonGroup[::2]
     taxonGroup_values_list = taibif_taxonGroup[1::2]
     taxonGroup_dict = dict(zip(taxonGroup_keys_list,taxonGroup_values_list))
+
+    # Merge group archaea with group others
+    if 'Others' in taxonGroup_dict and 'Archaea' in taxonGroup_dict:
+        taxonGroup_dict['Others'] += taxonGroup_dict['Archaea']
+        del taxonGroup_dict['Archaea']
+
     publisher_num = DatasetOrganization.objects.count()
 
     context = {
@@ -449,6 +456,11 @@ def data_visual(request):
     taxonGroup_keys_list = taibif_taxonGroup[::2]
     taxonGroup_values_list = taibif_taxonGroup[1::2]
     taxonGroup_dict = dict(zip(taxonGroup_keys_list,taxonGroup_values_list))
+
+    # Merge group archaea with group others
+    if 'Others' in taxonGroup_dict and 'Archaea' in taxonGroup_dict:
+        taxonGroup_dict['Others'] += taxonGroup_dict['Archaea']
+        del taxonGroup_dict['Archaea']
     context = {        
                'taxonGroup_dict':taxonGroup_dict,
                }

@@ -251,6 +251,12 @@ class SolrQuery(object):
                 x2 = convert_x_coor_to_grid(max(coor_list))
                 map_query = "{!frange l=" + str(x1) + " u=" + str(x2) + "}grid_x"
                 self.solr_tuples.append(('fq', map_query))
+            elif key == 'taibif_taxonGroup':
+                if len(values) > 1:
+                    query = ' OR '.join(['{}:"{}"'.format('taibif_taxonGroup', value) for value in values])
+                    self.solr_tuples.append(('fq', query))
+                else:
+                    self.solr_tuples.append(('fq', '{}:{}'.format('taibif_taxonGroup', values[0])))
 
         self.solr_tuples.append(('q', self.solr_q))
         if not 'rows' in req_lists:
@@ -267,7 +273,7 @@ class SolrQuery(object):
                     #flist.append('{}:{}'.format(i, JSON_FACET_MAP[self.core][i]))
             s = ','.join(flist)
             self.solr_tuples.append(('json.facet', '{'f'{s}''}'))
-            
+        print(f'self.solr_tuples:{self.solr_tuples}')
         query_string = urllib.parse.urlencode(self.solr_tuples)
         self.solr_url = f'{SOLR_PREFIX}{self.core}/select?fl={self.filter_field}&{query_string}'
         return self.solr_url
