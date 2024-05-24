@@ -4695,3 +4695,21 @@ body {
     color: #4a3e3a !important;
     font-size: 14px !important;
 }
+
+.alphabet-list li {
+    list-style: none;
+}
+
+.license-list li {
+    margin-bottom: 5px;
+}
+
+#ipt-mapping{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#ipt-mapping img{
+    width: 90%;
+}
