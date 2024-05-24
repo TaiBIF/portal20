@@ -4713,3 +4713,11 @@ body {
 #ipt-mapping img{
     width: 90%;
 }
+
+.article-content-wrapper p img[alt~="small-size"] {
+    height: 380px;
+}
+
+.article-content-wrapper p img[alt~="large-size"] {
+    height: 640px;
+}
