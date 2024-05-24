@@ -784,41 +784,25 @@
   <dynamicField name="*_f" type="pfloat" indexed="true" stored="true"/>
   <dynamicField name="*_d" type="pdouble" indexed="true" stored="true"/>
   <dynamicField name="*_p" type="location" indexed="true" stored="true"/>
-  <copyField source="basisOfRecord" dest="_text_"/>
+  <copyField source="kingdom" dest="_text_"/>
+  <copyField source="taibif_kingdom" dest="_text_"/>
+  <copyField source="phylum" dest="_text_"/>
+  <copyField source="taibif_phylum" dest="_text_"/>
+  <copyField source="order" dest="_text_"/>
+  <copyField source="taibif_order" dest="_text_"/>
   <copyField source="class" dest="_text_"/>
   <copyField source="taibif_class" dest="_text_"/>
-  <copyField source="country" dest="_text_"/>
-  <copyField source="countryCode" dest="_text_"/>
-  <copyField source="county" dest="_text_"/>
-  <copyField source="datasetName" dest="_text_"/>
   <copyField source="family" dest="_text_"/>
   <copyField source="taibif_family" dest="_text_"/>
   <copyField source="genus" dest="_text_"/>
   <copyField source="taibif_genus" dest="_text_"/>
-  <copyField source="habitat" dest="_text_"/>
-  <copyField source="island" dest="_text_"/>
-  <copyField source="kingdom" dest="_text_"/>
-  <copyField source="taibif_kingdom" dest="_text_"/>
-  <copyField source="license" dest="_text_"/>
-  <copyField source="locality" dest="_text_"/>
-  <copyField source="order" dest="_text_"/>
-  <copyField source="taibif_order" dest="_text_"/>
-  <copyField source="phylum" dest="_text_"/>
-  <copyField source="taibif_phylum" dest="_text_"/>
-  <copyField source="publisher" dest="_text_"/>
-  <copyField source="rights" dest="_text_"/>
-  <copyField source="scientificName" dest="_text_"/>
-  <copyField source="taibif_ch_county" dest="_text_"/>
-  <copyField source="taibif_country" dest="_text_"/>
-  <copyField source="taibif_countryCode" dest="_text_"/>
-  <copyField source="taibif_county" dest="_text_"/>
   <copyField source="taibif_dataset_name" dest="_text_"/>
   <copyField source="taibif_dataset_name_zh" dest="_text_"/>
   <copyField source="taibif_scientificName" dest="_text_"/>
-  <copyField source="taibif_taxon_name_zh" dest="_text_"/>
+  <copyField source="scientificName" dest="_text_"/>
   <copyField source="vernacularName" dest="_text_"/>
+  <copyField source="taibif_vernacularName" dest="_text_"/>
   <copyField source="taibif_taxonGroup" dest="taibif_taxonGroup_str" maxChars="256"/>
   <copyField source="taibif_taicolTaxonID" dest="taibif_taicolTaxonID_str" maxChars="256"/>
   <copyField source="path" dest="path_str" maxChars="256"/>
-  <copyField source="taibif_typeStatus" dest="taibif_typeStatus_str" maxChars="256"/>
 </schema>
