@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 {% block title %}資料應用案例{% endblock %}
 
@@ -10,7 +11,7 @@
 <div class="bg-main-pale">
     <div class="container">
         <div class="caption-mascot-wrapper">
-            <h1 class="title">資料應用案例</h1>
+            <h1 class="title">{% trans "資料應用案例" %}</h1>
             <img src="{% static 'images/mascot-flower.png' %}" alt="" class="symbol">
         </div>
     </div>
@@ -22,9 +23,9 @@
     <!-- breadcrumb begin -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-            <li class="breadcrumb-item">資料應用</li>
-            <li class="breadcrumb-item active" aria-current="page">資料應用案例</li>
+            <li class="breadcrumb-item"><a href="index.html">{% trans "首頁" %}</a></li>
+            <li class="breadcrumb-item">{% trans "資料應用" %}</li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans "資料應用案例" %}</li>
         </ol>
     </nav>
     <!-- breadcrumb end -->
