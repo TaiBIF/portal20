@@ -835,7 +835,8 @@ a.masthead-block-menu:hover .menu-title {
     -ms-flex: 0 0 50%;
     -webkit-box-flex: 0;
     flex: 0 0 50%;
-    max-width: 50%;
+    /* max-width: 50%; */
+    width: 300px !important;
 }
 .col-master-menu .block-btn-ctn {
     height: 208px;
@@ -4720,4 +4721,8 @@ body {
 
 .article-content-wrapper p img[alt~="large-size"] {
     height: 640px;
+}
+
+.menu-items li a {
+    font-size: 15px;
 }
