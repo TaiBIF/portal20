@@ -4726,3 +4726,18 @@ body {
 .menu-items li a {
     font-size: 15px;
 }
+
+.toggle-item-content-img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.toggle-item-content-img-container img {
+    width: 90%;
+}
+
+.toggle-item-content-sub-title {
+    font-weight: 700;
+    font-size: 22px;
+}
