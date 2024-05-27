@@ -1,62 +1,104 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 {% block title %}資料開放與應用工作坊{% endblock %}
 
 
 {% block main %}
-
-    
-    <!-- topnav begin -->
-    <div class="bg-main-pale">
-        <div class="container">
-          <div class="caption-mascot-wrapper">
+<!-- topnav begin -->
+<div class="bg-main-pale">
+    <div class="container">
+        <div class="caption-mascot-wrapper">
             <h1 class="title">資料開放與應用工作坊</h1>
             <img src="{% static 'images/mascot-frog.png'%}" alt="" class="symbol">
-
-            
-          </div>
         </div>
-      </div>
-      <!-- topnav end -->
-      <!-- container begin -->
-      <div class="container my-5">
-        <!-- breadcrumb begin -->
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
+    </div>
+</div>
+<!-- topnav end -->
+
+<!-- container begin -->
+<div class="container my-5">
+    <!-- breadcrumb begin -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
             <li class="breadcrumb-item">教育資源</li>
             <li class="breadcrumb-item active" aria-current="page">資料開放與應用工作坊</li>
-          </ol>
-        </nav>
-        <!-- breadcrumb end -->
-        <!-- row begin -->
-        <div class="row justify-content-center">
-          <!-- col begin -->
-          <div class="col-12 col-md-10 offset-md-1">
-  
-            <p>國科會負責辦理《生物多樣性行動計畫》中 D12010「建立生物多樣性資訊交換機制及各類或各機構資料庫之建置與整合，並定期增修補充各項資料庫之內容」及 D21010「維護及更新生物多樣性監測資料之資訊管理系統」，從 2012 年起要求研究計畫必須在計畫結案三個月內繳交報告的同時，繳交計畫過程產生的生態分布資料（見說明1）。資料繳交之規範經學門召集人於2018年1月17日開會討論後，調整如下</p>
-  
-            <div class="row">
-              <div class="col-12 col-md-6 my-3">
-                <a href="{% url 'tech-online-class' %}" class="btn-cta-learning">
-                  <span class="heading">線上教材包</span>
-                  <img src="{% static 'images/edu-video.png'%}" alt="">
-                  
-                </a>
-              </div>
-              <div class="col-12 col-md-6 my-3">
-                <a href="{% url 'tech-class-license' %}" class="btn-cta-learning">
-                  <span class="heading">課程認證</span>
-                  <img src="{% static 'images/edu-lesson.png'%}" alt="">
-                </a>
-              </div>
+        </ol>
+    </nav>
+    <!-- breadcrumb end -->
+
+    <!-- row begin -->
+    <div class="row justify-content-center">
+        <!-- col begin -->
+        <div class="col-12 col-md-10 offset-md-1">
+            <p>
+                為了讓資料提供者及大眾更加了解生物多樣性資料開放的概念，形成資料共享的文化，我們每年會於上半年和下半年各舉辦一場 TaiBIF 資料發布及應用工作坊，並針對下列主題進行說明（三天課程），也會依照工作坊的主題或學員背景不同進行微調：
+            </p>
+            <div class="article-content-wrapper">
+                <h3>初階— 基礎概論</h3>
             </div>
-  
-          </div>
-          <!-- col end -->
+            <ul>
+                <li>開放資料流程 45 min</li>
+                <li>資料發布類型 60 min</li>
+                <li>資料標準及共通欄位 75 min</li>
+                <li><span class="highlight-box-primary">HW</span> 資料欄位對應(DwC) 實作練習 75 min</li>
+                <li>敏感物種資料處理原則 30 min</li>
+            </ul>
+            <div class="article-content-wrapper">
+                <h3>初階— 資料處理及上傳</h3>
+            </div>
+            <ul>
+                <li><span class="highlight-box-primary">HW</span> 開放資料的前置準備 70 min</li>
+                <li><span class="highlight-box-primary">進階 HW</span> 用工具進行資料清理 100 min</li>
+                <li><span class="highlight-box-primary">HW</span> 如何上傳資料至 IPT  2 hr</li>
+            </ul>
+            <div class="article-content-wrapper">
+                <h3>進階— 資料管理及應用</h3>
+            </div>
+            <ul>
+                <li>TBIA 及入口網介紹 30 min</li>
+                <li><span class="highlight-box-primary">進階 HW</span> 怎麼下載及引用資料 60 min</li>
+                <li>資料論文 data paper 、應用案例介紹 30 min</li>
+                <li><span class="highlight-box-primary">進階 HW</span> 資料管理 (depositar) 2 hr</li>
+            </ul>
+            <div class="article-content-wrapper">
+                <h3>線上教材包</h3>
+            </div>
+            <p>
+                為提供無法參加實體工作坊之資料開放者線上學習資源，我們將部分工作坊主題之上課錄影檔及講義開放上線，
+                歡迎大家多多利用，內容詳情請點選下方按鈕。另外，也歡迎有興趣做線上學習並希望拿到認證的來申請線上自學工作坊！
+            </p>
+            <div class="article-content-wrapper">
+                <h3>課程認證</h3>
+            </div>
+            <p>工作坊作業繳交</p>
+            <ul>
+                <li>時程：需要證書者，可於參加完工作坊一個月內完成作業並繳交，經過審核後通過課程認證並核發證書。</li>
+                <li>初階課程證書：完成 <span class="highlight-box-primary">HW</span> 即可獲得，亦將成為IPT 帳號審核相關依據</li>
+                <li>進階課程證書：完成 <span class="highlight-box-primary">HW</span> 及 <span class="highlight-box-primary">進階  HW</span> 即可獲得，可進一步選擇成為 TaiBIFer 志工（表示已完成志工培訓的必要條件）</li>
+            </ul>
+            <p>歡迎點選下方按鈕了解詳細的課程認證方式，若已上過線上自學工作坊者，也請點選下方按進行課後認證。</p>
+
+            <div class="row">
+                <div class="col-12 col-md-6 my-3">
+                    <a href="{% url 'tech-online-class' %}" class="btn-cta-learning">
+                        <span class="heading">線上教材包</span>
+                        <img src="{% static 'images/edu-video.png'%}" alt="">
+                        
+                    </a>
+                </div>
+                <div class="col-12 col-md-6 my-3">
+                    <a href="{% url 'tech-class-license' %}" class="btn-cta-learning">
+                        <span class="heading">課程認證</span>
+                        <img src="{% static 'images/edu-lesson.png'%}" alt="">
+                    </a>
+                </div>
+            </div>
         </div>
-        <!-- row end -->
-      </div>
-      <!-- container end -->
-      
+        <!-- col end -->
+    </div>
+    <!-- row end -->
+</div>
+<!-- container end -->
 {% endblock %}

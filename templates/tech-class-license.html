@@ -1,70 +1,269 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 {% block title %}課程認證{% endblock %}
 
 
 {% block main %}
-
-    
-    <!-- topnav begin -->
-    <div class="bg-main-pale">
-      <div class="container">
+<!-- topnav begin -->
+<div class="bg-main-pale">
+    <div class="container">
         <div class="caption-mascot-wrapper">
-          <h1 class="title">課程認證</h1>
-          <img src="{% static 'images/mascot-frog.png'%}" alt="" class="symbol">
+            <h1 class="title">課程認證</h1>
+            <img src="{% static 'images/mascot-frog.png'%}" alt="" class="symbol">
         </div>
-      </div>
     </div>
-    <!-- topnav end -->
-    <!-- container begin -->
-    <div class="container my-5">
-      <!-- breadcrumb begin -->
-      <nav aria-label="breadcrumb">
+</div>
+<!-- topnav end -->
+
+<!-- container begin -->
+<div class="container my-5">
+    <!-- breadcrumb begin -->
+    <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-          <li class="breadcrumb-item">教育資源</li>
-          <li class="breadcrumb-item active" aria-current="page">課程認證</li>
+            <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+            <li class="breadcrumb-item">教育資源</li>
+            <li class="breadcrumb-item active" aria-current="page">課程認證</li>
         </ol>
-      </nav>
-      <!-- breadcrumb end -->
-      <!-- row begin -->
-      <div class="row">
+    </nav>
+    <!-- breadcrumb end -->
+
+     <!-- row begin -->
+     <div class="row">
         <!-- col left begin -->
         <div class="col-12 col-md-3">
-
-          <div class="dropdown dropdown-flexible-wrapper">
-            <a class="btn btn-toggle-flexible visible-xs" href="#" data-toggle="dropdown" aria-expanded="false">
-              課程認證
-            </a>
-            <div class="dropdown-menu dropdown-menu-flexible d-md-block">
-              <a class="dropdown-item current-sunset" href="#">初階課程</a>
-              <a class="dropdown-item" href="#">進階課程</a>
-              <a class="dropdown-item" href="#">認證辦法</a>
-              <a class="dropdown-item" href="#">歷年通過認證名單</a>
+            <div class="dropdown dropdown-flexible-wrapper">
+                <a class="btn btn-toggle-flexible visible-xs" href="#" data-toggle="dropdown" aria-expanded="false">
+                    課程認證
+                </a>
+                <div class="dropdown-menu-flexible d-md-block">
+                    <a data-cat="1" class="dropdown-item nav-item current-sunset" href="#">{% trans "初階課程" %}</a>
+                    <a data-cat="2" class="dropdown-item nav-item" href="#">{% trans "進階課程" %}</a>
+                    <a data-cat="3" class="dropdown-item nav-item" href="#">{% trans "認證辦法" %}</a>
+                    <a data-cat="4" class="dropdown-item nav-item" href="#">{% trans "線上自學工作坊課程認證" %}</a>
+                    <a data-cat="5" class="dropdown-item nav-item" href="#">{% trans "歷年通過認證名單" %}</a>
+                </div>
             </div>
-          </div>
-
         </div>
         <!-- col left end -->
         <!-- col right begin -->
-        <div class="col-12 col-md-9">
-          <h4 class="headline-left-hr">課程說明：</h4>
-          <p>一份好的資料集，必須可以再利用（具互操作性），若能提供越多欄位資料，則資料的品質及價值也能相對地提高，在任何情況下，資料集至少要有下列所述 Darwin Core 欄位</p>
-          <h4 class="headline-left">相關參考連結：</h4>
-          <ul>
-            <li>DwC 資料欄位的各集合內容：<a href="https://tools.gbif.org/dwca-validator/extensions.do" target="_blank">Darwin Core Registered Extensions</a>（按 core 和 extension 分類）</li>
-            <li>DwC 資料欄位標準英文定義快速查詢：<a href="https://dwc.tdwg.org/terms/" target="_blank">Darwin Core Quick Reference Guide</a>（按詞條的 class 分類）</li>
-          </ul>
-          <div class="embed-responsive embed-responsive-3by2">
-            <iframe src="https://www.slideshare.net/slideshow/embed_code/key/68wnofrPt4FlcO?hostedIn=slideshare&amp;page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen=""></iframe>
-          </div>
-          <p class="mt-3">操作流程下載：<a href="/media/article/download/TaiBIF IPT操作說明 2023 v2.6.3.pdf" class="myicon icon-download-document"></a></p>
+        <div data-cat="1" class="col-12 col-md-9 nav-item-content">
+            <h1 class="heading-lg-ul">{% trans "初階課程" %}</h1>
+            <p>此部分為開放資料所需學習之必修課程，亦為 IPT 帳號審核相關依據</p>
+            <div class="article-content-wrapper">
+                <h3>{% trans "基礎概論" %}</h3>
+            </div>
+            <p>
+                <ul>
+                    <li>開放資料流程</li>
+                    <li>資料發布類型</li>
+                    <li>資料標準及共通欄位</li>
+                    <li><span class="highlight-box-primary">HW</span> 資料欄位對應(DwC) 實作練習</li>
+                    <li>敏感物種資料處理原則</li>
+                </ul>
+            </p>
+            <div class="article-content-wrapper">
+                <h3>{% trans "資料處理及上傳" %}</h3>
+            </div>
+            <p>
+                <ul>
+                    <li><span class="highlight-box-primary">HW</span> 開放資料的前置準備</li>
+                    <li><span class="highlight-box-primary">HW</span> 如何上傳資料至 IPT</li>
+                </ul>
+            </p>
+        </div>
+
+        <div data-cat="2" class="col-12 col-md-9 nav-item-content hide">
+            <h1 class="heading-lg-ul">{% trans "進階課程" %}</h1>
+            <div class="article-content-wrapper">
+                <h3>{% trans "資料處理及上傳" %}</h3>
+            </div>
+            <p>
+                <ul>
+                    <li><span class="highlight-box-primary">進階 HW</span> 用工具進行資料清理</li>
+                </ul>
+            </p>
+            <div class="article-content-wrapper">
+                <h3>{% trans "資料管理及應用" %}</h3>
+            </div>
+            <p>
+                <ul>
+                    <li>TBIA 及入口網介紹</li>
+                    <li><span class="highlight-box-primary">進階 HW</span> 怎麼下載及引用資料</li>
+                    <li>資料論文 data paper 、應用案例介紹</li>
+                    <li><span class="highlight-box-primary">進階 HW</span> 資料管理 (depositar)</li>
+                </ul>
+            </p>
+        </div>
+
+        <div data-cat="3" class="col-12 col-md-9 nav-item-content hide">
+            <h1 class="heading-lg-ul">{% trans "認證辦法" %}</h1>
+            <p>
+                每期工作坊皆有5項課程指定作業，包含2項初階作業及3項進階作業。 完成課程指定作業，並於課後一個月內繳交至線上作業繳交表單，
+                經各項主題課程講師評分後，分數達標即可獲得TaiBIF課程認證證書。
+            </p>
+            <div class="article-content-wrapper">
+                <h3>{% trans "指定作業項目（將持續更新）" %}</h3>
+            </div>
+            <p>
+                <strong>初階作業</strong>
+                <ul>
+                    <li>DwC 資料欄位對應 + Sampling Event 資料集整理</li>
+                    <li>資料集上傳TaiBIF test IPT</li>
+                </ul>
+            </p>
+            <p>
+                <strong>進階作業</strong>
+                <ul>
+                    <li>openRefine 資料清理</li>
+                    <li>開放資料下載</li>
+                    <li>DMP 資料管理方案規劃</li>
+                </ul>
+            </p> 
+            <div class="article-content-wrapper">
+                <h3>{% trans "作業評核標準" %}</h3>
+            </div>
+            <p>
+                <strong>初階認證</strong>
+                <p>初階作業每項滿分20分，累計各項作業總分達25分即通過。</p>
+            </p>
+            <p>
+                <strong>進階認證</strong>
+                <p>此認證須完成包含初階作業在內所有作業，每項滿分20分 (DMP 資料管理方案滿分30分)，累計各項作業總分達70分即通過；40分以上未達70分者則給予初階認證。</p>
+            </p> 
+            <div class="article-content-wrapper">
+                <h3>{% trans "證書樣式" %}</h3>
+            </div>
+            <div class="certification-container">
+                <img src="{% static 'images/workshop_certification.png'%}"/>
+                <img src="{% static 'images/workshop_certification_advanced.png'%}"/>
+            </div>
+        </div>
+
+        <div data-cat="4" class="col-12 col-md-9 nav-item-content hide">
+            <h1 class="heading-lg-ul">{% trans "線上自學工作坊課程認證" %}</h1>
+            <p>
+                若您有申請線上自學工作坊，則請點選線上自學工作坊作業繳交區，上傳初階和進階認證作業，並聯繫我們告知您已完成作業。
+            </p>
+        </div>
+
+        <div data-cat="5" class="col-12 col-md-9 nav-item-content hide">
+            <h1 class="heading-lg-ul">{% trans "線上自學工作坊課程認證" %}</h1>
+            <p>
+                課程認證制度自 2022-09-26 起（2022最後場次工作坊）實施
+            </p>
+            <div class="certification-container">
+                <img src="{% static 'images/workshop_certification.png'%}"/>
+                <img src="{% static 'images/workshop_certification_advanced.png'%}"/>
+            </div>
+            <div class="article-content-wrapper">
+                <h3>2022</h3>
+            </div>
+            <p>
+                <strong>初階課程通過名單</strong>
+                <div>共計 4 名</div>
+                <ul>
+                    <li>陳Ｏ薇</li>
+                    <li>陳Ｏ豪</li>
+                    <li>蔡Ｏ雯</li>
+                    <li>蕭Ｏ元</li>
+                </ul>
+            </p>
+            <p>
+                <strong>進階課程通過名單</strong>
+                <div>共計 20 名</div>
+                <ul>
+                    <li>翁Ｏ賢</li>
+                    <li>何Ｏ凡</li>
+                    <li>吳Ｏ緯</li>
+                    <li>孫Ｏ</li>
+                    <li>宋Ｏ心</li>
+                    <li>曹Ｏ峰</li>
+                    <li>林Ｏ宏</li>
+                    <li>林Ｏ廷</li>
+                    <li>林Ｏ辰</li>
+                    <li>林Ｏ昊</li>
+                    <li>王Ｏ安</li>
+                    <li>王Ｏ明</li>
+                    <li>范Ｏ衍</li>
+                    <li>蔡Ｏ翰</li>
+                    <li>蕭Ｏ祥</li>
+                    <li>賴Ｏ成</li>
+                    <li>郭Ｏ嘉</li>
+                    <li>陳Ｏ微</li>
+                    <li>陳Ｏ玟</li>
+                    <li>胡Ｏ曦</li>
+                </ul>
+            </p>
+
+            <div class="article-content-wrapper">
+                <h3>2023</h3>
+            </div>
+            <p>
+                <strong>初階課程通過名單</strong>
+                <div>共計 12 名</div>
+                <ul>
+                    <li>姚Ｏ音</li>
+                    <li>林Ｏ軒</li>
+                    <li>歐Ｏ瑋</li>
+                    <li>蔡Ｏ家</li>
+                    <li>鄭Ｏ容</li>
+                    <li>陳Ｏ蓁</li>
+                    <li>陳Ｏ仁</li>
+                    <li>吳Ｏ敏</li>
+                    <li>張簡Ｏ蓮</li>
+                    <li>彭Ｏ華</li>
+                    <li>黃Ｏ霈</li>
+                    <li>黃Ｏ舒</li>
+                </ul>
+            </p>
+            <p>
+                <strong>進階課程通過名單</strong>
+                <div>共計 37 名</div>
+                <ul>
+                    <li>Lyvia Chong</li>
+                    <li>吳Ｏ鈴</li>
+                    <li>吳Ｏ綺</li>
+                    <li>吳Ｏ諭</li>
+                    <li>徐Ｏ遜</li>
+                    <li>曾Ｏ博</li>
+                    <li>朱Ｏ陽</li>
+                    <li>林Ｏ晴</li>
+                    <li>潘Ｏ合</li>
+                    <li>邱Ｏ恩</li>
+                    <li>陳Ｏ錞</li>
+                    <li>陳Ｏ君</li>
+                    <li>陳Ｏ家</li>
+                    <li>黃Ｏ新</li>
+                    <li>王Ｏ</li>
+                    <li>邱Ｏ祥</li>
+                    <li>吳Ｏ臻</li>
+                    <li>李Ｏ全</li>
+                    <li>何Ｏ倩</li>
+                    <li>吳Ｏ珈</li>
+                    <li>呂Ｏ茵</li>
+                    <li>姚Ｏ</li>
+                    <li>孫Ｏ翔</li>
+                    <li>張Ｏ紋</li>
+                    <li>徐Ｏ恆</li>
+                    <li>李Ｏ蓉</li>
+                    <li>李Ｏ韶</li>
+                    <li>林Ｏ宸</li>
+                    <li>沈Ｏ蓮</li>
+                    <li>王Ｏ皓</li>
+                    <li>鄭Ｏ琪</li>
+                    <li>陳Ｏ宇</li>
+                    <li>陳Ｏ萱</li>
+                    <li>陳Ｏ儒</li>
+                    <li>陳Ｏ為</li>
+                    <li>馮Ｏ婕</li>
+                    <li>黃Ｏ晴</li>
+                </ul>
+            </p>
         </div>
         <!-- col right end -->
-      </div>
-      <!-- row end -->
     </div>
-    <!-- container end -->
-
-
+    <!-- row end -->
+</div>
+<!-- container end -->
 {% endblock %}
