@@ -320,7 +320,6 @@ class SolrQuery(object):
             # 'facets': facets,
         }
 
-
     def get_occurrence(self,taibif_occ_id):
         solr_q = '*:*'
         solr_fq = 'taibif_occ_id:' + str(taibif_occ_id)
@@ -426,7 +425,7 @@ class SolrQuery(object):
         if data := resp['facet_counts']['facet_fields']['taibif_month']:
             result = []
             for i in range(0, len(data), 2):
-                if data[i] != '-1':
+                if data[i] != '-1' or '0':
                     result.append({
                         'key': MONTH_ORDER[data[i]],
                         'label': data[i],
