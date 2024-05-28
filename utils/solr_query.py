@@ -422,20 +422,35 @@ class SolrQuery(object):
                 'rows': result,  
             })
             
+        # if data := resp['facet_counts']['facet_fields']['taibif_month']:
+        #     result = []
+        #     i = 0
+        #     while i < len(data):
+        #         print(data[i])
+        #         if data[i] in ['-1', '0']:
+        #             del data[i:i+2]  
+        #         else:
+        #             i += 2 
+        #     print(f'MONTH DATA: {data}')
+
+        #     for i in range(0, len(data), 2):
+        #         result.append({
+        #             'key': MONTH_ORDER[data[i]],
+        #             'label': data[i],
+        #             'count': data[i + 1]
+        #         })
+            
+        #     result.sort(key=lambda x: x['key'])
+        #     menus.append({
+        #         'key': 'month',
+        #         'label': '月份 Month',
+        #         'rows': result,  
+        #     })
         if data := resp['facet_counts']['facet_fields']['taibif_month']:
             result = []
-            i = 0
-            while i < len(data):
-                print(data[i])
-                if data[i] in ['-1', '0']:
-                    del data[i:i+2]  
-                else:
-                    i += 2 
-            print(f'MONTH DATA: {data}')
-
             for i in range(0, len(data), 2):
                 result.append({
-                    'key': MONTH_ORDER[data[i]],
+                    'key': data[i],
                     'label': data[i],
                     'count': data[i + 1]
                 })
