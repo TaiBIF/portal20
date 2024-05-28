@@ -426,11 +426,12 @@ class SolrQuery(object):
         if data := resp['facet_counts']['facet_fields']['taibif_month']:
             result = []
             for i in range(0, len(data), 2):
-                result.append({
-                    'key': MONTH_ORDER[data[i]],
-                    'label': data[i],
-                    'count': data[i + 1]
-                })
+                if data[i] != '-1':
+                    result.append({
+                        'key': MONTH_ORDER[data[i]],
+                        'label': data[i],
+                        'count': data[i + 1]
+                    })
             
             result.sort(key=lambda x: x['key'])
             menus.append({
