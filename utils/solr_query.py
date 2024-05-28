@@ -424,13 +424,21 @@ class SolrQuery(object):
             
         if data := resp['facet_counts']['facet_fields']['taibif_month']:
             result = []
+            i = 0
+            while i < len(data):
+                print(data[i])
+                if data[i] in ['-1', '0']:
+                    del data[i:i+2]  
+                else:
+                    i += 2 
+            print(f'MONTH DATA: {data}')
+
             for i in range(0, len(data), 2):
-                if data[i] != '-1' or '0':
-                    result.append({
-                        'key': MONTH_ORDER[data[i]],
-                        'label': data[i],
-                        'count': data[i + 1]
-                    })
+                result.append({
+                    'key': MONTH_ORDER[data[i]],
+                    'label': data[i],
+                    'count': data[i + 1]
+                })
             
             result.sort(key=lambda x: x['key'])
             menus.append({
@@ -460,7 +468,11 @@ class SolrQuery(object):
         
         if data := resp['facet_counts']['facet_fields']['publisher']:
             result = []
-            for i in range(0, 10, 2): # 只呈現前 5 多的發布單位
+            if len(data) > 10:
+                display_number = 10
+            else:
+                display_number = len(data)
+            for i in range(0, display_number, 2): # 只呈現前 5 多的發布單位
                 result.append({
                     'key': data[i],
                     'label': data[i],
