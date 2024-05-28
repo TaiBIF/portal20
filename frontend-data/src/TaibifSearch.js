@@ -298,16 +298,16 @@ class TaibifSearch extends React.Component {
     // for window.history.pushState
     let url = `${window.location.origin}${window.location.pathname}`;
     /* TODO menu facet */
-    const facetQueryString = (isOccurrence === true) ? 'facet=year&facet=month&facet=dataset&facet=dataset_id&facet=publisher&facet=country&facet=license&facet=taibif_county&facet=CoordinateInvalid&facet=TaxonMatchNone&facet=RecordedDateInvalid&facet=wildlife_refuges&facet=forest_reserves&facet=selfProduced&facet=taibif_taxonGroup' : 'menu=1';
+    // const facetQueryString = (isOccurrence === true) ? '' : 'menu=1';
     if (filters) {
       let queryString = filtersToSearch(filters);
       apiUrl = `${apiUrl}?${queryString}&`;
       url = `${url}?${queryString}`;
     }
     else {
-      apiUrl = `${apiUrl}?`;
+      apiUrl = `${apiUrl}`;
     }
-    apiUrl = `${apiUrl}${facetQueryString}`;
+    // apiUrl = `${apiUrl}${facetQueryString}`;
 
     // if (apiUrl.includes('selfProduced=')) {
     //   apiUrl = apiUrl.replace('selfProduced=', 'selfProduced:')

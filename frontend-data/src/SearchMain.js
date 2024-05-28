@@ -145,6 +145,19 @@ const SEARCH_TYPE_LABEL_MAP = {
   'species': '物種',
 }
 
+const TAXON_GROUP_MAP = {
+  'Others': '其他',
+  'Plants': '植物',
+  'Fungi': '真菌',
+  'Bacteria': '細菌',
+  'Insects': '昆蟲',
+  'Fishes': '魚',
+  'Reptiles': '爬蟲類',
+  'Amphibia': '兩棲類',
+  'Birds': '鳥類',
+  'Mammals': '哺乳類',
+}
+
 function SearchMain(props) {
 
   const language = props.language;
@@ -158,6 +171,9 @@ function SearchMain(props) {
   const elapsed = (props.data && props.data.elapsed ) ? props.data.elapsed.toFixed(2) : '';
 
   const typeLabel = (language == 'en') ? props.searchType : SEARCH_TYPE_LABEL_MAP[props.searchType];
+
+  const queryParameters = new URLSearchParams(window.location.search)
+  const taibif_taxonGroup = TAXON_GROUP_MAP[queryParameters.get('taibif_taxonGroup')]
 
   let q = null;
   const filterTags = [];
@@ -226,6 +242,8 @@ function SearchMain(props) {
       }
     }
   }
+
+  taibif_taxonGroup ? filterTags.push((<span key="q" className="search-content-sort-tag">類群：{ taibif_taxonGroup }</span>)) : ''
 
   if (props.taxonProps && props.taxonProps.taxonData) {
     for (let tid in props.taxonProps.taxonData.checked) {

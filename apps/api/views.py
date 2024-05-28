@@ -47,8 +47,8 @@ from .cached import COUNTRY_ROWS, YEAR_ROWS
 from conf.settings import ENV
 
 #----------------- defaul map geojson -----------------#
-default_solr = SolrQuery('taibif_occurrence')
-default_solr_url = default_solr.generate_solr_url()
+default_solr = SolrQuery('taibif_occurrence', None, None)
+default_solr_url = default_solr.generate_solr_url(None)
 default_map_geojson = get_geojson(default_solr_url)
 cache.set('default_map_geojson', default_map_geojson, 2592000)
 
@@ -503,23 +503,12 @@ def occurrence_search_v2(request):
     facet_values = []
     facet_selected = {}
     query_list = []
-    is_chart = False
-    if re.search("^/api/v1/occurrence/charts.*", str(request.get_full_path())) :
-        is_chart = True
-    
-    for key, values in request.GET.lists():
-        if key == 'facet':
-            facet_values = values
-        else:
-            query_list.append((key, values))
+    # is_chart = False
+    # if re.search("^/api/v1/occurrence/charts.*", str(request.get_full_path())) :
+    #     is_chart = True
 
-    for key, values in request.GET.lists():
-        if key in facet_values:
-                facet_selected[key] = values
-
-    solr = SolrQuery('taibif_occurrence', facet_values)
-    req = solr.request(query_list)
-    #response = req['solr_response']
+    solr = SolrQuery('taibif_occurrence', request.GET, None)
+    req = solr.request()
     resp = solr.get_response()
     if not resp:
         return JsonResponse({
@@ -528,149 +517,180 @@ def occurrence_search_v2(request):
             'solr_url': solr.solr_url,
             'solr_tuples': solr.solr_tuples,
         })
-    # for frontend menu data sturct
-    menus = solr.get_menus()
-
-    # get full menu if no facet return
-    if len(menus) == 0:
-        menus = get_init_menu(facet_values)
-
-    new_menus = []
-    selected_facet_menu = {}
-    if len(facet_selected) >= 1:
-        for key, values in facet_selected.items():
-            # get each facet, count
-            solr_menu = SolrQuery('taibif_occurrence', facet_values)
-            tmp_query_list = query_list[:]
-            tmp_query_list.remove((key, values))
-            solr_menu.request(tmp_query_list)
-            if submenu := solr_menu.get_menus(key):
-                selected_facet_menu[key] = submenu
-    # reset menus (prevent too less count will filter out by solr facet default limit)
-    for i, v in enumerate(menus):
-        key = v['key']
-        if key in selected_facet_menu:
-            #print ('--------', i, facet_selected[key], selected_facet_menu[key], menus[i])
-            tmp_menu = selected_facet_menu[key].copy()
-            tmp_menu_add = []
-            # for selected in facet_selected[key]:
-            #     filtered = list(filter(lambda x: x['key'] == selected, tmp_menu['rows']))
-            #     if len(filtered) == 0 and len(tmp_menu['rows']) > 0:
-            #         #print(key, selected, tmp_menu)
-            #         tmp_menu['rows'].pop()
-            #         count = 0
-            #         for item in menus[i]['rows']:
-            #             #print (key, item['key'], selected, item['count'])
-            #             if str(item['key']) == str(selected):
-            #                 count = item['count']
-            #                 break
-            #         tmp_menu_add.append((selected, count))
-            for x in tmp_menu_add:
-                tmp_menu['rows'].append({
-                    'key': x[0],
-                    'label': x[0],
-                    'count': x[1],
-                })
-            # resort add add fixed menu back
-            tmp_menu['rows'] = sorted(tmp_menu['rows'], key=lambda x: x['count'], reverse=True)
-            new_menus.append(tmp_menu)
-        else:
-            new_menus.append(menus[i])
-    # month hack
-    #print(new_menus)
-    for menu in new_menus:
-        if menu['key'] == 'month':
-            month_rows = []
-            for month in range(1, 13):
-                count = 0
-                for x in menu['rows']:
-                    if str(x['key']) == str(month):
-                        count = x['count']
-
-                month_rows.append({
-                    'key': str(month),
-                    'label': str(month),
-                    'count': count
-                })
-            menu['rows'] = month_rows
-
-    # year hack
-    #print(new_menus)
-    for menu in new_menus:
-        if menu['key'] == 'year':
-            if is_chart != True :
-                menu['rows'] = [{'key': 'fake_year_range', 'label': 'fake_year_range', 'count': 0}]
     
-    # HACK, for menu items all zero:
-    for menu in new_menus:
-        menu_default = None
-        if menu['key'] not in['month', 'year']:
-            #print(menu['key'], sum([x.get('count', 0) for x in menu['rows']]))
-            total = sum([x.get('count', 0) for x in menu['rows']])
-            if total == 0:
-                if not menu_default:
-                    menu_default = get_init_menu(facet_values)
-                    found = filter(lambda x: x['key'] == menu['key'], menu_default)
-                    if submenu := list(found):
-                        # replace submenu !!
-                        menu['rows'] = submenu[0]['rows']
-    #chart api return month/year/datasey facet 
-    if is_chart :
-        charts_year=[]
-        charts_month=[]
-        charts_dataset=[]
-        menus = solr.get_menus()
-        for menu in menus:
+    menus = solr.get_menus()
+    for menu in menus:
+        if menu['key'] == 'year':
+                menu['rows'] = [{'key': 'fake_year_range', 'label': 'fake_year_range', 'count': 0}]
+    resp['menus'] = menus
+
+    query_params = list(request.GET.lists())
+    if query_params:
+        print('QUERY ITEMS ALERT!!!')
+        print(query_params)
+        last_query_item = query_params[-1][0]
+        print(f'last_query_item:{last_query_item}')
+        solr = SolrQuery('taibif_occurrence', request.GET, last_query_item)
+        last_item_req = solr.request()
+        last_item_resp = solr.get_response()
+        last_item_menus = solr.get_menus()
+        month_menu = [menu for menu in last_item_menus if menu['key'] == 'month']
+        print(f'NEW MONTH MENU:{month_menu}')
+
+        month_menu_index = None
+        for i, menu in enumerate(last_item_menus):
             if menu['key'] == 'month':
-                for month in range(1, 13):
-                    count = 0
-                    for x in menu['rows']:
-                        if str(x['key']) == str(month):
-                            count = x['count']
+                month_menu_index = i
+                break
+        
+        if month_menu_index is not None:
+            menus[month_menu_index] = month_menu[0]
+            resp['menus'] = menus
 
-                    charts_month.append({
-                        'key': str(month),
-                        'label': str(month),
-                        'count': count
-                    })
-            if menu['key'] == 'year':
-                for x in menu['rows']:
-                    if int(x['key']) > 1784:
-                        charts_year.append({
-                        'key': x['key'],
-                        'label': x['label'],
-                        'count': x['count']
-                    })
-            if menu['key'] == 'dataset':
-                for x in menu['rows']:
-                    charts_dataset.append({
-                        'key': x['key'],
-                        'label': x['label'],
-                        'count': x['count']
-                    })
 
-        ret = {
-            'charts': [
-                {
-                    'key': 'year',
-                    'label': '年份',
-                    'rows': charts_year,
-                },
-                {
-                    'key': 'month',
-                    'label': '月份',
-                    'rows': charts_month,
-                },
-                {
-                    'key': 'dataset',
-                    'label': '資料集',
-                    'rows': charts_dataset,
-                },
-            ],
-        }
-        return JsonResponse(ret)
 
-    resp['menus'] = new_menus
+
+    # # get full menu if no facet return
+    # if len(menus) == 0:
+    #     menus = get_init_menu(facet_values)
+
+    # new_menus = []
+    # selected_facet_menu = {}
+    # if len(facet_selected) >= 1:
+    #     for key, values in facet_selected.items():
+    #         # get each facet, count
+    #         solr_menu = SolrQuery('taibif_occurrence', facet_values)
+    #         tmp_query_list = query_list[:]
+    #         tmp_query_list.remove((key, values))
+    #         solr_menu.request(tmp_query_list)
+    #         if submenu := solr_menu.get_menus(key):
+    #             selected_facet_menu[key] = submenu
+    # # reset menus (prevent too less count will filter out by solr facet default limit)
+    # for i, v in enumerate(menus):
+    #     key = v['key']
+    #     if key in selected_facet_menu:
+    #         #print ('--------', i, facet_selected[key], selected_facet_menu[key], menus[i])
+    #         tmp_menu = selected_facet_menu[key].copy()
+    #         tmp_menu_add = []
+    #         # for selected in facet_selected[key]:
+    #         #     filtered = list(filter(lambda x: x['key'] == selected, tmp_menu['rows']))
+    #         #     if len(filtered) == 0 and len(tmp_menu['rows']) > 0:
+    #         #         #print(key, selected, tmp_menu)
+    #         #         tmp_menu['rows'].pop()
+    #         #         count = 0
+    #         #         for item in menus[i]['rows']:
+    #         #             #print (key, item['key'], selected, item['count'])
+    #         #             if str(item['key']) == str(selected):
+    #         #                 count = item['count']
+    #         #                 break
+    #         #         tmp_menu_add.append((selected, count))
+    #         for x in tmp_menu_add:
+    #             tmp_menu['rows'].append({
+    #                 'key': x[0],
+    #                 'label': x[0],
+    #                 'count': x[1],
+    #             })
+    #         # resort add add fixed menu back
+    #         tmp_menu['rows'] = sorted(tmp_menu['rows'], key=lambda x: x['count'], reverse=True)
+    #         new_menus.append(tmp_menu)
+    #     else:
+    #         new_menus.append(menus[i])
+    # # month hack
+    # #print(new_menus)
+    # for menu in new_menus:
+    #     if menu['key'] == 'month':
+    #         month_rows = []
+    #         for month in range(1, 13):
+    #             count = 0
+    #             for x in menu['rows']:
+    #                 if str(x['key']) == str(month):
+    #                     count = x['count']
+
+    #             month_rows.append({
+    #                 'key': str(month),
+    #                 'label': str(month),
+    #                 'count': count
+    #             })
+    #         menu['rows'] = month_rows
+
+    # # year hack
+    # #print(new_menus)
+    # for menu in new_menus:
+    #     if menu['key'] == 'year':
+    #         if is_chart != True :
+    #             menu['rows'] = [{'key': 'fake_year_range', 'label': 'fake_year_range', 'count': 0}]
+    
+    # # HACK, for menu items all zero:
+    # for menu in new_menus:
+    #     menu_default = None
+    #     if menu['key'] not in['month', 'year']:
+    #         #print(menu['key'], sum([x.get('count', 0) for x in menu['rows']]))
+    #         total = sum([x.get('count', 0) for x in menu['rows']])
+    #         if total == 0:
+    #             if not menu_default:
+    #                 menu_default = get_init_menu(facet_values)
+    #                 found = filter(lambda x: x['key'] == menu['key'], menu_default)
+    #                 if submenu := list(found):
+    #                     # replace submenu !!
+    #                     menu['rows'] = submenu[0]['rows']
+
+    # #chart api return month/year/datasey facet 
+    # if is_chart :
+    #     charts_year=[]
+    #     charts_month=[]
+    #     charts_dataset=[]
+    #     menus = solr.get_menus()
+    #     for menu in menus:
+    #         if menu['key'] == 'month':
+    #             for month in range(1, 13):
+    #                 count = 0
+    #                 for x in menu['rows']:
+    #                     if str(x['key']) == str(month):
+    #                         count = x['count']
+
+    #                 charts_month.append({
+    #                     'key': str(month),
+    #                     'label': str(month),
+    #                     'count': count
+    #                 })
+    #         if menu['key'] == 'year':
+    #             for x in menu['rows']:
+    #                 if int(x['key']) > 1784:
+    #                     charts_year.append({
+    #                     'key': x['key'],
+    #                     'label': x['label'],
+    #                     'count': x['count']
+    #                 })
+    #         if menu['key'] == 'dataset':
+    #             for x in menu['rows']:
+    #                 charts_dataset.append({
+    #                     'key': x['key'],
+    #                     'label': x['label'],
+    #                     'count': x['count']
+    #                 })
+
+    #     ret = {
+    #         'charts': [
+    #             {
+    #                 'key': 'year',
+    #                 'label': '年份',
+    #                 'rows': charts_year,
+    #             },
+    #             {
+    #                 'key': 'month',
+    #                 'label': '月份',
+    #                 'rows': charts_month,
+    #             },
+    #             {
+    #                 'key': 'dataset',
+    #                 'label': '資料集',
+    #                 'rows': charts_dataset,
+    #             },
+    #         ],
+    #     }
+    #     return JsonResponse(ret)
+
+    # resp['menus'] = new_menus
 
 
     # TODO, init taxon_key
@@ -697,32 +717,19 @@ def occurrence_search_v2(request):
 
     resp['solr_qtime'] = req['solr_response']['responseHeader']['QTime']
 
-    #--------------- map ---------------#
-    # check if solr data has been updated
-    # solr_updated = False if cache.get('default_solr_count') == resp['count'] else True
-    # if query_list: # 如果有帶篩選條件
-    #     resp['map_geojson'] = get_geojson(solr.solr_url)
-    # elif solr_updated or not cache.get('default_map_geojson'):
-    #     # 如果沒有篩選條件且solr資料有更新 或 如果沒有篩選條件且cache沒有default_map_geojson
-    #     resp['map_geojson'] = get_geojson(solr.solr_url)
-    #     cache.set('default_map_geojson', resp['map_geojson'])
-    #     cache.set('default_solr_count', resp['count'])
-    # else: # 如果沒有篩選條件且solr沒更新且cache有default_map_geojson
-    #     resp['map_geojson'] = default_map_geojson
-    if current_path == '/api/v2/occurrence/map':
-        solr_updated = False if cache.get('default_solr_count') == resp['count'] else True
-        if query_list: # 如果有帶篩選條件
-            resp['map_geojson'] = get_geojson(solr.solr_url)
-        elif solr_updated or not cache.get('default_map_geojson'):
-            # 如果沒有篩選條件且solr資料有更新 或 如果沒有篩選條件且cache沒有default_map_geojson
-            resp['map_geojson'] = get_geojson(solr.solr_url)
-            cache.set('default_map_geojson', resp['map_geojson'])
-            cache.set('default_solr_count', resp['count'])
-        else: # 如果沒有篩選條件且solr沒更新且cache有default_map_geojson
-            resp['map_geojson'] = default_map_geojson
+    # if current_path == '/api/v2/occurrence/map':
+    #     solr_updated = False if cache.get('default_solr_count') == resp['count'] else True
+    #     if query_list: # 如果有帶篩選條件
+    #         resp['map_geojson'] = get_geojson(solr.solr_url)
+    #     elif solr_updated or not cache.get('default_map_geojson'):
+    #         # 如果沒有篩選條件且solr資料有更新 或 如果沒有篩選條件且cache沒有default_map_geojson
+    #         resp['map_geojson'] = get_geojson(solr.solr_url)
+    #         cache.set('default_map_geojson', resp['map_geojson'])
+    #         cache.set('default_solr_count', resp['count'])
+    #     else: # 如果沒有篩選條件且solr沒更新且cache有default_map_geojson
+    #         resp['map_geojson'] = default_map_geojson
             
     resp['elapsed'] = time.time() - time_start
-    # #print('final', time.time() - time_start)
 
     return JsonResponse(resp)
 
