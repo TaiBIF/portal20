@@ -70,7 +70,7 @@ function Accordion(props) {
       }
   }})
   const menuItems = content.rows.map((x) => {
-    if(content.key ===  'year'){
+    if(content.key ===  'taibif_year'){
       const handleChange = (event, newValue) => {
         setYearValue(newValue);
         onClick(event, content.key, newValue);
@@ -93,7 +93,7 @@ function Accordion(props) {
           />
           </div>
       );
-    } else if (content.key ===  'dataset'){   
+    } else if (content.key ===  'taibif_dataset_name_zh'){   
       const count = (x.count) >=0 ? x.count.toLocaleString() : null;
       const itemChecked = filters.has(`${content.key}=${x.key}`);
       if (!itemChecked){
@@ -110,21 +110,6 @@ function Accordion(props) {
             </div>
         );
       }
-    } else if (content.key ===  'selfProduced'){   
-      const count = (x.count) >=0 ? x.count.toLocaleString() : null;
-      const itemChecked = filters.has(`${content.key}=${x.key}`);
-      return (
-          <div className="search-sidebar-checkbox-wrapper" key={x.key}>
-            <label className="custom-input-ctn">
-            <input type="checkbox" onChange={(e)=> {e.persist(); onClick(e, content.key, x.key)}} checked={itemChecked} />
-            <span className="checkmark"></span>
-            <span className="search-sidebar-count-group">
-            <Translation>{t => <span className="name">{t(x.label == false ? 'GBIF' : 'TaiBIF IPT')}</span>}</Translation>
-              <span className="count">{count}</span>
-            </span>
-            </label>
-          </div>
-      );
     } else {
       const count = (x.count) >=0 ? x.count.toLocaleString() : null;
       const itemChecked = filters.has(`${content.key}=${x.key}`);

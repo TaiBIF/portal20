@@ -17,18 +17,18 @@ import {
 
 const navTabsData = [
   {
-    'key': 'Search',
+    'key': 'search',
     'label': '資料列表',
     'path': '/occurrence/search/',
   },
   {
-    'key': 'Gallery',
+    'key': 'gallery',
     'label': '影像集',
     'path': '/occurrence/gallery/',
     'disable': true,
   },
   {
-    'key': 'Map',
+    'key': 'map',
     'label': '分佈地圖',
     'path': '/occurrence/map/',
     //'disable': true,
@@ -40,19 +40,18 @@ const navTabsData = [
     'disable': true,
   },
   {
-    'key': 'Charts',
+    'key': 'charts',
     'label': '指標',
     'path': '/occurrence/charts/',
   },
   {
-    'key': 'Download',
+    'key': 'download',
     'label': '下載',
     'path': '/occurrence/download/',
   }
 ];
 
 const OccurrenceRouter = ({data, filters,urlPrefix, language}) =>  {
-  //console.log(data);
   const path = window.location.pathname;
   const m = path.match(/\/occurrence\/(search|map|gallery|taxonomy|charts|download)/);
   const initTab = (m[1]) ? m[1] : 'search';
@@ -68,10 +67,6 @@ const OccurrenceRouter = ({data, filters,urlPrefix, language}) =>  {
       );
     }
   }
-  /*{navTabsData.map((x) => (
-      <li key={x.key} className={activeTab === x.key ? "active" : null} onClick={(e)=>setActiveTab(x.key)}>
-      <Link to={x.path}>{x.label}</Link>
-      </li>))}*/
   return (
       <Router>
       <div className="table-responsive">

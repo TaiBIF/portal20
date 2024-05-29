@@ -59,7 +59,6 @@ cache.set('default_solr_count', resp['count'] if resp else 0, 2592000)
 #----------------- defaul map geojson -----------------#
 
 
-
 def search_occurrence_v1_charts(request):
     year_start = 1000
     year_end = 2021
@@ -159,8 +158,6 @@ def search_occurrence_v1_charts(request):
     }
     return JsonResponse(ret)
 
-
-
 def get_map_species(request):
     query_list = []
     for key, values in request.GET.lists():
@@ -206,31 +203,6 @@ def dataset_api(request):
     } for x in result_d ]
     
     return HttpResponse(json.dumps(rows), content_type="application/json")
-    
-# def taxon_api(request):
-    
-#     ds_search = SpeciesSearch(list(request.GET.lists())).result_map
-#     result_d = ds_search.query.values()
-    
-#     rows = [{
-#         'title' : x['title'] if 'title' in x else None,
-#         'name' : x['name'],
-#         'author' : x['author'] if 'author' in x and x['mod_date'] != None else None,
-#         'pub_date' : x['pub_date'].strftime("%Y-%m-%d") if 'pub_date' in x and x['pub_date'] != None else None,
-#         'mod_date' : x['mod_date'].strftime("%Y-%m-%d") if 'mod_date' in x and x['mod_date'] != None else None,
-#         'core' : x['dwc_core_type'] if 'dwc_core_type' in x else None,
-#         'license' : x['data_license'] if 'data_license' in x and x['data_license'] != None else 'unknown',
-#         'doi' : x['gbif_doi'] if 'doi' in x and x['gbif_doi'] != None else None,
-#         'organization_id' : x['organization_uuid'] if 'organization_uuid' in x and x['organization_uuid'] != None else None,
-#         'organization_name' : x['organization_name'] if 'organization_name' in x and x['organization_name'] != None else None,
-#         'num_record' : x['num_record'] if 'num_record' in x and x['num_record'] != None else None,
-#         'gbif_dataset_id' : x['guid'] if 'guid' in x and x['guid'] != None else None,
-#         # 'citation' : x['citation'] if 'citation' in x else None,
-#         # 'resource' : x['resource'] if 'resource' in x else None,
-#     } for x in result_d ]
-    
-#     return HttpResponse(json.dumps(rows), content_type="application/json")
-
 
 def publisher_api(request):
     dataset = []
@@ -251,7 +223,6 @@ def publisher_api(request):
     } for x in result_d ]
     
     return HttpResponse(json.dumps(rows), content_type="application/json")
-
 
 def publisher_dataset_api(request,pk):
     dataset = []
@@ -280,232 +251,9 @@ def publisher_dataset_api(request,pk):
 
     return HttpResponse(json.dumps(rows), content_type="application/json")
 
-'''
-for_basic_occ 2023-10 棄用，和 occurrence_api 合併 by JJJ
-'''
-# def for_basic_occ(request):
-#     # rows, offset, taibifModDate
-#     query_list = []
-#     solr_error = ''
-#     rows=100
-#     offset=0
-#     fq_query=''
-#     fq_list = []
-#     generate_list = []
-#     q_list = []
-#     if request.GET.get('q'): 
-#         q_list.append(('q', request.GET.get('q')))
-#     else:
-#         q_list.append(('q', '{}:{}'.format('*', '*')))
-    
-#     for key, values in request.GET.lists():
-#         if key == 'fl':
-#             generate_list.append(('fl', values[0]))
-#         elif key == 'wt':
-#             generate_list.remove(('wt', 'json'))
-#             generate_list.append(('wt', values[0]))
-#         elif key == "rows":
-#             rows = int(values[0])
-#             if rows <=3000:
-#                 generate_list.append((key, values[0]))
-#             else : 
-#                 rows = 3000
-#                 generate_list.append((key, 3000))
-#         elif key == "offset":
-#             offset = values[0]
-#             generate_list.append(('start', values[0]))
-        
-#         elif key == "occurrenceID":
-#             fq_list.append(('fq', '{}:"{}"'.format('occurrenceID', values[0])))
-#         elif key == "taibifOccurrenceID":
-#             fq_list.append(('fq', '{}:"{}"'.format('taibif_occ_id', values[0])))
-#         elif key == "basisOfRecord":
-#             if ',' in values[0]:
-#                 vlist = values[0].split(',')
-#                 vlistString = '" OR "'.join(vlist)
-#                 fq_list.append(('fq', f'taibif_basisOfRecord:"{vlistString}"'))
-#             else: 
-#                 fq_list.append(('fq', '{}:{}'.format('taibif_basisOfRecord', values[0])))
-#         elif key == "datasetName":
-#             fq_list.append(('fq', '{}:{}'.format('taibif_dataset_name_zh', values[0])))
-            
-#         elif key == "taibifDatasetID":
-#             fq_list.append(('fq', '{}:"{}"'.format('taibifDatasetID', values[0])))
-        
-#         elif key == "taxonRank":
-#             fq_list.append(('fq', '{}:"{}"'.format('taxon_rank', values[0])))
-                
-#         elif key == "scientificName":
-#             fq_list.append(('fq', '{}:{}'.format('taibif_scientificname', values[0])))
-#         elif key == "typeStatus":
-#             fq_list.append(('fq', '{}:{} -typeStatus:*voucher*'.format('typeStatus', '*'+values[0]+'*')))
-            
-#         # range query
-#         elif key == "taibifModifiedDate":
-#             if ',' in values[0]:
-#                 vlist = values[0].split(',')
-#                 fq_list.append(('fq', f'mod_date:[{vlist[0]}T00:00:00Z TO {vlist[1]}T00:00:00Z]'))
-#             else:
-#                 fq_list.append(('fq', f'mod_date:"{values[0]}T00:00:00Z"'))
-#         elif key == "eventDate":
-#             if ',' in values[0]:
-#                 vlist = values[0].split(',')
-#                 fq_list.append(('fq', f'taibif_event_date:[{vlist[0]}T00:00:00Z TO {vlist[1]}T00:00:00Z]'))
-#             else:
-#                 fq_list.append(('fq', f'taibif_event_date:{values[0]}'))
-#         elif key == "coordinateUncertaintyInMeters":
-#             if ',' in values[0]:
-#                 vlist = values[0].split(',')
-#                 fq_list.append(('fq', f'taibif_coordinateUncertaintyInMeters:[{vlist[0]} TO {vlist[1]}]'))
-#             else:
-#                 fq_list.append(('fq', '{}:{}'.format('taibif_coordinateUncertaintyInMeters', values[0])))
-#         elif key == 'license':
-#             litype = ''
-#             if values[0] == 'CC-BY':
-#                 litype = 'Creative Commons Attribution (CC-BY) 4.0 License'
-#             elif values[0] == 'CC-BY-NC':
-#                 litype = 'Creative Commons Attribution Non Commercial (CC-BY-NC) 4.0 License'
-#             elif values[0] == 'CC0':
-#                 litype = 'Public Domain (CC0 1.0)'
-#             elif values[0] == 'NA':
-#                 litype = 'unknown'
-#                 # fq_list.append(('fq', '-license:[* TO *]'))
-#                 # continue
-#             fq_list.append(('fq', '{}:"{}"'.format('license', litype)))
-        
-#         elif key == 'selfProduced':
-#             fq_list.append(('fq', '{}:{}'.format('selfProduced', values[0])))
-#         else:
-#             return JsonResponse({
-#                 'results': 0,
-#                 'query_column': key,
-#                 'error_msg':"the column can't be search in this mode.",
-#             })
-    
-#     if "rows" not in generate_list:
-#         generate_list.append(("rows", 100))
-        
-#     solr = SolrQuery('taibif_occurrence')
-#     fq_query = urllib.parse.urlencode(fq_list)
-#     q_query = urllib.parse.urlencode(q_list)
-#     generate_query = urllib.parse.urlencode(generate_list)
-
-#     solr.solr_url = f'http://solr:8983/solr/{solr.core}/select?indent=true&q.op=OR'
-#     if generate_query:
-#         solr.solr_url = solr.solr_url+f'&{generate_query}'
-#     if q_query:
-#         solr.solr_url = solr.solr_url+f'&{q_query}'
-#     if fq_query:
-#         solr.solr_url = solr.solr_url+f'&{fq_query}'
-#     try: 
-#         resp =urllib.request.urlopen(solr.solr_url)
-#         resp_dict = resp.read().decode()
-#         solr.solr_response = json.loads(resp_dict)
-#     except urllib.request.HTTPError as e:
-#         solr_error = str(e)
-    
-#     if not solr.solr_response['response']['docs']: 
-#         if solr_error:
-#             return JsonResponse({
-#                 'results': 0,
-#                 'query_list': fq_list,
-#                 'error_url': solr.solr_url,
-#                 'error_msg': solr_error,
-#             })    
-        
-#         if solr.solr_response['response']['numFound'] == 0:
-#             res={}
-#             res_list=[] 
-#             res['count'] = solr.solr_response['response']['numFound']
-#             res['offset'] = int(offset)
-#             res['rows'] = int(rows)
-#             res['results'] = res_list
-#             return JsonResponse(res)
-   
-#     res={}
-#     res_list=[] 
-#     for i in solr.solr_response['response']['docs']:
-#         backbone = i['taxon_backbone']if 'taxon_backbone' in i else None
-#         mediaLicense = i['mediaLicense'] if 'mediaLicense' in i else None
-#         group = i['taibif_taxonGroup'][0] if 'taibif_taxonGroup' in i else None
-#         if 'orderzh' in i :
-#             if i['orderzh'] in ['Accipitriformes','Anseriformes','Apodiformes','Bucerotiformes','Caprimulgiformes','Charadriiformes','Ciconiiformes','Columbiformes','Coraciiformes','Cuculiformes','Falconiformes','Galliformes','Gaviiformes','Gruiformes','Passeriformes','Pelecaniformes','Phaethontiformes','Phoenicopteriformes','Piciformes','Podicipediformes','Procellariiformes','Psittaciformes','Strigiformes','Suliformes','Struthioniformes',]:
-#                 group = 'Birds'
-#         res_list.append({
-#             'occurrenceID':i['occurrenceID'] if 'occurrenceID' in i else None,
-#             'taibifOccurrenceID':i['taibif_occ_id'],
-#             'basisOfRecord':i['taibif_basisOfRecord'] if 'taibif_basisOfRecord' in i else None,
-#             # 'modifiedDate':i['modified'] if 'modified' in i else None,
-#             'taibifModifiedDate':i['mod_date'][0],
-#             'datasetName':i['taibif_dataset_name_zh'] if 'taibif_dataset_name_zh' in i else None,
-#             'occurrenceStatus':i['taibif_occurrenceStatus'] if 'taibif_occurrenceStatus' in i else None,
-#             'scientificName': i['taibif_scientificname'] if 'taibif_scientificname' in i else None,
-#             'taibifDatasetID': i['taibifDatasetID'],
-#             'taxonRank':i['taxon_rank'] if 'taxon_rank' in i else None,
-#             'taicolTaxonID': i['taibif_accepted_namecode']  if backbone == "TaiCOL" else  None,
-#             'kingdom':i['kingdomzh'] if 'kingdomzh' in i else None,
-#             'phylum':i['phylumzh'] if 'phylumzh' in i else None,
-#             'class':i['classzh'] if 'classzh' in i else None,
-#             'order':i['orderzh'] if 'orderzh' in i else None,
-#             'family':i['familyzh'] if 'familyzh' in i else None,
-#             'genus':i['genuszh'] if 'genuszh' in i else None,
-#             'taxonGroup':group,
-#             'eventDate':i['taibif_event_date'] if 'taibif_event_date' in i else None,
-#             'year':i['taibif_year'][0] if 'taibif_year' in i else None,
-#             'month':i['taibif_month'][0] if 'taibif_month' in i else None,
-#             'decimalLatitude':str(i['taibif_latitude'][0]) if 'taibif_latitude' in i  else None,
-#             'decimalLongitude':str(i['taibif_longitude'][0]) if 'taibif_longitude' in i  else None,
-#             'coordinateUncertaintyInMeters':i['taibif_coordinateUncertaintyInMeters'][0] if 'taibif_coordinateUncertaintyInMeters' in i else None,
-#             'country':i['taibif_country'] if 'taibif_country' in i else None,
-#             'county':i['taibif_county'] if 'taibif_county' in i else None,
-#             'license':i['license'] if 'license' in i and i['license']!= 'unknown' else 'NA',
-#             'selfProduced':i['selfProduced'][0],
-            
-#             'taibifCreatedDate':i['mod_date'][0],
-#             'datasetShortName':i['taibif_dataset_name'] if 'taibif_dataset_name' in i else None,
-#             'isPreferredName': i['taibif_vernacular_name'] if 'taibif_vernacular_name' in i else None,
-#             'gbifAcceptedID':int(float(i['taibif_accepted_namecode']))  if backbone == "GBIF" else  None ,
-#             'scientificNameID':i['taibif_namecode'] if 'taibif_namecode' in i else  None,
-#             'taxonBackbone':backbone,
-#             'day':i['taibif_day'][0] if 'taibif_day' in i else None,
-#             'geodeticDatum':i['taibif_geodeticDatum'] if 'taibif_geodeticDatum' in i else None, #對到verbatimCoordinateSystem
-#             'verbatimSRS':i['taibif_crs'] if 'taibif_crs' in i else None, # verbatimSRS
-#             'dataGeneralizations':i['dataGeneralizations'] if 'dataGeneralizations' in i else None,
-#             'coordinatePrecision':i['coordinatePrecision'] if 'coordinatePrecision' in i else None,
-#             'locality':i['locality'] if 'locality' in i  else None,
-#             'habitatReserve':i['forestN'][0] if 'forestN' in i else None,
-#             'wildlifeReserve':i['wildlifeN'][0] if 'wildlifeN' in i else None,
-#             'countryCode':i['taibif_countryCode'] if 'taibif_countryCode' in i else None,
-#             'typeStatus':i['typeStatus'] if 'typeStatus' in i else None,
-#             'preservation':i['preservation'] if 'preservation' in i else None,
-#             'collectionID':i['collectionID'] if 'collectionID' in i else None,
-#             'recordedBy':i['recordedBy'] if 'recordedBy' in i else None,
-#             'recordNumber':i['recordNumber'] if 'recordNumber' in i else None,
-#             'organismQuantity':i['organismQuantity'] if 'organismQuantity' in i else None,
-#             'organismQuantityType':i['organismQuantityType'] if 'organismQuantityType' in i else None,
-#             'associatedMedia':i['associatedMedia']  if 'associatedMedia' else  None,
-#             'mediaLicense':mediaLicense,
-            
-#         })
-
-#     res['url'] = solr.solr_url
-#     res['count'] = solr.solr_response['response']['numFound']
-#     res['offset'] = int(offset)
-#     res['rows'] = int(rows)
-#     res['results'] = res_list
-
-#     return JsonResponse(res)
-
 def occurrence_search_v2(request):
     current_path = request.path
-
     time_start = time.time()
-    facet_values = []
-    facet_selected = {}
-    query_list = []
-    # is_chart = False
-    # if re.search("^/api/v1/occurrence/charts.*", str(request.get_full_path())) :
-    #     is_chart = True
 
     solr = SolrQuery('taibif_occurrence', request.GET, None)
     req = solr.request()
@@ -520,120 +268,39 @@ def occurrence_search_v2(request):
     
     menus = solr.get_menus()
     for menu in menus:
-        if menu['key'] == 'year':
+        if menu['key'] == 'taibif_year':
                 menu['rows'] = [{'key': 'fake_year_range', 'label': 'fake_year_range', 'count': 0}]
     resp['menus'] = menus
 
     query_params = list(request.GET.lists())
-    if query_params:
+    if len(query_params) > 0:
         print('QUERY ITEMS ALERT!!!')
         print(query_params)
-        last_query_item = query_params[-1][0]
-        print(f'last_query_item:{last_query_item}')
-        solr = SolrQuery('taibif_occurrence', request.GET, last_query_item)
-        last_item_req = solr.request()
-        last_item_resp = solr.get_response()
-        last_item_menus = solr.get_menus()
-        month_menu = [menu for menu in last_item_menus if menu['key'] == 'month']
-        print(f'NEW MONTH MENU:{month_menu}')
+        query_params = [item for item in query_params if item[0] != 'q']
+        if query_params:
+            last_query_item = query_params[-1][0]
+            print(f'last_query_item:{last_query_item}')
+            if last_query_item not in ['year', 'q']:
+                solr = SolrQuery('taibif_occurrence', request.GET, last_query_item)
+                last_item_req = solr.request()
+                last_item_resp = solr.get_response()
+                last_item_menus = solr.get_menus()
+                updated_menu = [menu for menu in last_item_menus if menu['key'] == last_query_item]
+                print(f'NEW MONTH MENU:{updated_menu}')
 
-        month_menu_index = None
-        for i, menu in enumerate(last_item_menus):
-            if menu['key'] == 'month':
-                month_menu_index = i
-                break
-        
-        if month_menu_index is not None:
-            menus[month_menu_index] = month_menu[0]
-            resp['menus'] = menus
+                updated_menu_index = None
+                for i, menu in enumerate(last_item_menus):
+                    if menu['key'] == last_query_item:
+                        updated_menu_index = i
+                        break
+                
+                if updated_menu_index is not None:
+                    menus[updated_menu_index] = updated_menu[0]
+                    resp['menus'] = menus
 
-
-
-
-    # # get full menu if no facet return
-    # if len(menus) == 0:
-    #     menus = get_init_menu(facet_values)
-
-    # new_menus = []
-    # selected_facet_menu = {}
-    # if len(facet_selected) >= 1:
-    #     for key, values in facet_selected.items():
-    #         # get each facet, count
-    #         solr_menu = SolrQuery('taibif_occurrence', facet_values)
-    #         tmp_query_list = query_list[:]
-    #         tmp_query_list.remove((key, values))
-    #         solr_menu.request(tmp_query_list)
-    #         if submenu := solr_menu.get_menus(key):
-    #             selected_facet_menu[key] = submenu
-    # # reset menus (prevent too less count will filter out by solr facet default limit)
-    # for i, v in enumerate(menus):
-    #     key = v['key']
-    #     if key in selected_facet_menu:
-    #         #print ('--------', i, facet_selected[key], selected_facet_menu[key], menus[i])
-    #         tmp_menu = selected_facet_menu[key].copy()
-    #         tmp_menu_add = []
-    #         # for selected in facet_selected[key]:
-    #         #     filtered = list(filter(lambda x: x['key'] == selected, tmp_menu['rows']))
-    #         #     if len(filtered) == 0 and len(tmp_menu['rows']) > 0:
-    #         #         #print(key, selected, tmp_menu)
-    #         #         tmp_menu['rows'].pop()
-    #         #         count = 0
-    #         #         for item in menus[i]['rows']:
-    #         #             #print (key, item['key'], selected, item['count'])
-    #         #             if str(item['key']) == str(selected):
-    #         #                 count = item['count']
-    #         #                 break
-    #         #         tmp_menu_add.append((selected, count))
-    #         for x in tmp_menu_add:
-    #             tmp_menu['rows'].append({
-    #                 'key': x[0],
-    #                 'label': x[0],
-    #                 'count': x[1],
-    #             })
-    #         # resort add add fixed menu back
-    #         tmp_menu['rows'] = sorted(tmp_menu['rows'], key=lambda x: x['count'], reverse=True)
-    #         new_menus.append(tmp_menu)
-    #     else:
-    #         new_menus.append(menus[i])
-    # # month hack
-    # #print(new_menus)
-    # for menu in new_menus:
-    #     if menu['key'] == 'month':
-    #         month_rows = []
-    #         for month in range(1, 13):
-    #             count = 0
-    #             for x in menu['rows']:
-    #                 if str(x['key']) == str(month):
-    #                     count = x['count']
-
-    #             month_rows.append({
-    #                 'key': str(month),
-    #                 'label': str(month),
-    #                 'count': count
-    #             })
-    #         menu['rows'] = month_rows
-
-    # # year hack
-    # #print(new_menus)
-    # for menu in new_menus:
-    #     if menu['key'] == 'year':
-    #         if is_chart != True :
-    #             menu['rows'] = [{'key': 'fake_year_range', 'label': 'fake_year_range', 'count': 0}]
-    
-    # # HACK, for menu items all zero:
-    # for menu in new_menus:
-    #     menu_default = None
-    #     if menu['key'] not in['month', 'year']:
-    #         #print(menu['key'], sum([x.get('count', 0) for x in menu['rows']]))
-    #         total = sum([x.get('count', 0) for x in menu['rows']])
-    #         if total == 0:
-    #             if not menu_default:
-    #                 menu_default = get_init_menu(facet_values)
-    #                 found = filter(lambda x: x['key'] == menu['key'], menu_default)
-    #                 if submenu := list(found):
-    #                     # replace submenu !!
-    #                     menu['rows'] = submenu[0]['rows']
-
+    # is_chart = False
+    # if re.search("^/api/v1/occurrence/charts.*", str(request.get_full_path())) :
+    #     is_chart = True
     # #chart api return month/year/datasey facet 
     # if is_chart :
     #     charts_year=[]
@@ -717,17 +384,21 @@ def occurrence_search_v2(request):
 
     resp['solr_qtime'] = req['solr_response']['responseHeader']['QTime']
 
-    # if current_path == '/api/v2/occurrence/map':
-    #     solr_updated = False if cache.get('default_solr_count') == resp['count'] else True
-    #     if query_list: # 如果有帶篩選條件
-    #         resp['map_geojson'] = get_geojson(solr.solr_url)
-    #     elif solr_updated or not cache.get('default_map_geojson'):
-    #         # 如果沒有篩選條件且solr資料有更新 或 如果沒有篩選條件且cache沒有default_map_geojson
-    #         resp['map_geojson'] = get_geojson(solr.solr_url)
-    #         cache.set('default_map_geojson', resp['map_geojson'])
-    #         cache.set('default_solr_count', resp['count'])
-    #     else: # 如果沒有篩選條件且solr沒更新且cache有default_map_geojson
-    #         resp['map_geojson'] = default_map_geojson
+    if current_path == '/api/v2/occurrence/map':
+        solr_updated = False if cache.get('default_solr_count') == resp['count'] else True
+        query_params = list(request.GET.lists())
+        if len(query_params) > 0:
+            print('QUERY ITEMS ALERT!!!')
+            print(query_params)
+            solr_url = solr.generate_solr_url(request.GET)
+            resp['map_geojson'] = get_geojson(solr_url)
+        elif solr_updated or not cache.get('default_map_geojson'):
+            # 如果沒有篩選條件且solr資料有更新 或 如果沒有篩選條件且cache沒有default_map_geojson
+            resp['map_geojson'] = get_geojson(solr.solr_url)
+            cache.set('default_map_geojson', resp['map_geojson'])
+            cache.set('default_solr_count', resp['count'])
+        else: # 如果沒有篩選條件且solr沒更新且cache有default_map_geojson
+            resp['map_geojson'] = default_map_geojson
             
     resp['elapsed'] = time.time() - time_start
 

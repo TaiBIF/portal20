@@ -23,24 +23,24 @@ else:
 
 JSON_FACET_MAP = {
     'taibif_occurrence': {
-        'dataset_name': {
+        'taibif_dataset_name_zh': {
             'type': 'terms',
             'field': 'taibif_dataset_name_zh',
             'mincount': 1,
             'limit': -1,
         },
-        'month': {
+        'taibif_month': {
             'type': 'terms',
             'field':'taibif_month',
             'limit': -1,
             #'mincount': 0, cause solr error?
         },
-        'year': {
+        'taibif_year': {
             'type':'terms',
             'field':'taibif_year',
             'limit': -1,
         },
-        'country': {
+        'taibif_country': {
             'type':'terms',
             'field':'taibif_country',
             'mincount': 0,
@@ -52,12 +52,12 @@ JSON_FACET_MAP = {
             'mincount': 0,
             'limit': -1,
         },
-        'license': {
+        'taibif_license': {
             'type':'terms',
             'field':'taibif_license',
             'mincount': 0,
         },
-        'county': {
+        'taibif_county': {
             'type':'terms',
             'field':'taibif_county',
             'limit': -1,
@@ -144,10 +144,10 @@ CODE_MAPPING ={
     
 }
 
-MONTH_ORDER = {
-                '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6,
-                '7': 7, '8': 8, '9': 9, '10': 10, '11': 11, '12': 12
-            }
+SOURCE_MAP = {
+    'true': 'TaiBIF IPT',
+    'false': 'GBIF'
+}
 
 
 def get_init_menu(facet_values=[]):
@@ -177,16 +177,15 @@ class SolrQuery(object):
         self.solr_tuples = [
             ('q.op', 'AND'),
             ('wt', 'json'),
+            ('rows', 20),
+            ('q', 'basisOfRecord:*')
         ]
         self.core = core
         self.queryset = queryset
-        # self.facet_values = facet_values
         self.query_list = ''
         self.solr_error = ''
         self.solr_response = {}
         self.solr_url = ''
-        self.solr_q = 'basisOfRecord:*' # Only fetch occurrence data, using basisOfRecord to estimate
-        # Limit the respoense fields
         self.filter_field = 'taibif_vernacularName,taibif_country,taibif_locality,taibif_basisOfRecord,basisOfRecord,taibif_datasetKey,taibif_formattedName,taibif_dataset_name_zh,taibif_kingdom,taibif_phylum,taibif_class,taibif_order,taibif_family,taibif_genus,taibif_occ_id,taibif_eventDate'
         self.facet_field = 'facet=true&facet.field=taibif_year&facet.field=taibif_month&facet.field=taibif_dataset_name_zh&facet.field=publisher&facet.field=taibif_country&facet.field=taibif_license&facet.field=taibif_county&facet.field=CoordinateInvalid&facet.field=TaxonMatchNone&facet.field=RecordedDateInvalid&facet.field=wildlife_refuges&facet.field=forest_reserves&facet.field=selfProduced'
         self.last_query_item = last_query_item
@@ -199,16 +198,9 @@ class SolrQuery(object):
                 print(f'key:{key}, value:{values}')
                 if key == 'q' and values[0] != '':
                     self.solr_q = values[0]
+                    self.solr_tuples.append(('fq', self.solr_q))
                 elif key == 'offset':
                     self.solr_tuples.append(('start', values[0]))
-                elif key == 'rows':
-                    self.rows = int(values[0])
-                    self.solr_tuples.append(('rows', self.rows))
-                elif key == 'fl':
-                    self.solr_tuples.append(('fl', values[0]))
-                elif key == 'wt':
-                    self.solr_tuples.remove(('wt', 'json'))
-                    self.solr_tuples.append(('wt', values[0]))
                 elif key == 'taxon_key':
                     taxon_key_list = []
                     for v in values:
@@ -219,14 +211,8 @@ class SolrQuery(object):
                             taxon_key_list.append(f'{rank}_key:{taxon_id}')
                     #fq=(cat1:val1 OR cat2:val2 OR (cat3:(val3 AND val4)))
                     self.solr_tuples.append(('fq', ' OR '.join(taxon_key_list)))
-                elif key == 'path':
-                    self.solr_tuples.append(('fq', 'path:*{}*'.format(values[0])))
-                elif key == 'issues':
-                    self.solr_tuples.append(('fq', '{}:"{}"'.format(values[0], 'true')))
                 elif key in JSON_FACET_MAP[self.core]:
                     field = JSON_FACET_MAP[self.core][key]['field']
-                    if (field == 'taibif_dataset_name_zh'):
-                        field = 'taibif_dataset_name'
                     if len(values) == 1:
                         if ',' in values[0]:
                             vlist = values[0].split(',')
@@ -239,12 +225,6 @@ class SolrQuery(object):
                                     self.solr_tuples.append(('fq', '{}:"{}"'.format(field, values[0])))
                     else:
                         self.solr_tuples.append(('fq', ' OR '.join([f'{field}:"{x}"' for x in values])))
-                        #self.solr_tuples.append(('fq', 'taibif_dataset_name:A OR taibif_dataset_name:B'))
-                # this get by __init__
-                #elif key == 'facet':
-                #    self.has_facet = True
-                #    self.facet_values = values
-                #-----map------#
                 elif key == 'lat':
                     coor_list = [ float(c) for c in values]
                     y1 = convert_y_coor_to_grid(min(coor_list))
@@ -264,7 +244,7 @@ class SolrQuery(object):
                     else:
                         self.solr_tuples.append(('fq', '{}:{}'.format('taibif_taxonGroup', values[0])))
 
-        self.solr_tuples.append(('q', self.solr_q))
+        # self.solr_tuples.append(('q', self.solr_q))
         # if not 'rows' in req_lists:
         #     self.solr_tuples.append(('rows', self.rows)) #TODO remove redundant key['rows']
  
@@ -281,8 +261,9 @@ class SolrQuery(object):
         #     self.solr_tuples.append(('json.facet', '{'f'{s}''}'))
         query_string = urllib.parse.urlencode(self.solr_tuples)
         self.solr_url = f'{SOLR_PREFIX}{self.core}/select?fl={self.filter_field}&{self.facet_field}&{query_string}'
-        if last_query_item == 'month':
-            self.solr_url = self.solr_url.replace('fq=taibif_month', '')
+
+        if last_query_item in JSON_FACET_MAP[self.core]:
+            self.solr_url = self.solr_url.replace(f'fq={last_query_item}', '')
         print(f'SOLR URL: {self.solr_url}')
         return self.solr_url
 
@@ -357,7 +338,7 @@ class SolrQuery(object):
                 })
             
             menus.append({
-                'key': 'country',
+                'key': 'taibif_country',
                 'label': '國家/區域 Country or Area',
                 'rows': result,  
             })
@@ -372,7 +353,7 @@ class SolrQuery(object):
                 })
             
             menus.append({
-                'key': 'county',
+                'key': 'taibif_county',
                 'label': '台灣縣市 Taiwan City or County',
                 'rows': result,  
             })
@@ -417,47 +398,27 @@ class SolrQuery(object):
                 })
             
             menus.append({
-                'key': 'year',
+                'key': 'taibif_year',
                 'label': '年份 Year',
                 'rows': result,  
             })
             
-        # if data := resp['facet_counts']['facet_fields']['taibif_month']:
-        #     result = []
-        #     i = 0
-        #     while i < len(data):
-        #         print(data[i])
-        #         if data[i] in ['-1', '0']:
-        #             del data[i:i+2]  
-        #         else:
-        #             i += 2 
-        #     print(f'MONTH DATA: {data}')
-
-        #     for i in range(0, len(data), 2):
-        #         result.append({
-        #             'key': MONTH_ORDER[data[i]],
-        #             'label': data[i],
-        #             'count': data[i + 1]
-        #         })
-            
-        #     result.sort(key=lambda x: x['key'])
-        #     menus.append({
-        #         'key': 'month',
-        #         'label': '月份 Month',
-        #         'rows': result,  
-        #     })
         if data := resp['facet_counts']['facet_fields']['taibif_month']:
+            print(f'MONTH DATA: {data}')
             result = []
             for i in range(0, len(data), 2):
-                result.append({
-                    'key': data[i],
-                    'label': data[i],
-                    'count': data[i + 1]
-                })
+                month = data[i]
+                if 1 <= int(month) <= 12:
+                    result.append({
+                        'key': int(month),
+                        'label': month,
+                        'count': data[i + 1]
+                    })
             
             result.sort(key=lambda x: x['key'])
+            print(f'FILTERED MONTH DATA: {result}')
             menus.append({
-                'key': 'month',
+                'key': 'taibif_month',
                 'label': '月份 Month',
                 'rows': result,  
             })
@@ -476,7 +437,7 @@ class SolrQuery(object):
                 })
             
             menus.append({
-                'key': 'dataset_name',
+                'key': 'taibif_dataset_name_zh',
                 'label': '資料集 Dataset',
                 'rows': result,  
             })
@@ -510,7 +471,7 @@ class SolrQuery(object):
                 })
             
             menus.append({
-                'key': 'license',
+                'key': 'taibif_license',
                 'label': '授權類型 License',
                 'rows': result,  
             })
@@ -520,10 +481,11 @@ class SolrQuery(object):
             for i in range(0, len(data), 2):
                 result.append({
                     'key': data[i],
-                    'label': data[i],
+                    'label': SOURCE_MAP[data[i]],
                     'count': data[i + 1]
                 })
             
+            print(f'FILTERED SOURCE DATA: {result}')
             menus.append({
                 'key': 'selfProduced',
                 'label': '資料來源 Source',
