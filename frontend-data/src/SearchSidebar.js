@@ -95,12 +95,12 @@ function Accordion(props) {
       );
     } else if (content.key ===  'taibif_dataset_name_zh'){   
       const count = (x.count) >=0 ? x.count.toLocaleString() : null;
-      const itemChecked = filters.has(`${content.key}=${x.key}`);
+      const itemChecked = filters.has(`taibif_datasetKey=${x.key}`);
       if (!itemChecked){
         return (
             <div className="search-sidebar-checkbox-wrapper" key={x.key}>
               <label className="custom-input-ctn">
-              <input type="checkbox" onChange={(e)=> {e.persist(); onClick(e, content.key, x.key)}} checked={itemChecked} />
+              <input type="checkbox" onChange={(e)=> {e.persist(); onClick(e, 'taibif_datasetKey', x.key)}} checked={itemChecked} />
               <span className="checkmark"></span>
               <span className="search-sidebar-count-group">
                 <Translation>{t => <span className="name">{t(x.label)}</span>}</Translation>

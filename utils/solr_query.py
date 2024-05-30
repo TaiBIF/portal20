@@ -182,7 +182,7 @@ class SolrQuery(object):
         self.solr_response = {}
         self.solr_url = ''
         self.filter_field = 'taibif_vernacularName,taibif_country,taibif_locality,taibif_basisOfRecord,basisOfRecord,taibif_datasetKey,taibif_formattedName,taibif_dataset_name_zh,taibif_kingdom,taibif_phylum,taibif_class,taibif_order,taibif_family,taibif_genus,taibif_occ_id,taibif_eventDate'
-        self.facet_field = 'facet=true&facet.field=taibif_year&facet.field=taibif_month&facet.field=taibif_dataset_name_zh&facet.field=publisher&facet.field=taibif_country&facet.field=taibif_license&facet.field=taibif_county&facet.field=CoordinateInvalid&facet.field=TaxonMatchNone&facet.field=RecordedDateInvalid&facet.field=wildlife_refuges&facet.field=forest_reserves&facet.field=selfProduced'
+        self.facet_field = 'facet=true&facet.field=taibif_year&facet.field=taibif_month&facet.field=taibif_dataset_name_zh&facet.field=publisher&facet.field=taibif_country&facet.field=taibif_license&facet.field=taibif_county&facet.field=wildlife_refuges&facet.field=forest_reserves&facet.field=selfProduced&facet.field=taibif_datasetKey'
         self.last_query_item = last_query_item
 
     def generate_solr_url(self, queryset=None, last_query_item=None):
@@ -243,6 +243,7 @@ class SolrQuery(object):
         if last_query_item in JSON_FACET_MAP:
             self.solr_url = self.solr_url.replace(f'fq={last_query_item}', '')
         
+        print(f'SOLR URL: {self.solr_url}')
         return self.solr_url
 
     def request(self):
@@ -401,23 +402,23 @@ class SolrQuery(object):
             })
 
         if data := resp['facet_counts']['facet_fields']['taibif_dataset_name_zh']:
-            result = []
-            if len(data) > 10:
-                display_number = 10
-            else:
-                display_number = len(data)
-            for i in range(0, display_number, 2): # 最多呈現前 5 多的資料集
-                result.append({
-                    'key': data[i],
-                    'label': data[i],
-                    'count': data[i + 1]
+            if dataset_key := resp['facet_counts']['facet_fields']['taibif_datasetKey']:
+                merged_list = [(data[i], data[i+1], dataset_key[i], dataset_key[i+1]) for i in range(0, len(data), 2)]
+                # print(f'MERGED LISST: {merged_list}')
+
+                result = []
+                for i in merged_list: 
+                    result.append({
+                        'key': i[2],
+                        'label': i[0],
+                        'count': i[1]  
+                    })
+                
+                menus.append({
+                    'key': 'taibif_dataset_name_zh',
+                    'label': '資料集 Dataset',
+                    'rows': result,  
                 })
-            
-            menus.append({
-                'key': 'taibif_dataset_name_zh',
-                'label': '資料集 Dataset',
-                'rows': result,  
-            })
         
         if data := resp['facet_counts']['facet_fields']['publisher']:
             result = []
