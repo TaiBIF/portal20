@@ -91,7 +91,7 @@ def search_all(request):
 
         # species
         species_rows = []
-        for x in Taxon.objects.filter(Q(name__icontains=q) | Q(name_zh__icontains=q)).all()[:5]:
+        for x in Taxon.objects.filter(Q(name__icontains=q) | Q(name_zh__icontains=q)).exclude(taicol_taxon_id__isnull=True).all()[:5]:
             species_rows.append({
                 'title':  x.get_name(),
                 'species_rank': x.get_rank_display(),
