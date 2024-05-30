@@ -521,8 +521,8 @@ def species_view(request, taicol_taxon_id):
     r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&rows={search_limit}&q=*:*&fq={solr_q}&{facet_json}')
 
 
-    map_url = "http://"+request.META['HTTP_HOST']+"/api/v2/occurrence/search?q=*:*&fq="+solr_q+"&facet=year&facet=month&facet=dataset&facet=dataset_id&facet=publisher&facet=country&facet=license"
-    r2 = requests.get(map_url)
+    # map_url = "http://"+request.META['HTTP_HOST']+"/api/v2/occurrence/search?q=*:*&fq="+solr_q+"&facet=year&facet=month&facet=dataset&facet=dataset_id&facet=publisher&facet=country&facet=license"
+    # r2 = requests.get(map_url)
 
     # 資料集出現次數資訊
     if r.status_code == 200:
@@ -542,11 +542,11 @@ def species_view(request, taicol_taxon_id):
             for x,y,z,n in zip(count, dataset_list, dataset_zh_list,dataset_taibif_dataset_id):
                 dataset.append({'count':x,'name':y,'name_zh':z,'taibifDatasetID':n})                
 
-    if r2.status_code == 200:
-        data2 = r2.json()
+    # if r2.status_code == 200:
+    #     data2 = r2.json()
 
-        if data2['map_geojson']['features']!=[]:
-            map_geojson = True
+        # if data2['map_geojson']['features']!=[]:
+        #     map_geojson = True
 
     
 # dataset_occ_count
