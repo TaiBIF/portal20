@@ -174,6 +174,7 @@ function SearchMain(props) {
 
   const queryParameters = new URLSearchParams(window.location.search)
   const taibif_taxonGroup = TAXON_GROUP_MAP[queryParameters.get('taibif_taxonGroup')]
+  const taibif_datasetKey = queryParameters.get('taibif_datasetKey')
 
   let q = null;
   const filterTags = [];
@@ -215,9 +216,9 @@ function SearchMain(props) {
     } else if (menuKey[0] === 'q') {
       q = decodeURIComponent(menuKey[1]);
       if (language === 'zh-hant'){
-        filterTags.push((<span key="q" className="search-content-sort-tag">關鍵字:{ q }</span>));
+        filterTags.push((<span key="q" className="search-content-sort-tag">關鍵字：{ q }</span>));
       } else if (language === 'en'){
-        filterTags.push((<span key="q" className="search-content-sort-tag">keyword:{ q }</span>));
+        filterTags.push((<span key="q" className="search-content-sort-tag">keyword: { q }</span>));
       }
       
     } else if ((menuKey[0] === 'lat'||menuKey[0] === 'lng') && !mapTag) {
@@ -234,16 +235,17 @@ function SearchMain(props) {
       });
       mapTag = true
       if (language === 'zh-hant'){
-        filterTags.push((<span key="map" className="search-content-sort-tag">經度:{lng[0]}~{lng[1]}</span>));
-        filterTags.push((<span key="map" className="search-content-sort-tag">緯度:{lat[0]}~{lat[1]}</span>));
+        filterTags.push((<span key="map" className="search-content-sort-tag">經度：{lng[0]}~{lng[1]}</span>));
+        filterTags.push((<span key="map" className="search-content-sort-tag">緯度：{lat[0]}~{lat[1]}</span>));
       } else if (language === 'en'){
-        filterTags.push((<span key="map" className="search-content-sort-tag">Longitude:{lng[0]}~{lng[1]}</span>));
-        filterTags.push((<span key="map" className="search-content-sort-tag">Latitude:{lat[0]}~{lat[1]}</span>));
+        filterTags.push((<span key="map" className="search-content-sort-tag">Longitude: {lng[0]}~{lng[1]}</span>));
+        filterTags.push((<span key="map" className="search-content-sort-tag">Latitude: {lat[0]}~{lat[1]}</span>));
       }
     }
   }
 
   taibif_taxonGroup ? filterTags.push((<span key="q" className="search-content-sort-tag">類群：{ taibif_taxonGroup }</span>)) : ''
+  taibif_datasetKey ? filterTags.push((<span key="q" className="search-content-sort-tag">datasetKey: { taibif_datasetKey }</span>)) : ''
 
   if (props.taxonProps && props.taxonProps.taxonData) {
     for (let tid in props.taxonProps.taxonData.checked) {

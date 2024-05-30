@@ -143,7 +143,7 @@ def search_all(request):
 
 def occurrence_view(request, taibif_id):
 
-    solr = SolrQuery('taibif_occurrence')
+    solr = SolrQuery('taibif_occurrence', None, None)
     req = solr.get_occurrence(taibif_id)
     result = req['results']
     

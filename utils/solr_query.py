@@ -14,105 +14,100 @@ from apps.data.models import (
     taibifcode
 )
 if ENV in ['dev','stag']:
-    # SOLR_PREFIX = 'http://solr:8983/solr/'
-# if ENV == 'dev':
-    # SOLR_PREFIX = 'http://54.65.81.61:8983/solr/'
     SOLR_PREFIX = 'http://solr:8983/solr/'
 else:
     SOLR_PREFIX = 'http://solr:8983/solr/'
 
 JSON_FACET_MAP = {
-    'taibif_occurrence': {
-        'taibif_dataset_name_zh': {
-            'type': 'terms',
-            'field': 'taibif_dataset_name_zh',
-            'mincount': 1,
-            'limit': -1,
-        },
-        'taibif_month': {
-            'type': 'terms',
-            'field':'taibif_month',
-            'limit': -1,
-            #'mincount': 0, cause solr error?
-        },
-        'taibif_year': {
-            'type':'terms',
-            'field':'taibif_year',
-            'limit': -1,
-        },
-        'taibif_country': {
-            'type':'terms',
-            'field':'taibif_country',
-            'mincount': 0,
-            'limit': -1,
-        },
-        'publisher': {
-            'type':'terms',
-            'field':'publisher',
-            'mincount': 0,
-            'limit': -1,
-        },
-        'taibif_license': {
-            'type':'terms',
-            'field':'taibif_license',
-            'mincount': 0,
-        },
-        'taibif_county': {
-            'type':'terms',
-            'field':'taibif_county',
-            'limit': -1,
-        },
-        'taxon_id': {
-            'type':'terms',
-            'field':'taxon_id',
-            'mincount': 1,
-            'limit': -1,
-        },
-        'taibif_error': {
-            'type':'terms',
-            'field':'taibif_error',
-            'mincount': 1,
-        },
-        'CoordinateInvalid': {
-            'type':'terms',
-            'field':'CoordinateInvalid',
-            'mincount': 1,
-        },
-        'TaxonMatchNone': {
-            'type':'terms',
-            'field':'TaxonMatchNone',
-            'mincount': 1,
-        },
-        'RecordedDateInvalid': {
-            'type':'terms',
-            'field':'RecordedDateInvalid',
-            'mincount': 1,
-        },
-        'forest_reserves': {
-            'type':'terms',
-            'field':'forest_reserves',
-            'mincount': 0,
-            'limit': -1,
-        },
-        'wildlife_refuges': {
-            'type':'terms',
-            'field':'wildlife_refuges',
-            'mincount': 0,
-            'limit': -1,
-        },
-        'taibif_datasetKey': {
-            'type':'terms',
-            'field':'taibif_datasetKey',
-            'mincount': 0,
-            'limit': -1,
-        },
-        'selfProduced': {
-            'type':'terms',
-            'field':'selfProduced',
-            'mincount': 0,
-            'limit': -1,
-        },
-    }
+    'taibif_dataset_name_zh': {
+        'type': 'terms',
+        'field': 'taibif_dataset_name_zh',
+        'mincount': 1,
+        'limit': -1,
+    },
+    'taibif_month': {
+        'type': 'terms',
+        'field':'taibif_month',
+        'limit': -1,
+        #'mincount': 0, cause solr error?
+    },
+    'taibif_year': {
+        'type':'terms',
+        'field':'taibif_year',
+        'limit': -1,
+    },
+    'taibif_country': {
+        'type':'terms',
+        'field':'taibif_country',
+        'mincount': 0,
+        'limit': -1,
+    },
+    'publisher': {
+        'type':'terms',
+        'field':'publisher',
+        'mincount': 0,
+        'limit': -1,
+    },
+    'taibif_license': {
+        'type':'terms',
+        'field':'taibif_license',
+        'mincount': 0,
+    },
+    'taibif_county': {
+        'type':'terms',
+        'field':'taibif_county',
+        'limit': -1,
+    },
+    'taxon_id': {
+        'type':'terms',
+        'field':'taxon_id',
+        'mincount': 1,
+        'limit': -1,
+    },
+    'taibif_error': {
+        'type':'terms',
+        'field':'taibif_error',
+        'mincount': 1,
+    },
+    'CoordinateInvalid': {
+        'type':'terms',
+        'field':'CoordinateInvalid',
+        'mincount': 1,
+    },
+    'TaxonMatchNone': {
+        'type':'terms',
+        'field':'TaxonMatchNone',
+        'mincount': 1,
+    },
+    'RecordedDateInvalid': {
+        'type':'terms',
+        'field':'RecordedDateInvalid',
+        'mincount': 1,
+    },
+    'forest_reserves': {
+        'type':'terms',
+        'field':'forest_reserves',
+        'mincount': 0,
+        'limit': -1,
+    },
+    'wildlife_refuges': {
+        'type':'terms',
+        'field':'wildlife_refuges',
+        'mincount': 0,
+        'limit': -1,
+    },
+    'taibif_datasetKey': {
+        'type':'terms',
+        'field':'taibif_datasetKey',
+        'mincount': 0,
+        'limit': -1,
+    },
+    'selfProduced': {
+        'type':'terms',
+        'field':'selfProduced',
+        'mincount': 0,
+        'limit': -1,
+    },
 }
 
 CODE_MAPPING ={
@@ -173,7 +168,7 @@ class SolrQuery(object):
     '''
     rows = 20
 
-    def __init__(self, core, queryset, last_query_item):
+    def __init__(self, core, queryset=None, last_query_item=None):
         self.solr_tuples = [
             ('q.op', 'AND'),
             ('wt', 'json'),
@@ -190,12 +185,10 @@ class SolrQuery(object):
         self.facet_field = 'facet=true&facet.field=taibif_year&facet.field=taibif_month&facet.field=taibif_dataset_name_zh&facet.field=publisher&facet.field=taibif_country&facet.field=taibif_license&facet.field=taibif_county&facet.field=CoordinateInvalid&facet.field=TaxonMatchNone&facet.field=RecordedDateInvalid&facet.field=wildlife_refuges&facet.field=forest_reserves&facet.field=selfProduced'
         self.last_query_item = last_query_item
 
-    def generate_solr_url(self, queryset, last_query_item=None):
+    def generate_solr_url(self, queryset=None, last_query_item=None):
         map_query = ''
         if queryset is not None:
-            print(f'QUERY SET:{queryset}')
             for key, values in queryset.lists():
-                print(f'key:{key}, value:{values}')
                 if key == 'q' and values[0] != '':
                     self.solr_q = values[0]
                     self.solr_tuples.append(('fq', self.solr_q))
@@ -209,20 +202,19 @@ class SolrQuery(object):
                         if len(klist) > 1:
                             taxon_id = klist[1]
                             taxon_key_list.append(f'{rank}_key:{taxon_id}')
-                    #fq=(cat1:val1 OR cat2:val2 OR (cat3:(val3 AND val4)))
                     self.solr_tuples.append(('fq', ' OR '.join(taxon_key_list)))
-                elif key in JSON_FACET_MAP[self.core]:
-                    field = JSON_FACET_MAP[self.core][key]['field']
+                elif key in JSON_FACET_MAP:
+                    field = JSON_FACET_MAP[key]['field']
                     if len(values) == 1:
-                        if ',' in values[0]:
-                            vlist = values[0].split(',')
+                        value = values[0]
+                        if ',' in value:
+                            vlist = value.split(',')
                             self.solr_tuples.append(('fq', f'{key}:[{vlist[0]} TO {vlist[1]}]'))
                         else:
-                            if key in JSON_FACET_MAP[self.core]:
-                                if key == 'selfProduced': # 布林值搜尋 value 不需要轉成 string
-                                    self.solr_tuples.append(('fq', '{}:{}'.format(field, values[0])))
-                                else:
-                                    self.solr_tuples.append(('fq', '{}:"{}"'.format(field, values[0])))
+                            if key == 'selfProduced':  # 布林值搜尋 value 不需要轉成 string
+                                self.solr_tuples.append(('fq', f'{field}:{value}'))
+                            else:
+                                self.solr_tuples.append(('fq', f'{field}:"{value}"'))
                     else:
                         self.solr_tuples.append(('fq', ' OR '.join([f'{field}:"{x}"' for x in values])))
                 elif key == 'lat':
@@ -243,28 +235,14 @@ class SolrQuery(object):
                         self.solr_tuples.append(('fq', query))
                     else:
                         self.solr_tuples.append(('fq', '{}:{}'.format('taibif_taxonGroup', values[0])))
-
-        # self.solr_tuples.append(('q', self.solr_q))
-        # if not 'rows' in req_lists:
-        #     self.solr_tuples.append(('rows', self.rows)) #TODO remove redundant key['rows']
- 
-        # if len(self.facet_values):
-        #     self.solr_tuples.append(('facet', 'true'))
-        #     s = ''
-        #     flist = []
-        #     #print (str(JSON_FACET_MAP[self.core]).replace("'", '',).replace(' ', ''))
-        #     for i in self.facet_values:
-        #         if i in JSON_FACET_MAP[self.core]:
-        #             flist.append('{}:{}'.format(i, str(JSON_FACET_MAP[self.core][i]).replace("'", '',).replace(' ', '')))
-        #             #flist.append('{}:{}'.format(i, JSON_FACET_MAP[self.core][i]))
-        #     s = ','.join(flist)
-        #     self.solr_tuples.append(('json.facet', '{'f'{s}''}'))
+                elif key == 'path':
+                    self.solr_tuples.append(('fq', 'path:*{}*'.format(values[0])))
         query_string = urllib.parse.urlencode(self.solr_tuples)
         self.solr_url = f'{SOLR_PREFIX}{self.core}/select?fl={self.filter_field}&{self.facet_field}&{query_string}'
 
-        if last_query_item in JSON_FACET_MAP[self.core]:
+        if last_query_item in JSON_FACET_MAP:
             self.solr_url = self.solr_url.replace(f'fq={last_query_item}', '')
-        print(f'SOLR URL: {self.solr_url}')
+        
         return self.solr_url
 
     def request(self):
@@ -391,11 +369,12 @@ class SolrQuery(object):
         if data := resp['facet_counts']['facet_fields']['taibif_year']:
             result = []
             for i in range(0, len(data), 2):
-                result.append({
-                    'key': data[i],
-                    'label': data[i],
-                    'count': data[i + 1]
-                })
+                if int(data[i]) > 1784:
+                    result.append({
+                        'key': data[i],
+                        'label': data[i],
+                        'count': data[i + 1]
+                    })
             
             menus.append({
                 'key': 'taibif_year',
@@ -404,7 +383,6 @@ class SolrQuery(object):
             })
             
         if data := resp['facet_counts']['facet_fields']['taibif_month']:
-            print(f'MONTH DATA: {data}')
             result = []
             for i in range(0, len(data), 2):
                 month = data[i]
@@ -416,7 +394,6 @@ class SolrQuery(object):
                     })
             
             result.sort(key=lambda x: x['key'])
-            print(f'FILTERED MONTH DATA: {result}')
             menus.append({
                 'key': 'taibif_month',
                 'label': '月份 Month',
@@ -485,7 +462,6 @@ class SolrQuery(object):
                     'count': data[i + 1]
                 })
             
-            print(f'FILTERED SOURCE DATA: {result}')
             menus.append({
                 'key': 'selfProduced',
                 'label': '資料來源 Source',

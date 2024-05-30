@@ -58,6 +58,15 @@ cache.set('default_solr_count', resp['count'] if resp else 0, 2592000)
 
 #----------------- defaul map geojson -----------------#
 
+init_solr = SolrQuery('taibif_occurrence')
+init_solr_req = init_solr.request()
+init_solr_resp = init_solr.get_response()
+init_solr_menus = init_solr.get_menus()
+init_solr_resp['menus'] = init_solr_menus
+init_solr_resp['elapsed'] = init_solr_req['solr_response']['responseHeader']['QTime'] / 1000
+init_solr_resp['tree'] = [{'id': 't0000005', 'data': {'name': '細菌界 Bacteria', 'count': None}}, {'id': 't0000007', 'data': {'name': '原藻界 Chromista', 'count': None}}, {'id': 't0000004', 'data': {'name': '古菌界 Archaea', 'count': None}}, {'id': 't0000008', 'data': {'name': '真菌界 Fungi', 'count': None}}, {'id': 't0000009', 'data': {'name': '動物界 Animalia', 'count': None}}, {'id': 't0000003', 'data': {'name': '植物界 Plantae', 'count': None}}, {'id': 't0000006', 'data': {'name': '原生生物界 Protozoa', 'count': None}}]
+cache.set('init_solr_resp', init_solr_resp, 2592000)
+
 
 def search_occurrence_v1_charts(request):
     year_start = 1000
@@ -253,6 +262,10 @@ def publisher_dataset_api(request,pk):
 
 def occurrence_search_v2(request):
     current_path = request.path
+    print(f'CURRENT PATH: {current_path}')
+    if current_path == '/api/v2/occurrence/search' and cache.get('init_solr_resp') and len(list(request.GET.lists())) == 0:
+        print('GOTCHA CACHE!!!')
+        return JsonResponse(init_solr_resp)
     time_start = time.time()
 
     solr = SolrQuery('taibif_occurrence', request.GET, None)
@@ -267,26 +280,18 @@ def occurrence_search_v2(request):
         })
     
     menus = solr.get_menus()
-    for menu in menus:
-        if menu['key'] == 'taibif_year':
-                menu['rows'] = [{'key': 'fake_year_range', 'label': 'fake_year_range', 'count': 0}]
-    resp['menus'] = menus
 
     query_params = list(request.GET.lists())
     if len(query_params) > 0:
-        print('QUERY ITEMS ALERT!!!')
-        print(query_params)
         query_params = [item for item in query_params if item[0] != 'q']
         if query_params:
             last_query_item = query_params[-1][0]
-            print(f'last_query_item:{last_query_item}')
-            if last_query_item not in ['year', 'q']:
+            if last_query_item not in ['year', 'q', 'taibif_datasetKey', 'taibif_taxonGroup']:
                 solr = SolrQuery('taibif_occurrence', request.GET, last_query_item)
                 last_item_req = solr.request()
                 last_item_resp = solr.get_response()
                 last_item_menus = solr.get_menus()
                 updated_menu = [menu for menu in last_item_menus if menu['key'] == last_query_item]
-                print(f'NEW MONTH MENU:{updated_menu}')
 
                 updated_menu_index = None
                 for i, menu in enumerate(last_item_menus):
@@ -298,67 +303,38 @@ def occurrence_search_v2(request):
                     menus[updated_menu_index] = updated_menu[0]
                     resp['menus'] = menus
 
-    # is_chart = False
-    # if re.search("^/api/v1/occurrence/charts.*", str(request.get_full_path())) :
-    #     is_chart = True
-    # #chart api return month/year/datasey facet 
-    # if is_chart :
-    #     charts_year=[]
-    #     charts_month=[]
-    #     charts_dataset=[]
-    #     menus = solr.get_menus()
-    #     for menu in menus:
-    #         if menu['key'] == 'month':
-    #             for month in range(1, 13):
-    #                 count = 0
-    #                 for x in menu['rows']:
-    #                     if str(x['key']) == str(month):
-    #                         count = x['count']
-
-    #                 charts_month.append({
-    #                     'key': str(month),
-    #                     'label': str(month),
-    #                     'count': count
-    #                 })
-    #         if menu['key'] == 'year':
-    #             for x in menu['rows']:
-    #                 if int(x['key']) > 1784:
-    #                     charts_year.append({
-    #                     'key': x['key'],
-    #                     'label': x['label'],
-    #                     'count': x['count']
-    #                 })
-    #         if menu['key'] == 'dataset':
-    #             for x in menu['rows']:
-    #                 charts_dataset.append({
-    #                     'key': x['key'],
-    #                     'label': x['label'],
-    #                     'count': x['count']
-    #                 })
-
-    #     ret = {
-    #         'charts': [
-    #             {
-    #                 'key': 'year',
-    #                 'label': '年份',
-    #                 'rows': charts_year,
-    #             },
-    #             {
-    #                 'key': 'month',
-    #                 'label': '月份',
-    #                 'rows': charts_month,
-    #             },
-    #             {
-    #                 'key': 'dataset',
-    #                 'label': '資料集',
-    #                 'rows': charts_dataset,
-    #             },
-    #         ],
-    #     }
-    #     return JsonResponse(ret)
-
-    # resp['menus'] = new_menus
-
+    if '/api/v1/occurrence/charts' in current_path:
+        charts_year = []
+        charts_month = []
+        charts_dataset = []
+        for menu in menus:
+            if menu['key'] == 'taibif_month':
+                print(f'ROWS IN MONTHS: {menu["rows"]}')
+                charts_month = menu['rows']
+            if menu['key'] == 'taibif_year':
+                charts_year = menu['rows']
+            if menu['key'] == 'taibif_dataset_name_zh':
+                charts_dataset = menu['rows']
+        ret = {
+            'charts': [
+                {
+                    'key': 'year',
+                    'label': '年份',
+                    'rows': charts_year,
+                },
+                {
+                    'key': 'month',
+                    'label': '月份',
+                    'rows': charts_month,
+                },
+                {
+                    'key': 'dataset',
+                    'label': '資料集',
+                    'rows': charts_dataset,
+                },
+            ],
+        }
+        return JsonResponse(ret)
 
     # TODO, init taxon_key
     req_dict = dict(request.GET)
@@ -399,8 +375,14 @@ def occurrence_search_v2(request):
             cache.set('default_solr_count', resp['count'])
         else: # 如果沒有篩選條件且solr沒更新且cache有default_map_geojson
             resp['map_geojson'] = default_map_geojson
-            
+
+    for menu in menus:
+        if menu['key'] == 'taibif_year':
+                menu['rows'] = [{'key': 'fake_year_range', 'label': 'fake_year_range', 'count': 0}]
+    resp['menus'] = menus    
     resp['elapsed'] = time.time() - time_start
+
+    print(f'TREE: {treeData}')
 
     return JsonResponse(resp)
 

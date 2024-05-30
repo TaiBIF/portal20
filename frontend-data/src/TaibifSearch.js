@@ -298,16 +298,16 @@ class TaibifSearch extends React.Component {
     // for window.history.pushState
     let url = `${window.location.origin}${window.location.pathname}`;
     /* TODO menu facet */
-    // const facetQueryString = (isOccurrence === true) ? '' : 'menu=1';
+    const facetQueryString = (isOccurrence === true) ? '' : 'menu=1';
     if (filters) {
       let queryString = filtersToSearch(filters);
       apiUrl = `${apiUrl}?${queryString}&`;
       url = `${url}?${queryString}`;
     }
     else {
-      apiUrl = `${apiUrl}`;
+      apiUrl = `${apiUrl}?`;
     }
-    // apiUrl = `${apiUrl}${facetQueryString}`;
+    apiUrl = `${apiUrl}${facetQueryString}`;
 
     // if (apiUrl.includes('selfProduced=')) {
     //   apiUrl = apiUrl.replace('selfProduced=', 'selfProduced:')
