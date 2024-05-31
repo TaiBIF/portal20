@@ -403,15 +403,13 @@ class SolrQuery(object):
 
         if data := resp['facet_counts']['facet_fields']['taibif_dataset_name_zh']:
             if dataset_key := resp['facet_counts']['facet_fields']['taibif_datasetKey']:
-                merged_list = [(data[i], data[i+1], dataset_key[i], dataset_key[i+1]) for i in range(0, len(data), 2)]
-                # print(f'MERGED LISST: {merged_list}')
 
                 result = []
-                for i in merged_list: 
+                for i in range(0, len(data), 2): 
                     result.append({
-                        'key': i[2],
-                        'label': i[0],
-                        'count': i[1]  
+                        'key': dataset_key[i],
+                        'label': data[i],
+                        'count': data[i + 1]  
                     })
                 
                 menus.append({
