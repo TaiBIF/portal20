@@ -4737,3 +4737,9 @@ body {
     font-weight: 700;
     font-size: 22px;
 }
+
+.img-fluid {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+}
