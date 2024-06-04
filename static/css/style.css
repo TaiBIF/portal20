@@ -371,11 +371,6 @@ a:active {
     content: "\e946";
 }
 
-.img-fluid {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-}
 
 .visible-xs {
     display: none;
@@ -1617,9 +1612,9 @@ a.btn-sunset-lg.focus {
     padding-bottom: 66.6666%;
 }
 
-.col-supervisor-logo {
+/* .col-supervisor-logo {
     padding: 10px 15px;
-}
+} */
 
 .col-partner-logo {
     max-width: 20%;
@@ -1984,7 +1979,7 @@ table.table-ltgray tbody tr:nth-of-type(odd) {
     border: 1px solid #ddd;
 }
 .col-card-asset .card-asset-img img {
-    width: 50%;
+    width: 90%;
     height: auto;
     border-radius: 0.25rem;
 }
@@ -4684,7 +4679,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    /* gap: 20px; */
+    /* flex-wrap: wrap; */
 }
 
 .partner-logo-container .img-fluid {
