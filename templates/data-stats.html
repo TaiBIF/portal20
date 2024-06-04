@@ -62,63 +62,6 @@ const checkTaibifIptCheckbox = document.querySelector('.check-taibif-ipt');
 const checkTaibifAllCheckbox = document.querySelector('.check-all');
 let baseURL = `${window.location.origin}${window.location.pathname}`;
 
-function downloadCSV() {
-    var allCSV = ""; // 用于存储所有页面的CSV内容
-
-    // 获取所有分页的表格元素
-    var tables = document.querySelectorAll(".table-ltmilo");
-
-    // 遍历每个分页的表格
-    tables.forEach(function(table) {
-        var rows = table.querySelectorAll("tr");
-
-        // 遍历当前分页表格的每一行
-        for (var i = 0; i < rows.length; i++) {
-            var row = rows[i];
-            var cells = row.querySelectorAll("td, th");
-
-            // 遍历当前行的每个单元格
-            for (var j = 0; j < cells.length; j++) {
-                var cell = cells[j].innerText || cells[j].textContent;
-
-                // 如果单元格包含逗号，则需要将其用引号括起来
-                if (cell.indexOf(",") !== -1) {
-                    cell = '"' + cell + '"';
-                }
-
-                // 将当前单元格的值添加到CSV字符串中
-                allCSV += cell;
-
-                // 如果不是当前行的最后一个单元格，则添加逗号分隔符
-                if (j < cells.length - 1) {
-                    allCSV += ",";
-                }
-            }
-
-            // 在每行末尾添加换行符
-            allCSV += "\n";
-        }
-    });
-
-    // 创建一个隐藏的链接元素
-    var link = document.createElement("a");
-    link.style.display = "none";
-
-    // 将所有页面的CSV数据设置为链接的href属性
-    var blob = new Blob([allCSV], { type: "text/csv" });
-    link.href = window.URL.createObjectURL(blob);
-
-    // 设置下载文件的名称
-    link.download = "alldatasets.csv";
-
-    // 将链接添加到页面中并点击
-    document.body.appendChild(link);
-    link.click();
-
-    // 清理
-    document.body.removeChild(link);
-}
-
 // Set checkTaibifAllCheckbox as default
 if (baseURL === window.location.href) {
     checkTaibifAllCheckbox.setAttribute('checked', 'checked');
@@ -163,10 +106,6 @@ if (window.location.href.includes('search_query')) {
 
 $('#clean-search').on('click', function() {
     window.location.href = baseURL;
-});
-
-$('#btn-downlaod-table').on('click', function() {
-    downloadCSV();
 });
 </script>
 {% endblock %}
