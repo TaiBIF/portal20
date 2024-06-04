@@ -1,97 +1,100 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 {% block title %}計畫資料繳交依據與時程{% endblock %}
 
 
 {% block main %}
 
-    <!-- topnav begin -->
-    <div class="bg-main-pale">
-        <div class="container">
-          <div class="caption-mascot-wrapper">
-            <h1 class="title">計畫資料繳交依據與時程</h1>
+<!-- topnav begin -->
+<div class="bg-main-pale">
+    <div class="container">
+        <div class="caption-mascot-wrapper">
+            <h1 class="title">{% trans "計畫資料繳交依據與時程" %}</h1>
             <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
-          </div>
         </div>
-      </div>
-      <!-- topnav end -->
-      <!-- container begin -->
-      <div class="container my-5">
-        <!-- breadcrumb begin -->
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-            <li class="breadcrumb-item">開放資料</li>
-            <li class="breadcrumb-item active" aria-current="page">計畫資料繳交依據與時程</li>
-          </ol>
-        </nav>
-        <!-- breadcrumb end -->
-        <!-- row begin -->
-        <div class="row">
-          <!-- col left begin -->
-          <div class="col-12 col-md-3">
-  
-            <div class="dropdown dropdown-flexible-wrapper">
-              <a class="btn btn-toggle-flexible visible-xs" href="#" data-toggle="dropdown" aria-expanded="false">
-                計畫資料繳交依據與時程
-              </a>
-              <div class="dropdown-menu-flexible d-md-block">
-                <a data-cat="nstc" class="dropdown-item nav-item current-sunset" href="#">國科會計畫</a>
-                <a data-cat="eco" class="dropdown-item nav-item" href="#">生態檢核計畫</a>
-                <a data-cat="ltser" class="dropdown-item nav-item" href="#">LTSER</a>
-              </div>
-            </div>
-  
-          </div>
-          <!-- col left end -->
-          <!-- col right begin -->
-          <div data-cat="nstc" class="col-12 col-md-9 nav-item-content">
-            <h4 class="headline-left-hr">國科會計畫</h4>
+    </div>
+</div>
+<!-- topnav end -->
 
-            <div class="article-content-wrapper">
-              <h3>國科會資料繳交依據與時程</h3>
+<!-- container begin -->
+<div class="container my-5">
+    <!-- breadcrumb begin -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">{% trans "首頁" %}</a></li>
+            <li class="breadcrumb-item">{% trans "開放資料" %}</li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans "計畫資料繳交依據與時程" %}</li>
+        </ol>
+    </nav>
+    <!-- breadcrumb end -->
+
+    <!-- row begin -->
+    <div class="row">
+        <!-- col left begin -->
+        <div class="col-12 col-md-3">
+            <div class="dropdown dropdown-flexible-wrapper">
+                <a class="btn btn-toggle-flexible visible-xs" href="#" data-toggle="dropdown" aria-expanded="false">
+                    計畫資料繳交依據與時程
+                </a>
+                <div class="dropdown-menu-flexible d-md-block">
+                    <a data-cat="nstc" class="dropdown-item nav-item current-sunset" href="#">國科會計畫</a>
+                    <a data-cat="eco" class="dropdown-item nav-item" href="#">生態檢核計畫</a>
+                    <a data-cat="ltser" class="dropdown-item nav-item" href="#">LTSER</a>
+                </div>
             </div>
+        </div>
+        <!-- col left end -->
+
+        <!-- col right begin -->
+        <div data-cat="nstc" class="col-12 col-md-9 nav-item-content">
+            <h4 class="headline-left-hr">國科會計畫</h4>
+            <div class="article-content-wrapper">
+                h3>國科會資料繳交依據與時程</h3>
+            </div>
+
             <p>依國際資料標準整理及繳交生物多樣性資料，便利學術同儕資料共享及引用，提昇研究水準。</p>
             <img class="workflow" src="{% static 'images/workflow-most-ipt.jpg' %}"/>
             <small>資料管理流程 @TaiBIF，以上依國科會制定「生物多樣性及長期生態研究計畫之物種分布資料釋出作業規範」辦理</small>
             <div class="schedule-flow-wrapper schedule-flow-skin-1">
-              <div class="schedule-flow-title">1. 填寫詮釋資料</div>
-              <div class="schedule-flow-content">國科會計畫申請通過後即應填寫詮釋資料 (e.g., 聯絡人, 時間, 地理範圍)，讓其他人更能掌握資料集內容。</div>
+                <div class="schedule-flow-title">1. 填寫詮釋資料</div>
+                <div class="schedule-flow-content">國科會計畫申請通過後即應填寫詮釋資料 (e.g., 聯絡人, 時間, 地理範圍)，讓其他人更能掌握資料集內容。</div>
             </div>
-  
+
             <div class="schedule-flow-wrapper schedule-flow-skin-1">
-              <div class="schedule-flow-title">2. 原始資料是否包含物種資料？</div>
-              <div class="schedule-flow-content">研究資料是否包含物種出現紀錄(Occurrence)、物種名錄 (Checklist) 或調查活動 (Sampling event)。若為是則發布資料至 TaiBIF。</div>
+                <div class="schedule-flow-title">2. 原始資料是否包含物種資料？</div>
+                <div class="schedule-flow-content">研究資料是否包含物種出現紀錄(Occurrence)、物種名錄 (Checklist) 或調查活動 (Sampling event)。若為是則發布資料至 TaiBIF。</div>
             </div>
-  
+
             <div class="schedule-flow-wrapper schedule-flow-skin-1">
-              <div class="schedule-flow-title">3. 上傳計畫報告</div>
-              <div class="schedule-flow-content">妥善整理和標準化收集的研究資料後，繳交計畫報告至國科會。待日後發表論文，達到資料公開時限時，仍須將資料開放。</div>
+                <div class="schedule-flow-title">3. 上傳計畫報告</div>
+                <div class="schedule-flow-content">妥善整理和標準化收集的研究資料後，繳交計畫報告至國科會。待日後發表論文，達到資料公開時限時，仍須將資料開放。</div>
             </div>
-  
+
             <div class="schedule-flow-wrapper schedule-flow-skin-2">
-              <div class="schedule-flow-title">4. 資料檢核</div>
-              <div class="schedule-flow-content">依照 Darwin Core 資料欄位標準，並使用資料檢核工具協助清理、標準化生物多樣性資料。</div>
+                <div class="schedule-flow-title">4. 資料檢核</div>
+                <div class="schedule-flow-content">依照 Darwin Core 資料欄位標準，並使用資料檢核工具協助清理、標準化生物多樣性資料。</div>
             </div>
-  
+
             <div class="schedule-flow-wrapper schedule-flow-skin-2">
-              <div class="schedule-flow-title">5. 利用 IPT 上傳</div>
-              <div class="schedule-flow-content">使用<a href="http://ipt.taibif.tw" target="_blank"> IPT (Integrated Publishing Toolkit) </a>資料上傳工具，根據資料內容對應相關欄位。</div>
+                <div class="schedule-flow-title">5. 利用 IPT 上傳</div>
+                <div class="schedule-flow-content">使用<a href="http://ipt.taibif.tw" target="_blank"> IPT (Integrated Publishing Toolkit) </a>資料上傳工具，根據資料內容對應相關欄位。</div>
             </div>
-  
+
             <div class="schedule-flow-wrapper schedule-flow-skin-2">
-              <div class="schedule-flow-title">6. 更新詮釋資料</div>
-              <div class="schedule-flow-content">填寫詮釋資料 (Metadata)，包含計畫名稱、資料種類、授權方式 (採用創用CC授權)、計畫摘要、資料提供者、計畫聯絡人等資訊。</div>
+                <div class="schedule-flow-title">6. 更新詮釋資料</div>
+                <div class="schedule-flow-content">填寫詮釋資料 (Metadata)，包含計畫名稱、資料種類、授權方式 (採用創用CC授權)、計畫摘要、資料提供者、計畫聯絡人等資訊。</div>
             </div>
-  
+
             <div class="schedule-flow-wrapper schedule-flow-skin-2">
-              <div class="schedule-flow-title">7. 發布及公開資料</div>
-              <div class="schedule-flow-content">確認資料填寫無誤之後，上傳原始資料並發布至 TaiBIF，恭喜發布資料成功！</div>
+                <div class="schedule-flow-title">7. 發布及公開資料</div>
+                <div class="schedule-flow-content">確認資料填寫無誤之後，上傳原始資料並發布至 TaiBIF，恭喜發布資料成功！</div>
             </div>
 
             <div class="article-content-wrapper">
-              <h3>國科會生物多樣性學科相關計畫開放資料繳交規範</h3>
+                <h3>國科會生物多樣性學科相關計畫開放資料繳交規範</h3>
             </div>
+
             <p>
                 國科會負責辦理《生物多樣性行動計畫》中 D12010「建立生物多樣性資訊交換機制及各類或各機構資料庫之建置與整合，並定期增修補充各項資料庫之內容」及 D21010「維護及更新生物多樣性監測資料之資訊管理系統」，從 2012 年起要求研究計畫必須在計畫結案三個月內繳交報告的同時，繳交計畫過程產生的生態分布資料（見說明1）。資料繳交之規範經學門召集人於2018年1月17日開會討論後，調整如下：
             </p>
@@ -112,21 +115,21 @@
             <p>參考資料：</p>
             <p><a href="http://ec.europa.eu/research/participants/docs/h2020-funding-guide/cross-cutting-issues/open-access-dissemination_en.htm" target="_blank">European Union, 2018. Participant Portal H2020 Online Manual.</a></p>
             <p><a href="http://www.nsf.gov/bfa/dias/policy/dmp.jsp" target="_blank">NSF, 2013. Dissemination and Sharing of Research Results.</a></p>
-          </div>
+        </div>
 
-          <div data-cat="eco" class="col-12 col-md-9 nav-item-content hide">
+        <div data-cat="eco" class="col-12 col-md-9 nav-item-content hide">
             <h4 class="headline-left-hr">生態檢核計畫</h4>
             <p>敬請期待</p>
-          </div>
+        </div>
 
-          <div data-cat="ltser" class="col-12 col-md-9 nav-item-content hide">
+        <div data-cat="ltser" class="col-12 col-md-9 nav-item-content hide">
             <h4 class="headline-left-hr">LTSER</h4>
             <p>敬請期待</p>
-          </div>
-          <!-- col right end -->
         </div>
-        <!-- row end -->
-      </div>
-      <!-- container end -->
+        <!-- col right end -->
+    </div>
+    <!-- row end -->
+</div>
+<!-- container end -->
   
 {% endblock %}

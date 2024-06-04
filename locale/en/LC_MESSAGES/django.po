@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-27 10:05+0800\n"
+"POT-Creation-Date: 2024-06-04 15:42+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: apps/page/views.py:489
+#: apps/page/views.py:488
 msgid "這裡放需要翻譯的文字"
 msgstr ""
 
@@ -31,7 +31,7 @@ msgid "English"
 msgstr ""
 
 #: templates/about-gbif.html:14 templates/base.html:119
-#: templates/base_new.html:62 templates/web-navi.html:41
+#: templates/web-navi.html:41
 msgid "GBIF 介紹"
 msgstr "About GBIF"
 
@@ -39,9 +39,12 @@ msgstr "About GBIF"
 #: templates/cookbook-detail-1.html:41 templates/cookbook-detail-3.html:38
 #: templates/data-case.html:26 templates/data-clean.html:23
 #: templates/data-paper.html:22 templates/data-policy.html:29
-#: templates/data-product.html:23 templates/open-license.html:24
-#: templates/open-process.html:25 templates/tech-book.html:28
-#: templates/tools.html:23 templates/web-navi.html:27
+#: templates/data-product.html:23 templates/data-stats.html:134
+#: templates/open-license.html:24 templates/open-process.html:25
+#: templates/open-standard.html:23 templates/open-timezone.html:25
+#: templates/open-upload.html:25 templates/tech-book.html:28
+#: templates/tech-open.html:26 templates/tools.html:23
+#: templates/web-navi.html:27
 msgid "首頁"
 msgstr "Home Page"
 
@@ -211,8 +214,7 @@ msgid "資料來源:"
 msgstr "From: "
 
 #: templates/about-taibif.html:18 templates/about-taibif.html:31
-#: templates/base.html:118 templates/base_new.html:61
-#: templates/web-navi.html:40
+#: templates/base.html:118 templates/web-navi.html:40
 msgid "TaiBIF 介紹"
 msgstr "About TaiBIF"
 
@@ -318,23 +320,21 @@ msgid "篩選"
 msgstr ""
 
 #: templates/article-list.html:137 templates/base.html:248
-#: templates/base_new.html:189 templates/index.html:478
-#: templates/web-navi.html:112
+#: templates/index.html:472 templates/web-navi.html:112
 msgid "新聞"
 msgstr "News"
 
 #: templates/article-list.html:142 templates/base.html:249
-#: templates/base_new.html:190 templates/index.html:506
-#: templates/web-navi.html:113
+#: templates/index.html:500 templates/web-navi.html:113
 msgid "活動"
 msgstr "Activities & Events"
 
-#: templates/article-list.html:147 templates/base_new.html:191
+#: templates/article-list.html:147
 msgid "更新"
 msgstr "Updates"
 
 #: templates/article-list.html:152 templates/base.html:250
-#: templates/index.html:534 templates/web-navi.html:114
+#: templates/index.html:528 templates/web-navi.html:114
 msgid "科普"
 msgstr "Popular Science"
 
@@ -344,12 +344,12 @@ msgid "資料故事"
 msgstr "Data Stories"
 
 #: templates/article-list.html:162 templates/base.html:263
-#: templates/base_new.html:204 templates/web-navi.html:125
+#: templates/web-navi.html:125
 msgid "技術專欄"
 msgstr "Technical Memo"
 
 #: templates/article-list.html:167 templates/base.html:264
-#: templates/base_new.html:205 templates/web-navi.html:126
+#: templates/web-navi.html:126
 msgid "出版品"
 msgstr "Publications"
 
@@ -361,9 +361,8 @@ msgstr "TaiBIF Academic Publication"
 msgid "網站捷徑"
 msgstr "Shortcuts"
 
-#: templates/base.html:90 templates/base.html:193 templates/base_new.html:134
-#: templates/index.html:107 templates/tools.html:12 templates/tools.html:25
-#: templates/web-navi.html:60
+#: templates/base.html:90 templates/base.html:193 templates/index.html:101
+#: templates/tools.html:12 templates/tools.html:25 templates/web-navi.html:60
 msgid "開放資料工具"
 msgstr "TaiBIF Tools"
 
@@ -371,38 +370,33 @@ msgstr "TaiBIF Tools"
 msgid "資料標準模板"
 msgstr "Data Templates"
 
-#: templates/base.html:94 templates/base.html:122 templates/base_new.html:65
-#: templates/web-navi.html:16 templates/web-navi.html:29
-#: templates/web-navi.html:44
+#: templates/base.html:94 templates/base.html:122 templates/web-navi.html:16
+#: templates/web-navi.html:29 templates/web-navi.html:44
 msgid "網站導覽"
 msgstr "Site Map"
 
-#: templates/base.html:120 templates/base_new.html:63
-#: templates/web-navi.html:42
+#: templates/base.html:120 templates/web-navi.html:42
 msgid "TaiBIF 成果"
 msgstr "TaiBIF Achievements"
 
-#: templates/base.html:121 templates/base_new.html:64
-#: templates/web-navi.html:43
+#: templates/base.html:121 templates/web-navi.html:43
 msgid "感謝名單"
 msgstr "Acknowledgement"
 
-#: templates/base.html:125 templates/base_new.html:68
-#: templates/cookbook-detail-2.html:379 templates/web-navi.html:45
+#: templates/base.html:125 templates/cookbook-detail-2.html:379
+#: templates/web-navi.html:45
 msgid "相關連結"
 msgstr "Related Links"
 
-#: templates/base.html:127 templates/base_new.html:70
-#: templates/web-navi.html:47
+#: templates/base.html:127 templates/web-navi.html:47
 msgid "TaiBIF 資源下載專區"
 msgstr "Resource Downloads"
 
-#: templates/base.html:128 templates/base_new.html:71
-#: templates/web-navi.html:48
+#: templates/base.html:128 templates/web-navi.html:48
 msgid "使用條款暨隱私權政策"
 msgstr "Terms of Use & Privacy Policy"
 
-#: templates/base.html:136 templates/base_new.html:80
+#: templates/base.html:136
 msgid "聯絡我們"
 msgstr "Contact Us"
 
@@ -410,46 +404,52 @@ msgstr "Contact Us"
 msgid "選擇語言"
 msgstr "Languages"
 
-#: templates/base.html:169 templates/base_new.html:108
-#: templates/search_all.html:29
+#: templates/base.html:169 templates/search_all.html:29
 msgid "全站搜尋..."
 msgstr "Site Search"
 
-#: templates/base.html:188 templates/data-clean.html:24 templates/index.html:98
+#: templates/base.html:188 templates/data-clean.html:24
+#: templates/data-stats.html:135 templates/index.html:92
 #: templates/open-license.html:25 templates/open-process.html:26
-#: templates/tools.html:24 templates/web-navi.html:56
+#: templates/open-standard.html:24 templates/open-timezone.html:26
+#: templates/open-upload.html:26 templates/tools.html:24
+#: templates/web-navi.html:56
 msgid "開放資料"
 msgstr "Open Data"
 
-#: templates/base.html:191 templates/index.html:101
+#: templates/base.html:191 templates/index.html:95
 #: templates/open-process.html:13 templates/open-process.html:27
 #: templates/web-navi.html:58
 msgid "開放資料流程"
 msgstr "Publish Your Data"
 
-#: templates/base.html:192 templates/index.html:104 templates/web-navi.html:59
+#: templates/base.html:192 templates/index.html:98
+#: templates/open-timezone.html:13 templates/open-timezone.html:27
+#: templates/web-navi.html:59
 msgid "計畫資料繳交依據與時程"
 msgstr "Project Data Submission and Timelines"
 
-#: templates/base.html:194 templates/base_new.html:135 templates/index.html:110
-#: templates/index.html:229 templates/web-navi.html:61
+#: templates/base.html:194 templates/data-stats.html:123
+#: templates/data-stats.html:136 templates/index.html:104
+#: templates/index.html:223 templates/web-navi.html:61
 msgid "資料發布狀況"
 msgstr "Data Publishing Status"
 
 #: templates/base.html:202 templates/cookbook-detail-1.html:42
 #: templates/cookbook-detail-2.html:45 templates/cookbook-detail-3.html:39
-#: templates/index.html:125 templates/tech-book.html:29
-#: templates/web-navi.html:69
+#: templates/index.html:119 templates/tech-book.html:29
+#: templates/tech-open.html:27 templates/web-navi.html:69
 msgid "教育資源"
 msgstr "Educational Resources"
 
-#: templates/base.html:205 templates/index.html:128 templates/web-navi.html:71
+#: templates/base.html:205 templates/index.html:122 templates/tech-open.html:14
+#: templates/tech-open.html:28 templates/web-navi.html:71
 msgid "什麼是開放資料"
 msgstr "What is Open Data"
 
 #: templates/base.html:206 templates/cookbook-detail-1.html:29
 #: templates/cookbook-detail-1.html:43 templates/cookbook-detail-2.html:46
-#: templates/cookbook-detail-3.html:40 templates/index.html:131
+#: templates/cookbook-detail-3.html:40 templates/index.html:125
 #: templates/tech-book.html:5 templates/tech-book.html:15
 #: templates/tech-book.html:30 templates/tech-book.html:36
 #: templates/web-navi.html:72
@@ -457,80 +457,77 @@ msgid "生物多樣性資訊概論"
 msgstr "Biodiversity Information Cookbook"
 
 #: templates/base.html:207 templates/cookbook-detail-2.html:34
-#: templates/cookbook-detail-3.html:26 templates/index.html:134
+#: templates/cookbook-detail-3.html:26 templates/index.html:128
 #: templates/web-navi.html:73
 msgid "資料開放與應用工作坊"
 msgstr "Data Mobilization and Application Workshop"
 
-#: templates/base.html:208 templates/index.html:137 templates/web-navi.html:74
+#: templates/base.html:208 templates/index.html:131 templates/web-navi.html:74
 msgid "參與志工培訓"
 msgstr "Become A Volunteer"
 
 #: templates/base.html:216 templates/data-case.html:27
 #: templates/data-paper.html:23 templates/data-product.html:24
-#: templates/index.html:152 templates/web-navi.html:82
+#: templates/index.html:146 templates/web-navi.html:82
 msgid "資料應用"
 msgstr "Data Use"
 
 #: templates/base.html:219 templates/data-clean.html:4
 #: templates/data-paper.html:4 templates/data-paper.html:11
-#: templates/data-paper.html:24 templates/index.html:155
+#: templates/data-paper.html:24 templates/index.html:149
 #: templates/web-navi.html:84
 msgid "資料期刊與論文"
 msgstr "Data Papers & Journals"
 
-#: templates/base.html:220 templates/index.html:158 templates/web-navi.html:85
+#: templates/base.html:220 templates/index.html:152 templates/web-navi.html:85
 msgid "資料視覺化"
 msgstr "Data Graphic"
 
 #: templates/base.html:221 templates/data-case.html:14
-#: templates/data-case.html:28 templates/index.html:161
+#: templates/data-case.html:28 templates/index.html:155
 #: templates/web-navi.html:86
 msgid "資料應用案例"
 msgstr "Data Use Cases"
 
 #: templates/base.html:222 templates/data-product.html:12
 #: templates/data-product.html:25 templates/data-product.html:35
-#: templates/index.html:164 templates/web-navi.html:87
+#: templates/index.html:158 templates/web-navi.html:87
 msgid "資料產品"
 msgstr "Data Products"
 
-#: templates/base.html:230 templates/index.html:179 templates/web-navi.html:95
+#: templates/base.html:230 templates/index.html:173 templates/web-navi.html:95
 msgid "找資料"
 msgstr "Find Data"
 
-#: templates/base.html:233 templates/base_new.html:174 templates/index.html:182
-#: templates/index.html:236 templates/web-navi.html:97
+#: templates/base.html:233 templates/index.html:176 templates/index.html:230
+#: templates/web-navi.html:97
 msgid "物種出現紀錄"
 msgstr "Occurrences"
 
-#: templates/base.html:234 templates/base_new.html:175 templates/index.html:185
+#: templates/base.html:234 templates/index.html:179
 #: templates/search_all.html:24 templates/web-navi.html:98
 msgid "物種"
 msgstr "Species"
 
-#: templates/base.html:235 templates/base_new.html:176 templates/index.html:188
-#: templates/index.html:248 templates/search_all.html:25
-#: templates/web-navi.html:99
+#: templates/base.html:235 templates/index.html:182 templates/index.html:242
+#: templates/search_all.html:25 templates/web-navi.html:99
 msgid "資料集"
 msgstr "Datasets"
 
-#: templates/base.html:236 templates/base_new.html:177 templates/index.html:191
-#: templates/index.html:270 templates/web-navi.html:100
+#: templates/base.html:236 templates/index.html:185 templates/index.html:264
+#: templates/web-navi.html:100
 msgid "資料發布單位"
 msgstr "Publishers"
 
-#: templates/base.html:245 templates/base_new.html:186 templates/index.html:468
-#: templates/web-navi.html:110
+#: templates/base.html:245 templates/index.html:462 templates/web-navi.html:110
 msgid "最新消息"
 msgstr "News & Notices"
 
-#: templates/base.html:258 templates/base_new.html:199 templates/index.html:564
-#: templates/web-navi.html:122
+#: templates/base.html:258 templates/index.html:558 templates/web-navi.html:122
 msgid "專題文章"
 msgstr "Articles"
 
-#: templates/base.html:262 templates/base_new.html:203
+#: templates/base.html:262
 msgid "科普文章"
 msgstr "Popular Science"
 
@@ -543,14 +540,6 @@ msgstr ""
 #: templates/base.html:291
 msgid "Copyright © TaiBIF 臺灣生物多樣性資訊機構"
 msgstr "Copyright © Taiwan Biodiversity Information Facility"
-
-#: templates/base_new.html:69
-msgid "FAQ"
-msgstr ""
-
-#: templates/base_new.html:178
-msgid "API"
-msgstr ""
 
 #: templates/cookbook-detail-1.html:4
 #, fuzzy
@@ -3008,75 +2997,75 @@ msgstr ""
 "We appreciate your anticipation and look forward to unveiling. Stay tuned "
 "for further updates and announcements. Thank you for your patience."
 
-#: templates/index.html:219
+#: templates/index.html:213
 msgid "生物多樣性資料開放的推手"
 msgstr "The Facilitator of Biodiversity Open Data"
 
-#: templates/index.html:260
+#: templates/index.html:254
 msgid "涵蓋物種數"
 msgstr "Number of Species"
 
-#: templates/index.html:282
+#: templates/index.html:276
 msgid "資料應用發表"
 msgstr "Peer-reviewed Papers Using Data"
 
-#: templates/index.html:290
+#: templates/index.html:284
 msgid "看更多發布狀況"
 msgstr "See More Data Status"
 
-#: templates/index.html:304
+#: templates/index.html:298
 msgid "植物"
 msgstr "Plants"
 
-#: templates/index.html:319
+#: templates/index.html:313
 msgid "真菌"
 msgstr "Fungi"
 
-#: templates/index.html:334
+#: templates/index.html:328
 msgid "細菌"
 msgstr "Bacteria"
 
-#: templates/index.html:349
+#: templates/index.html:343
 msgid "昆蟲"
 msgstr "Insects"
 
-#: templates/index.html:364
+#: templates/index.html:358
 msgid "魚"
 msgstr "Fishes"
 
-#: templates/index.html:379
+#: templates/index.html:373
 msgid "爬蟲類"
 msgstr "Reptiles"
 
-#: templates/index.html:394
+#: templates/index.html:388
 msgid "兩棲類"
 msgstr "Amphibians"
 
-#: templates/index.html:409
+#: templates/index.html:403
 msgid "鳥類"
 msgstr "Birds"
 
-#: templates/index.html:426
+#: templates/index.html:420
 msgid "哺乳類"
 msgstr "Mammals"
 
-#: templates/index.html:441
+#: templates/index.html:435
 msgid "其他"
 msgstr "Others"
 
-#: templates/index.html:454
+#: templates/index.html:448
 msgid "看更多資訊視覺化"
 msgstr "See More"
 
-#: templates/index.html:593
+#: templates/index.html:587
 msgid "行事曆"
 msgstr "Calendar"
 
-#: templates/index.html:601
+#: templates/index.html:595
 msgid "指導單位"
 msgstr "Advisors"
 
-#: templates/index.html:644
+#: templates/index.html:638
 msgid "夥伴單位"
 msgstr "Partners"
 
@@ -3112,6 +3101,14 @@ msgstr "Data Paper Publication"
 msgid "資料再利用"
 msgstr "Data Reuse"
 
+#: templates/open-standard.html:12 templates/open-standard.html:25
+msgid "資料標準化"
+msgstr "Data Standardization"
+
+#: templates/open-upload.html:13 templates/open-upload.html:27
+msgid "資料上傳"
+msgstr "Data Uploading"
+
 #: templates/search_all.html:23
 msgid "出現紀錄"
 msgstr ""
@@ -3127,6 +3124,51 @@ msgstr ""
 #: templates/tech-book.html:107
 msgid "使用Excel模板準備調查活動資料構"
 msgstr "Prepare sampling-event data using Excel template"
+
+#: templates/tech-class-license.html:40 templates/tech-class-license.html:51
+msgid "初階課程"
+msgstr ""
+
+#: templates/tech-class-license.html:41 templates/tech-class-license.html:77
+msgid "進階課程"
+msgstr ""
+
+#: templates/tech-class-license.html:42 templates/tech-class-license.html:100
+msgid "認證辦法"
+msgstr ""
+
+#: templates/tech-class-license.html:43 templates/tech-class-license.html:144
+#: templates/tech-class-license.html:151
+msgid "線上自學工作坊課程認證"
+msgstr ""
+
+#: templates/tech-class-license.html:44
+msgid "歷年通過認證名單"
+msgstr ""
+
+#: templates/tech-class-license.html:54
+msgid "基礎概論"
+msgstr ""
+
+#: templates/tech-class-license.html:66 templates/tech-class-license.html:79
+msgid "資料處理及上傳"
+msgstr ""
+
+#: templates/tech-class-license.html:87
+msgid "資料管理及應用"
+msgstr ""
+
+#: templates/tech-class-license.html:106
+msgid "指定作業項目（將持續更新）"
+msgstr ""
+
+#: templates/tech-class-license.html:124
+msgid "作業評核標準"
+msgstr ""
+
+#: templates/tech-class-license.html:135
+msgid "證書樣式"
+msgstr ""
 
 #: templates/web-navi.html:102
 msgid "全站搜尋"

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 
 {% block title %}API{% endblock %}
@@ -19,8 +20,8 @@
 <div class="container my-5">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-            <li class="breadcrumb-item">找資料</li>
+            <li class="breadcrumb-item"><a href="index.html">{% trans "首頁" %}</a></li>
+            <li class="breadcrumb-item">{% trans "找資料" %}</li>
             <li class="breadcrumb-item active" aria-current="page">API</li>
         </ol>
     </nav>

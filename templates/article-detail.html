@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+{% load i18n %}
 {% load static %}
 {% load helper_tags %}
 
@@ -24,8 +25,8 @@
 <div class="container">
     <nav class="article-breadcrumb" aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-            <li class="breadcrumb-item active" aria-current="page">更多資訊</li>
+            <li class="breadcrumb-item"><a href="index.html">{% trans "首頁" %}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans "更多資訊" %}</li>
         </ol>
     </nav>
     <!-- story title & share btns begin -->
