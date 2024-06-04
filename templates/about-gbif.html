@@ -2,7 +2,7 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}GBIF 介紹{% endblock %}
+{% block title %}{% trans "GBIF 介紹" %}{% endblock %}
 {% get_current_language as LANGUAGE_CODE %}
 {% block main %}
 
@@ -24,7 +24,7 @@
    <ol class="breadcrumb">
      <li class="breadcrumb-item"><a href="index.html">{% trans "首頁" %}</a></li>
      <li class="breadcrumb-item">{% trans "關於我們" %}</li>
-     <li class="breadcrumb-item active" aria-current="page">{% trans "GBIF 簡介" %}</li>
+     <li class="breadcrumb-item active" aria-current="page">{% trans "GBIF 介紹" %}</li>
    </ol>
  </nav>
  <!-- breadcrumb end -->

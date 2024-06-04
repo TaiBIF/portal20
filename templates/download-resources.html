@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% load i18n %} 
 {% load static %}
-{% block title %}TaiBIF 資源下載專區{% endblock %}
+{% block title %}{% trans "TaiBIF 資源下載專區" %}{% endblock %}
 
 
 {% block main %}
@@ -8,7 +9,7 @@
 <div class="bg-main-pale">
   <div class="container">
     <div class="caption-mascot-wrapper">
-      <h1 class="title">TaiBIF 資源下載專區</h1>
+      <h1 class="title">{% trans "TaiBIF 資源下載專區" %}</h1>
       <img src="{% static 'images/mascot-Mreevesi.png'%}" alt="" class="symbol">
     </div>
   </div>
@@ -19,9 +20,9 @@
       <!-- breadcrumb begin -->
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-          <li class="breadcrumb-item">關於我們</li>
-          <li class="breadcrumb-item active" aria-current="page">TaiBIF 資源下載專區</li>
+          <li class="breadcrumb-item"><a href="index.html">{% trans "首頁" %}</a></li>
+          <li class="breadcrumb-item">{% trans "關於我們" %}</li>
+          <li class="breadcrumb-item active" aria-current="page">{% trans "TaiBIF 資源下載專區" %}</li>
         </ol>
       </nav>
       <!-- breadcrumb end -->
