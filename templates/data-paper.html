@@ -38,7 +38,7 @@
                     <a data-cat="guide" class="dropdown-item nav-item" href="#">{% trans "資料論文發表指引" %}</a>
                     <a data-cat="journal" class="dropdown-item nav-item" href="#">{% trans "資料期刊" %}</a>
                     <a data-cat="history" class="dropdown-item nav-item" href="#">{% trans "TaiBIF 歷年合作資料論文" %}</a>
-                    <a data-cat="call" class="dropdown-item nav-item" href="#">{% trans "資料論文徵稿" %}</a>
+                    <a data-cat="call" class="dropdown-item nav-item" href="#">{% trans "資料論文合作" %}</a>
                 </div>
             </div>
         </div>
@@ -186,12 +186,17 @@
         </div>
         
         <div data-cat="call" class="col-12 col-md-9 nav-item-content hide">
-            <h1 class="heading-lg-ul">{% trans "資料論文徵稿" %}</h1>
+            <h1 class="heading-lg-ul">{% trans "資料論文合作" %}</h1>
             <p>
-                {% url 'contact_us' as contact_us %}
-                {% blocktrans %}
-                TaiBIF每年皆有固定經費來贊助與生物多樣性相關之主題的資料論文發表，欲知詳情如合作模式與適用條件，歡迎<a href="{{ contact_us }}">聯繫我們</a>。
-                {% endblocktrans %}
+                TaiBIF每年皆有固定經費來贊助與生物多樣性相關之主題的資料論文發表，欲知詳情如合作模式與適用條件，歡迎<a href="{% url 'contact_us' %}">聯繫我們</a>。
+            </p>
+            <p>
+                相關條件：
+                <ol>
+                    <li>須將資料集上傳至TaiBIF 和 GBIF，上傳流程請參照<a href="{% url 'open-process' %}">開放資料流程</a></li>
+                    <li>須將TaiBIF 團隊中至少一位成員列為共同作者（該成員將可協助資料發布）</li>
+                    <li>須於致謝（Acknowledgement）中提及 Taiwan Biodiversity Information Facility, TaiBIF</li>
+                </ol>
             </p>
         </div>
         <!-- col right end -->
