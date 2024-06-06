@@ -230,7 +230,7 @@ def data_stats(request):
     dataset_num = Dataset.objects.filter(status='PUBLIC').count()
     publisher_num = DatasetOrganization.objects.count()
 
-    dataset_orm = Dataset.objects.filter(source='TaiBIF IPT', status='PUBLIC').order_by('pub_date')
+    dataset_orm = Dataset.objects.filter(source='TaiBIF IPT', status='PUBLIC').order_by('-pub_date')
     # Grab the content for the table
     if search_query:
         dataset = dataset_orm.filter(Q(title__contains=search_query) | Q(dwc_core_type__contains=search_query)).values('title', 'organization_name', 'dwc_core_type', 'num_occurrence', 'num_record', 'pub_date', 'country', 'status', 'is_most_project', 'taibif_dataset_id')
