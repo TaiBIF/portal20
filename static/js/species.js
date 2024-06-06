@@ -28,14 +28,15 @@ function gerBorderColor(d) {
 
 const rank = document.currentScript.getAttribute('taxon_rank'); 
 const id = document.currentScript.getAttribute('taxon_id'); 
-const endpoint = `/api/v2/occurrence/search?path=${id}&facet=year&facet=month&facet=dataset&facet=dataset_id&facet=publisher&facet=country&facet=license`;
+const mapUrl  =  `http://solr:8983/solr/taibif_occurrence/select?&q.op=AND&q=basisOfRecord:*&fq=taibif_taicolTaxonID:${id}`
 
 $.ajax({
   type: "GET",
-  url: endpoint,
+  url: '/api/get_map_geojson',
+  data: { solr_url: mapUrl },
   dataType: "json",
   success: function (response) {
-    L.geoJSON(response.map_geojson,{
+    L.geoJSON(response,{
       pointToLayer: function(feature, latlng) {
         return L.circleMarker(latlng, {
           radius: getRadius(feature.properties.counts),

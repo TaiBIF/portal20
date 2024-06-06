@@ -173,7 +173,7 @@
                 {% for set in dataset %}
                     <tr>
                         <td><a href="{% url 'dataset-detail' taibif_dataset_id=set.taibifDatasetID %}">{{ set.name_zh }}</a></td>
-                        <td><a href="{% url 'search-occurrence' cat='search'  %}?path={{ taxon.taicol_taxon_id }}&dataset={{set.name}}">{{ set.count|intcomma:False }}</td>
+                        <td><a href="{% url 'search-occurrence' cat='search'  %}?taibif_taicolTaxonID={{ taxon.taicol_taxon_id }}&taibif_datasetKey={{ set.taibifDatasetID }}">{{ set.count|intcomma:False }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

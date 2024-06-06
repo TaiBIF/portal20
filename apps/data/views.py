@@ -38,6 +38,7 @@ from .helpers.mod_search import (
     SpeciesSearch,
 )
 from utils.solr_query import SolrQuery
+from  utils.map_data import get_geojson
 
 from apps.data.models import DATA_MAPPING
 
@@ -489,59 +490,49 @@ def publisher_view(request, pk):
 # 地理分佈|資料集出現次數|物種描述|文獻
 def species_view(request, taicol_taxon_id):
     context = {}
-    dataset = []
+    dataset_data = []
     search_count = 0
     map_geojson = False
     taxon = get_object_or_404(Taxon, taicol_taxon_id=taicol_taxon_id)
-    switch = {
-            'kingdom':'kingdom_key',
-            'phylum':'phylum_key',
-            'class':'class_key',
-            'order':'order_key',
-            'family':'family_key',
-            'genus':'genus_key',
-            'species':'taxon_id',
-        }
-    total = []
-
-
-    # solr_q = switch.get(taxon.rank) + ':' + str(taicol_taxon_id)
-    solr_q = 'path:' + str(taicol_taxon_id)
-    # scientificName
-    search_limit = 20
-    facet_dataset = 'dataset:{type:terms,field:taibif_dataset_name,limit:-1,mincount:1}'
-    facet_dataset_zh = 'dataset_zh:{type:terms,field:taibif_dataset_name_zh,limit:-1,mincount:1}'
-    facet_taibif_dataset_id = 'taibifDatasetID:{type:terms,field:taibifDatasetID,limit:-1,mincount:1}'
-    facet_json = 'json.facet={'+facet_dataset +','+facet_dataset_zh +','+facet_taibif_dataset_id +'}'
-    
-
-    # if ENV in ['dev','stag']:
-    #     r = requests.get(f'http://54.65.81.61:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&rows={search_limit}&q=*:*&fq={solr_q}&{facet_json}')
-    # else:
-    r = requests.get(f'http://solr:8983/solr/taibif_occurrence/select?facet=true&q.op=AND&rows={search_limit}&q=*:*&fq={solr_q}&{facet_json}')
-
-
-    # map_url = "http://"+request.META['HTTP_HOST']+"/api/v2/occurrence/search?q=*:*&fq="+solr_q+"&facet=year&facet=month&facet=dataset&facet=dataset_id&facet=publisher&facet=country&facet=license"
-    # r2 = requests.get(map_url)
+    # switch = {
+    #         'kingdom':'kingdom_key',
+    #         'phylum':'phylum_key',
+    #         'class':'class_key',
+    #         'order':'order_key',
+    #         'family':'family_key',
+    #         'genus':'genus_key',
+    #         'species':'taxon_id',
+    #     }
+    # total = []
 
     # 資料集出現次數資訊
+    solr_q = f'taibif_taicolTaxonID:{str(taicol_taxon_id)}'
+    solr_facet = 'facet=true&facet.field=taibif_dataset_name_zh&facet.field=taibif_datasetKey'
+    solr_url = f'http://solr:8983/solr/taibif_occurrence/select?&q.op=AND&rows=0&q=basisOfRecord:*&fq={solr_q}&{solr_facet}' # rows=0 since solr search results are not necessary for this page
+    r = requests.get(solr_url)
+
     if r.status_code == 200:
+        resp = r.json()
+        search_count = resp['response']['numFound']
+        data = resp['facet_counts']['facet_fields'].get('taibif_dataset_name_zh', [])   
+        dataset_key = resp['facet_counts']['facet_fields'].get('taibif_datasetKey', [])
+        dataset_data = [
+            {
+                'count': count,
+                'name_zh': name,
+                'taibifDatasetID': key
+            }
+            for name, count, key in zip(data[::2], data[1::2], dataset_key[::2])
+            if count > 0
+        ]              
 
-        data = r.json()
-        search_count = data['response']['numFound']
-
-        if search_count != 0 :
-            count = []
-            dataset_list = []
-            dataset_zh_list = []
-            count = [x['count'] for x in data['facets']['dataset']['buckets']]
-            dataset_list = [x['val'] for x in data['facets']['dataset']['buckets']]
-            dataset_zh_list = [x['val']for x in data['facets']['dataset_zh']['buckets']]
-            dataset_taibif_dataset_id = [x['val']for x in data['facets']['taibifDatasetID']['buckets']]
-            
-            for x,y,z,n in zip(count, dataset_list, dataset_zh_list,dataset_taibif_dataset_id):
-                dataset.append({'count':x,'name':y,'name_zh':z,'taibifDatasetID':n})                
-
+    # map_url = "http://127.0.0.1/api/v2/occurrence/search?q=*:*&fq="+solr_q+"&facet=year&facet=month&facet=dataset&facet=dataset_id&facet=publisher&facet=country&facet=license"
+    map_url  = f'http://solr:8983/solr/taibif_occurrence/select?&q.op=AND&q=basisOfRecord:*&fq={solr_q}'
+    # map_resp = get_geojson(map_url)
+    # print(f'MAP RESP: {map_resp}')
+    # r2 = requests.get(map_url)
+    # print(f'MAP URL: {map_url}')
+    # print(f'MAP RESP: {r2}')
     # if r2.status_code == 200:
     #     data2 = r2.json()
 
@@ -553,9 +544,9 @@ def species_view(request, taicol_taxon_id):
         
     context = {
         'taxon': taxon,
-        'dataset':dataset,
+        'dataset':dataset_data,
         'total':search_count,
-        'map_view':map_geojson,
+        'map_view':True,
     }
     
     return render(request, 'species.html', context)

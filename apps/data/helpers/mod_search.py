@@ -117,7 +117,6 @@ class SuperSearch(object):
         offset = max(0, self.offset)
         limit = min(self.LIMIT_THRESHOLD, self.limit)
 
-        #print("get_results---------", query,offset,limit)
         if limit > 0:
             results = [self.result_map(x) for x in query.all()[offset:offset+limit]]
         else:

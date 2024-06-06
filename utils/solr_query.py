@@ -237,6 +237,8 @@ class SolrQuery(object):
                         self.solr_tuples.append(('fq', '{}:{}'.format('taibif_taxonGroup', values[0])))
                 elif key == 'path':
                     self.solr_tuples.append(('fq', 'path:*{}*'.format(values[0])))
+                elif key == 'taibif_taicolTaxonID':
+                    self.solr_tuples.append(('fq', f'taibif_taicolTaxonID:{values[0]}'))
         query_string = urllib.parse.urlencode(self.solr_tuples)
         self.solr_url = f'{SOLR_PREFIX}{self.core}/select?fl={self.filter_field}&{self.facet_field}&{query_string}'
 

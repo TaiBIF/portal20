@@ -1597,5 +1597,14 @@ def get_autocomplete_taxon(request):
                 'name': x.name,
                 'label':x.name,
             } for x in autocomplete_taxon]
-     
+    
     return HttpResponse(json.dumps(names), content_type='application/json') 
+
+def get_map_geojson(request):
+    solr_url = request.GET.get('solr_url')
+    if not solr_url:
+        return JsonResponse({'error': 'solr_url parameter is required'}, status=400)
+    
+    geojson_data = get_geojson(solr_url)
+    return JsonResponse(geojson_data)
+    

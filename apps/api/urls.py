@@ -17,6 +17,7 @@ urlpatterns = [
     path('v2/occurrence/map', views.occurrence_search_v2, name='api-occurrence-search-v2-map'),
     path('dataset/export', views.export, name='export'),
     path('v2/occurrence/get_map_species', views.get_map_species, name='get_map_species'),
+    path('get_map_geojson/', views.get_map_geojson, name='get_map_geojson'),
     
     # 外部使用的API
     path('v2/dataset', views.dataset_api, name='api_dataset'),
