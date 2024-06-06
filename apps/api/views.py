@@ -262,12 +262,10 @@ def publisher_dataset_api(request,pk):
 
 def occurrence_search_v2(request):
     current_path = request.path
-    print(f'CURRENT PATH: {current_path}')
     if current_path == '/api/v2/occurrence/search' and cache.get('init_solr_resp') and len(list(request.GET.lists())) == 0:
-        print('GOTCHA CACHE!!!')
         return JsonResponse(init_solr_resp)
+    
     time_start = time.time()
-
     solr = SolrQuery('taibif_occurrence', request.GET, None)
     req = solr.request()
     resp = solr.get_response()
@@ -309,7 +307,6 @@ def occurrence_search_v2(request):
         charts_dataset = []
         for menu in menus:
             if menu['key'] == 'taibif_month':
-                print(f'ROWS IN MONTHS: {menu["rows"]}')
                 charts_month = menu['rows']
             if menu['key'] == 'taibif_year':
                 charts_year = menu['rows']
@@ -342,15 +339,16 @@ def occurrence_search_v2(request):
     if tkey := req_dict.get('taxon_key', ''):
         taxon_key = tkey
     # tree
-    treeRoot = Taxon.objects.filter(rank='Kingdom').all()
-    treeData = [{
-        'id': x.taicol_taxon_id,
-        'data': {
-            'name': x.get_name(),
-            'count': x.count,
-        },
-    } for x in treeRoot]
-    resp['tree'] = treeData
+    # treeRoot = Taxon.objects.filter(rank='Kingdom').all()
+    # treeData = [{
+    #     'id': x.taicol_taxon_id,
+    #     'data': {
+    #         'name': x.get_name(),
+    #         'count': x.count,
+    #     },
+    # } for x in treeRoot]
+    # resp['tree'] = treeData
+    resp['tree'] = [{'id': 't0000005', 'data': {'name': '細菌界 Bacteria', 'count': None}}, {'id': 't0000007', 'data': {'name': '原藻界 Chromista', 'count': None}}, {'id': 't0000004', 'data': {'name': '古菌界 Archaea', 'count': None}}, {'id': 't0000008', 'data': {'name': '真菌界 Fungi', 'count': None}}, {'id': 't0000009', 'data': {'name': '動物界 Animalia', 'count': None}}, {'id': 't0000003', 'data': {'name': '植物界 Plantae', 'count': None}}, {'id': 't0000006', 'data': {'name': '原生生物界 Protozoa', 'count': None}}]
     # TODO, init taxon_key
     #resp['taxon_checked'] = tkey
     if request.GET.get('debug_solr', ''):
@@ -364,8 +362,6 @@ def occurrence_search_v2(request):
         solr_updated = False if cache.get('default_solr_count') == resp['count'] else True
         query_params = list(request.GET.lists())
         if len(query_params) > 0:
-            print('QUERY ITEMS ALERT!!!')
-            print(query_params)
             solr_url = solr.generate_solr_url(request.GET)
             resp['map_geojson'] = get_geojson(solr_url)
         elif solr_updated or not cache.get('default_map_geojson'):
@@ -381,8 +377,6 @@ def occurrence_search_v2(request):
                 menu['rows'] = [{'key': 'fake_year_range', 'label': 'fake_year_range', 'count': 0}]
     resp['menus'] = menus    
     resp['elapsed'] = time.time() - time_start
-
-    print(f'TREE: {treeData}')
 
     return JsonResponse(resp)
 
@@ -1008,119 +1002,73 @@ def search_dataset(request):
     menu_list = []
     # content search
     ds_search = DatasetSearch(list(request.GET.lists()))
-    # menu item
-    ds_menu = DatasetSearch([]) 
+
     if has_menu:
         condiction_menu = list(request.GET.lists())
-        publisher_query = []
-        for k,v in condiction_menu:
-            if k!= "publisher":
-                publisher_query.append((k,v))
-        publisher_menu = DatasetSearch(publisher_query) 
-        # publisher 
-        publisher_list = ds_menu.query\
-            .values('organization','organization_name')\
-            .exclude(organization__isnull=True)\
-            .exclude(organization_name__isnull=True)\
-            .distinct('organization')
-        
-        publisher_count = publisher_menu.query\
-            .values('organization')\
-            .exclude(organization__isnull=True)\
-            .exclude(organization_name__isnull=True)\
-            .annotate(count=Count('organization'))\
-            .order_by('-count')
-        for i in publisher_list:
-            if publisher_count.filter(organization=i['organization']):
-                i['count'] = publisher_count.filter(organization=i['organization'])[0]['count']    
-            else:
-                i['count'] = 0
-        publisher_rows = [{
-            'key':x['organization'],
-            'label':x['organization_name'],
-            'count': x['count'],
-        } for x in publisher_list]
-        publisher_rows = sorted(publisher_rows, key=lambda d: d['count'], reverse=True) 
 
-
-        country_query = []
-        for k,v in condiction_menu:
-            if k!= "country":
-                country_query.append((k,v))
-        country_menu = DatasetSearch(country_query) 
-        # country
-        country_list = ds_menu.query\
-            .values('country')\
-            .exclude(country__exact='')\
-            .distinct('country')
-        country_count = country_menu.query\
-            .values('country')\
-            .exclude(country__exact='')\
-            .annotate(count=Count('country'))\
+        # 發布單位 publisher
+        publisher_query = [(k, v) for k, v in condiction_menu if k != 'publisher']
+        publisher_count = (
+            DatasetSearch(publisher_query)
+            .query
+            .values('organization', 'organization_name')
+            .exclude(organization__isnull=True)
+            .exclude(organization_name__isnull=True)
+            .annotate(count=Count('*'))
             .order_by('-count')
-        for i in country_list:
-            if country_count.filter(country=i['country']):
-                i['count'] = country_count.filter(country=i['country'])[0]['count']    
-            else:
-                i['count'] = 0
-        
-        country_rows = [{
-            'key':x['country'],
-            'label':DATA_MAPPING['country'][x['country']],
-            'count': x['count']
-        } for x in country_list]
-        country_rows = sorted(country_rows, key=lambda d: d['count'], reverse=True) 
+        )
+        publisher_rows = sorted(
+            [{'key':item['organization'], 'label':item['organization_name'], 'count': item['count'] or 0} for item in publisher_count],
+            key=lambda d: d['count'], 
+            reverse=True
+        ) 
+
+        # 發布地區/國家 publishing country or area
+        country_query = [(k, v) for k, v in condiction_menu if k != 'country']
+        country_count_data = (
+            DatasetSearch(country_query)
+            .query
+            .values('country')
+            .exclude(country__exact='')
+            .annotate(count=Count('*'))
+            .order_by('-count')
+        )
+        country_rows = sorted(
+            [{'key':item['country'], 'label':DATA_MAPPING['country'].get(item['country']), 'count': item['count'] or 0} for item in country_count_data],
+            key=lambda d: d['count'], 
+            reverse=True
+        )
 
         # 授權類型 license
-        rights_query = []
-        for k,v in condiction_menu:
-            if k!= "rights":
-                rights_query.append((k,v))
-        rights_menu = DatasetSearch(rights_query) 
-        rights_list = ds_menu.query\
-            .values('data_license')\
-            .exclude(data_license__exact='')\
-            .distinct('data_license')
-        rights_count = rights_menu.query\
-            .values('data_license')\
-            .exclude(data_license__exact='')\
-            .annotate(count=Count('data_license'))\
+        rights_query = [(k, v) for k, v in condiction_menu if k != 'rights']
+        rights_count_data = (
+            DatasetSearch(rights_query)
+            .query
+            .values('data_license')
+            .exclude(data_license__exact='')
+            .annotate(count=Count('*'))
             .order_by('-count')
-        for i in rights_list:
-            if rights_count.filter(data_license=i['data_license']):
-                i['count'] = rights_count.filter(data_license=i['data_license'])[0]['count']
-            else:
-                i['count'] = 0
-                
-        rights_rows = [{
-            'key': DATA_MAPPING['rights'][x['data_license']],
-            'label':DATA_MAPPING['rights'][x['data_license']],
-            'count': x['count']
-        } for x in rights_list]
-        rights_rows = sorted(rights_rows, key=lambda d: d['count'], reverse=True) 
+        )
+        rights_rows = sorted(
+            [{'key': DATA_MAPPING['rights'].get(item['data_license'], '未映射授權'), 'label':DATA_MAPPING['rights'].get(item['data_license'], '未映射授權'), 'count': item['count'] or 0} for item in rights_count_data],
+            key=lambda d: d['count'],
+            reverse=True
+        )
         
         # 資料來源 Source
-        source_query = []
-        for k,v in condiction_menu:
-            if k != 'source':
-                source_query.append((k,v))
-        source_menu = DatasetSearch(source_query) 
-        
-        source_list = ds_menu.query.values('source').distinct('source')
-
-        source_count_data = source_menu.query.values('source').annotate(count=Count('*')).order_by('-count')
-        source_count_dict = {item['source']: item['count'] for item in source_count_data}
-        
-        for source in source_list:
-            source['count'] = source_count_dict.get(source['source'])
-
-        source_rows = [{
-            'key': item['source'],
-            'label': item['source'],
-            'count': item['count'] if item['count'] else 0,
-        } for item in source_list]
-
-        source_rows = sorted(source_rows, key=lambda d: d['count'], reverse=True)
+        source_query = [(k, v) for k, v in condiction_menu if k != 'source']
+        source_count_data = (
+            DatasetSearch(source_query)
+            .query
+            .values('source')
+            .annotate(count=Count('*'))
+            .order_by('-count')
+        )
+        source_rows = sorted(
+            [{'key': item['source'], 'label': item['source'], 'count': item['count'] or 0} for item in source_count_data],
+            key=lambda d: d['count'],
+            reverse=True
+        )
 
         menu_list = [
             {
@@ -1144,16 +1092,14 @@ def search_dataset(request):
                 'rows': source_rows
             }
         ]
-
-    # search
+        
     res = ds_search.get_results()
-
     data = {
         'search': res,
     }
     if has_menu:
         data['menus'] = menu_list
-    #return {'data': data}
+
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 #@json_ret

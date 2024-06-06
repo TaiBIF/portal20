@@ -254,7 +254,7 @@ class DatasetSearch(SuperSearch):
         super().__init__(filters)
 
         # filter query
-        query = self.model.public_objects.filter()
+        query = self.model.public_objects.filter().select_related('organization')
         #query = self.query
         for key, values in self.filters:
             if key == 'q':
@@ -342,8 +342,7 @@ class DatasetSearch(SuperSearch):
             'id': x.id,
             'name': x.name,
             'dwc_type': x.get_dwc_core_type_display(),
-            # 'publisher': x.organization.name if x.organization else None,
-            'publisher': None,
+            'publisher': x.organization.name if x.organization else None,
             'num_occurrence': x.num_occurrence,
             'num_record': x.num_record,
             'pub_date': x.pub_date.strftime('%Y-%m-%d') if x.pub_date else None,
