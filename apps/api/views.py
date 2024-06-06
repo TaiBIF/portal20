@@ -1034,7 +1034,7 @@ def search_dataset(request):
             .order_by('-count')
         )
         country_rows = sorted(
-            [{'key':item['country'], 'label':DATA_MAPPING['country'].get(item['country']), 'count': item['count'] or 0} for item in country_count_data],
+            [{'key':item['country'], 'label':DATA_MAPPING['country'].get(item['country'], '未映射國家'), 'count': item['count'] or 0} for item in country_count_data],
             key=lambda d: d['count'], 
             reverse=True
         )
@@ -1092,7 +1092,7 @@ def search_dataset(request):
                 'rows': source_rows
             }
         ]
-        
+
     res = ds_search.get_results()
     data = {
         'search': res,
