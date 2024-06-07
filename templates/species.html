@@ -53,7 +53,13 @@
         'searching'   : false,
         'ordering'    : false,
         'info'        : false,
-        'autoWidth'   : false
+        'autoWidth'   : true,
+        'language': {
+            paginate: {
+                previous: "<span class='myicon icon-arrow-left'></span>",
+                next: "<span class='myicon icon-arrow-right'></span>"
+            },
+        },
       })
 
     })
@@ -161,17 +167,18 @@
         <!-- 資料集出現次數 begin -->
         <div id="section3">
             <h3>資料集出現次數</h3>
-            <table id="dataset-table" class="table table-bordered">
+            <table id="dataset-table" class="table table-ltmilo">
                 <thead>
-                <tr>
-                    <th>資料集</th>
-                    <th>紀錄筆數</th>
-                    <!-- <th>&nbsp;</th> -->
-                </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>資料集</th>
+                        <th>紀錄筆數</th>
+                    </tr>
                 </thead>
                 <tbody>
                 {% for set in dataset %}
                     <tr>
+                        <td>{{ forloop.counter }}</td>
                         <td><a href="{% url 'dataset-detail' taibif_dataset_id=set.taibifDatasetID %}">{{ set.name_zh }}</a></td>
                         <td><a href="{% url 'search-occurrence' cat='search'  %}?taibif_taicolTaxonID={{ taxon.taicol_taxon_id }}&taibif_datasetKey={{ set.taibifDatasetID }}">{{ set.count|intcomma:False }}</td>
                     </tr>
