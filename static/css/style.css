@@ -1722,15 +1722,15 @@ a.btn-sunset-lg.focus {
     background: #bb998b;
     border: 1px solid transparent;
 }
-.dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
+/* .dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
 .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover,
 .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
     color: rgba(132, 108, 91, 0.6) !important;
-}
+} */
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-    color: #4a3e3a !important;
-    background: #eae3df;
-    border: 1px solid transparent;
+    color: #fff !important;
+    background: #bb998b;
+    border: 1px solid #bb998b;
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button:active {
     background: #846c5b;
@@ -4742,4 +4742,12 @@ body {
     width: 100%;
     max-width: 100%;
     height: auto;
+}
+
+.online-workshop-course-table tr th:nth-child(2) {
+    width: 10%;
+}
+
+.online-workshop-course-table tr th,  .online-workshop-course-table tr td{
+    vertical-align: middle !important;
 }
