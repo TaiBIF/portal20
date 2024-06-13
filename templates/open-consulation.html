@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block title %}開放資料諮詢服務{% endblock %}
+
+
+{% block main %}
+<div class="bg-main-pale">
+    <div class="container">
+        <div class="caption-mascot-wrapper">
+            <h1 class="title">{% trans "開放資料諮詢服務" %}</h1>
+            <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
+            <li class="breadcrumb-item">{% trans "開放資料" %}</li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans "開放資料諮詢服務" %}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-12 col-md-3">
+            <div class="dropdown dropdown-flexible-wrapper">
+                <a class="btn btn-toggle-flexible visible-xs" href="#" data-toggle="dropdown" aria-expanded="false">
+                    開放資料諮詢服務
+                </a>
+                <div class="dropdown-menu-flexible d-md-block">
+                    <a data-cat="q1" class="dropdown-item nav-item current-sunset" href="#">申請線上自學工作坊</a>
+                    <a data-cat="q2" class="dropdown-item nav-item" href="#">申請資料清理服務</a>
+                    <a data-cat="q3" class="dropdown-item nav-item" href="#">資料發布問題諮詢</a>
+                    <a data-cat="q4" class="dropdown-item nav-item" href="#">資料論文合作</a>
+                </div>
+            </div>
+        </div>
+
+        <div data-cat="q1" class="col-12 col-md-9 nav-item-content">
+            <h4 class="headline-left-hr">申請線上自學工作坊</h4>
+            <p>
+                歡迎申請 TaiBIF 線上自學工作坊！本課程適合對於開放資料發布及應用有興趣，但無法來上三天實體課程的公司、團體、組織、機關參加，
+                透過填寫申請表，我們將與您聯繫並提供貴單位適合的線上免費課程方案，並可依需求提供線上預約諮詢。若您對於課程認證有興趣，也歡迎繳交指定作業來獲得認證及相關建議！
+            </p>
+            <p>
+                有興趣者請填寫<a href="https://docs.google.com/forms/d/e/1FAIpQLSfqOJTqON13PMbNZbmLFSk6KXDaSa6S8RJ8vnOk5BB59PsxMQ/viewform" target="_blank">申請表單</a>，課程主題及說明如下：
+            </p>
+            <table class="table online-workshop-course-table">
+                <tr>
+                    <th>主題</th>
+                    <th>等級</th>
+                    <th>說明</th>
+                </tr>
+                <tr>
+                    <td>00-TaiBIF簡介</td>
+                    <td><span class="highlight-box-primary">基礎</span></td>
+                    <td>簡介臺灣生物多樣性資訊機構（TaiBIF）及提供的服務</td>
+                </tr>
+                <tr>
+                    <td>01-開放資料流程</td>
+                    <td><span class="highlight-box-primary">基礎</span></td>
+                    <td>為什麼要開放資料？<br>理想中的資料流通是如何成形的？</td>
+                </tr>
+                <tr>
+                    <td>02-資料發布類型</td>
+                    <td><span class="highlight-box-primary">基礎</span></td>
+                    <td>介紹物種清單 checklist、出現紀錄 occurrence、調查活動 sampling event，認識自己的資料屬於哪種類型</td>
+                </tr>
+                <tr>
+                    <td>03-資料標準及共通欄位</td>
+                    <td><span class="highlight-box-primary">基礎</span></td>
+                    <td>介紹國際通用標準 Darwin Core (DwC)</td>
+                </tr>
+                <tr>
+                    <td>04-開放資料的前置準備及清理</td>
+                    <td><span class="highlight-box-primary">基礎</span></td>
+                    <td>瞭解 GBIF 的資料結構及如何提升自己資料的品質</td>
+                </tr>
+                <tr>
+                    <td>05-生物多樣性敏感資料處理原則</td>
+                    <td><span class="highlight-box-primary">基礎</span></td>
+                    <td>介紹敏感物種的資料發布、地理資訊屏蔽原則及指引</td>
+                </tr>
+                <tr>
+                    <td>06-資料上傳 IPT</td>
+                    <td><span class="highlight-box-primary">基礎</span></td>
+                    <td>學習將物種資料上傳至TaiBIF 的資料發布工具 – IPT</td>
+                </tr>
+                <tr>
+                    <td>01-開放資料授權規範</td>
+                    <td><span class="highlight-box-secondary">進階</span></td>
+                    <td>了解開放資料的授權規範及不同角色使用授權的權利義務</td>
+                </tr>
+                <tr>
+                    <td>02-TBIA及入口網介紹</td>
+                    <td><span class="highlight-box-secondary">進階</span></td>
+                    <td>介紹臺灣生物多樣性資訊聯盟（TBIA）及共通資料庫查詢系統（入口網）</td>
+                </tr>
+                <tr>
+                    <td>03-如何下載及引用開放資料</td>
+                    <td><span class="highlight-box-secondary">進階</span></td>
+                    <td>如何從GBIF下載及引用開放資料</td>
+                </tr>
+                <tr>
+                    <td>04-資料論文</td>
+                    <td><span class="highlight-box-secondary">進階</span></td>
+                    <td>什麼是資料論文？如何準備？</td>
+                </tr>
+                <tr>
+                    <td>05-OpenRefine 資料清理工具介紹與實作</td>
+                    <td><span class="highlight-box-secondary">進階</span></td>
+                    <td>使用小工具和 OpenRefine 來清理自己的或範例資料</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            <p>若您有申請線上自學工作坊，則請點選線上自學工作坊<a href="https://docs.google.com/forms/d/e/1FAIpQLSe1ATKg1kmK3zGxHWmgVEaKrOY4bDAqohht77tjeIG0zeXvag/viewform" target="_blank">作業繳交區</a>，上傳初階和進階認證作業，並聯繫我們告知您已完成作業。</p>
+        </div>
+
+        <div data-cat="q2" class="col-12 col-md-9 nav-item-content hide">
+            <h4 class="headline-left-hr">申請資料清理服務</h4>
+            <p>即將上線，敬請期待！</p>
+        </div>
+
+        <div data-cat="q3" class="col-12 col-md-9 nav-item-content hide">
+            <h4 class="headline-left-hr">資料發布問題諮詢</h4>
+            <p>
+                TaiBIF 提供任何生物多樣性資料發布的諮詢服務及協助，常見問題可先參考<a href="{% url 'faq' %}">資料集發布常見問題</a>，
+                若沒有找到您需要的解答，可加入FB社團：<a href="https://www.facebook.com/groups/3176539809245108" target="_blank">TaiBIF/GBIF 資料發布問題討論</a>並發問，
+                或進一步<a href="{% url 'contact_us' %}">聯繫我們</a>。
+            </p>
+        </div>
+
+        <div data-cat="q4" class="col-12 col-md-9 nav-item-content hide">
+            <h4 class="headline-left-hr">資料論文合作</h4>
+            <p>
+                TaiBIF每年皆有固定經費來贊助與生物多樣性相關之主題的資料論文發表，欲知詳情如合作模式與適用條件，歡迎<a href="{% url 'contact_us' %}">聯繫我們</a>。
+            </p>
+            <p>
+                相關條件：
+                <ol>
+                    <li>須將資料集上傳至TaiBIF 和 GBIF，上傳流程請參照<a href="{% url 'open-process' %}">開放資料流程</a></li>
+                    <li>須將TaiBIF 團隊中至少一位成員列為共同作者（該成員將可協助資料發布）</li>
+                    <li>須於致謝（Acknowledgement）中提及 Taiwan Biodiversity Information Facility, TaiBIF</li>
+                </ol>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
