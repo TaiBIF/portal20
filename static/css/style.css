@@ -389,7 +389,7 @@ a:active {
     text-align: center;
 }
 .shortcut-menu-wrapper .btn {
-    width: 120px;
+    width: 130px;
     border: 0.25rem;
     background-image: -webkit-gradient(
         linear,
@@ -411,8 +411,8 @@ a:active {
     margin: 0.5rem auto;
 }
 .shortcut-menu-wrapper .dropdown-menu {
-    width: 120px;
-    min-width: 120px;
+    width: 130px;
+    min-width: 130px;
     padding: 0;
     background-color: #faf9f9;
     margin-bottom: -1px;

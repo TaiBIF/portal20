@@ -523,3 +523,6 @@ def page_not_found_view(request,exception=None):
 
 def response_error_handler(request,exception=None):
     return render(request, '500.html', status=500)
+
+def open_consulation(request):
+    return render(request, 'open-consulation.html')
