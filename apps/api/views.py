@@ -348,7 +348,13 @@ def occurrence_search_v2(request):
     #     },
     # } for x in treeRoot]
     # resp['tree'] = treeData
-    resp['tree'] = [{'id': 't0000005', 'data': {'name': '細菌界 Bacteria', 'count': None}}, {'id': 't0000007', 'data': {'name': '原藻界 Chromista', 'count': None}}, {'id': 't0000004', 'data': {'name': '古菌界 Archaea', 'count': None}}, {'id': 't0000008', 'data': {'name': '真菌界 Fungi', 'count': None}}, {'id': 't0000009', 'data': {'name': '動物界 Animalia', 'count': None}}, {'id': 't0000003', 'data': {'name': '植物界 Plantae', 'count': None}}, {'id': 't0000006', 'data': {'name': '原生生物界 Protozoa', 'count': None}}]
+    resp['tree'] = [{'id': 't0000005', 'data': {'name': '細菌界 Bacteria', 'count': None}}, 
+                    {'id': 't0000007', 'data': {'name': '原藻界 Chromista', 'count': None}},
+                    {'id': 't0000004', 'data': {'name': '古菌界 Archaea', 'count': None}}, 
+                    {'id': 't0000008', 'data': {'name': '真菌界 Fungi', 'count': None}}, 
+                    {'id': 't0000009', 'data': {'name': '動物界 Animalia', 'count': None}}, 
+                    {'id': 't0000003', 'data': {'name': '植物界 Plantae', 'count': None}}, 
+                    {'id': 't0000006', 'data': {'name': '原生生物界 Protozoa', 'count': None}}]
     # TODO, init taxon_key
     #resp['taxon_checked'] = tkey
     if request.GET.get('debug_solr', ''):
@@ -1217,11 +1223,11 @@ def search_species(request):
                     'count': x['count'],
                 } for x in Taxon.get_tree(rank=rank, status=status)]
             },
-            {
-                'key': 'highertaxon',
-                'label': '高階分類群 Higher Taxon Classification',
-                'rows': higherTaxon_menu_tmp,
-            },
+            # {
+            #     'key': 'highertaxon',
+            #     'label': '高階分類群 Higher Taxon Classification',
+            #     'rows': higherTaxon_menu_tmp,
+            # },
             {
                 'key': 'status',
                 'label': '學名狀態 Status',

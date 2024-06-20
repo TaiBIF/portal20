@@ -104,10 +104,6 @@
         {% endif %}
         <li><a href="#section2">地理分佈</a></li>
         <li><a href="#section3">資料集出現次數</a></li>
-        <li><a href="#section4">物種描述</a></li>
-        {% if taxon.reference %}
-        <li><a href="#section5">文獻</a></li>
-        {% endif %}
     </ul>
     <!-- amchor btns begin -->
 
@@ -187,66 +183,6 @@
             </table>
         </div>
         <!-- 資料集出現次數 end -->
-
-        <!-- TaiCol物種描述 begin -->
-        <div id="section4">
-            <h3>物種描述</h3>
-            
-            {% if taxon.taieol_desc %}
-            {{taxon.taieol_desc}}
-            {% endif %}
-
-            <!--carousel photos begin-->
-            {% if taxon.species_pic %}
-            <div id="carousel-postImages" class="carousel slide" data-ride="carousel">
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner" style="max-width:70%; max-height:50%; height: auto; width:auto;margin-left:auto;margin-right:auto;display: block;">
-                    {% for i in taxon.species_pic %}
-                    <div class="item {% if forloop.counter == 1 %} active{% endif %}">
-                    {% if i.image_name%}
-                        <img src="/media/{{i.folder}}{{i.image_name}}" >
-                        <p class="article-img-license">{% if i.photographer %}{{i.photographer}}@{% endif %}TaiBIF 臺灣生物多樣性資訊機構-CC BY 4.0</p> 
-                    </div>
-                    {% elif i.taieol_pic %}
-                        <img src="{{i.taieol_pic}}">
-                        <p class="article-img-license">{% if i.photographer %}{{i.photographer}}@{% endif %}TaiEOL 生命大百科-CC BY 4.0</p>
-                    {% endif%}
-                    {% endfor %} 
-                </div> 
-
-                    {% if taxon.species_pic|length > 1 %}
-                    <!-- Controls -->
-                    <a class="left carousel-control" href="#carousel-postImages" role="button" data-slide="prev">
-                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="right carousel-control" href="#carousel-postImages" role="button" data-slide="next">
-                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                    {% endif %}
-            </div> 
-            {% endif %}
-            <!-- TaiCol物種描述 end -->
-
-
-            <!-- Kuan Yu added for taieol discription -->
-            {% for i in species_info.taieol_desc %}
-            <div id="section9">
-                <h4 class="heading-md-ul">{{ i.title }}</h4>
-                {{ i.content | striptags }}
-            </div>
-            {% endfor %}
-
-            <!-- 文獻 begin -->
-            {% if  taxon.reference %}
-            <div id="section5">
-                <h4 class="heading-md-ul">文獻</h4>
-                {{taxon.reference}}
-            </div>
-            {% endif %}
-            <!-- 文獻 end -->
-        </div>
     </div>
 </div>
 

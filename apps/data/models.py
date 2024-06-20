@@ -243,15 +243,15 @@ class DatasetOrganization(models.Model):
 #         return r
 
 class Taxon(models.Model):
-    RANK_LIST = [('Domain', '域'), ('Superkingdom', '總界'), ('Kingdom', '界'), ('Subkingdom', '亞界'), ('Infrakingdom', '下界'), 
+    RANK_LIST = [('Domain', '域'), ('Superkingdom', '總界'), ('kingdom', '界'), ('Subkingdom', '亞界'), ('Infrakingdom', '下界'), 
  ('Superdivision', '超部|總部'), ('Division', '部|類'), ('Subdivision', '亞部|亞類'), ('Infradivision', '下部|下類'), ('Parvdivision','小部|小類'), 
- ('Superphylum', '超門|總門'), ('Phylum', '門'),('Subphylum', '亞門'), ('Infraphylum', '下門'), ('Microphylum', '小門'), ('Parvphylum', '小門'), 
- ('Superclass', '超綱|總綱'), ('Class', '綱'), ('Subclass', '亞綱'), ('Infraclass','下綱'),('Superorder','超目|總目'), 
- ('Order', '目'), ('Suborder', '亞目'), ('Infraorder', '下目'), ('Superfamily', '超科|總科'), ('Family', '科'),
- ('Subfamily', '亞科'), ('Tribe', '族'), ('Subtribe', '亞族'), ('Genus', '屬'), ('Subgenus', '亞屬'), ('Seection', '亞組|亞節'), 
- ('Species', '種'), ('Subspecies', '亞種'), ('Nothosubspecies', '雜交亞種'), ('Variety', '變種'), 
- ('Subvariety', '亞變種'), ('Nothovariety', '雜交變種'), ('Form', '型'), ('Subform', '亞型'), 
- ('Special Form', '特別品型'), ('Race', '種族'), ('Stirp', '種族'), ('Morph', '形態型'), ('Aberration', '異常個體'), ('Hybrid Formula', '雜交組合')]
+ ('Superphylum', '超門|總門'), ('phylum', '門'),('Subphylum', '亞門'), ('Infraphylum', '下門'), ('Microphylum', '小門'), ('Parvphylum', '小門'), 
+ ('Superclass', '超綱|總綱'), ('class', '綱'), ('Subclass', '亞綱'), ('Infraclass','下綱'),('Superorder','超目|總目'), 
+ ('order', '目'), ('Suborder', '亞目'), ('Infraorder', '下目'), ('Superfamily', '超科|總科'), ('family', '科'),
+ ('Subfamily', '亞科'), ('Tribe', '族'), ('Subtribe', '亞族'), ('genus', '屬'), ('Subgenus', '亞屬'), ('Seection', '亞組|亞節'), 
+ ('species', '種'), ('Subspecies', '亞種'), ('Nothosubspecies', '雜交亞種'), ('variety', '變種'), 
+ ('subvariety', '亞變種'), ('nothovariety', '雜交變種'), ('form', '型'), ('subform', '亞型'), 
+ ('special form', '特別品型'), ('Race', '種族'), ('Stirp', '種族'), ('Morph', '形態型'), ('Aberration', '異常個體'), ('hybrid formula', '雜交組合')]
 
     taicol_taxon_id = models.CharField('taicol taxon id', max_length=128, null=True, blank=True)
     is_accepted_name = models.BooleanField('status', default=True)
