@@ -506,7 +506,7 @@ def species_view(request, taicol_taxon_id):
     # total = []
 
     # 資料集出現次數資訊
-    solr_q = f'taibif_taicolTaxonID:{str(taicol_taxon_id)}'
+    solr_q = f'path:{str(taicol_taxon_id)}'
     solr_facet = 'facet=true&facet.field=taibif_dataset_name_zh&facet.field=taibif_datasetKey'
     solr_url = f'http://solr:8983/solr/taibif_occurrence/select?&q.op=AND&rows=0&q=basisOfRecord:*&fq={solr_q}&{solr_facet}' # rows=0 since solr search results are not necessary for this page
     r = requests.get(solr_url)

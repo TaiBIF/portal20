@@ -28,7 +28,7 @@ function gerBorderColor(d) {
 
 const rank = document.currentScript.getAttribute('taxon_rank'); 
 const id = document.currentScript.getAttribute('taxon_id'); 
-const mapUrl  =  `http://solr:8983/solr/taibif_occurrence/select?&q.op=AND&q=basisOfRecord:*&fq=taibif_taicolTaxonID:${id}`
+const mapUrl  =  `http://solr:8983/solr/taibif_occurrence/select?&q.op=AND&q=basisOfRecord:*&fq=path:${id}`
 
 $.ajax({
   type: "GET",
