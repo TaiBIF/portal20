@@ -17,8 +17,7 @@ function TreeNode({nodeData, onClickSpecies, showLinnaeanOnly, treeKey, onTaxonR
       setChildrenState([]);
     }
     else {
-      if (showLinnaeanOnly) {
-        const apiUrl = `/api/taxon/tree/node/${nodeData.id}?linnaean=yes`;
+      const apiUrl = `/api/taxon/tree/node/${nodeData.id}?linnaean=yes`;
         fetch(apiUrl)
           .then(res => res.json())
           .then(
@@ -29,31 +28,11 @@ function TreeNode({nodeData, onClickSpecies, showLinnaeanOnly, treeKey, onTaxonR
             (error) => {
               console.log('error tree click', error);
             });
-      } else {
-        const apiUrl = `/api/taxon/tree/node/${nodeData.id}`;
-        fetch(apiUrl)
-          .then(res => res.json())
-          .then(
-            (json) => {
-              console.log('resp (tree): ', json);
-              setChildrenState(json.children);
-
-              // adjust Accordion content height
-              const h = document.querySelector('.taxon-tree-container').scrollHeight;
-              const contentEle = document.querySelector('.accordion-content-taxon');
-              //contentEle.style.maxHeight = `${h}px`;
-            },
-            (error) => {
-              console.log('error tree click', error);
-            });
-      }
     }
   }
 
   const childrenNodes = (children || []).map( child => {
     return <TreeNode key={child.id} nodeData={child} onClickSpecies={onClickSpecies} 
-    showLinnaeanOnly={showLinnaeanOnly}
-    onTaxonRemoveClick={onTaxonRemoveClick}
     treeKey={treeKey}
     />
   });
@@ -85,7 +64,6 @@ function TreeNode({nodeData, onClickSpecies, showLinnaeanOnly, treeKey, onTaxonR
 }
 
 function Tree(props) {
-  const [showLinnaeanOnly, setShowLinnaeanOnly] = useState(false);
   const [treeKey, setTreeKey] = useState(Date.now());
 
   const handleCheckboxChange = () => {
@@ -97,8 +75,6 @@ function Tree(props) {
   //console.log('<Tree> ', props);
   const treeRootNodes = props.taxonData.tree.map((child) => {
     return <TreeNode key={child.id} nodeData={child} onClickSpecies={props.onClickSpecies} 
-    showLinnaeanOnly={showLinnaeanOnly}
-    onToggleLinnaean={props.handleCheckboxChange}
     onTaxonRemoveClick={props.onTaxonRemoveClick}
     treeKey={treeKey}/>
   });
@@ -107,12 +83,6 @@ function Tree(props) {
       <div className="taxon-tree-container">
         <div className="taxon-tree-title">
           <span> 
-          </span>
-          <span>
-            <label>
-              <input type="checkbox" onChange={handleCheckboxChange}></input>
-              僅顯示林奈階層
-            </label>
           </span>
         </div>
       {treeRootNodes}
