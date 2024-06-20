@@ -126,12 +126,13 @@ class SuperSearch(object):
 
         #count = 0
         # TODO need refine
-        if len(self.filters) == 0:
-            count = self._estimate_count_all()
-        elif self.is_estimate_count and not self.force_accurate_count:
-            count = self._estimate_count()
-        else:
-            count = query.count()
+        # if len(self.filters) == 0:
+        #     count = self._estimate_count_all()
+        # elif self.is_estimate_count and not self.force_accurate_count:
+        #     count = self._estimate_count()
+        # else:
+        #     count = query.count()
+        count = query.count()
 
         ret = {
             'elapsed': self.timed[1] - self.timed[0],
