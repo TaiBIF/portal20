@@ -164,9 +164,9 @@ export default function OccurrenceSearch(props) {
             <th>Date</th>
             <th>Country or Area</th>
             <th>Dataset</th>
-            <th>Basic of Record</th>
+            <th>Basis of Record</th>
             <th>Kingdom</th>
-            <th>Pyhlum</th>
+            <th>Phylum</th>
             <th>Class</th>
             <th>Family</th>
             <th>Order</th>
