@@ -412,7 +412,10 @@ class Taxon(models.Model):
             rank_list = self.path.split(">")
             a=[]
             for i in rank_list:
-                a.append(Taxon.objects.get(taicol_taxon_id = i))
+                try:
+                    a.append(Taxon.objects.get(taicol_taxon_id = i))
+                except:
+                    print(f"Taxon with taicol_taxon_id '{i}' does not exist in the database.")
             return list(reversed(a))
         else:
             return []
