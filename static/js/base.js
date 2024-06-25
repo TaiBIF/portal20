@@ -36,8 +36,7 @@ $(document).ready(function() {
   });
 
   // 三層 nav
-  $('.dropdown-item').click(function(event) {
-    event.preventDefault(); 
+  $('.dropdown-item').click(function() {
     $(this).next('.dropdown-3rd').toggleClass('hide');
     var dropdownMenu = $(this).closest('.dropdown-menu');
     dropdownMenu.find('.dropdown-3rd').not($(this).next('.dropdown-3rd')).addClass('hide');
