@@ -1159,58 +1159,58 @@ def search_species(request):
     menu_list = []
     
     condiction_menu = list(request.GET.lists())
-    higherTaxon_query = []
-    for k,v in condiction_menu:
-        if k!= "highertaxon":
-            higherTaxon_query.append((k,v))
-    higherTaxon_menu = SpeciesSearch(higherTaxon_query) 
+    # higherTaxon_query = []
+    # for k,v in condiction_menu:
+    #     if k!= "highertaxon":
+    #         higherTaxon_query.append((k,v))
+    # higherTaxon_menu = SpeciesSearch(higherTaxon_query) 
 
-    kingdom_count = higherTaxon_menu.query\
-            .extra(select ={'taxon_id':'kingdom_taxon_id'})\
-            .values('taxon_id')\
-            .exclude(kingdom_taxon_id__exact='')\
-            .annotate(count=Count('kingdom_taxon_id'))\
-            .order_by('-count')
-    phylum_count = higherTaxon_menu.query\
-            .extra(select ={'taxon_id':'phylum_taxon_id'})\
-            .values('taxon_id')\
-            .exclude(phylum_taxon_id__exact='')\
-            .annotate(count=Count('phylum_taxon_id'))\
-            .order_by('-count')
-    order_count = higherTaxon_menu.query\
-            .extra(select ={'taxon_id':'order_taxon_id'})\
-            .values('taxon_id')\
-            .exclude(order_taxon_id__exact='')\
-            .annotate(count=Count('order_taxon_id'))\
-            .order_by('-count')
-    class_count = higherTaxon_menu.query\
-            .extra(select ={'taxon_id':'class_taxon_id'})\
-            .values('taxon_id')\
-            .exclude(class_taxon_id__exact='')\
-            .annotate(count=Count('class_taxon_id'))\
-            .order_by('-count')
-    family_count = higherTaxon_menu.query\
-            .extra(select ={'taxon_id':'family_taxon_id'})\
-            .values('taxon_id')\
-            .exclude(family_taxon_id__exact='')\
-            .annotate(count=Count('family_taxon_id'))\
-            .order_by('-count')
-    genus_count = higherTaxon_menu.query\
-            .extra(select ={'taxon_id':'genus_taxon_id'})\
-            .values('taxon_id')\
-            .exclude(genus_taxon_id__exact='')\
-            .annotate(count=Count('genus_taxon_id'))\
-            .order_by('-count')
+    # kingdom_count = higherTaxon_menu.query\
+    #         .extra(select ={'taxon_id':'kingdom_taxon_id'})\
+    #         .values('taxon_id')\
+    #         .exclude(kingdom_taxon_id__exact='')\
+    #         .annotate(count=Count('kingdom_taxon_id'))\
+    #         .order_by('-count')
+    # phylum_count = higherTaxon_menu.query\
+    #         .extra(select ={'taxon_id':'phylum_taxon_id'})\
+    #         .values('taxon_id')\
+    #         .exclude(phylum_taxon_id__exact='')\
+    #         .annotate(count=Count('phylum_taxon_id'))\
+    #         .order_by('-count')
+    # order_count = higherTaxon_menu.query\
+    #         .extra(select ={'taxon_id':'order_taxon_id'})\
+    #         .values('taxon_id')\
+    #         .exclude(order_taxon_id__exact='')\
+    #         .annotate(count=Count('order_taxon_id'))\
+    #         .order_by('-count')
+    # class_count = higherTaxon_menu.query\
+    #         .extra(select ={'taxon_id':'class_taxon_id'})\
+    #         .values('taxon_id')\
+    #         .exclude(class_taxon_id__exact='')\
+    #         .annotate(count=Count('class_taxon_id'))\
+    #         .order_by('-count')
+    # family_count = higherTaxon_menu.query\
+    #         .extra(select ={'taxon_id':'family_taxon_id'})\
+    #         .values('taxon_id')\
+    #         .exclude(family_taxon_id__exact='')\
+    #         .annotate(count=Count('family_taxon_id'))\
+    #         .order_by('-count')
+    # genus_count = higherTaxon_menu.query\
+    #         .extra(select ={'taxon_id':'genus_taxon_id'})\
+    #         .values('taxon_id')\
+    #         .exclude(genus_taxon_id__exact='')\
+    #         .annotate(count=Count('genus_taxon_id'))\
+    #         .order_by('-count')
     
-    taxon_count = kingdom_count.union(phylum_count).union(order_count).union(class_count).union(family_count).union(genus_count).order_by('-count')[:10]
+    # taxon_count = kingdom_count.union(phylum_count).union(order_count).union(class_count).union(family_count).union(genus_count).order_by('-count')[:10]
     
-    higherTaxon_menu_tmp = []
-    if taxon_count:
-        higherTaxon_menu_tmp = [{
-            'key': x['taxon_id'],
-            'label': Taxon.objects.get(taicol_taxon_id = x['taxon_id']).name,
-            'count': x['count'],
-        } for x in taxon_count if x['taxon_id'] != None]
+    # higherTaxon_menu_tmp = []
+    # if taxon_count:
+    #     higherTaxon_menu_tmp = [{
+    #         'key': x['taxon_id'],
+    #         'label': Taxon.objects.get(taicol_taxon_id = x['taxon_id']).name,
+    #         'count': x['count'],
+    #     } for x in taxon_count if x['taxon_id'] != None]
     
     if has_menu:
         menus = [
