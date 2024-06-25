@@ -23,9 +23,6 @@ DATA_MAPPING = {
         'Creative Commons Attribution Non Commercial (CC-BY-NC) 4.0 License': 'CC-BY-NC',
         'Creative Commons Attribution (CC-BY) 4.0 License': 'CC-BY',
         'Public Domain (CC0 1.0)': 'CC0',
-        'http://creativecommons.org/licenses/by/4.0/legalcode': 'CC-BY',
-        'http://creativecommons.org/publicdomain/zero/1.0/legalcode': 'CC0',
-        'http://creativecommons.org/licenses/by-nc/4.0/legalcode': 'CC-BY-NC',
         'unknown': '未明確授權',
         None: '未明確授權'
     },
