@@ -1613,7 +1613,7 @@ a.btn-sunset-lg.focus {
 }
 
 /* .col-supervisor-logo {
-    padding: 10px 15px;
+    width: 35%;
 } */
 
 .col-partner-logo {
@@ -4680,7 +4680,7 @@ body {
     justify-content: center;
     align-items: center;
     /* gap: 20px; */
-    /* flex-wrap: wrap; */
+    flex-wrap: wrap;
 }
 
 .partner-logo-container .img-fluid {
