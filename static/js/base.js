@@ -34,4 +34,17 @@ $(document).ready(function() {
     $('.toggle-item-content').addClass('hide');
     $(`.toggle-item-content[data-cat='${cat}']`).removeClass('hide');
   });
+
+  // 三層 nav
+  $('.dropdown-item').click(function(event) {
+    event.preventDefault(); 
+    $(this).next('.dropdown-3rd').toggleClass('hide');
+    var dropdownMenu = $(this).closest('.dropdown-menu');
+    dropdownMenu.find('.dropdown-3rd').not($(this).next('.dropdown-3rd')).addClass('hide');
+  });
+  $('.dropdown-child-3rd').click(function() {
+    const cat = $(this).data('cat');
+    $('.toggle-item-content').addClass('hide');
+    $(`.toggle-item-content[data-cat='${cat}']`).removeClass('hide');
+  });
 })

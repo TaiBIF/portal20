@@ -4751,3 +4751,43 @@ body {
 .online-workshop-course-table tr th,  .online-workshop-course-table tr td{
     vertical-align: middle !important;
 }
+
+.icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tooltip-context {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.tooltip-icon {
+    margin-top: -10px;
+}
+
+.dropdown-child-3rd {
+    background-color: #FFF7EF !important;
+    color: #4a3e3a;
+    margin: 0.25rem 0;
+    padding: 0.5rem 1.75rem 0.5rem 0.75rem;
+    border-radius: 0.25rem;
+    white-space: pre-wrap;
+    display: block;
+    position: relative;
+    width: 100%;
+    /* padding: 0.25rem 1.5rem; */
+    clear: both;
+    font-weight: 400;
+    text-align: inherit;
+    white-space: wrap;
+    background-color: transparent;
+    border: 0;
+}
+
+.dropdown-child-3rd:hover {
+    cursor: pointer !important;
+    text-decoration: none;
+    color: #4a3e3a !important;
+}
