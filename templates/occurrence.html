@@ -74,6 +74,36 @@
     .table td:last-child {
         font-size: 14px;
     }
+
+    .info-icon-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    }
+
+    .info-tooltip {
+        font-size: 16px;
+        visibility: hidden;
+        width: 500px;
+        text-align: center;
+        padding: 15px 30px;
+        position: absolute;
+        z-index: 1;
+        bottom: 130%; /* Position above the icon */
+        left: 5%;
+        /* margin-left: -100px; Center the tooltip */
+        background: rgba(221, 221, 221, 0.53);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(17.4px);
+-webkit-backdrop-filter: blur(17.4px);
+border: 1px solid rgba(221, 221, 221, 0.3);
+    }
+
+    .info-icon-container:hover .info-tooltip {
+        visibility: visible;
+        /* opacity: 1; */
+    }
 </style>
 {% endblock %}
 
@@ -283,6 +313,13 @@ L.marker([{{ map_view.0 }}, {{ map_view.1}}]).addTo(map);
 
     <div class="article-head-wrapper">
         <h1 class="heading-lg-ul occurrence-heading">分類 Taxon 
+        <div class="info-icon-container">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#846c5b" class="bi bi-info-circle" viewBox="0 0 24 24">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+                </svg>
+            <div class="info-tooltip">若 TaiCOL 物種編碼欄位不為 None，表示該物種資訊來自於 TaiCOL Backbone；若為 None 則表示該物種資訊來自 GBIF Backbone</div>
+        </div>
         {% if  taxon.taxon_backbone != None %}
             <div class="taxonbackbone" alt="Backbone: {{ taxon.taxon_backbone }}">
                 <span class="glyphicon glyphicon-info-sign"></span>
@@ -300,54 +337,58 @@ L.marker([{{ map_view.0 }}, {{ map_view.1}}]).addTo(map);
             {% for k,v in taxon.items %}
             {% if v.value.0 != None or v.value.1 != None %}
                 {% if k == 'scientificNameID' or k == 'acceptedNameUsageID' %}
-                    <tr><td>{{ v.name_zh }}</td>
-                    <td>
-                        <a href="https://nametool.taicol.tw/zh-tw/taxon-names/{{ v.value.1 }}">{{ v.value.1 }}</a>
-                    </td>
-                    <td>
-                        {% if v.value.1 is not None %}
-                        {{ v.value.1 }}
-                        {% elif v.value.1 is None %}
-                        {{ v.value.0 }}
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if v.value.1 is not None %}
-                        {% if v.value.1 == v.value.0 %}
+                    <tr>
+                        <td>
+                            {{ v.name_zh }}
+                        </td>
+                        <td>
+                            <a href="https://nametool.taicol.tw/zh-tw/taxon-names/{{ v.value.1 }}">{{ v.value.1 }}</a>
+                        </td>
+                        <td>
+                            {% if v.value.1 is not None %}
+                                {{ v.value.1 }}
+                            {% elif v.value.1 is None %}
+                                {{ v.value.0 }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if v.value.1 is not None %}
+                            {% if v.value.1 == v.value.0 %}
 
-                        {% else %}
-                            Inferred
-                        {% endif %}
-                        {% elif v.value.1 is None %}
-                        
-                        {% endif %}
-                    </td>
-                    </tr>
-                    {% elif k == 'scientificNameTaxonID' %}
-                    <tr><td>{{ v.name_zh }}</td>
-                    <td>
-                        <a href="https://taicol.tw/taxon/{{ v.value.1 }}">{{ v.value.1 }}</a>
-                    </td>
-                    <td>
-                        {% if v.value.0 != None %}
-                        {{ v.value.0 }}
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if v.value.1 is not None %}
-                        {% if v.value.1 == v.value.0 %}
+                            {% else %}
+                                Inferred
+                            {% endif %}
+                            {% elif v.value.1 is None %}
+                            
+                            {% endif %}
+                        </td>
+                        </tr>
+                        {% elif k == 'scientificNameTaxonID' %}
+                        <tr><td>{{ v.name_zh }}</td>
+                        <td>
+                            <a href="https://taicol.tw/taxon/{{ v.value.1 }}">{{ v.value.1 }}</a>
+                        </td>
+                        <td>
+                            {% if v.value.0 != None %}
+                            {{ v.value.0 }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if v.value.1 is not None %}
+                            {% if v.value.1 == v.value.0 %}
 
-                        {% else %}
-                            Inferred
-                        {% endif %}
-                        {% elif v.value.1 is None %}
-                        
-                        {% endif %}
-                    </td>
+                            {% else %}
+                                Inferred
+                            {% endif %}
+                            {% elif v.value.1 is None %}
+                            
+                            {% endif %}
+                        </td>
                     </tr>
 
                 {% else %}
-                <tr><td>{{ v.name_zh }}</td>
+                <tr>
+                    <td>{{ v.name_zh }}</td>
                     <td>
                     {% if v.value.1 != None and v.value.1 != ''%}
                         {{ v.value.1 }}
