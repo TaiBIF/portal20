@@ -1499,6 +1499,7 @@ a.btn-sunset-lg.focus {
     border-radius: 0.25rem;
     height: 100%;
     margin-left: 10px;
+    margin-right: 10px;
 }
 .card-plain-article .tag {
     color: #fff;
