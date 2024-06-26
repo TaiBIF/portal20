@@ -4799,3 +4799,29 @@ body {
     color: #4a3e3a !important;
     background-color: #FFE4CC !important;
 }
+
+.search-all-btn-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.search-all-btn {
+    font-size: 1.5rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    background-color: rgba(132, 108, 91, 0.6);
+    display: inline-block;
+    margin-bottom: 10px;
+    border: none;
+}
+
+.search-all-btn a {
+    color: #fff;
+}
+
+.search-all-sub-title {
+    font-size: 14px;
+    margin-left: 10px;
+}

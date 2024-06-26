@@ -246,7 +246,7 @@ class Taxon(models.Model):
  ('Superclass', '超綱|總綱'), ('class', '綱'), ('Subclass', '亞綱'), ('Infraclass','下綱'),('Superorder','超目|總目'), 
  ('order', '目'), ('Suborder', '亞目'), ('Infraorder', '下目'), ('Superfamily', '超科|總科'), ('family', '科'),
  ('Subfamily', '亞科'), ('Tribe', '族'), ('Subtribe', '亞族'), ('genus', '屬'), ('Subgenus', '亞屬'), ('Seection', '亞組|亞節'), 
- ('species', '種'), ('Subspecies', '亞種'), ('Nothosubspecies', '雜交亞種'), ('variety', '變種'), 
+ ('species', '種'), ('subspecies', '亞種'), ('Nothosubspecies', '雜交亞種'), ('variety', '變種'), 
  ('subvariety', '亞變種'), ('nothovariety', '雜交變種'), ('form', '型'), ('subform', '亞型'), 
  ('special form', '特別品型'), ('Race', '種族'), ('Stirp', '種族'), ('Morph', '形態型'), ('Aberration', '異常個體'), ('hybrid formula', '雜交組合')]
 

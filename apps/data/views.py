@@ -65,7 +65,7 @@ def search_all(request):
 
         # article
         article_rows = []
-        for x in Article.objects.filter(title__icontains=q).all()[:10]:
+        for x in Article.objects.filter(title__icontains=q).all()[:5]:
             article_rows.append({
                 'title': x.title,
                 'content': x.content,
@@ -135,8 +135,6 @@ def search_all(request):
                 },
             ]
         }
-
-        print(f'context: {context}')
 
         return render(request, 'search_all.html', context)
 

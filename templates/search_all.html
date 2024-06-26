@@ -41,7 +41,7 @@ TaiBIF::search
             {% for cat in results %}
                 {% if cat.rows %}
                 <div class="list-group">
-                    <h1 class="heading-lg-ul">{{ cat.label }}</h1>
+                    <h1 class="heading-lg-ul">{{ cat.label }}<span class="search-all-sub-title">以下列表僅顯示前五筆結果，更多詳情請點擊下方「查看更多結果」</span></h1>
                         {% for i in cat.rows %}
                             <a href="{{ i.url }}" class="list-group-item">
                                 {% if i.dwc_core_type %}
@@ -59,17 +59,32 @@ TaiBIF::search
                                 {% endif %}
                             </a>
                         {% endfor %}
-                    {% if cat.rows|length >= 10 %}
-                    <h4 class="list-group-item-heading">...</h4>
-                    
-                    {% if cat.cat != "article" %}
-                    <a href="/{{ cat.cat }}/search/?q={{ request.GET.q }}" class="list-group-item list-group-item-success">
-                    {% elif cat.cat == "article" %}
-                    <a href="/article/search/?q={{ request.GET.q }}" class="list-group-item list-group-item-success">
-                    {% endif %}
-                        <h4 class="list-group-item-heading">搜尋: {{ request.GET.q }}</h4>
-                        <p class="list-group-item-text">更多{{cat.label}}</p>
-                    </a>
+                    {% if cat.rows|length >= 5 %}
+                        {% if cat.cat == 'species' %}
+                        <div class="search-all-btn-container">
+                            <button class="search-all-btn">
+                                <a href="{% url 'search-species' %}?q={{ request.GET.q }}">查看更多結果</a>
+                            </button>
+                        </div>
+                        {% elif cat.cat == 'dataset' %}
+                        <div class="search-all-btn-container">
+                            <button class="search-all-btn">
+                                <a href="{% url 'search-dataset' %}?q={{ request.GET.q }}">查看更多結果</a>
+                            </button>
+                        </div>
+                        {% elif cat.cat == 'publisher' %}
+                        <div class="search-all-btn-container">
+                            <button class="search-all-btn">
+                                <a href="{% url 'search-publisher' %}?q={{ request.GET.q }}">查看更多結果</a>
+                            </button>
+                        </div>
+                        {% elif cat.cat == 'article' %}
+                        <div class="search-all-btn-container">
+                            <button class="search-all-btn">
+                                <a href="/article/search/?q={{ request.GET.q }}">查看更多結果</a>
+                            </button>
+                        </div>
+                        {% endif %}
                     {% endif %}
                 </div>
                 {% endif %}
