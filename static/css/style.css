@@ -4825,3 +4825,28 @@ body {
     font-size: 14px;
     margin-left: 10px;
 }
+
+.article-related-wrapper {
+    margin-top: 40px;
+}
+
+#topic-board{
+    margin-bottom: 30px;
+}
+
+.topic-card-wrapper {
+    background-color: #fff;
+    border: #ddd solid 1px;
+    border-radius: 4px;
+    padding: 8px 0;
+    margin-left: 5px;
+    height: 90px
+}
+
+.topic-inner-ctn {
+    padding: 2px 12px;
+}
+
+.topic-inner-title {
+    color: #4a3e3a !important;
+}

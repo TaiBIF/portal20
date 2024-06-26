@@ -46,4 +46,28 @@ $(document).ready(function() {
     $('.toggle-item-content').addClass('hide');
     $(`.toggle-item-content[data-cat='${cat}']`).removeClass('hide');
   });
+
+  // 推薦文章輪播設定
+  var owl_topic = $('#topic-board');
+  owl_topic.owlCarousel({
+    margin: 20,
+    nav: true,
+    dots: true,
+    loop: true,
+    autoplay: true,
+    autoplayTimeout: 3000,
+    autoplayHoverPause: true,
+    thumbs: false,
+    responsive: {
+      0: {
+        items: 1
+      },
+      650: {
+        items: 2
+      },
+      1000: {
+        items: 4
+      }
+    }
+  })
 })
