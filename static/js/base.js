@@ -51,8 +51,8 @@ $(document).ready(function() {
   var owl_topic = $('#topic-board');
   owl_topic.owlCarousel({
     margin: 20,
-    nav: true,
-    dots: true,
+    nav: false,
+    dots: false,
     loop: true,
     autoplay: true,
     autoplayTimeout: 3000,

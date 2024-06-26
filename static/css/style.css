@@ -1572,13 +1572,13 @@ a.btn-sunset-lg.focus {
     right: -36px;
 }
 
-.owl-theme .owl-prev:before {
+/* .owl-theme .owl-prev:before {
     content: "\e935";
 }
 
 .owl-theme .owl-next:before {
     content: "\e936";
-}
+} */
 
 .owl-theme .owl-prev:hover,
 .owl-theme .owl-next:hover {
