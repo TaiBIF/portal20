@@ -4711,6 +4711,13 @@ body {
     width: 90%;
 }
 
+.article-content-wrapper p img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 560px;
+}
+
 .article-content-wrapper p img[alt~="small-size"] {
     height: 380px;
 }
