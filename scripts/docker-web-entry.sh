@@ -10,4 +10,4 @@ cp /frontend/data-table.min.js /taibif-code/static/js
 python manage.py migrate --no-input
 python manage.py collectstatic --no-input
 
-gunicorn --bind 0.0.0.0:8003 --workers=5 --timeout 120 conf.wsgi:application
+gunicorn --bind 0.0.0.0:8001 --workers=5 --timeout 120 conf.wsgi:application
