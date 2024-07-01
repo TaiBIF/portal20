@@ -1,5 +1,21 @@
 $(document).ready(function() {
   //navbar-search
+  $('#navbar-search-input').keydown(function(event) {
+    event.preventDefault();
+    if (event.key === 'Enter') {
+      const q = $(this).val();
+      window.location.href = `/search/?q=${q}`;
+    }
+  });
+  
+  $('#navbar-search-input').keydown(function(event) {
+    event.preventDefault();
+    if (event.key === 'Enter') {
+      const q = $(this).val();
+      window.location.href = `/search/?q=${q}`;
+    }
+  });
+
   $('#navbar-search-btn').click(function () {
     const q = $('#navbar-search-input').val();
     window.location.href = `/search/?q=${q}`;

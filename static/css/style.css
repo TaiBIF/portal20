@@ -4852,3 +4852,7 @@ body {
 .topic-inner-title {
     color: #4a3e3a !important;
 }
+
+#navbar-search-btn {
+    outline: none !important;
+}
