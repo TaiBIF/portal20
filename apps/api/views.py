@@ -1476,7 +1476,7 @@ def search_occurrence_v1(request):
 
 def export(request):
     solr = SolrQuery('taibif_occurrence')
-    solr_url = solr.generate_solr_url(request.GET.lists())
+    solr_url = solr.generate_solr_url(request.GET)
     generateCSV(solr_url,request)
 
     return JsonResponse({"status":'success'}, safe=False)
