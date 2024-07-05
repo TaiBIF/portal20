@@ -245,8 +245,80 @@ class SolrQuery(object):
         if last_query_item in JSON_FACET_MAP:
             self.solr_url = self.solr_url.replace(f'fq={last_query_item}', '')
         
-        print(f'SOLR URL: {self.solr_url}')
+        # print(f'SOLR URL: {self.solr_url}')
         return self.solr_url
+    
+    def generate_export_solr_url(self, queryset=None):
+        solr_export_tuples = [
+            ('q.op', 'AND'),
+            ('wt', 'csv'),
+            ('rows', 1000000),
+            ('q', 'basisOfRecord:*')
+        ]
+        export_filter_field = (
+            'taibif_occ_id,taibif_datasetKey,taibif_dataset_name_zh,scientificName,taxonRank,basisOfRecord,'
+            'kingdom,phylum,class,order,family,genus,'
+            'countryCode,eventDate,locality,stateProvince,decimalLongitude,decimalLatitude,'
+            'taibif_scientificName,taibif_basisOfRecord,'
+            'taibif_kingdom,taibif_phylum,taibif_class,taibif_order,taibif_family,taibif_genus,taibif_taxonRank,'
+            'taibif_eventDate,taibif_country,taibif_locality,'
+            'taibif_decimalLongitude,taibif_decimalLatitude,taibif_geodeticDatum,taibif_countryCode,taibif_country,taibif_county_zh,taibif_county'
+        )
+        map_query = ''
+        if queryset is not None:
+            for key, values in queryset.lists():
+                if key == 'q' and values[0] != '':
+                    solr_q = values[0]
+                    solr_export_tuples.append(('fq', solr_q))
+                elif key == 'taxon_key':
+                    taxon_key_list = []
+                    for v in values:
+                        klist = v.split(':')
+                        rank = klist[0]
+                        if len(klist) > 1:
+                            taxon_id = klist[1]
+                            taxon_key_list.append(f'{rank}_key:{taxon_id}')
+                    solr_export_tuples.append(('fq', ' OR '.join(taxon_key_list)))
+                elif key in JSON_FACET_MAP:
+                    field = JSON_FACET_MAP[key]['field']
+                    if len(values) == 1:
+                        value = values[0]
+                        if ',' in value:
+                            vlist = value.split(',')
+                            solr_export_tuples.append(('fq', f'{key}:[{vlist[0]} TO {vlist[1]}]'))
+                        else:
+                            if key == 'selfProduced':  # 布林值搜尋 value 不需要轉成 string
+                                solr_export_tuples.append(('fq', f'{field}:{value}'))
+                            else:
+                                solr_export_tuples.append(('fq', f'{field}:"{value}"'))
+                    else:
+                        solr_export_tuples.append(('fq', ' OR '.join([f'{field}:"{x}"' for x in values])))
+                elif key == 'lat':
+                    coor_list = [ float(c) for c in values]
+                    y1 = convert_y_coor_to_grid(min(coor_list))
+                    y2 = convert_y_coor_to_grid(max(coor_list))
+                    map_query = "{!frange l=" + str(y1) + " u=" + str(y2) + "}grid_y"
+                    solr_export_tuples.append(('fq', map_query))
+                elif key == 'lng':
+                    coor_list = [ float(c) for c in values]
+                    x1 = convert_x_coor_to_grid(min(coor_list))
+                    x2 = convert_x_coor_to_grid(max(coor_list))
+                    map_query = "{!frange l=" + str(x1) + " u=" + str(x2) + "}grid_x"
+                    solr_export_tuples.append(('fq', map_query))
+                elif key == 'taibif_taxonGroup':
+                    if len(values) > 1:
+                        query = ' OR '.join(['{}:"{}"'.format('taibif_taxonGroup', value) for value in values])
+                        solr_export_tuples.append(('fq', query))
+                    else:
+                        solr_export_tuples.append(('fq', '{}:{}'.format('taibif_taxonGroup', values[0])))
+                elif key == 'path':
+                    solr_export_tuples.append(('fq', 'path:*{}*'.format(values[0])))
+                elif key == 'taibif_taicolTaxonID':
+                    solr_export_tuples.append(('fq', f'taibif_taicolTaxonID:{values[0]}'))
+        query_string = urllib.parse.urlencode(solr_export_tuples)
+        export_solr_url = f'{SOLR_PREFIX}{self.core}/select?fl={export_filter_field}&{query_string}'
+
+        return export_solr_url
 
     def request(self):
         if self.last_query_item:

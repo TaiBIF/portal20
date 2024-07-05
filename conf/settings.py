@@ -233,6 +233,14 @@ LOGGING = {
             'backupCount': 10,
             'formatter': 'file_format',
         },
+        'celery_file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOGS_ROOT, 'celery.log'),
+            'maxBytes': 1024 * 1024 * 15,
+            'backupCount': 10,
+            'formatter': 'file_format',
+        },
     },
     'loggers': {
         'django': {
@@ -244,9 +252,23 @@ LOGGING = {
             'level': 'DEBUG',
             'handlers': ['console', 'file'],
             'propagate': False,
-        }
+        },
+        'celery': {
+            'level': 'DEBUG',
+            'handlers': ['console', 'celery_file'],
+            'propagate': False,
+        },
     }
 }
+
+# Ensure Celery uses Django's logging configuration
+from celery.signals import setup_logging
+
+@setup_logging.connect
+def config_loggers(*args, **kwargs):
+    from logging.config import dictConfig
+    dictConfig(LOGGING)
+
 #USE_SENTRY=on
 #SENTRY_DSN=https://<project-key>@sentry.io/<project-id>
 

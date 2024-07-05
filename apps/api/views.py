@@ -7,6 +7,7 @@ import csv
 import os
 import subprocess
 import requests
+# import pandas as pd
 from django.core import serializers
 
 from django.shortcuts import render, get_object_or_404
@@ -17,6 +18,10 @@ from django.core.mail import send_mail
 from django.conf import settings as conf_settings
 from requests.sessions import default_headers
 from urllib.parse import quote
+
+from celery import shared_task
+from celery.utils.log import get_task_logger
+logger = get_task_logger(__name__)
 
 
 from apps.data.models import (
@@ -1476,21 +1481,19 @@ def search_occurrence_v1(request):
 
 def export(request):
     solr = SolrQuery('taibif_occurrence')
-    solr_url = solr.generate_solr_url(request.GET)
+    solr_url = solr.generate_export_solr_url(request.GET)
     generateCSV(solr_url,request)
 
     return JsonResponse({"status":'success'}, safe=False)
 
+@shared_task
 def generateCSV(solr_url,request):
-    #directory = os.path.abspath(os.path.join(os.path.curdir))
-    #taibifVolumesPath = '/taibif-volumes/media/'
-    #csvFolder = directory+taibifVolumesPath
     CSV_MEDIA_FOLDER = 'csv'
     csvFolder = os.path.join(conf_settings.MEDIA_ROOT, CSV_MEDIA_FOLDER)
     timestramp = str(int(time.time()))
     type = request.GET['type']
-    filename = f'{type}_{timestramp}.csv'
     tempFilename = f'{timestramp}_temp.csv'
+    filename = f'{type}_{timestramp}.csv'
     downloadURL = '没有任何資料'
     csvFileTempPath = os.path.join(csvFolder, tempFilename)
     csvFilePath = os.path.join(csvFolder, filename)
@@ -1498,18 +1501,43 @@ def generateCSV(solr_url,request):
     if not os.path.exists(csvFolder):
         os.makedirs(csvFolder)
 
-    if len(solr_url) > 0:
-        downloadURL = "https://"+request.META['HTTP_HOST']+conf_settings.MEDIA_URL+os.path.join(CSV_MEDIA_FOLDER, filename)
+    logger.info(f'REQUEST QUERYSET: {request}')
 
+    # if len(solr_url) > 0:
+    #     downloadURL = "https://"+request.META['HTTP_HOST']+conf_settings.MEDIA_URL+os.path.join(CSV_MEDIA_FOLDER, filename)
+    #     response = requests.get(solr_url)
+    #     response.raise_for_status()
+    #     solr_data = response.json()
+    #     docs = solr_data['response']['docs']
+
+    #     header = [
+    #         'taibif_occ_id', 'taibif_datasetKey', 'taibif_dataset_name_zh', 'scientificName', 'taxonRank', 'basisOfRecord',
+    #         'kingdom', 'phylum', 'class', 'order', 'family', 'genus',
+    #         'countryCode', 'eventDate', 'locality', 'stateProvince', 'decimalLongitude', 'decimalLatitude',
+    #         'taibif_scientificName', 'taibif_basisOfRecord',
+    #         'taibif_kingdom', 'taibif_phylum', 'taibif_class', 'taibif_order', 'taibif_family', 'taibif_genus', 'taibif_taxonRank',
+    #         'taibif_eventDate', 'taibif_country', 'taibif_locality',
+    #         'taibif_decimalLongitude', 'taibif_decimalLatitude', 'taibif_geodeticDatum', 'taibif_countryCode', 'taibif_country', 'taibif_county_zh', 'taibif_county'
+    #     ]
+    #     with open(csvFilePath, 'w', newline='', encoding='utf-8') as csvfile:
+    #         writer = csv.DictWriter(csvfile, fieldnames=header)
+    #         writer.writeheader()
+    #         for doc in docs:
+    #             writer.writerow(doc)
+    if solr_url:
+        downloadURL = f"https://{request.META['HTTP_HOST']}{conf_settings.MEDIA_URL}{os.path.join(CSV_MEDIA_FOLDER, filename)}"
         if type == 'species' :
-            commands = 'curl "'+solr_url+'" >  '+csvFileTempPath+'  &&  ( head -1 '+csvFileTempPath+' && tail -n+2 '+csvFileTempPath+'  | awk \'BEGIN{FS=OFS=","}NF=(NF-1)\'  | awk -F , \'{a[$0]++; next}END {for (i in a) print i", "a[i]}\'| awk -F , \'!seen[$1]++\' ) > '+csvFilePath+' && rm -rf '+csvFileTempPath
+            command = 'curl "'+solr_url+'" >  '+csvFileTempPath+'  &&  ( head -1 '+csvFileTempPath+' && tail -n+2 '+csvFileTempPath+'  | awk \'BEGIN{FS=OFS=","}NF=(NF-1)\'  | awk -F , \'{a[$0]++; next}END {for (i in a) print i", "a[i]}\'| awk -F , \'!seen[$1]++\' ) > '+csvFilePath+' && rm -rf '+csvFileTempPath
+        else:
+            command = f'curl "{solr_url}" > "{csvFilePath}"'
+        
+        try:
+            result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            logger.info('CURL SUCCESSFULLY OPERATED')
+        except subprocess.CalledProcessError as e:
+            logger.error(f'CURL COMMAND FAILED WITH ERROR: {e.stderr.decode("utf-8")}')
+            raise
 
-        else :
-            commands = f'curl "{solr_url}"  > {csvFilePath} '
-
-        # print("commands === ", commands)
-        process = subprocess.Popen(commands, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-      
     sendMail(downloadURL,request,dataPolicyURL)
 
 def sendMail(downloadURL,request,dataPolicyURL):
