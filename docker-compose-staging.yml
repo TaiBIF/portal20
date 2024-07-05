@@ -46,7 +46,6 @@ services:
       - ../taibif-volumes/media:/taibif-volumes/media
       - ../taibif-volumes/logs/nginx:/var/log/nginx
       - ../taibif-volumes/biomap:/biomap
-
     links:
       - web:web
     logging:
@@ -54,3 +53,5 @@ services:
       options:
         max-size: "1m"
         max-file: "3"
+  celery:
+    image: taibif-web-stag-image
