@@ -259,10 +259,11 @@ class SolrQuery(object):
             'taibif_occ_id,taibif_datasetKey,taibif_dataset_name_zh,scientificName,taxonRank,basisOfRecord,'
             'kingdom,phylum,class,order,family,genus,'
             'countryCode,eventDate,locality,stateProvince,decimalLongitude,decimalLatitude,'
-            'taibif_scientificName,taibif_basisOfRecord,'
-            'taibif_kingdom,taibif_phylum,taibif_class,taibif_order,taibif_family,taibif_genus,taibif_taxonRank,'
+            'taibif_scientificName,taibif_vernacularName,taibif_basisOfRecord,'
+            'taibif_kingdom,taibif_phylum,taibif_class,taibif_order,taibif_family,taibif_genus,taibif_taxonRank,taibif_taxonBackbone,taibif_taicolTaxonID,'
             'taibif_eventDate,taibif_country,taibif_locality,'
-            'taibif_decimalLongitude,taibif_decimalLatitude,taibif_geodeticDatum,taibif_countryCode,taibif_country,taibif_county_zh,taibif_county'
+            'taibif_decimalLongitude,taibif_decimalLatitude,taibif_geodeticDatum,taibif_countryCode,taibif_country,taibif_county_zh,taibif_county,'
+            'taibif_license,taibif_mediaReferences,taibif_mediaLicense'
         )
         map_query = ''
         if queryset is not None:

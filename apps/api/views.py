@@ -1503,42 +1503,68 @@ def generateCSV(solr_url,request):
 
     logger.info(f'REQUEST QUERYSET: {request}')
 
-    # if len(solr_url) > 0:
-    #     downloadURL = "https://"+request.META['HTTP_HOST']+conf_settings.MEDIA_URL+os.path.join(CSV_MEDIA_FOLDER, filename)
-    #     response = requests.get(solr_url)
-    #     response.raise_for_status()
-    #     solr_data = response.json()
-    #     docs = solr_data['response']['docs']
+    # if solr_url:
+    #     downloadURL = f"https://{request.META['HTTP_HOST']}{conf_settings.MEDIA_URL}{os.path.join(CSV_MEDIA_FOLDER, filename)}"
+    #     if type == 'species' :
+    #         command = 'curl "'+solr_url+'" >  '+csvFileTempPath+'  &&  ( head -1 '+csvFileTempPath+' && tail -n+2 '+csvFileTempPath+'  | awk \'BEGIN{FS=OFS=","}NF=(NF-1)\'  | awk -F , \'{a[$0]++; next}END {for (i in a) print i", "a[i]}\'| awk -F , \'!seen[$1]++\' ) > '+csvFilePath+' && rm -rf '+csvFileTempPath
+    #     else:
+    #         command = f'curl "{solr_url}" > "{csvFilePath}"'
+        
+    #     try:
+    #         result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    #         logger.info('CURL SUCCESSFULLY OPERATED')
+    #     except subprocess.CalledProcessError as e:
+    #         logger.error(f'CURL COMMAND FAILED WITH ERROR: {e.stderr.decode("utf-8")}')
+    #         raise
 
-    #     header = [
-    #         'taibif_occ_id', 'taibif_datasetKey', 'taibif_dataset_name_zh', 'scientificName', 'taxonRank', 'basisOfRecord',
-    #         'kingdom', 'phylum', 'class', 'order', 'family', 'genus',
-    #         'countryCode', 'eventDate', 'locality', 'stateProvince', 'decimalLongitude', 'decimalLatitude',
-    #         'taibif_scientificName', 'taibif_basisOfRecord',
-    #         'taibif_kingdom', 'taibif_phylum', 'taibif_class', 'taibif_order', 'taibif_family', 'taibif_genus', 'taibif_taxonRank',
-    #         'taibif_eventDate', 'taibif_country', 'taibif_locality',
-    #         'taibif_decimalLongitude', 'taibif_decimalLatitude', 'taibif_geodeticDatum', 'taibif_countryCode', 'taibif_country', 'taibif_county_zh', 'taibif_county'
-    #     ]
-    #     with open(csvFilePath, 'w', newline='', encoding='utf-8') as csvfile:
-    #         writer = csv.DictWriter(csvfile, fieldnames=header)
-    #         writer.writeheader()
-    #         for doc in docs:
-    #             writer.writerow(doc)
     if solr_url:
         downloadURL = f"https://{request.META['HTTP_HOST']}{conf_settings.MEDIA_URL}{os.path.join(CSV_MEDIA_FOLDER, filename)}"
-        if type == 'species' :
-            command = 'curl "'+solr_url+'" >  '+csvFileTempPath+'  &&  ( head -1 '+csvFileTempPath+' && tail -n+2 '+csvFileTempPath+'  | awk \'BEGIN{FS=OFS=","}NF=(NF-1)\'  | awk -F , \'{a[$0]++; next}END {for (i in a) print i", "a[i]}\'| awk -F , \'!seen[$1]++\' ) > '+csvFilePath+' && rm -rf '+csvFileTempPath
-        else:
-            command = f'curl "{solr_url}" > "{csvFilePath}"'
-        
-        try:
-            result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            logger.info('CURL SUCCESSFULLY OPERATED')
-        except subprocess.CalledProcessError as e:
-            logger.error(f'CURL COMMAND FAILED WITH ERROR: {e.stderr.decode("utf-8")}')
-            raise
+        if type == 'species':
+            # 下载 CSV 文件到临时文件
+            command = 'curl "' + solr_url + '" > ' + csvFileTempPath
+            try:
+                subprocess.run(command, shell=True, check=True)
+                logger.info('Curl CSV file successfully')
+            except subprocess.CalledProcessError as e:
+                logger.error(f'Failed to curl CSV file: {e.stderr.decode("utf-8")}')
+                raise
 
-    sendMail(downloadURL,request,dataPolicyURL)
+            with open(csvFileTempPath, 'r', encoding='utf-8') as temp_file, open(csvFilePath, 'w', newline='', encoding='utf-8') as final_file:
+                reader = csv.DictReader(temp_file)
+                # 選擇 species list 要保留的欄位
+                fields_to_keep = [
+                    'taibif_taicolTaxonID', 'taibif_scientificName', 'taibif_kingdom', 'taibif_phylum', 'taibif_class', 'taibif_order', 
+                    'taibif_family', 'taibif_genus', 'taibif_taxonRank', 'taibif_taxonBackbone'
+                ]
+                writer = csv.DictWriter(final_file, fieldnames=fields_to_keep)
+                writer.writeheader()
+
+                # 追蹤已經寫入 final_file 的 row，避免重複
+                seen_rows = set()
+
+                # 逐 row 處理 temp_file 的內容，剔除重複的 row
+                for row in reader:
+                    filtered_row = {key: row[key] for key in fields_to_keep}
+                    row_tuple = tuple(filtered_row.values())
+
+                    if row_tuple not in seen_rows:
+                        writer.writerow(filtered_row)
+                        seen_rows.add(row_tuple)
+
+            # 刪除過渡檔案 temp_file
+            os.remove(csvFileTempPath)
+            logger.info('Processed CSV file and removed duplicates')
+        else:
+            # 直接下载到指定的 CSV 文件
+            command = f'curl "{solr_url}" > "{csvFilePath}"'
+            try:
+                subprocess.run(command, shell=True, check=True)
+                logger.info('Curl CSV file successfully')
+            except subprocess.CalledProcessError as e:
+                logger.error(f'Failed to curl CSV file: {e.stderr.decode("utf-8")}')
+                raise
+
+        sendMail(downloadURL,request,dataPolicyURL)
 
 def sendMail(downloadURL,request,dataPolicyURL):
     license = 'CC-BY-NC 4.0'
