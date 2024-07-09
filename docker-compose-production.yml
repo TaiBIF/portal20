@@ -81,3 +81,5 @@ services:
   solr:
     environment:
       - SOLR_JAVA_MEM=-Xms8g -Xms8g
+  celery:
+    image: taibif-web-image
