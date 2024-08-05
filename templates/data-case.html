@@ -2,11 +2,64 @@
 {% load i18n %}
 {% load static %}
 {% block title %}{% trans "資料應用案例" %}{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/data-case.css' %}">
+<script src="{% static 'js/data-case.js' %}"></script>
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
 
+<!-- Load d3-cloud -->
+<script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3.layout.cloud.js"></script>
+
+{% block script %}
+<script>
+
+// List of words
+var myWords = ["Hello", "Everybody", "How", "Are", "You", "Today", "It", "Is", "A", "Lovely", "Day", "I", "Love", "Coding", "In", "My", "Van", "Mate"]
+
+// set the dimensions and margins of the graph
+var margin = {top: 10, right: 10, bottom: 10, left: 10},
+    width = 450 - margin.left - margin.right,
+    height = 450 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("#my_dataviz").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")");
+
+// Constructs a new cloud layout instance. It run an algorithm to find the position of words that suits your requirements
+var layout = d3.layout.cloud()
+    .size([width, height])
+    .words(myWords.map(function(d) { return {text: d}; }))
+    .padding(10)
+    .fontSize(60)
+    .on("end", draw);
+layout.start();
+
+// This function takes the output of 'layout' above and draw the words
+// Better not to touch it. To change parameters, play with the 'layout' variable above
+function draw(words) {
+    svg
+    .append("g")
+        .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+        .selectAll("text")
+        .data(words)
+        .enter().append("text")
+        .style("font-size", function(d) { return d.size + "px"; })
+        .attr("text-anchor", "middle")
+        .attr("transform", function(d) {
+            return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+        })
+        .text(function(d) { return d.text; });
+}
+</script>
+{% endblock %}
+{% endblock head %}
 
 {% block main %}
-
-    
 <!-- topnav begin -->
 <div class="bg-main-pale">
     <div class="container">
@@ -35,7 +88,16 @@
         <!-- col begin -->
         <div class="col-12">
             <div class="my-5">
-                <h1 class="headline-center-sm">敬請期待</h1>
+                <div id="my_dataviz"></div>
+                <div class="data-table-btn-container">
+                    <button class="table-btn" id="gbif-case-btn">GBIF 應用案例</button>
+                    <button class="table-btn" id="taibif-case-btn">TaiBIF 應用案例</button>
+                </div>
+                <div class="data-table-container">
+                    <div class="loader"></div>
+                    <table id="gbif-case" class="table table-ltmilo"></table>
+                    <table id="taibif-case" class="table table-ltmilo d-none"></table>
+                </div>
             </div>
         </div>
         <!-- col end -->

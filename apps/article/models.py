@@ -67,6 +67,11 @@ class Article(models.Model):
         ('N', '否'),
         ('Y', '是'),
     )
+
+    CASE_TYPE_CHOICE = (
+        ('HACKSON', '數據松'),
+    )
+
     title = models.CharField('標題', max_length=500)
     summary = models.TextField('摘要', blank=True)
     content = models.TextField('內文', blank=True, help_text='新文章預設都是 markdown 顯示')
@@ -77,11 +82,14 @@ class Article(models.Model):
     is_pinned = models.CharField('置頂', max_length=2, default='N', choices=PINNED_CHOICE)
     is_homepage = models.BooleanField('首頁專題文章', null=True)
     is_content_markdown = models.BooleanField('內文是否 markdown', null=True, blank=True, help_text='舊文章要特別勾, 才會有 markdown 顯示')
-    cover = models.ImageField(upload_to=article_cover_path, blank=True, help_text='注：圖片尺寸誤過長')
+    cover = models.ImageField(upload_to=article_cover_path, blank=True, help_text='注：圖片尺寸勿過長')
     cover_license_text = models.CharField('授權文字', max_length=100, blank=True)
     tags = models.ManyToManyField(Tag, verbose_name='標籤', related_name='articles', blank=True)
     memo = models.CharField('備註(不會顯示)', max_length=128, blank=True)
     memo_text = models.TextField('備註(多字)', blank=True)
+    is_data_case = models.BooleanField('是否為應用案例', default=False, help_text='（勾選後才會呈現在 資料應用案例 頁面上）')
+    media_url = models.TextField('多媒體檔案連結', blank=True)
+    case_type = models.CharField('案例類型', max_length=50, choices=CASE_TYPE_CHOICE, blank=True, help_text='（若為以上應用案例打勾，請選擇案例類型）')
 
     def save(self, *args, **kwargs):
         if not self.id:
