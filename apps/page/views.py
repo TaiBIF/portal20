@@ -466,7 +466,25 @@ def data_visual(request):
     return render(request, 'data-visual.html', context)
 
 def data_case(request):
-    context = {}
+    CASE_TYPE_MAP = {
+        'DATATHON': '數據松'
+    }
+    articles = Article.objects.filter(is_data_case=True).order_by('created').values('id', 'created', 'title', 'case_type', 'content')[:3]
+
+    results = []
+    for article in articles:
+        formatted_date = article['created'].strftime('%Y/%m/%d')
+        results.append({
+            'id': article['id'],
+            'date': formatted_date,
+            'title': article['title'],
+            'case_type': CASE_TYPE_MAP.get(article['case_type'], ''),
+            'content':  article['content'],
+        })
+    context = {
+        'articles': results
+    }
+    print(f'CONTEXT: {context}')
     return render(request, 'data-case.html', context)
 
 def data_product(request):

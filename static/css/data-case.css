@@ -45,9 +45,9 @@
 .data-table-btn-container {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .table-btn {
@@ -71,4 +71,80 @@
 
 .table-btn:hover {
     background-color: #fff;
+}
+
+#story-banner {
+    width: 30%;
+    border-bottom-left-radius: 15px;
+    border-top-left-radius: 15px;
+    object-fit: cover;
+}
+
+.story-list-container {
+    display: flex;
+    flex-direction: column; /* 確保子元素垂直排列 */
+    flex-grow: 1; /* 佔滿剩餘空間 */
+    height: 100%; /* 確保容器的高度 */
+}
+
+.story-container {
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    border: 1px solid #eee8e6;
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(74, 62, 58, 0.15);
+    box-shadow: 0px 0px 4px 0px rgba(74, 62, 58, 0.15);
+    border-radius: 15px;
+    width: 100%;
+}
+
+.story-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.story-list li {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee8e6;
+}
+
+.story-list li:last-child {
+    border-bottom: none;
+    text-align: right; /* 內容靠右對齊 */
+}
+
+.img-cc {
+    font-size: 12px;
+}
+
+#story-tag {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    background-color: #eae3df !important;
+    color: #4a3e3a !important;
+    border-radius: 4px !important;
+}
+
+#story-title {
+    font-size: 18px !important;
+    color: #525252 !important;
+}
+
+#story-date {
+    font-size: 12px !important;
+    color: #888 !important;
+}
+
+#story-content {
+    font-size: 14px !important;
+    color: #525252 !important;
+}
+
+.word-cloud-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

@@ -69,7 +69,7 @@ class Article(models.Model):
     )
 
     CASE_TYPE_CHOICE = (
-        ('HACKSON', '數據松'),
+        ('DATATHON', '數據松'),
     )
 
     title = models.CharField('標題', max_length=500)

@@ -131,7 +131,7 @@ def article_tag_list(request, tag_name):
         'article_list': article_list,
     })
 
-def data_case(request):
+def data_case():
     articles = Article.objects.filter(is_data_case=True).values('created', 'title', 'category', 'media_url')
 
     results = []
