@@ -131,15 +131,15 @@ def article_tag_list(request, tag_name):
         'article_list': article_list,
     })
 
-def data_case():
-    articles = Article.objects.filter(is_data_case=True).values('created', 'title', 'category', 'media_url')
+def data_case(request):
+    articles = Article.objects.filter(is_data_case=True).values('created', 'title', 'case_type', 'media_url')
 
     results = []
     for article in articles:
         results.append({
             'year': article['created'].year,
             'title': article['title'],
-            'literatureType': article['category'],
+            'literatureType': article['case_type'],
             'identifiers': {'doi': article['media_url']},
         })
     

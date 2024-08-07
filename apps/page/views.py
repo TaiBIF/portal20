@@ -484,7 +484,6 @@ def data_case(request):
     context = {
         'articles': results
     }
-    print(f'CONTEXT: {context}')
     return render(request, 'data-case.html', context)
 
 def data_product(request):
