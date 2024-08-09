@@ -18,6 +18,8 @@ urlpatterns = [
     path('dataset/export', views.export, name='export'),
     path('v2/occurrence/get_map_species', views.get_map_species, name='get_map_species'),
     path('get_map_geojson/', views.get_map_geojson, name='get_map_geojson'),
+    path('get_heatmap_data/', views.get_heatmap_data, name='get_heatmap_data'),
+    path('get_barchart_data/', views.get_barchart_data, name='get_barchart_data'),
     
     # 外部使用的API
     path('v2/dataset', views.dataset_api, name='api_dataset'),

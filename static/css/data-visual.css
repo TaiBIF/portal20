@@ -1,0 +1,78 @@
+.d-none {
+    display: none !important;
+}
+
+.select2-container--default {
+    width: 150px !important;
+}
+
+label {
+    font-weight: 400 !important;
+    color: #4a3e3a !important;
+}
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #846c5b;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+} 
+
+#plot-container {
+    position: relative;
+}
+
+.chart-btn {
+    background-color: #eee8e6;
+    border-radius: 8px;
+    border-style: none;
+    box-sizing: border-box;
+    color: #4a3e3a;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    /* font-weight: 500; */
+    height: 40px;
+    line-height: 20px;
+    list-style: none;
+    margin: 0;
+    outline: none;
+    padding: 10px 16px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: .3s ease;
+    vertical-align: baseline;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.chart-btn:hover {
+    background-color: #BDB2A9;
+    color: #fff !important;
+}
+
+#chart-btn-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}

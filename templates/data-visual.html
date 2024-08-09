@@ -3,7 +3,19 @@
 {% load static %}
 {% load humanize %}
 {% block title %}{% trans "資料視覺化" %}{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/data-visual.css' %}">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script src="{% static 'js/data-visual.js' %}"></script>
+{% endblock head %}
+{% block script %}
+<script>
 
+
+</script>
+{% endblock %}
 
 {% block main %}
 
@@ -166,9 +178,47 @@
     </div>
     <!-- 資訊視覺化 row end -->
 
-    <div class="my-5">
-        <h1 class="headline-center-sm">更多視覺化敬請期待</h1>
-    </div>
+    <section>
+        <h3 class="headline-left sub-heading">
+            視覺化觀測資料
+        </h3>
+        <div id="selector-container">
+            <p>
+                選擇下拉式選單中的項目，即可呈現對應的圖表，
+            </p>
+            <span>
+                <label>顯示觀測紀錄項目</label>
+                <select id="heatmap-variable"> <!-- Heatmap X軸 -->
+                    <option value="" disabled selected>請選擇項目</option>
+                    <option value="taibif_basisOfRecord">記錄類型</option>
+                    <option value="taibif_country">國家或地區</option>
+                    <option value="taibif_year">年份</option>
+                    <option value="taibif_kingdom">界</option>
+                    <option value="taibif_taxonGroup">類群</option>
+                </select>
+            </span>
+            <span>
+                <label>，將觀測紀錄分類成</label>
+                <select id="heatmap-group"> <!-- Heatmap Y軸 -->
+                    <option value="" disabled selected>請選擇分類</option>
+                    <option value="">無</option>
+                    <option value="taibif_basisOfRecord">記錄類型</option>
+                    <option value="taibif_country">國家或地區</option>
+                    <option value="taibif_year">年份</option>
+                    <option value="taibif_kingdom">界</option>
+                    <option value="taibif_taxonGroup">類群</option>
+                </select>
+            </span>
+        </div>
+        <div id="plot-container">
+            <div class="loader d-none"></div>
+            <div id="my_dataviz"></div>
+            <div id="chart-btn-container" class="d-none">
+                <button class="chart-btn" id="next-btn">後十年</button>
+                <button class="chart-btn" id="prev-btn">前十年</button>
+            </div>
+        </div>
+    </section>
 </div>
 <!-- container end -->   
 {% endblock %}
