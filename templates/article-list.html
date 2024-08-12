@@ -139,11 +139,6 @@
           {% trans "活動" %}
         </label>
         <label class="custom-input-ctn">
-          <input type="checkbox" class="select-category-sci" data-type="update"{% if "UPDATE" in article_cat%} checked="checked"{% endif %}>
-          <span class="checkmark"></span>
-          {% trans "更新" %}
-        </label>
-        <label class="custom-input-ctn">
           <input type="checkbox" class="select-category-sci" data-type="sci"{% if "SCI" in article_cat %} checked="checked"{% endif %}>
           <span class="checkmark"></span>
           {% trans "科普" %}
@@ -154,11 +149,6 @@
           {% trans "資料故事" %}
         </label>  
         <label class="custom-input-ctn">
-          <input type="checkbox" class="select-category-sci" data-type="tech"{% if "TECH" in article_cat %} checked="checked"{% endif %}>
-          <span class="checkmark"></span>
-          {% trans "技術專欄" %} 
-        </label>
-        <label class="custom-input-ctn">
           <input type="checkbox" class="select-category-sci" data-type="pub"{% if "PUB" in article_cat%} checked="checked"{% endif %}>
           <span class="checkmark"></span>
           {% trans "出版品" %}
@@ -166,7 +156,7 @@
         <label class="custom-input-ctn">
           <input type="checkbox" class="select-category-sci" data-type="pos"{% if "POS"  in article_cat%} checked="checked"{% endif %}>
           <span class="checkmark"></span>
-          {% trans "TaiBIF發表文章/海報" %}
+          {% trans "TaiBIF 成果" %}
         </label> 
       </form>
     </div>

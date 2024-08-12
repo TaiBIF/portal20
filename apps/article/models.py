@@ -54,12 +54,9 @@ class Article(models.Model):
     CATEGORY_CHOICE = (
         ('NEWS', '新聞'),
         ('EVENT', '活動'),
-        ('UPDATE', '更新'),
         ('SCI', '科普'),
-        ('TECH', '技術專欄'),
-        ('PUB', '出版品資料'),
-        ('POS', 'TaiBIF發表文章/海報'),
-        ('STATIC', '靜態頁面'),
+        ('PUB', '出版品'),
+        ('POS', 'TaiBIF 成果'),
         ('STORY', '資料故事')
     )
 
