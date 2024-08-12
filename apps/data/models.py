@@ -936,4 +936,17 @@ class taibifcode(models.Model):
     name = models.CharField(blank=True, null=True, max_length=128)
     name_c = models.CharField(blank=True, null=True, max_length=128)
     desc = models.TextField(blank=True, null=True)
-    
+
+class WorkshopCertificationList(models.Model):
+    LEVEL_CHOICES = (
+        ('basic', '初階'),
+        ('advanced', '進階')
+    )
+    year = models.IntegerField('通過年份', blank=False)
+    level = models.CharField('認證等級', choices=LEVEL_CHOICES, blank=False)
+    name = models.CharField('姓名', blank=False, help_text='（需要手動彌封）')
+    last_update = models.DateTimeField('最後修改日期', auto_now_add=True)
+
+    class Meta:
+        verbose_name = "歷年工作坊通過認證名單"  # 
+        verbose_name_plural = "歷年工作坊通過認證名單"  

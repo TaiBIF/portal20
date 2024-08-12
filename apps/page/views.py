@@ -27,6 +27,7 @@ from apps.data.models import (
     DatasetOrganization,
 )
 from apps.article.models import Article
+from apps.data.models import WorkshopCertificationList
 from .models import Post, Journal
 from utils.mail import taibif_mail_contact_us
 
@@ -218,7 +219,7 @@ def open_data(request):
 def data_stats(request):
     most = request.GET.get('most', '')
     search_query = request.GET.get('search_query', '')
-    print(f'search_query:{search_query}')
+    # print(f'search_query:{search_query}')
 
     query = Dataset.objects
     if most:
@@ -253,7 +254,7 @@ def data_stats(request):
         item['dwc_core_type'] = value_mapping.get(item['dwc_core_type'], item['dwc_core_type'])
         modified_dataset.append(item)
 
-    print(f'modified_dataset:{modified_dataset}')
+    # print(f'modified_dataset:{modified_dataset}')
 
     context = {
         'dataset_list': query.order_by(F('pub_date').desc(nulls_last=True)).all(),
@@ -435,7 +436,22 @@ def tech_online_class(request):
     return render(request, 'tech-online-class.html', context)
 
 def tech_class_license(request):
-    context = {}
+    certification_list = WorkshopCertificationList.objects.all().order_by('year')
+    certification_data = {}
+    for item in certification_list:
+        year = item.year
+        level = item.level
+        name = item.name
+
+        if year not in certification_data:
+            certification_data[year] = {'basic': [], 'advanced': []}
+        
+        if level == 'basic':
+            certification_data[year]['basic'].append(name)
+        elif level == 'advanced':
+            certification_data[year]['advanced'].append(name)
+    # print(f'CERTIFICATION DATA: {certification_data}')
+    context = {'certification_data': certification_data}
     return render(request, 'tech-class-license.html', context)
 
 def tech_volunteer(request):

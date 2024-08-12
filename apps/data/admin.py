@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Taxon, Dataset
+from .models import Taxon, Dataset, WorkshopCertificationList
 
 class DatasetAdmin(admin.ModelAdmin):
     model = Dataset
@@ -19,6 +19,15 @@ class TaxonAdmin(admin.ModelAdmin):
     readonly_fields = ('count', 'parent', 'parent_id')
     search_fields = ('name', 'name_zh')
 
+class WorkshopCertificationListAdmin(admin.ModelAdmin):
+    model = WorkshopCertificationList
+    list_display = ('name', 'year', 'level', 'last_update')
+    list_filter = ('year', 'level')
+    fields = ('name', 'year', 'level')
+    readonly_fields = ('last_update',)
+    search_fields = ('name', 'year', 'level')
+
 
 admin.site.register(Taxon, TaxonAdmin)
 admin.site.register(Dataset, DatasetAdmin)
+admin.site.register(WorkshopCertificationList, WorkshopCertificationListAdmin)
