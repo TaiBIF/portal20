@@ -1,8 +1,8 @@
-const chartTypeMapping = {
+const chartTypeMapping = { // 依照繪製的圖表決定路由
     'barchart': '/api/get_barchart_data',
     'heatmap': '/api/get_heatmap_data'
 };
-const axisMapping = {
+const axisMapping = { // 軸上預先排序好的值，也以防有些項目、分類缺失
     'taibif_basisOfRecord': ['材料實體', '保存標本', '化石標本', '活體標本', '人為觀測', '材料樣本', '機器觀測', '調查活動', '名錄/分類群', '出現紀錄', '文獻紀錄'],
     'taibif_kingdom': ['Animalia', 'Archaea', 'Bacteria', 'Chromista', 'Fungi', 'Plantae', 'Protozoa', 'Viruses'],
     'taibif_taxonGroup': ['Unknown', 'Others', 'Mammals', 'Birds', 'Amphibia', 'Reptiles', 'Fishes', 'Insects', 'Bacteria', 'Fungi', 'Plants']
@@ -43,17 +43,20 @@ $(document).ready(function() {
     $('#prev-btn').on('click', function() {
         yearPagination += 1;
         checkBtnStatus();
-        triggerRenderPlot()
+        triggerRenderPlot();
     });
 
     $('#next-btn').on('click', function() {
         yearPagination -= 1;
         checkBtnStatus();
-        triggerRenderPlot()
+        triggerRenderPlot();
     });
 });
 
 function checkSelectorValue() {
+    /*
+    取得目前下拉式選單中被選中的值
+    */ 
     const yAxis = $('#heatmap-variable').select2('data');
     const xAxis = $('#heatmap-group').select2('data');
     const yAxisValue = yAxis[0].id ? yAxis[0].id : null;
@@ -63,15 +66,23 @@ function checkSelectorValue() {
 };
 
 function triggerRenderPlot() {
+    /*
+    前十年、後十年按鈕點擊之後，重新繪製對應的圖表
+    */ 
     const {yAxisValue, xAxisValue} = checkSelectorValue()
-    if (yAxisValue === null) {
+    if (xAxisValue === null) { // 紀錄分類（X軸）為空則表示只選擇擇紀錄項目（Ｙ軸），重新繪製長條圖
         fectchData('barchart', 'taibif_year', null, yearPagination);
-    } else {
+    } else { // 若選擇雙軸，重新繪製熱力圖
         fectchData('heatmap', yAxisValue, xAxisValue, yearPagination);
     };
 };
 
 function checkBtnStatus() {
+    /*
+    若下拉式選單有選擇年份的話，顯示前十年、後十年的按鈕，
+    若無則隱藏前十年、後十年的按鈕。
+    後十年按鈕在圖表為當今年份時，會隱藏起來
+    */ 
     const {yAxisValue, xAxisValue} = checkSelectorValue()
     if ((yAxisValue === 'taibif_year') || (xAxisValue === 'taibif_year')) {
         $('#chart-btn-container').removeClass('d-none');
@@ -87,6 +98,11 @@ function checkBtnStatus() {
 };
 
 function getCurrentYear(yearPagination) {
+    /*
+    取得當今年份，以及繪製年份相關圖表時的起始年份與結束年份。
+    一次以 10 年為一區間，取哪個區間則用 yearPagination 控制，
+    yearPagination 為全域變數，紀錄當下為第幾個年份區間
+    */
     const currentYear = new Date().getFullYear();
     const startYear = currentYear - 10 * (yearPagination + 1);
     const endYear = currentYear - 10 * yearPagination;
@@ -96,7 +112,6 @@ function getCurrentYear(yearPagination) {
 
 function fectchData(chartType, yAxis, xAxis, yearPagination) {
     const {startYear, endYear} = getCurrentYear(yearPagination);
-    console.log(startYear, endYear);
     $('.loader').removeClass('d-none');
     const url = chartTypeMapping[chartType]
     $.ajax({
@@ -167,7 +182,7 @@ function createBarchart(data, yAxis, yearPagination) {
         .text(d => d.value)
         .style("text-anchor", "start")
         .style("fill", '#525252')
-        .style("font-size", "12px");  // 可根據需要調整字體大小
+        .style("font-size", "12px");  
 
     const yAxisGroup = svg.append("g")
         .call(d3.axisLeft(y).tickSize(5));
