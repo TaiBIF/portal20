@@ -948,5 +948,25 @@ class WorkshopCertificationList(models.Model):
     last_update = models.DateTimeField('最後修改日期', auto_now_add=True)
 
     class Meta:
-        verbose_name = "歷年工作坊通過認證名單"  # 
-        verbose_name_plural = "歷年工作坊通過認證名單"  
+        verbose_name = '歷年工作坊通過認證名單'
+        verbose_name_plural = '歷年工作坊通過認證名單'
+
+class TaibifParticipants(models.Model):
+    name = models.CharField('姓名', blank=False)
+    role = models.TextField('角色類型', blank=False, help_text='（若有一個以上的項目，請用全形頓號分隔）')
+    missions = models.TextField('參與任務', blank=False, help_text='（若有一個以上的項目，請用全形頓號分隔）')
+    last_update = models.DateTimeField('最後修改日期', auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'TaiBIF 參與人員致謝名單'
+        verbose_name_plural = 'TaiBIF 參與人員致謝名單'
+
+class TaibiferList(models.Model):
+    name = models.CharField('姓名', blank=False)
+    role = models.TextField('角色類型', blank=False, help_text='（若有一個以上的項目，請用全形頓號分隔）')
+    missions = models.TextField('參與任務', blank=False, help_text='（若有一個以上的項目，請用全形頓號分隔）')
+    last_update = models.DateTimeField('最後修改日期', auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'TaiBIF 專業人員/志工名單'
+        verbose_name_plural = 'TaiBIF 專業人員/志工名單'

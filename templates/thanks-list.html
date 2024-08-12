@@ -42,62 +42,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>邵廣昭</td>
-              <td>歷任團隊成員</td>
-              <td>TaiBIF 創辦人</td>
-            </tr>
-            <tr>
-              <td>麥舘碩</td>
-              <td>歷任團隊成員、開發協作者</td>
-              <td>TaiBIF 資訊系統開發</td>
-            </tr>
-            <tr>
-              <td>穆家宏</td>
-              <td>歷任團隊成員、開發協作者</td>
-              <td>TaiBIF 資訊系統開發</td>
-            </tr>
-            <tr>
-              <td>邱奕勝</td>
-              <td>歷任團隊成員、推廣大使</td>
-              <td>社群經營、推廣交流</td>
-            </tr>
-            <tr>
-            <tr>
-              <td>李宜軒</td>
-              <td>歷任團隊成員、資料清理協作者</td>
-              <td>TaiCOL 物種名錄架構規劃</td>
-            </tr>
-            <tr>
-              <td>曾鈺絜</td>
-              <td>歷任團隊成員、開發協作者</td>
-              <td>TaiCOL 物種名錄及其他資訊系統開發</td>
-            </tr>
-            <tr>
-              <td>王豫煌</td>
-              <td>歷任團隊成員、開發協作者</td>
-              <td>TaiBIF 歷任節點經理</td>
-            </tr>
-            <tr>
-              <td>柯智仁</td>
-              <td>歷任團隊成員</td>
-              <td>TaiBIF 歷任節點經理、國際交流</td>
-            </tr>
-            <tr>
-              <td>龔明哲</td>
-              <td>歷任團隊成員、開發協作者</td>
-              <td>TaiBIF 官網開發</td>
-            </tr>
-            <tr>
-              <td>林永昌</td>
-              <td>開發協作者</td>
-              <td>早期資料庫系統開發</td>
-            </tr>
-            <tr>
-              <td>Ike Huang</td>
-              <td>開發協作者</td>
-              <td>TaiBIF 資訊系統開發合作</td>
-            </tr>
+            {% for participant in participants %}
+              <tr>
+                <td>{{ participant.name }}</td>
+                <td>{{ participant.role }}</td>
+                <td>{{ participant.missions }}</td>
+              </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
@@ -117,173 +68,17 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>楊富鈞</td>
-              <td>推廣大使、歷任團隊成員</td>
-              <td>TaiBIF 工作坊講師</td>
-            </tr>
-            <tr>
-              <td>方品仁</td>
-              <td>翻譯協作者</td>
-              <td>GBIF 文件翻譯協作</td>
-            </tr>
-            <tr>
-              <td>何宣慶</td>
-              <td>翻譯協作者</td>
-              <td>歷任翻譯協作</td>
-            </tr>
-            <tr>
-              <td>曾柏諺</td>
-              <td>翻譯協作者</td>
-              <td>歷任翻譯協作</td>
-            </tr>
-            <tr>
-              <td>林詠喬</td>
-              <td>開發協作者</td>
-              <td>TaiBIF 官網開發協作</td>
-            </tr>
-            <tr>
-              <td>柯智仁</td>
-              <td>推廣大使</td>
-              <td>TaiBIF 工作坊講師</td>
-            </tr>
-            <tr>
-              <td>郭貴嵐</td>
-              <td>推廣大使</td>
-              <td>TaiBIF 工作坊助教</td>
-            </tr>
-            <tr>
-              <td>郭姿蒨</td>
-              <td>推廣大使</td>
-              <td>TaiBIF 工作坊助教</td>
-            </tr>
-            <tr>
-              <td>鍾惠名</td>
-              <td>推廣大使</td>
-              <td>TaiBIF 工作坊助教</td>
-            </tr>
-            <tr>
-              <td>倪旻萱</td>
-              <td>推廣大使</td>
-              <td>TaiBIF 工作坊助教</td>
-            </tr>
-            <tr>
-              <td>余佑錚</td>
-              <td>推廣大使</td>
-              <td>TaiBIF 工作坊講師</td>
-            </tr>
-            <tr>
-              <td>吳俊毅</td>
-              <td>推廣大使</td>
-              <td>TaiBIF 工作坊講師</td>
-            </tr>
-            <tr>
-              <td>陳佑真</td>
-              <td>推廣大使</td>
-              <td>TaiBIF 工作坊講師</td>
-            </tr>
-            <tr>
-              <td>陳建文</td>
-              <td>推廣大使</td>
-              <td>TaiBIF 工作坊講師</td>
-            </tr>
-            <tr>
-              <td>黃俊嘉</td>
-              <td>推廣大使</td>
-              <td>TaiBIF 工作坊講師</td>
-            </tr>
-            <tr>
-              <td>林誠夏</td>
-              <td>推廣大使</td>
-              <td>TaiBIF 工作坊講師、TaiBIF 開放授權法制顧問</td>
-            </tr>
-            <tr>
-              <td>何亞凡</td>
-              <td>推廣大使</td>
-              <td>TaiBIF 工作坊助教</td>
-            </tr>
-            <tr>
-              <td>賴建成</td>
-              <td>推廣大使</td>
-              <td>TaiBIF 工作坊助教</td>
-            </tr>
+            {% for taibifer in taibifers %}
+              <tr>
+                <td>{{ taibifer.name }}</td>
+                <td>{{ taibifer.role }}</td>
+                <td>{{ taibifer.missions }}</td>
+              </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
     </div>
-    <!-- 志工名單 end -->
-    <!-- <div class="my-5">
-      <h1 class="headline-center-sm">指導單位</h1>
-      <div class="row justify-content-center align-items-center">
-        <div class="col-7 col-md-4 col-supervisor-logo">
-            <a href="https://www.nstc.gov.tw/" target="_blank">
-                <img src="{% static 'images/logo-supervisor/logo-supervisor-nstc.svg' %}" alt="" class="img-fluid">
-            </a>
-        </div>
-        <div class="col-5 col-md-3 col-supervisor-logo">
-            <a href="https://www.coa.gov.tw/" target="_blank">
-                <img src="{% static 'images/logo-supervisor/logo-supervisor-coa.svg' %}" alt="" class="img-fluid">
-            </a>
-        </div>
-        <div class="col-3 col-md-2 col-supervisor-logo">
-            <a href="https://www.biodiv.tw" target="_blank">
-                <img src="{% static 'images/logo-supervisor/logo-supervisor-brcas.svg' %}" alt="" class="img-fluid">
-            </a>
-        </div>
-        <div class="col-5 col-md-3 col-supervisor-logo">
-            <a href="https://www.sinica.edu.tw/ch" target="_blank">
-                <img src="{% static 'images/logo-supervisor/logo-supervisor-sinica.svg' %}" alt="" class="img-fluid">
-            </a>
-        </div>
-      </div>
-    </div>
-
-    <div class="my-5">
-      <h1 class="headline-center-sm">夥伴單位</h1>
-      <div class="row justify-content-center align-items-center partner-container">
-        <div class="col-partner-logo">
-            <a href="https://www.forest.gov.tw/" target="_blank">
-                <img src="{% static 'images/logo-partner/logo-partner-forest.svg' %}" alt="" class="img-fluid">
-            </a>
-        </div>
-        <div class="col-partner-logo">
-            <a href="#">
-                <img src="{% static 'images/logo-partner/logo-partner-endemic.svg' %}" alt="" class="img-fluid">
-            </a>
-        </div>
-        <div class="col-partner-logo">
-            <a href="https://www.cpami.gov.tw" target="_blank">
-                <img src="{% static 'images/logo-partner/logo-partner-cpami.svg' %}" alt="" class="img-fluid">
-            </a>
-        </div>
-        <div class="col-partner-logo">
-            <a href="https://www.oca.gov.tw/ch/index.jsp" target="_blank">
-                <img src="{% static 'images/logo-partner/logo-partner-oca.svg' %}" alt="" class="img-fluid">
-            </a>
-        </div>
-        <div class="col-partner-logo">
-            <a href="https://www.tfri.gov.tw" target="_blank">
-                <img src="{% static 'imageslogo-partner/logo-partner-tfri.svg' %}" alt="" class="img-fluid">
-            </a>
-        </div>
-        <div class="col-partner-logo">
-            <a href="#">
-                <img src="{% static 'images/logo-partner/logo-partner-ntm.svg' %}" alt="" class="img-fluid">
-            </a>
-        </div>
-        <div class="col-partner-logo">
-            <a href="#">
-                <img src="{% static 'images/logo-partner/logo-partner-wra.svg' %}" alt="" class="img-fluid">
-            </a>
-        </div>
-        <div class="col-partner-logo">
-            <a href="#">
-                <img src="{% static 'images/logo-partner/logo-partner-depositar.svg' %}" alt="" class="img-fluid">
-            </a>
-        </div>
-      </div>
-    </div> -->
-    <!-- 夥伴單位 end -->
   </div>
   <!-- container end -->
 

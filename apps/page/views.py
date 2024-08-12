@@ -27,7 +27,7 @@ from apps.data.models import (
     DatasetOrganization,
 )
 from apps.article.models import Article
-from apps.data.models import WorkshopCertificationList
+from apps.data.models import WorkshopCertificationList, TaibifParticipants, TaibiferList
 from .models import Post, Journal
 from utils.mail import taibif_mail_contact_us
 
@@ -392,7 +392,12 @@ def download_resources(request):
     return render(request, 'download-resources.html', context)
 
 def thanks_list(request):
-    context = {}
+    participants_list = TaibifParticipants.objects.values('name', 'role', 'missions')
+    taibifer_list = TaibiferList.objects.values('name', 'role', 'missions')
+
+    context = {'participants': participants_list,
+               'taibifers': taibifer_list
+               }
     return render(request, 'thanks-list.html', context)
 
 def open_process(request):

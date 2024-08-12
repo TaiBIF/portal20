@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Taxon, Dataset, WorkshopCertificationList
+from .models import Taxon, Dataset, WorkshopCertificationList, TaibifParticipants, TaibiferList
 
 class DatasetAdmin(admin.ModelAdmin):
     model = Dataset
@@ -27,7 +27,25 @@ class WorkshopCertificationListAdmin(admin.ModelAdmin):
     readonly_fields = ('last_update',)
     search_fields = ('name', 'year', 'level')
 
+class TaibifParticipantsAdmin(admin.ModelAdmin):
+    model = TaibifParticipants
+    list_display = ('name', 'role', 'missions', 'last_update')
+    list_filter = ('role', 'missions')
+    fields = ('name', 'role', 'missions')
+    readonly_fields = ('last_update',)
+    search_fields = ('name', 'role', 'missions')
+
+class TaibiferListAdmin(admin.ModelAdmin):
+    model = TaibiferList
+    list_display = ('name', 'role', 'missions', 'last_update')
+    list_filter = ('role', 'missions')
+    fields = ('name', 'role', 'missions')
+    readonly_fields = ('last_update',)
+    search_fields = ('name', 'role', 'missions')
+
 
 admin.site.register(Taxon, TaxonAdmin)
 admin.site.register(Dataset, DatasetAdmin)
 admin.site.register(WorkshopCertificationList, WorkshopCertificationListAdmin)
+admin.site.register(TaibifParticipants, TaibifParticipantsAdmin)
+admin.site.register(TaibiferList, TaibiferListAdmin)
