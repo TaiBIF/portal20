@@ -60,23 +60,9 @@ def index(request):
         .order_by("-is_pinned", "-created")
         .all()[0:4]
     )
-    # topic_list = Article.objects.filter(category__in=['SCI', 'TECH', 'PUB']).order_by('?').all()[0:10]
-    # topic_list = Article.objects.filter(is_homepage=True).order_by("?").all()[0:10]
-    # get top newest article 6 records for homepage by category
-    topic_news_list = (
-        Article.objects.filter(category="NEWS").order_by("-created").all()[0:6]
-    )
-    topic_event_list = (
-        Article.objects.filter(category="EVENT").order_by("-created").all()[0:6]
-    )
-    topic_pscience_list = (
-        Article.objects.filter(category="PSCIENCE").order_by("-created").all()[0:6]
-    )
 
-    # merge 3 category article list to toopic_list
-    # topic_list = list(chain(topic_news_list, topic_event_list, topic_pscience_list))
-    topic_list = (
-        Article.objects.filter(category__in=["NEWS", "EVENT", "SCI"])
+    story_list = (
+        Article.objects.filter(category__in=['STORY'])
         .order_by("-created")
         .all()[0:6]
     )
@@ -111,7 +97,7 @@ def index(request):
         "news_list": news_list,
         "event_list": event_list,
         "update_list": update_list,
-        "topic_list": topic_list,
+        "story_list": story_list,
         "stats": get_home_stats(),
         "dataset_num": dataset_num,
         "occ_num": occ_num,
@@ -120,8 +106,6 @@ def index(request):
         'publisher_num': publisher_num
         # 'taxon_cover':taxon_cover,
     }
-
-    print(context)
 
     return render(request, "index.html", context)
 
