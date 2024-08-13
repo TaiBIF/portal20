@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Taxon, Dataset, WorkshopCertificationList, TaibifParticipants, TaibiferList, DataPaperList
+from .models import Taxon, Dataset, WorkshopCertificationList, TaibifParticipants, TaibiferList, DataPaperList, DatasetOrganization
 
 class DatasetAdmin(admin.ModelAdmin):
     model = Dataset
@@ -51,6 +51,14 @@ class DataPaperListAdmin(admin.ModelAdmin):
     readonly_fields = ('last_update',)
     search_fields = ('title', 'journal', 'article_doi', 'dataset_doi')
 
+class DatasetOrganizationAdmin(admin.ModelAdmin):
+    model = DatasetOrganization
+    list_display = ('name', 'country_code', 'organization_gbif_uuid')
+    list_filter = ('country_code',)
+    fields = ('id', 'name', 'organization_gbif_uuid', 'description', 'country_code', 'country_or_area', 'administrative_contact', 'technical_contact', 'endorsed_by', 'installations', 'dataset_num', 'occurences_num')
+    readonly_fields = ('id', 'dataset_num', 'occurences_num')
+    search_fields = ('name', 'organization_gbif_uuid')
+
 
 admin.site.register(Taxon, TaxonAdmin)
 admin.site.register(Dataset, DatasetAdmin)
@@ -58,3 +66,4 @@ admin.site.register(WorkshopCertificationList, WorkshopCertificationListAdmin)
 admin.site.register(TaibifParticipants, TaibifParticipantsAdmin)
 admin.site.register(TaibiferList, TaibiferListAdmin)
 admin.site.register(DataPaperList, DataPaperListAdmin)
+admin.site.register(DatasetOrganization, DatasetOrganizationAdmin)

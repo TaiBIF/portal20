@@ -1132,13 +1132,13 @@ def search_publisher(request):
             },
         ]
 
-        menus = [
-            {
-                'key': 'country_code',
-                'label': '國家/區域 Country or Area',
-                'rows': [{'label': DATA_MAPPING['country'][x['country_code']], 'key': x['country_code'], 'count': x['count']} for x in country_list]
-            },
-        ]
+        # menus = [
+        #     {
+        #         'key': 'country_code',
+        #         'label': '國家/區域 Country or Area',
+        #         'rows': [{'label': DATA_MAPPING['country'][x['country_code']], 'key': x['country_code'], 'count': x['count']} for x in country_list]
+        #     },
+        # ]
 
     # search
     publisher_search = PublisherSearch(list(request.GET.lists()))
