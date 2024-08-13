@@ -72,10 +72,8 @@ def index(request):
     r = requests.get(url).json()
     occ_num = r["response"]["numFound"]
     
-    # occ_num = Dataset.objects.aggregate(Sum('num_occurrence'))['num_occurrence__sum']
 
     dataset_num = Dataset.objects.filter(status="PUBLIC").count()
-    # taxon_cover = len(occ_result['facets']['taxon_id']['buckets'])
     
     taxon_num = Taxon.objects.values('name').distinct().count()
 
@@ -94,6 +92,18 @@ def index(request):
 
     publisher_num = DatasetOrganization.objects.count()
 
+    gbif_data_case_url = 'https://api.gbif.org/v1/literature/search?countriesOfCoverage=TW'
+    gbif_data_case_response = requests.get(gbif_data_case_url)
+    gbif_data_case_dict = gbif_data_case_response.json()
+
+    if gbif_data_case_dict:
+        gbif_data_case_count = gbif_data_case_dict['count']
+    else: 
+        gbif_data_case_count = 0
+    
+    taibif_case_count = Article.objects.filter(is_data_case=True).count()
+    total_case_count = gbif_data_case_count + taibif_case_count
+
     context = {
         "news_list": news_list,
         "event_list": event_list,
@@ -104,8 +114,8 @@ def index(request):
         "occ_num": occ_num,
         'taxon_num': taxon_num,
         'taxonGroup_dict':taxonGroup_dict,
-        'publisher_num': publisher_num
-        # 'taxon_cover':taxon_cover,
+        'publisher_num': publisher_num,
+        'case_count': total_case_count
     }
 
     return render(request, "index.html", context)
