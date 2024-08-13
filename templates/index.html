@@ -580,8 +580,8 @@
             <div class="card-plain-article">
                 <a
                     class="tag"
-                    href="{% url 'article-list' category=i.category|lower  %}"
-                    >{% trans i.get_category_display %}</a
+                    href="{% url 'article-search' %}?category={{i.category|lower}}"
+                    >{% trans i.get_case_type %}</a
                 >
                 <p class="topic-content">
                     <a href="{{ i.get_absolute_url }}"

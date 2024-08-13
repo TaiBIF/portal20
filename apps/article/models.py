@@ -127,6 +127,9 @@ class Article(models.Model):
                         })
                 return {'files': files}
         return None
+    
+    def get_case_type(self):
+        return dict(self.CASE_TYPE_CHOICE).get(self.case_type, '')
 
     class Meta:
         verbose_name = u'文章'
