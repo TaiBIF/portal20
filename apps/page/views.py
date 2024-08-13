@@ -27,7 +27,7 @@ from apps.data.models import (
     DatasetOrganization,
 )
 from apps.article.models import Article
-from apps.data.models import WorkshopCertificationList, TaibifParticipants, TaibiferList
+from apps.data.models import WorkshopCertificationList, TaibifParticipants, TaibiferList, DataPaperList
 from .models import Post, Journal
 from utils.mail import taibif_mail_contact_us
 
@@ -35,6 +35,7 @@ from apps.data.helpers.stats import get_home_stats
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_GET
 from django.utils.translation import activate
+from datetime import datetime
 
 def act_lang(func):
     def wrapper(*args, **kwargs):
@@ -447,10 +448,13 @@ def tech_volunteer(request):
     context = {}
     return render(request, 'tech-volunteer.html', context)
 
-
-
 def data_paper(request):
-    context = {}
+    data_paper_list = DataPaperList.objects.all().order_by('last_update').values()
+    latest_update = data_paper_list.last()['last_update'].strftime('%Y/%m/%d') if data_paper_list else None
+    context = {
+        'data_paper_list': data_paper_list,
+        'latest_update': latest_update
+    }
     return render(request, 'data-paper.html', context)
 
 def data_visual(request):

@@ -970,3 +970,14 @@ class TaibiferList(models.Model):
     class Meta:
         verbose_name = 'TaiBIF 專業人員/志工名單'
         verbose_name_plural = 'TaiBIF 專業人員/志工名單'
+
+class DataPaperList(models.Model):
+    title = models.TextField('文章標題', blank=False)
+    journal = models.CharField('發表期刊', blank=False)
+    article_doi = models.CharField('文章 doi', blank=False, help_text='（請填入 doi 即可，例：10.3897/BDJ.10.e90196。前端會自動轉換成連結）')
+    dataset_doi = models.CharField('資料集 doi', blank=False, help_text='（請填入 doi 即可，例：10.15468/43z4mj。前端會自動轉換成連結）')
+    last_update = models.DateTimeField('最後修改日期', auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'TaiBIF 歷年合作資料論文'
+        verbose_name_plural = 'TaiBIF 歷年合作資料論文'

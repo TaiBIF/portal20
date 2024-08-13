@@ -4862,3 +4862,7 @@ body {
     color: #fff;
     margin-bottom: 30px;
 }
+
+.data-paper-table th, .data-paper-table td {
+    padding: 1rem 1rem !important;
+}
