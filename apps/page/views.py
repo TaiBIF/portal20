@@ -94,11 +94,13 @@ def index(request):
 
     gbif_data_case_url = 'https://api.gbif.org/v1/literature/search?countriesOfCoverage=TW'
     gbif_data_case_response = requests.get(gbif_data_case_url)
-    gbif_data_case_dict = gbif_data_case_response.json()
-
-    if gbif_data_case_dict:
-        gbif_data_case_count = gbif_data_case_dict['count']
-    else: 
+    if gbif_data_case_response.status_code == 200:
+        gbif_data_case_dict = gbif_data_case_response.json()
+        if gbif_data_case_dict:
+            gbif_data_case_count = gbif_data_case_dict['count']
+        else:
+            gbif_data_case_count = 0
+    else:
         gbif_data_case_count = 0
     
     taibif_case_count = Article.objects.filter(is_data_case=True).count()
