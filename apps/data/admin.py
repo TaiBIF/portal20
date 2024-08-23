@@ -45,9 +45,9 @@ class TaibiferListAdmin(admin.ModelAdmin):
 
 class DataPaperListAdmin(admin.ModelAdmin):
     model = DataPaperList
-    list_display = ('title', 'journal', 'article_doi', 'dataset_doi', 'last_update')
-    list_filter = ('journal',)
-    fields = ('title', 'journal', 'article_doi', 'dataset_doi')
+    list_display = ('title', 'journal', 'article_doi', 'dataset_doi', 'year')
+    list_filter = ('journal', 'year')
+    fields = ('title', 'journal', 'article_doi', 'dataset_doi', 'year')
     readonly_fields = ('last_update',)
     search_fields = ('title', 'journal', 'article_doi', 'dataset_doi')
 

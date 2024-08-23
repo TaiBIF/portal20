@@ -980,6 +980,7 @@ class DataPaperList(models.Model):
     journal = models.CharField('發表期刊', blank=False)
     article_doi = models.CharField('文章 doi', blank=False, help_text='（請填入 doi 即可，例：10.3897/BDJ.10.e90196。前端會自動轉換成連結）')
     dataset_doi = models.CharField('資料集 doi', blank=False, help_text='（請填入 doi 即可，例：10.15468/43z4mj。前端會自動轉換成連結）')
+    year = models.IntegerField('發布年份', blank=False, help_text='（會依照發布年份顯示在前端，由新至舊排序）')
     last_update = models.DateTimeField('最後修改日期', auto_now_add=True)
 
     class Meta:
