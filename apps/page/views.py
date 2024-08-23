@@ -503,7 +503,7 @@ def data_case(request):
     CASE_TYPE_MAP = {
         'DATATHON': '數據松'
     }
-    articles = Article.objects.filter(is_data_case=True).order_by('created').values('id', 'created', 'title', 'case_type', 'content')[:3]
+    articles = Article.objects.filter(is_data_case=True).order_by('-created').values('id', 'created', 'title', 'case_type', 'content')[:3]
 
     results = []
     for article in articles:
