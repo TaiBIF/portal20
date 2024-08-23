@@ -251,7 +251,19 @@ def data_stats(request):
         item['dwc_core_type'] = value_mapping.get(item['dwc_core_type'], item['dwc_core_type'])
         modified_dataset.append(item)
 
-    # print(f'modified_dataset:{modified_dataset}')
+    gbif_data_case_url = 'https://api.gbif.org/v1/literature/search?countriesOfCoverage=TW'
+    gbif_data_case_response = requests.get(gbif_data_case_url)
+    if gbif_data_case_response.status_code == 200:
+        gbif_data_case_dict = gbif_data_case_response.json()
+        if gbif_data_case_dict:
+            gbif_data_case_count = gbif_data_case_dict['count']
+        else:
+            gbif_data_case_count = 0
+    else:
+        gbif_data_case_count = 0
+    
+    taibif_case_count = Article.objects.filter(is_data_case=True).count()
+    total_case_count = gbif_data_case_count + taibif_case_count
 
     context = {
         'dataset_list': query.order_by(F('pub_date').desc(nulls_last=True)).all(),
@@ -260,6 +272,7 @@ def data_stats(request):
         'occ_num':occ_num,
         'env': settings.ENV,
         'dataset': modified_dataset,
+        'case_count': total_case_count
     }
     return render(request, 'data-stats.html', context) 
 
