@@ -465,8 +465,8 @@ def tech_class_license(request):
             certification_data[year]['basic'].append(name)
         elif level == 'advanced':
             certification_data[year]['advanced'].append(name)
-    # print(f'CERTIFICATION DATA: {certification_data}')
-    context = {'certification_data': certification_data}
+    sorted_certification_data = dict(sorted(certification_data.items(), key=lambda item: item[0], reverse=True))
+    context = {'certification_data': sorted_certification_data}
     return render(request, 'tech-class-license.html', context)
 
 def tech_volunteer(request):
