@@ -86,4 +86,11 @@ $(document).ready(function() {
       }
     }
   })
+
+  $('.owl-prev').click(function() {
+    owl_topic.trigger('prev.owl.carousel');
+  });
+  $('.owl-next').click(function() {
+    owl_topic.trigger('next.owl.carousel');
+  });
 })
