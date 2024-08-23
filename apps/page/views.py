@@ -77,7 +77,7 @@ def index(request):
     
     taxon_num = Taxon.objects.values('name').distinct().count()
 
-    taxonGroup_url = f'http://solr:8983/solr/taibif_occurrence/select?facet.field=taibif_taxonGroup&facet=true&indent=true&q.op=OR&q=*%3A*&rows=0'
+    taxonGroup_url = f'http://solr:8983/solr/taibif_occurrence/select?basisOfRecord:*&facet.field=taibif_taxonGroup&facet=true&indent=true&q.op=OR&q=*%3A*&rows=0'
     taxonGroup_r = requests.get(taxonGroup_url).json()   
     taibif_taxonGroup =  taxonGroup_r['facet_counts']['facet_fields']['taibif_taxonGroup']
 
