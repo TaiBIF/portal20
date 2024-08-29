@@ -26,6 +26,9 @@ class ArticleAdmin(admin.ModelAdmin):
         'is_homepage',
         'created',
         'changed',
+        'is_data_case',
+        'case_type',
+        'media_url',
     )
     inlines = [PostImageAdmin]
 

@@ -1,8 +1,7 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, JsonResponse
 from django.views import generic
 from django.core.paginator import Paginator
-
 from .models import Article, PostImage
 from itertools import chain
 
@@ -131,3 +130,18 @@ def article_tag_list(request, tag_name):
     return render(request, 'article-tag-list.html', {
         'article_list': article_list,
     })
+
+def data_case(request):
+    articles = Article.objects.filter(is_data_case=True).values('created', 'title', 'case_type', 'media_url')
+
+    results = []
+    for article in articles:
+        results.append({
+            'year': article['created'].year,
+            'title': article['title'],
+            'literatureType': article['case_type'],
+            'identifiers': {'doi': article['media_url']},
+        })
+    
+    data = {'results': results}
+    return JsonResponse(data)

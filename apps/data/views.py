@@ -466,7 +466,7 @@ def publisher_view(request, pk):
     dataset = []
     
     context['publisher'] = get_object_or_404(DatasetOrganization, pk=pk)
-    for x in Dataset.objects.filter(organization=pk).all():
+    for x in Dataset.objects.filter(organization=pk, status='PUBLIC').all():
         dataset.append({
             'name': x.name,
             'name_zh': x.title,
@@ -476,8 +476,8 @@ def publisher_view(request, pk):
         })
 
     context["info"] = {
-        'dataset_num' : Dataset.objects.filter(organization__id=pk).count(),
-        'sum_occurrence' : Dataset.objects.filter(organization__id=pk).aggregate(Sum('num_occurrence'))['num_occurrence__sum']
+        'dataset_num' : Dataset.objects.filter(organization__id=pk, status='PUBLIC').count(),
+        'sum_occurrence' : Dataset.objects.filter(organization__id=pk, status='PUBLIC').aggregate(Sum('num_occurrence'))['num_occurrence__sum']
     }
     context['dataset'] = dataset
 

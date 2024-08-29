@@ -2,6 +2,9 @@
 {% load i18n %}
 {% load static %}
 {% block title %}課程認證{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/tech-class-license.css' %}">
+{% endblock head %}
 
 
 {% block main %}
@@ -28,8 +31,8 @@
     </nav>
     <!-- breadcrumb end -->
 
-     <!-- row begin -->
-     <div class="row">
+    <!-- row begin -->
+    <div class="row">
         <!-- col left begin -->
         <div class="col-12 col-md-3">
             <div class="dropdown dropdown-flexible-wrapper">
@@ -156,110 +159,31 @@
                 <img src="{% static 'images/workshop_certification.png'%}"/>
                 <img src="{% static 'images/workshop_certification_advanced.png'%}"/>
             </div>
-            <div class="article-content-wrapper">
-                <h3>2022</h3>
-            </div>
-            <p>
-                <strong>初階課程通過名單</strong>
-                <div>共計 4 名</div>
-                <ul>
-                    <li>陳Ｏ薇</li>
-                    <li>陳Ｏ豪</li>
-                    <li>蔡Ｏ雯</li>
-                    <li>蕭Ｏ元</li>
-                </ul>
-            </p>
-            <p>
-                <strong>進階課程通過名單</strong>
-                <div>共計 20 名</div>
-                <ul>
-                    <li>翁Ｏ賢</li>
-                    <li>何Ｏ凡</li>
-                    <li>吳Ｏ緯</li>
-                    <li>孫Ｏ</li>
-                    <li>宋Ｏ心</li>
-                    <li>曹Ｏ峰</li>
-                    <li>林Ｏ宏</li>
-                    <li>林Ｏ廷</li>
-                    <li>林Ｏ辰</li>
-                    <li>林Ｏ昊</li>
-                    <li>王Ｏ安</li>
-                    <li>王Ｏ明</li>
-                    <li>范Ｏ衍</li>
-                    <li>蔡Ｏ翰</li>
-                    <li>蕭Ｏ祥</li>
-                    <li>賴Ｏ成</li>
-                    <li>郭Ｏ嘉</li>
-                    <li>陳Ｏ微</li>
-                    <li>陳Ｏ玟</li>
-                    <li>胡Ｏ曦</li>
-                </ul>
-            </p>
-
-            <div class="article-content-wrapper">
-                <h3>2023</h3>
-            </div>
-            <p>
-                <strong>初階課程通過名單</strong>
-                <div>共計 12 名</div>
-                <ul>
-                    <li>姚Ｏ音</li>
-                    <li>林Ｏ軒</li>
-                    <li>歐Ｏ瑋</li>
-                    <li>蔡Ｏ家</li>
-                    <li>鄭Ｏ容</li>
-                    <li>陳Ｏ蓁</li>
-                    <li>陳Ｏ仁</li>
-                    <li>吳Ｏ敏</li>
-                    <li>張簡Ｏ蓮</li>
-                    <li>彭Ｏ華</li>
-                    <li>黃Ｏ霈</li>
-                    <li>黃Ｏ舒</li>
-                </ul>
-            </p>
-            <p>
-                <strong>進階課程通過名單</strong>
-                <div>共計 37 名</div>
-                <ul>
-                    <li>Lyvia Chong</li>
-                    <li>吳Ｏ鈴</li>
-                    <li>吳Ｏ綺</li>
-                    <li>吳Ｏ諭</li>
-                    <li>徐Ｏ遜</li>
-                    <li>曾Ｏ博</li>
-                    <li>朱Ｏ陽</li>
-                    <li>林Ｏ晴</li>
-                    <li>潘Ｏ合</li>
-                    <li>邱Ｏ恩</li>
-                    <li>陳Ｏ錞</li>
-                    <li>陳Ｏ君</li>
-                    <li>陳Ｏ家</li>
-                    <li>黃Ｏ新</li>
-                    <li>王Ｏ</li>
-                    <li>邱Ｏ祥</li>
-                    <li>吳Ｏ臻</li>
-                    <li>李Ｏ全</li>
-                    <li>何Ｏ倩</li>
-                    <li>吳Ｏ珈</li>
-                    <li>呂Ｏ茵</li>
-                    <li>姚Ｏ</li>
-                    <li>孫Ｏ翔</li>
-                    <li>張Ｏ紋</li>
-                    <li>徐Ｏ恆</li>
-                    <li>李Ｏ蓉</li>
-                    <li>李Ｏ韶</li>
-                    <li>林Ｏ宸</li>
-                    <li>沈Ｏ蓮</li>
-                    <li>王Ｏ皓</li>
-                    <li>鄭Ｏ琪</li>
-                    <li>陳Ｏ宇</li>
-                    <li>陳Ｏ萱</li>
-                    <li>陳Ｏ儒</li>
-                    <li>陳Ｏ為</li>
-                    <li>馮Ｏ婕</li>
-                    <li>黃Ｏ晴</li>
-                </ul>
-            </p>
+            {% for year, levels in certification_data.items %}
+                <div class="article-content-wrapper">
+                    <h3>{{ year }}年度</h3>
+                </div>
+                {% if levels.basic %}
+                    <div>
+                        <strong>初階課程通過名單</strong><small>（共計 {{ levels.basic|length }} 名）</small>
+                        <ul class="certification-list-container">
+                            {% for name in levels.basic %}
+                                <li>{{ name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                {% if levels.advanced %}
+                    <div>
+                        <strong>進階課程通過名單</strong><small>（共計 {{ levels.advanced|length }} 名）</small>
+                        <ul class="certification-list-container">
+                            {% for name in levels.advanced %}
+                                <li>{{ name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            {% endfor %}
         </div>
         <!-- col right end -->
     </div>

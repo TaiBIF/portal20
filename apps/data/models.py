@@ -17,6 +17,8 @@ DATA_MAPPING = {
         'VN':'越南',
         'AU': '澳洲',
         'unknown':'其他',
+        'MY': '馬來西亞',
+        'HK': '香港',
         None: '未知'
     },
     'rights': {
@@ -139,8 +141,6 @@ class Dataset(models.Model):
     def doi_link(self):
         return 'https://doi.org/{}'.format(self.gbif_doi)
     
-        
-
     def __str__(self):
         r = '<Dataset {}>'.format(self.name)
         return r
@@ -188,17 +188,17 @@ class DatasetOrganization(models.Model):
 
     NUM_PER_PAGE = 20
 
-    name = models.CharField('name', max_length=512)
-    description = models.TextField('description', default='',null=True)
-    country_code = models.CharField('country_code', max_length=8, default='TW',null=True)
-    administrative_contact = models.CharField('administrative_contact', max_length=256, default='',null=True)
-    endorsed_by = models.CharField('endorsed_by', max_length=256, default='',null=True)
-    organization_gbif_uuid = models.CharField('organization_gbif_uuid', max_length=256, default='',null=True)
-    installations = models.CharField('installations', max_length=256, default='',null=True)
-    technical_contact = models.CharField('technical_contact', max_length=256, default='',null=True)
-    country_or_area = models.CharField('country_or_area', max_length=256, default='',null=True)
-    occurences_num = models.IntegerField('country_or_area', default=0,null=True)
-    dataset_num = models.IntegerField('dataset_num',default=0,null=True)
+    name = models.CharField('發布單位名稱', max_length=512)
+    description = models.TextField('單位描述', default='',null=True, blank=True)
+    country_code = models.CharField('國家代碼', max_length=8, default='TW',null=True, blank=True)
+    administrative_contact = models.CharField('行政聯絡人', max_length=256, default='',null=True, blank=True)
+    endorsed_by = models.CharField('發布單位認證節點', max_length=256, default='',null=True, blank=True)
+    organization_gbif_uuid = models.CharField('發布單位 GBIF UUID', max_length=256, default='',null=True)
+    installations = models.CharField('發布節點', max_length=256, default='',null=True, blank=True)
+    technical_contact = models.CharField('技術連絡人', max_length=256, default='',null=True, blank=True)
+    country_or_area = models.CharField('國家或區域', max_length=256, default='',null=True, blank=True)
+    occurences_num = models.IntegerField('出現紀錄筆數', default=0,null=True, help_text='(目前已不維護)', blank=True)
+    dataset_num = models.IntegerField('資料集數量',default=0,null=True, help_text='(目前已不維護)', blank=True)
 
     @property
     def sum_occurrence(self):
@@ -206,6 +206,10 @@ class DatasetOrganization(models.Model):
         for d in self.datasets.values('num_occurrence').all():
             n += d['num_occurrence']
         return n
+    
+    class Meta:
+        verbose_name = '發布單位'
+        verbose_name_plural = '發布單位'
 
 # class TaxonTree(models.Model):
 #     name = models.CharField('name', max_length=64)
@@ -936,4 +940,49 @@ class taibifcode(models.Model):
     name = models.CharField(blank=True, null=True, max_length=128)
     name_c = models.CharField(blank=True, null=True, max_length=128)
     desc = models.TextField(blank=True, null=True)
-    
+
+class WorkshopCertificationList(models.Model):
+    LEVEL_CHOICES = (
+        ('basic', '初階'),
+        ('advanced', '進階')
+    )
+    year = models.IntegerField('通過年份', blank=False)
+    level = models.CharField('認證等級', choices=LEVEL_CHOICES, blank=False)
+    name = models.CharField('姓名', blank=False, help_text='（需要手動彌封）')
+    last_update = models.DateTimeField('最後修改日期', auto_now_add=True)
+
+    class Meta:
+        verbose_name = '歷年工作坊通過認證名單'
+        verbose_name_plural = '歷年工作坊通過認證名單'
+
+class TaibifParticipants(models.Model):
+    name = models.CharField('姓名', blank=False)
+    role = models.TextField('角色類型', blank=False, help_text='（若有一個以上的項目，請用全形頓號分隔）')
+    missions = models.TextField('參與任務', blank=False, help_text='（若有一個以上的項目，請用全形頓號分隔）')
+    last_update = models.DateTimeField('最後修改日期', auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'TaiBIF 參與人員致謝名單'
+        verbose_name_plural = 'TaiBIF 參與人員致謝名單'
+
+class TaibiferList(models.Model):
+    name = models.CharField('姓名', blank=False)
+    role = models.TextField('角色類型', blank=False, help_text='（若有一個以上的項目，請用全形頓號分隔）')
+    missions = models.TextField('參與任務', blank=False, help_text='（若有一個以上的項目，請用全形頓號分隔）')
+    last_update = models.DateTimeField('最後修改日期', auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'TaiBIF 專業人員/志工名單'
+        verbose_name_plural = 'TaiBIF 專業人員/志工名單'
+
+class DataPaperList(models.Model):
+    title = models.TextField('文章標題', blank=False)
+    journal = models.CharField('發表期刊', blank=False)
+    article_doi = models.CharField('文章 doi', blank=False, help_text='（請填入 doi 即可，例：10.3897/BDJ.10.e90196。前端會自動轉換成連結）')
+    dataset_doi = models.CharField('資料集 doi', blank=False, help_text='（請填入 doi 即可，例：10.15468/43z4mj。前端會自動轉換成連結）')
+    year = models.IntegerField('發布年份', blank=False, help_text='（會依照發布年份顯示在前端，由新至舊排序）')
+    last_update = models.DateTimeField('最後修改日期', auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'TaiBIF 歷年合作資料論文'
+        verbose_name_plural = 'TaiBIF 歷年合作資料論文'

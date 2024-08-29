@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/dataset.css' %}">
+<script src="{% static 'js/dataset.js' %}"></script>
+{% endblock head %}
 
 {% block main %}
 <!-- container begin -->
@@ -97,28 +101,33 @@
         <!-- 聯絡資訊 begin -->
         <h3>聯絡資訊</h3>
         <!-- row contact-info begin -->
-        <div class="row">
+        <div class="contact-container">
             {% for i in contacts %}
-            <div class="col-md-6 col-xs-12">
-                <div class="contact-info-wrapper">
-                    <p class="heading-md-ul">
-                        {% if i.surname %}{{i.surname}}{% endif %}
-                        {% if i.givenname %}{{i.givenname}}{% endif %}
+            <div class="contact-accordion">
+                <div class="contact-name">
+                    <div>
+                        <span>{% if i.givenname %}{{i.givenname}}{% endif %} {% if i.surname %}{{i.surname}}{% endif %}</span>
                         <span class="heading-footnote">{{i.role}}</span>
-                    </p>
-                    <ul>
+                    </div>
+                    <span class="icon-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#4A3E3A" class="bi bi-chevron-double-down" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
+                            <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
+                        </svg>
+                    </span>
+                </div>
+                <ul class="d-none contact-detail">
                     {% if i.organizationname or i.positionname or i.country %}
-                    {% if i.positionname %}<li>{{i.positionname}}</li>{% endif %}
-                    {% if i.organizationname %}<li>{{i.organizationname}}</li>{% endif %}
-                    {% if i.country %}<li>{{i.country}}</li>{% endif %}
+                        {% if i.positionname %}<li>{{i.positionname}}</li>{% endif %}
+                        {% if i.organizationname %}<li>{{i.organizationname}}</li>{% endif %}
+                        {% if i.country %}<li>{{i.country}}</li>{% endif %}
                     {% endif %}
                     {% if i.postalcode or i.deliverypoint or i.electronicmailaddress or i.phone %}
                         {% if i.postalcode or i.deliverypoint %}<li><span class="myicon icon-pin"></span> {% if i.postalcode %}{{i.postalcode}}{% endif %}{% if i.deliverypoint %}{{i.deliverypoint}}{% endif %} </li>{% endif %}
                         {% if i.electronicmailaddress %}<li><span class="myicon icon-mail"></span>{{i.electronicmailaddress}}</li>{% endif %}
                         {% if i.phone %}<li><span class="myicon icon-phone"></span>{{i.phone}}</li>{% endif %}
-                        {% endif %}
-                    </ul>
-                </div>
+                    {% endif %}
+                </ul>
             </div>
             {% endfor %}
         </div>

@@ -53,5 +53,9 @@ services:
       options:
         max-size: "1m"
         max-file: "3"
+  
+  solr:
+    environment:
+      - SOLR_JAVA_MEM=-Xms8g -Xms8g
   celery:
     image: taibif-web-stag-image

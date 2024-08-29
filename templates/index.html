@@ -287,9 +287,11 @@
             <div class="col-card-brick">
                 <div class="card-brick card-glowing">
                     <p class="title">
-                        <span class="myicon icon-data-paper mr-1"></span>{% trans "資料應用發表" %}
+                        <span class="myicon icon-data-paper mr-1"></span>{% trans "臺灣資料應用發表" %}
                     </p>
-                    <p class="content">0</p>
+                    <p class="content">
+                        <a href="{% url 'data-case' %}">{{ case_count }}</a>
+                    </p>
                 </div>
             </div>
             <!-- col end -->
@@ -569,17 +571,17 @@
 <div class="bg-main-pale">
     <!-- container begin -->
     <div class="container py-5">
-        <h1 class="headline-center-md">{% trans "專題文章" %}</h1>
+        <h1 class="headline-center-md">{% trans "資料故事" %}</h1>
 
         <!-- owl-carousel begin -->
         <div class="owl-carousel owl-theme" id="article-carousel">
             <!-- item begin -->
-            {% for i in topic_list %}
+            {% for i in story_list %}
             <div class="card-plain-article">
                 <a
                     class="tag"
-                    href="{% url 'article-list' category=i.category|lower  %}"
-                    >{% trans i.get_category_display %}</a
+                    href="{% url 'article-search' %}?category={{i.category|lower}}"
+                    >{% trans i.get_case_type %}</a
                 >
                 <p class="topic-content">
                     <a href="{{ i.get_absolute_url }}"

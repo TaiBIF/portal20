@@ -118,68 +118,26 @@
 
         <div data-cat="history" class="col-12 col-md-9 nav-item-content hide">
             <h1 class="heading-lg-ul">{% trans "TaiBIF 歷年合作資料論文" %}</h1>
-            <small>{% trans "更新日期：" %}2023/02/29</small>
+            <small>{% trans "更新日期：" %}{{ latest_update }}</small>
             <div class="table-responsive mt-3">
-                <table class="table table-ltmilo">
+                <table class="table table-ltmilo data-paper-table">
                     <thead>
                         <tr>
                             <th class="col-md">{% trans "文章" %}</th>
                             <th class="col-md">{% trans "發表期刊" %}</th>
-                            <th class="col-md">{% trans "文章DOI" %}</th>
-                            <th class="col-md">{% trans "相關資料集" %}</th>
+                            <th class="col-md">{% trans "文章 DOI" %}</th>
+                            <th class="col-md">{% trans "相關資料集 DOI" %}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                John Terenzini, Yannan Fan, Melissa Jean-Yi Liu, Laura J Falkenberg (2024) Jellyfish in Hong Kong: a citizen science dataset.
-                            </td>
-                            <td>GigaByte</td>
-                            <td><a href="https://doi.org/10.46471/gigabyte.125" target="_blank">DOI: 10.46471/gigabyte.125</a></td>
-                            <td><a href="https://doi.org/10.15468/s4qwyk" target="_blank">DOI: 10.15468/s4qwyk</a></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Lin CP, Huang CH, Padgett T, Bucay MA, Chen CW, Shen ZY, Chiu L, Tseng YC, Yu JK, J Wang, MC Wang, Hoh DZ (2024) 
-                                Environmental DNA-based biodiversity profiling along Houdong River in northeastern Taiwan.
-                            </td>
-                            <td>Biodiversity Data Journal</td>
-                            <td><a href="https://doi.org/10.3897/BDJ.12.e116921" target="_blank">DOI: 10.3897/BDJ.12.e116921</a></td>
-                            <td><a href="https://doi.org/10.15468/66x9xh" target="_blank">DOI: 10.15468/66x9xh</a></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Hu C-H, Yu HY, Hoh DZ, Lin DL (2023) The observation records from whale and dolphin watching inshore of Hualien, eastern Taiwan.
-                            </td>
-                            <td>Biodiversity Data Journal</td>
-                            <td><a href="https://doi.org/10.3897/BDJ.11.e109649" target="_blank">DOI: 10.3897/BDJ.11.e109649</a></td>
-                            <td><a href="https://doi.org/10.15468/rg87xx" target="_blank">DOI: 10.15468/rg87xx</a></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Yeh Y-H, Kirschner R (2023) The diversity of cultivable endophytic fungi of the sand coast plant Ipomoea pes-caprae in Taiwan.
-                            </td>
-                            <td>Biodiversity Data Journal</td>
-                            <td><a href="https://doi.org/10.3897/BDJ.11.e98878" target="_blank">DOI: 10.3897/BDJ.11.e98878</a></td>
-                            <td><a href="https://doi.org/10.15468/9h9rcg" target="_blank">DOI: 10.15468/9h9rcg</a></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Hoh DZ, Fong C-L, Su H, Chen P, Tsai C-C, Tseng KWH, Liu MJY (2022) A dataset of sea turtle occurrences around the Taiwan coast.
-                            </td>
-                            <td>Biodiversity Data Journal</td>
-                            <td><a href="https://doi.org/10.3897/BDJ.10.e90196" target="_blank">DOI: 10.3897/BDJ.10.e90196</a></td>
-                            <td><a href="https://doi.org/10.15468/43z4mj" target="_blank">DOI: 10.15468/43z4mj</a></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Huang JCC, Hsieh YC, Lu SS, Yeh WC, Liang JY, Lin CJ, Tung GS (2021) 
-                                Flower-visiting insects of genus Melastoma (Myrtales: Melastomataceae) at the Fushan Botanical Garden, Taiwan.
-                            </td>
-                            <td>Biodiversity Data Journal</td>
-                            <td><a href="https://doi.org/10.3897/BDJ.9.e60315" target="_blank">DOI: 10.3897/BDJ.9.e60315</a></td>
-                            <td><a href="https://doi.org/10.15468/64ufkd" target="_blank">DOI: 10.15468/64ufkd</a></td>
-                        </tr>
+                        {% for data_paper in data_paper_list %}
+                            <tr>
+                                <td>{{ data_paper.title }}</td>
+                                <td>{{ data_paper.journal }}</td>
+                                <td><a href="https://doi.org/{{ data_paper.article_doi }}" target="_blank">{{ data_paper.article_doi }}</a></td>
+                                <td><a href="https://doi.org/{{ data_paper.dataset_doi }}" target="_blank">{{ data_paper.dataset_doi }}</a></td>
+                            </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>

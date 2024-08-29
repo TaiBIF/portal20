@@ -4833,7 +4833,19 @@ body {
 }
 
 #topic-board{
-    margin-bottom: 30px;
+    margin-bottom: 10px;
+}
+
+#owl-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#owl-btn-container div:hover {
+    cursor: pointer;
 }
 
 .topic-card-wrapper {
@@ -4861,4 +4873,12 @@ body {
     background-color: #cd7745;
     color: #fff;
     margin-bottom: 30px;
+}
+
+.data-paper-table th, .data-paper-table td {
+    padding: 1rem 1rem !important;
+}
+
+.publisher-dataset-table th, .publisher-dataset-table td {
+    padding: 1rem 1rem !important;
 }

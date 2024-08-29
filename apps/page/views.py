@@ -27,6 +27,7 @@ from apps.data.models import (
     DatasetOrganization,
 )
 from apps.article.models import Article
+from apps.data.models import WorkshopCertificationList, TaibifParticipants, TaibiferList, DataPaperList
 from .models import Post, Journal
 from utils.mail import taibif_mail_contact_us
 
@@ -34,6 +35,7 @@ from apps.data.helpers.stats import get_home_stats
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_GET
 from django.utils.translation import activate
+from datetime import datetime
 
 def act_lang(func):
     def wrapper(*args, **kwargs):
@@ -59,23 +61,9 @@ def index(request):
         .order_by("-is_pinned", "-created")
         .all()[0:4]
     )
-    # topic_list = Article.objects.filter(category__in=['SCI', 'TECH', 'PUB']).order_by('?').all()[0:10]
-    # topic_list = Article.objects.filter(is_homepage=True).order_by("?").all()[0:10]
-    # get top newest article 6 records for homepage by category
-    topic_news_list = (
-        Article.objects.filter(category="NEWS").order_by("-created").all()[0:6]
-    )
-    topic_event_list = (
-        Article.objects.filter(category="EVENT").order_by("-created").all()[0:6]
-    )
-    topic_pscience_list = (
-        Article.objects.filter(category="PSCIENCE").order_by("-created").all()[0:6]
-    )
 
-    # merge 3 category article list to toopic_list
-    # topic_list = list(chain(topic_news_list, topic_event_list, topic_pscience_list))
-    topic_list = (
-        Article.objects.filter(category__in=["NEWS", "EVENT", "SCI"])
+    story_list = (
+        Article.objects.filter(category__in=['STORY'])
         .order_by("-created")
         .all()[0:6]
     )
@@ -84,14 +72,12 @@ def index(request):
     r = requests.get(url).json()
     occ_num = r["response"]["numFound"]
     
-    # occ_num = Dataset.objects.aggregate(Sum('num_occurrence'))['num_occurrence__sum']
 
     dataset_num = Dataset.objects.filter(status="PUBLIC").count()
-    # taxon_cover = len(occ_result['facets']['taxon_id']['buckets'])
     
     taxon_num = Taxon.objects.values('name').distinct().count()
 
-    taxonGroup_url = f'http://solr:8983/solr/taibif_occurrence/select?facet.field=taibif_taxonGroup&facet=true&indent=true&q.op=OR&q=*%3A*&rows=0'
+    taxonGroup_url = f'http://solr:8983/solr/taibif_occurrence/select?basisOfRecord:*&facet.field=taibif_taxonGroup&facet=true&indent=true&q.op=OR&q=*%3A*&rows=0'
     taxonGroup_r = requests.get(taxonGroup_url).json()   
     taibif_taxonGroup =  taxonGroup_r['facet_counts']['facet_fields']['taibif_taxonGroup']
 
@@ -106,21 +92,33 @@ def index(request):
 
     publisher_num = DatasetOrganization.objects.count()
 
+    gbif_data_case_url = 'https://api.gbif.org/v1/literature/search?countriesOfCoverage=TW'
+    gbif_data_case_response = requests.get(gbif_data_case_url)
+    if gbif_data_case_response.status_code == 200:
+        gbif_data_case_dict = gbif_data_case_response.json()
+        if gbif_data_case_dict:
+            gbif_data_case_count = gbif_data_case_dict['count']
+        else:
+            gbif_data_case_count = 0
+    else:
+        gbif_data_case_count = 0
+    
+    taibif_case_count = Article.objects.filter(is_data_case=True).count()
+    total_case_count = gbif_data_case_count + taibif_case_count
+
     context = {
         "news_list": news_list,
         "event_list": event_list,
         "update_list": update_list,
-        "topic_list": topic_list,
+        "story_list": story_list,
         "stats": get_home_stats(),
         "dataset_num": dataset_num,
         "occ_num": occ_num,
         'taxon_num': taxon_num,
         'taxonGroup_dict':taxonGroup_dict,
-        'publisher_num': publisher_num
-        # 'taxon_cover':taxon_cover,
+        'publisher_num': publisher_num,
+        'case_count': total_case_count
     }
-
-    print(context)
 
     return render(request, "index.html", context)
 
@@ -218,7 +216,7 @@ def open_data(request):
 def data_stats(request):
     most = request.GET.get('most', '')
     search_query = request.GET.get('search_query', '')
-    print(f'search_query:{search_query}')
+    # print(f'search_query:{search_query}')
 
     query = Dataset.objects
     if most:
@@ -253,7 +251,19 @@ def data_stats(request):
         item['dwc_core_type'] = value_mapping.get(item['dwc_core_type'], item['dwc_core_type'])
         modified_dataset.append(item)
 
-    print(f'modified_dataset:{modified_dataset}')
+    gbif_data_case_url = 'https://api.gbif.org/v1/literature/search?countriesOfCoverage=TW'
+    gbif_data_case_response = requests.get(gbif_data_case_url)
+    if gbif_data_case_response.status_code == 200:
+        gbif_data_case_dict = gbif_data_case_response.json()
+        if gbif_data_case_dict:
+            gbif_data_case_count = gbif_data_case_dict['count']
+        else:
+            gbif_data_case_count = 0
+    else:
+        gbif_data_case_count = 0
+    
+    taibif_case_count = Article.objects.filter(is_data_case=True).count()
+    total_case_count = gbif_data_case_count + taibif_case_count
 
     context = {
         'dataset_list': query.order_by(F('pub_date').desc(nulls_last=True)).all(),
@@ -262,6 +272,7 @@ def data_stats(request):
         'occ_num':occ_num,
         'env': settings.ENV,
         'dataset': modified_dataset,
+        'case_count': total_case_count
     }
     return render(request, 'data-stats.html', context) 
 
@@ -391,7 +402,12 @@ def download_resources(request):
     return render(request, 'download-resources.html', context)
 
 def thanks_list(request):
-    context = {}
+    participants_list = TaibifParticipants.objects.values('name', 'role', 'missions')
+    taibifer_list = TaibiferList.objects.values('name', 'role', 'missions')
+
+    context = {'participants': participants_list,
+               'taibifers': taibifer_list
+               }
     return render(request, 'thanks-list.html', context)
 
 def open_process(request):
@@ -435,17 +451,35 @@ def tech_online_class(request):
     return render(request, 'tech-online-class.html', context)
 
 def tech_class_license(request):
-    context = {}
+    certification_list = WorkshopCertificationList.objects.all().order_by('year')
+    certification_data = {}
+    for item in certification_list:
+        year = item.year
+        level = item.level
+        name = item.name
+
+        if year not in certification_data:
+            certification_data[year] = {'basic': [], 'advanced': []}
+        
+        if level == 'basic':
+            certification_data[year]['basic'].append(name)
+        elif level == 'advanced':
+            certification_data[year]['advanced'].append(name)
+    sorted_certification_data = dict(sorted(certification_data.items(), key=lambda item: item[0], reverse=True))
+    context = {'certification_data': sorted_certification_data}
     return render(request, 'tech-class-license.html', context)
 
 def tech_volunteer(request):
     context = {}
     return render(request, 'tech-volunteer.html', context)
 
-
-
 def data_paper(request):
-    context = {}
+    data_paper_list = DataPaperList.objects.all().order_by('-year', '-last_update').values()
+    latest_update = data_paper_list.last()['last_update'].strftime('%Y/%m/%d') if data_paper_list else None
+    context = {
+        'data_paper_list': data_paper_list,
+        'latest_update': latest_update
+    }
     return render(request, 'data-paper.html', context)
 
 def data_visual(request):
@@ -466,7 +500,24 @@ def data_visual(request):
     return render(request, 'data-visual.html', context)
 
 def data_case(request):
-    context = {}
+    CASE_TYPE_MAP = {
+        'DATATHON': '數據松'
+    }
+    articles = Article.objects.filter(is_data_case=True).order_by('-created').values('id', 'created', 'title', 'case_type', 'content')[:3]
+
+    results = []
+    for article in articles:
+        formatted_date = article['created'].strftime('%Y/%m/%d')
+        results.append({
+            'id': article['id'],
+            'date': formatted_date,
+            'title': article['title'],
+            'case_type': CASE_TYPE_MAP.get(article['case_type'], ''),
+            'content':  article['content'],
+        })
+    context = {
+        'articles': results
+    }
     return render(request, 'data-case.html', context)
 
 def data_product(request):

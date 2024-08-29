@@ -61,6 +61,7 @@ services:
       - ../taibif-volumes/logs/nginx:/var/log/nginx
       - ../taibif-volumes/certbot/conf:/etc/letsencrypt
       - ../taibif-volumes/biomap:/biomap
+      - ../taibif-volumes/certbot/www:/var/www/certbot
 
     links:
       - web:web
