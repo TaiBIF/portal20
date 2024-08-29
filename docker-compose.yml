@@ -6,7 +6,7 @@ services:
     container_name: taibif-web-dev-container
     image: taibif-web-dev-image
     ports:
-      - 8003:8001
+      - 8001:8001
     depends_on:
       - db
     links:
@@ -51,23 +51,4 @@ services:
       - gettingstarted
     environment:
       - SOLR_JAVA_MEM=-Xms2g -Xms2g
-  celery:
-    restart: unless-stopped
-    container_name: taibif-celery-container
-    image: taibif-web-dev-image
-    command: sh -c "celery -A conf worker -l info -f /var/log/web-celery/celery.log"
-    volumes:
-      - .:/taibif-code
-      - ../taibif-volumes/media:/ct22-volumes/media
-      - ../taibif-volumes/logs/web-celery:/var/log/web-celery
-    depends_on:
-      - redis
-      - web
-    env_file:
-      - .env
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "1m"
-        max-file: "3"
   

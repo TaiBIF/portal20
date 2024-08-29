@@ -4856,9 +4856,3 @@ body {
 #navbar-search-btn {
     outline: none !important;
 }
-
-#download-dataset-btn {
-    background-color: #cd7745;
-    color: #fff;
-    margin-bottom: 30px;
-}
