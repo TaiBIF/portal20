@@ -1672,73 +1672,41 @@ from collections import defaultdict
 def get_heatmap_data(request):
     x_axis = request.GET.get('xAxis')
     y_axis = request.GET.get('yAxis')
+    pivot_key = f'{x_axis},{y_axis}'
     # print(f'x_axis: {x_axis}, y_axis: {y_axis}')
     url = 'http://solr:8983/solr/taibif_occurrence/select'
     params = {
-        'fl': f'{x_axis},{y_axis}',
+        'indent': 'true',
         'q': 'basisOfRecord:*',
-        'rows': 100, 
-        'start': 0,
-        'indent': 'true'
+        'facet': 'true',
+        'facet.pivot': pivot_key,
+        'rows': 0, 
     }
 
-    if x_axis == 'taibif_year':
-        start_year = request.GET.get('startYear')
-        end_year = request.GET.get('endYear')
-
-        if not start_year or not end_year:
-            return JsonResponse({'error': 'start_year and end_year parameters are required for taibif_year'}, status=400)
-
-        params['fq'] = f'{x_axis}:[{start_year} TO {end_year}]'
-    elif y_axis == 'taibif_year':
-        start_year = request.GET.get('startYear')
-        end_year = request.GET.get('endYear')
-
-        if not start_year or not end_year:
-            return JsonResponse({'error': 'start_year and end_year parameters are required for taibif_year'}, status=400)
-
-        params['fq'] = f'{y_axis}:[{start_year} TO {end_year}]'
-
-    all_results = []
-    num_found = 1  # 初始化為非零以進入循環
-
-    while params['start'] < num_found:
-        response = requests.get(url, params=params)
-        if response.status_code != 200:
-            return JsonResponse({'error': 'Failed to fetch data from Solr'}, status=response.status_code)
-        
-        data = response.json()
-        docs = data.get('response', {}).get('docs', [])
-        num_found = data.get('response', {}).get('numFound', 0)
-        all_results.extend(docs)
-        params['start'] += params['rows']
-    # print(f'SOLR RESULTS: {all_results}')
+    response = requests.get(url, params=params)
+    if response.status_code != 200:
+        return JsonResponse({'error': 'Failed to fetch data from Solr'}, status=response.status_code)
+    data = response.json()
+    pivot_results = data.get('facet_counts', {}).get('facet_pivot', {})
 
     # 分組和統計
     heatmap_data = defaultdict(lambda: defaultdict(int))
-    for doc in all_results:
-        variable = doc.get(y_axis, "Unknown")
-        group = doc.get(x_axis, "Unknown")
-        # print(f'VARIABLE: {variable}, GROUP: {group}')
-        if isinstance(group, list) or isinstance(variable, list):
-            if isinstance(group, list):
-                group_element = group[0]
-                heatmap_data[variable][group_element] += 1
-            else:
-                variable_element = variable[0]
-                heatmap_data[variable_element][group] += 1
-        else: 
-            heatmap_data[variable][group] += 1
-
+    for bucket in pivot_results[pivot_key]:
+        variable = bucket['value']
+        for pivot in bucket['pivot']:
+            group = pivot['value']
+            count = pivot['count']
+            heatmap_data[group][variable] = count
+    # print(f'HEATMAP DATA: {heatmap_data}')
 
     # 將結果轉換為繪製 heatmap 所需的格式
     formatted_heatmap_data = []
     for variable, group_counts in heatmap_data.items():
         for group, count in group_counts.items():
             formatted_heatmap_data.append({
-                "variable": variable,
-                "group": group,
-                "count": count
+                'variable': variable,
+                'group': group,
+                'count': count
             })
     
     # print(f'HEATMAP RESULTS: {formatted_heatmap_data}')
