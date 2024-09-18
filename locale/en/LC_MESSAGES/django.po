@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-04 15:42+0800\n"
+"POT-Creation-Date: 2024-09-18 10:29+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: apps/page/views.py:488
+#: apps/page/views.py:539
 msgid "這裡放需要翻譯的文字"
 msgstr ""
 
@@ -30,35 +30,39 @@ msgstr ""
 msgid "English"
 msgstr ""
 
-#: templates/about-gbif.html:14 templates/base.html:119
+#: templates/about-gbif.html:5 templates/about-gbif.html:14
+#: templates/about-gbif.html:27 templates/base.html:120
 #: templates/web-navi.html:41
 msgid "GBIF 介紹"
 msgstr "About GBIF"
 
 #: templates/about-gbif.html:25 templates/about-taibif.html:29
+#: templates/article-detail.html:28 templates/article-list.html:120
 #: templates/cookbook-detail-1.html:41 templates/cookbook-detail-3.html:38
-#: templates/data-case.html:26 templates/data-clean.html:23
-#: templates/data-paper.html:22 templates/data-policy.html:29
+#: templates/data-case.html:29 templates/data-clean.html:23
+#: templates/data-paper.html:22 templates/data-policy.html:26
 #: templates/data-product.html:23 templates/data-stats.html:134
-#: templates/open-license.html:24 templates/open-process.html:25
-#: templates/open-standard.html:23 templates/open-timezone.html:25
-#: templates/open-upload.html:25 templates/tech-book.html:28
-#: templates/tech-open.html:26 templates/tools.html:23
+#: templates/data-visual.html:39 templates/download-resources.html:23
+#: templates/faq.html:23 templates/links.html:25
+#: templates/open-consulation.html:20 templates/open-license.html:24
+#: templates/open-process.html:25 templates/open-standard.html:23
+#: templates/open-timezone.html:25 templates/open-upload.html:25
+#: templates/taibif-achievement.html:24 templates/taibif-api.html:23
+#: templates/tech-book.html:28 templates/tech-open.html:26
+#: templates/tech-volunteer.html:24 templates/tech-workshop.html:24
+#: templates/thanks-list.html:26 templates/tools.html:23
 #: templates/web-navi.html:27
 msgid "首頁"
 msgstr "Home Page"
 
 #: templates/about-gbif.html:26 templates/about-taibif.html:30
-#: templates/base.html:113 templates/data-policy.html:30
-#: templates/web-navi.html:28 templates/web-navi.html:38
+#: templates/base.html:114 templates/data-policy.html:27
+#: templates/download-resources.html:24 templates/faq.html:24
+#: templates/links.html:26 templates/taibif-achievement.html:25
+#: templates/thanks-list.html:27 templates/web-navi.html:28
+#: templates/web-navi.html:38
 msgid "關於我們"
 msgstr "About Us"
-
-#: templates/about-gbif.html:27
-#, fuzzy
-#| msgid "GBIF 介紹"
-msgid "GBIF 簡介"
-msgstr "About GBIF"
 
 #: templates/about-gbif.html:32 templates/about-gbif.html:91
 msgid "什麼是 GBIF ?"
@@ -213,8 +217,9 @@ msgstr ""
 msgid "資料來源:"
 msgstr "From: "
 
-#: templates/about-taibif.html:18 templates/about-taibif.html:31
-#: templates/base.html:118 templates/web-navi.html:40
+#: templates/about-taibif.html:4 templates/about-taibif.html:18
+#: templates/about-taibif.html:31 templates/base.html:119
+#: templates/web-navi.html:40
 msgid "TaiBIF 介紹"
 msgstr "About TaiBIF"
 
@@ -315,229 +320,259 @@ msgstr "Connecting Taiwan and international biodiversity information"
 msgid "團隊成員"
 msgstr "Team members"
 
+#: templates/article-detail.html:29
+#, fuzzy
+#| msgid "看更多資訊視覺化"
+msgid "更多資訊"
+msgstr "See More"
+
+#: templates/article-list.html:107 templates/article-list.html:121
+#: templates/data-paper.html:126
+msgid "文章"
+msgstr "Article"
+
 #: templates/article-list.html:128
 msgid "篩選"
 msgstr ""
 
-#: templates/article-list.html:137 templates/base.html:248
-#: templates/index.html:472 templates/web-navi.html:112
+#: templates/article-list.html:137 templates/base.html:250
+#: templates/index.html:488 templates/web-navi.html:113
 msgid "新聞"
 msgstr "News"
 
-#: templates/article-list.html:142 templates/base.html:249
-#: templates/index.html:500 templates/web-navi.html:113
+#: templates/article-list.html:142 templates/base.html:251
+#: templates/index.html:516 templates/web-navi.html:114
 msgid "活動"
 msgstr "Activities & Events"
 
-#: templates/article-list.html:147
-msgid "更新"
-msgstr "Updates"
-
-#: templates/article-list.html:152 templates/base.html:250
-#: templates/index.html:528 templates/web-navi.html:114
+#: templates/article-list.html:147 templates/base.html:252
+#: templates/index.html:544 templates/web-navi.html:115
 msgid "科普"
 msgstr "Popular Science"
 
-#: templates/article-list.html:157 templates/base.html:261
-#: templates/web-navi.html:124
+#: templates/article-list.html:152 templates/base.html:263
+#: templates/index.html:574 templates/web-navi.html:125
 msgid "資料故事"
 msgstr "Data Stories"
 
-#: templates/article-list.html:162 templates/base.html:263
-#: templates/web-navi.html:125
-msgid "技術專欄"
-msgstr "Technical Memo"
-
-#: templates/article-list.html:167 templates/base.html:264
-#: templates/web-navi.html:126
+#: templates/article-list.html:157 templates/base.html:265
+#: templates/web-navi.html:127
 msgid "出版品"
 msgstr "Publications"
 
-#: templates/article-list.html:172
-msgid "TaiBIF發表文章/海報"
-msgstr "TaiBIF Academic Publication"
+#: templates/article-list.html:162 templates/base.html:121
+#: templates/base.html:266 templates/taibif-achievement.html:4
+#: templates/taibif-achievement.html:12 templates/taibif-achievement.html:26
+#: templates/web-navi.html:42
+msgid "TaiBIF 成果"
+msgstr "TaiBIF Achievements"
 
 #: templates/base.html:86
 msgid "網站捷徑"
 msgstr "Shortcuts"
 
-#: templates/base.html:90 templates/base.html:193 templates/index.html:101
-#: templates/tools.html:12 templates/tools.html:25 templates/web-navi.html:60
+#: templates/base.html:90
+msgid "線上自學工作坊"
+msgstr ""
+
+#: templates/base.html:91 templates/base.html:194 templates/index.html:112
+#: templates/tools.html:4 templates/tools.html:12 templates/tools.html:25
+#: templates/web-navi.html:60
 msgid "開放資料工具"
 msgstr "TaiBIF Tools"
 
-#: templates/base.html:91
+#: templates/base.html:92
 msgid "資料標準模板"
 msgstr "Data Templates"
 
-#: templates/base.html:94 templates/base.html:122 templates/web-navi.html:16
-#: templates/web-navi.html:29 templates/web-navi.html:44
+#: templates/base.html:95 templates/base.html:123 templates/web-navi.html:5
+#: templates/web-navi.html:16 templates/web-navi.html:29
+#: templates/web-navi.html:44
 msgid "網站導覽"
 msgstr "Site Map"
 
-#: templates/base.html:120 templates/web-navi.html:42
-msgid "TaiBIF 成果"
-msgstr "TaiBIF Achievements"
-
-#: templates/base.html:121 templates/web-navi.html:43
+#: templates/base.html:122 templates/thanks-list.html:4
+#: templates/thanks-list.html:13 templates/thanks-list.html:28
+#: templates/web-navi.html:43
 msgid "感謝名單"
 msgstr "Acknowledgement"
 
-#: templates/base.html:125 templates/cookbook-detail-2.html:379
+#: templates/base.html:126 templates/cookbook-detail-2.html:379
+#: templates/links.html:5 templates/links.html:13 templates/links.html:27
 #: templates/web-navi.html:45
 msgid "相關連結"
 msgstr "Related Links"
 
-#: templates/base.html:127 templates/web-navi.html:47
+#: templates/base.html:128 templates/download-resources.html:4
+#: templates/download-resources.html:12 templates/download-resources.html:25
+#: templates/web-navi.html:47
 msgid "TaiBIF 資源下載專區"
 msgstr "Resource Downloads"
 
-#: templates/base.html:128 templates/web-navi.html:48
+#: templates/base.html:129 templates/web-navi.html:48
 msgid "使用條款暨隱私權政策"
 msgstr "Terms of Use & Privacy Policy"
 
-#: templates/base.html:136
+#: templates/base.html:137
 msgid "聯絡我們"
 msgstr "Contact Us"
 
-#: templates/base.html:142
+#: templates/base.html:143
 msgid "選擇語言"
 msgstr "Languages"
 
-#: templates/base.html:169 templates/search_all.html:29
+#: templates/base.html:170 templates/search_all.html:29
 msgid "全站搜尋..."
 msgstr "Site Search"
 
-#: templates/base.html:188 templates/data-clean.html:24
-#: templates/data-stats.html:135 templates/index.html:92
-#: templates/open-license.html:25 templates/open-process.html:26
-#: templates/open-standard.html:24 templates/open-timezone.html:26
-#: templates/open-upload.html:26 templates/tools.html:24
-#: templates/web-navi.html:56
+#: templates/base.html:189 templates/data-clean.html:24
+#: templates/data-stats.html:135 templates/index.html:103
+#: templates/open-consulation.html:21 templates/open-license.html:25
+#: templates/open-process.html:26 templates/open-standard.html:24
+#: templates/open-timezone.html:26 templates/open-upload.html:26
+#: templates/tools.html:24 templates/web-navi.html:56
 msgid "開放資料"
 msgstr "Open Data"
 
-#: templates/base.html:191 templates/index.html:95
+#: templates/base.html:192 templates/index.html:106
 #: templates/open-process.html:13 templates/open-process.html:27
 #: templates/web-navi.html:58
 msgid "開放資料流程"
 msgstr "Publish Your Data"
 
-#: templates/base.html:192 templates/index.html:98
+#: templates/base.html:193 templates/index.html:109
 #: templates/open-timezone.html:13 templates/open-timezone.html:27
 #: templates/web-navi.html:59
 msgid "計畫資料繳交依據與時程"
 msgstr "Project Data Submission and Timelines"
 
-#: templates/base.html:194 templates/data-stats.html:123
-#: templates/data-stats.html:136 templates/index.html:104
-#: templates/index.html:223 templates/web-navi.html:61
+#: templates/base.html:195 templates/data-stats.html:123
+#: templates/data-stats.html:136 templates/index.html:115
+#: templates/index.html:237 templates/web-navi.html:61
 msgid "資料發布狀況"
 msgstr "Data Publishing Status"
 
-#: templates/base.html:202 templates/cookbook-detail-1.html:42
+#: templates/base.html:196 templates/index.html:118
+#: templates/open-consulation.html:11 templates/open-consulation.html:22
+#: templates/web-navi.html:62
+#, fuzzy
+#| msgid "開放資料"
+msgid "開放資料諮詢服務"
+msgstr "Open Data"
+
+#: templates/base.html:204 templates/cookbook-detail-1.html:42
 #: templates/cookbook-detail-2.html:45 templates/cookbook-detail-3.html:39
-#: templates/index.html:119 templates/tech-book.html:29
-#: templates/tech-open.html:27 templates/web-navi.html:69
+#: templates/index.html:133 templates/tech-book.html:29
+#: templates/tech-open.html:27 templates/tech-volunteer.html:25
+#: templates/tech-workshop.html:25 templates/web-navi.html:70
 msgid "教育資源"
 msgstr "Educational Resources"
 
-#: templates/base.html:205 templates/index.html:122 templates/tech-open.html:14
-#: templates/tech-open.html:28 templates/web-navi.html:71
+#: templates/base.html:207 templates/index.html:136 templates/tech-open.html:4
+#: templates/tech-open.html:14 templates/tech-open.html:28
+#: templates/web-navi.html:72
 msgid "什麼是開放資料"
 msgstr "What is Open Data"
 
-#: templates/base.html:206 templates/cookbook-detail-1.html:29
+#: templates/base.html:208 templates/cookbook-detail-1.html:29
 #: templates/cookbook-detail-1.html:43 templates/cookbook-detail-2.html:46
-#: templates/cookbook-detail-3.html:40 templates/index.html:125
+#: templates/cookbook-detail-3.html:40 templates/index.html:139
 #: templates/tech-book.html:5 templates/tech-book.html:15
 #: templates/tech-book.html:30 templates/tech-book.html:36
-#: templates/web-navi.html:72
+#: templates/web-navi.html:73
 msgid "生物多樣性資訊概論"
 msgstr "Biodiversity Information Cookbook"
 
-#: templates/base.html:207 templates/cookbook-detail-2.html:34
-#: templates/cookbook-detail-3.html:26 templates/index.html:128
-#: templates/web-navi.html:73
+#: templates/base.html:209 templates/cookbook-detail-2.html:34
+#: templates/cookbook-detail-3.html:26 templates/index.html:142
+#: templates/tech-class-license.html:29 templates/tech-online-class.html:38
+#: templates/tech-workshop.html:4 templates/tech-workshop.html:12
+#: templates/tech-workshop.html:26 templates/web-navi.html:74
 msgid "資料開放與應用工作坊"
 msgstr "Data Mobilization and Application Workshop"
 
-#: templates/base.html:208 templates/index.html:131 templates/web-navi.html:74
+#: templates/base.html:210 templates/index.html:145
+#: templates/tech-volunteer.html:4 templates/tech-volunteer.html:12
+#: templates/tech-volunteer.html:26 templates/web-navi.html:75
 msgid "參與志工培訓"
 msgstr "Become A Volunteer"
 
-#: templates/base.html:216 templates/data-case.html:27
+#: templates/base.html:218 templates/data-case.html:30
 #: templates/data-paper.html:23 templates/data-product.html:24
-#: templates/index.html:146 templates/web-navi.html:82
+#: templates/data-visual.html:40 templates/index.html:160
+#: templates/web-navi.html:83
 msgid "資料應用"
 msgstr "Data Use"
 
-#: templates/base.html:219 templates/data-clean.html:4
-#: templates/data-paper.html:4 templates/data-paper.html:11
-#: templates/data-paper.html:24 templates/index.html:149
-#: templates/web-navi.html:84
+#: templates/base.html:221 templates/data-paper.html:4
+#: templates/data-paper.html:11 templates/data-paper.html:24
+#: templates/index.html:163 templates/web-navi.html:85
 msgid "資料期刊與論文"
 msgstr "Data Papers & Journals"
 
-#: templates/base.html:220 templates/index.html:152 templates/web-navi.html:85
+#: templates/base.html:222 templates/data-visual.html:5
+#: templates/data-visual.html:27 templates/data-visual.html:41
+#: templates/index.html:166 templates/web-navi.html:86
 msgid "資料視覺化"
 msgstr "Data Graphic"
 
-#: templates/base.html:221 templates/data-case.html:14
-#: templates/data-case.html:28 templates/index.html:155
-#: templates/web-navi.html:86
+#: templates/base.html:223 templates/data-case.html:4
+#: templates/data-case.html:17 templates/data-case.html:31
+#: templates/index.html:169 templates/web-navi.html:87
 msgid "資料應用案例"
 msgstr "Data Use Cases"
 
-#: templates/base.html:222 templates/data-product.html:12
-#: templates/data-product.html:25 templates/data-product.html:35
-#: templates/index.html:158 templates/web-navi.html:87
+#: templates/base.html:224 templates/data-product.html:4
+#: templates/data-product.html:12 templates/data-product.html:25
+#: templates/data-product.html:35 templates/index.html:172
+#: templates/web-navi.html:88
 msgid "資料產品"
 msgstr "Data Products"
 
-#: templates/base.html:230 templates/index.html:173 templates/web-navi.html:95
+#: templates/base.html:232 templates/index.html:187
+#: templates/taibif-api.html:24 templates/web-navi.html:96
 msgid "找資料"
 msgstr "Find Data"
 
-#: templates/base.html:233 templates/index.html:176 templates/index.html:230
-#: templates/web-navi.html:97
+#: templates/base.html:235 templates/index.html:190 templates/index.html:244
+#: templates/web-navi.html:98
 msgid "物種出現紀錄"
 msgstr "Occurrences"
 
-#: templates/base.html:234 templates/index.html:179
-#: templates/search_all.html:24 templates/web-navi.html:98
+#: templates/base.html:236 templates/index.html:193
+#: templates/search_all.html:24 templates/web-navi.html:99
 msgid "物種"
 msgstr "Species"
 
-#: templates/base.html:235 templates/index.html:182 templates/index.html:242
-#: templates/search_all.html:25 templates/web-navi.html:99
+#: templates/base.html:237 templates/index.html:196 templates/index.html:256
+#: templates/search_all.html:25 templates/web-navi.html:100
 msgid "資料集"
 msgstr "Datasets"
 
-#: templates/base.html:236 templates/index.html:185 templates/index.html:264
-#: templates/web-navi.html:100
+#: templates/base.html:238 templates/index.html:199 templates/index.html:278
+#: templates/web-navi.html:101
 msgid "資料發布單位"
 msgstr "Publishers"
 
-#: templates/base.html:245 templates/index.html:462 templates/web-navi.html:110
+#: templates/base.html:247 templates/index.html:478 templates/web-navi.html:111
 msgid "最新消息"
 msgstr "News & Notices"
 
-#: templates/base.html:258 templates/index.html:558 templates/web-navi.html:122
+#: templates/base.html:260 templates/web-navi.html:123
 msgid "專題文章"
 msgstr "Articles"
 
-#: templates/base.html:262
-msgid "科普文章"
-msgstr "Popular Science"
+#: templates/base.html:264 templates/web-navi.html:126
+msgid "技術專欄"
+msgstr "Technical Memo"
 
-#: templates/base.html:289
+#: templates/base.html:291
 msgid "11574 台北市南港區研究院路二段70巷28號 跨領域科技研究大樓 C301室"
 msgstr ""
 "C301, No. 28, Ln 70, Academia Rd. Sec. 2, Nangang Dist., 11574 Taipei, "
 "TAIWAN."
 
-#: templates/base.html:291
+#: templates/base.html:293
 msgid "Copyright © TaiBIF 臺灣生物多樣性資訊機構"
 msgstr "Copyright © Taiwan Biodiversity Information Facility"
 
@@ -1898,8 +1933,8 @@ msgstr ""
 "Copy data of Event, Measurement, Occurrence tables respectively into Notepad+"
 "+, encoded in UTF-8, then save as CSV text files"
 
-#: templates/data-clean.html:11 templates/data-clean.html:25
-#: templates/open-process.html:48
+#: templates/data-clean.html:4 templates/data-clean.html:11
+#: templates/data-clean.html:25 templates/open-process.html:48
 msgid "清理資料"
 msgstr "Data Cleaning"
 
@@ -1927,8 +1962,10 @@ msgstr "Data Journals"
 msgid "TaiBIF 歷年合作資料論文"
 msgstr "TaiBIF Data Paper Publication"
 
-#: templates/data-paper.html:41 templates/data-paper.html:189
-msgid "資料論文徵稿"
+#: templates/data-paper.html:41 templates/data-paper.html:147
+#, fuzzy
+#| msgid "資料論文徵稿"
+msgid "資料論文合作"
 msgstr "Call for Data Paper"
 
 #: templates/data-paper.html:50
@@ -2178,87 +2215,59 @@ msgstr ""
 "the following journals:\n"
 "            "
 
-#: templates/data-paper.html:121 templates/data-policy.html:49
-#: templates/data-policy.html:156
+#: templates/data-paper.html:121 templates/data-policy.html:46
+#: templates/data-policy.html:168
 msgid "更新日期："
 msgstr "last update: "
-
-#: templates/data-paper.html:126
-msgid "文章"
-msgstr "Article"
 
 #: templates/data-paper.html:127
 msgid "發表期刊"
 msgstr "Data Journal"
 
 #: templates/data-paper.html:128
-msgid "文章DOI"
-msgstr "Article DOI"
+msgid "文章 DOI"
+msgstr ""
 
 #: templates/data-paper.html:129
-msgid "相關資料集"
+#, fuzzy
+#| msgid "相關資料集"
+msgid "相關資料集 DOI"
 msgstr "Associated Dataset"
 
-#: templates/data-paper.html:192
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "            TaiBIF每年皆有固定經費來贊助與生物多樣性相關之主題的資料論文發"
-#| "表，欲知詳情如合作模式與適用條件，歡迎<a href=\"%(contact_us)s\">聯繫我們"
-#| "</a>。\n"
-#| "            "
-msgid ""
-"\n"
-"                TaiBIF每年皆有固定經費來贊助與生物多樣性相關之主題的資料論文"
-"發表，欲知詳情如合作模式與適用條件，歡迎<a href=\"%(contact_us)s\">聯繫我們</"
-"a>。\n"
-"                "
-msgstr ""
-"\n"
-"            TaiBIF provides fixed funding annually to sponsor the "
-"publication of data papers related to biodiversity. For details regarding "
-"collaboration methods and applicable terms, please feel free to <a href="
-"\"%(contact_us)s\">contact us</a>.\n"
-"            "
-
-#: templates/data-policy.html:14 templates/data-policy.html:31
+#: templates/data-policy.html:14 templates/data-policy.html:28
 msgid "資料使用條款暨隱私權政策"
 msgstr "Terms of Use & Privacy Policy"
 
-#: templates/data-policy.html:37
+#: templates/data-policy.html:34
 msgid ""
 "\n"
-"    臺灣生物多樣性資訊機構\n"
-"    <br>\n"
-"    (Taiwan Biodiversity Information Facility, TaiBIF)網站\n"
-"    <br>及資料使用條款暨隱私權政策\n"
-"    "
+"        臺灣生物多樣性資訊機構\n"
+"        <br>\n"
+"        (Taiwan Biodiversity Information Facility, TaiBIF)網站\n"
+"        <br>及資料使用條款暨隱私權政策\n"
+"        "
 msgstr ""
 "\n"
 "Taiwan Biodiversity Information Facility (TaiBIF) Website and Data Terms of "
 "Use & Privacy Policy"
 
-#: templates/data-policy.html:47
-msgid "網站及資料使用條款"
-msgstr "TaiBIF Terms of Use and Copyright Policy"
-
-#: templates/data-policy.html:48
+#: templates/data-policy.html:44
 msgid ""
 "臺灣生物多樣性資訊機構 (Taiwan Biodiversity Information Facility, TaiBIF) 網"
 "站及資料使用條款"
 msgstr "TaiBIF Website & Data Terms of Use"
 
-#: templates/data-policy.html:50 templates/data-policy.html:157
+#: templates/data-policy.html:47 templates/data-policy.html:170
 msgid "適用範圍"
 msgstr "Scope"
 
-#: templates/data-policy.html:53
+#: templates/data-policy.html:51
 msgid ""
 "\n"
-"          本網站由中央研究院生物多樣性研究中心負責維運。本站其上資料與素材，"
-"依貢獻者提交時指定之授權或聲明方式發布，未標示貢獻者資訊之資料與素材，則歸維"
-"運單位所有。\n"
-"          "
+"                本網站由中央研究院生物多樣性研究中心負責維運。本站其上資料與"
+"素材，依貢獻者提交時指定之授權或聲明方式發布，未標示貢獻者資訊之資料與素材，"
+"則歸維運單位所有。\n"
+"                "
 msgstr ""
 "\n"
 "This website is maintained and operated by the Biodiversity Research Center "
@@ -2267,23 +2276,23 @@ msgstr ""
 "submission, other data and materials without contributor labels are owned by "
 "the maintenance and operating organization."
 
-#: templates/data-policy.html:58
+#: templates/data-policy.html:56
 msgid ""
 "\n"
-"          本頁面的著作權政策，適用於您於 TaiBIF 網站活動時，所涉及之著作授權"
-"與被授權關係。\n"
-"          "
+"                本頁面的著作權政策，適用於您於 TaiBIF 網站活動時，所涉及之著"
+"作授權與被授權關係。\n"
+"                "
 msgstr ""
 "\n"
 "The copyright policy on this page is applied to your activities on the "
 "TaiBIF website."
 
-#: templates/data-policy.html:63
+#: templates/data-policy.html:61
 msgid ""
 "\n"
-"          使用者繼續使用 TaiBIF 網站服務之作為，視為當事人明示同意下述之使用"
-"條款，包括使用行為之拘束與技術規範之遵守，以及本使用條款之更新適用。\n"
-"          "
+"                使用者繼續使用 TaiBIF 網站服務之作為，視為當事人明示同意下述"
+"之使用條款，包括使用行為之拘束與技術規範之遵守，以及本使用條款之更新適用。\n"
+"                "
 msgstr ""
 "\n"
 "By subsequently using TaiBIF website service, a user indicates his/her "
@@ -2295,12 +2304,12 @@ msgstr ""
 msgid "資料的授權與分享方式"
 msgstr "Data Licensing and Sharing Method"
 
-#: templates/data-policy.html:71
+#: templates/data-policy.html:72
 msgid ""
 "\n"
-"        TaiBIF 網站刊載之所有資料，依貢獻者提交時之指定，採下列三者擇一之公眾"
-"授權或聲明方式提供使用，包括：\n"
-"        "
+"                TaiBIF 網站刊載之所有資料，依貢獻者提交時之指定，採下列三者擇"
+"一之公眾授權或聲明方式提供使用，包括：\n"
+"                "
 msgstr ""
 "\n"
 "All data and materials published on the TaiBIF website are provided for "
@@ -2308,13 +2317,13 @@ msgstr ""
 "submission and by one of the following public copyright licenses and "
 "dedication, including: "
 
-#: templates/data-policy.html:75
+#: templates/data-policy.html:77
 msgid ""
 "\n"
-"        1. CC0(公眾領域貢獻宣告)：透過採用公眾領域貢獻宣告，貢獻者將於符合法"
-"律規定的最大範圍內，宣告拋棄其對著作擁有之權利，以使公眾能不受限制地自由使用"
-"該著作，這是使用幅度最寬鬆的素材提供方式。\n"
-"        "
+"                        CC0(公眾領域貢獻宣告)：透過採用公眾領域貢獻宣告，貢獻"
+"者將於符合法律規定的最大範圍內，宣告拋棄其對著作擁有之權利，以使公眾能不受限"
+"制地自由使用該著作，這是使用幅度最寬鬆的素材提供方式。\n"
+"                        "
 msgstr ""
 "\n"
 "1. <strong>CC0</strong> (public domain dedication): By adopting the public "
@@ -2323,15 +2332,15 @@ msgstr ""
 "the work freely without any restriction, which is the most permissive way to "
 "provide material."
 
-#: templates/data-policy.html:80
+#: templates/data-policy.html:82
 msgid ""
 "\n"
-"        2. CC BY(CC授權 姓名標示)：本授權條款允許使用者重製、散布、傳輸以及修"
-"改著作(包括商業性利用)，惟使用時必須按照貢獻者所指定的方式，表彰其姓名。說"
-"明：使用者可以把照片用在任何地方，包括營利用途的使用，但不論任何方式的使用，"
-"都必須同步標示貢獻者的姓名、筆名，或其他指定的顯名資訊；使用者也可以使用貢獻"
-"者提供的資料及素材產出新的作品。\n"
-"        "
+"                        CC BY(CC授權 姓名標示)：本授權條款允許使用者重製、散"
+"布、傳輸以及修改著作(包括商業性利用)，惟使用時必須按照貢獻者所指定的方式，表"
+"彰其姓名。說明：使用者可以把照片用在任何地方，包括營利用途的使用，但不論任何"
+"方式的使用，都必須同步標示貢獻者的姓名、筆名，或其他指定的顯名資訊；使用者也"
+"可以使用貢獻者提供的資料及素材產出新的作品。\n"
+"                        "
 msgstr ""
 "\n"
 "2. <strong>CC BY</strong> (Attribution): This license allows users to "
@@ -2343,13 +2352,13 @@ msgstr ""
 "designated authorship information. Users can also exploit the data and "
 "materials provided by the contributor to reproduce new work."
 
-#: templates/data-policy.html:85
+#: templates/data-policy.html:87
 msgid ""
 "\n"
-"        3. CC BY-NC(CC授權 姓名標示-非商業性)：本授權條款允許使用者重製、散"
-"布、傳輸以及修改著作，但不得為商業目的之使用。使用時必須按照貢獻者指定的方式"
-"表彰其姓名。\n"
-"        "
+"                        CC BY-NC(CC授權 姓名標示-非商業性)：本授權條款允許使"
+"用者重製、散布、傳輸以及修改著作，但不得為商業目的之使用。使用時必須按照貢獻"
+"者指定的方式表彰其姓名。\n"
+"                        "
 msgstr ""
 "\n"
 "3. <strong>CC BY-NC</strong> (Attribution-NonCommercial): This license "
@@ -2357,21 +2366,21 @@ msgstr ""
 "for commercial purposes. User must attribute the contributor’s name in the "
 "manner specified by the contributor."
 
-#: templates/data-policy.html:91
+#: templates/data-policy.html:94
 msgid ""
 "\n"
-"        除個別純粹事實性紀錄資訊，依法不受著作權利保護，或另有聲明者外，本網"
-"站其餘資料與素材，皆採前列三者擇一之授權或聲明方式提供予公眾使用。依CC0、CC "
-"BY、或CC BY-NC，使用者得於商業目的或非商業目的上，不限時間、地域，對所提供之"
-"資料進行重製、改作、編輯、公開傳輸，或為其他依法需取得著作授權方可行之之利"
-"用。此一授權或宣告行為不會嗣後撤回，使用者亦毋須取得書面或其他方式授權，相關"
-"資料與素材亦得依所擇定之授權或聲明方式，經重製、散布，轉至其他託管平台進行公"
-"開演播模式之使用，包括但不限於轉引或轉載至全球生物多樣性資訊機構(GBIF)之主資"
-"料庫或其他節點提供利用。依CC BY、CC BY-NC授權方式提供者，後續使用時必須註明貢"
-"獻者姓名及原始出處，採CC0聲明方式提供者，該公眾領域貢獻宣告並不要求任何顯名義"
-"務，然基於學術倫理及科研考據之立場，仍建議使用者於可行狀況，盡量採下列中英文"
-"擇一之格式，註解相關資料及素材之貢獻者姓名及原始出處：\n"
-"        "
+"                除個別純粹事實性紀錄資訊，依法不受著作權利保護，或另有聲明者"
+"外，本網站其餘資料與素材，皆採前列三者擇一之授權或聲明方式提供予公眾使用。依"
+"CC0、CC BY、或CC BY-NC，使用者得於商業目的或非商業目的上，不限時間、地域，對"
+"所提供之資料進行重製、改作、編輯、公開傳輸，或為其他依法需取得著作授權方可行"
+"之之利用。此一授權或宣告行為不會嗣後撤回，使用者亦毋須取得書面或其他方式授"
+"權，相關資料與素材亦得依所擇定之授權或聲明方式，經重製、散布，轉至其他託管平"
+"台進行公開演播模式之使用，包括但不限於轉引或轉載至全球生物多樣性資訊機構"
+"(GBIF)之主資料庫或其他節點提供利用。依CC BY、CC BY-NC授權方式提供者，後續使用"
+"時必須註明貢獻者姓名及原始出處，採CC0聲明方式提供者，該公眾領域貢獻宣告並不要"
+"求任何顯名義務，然基於學術倫理及科研考據之立場，仍建議使用者於可行狀況，盡量"
+"採下列中英文擇一之格式，註解相關資料及素材之貢獻者姓名及原始出處：\n"
+"                "
 msgstr ""
 "\n"
 "Except for some purely factual record information, which is not protected by "
@@ -2397,31 +2406,31 @@ msgstr ""
 "research ethics and scientific accountability. The attribution information "
 "can be annotated either in Chinese or English:"
 
-#: templates/data-policy.html:95
+#: templates/data-policy.html:99
 msgid ""
 "\n"
-"          1. 資料集或資料庫名稱-貢獻者顯名資訊@TaiBIF 臺灣生物多樣性資訊機構-"
-"CC BY / CC BY-NC / CC0\n"
-"          "
+"                        資料集或資料庫名稱-貢獻者顯名資訊@TaiBIF 臺灣生物多樣"
+"性資訊機構-CC BY / CC BY-NC / CC0\n"
+"                        "
 msgstr ""
 
-#: templates/data-policy.html:100
+#: templates/data-policy.html:104
 msgid ""
 "\n"
-"          2. Title of the Dataset or Database-Contributor’s "
+"                        Title of the Dataset or Database-Contributor’s "
 "Attribution@TaiBIF-CC BY / CC BY-NC / CC0\n"
-"          "
+"                        "
 msgstr ""
 
-#: templates/data-policy.html:106
+#: templates/data-policy.html:111
 msgid ""
 "\n"
-"        本網站所採用之CC授權條款及CC0公眾領域貢獻宣告未指定版本，意即採前列之"
-"公眾授權或聲明方式提供使用時，使用者得自行選擇任何 Creative Commons 組織發布"
-"之授權條款及貢獻宣告版本進行適用，以CC BY為例，使用者得任擇CC BY 3.0 TW或CC "
-"BY 4.0授權條款進行利用，若未來CC授權條款或貢獻宣告版本再有更新，使用者亦得採"
-"行具同樣授權元素，更新的授權方式進行利用。\n"
-"        "
+"                本網站所採用之CC授權條款及CC0公眾領域貢獻宣告未指定版本，意即"
+"採前列之公眾授權或聲明方式提供使用時，使用者得自行選擇任何 Creative Commons "
+"組織發布之授權條款及貢獻宣告版本進行適用，以CC BY為例，使用者得任擇CC BY 3.0 "
+"TW或CC BY 4.0授權條款進行利用，若未來CC授權條款或貢獻宣告版本再有更新，使用者"
+"亦得採行具同樣授權元素，更新的授權方式進行利用。\n"
+"                "
 msgstr ""
 "\n"
 "The CC license suites and CC0 public domain dedication adopted by this "
@@ -2433,14 +2442,14 @@ msgstr ""
 "on version in the future, users may use the data under the new subsequent "
 "license with the same licensing elements."
 
-#: templates/data-policy.html:111
+#: templates/data-policy.html:116
 msgid ""
 "\n"
-"        本網站對於CC非商業性元素之限制範圍，尊重資料或素材貢獻者及使用者之獨"
-"立判斷與自主解釋，並無任何擴大、限縮，或引導之解釋意向。然提醒非商業性元素於"
-"不同立場間，或存有寬嚴不一的認定標準與灰色地帶，倘發生司法爭議，本網站當主張"
-"法律上網路服務提供者之免責地位，不參與任何一方發動之實體訴訟程序。\n"
-"        "
+"                本網站對於CC非商業性元素之限制範圍，尊重資料或素材貢獻者及使"
+"用者之獨立判斷與自主解釋，並無任何擴大、限縮，或引導之解釋意向。然提醒非商業"
+"性元素於不同立場間，或存有寬嚴不一的認定標準與灰色地帶，倘發生司法爭議，本網"
+"站當主張法律上網路服務提供者之免責地位，不參與任何一方發動之實體訴訟程序。\n"
+"                "
 msgstr ""
 "\n"
 "This website is not intended to expand, limit, or lead the explanation of "
@@ -2453,18 +2462,18 @@ msgstr ""
 "the law, and will not participate in any substantive legal proceedings "
 "initiated by either party."
 
-#: templates/data-policy.html:116
+#: templates/data-policy.html:123
 msgid "相關事項說明"
 msgstr "Miscellaneous"
 
-#: templates/data-policy.html:119
+#: templates/data-policy.html:127
 msgid ""
 "\n"
-"          除依照本網站主動提供或應申請提供之資料介接 API 及其使用規範者外，本"
-"網站相關服務僅提供自然人使用，禁止其他各種型態或頻率之機械自動化操作。當流量"
-"監控管理程式，發現網站系統資源有不正常耗用，並可合理推估其為機械自動化資料或"
-"素材捉取行為所致時，本網站將可能中斷或終止對該帳號之後續使用服務。\n"
-"          "
+"                除依照本網站主動提供或應申請提供之資料介接 API 及其使用規範者"
+"外，本網站相關服務僅提供自然人使用，禁止其他各種型態或頻率之機械自動化操作。"
+"當流量監控管理程式，發現網站系統資源有不正常耗用，並可合理推估其為機械自動化"
+"資料或素材捉取行為所致時，本網站將可能中斷或終止對該帳號之後續使用服務。\n"
+"                "
 msgstr ""
 "\n"
 "Except for data that provided initiatively by this website or those who can "
@@ -2476,14 +2485,14 @@ msgstr ""
 "mechanical automatic data or material extraction, this website may interrupt "
 "or terminate the subsequent service of that account."
 
-#: templates/data-policy.html:124
+#: templates/data-policy.html:132
 msgid ""
 "\n"
-"          本網站對提交之貢獻資料與素材，不負永久露出的維護責任；除此之外，當"
-"涉及生物多樣性敏感資料及相近狀況，該資料與素材內含的物種資訊可能造成物種受"
-"害，或其他相關環境損害時，本網站得要求貢獻者對資料進行適當遮蔽之後再次上傳，"
-"或由本平台協助進行遮蔽濾除之後另行更換。\n"
-"          "
+"                本網站對提交之貢獻資料與素材，不負永久露出的維護責任；除此之"
+"外，當涉及生物多樣性敏感資料及相近狀況，該資料與素材內含的物種資訊可能造成物"
+"種受害，或其他相關環境損害時，本網站得要求貢獻者對資料進行適當遮蔽之後再次上"
+"傳，或由本平台協助進行遮蔽濾除之後另行更換。\n"
+"                "
 msgstr ""
 "\n"
 "This website is not responsible for maintaining the submitted and "
@@ -2494,14 +2503,14 @@ msgstr ""
 "properly cover the sensitive data and then upload it again, or the platform "
 "may assist in masking and filtering then has the sensitive data replaced."
 
-#: templates/data-policy.html:129
+#: templates/data-policy.html:137
 msgid ""
 "\n"
-"          本網站於部分頁面提供資料及素材下載功能。關於下載資料與素材之保存，"
-"本網站會力求完整維護，惟資料與素材可能因其他因素，如天災、系統錯誤等，而滅"
-"失，本網站與維運單位不對前述滅失負任何責任。為避免前述滅失，貢獻者及使用者應"
-"自行保留資料與素材之複本。\n"
-"          "
+"                本網站於部分頁面提供資料及素材下載功能。關於下載資料與素材之"
+"保存，本網站會力求完整維護，惟資料與素材可能因其他因素，如天災、系統錯誤等，"
+"而滅失，本網站與維運單位不對前述滅失負任何責任。為避免前述滅失，貢獻者及使用"
+"者應自行保留資料與素材之複本。\n"
+"                "
 msgstr ""
 "\n"
 "This website provides download function of data and materials on some pages. "
@@ -2513,15 +2522,15 @@ msgstr ""
 "explained above, contributors and users should keep copies of the data and "
 "materials actively by themselves."
 
-#: templates/data-policy.html:134
+#: templates/data-policy.html:142
 msgid ""
 "\n"
-"          本網站不會對使用者上傳的貢獻資料與素材進行個案監督，然若該等資料或"
-"素材事後為第三方提報檢舉為不合法或不適當，本網站得於合理通知原貢獻者之後，移"
-"除相關爭議資料或素材，然當爭議資料與素材涉及侵害他人權利、違反法令、或有公然"
-"污辱、謾罵等人身攻擊等不適當資訊嵌入的狀況，本網站得不待通知原貢獻者，立即移"
-"除相關資料與素材。\n"
-"          "
+"                本網站不會對使用者上傳的貢獻資料與素材進行個案監督，然若該等"
+"資料或素材事後為第三方提報檢舉為不合法或不適當，本網站得於合理通知原貢獻者之"
+"後，移除相關爭議資料或素材，然當爭議資料與素材涉及侵害他人權利、違反法令、或"
+"有公然污辱、謾罵等人身攻擊等不適當資訊嵌入的狀況，本網站得不待通知原貢獻者，"
+"立即移除相關資料與素材。\n"
+"                "
 msgstr ""
 "\n"
 "This website will not monitor the contributed data and materials uploaded by "
@@ -2534,12 +2543,12 @@ msgstr ""
 "inappropriate information embedded to do so, this website shall immediately "
 "remove them without prior notification to the original contributors."
 
-#: templates/data-policy.html:139
+#: templates/data-policy.html:147
 msgid ""
 "\n"
-"          TaiBIF 網站授權範圍僅及於著作權及其相關權利保護之範圍，不及於其他智"
-"慧財產權利，包括但不限於專利、商標、及機關標誌或商號圖示之提供。\n"
-"          "
+"                TaiBIF 網站授權範圍僅及於著作權及其相關權利保護之範圍，不及於"
+"其他智慧財產權利，包括但不限於專利、商標、及機關標誌或商號圖示之提供。\n"
+"                "
 msgstr ""
 "\n"
 "The scope of license of TaiBIF website is limited to copyright and related "
@@ -2547,13 +2556,13 @@ msgstr ""
 "means including but not limited to patent, trademark, organization logo or "
 "business mark is not provided."
 
-#: templates/data-policy.html:144
+#: templates/data-policy.html:152
 msgid ""
 "\n"
-"          使用 TaiBIF 網站提供之各項資料與素材，不論其受著作權利保護與否，使"
-"用者不得惡意變更其相關資訊，若編輯、改作後所展示之資訊與原不符而造成損害，使"
-"用者須自負民事、刑事上之法律責任。\n"
-"          "
+"                使用 TaiBIF 網站提供之各項資料與素材，不論其受著作權利保護與"
+"否，使用者不得惡意變更其相關資訊，若編輯、改作後所展示之資訊與原不符而造成損"
+"害，使用者須自負民事、刑事上之法律責任。\n"
+"                "
 msgstr ""
 "\n"
 "When using the data and materials provided by the TaiBIF website, whether "
@@ -2563,14 +2572,14 @@ msgstr ""
 "users shall bear the legal responsibility by themselves in civil and "
 "criminal matters."
 
-#: templates/data-policy.html:149
+#: templates/data-policy.html:157
 msgid ""
 "\n"
-"          本網站並不擔保所提供資料與素材之正確性及合用性，使用者利用本網站無"
-"償提供之各項資料與素材，受有損害或損失，或致第三人受有損害或損失，除法令另有"
-"規定外，本網站及其維運單位，依CC授權條款及CC0公眾領域宣告之免責聲明，主張法律"
-"容許限度下最高的免責範圍，不負任何賠償或補償之責。\n"
-"          "
+"                本網站並不擔保所提供資料與素材之正確性及合用性，使用者利用本"
+"網站無償提供之各項資料與素材，受有損害或損失，或致第三人受有損害或損失，除法"
+"令另有規定外，本網站及其維運單位，依CC授權條款及CC0公眾領域宣告之免責聲明，主"
+"張法律容許限度下最高的免責範圍，不負任何賠償或補償之責。\n"
+"                "
 msgstr ""
 "\n"
 "This website does not guarantee correctness and fitness of the data and "
@@ -2583,19 +2592,19 @@ msgstr ""
 "applicable law a disclaimer, to not liable for any indemnification or "
 "compensation thereof."
 
-#: templates/data-policy.html:155
+#: templates/data-policy.html:166
 msgid ""
 "臺灣生物多樣性資訊機構 (Taiwan Biodiversity Information Facility, TaiBIF) 隱"
 "私權政策"
 msgstr "TaiBIF Privacy Policy"
 
-#: templates/data-policy.html:160
+#: templates/data-policy.html:174
 msgid ""
 "\n"
-"          本處所述隱私權政策，適用於貢獻者及使用者在 TaiBIF 網站活動時，所涉"
-"及有關個人資料的蒐集、處理及利用，包括但不限於會員註冊服務、洽詢維運團隊進行"
-"意見互動、資料與素材貢獻，以及網路資訊瀏覽等使用行為。\n"
-"          "
+"                本處所述隱私權政策，適用於貢獻者及使用者在 TaiBIF 網站活動"
+"時，所涉及有關個人資料的蒐集、處理及利用，包括但不限於會員註冊服務、洽詢維運"
+"團隊進行意見互動、資料與素材貢獻，以及網路資訊瀏覽等使用行為。\n"
+"                "
 msgstr ""
 "\n"
 "The privacy policy stated here applies to the personal data collection, "
@@ -2605,27 +2614,28 @@ msgstr ""
 "opinions exchange, contribution of data and materials, and website "
 "information browsing."
 
-#: templates/data-policy.html:165
+#: templates/data-policy.html:179
 msgid ""
 "\n"
-"          使用者持續使用 TaiBIF 網站服務，即視為當事人明示同意下述之資料蒐"
-"集、處理，及利用方式。\n"
-"          "
+"                使用者持續使用 TaiBIF 網站服務，即視為當事人明示同意下述之資"
+"料蒐集、處理，及利用方式。\n"
+"                "
 msgstr ""
 "\n"
 "Users who continue to use TaiBIF website services are deemed to have agreed "
 "to the following data collection, processing, and utilization methods."
 
-#: templates/data-policy.html:173
+#: templates/data-policy.html:187
 msgid "TaiBIF 蒐集使用者資料"
 msgstr "Personal Data collected"
 
-#: templates/data-policy.html:176
+#: templates/data-policy.html:191
 msgid ""
 "\n"
-"        使用者登錄本網站服務之相關帳號時，自主填註的各項個人識別資料，包括姓"
-"名、電郵、以及服務單位，僅作為認證、授權標示，與相關通知、聯繫之用。\n"
-"        "
+"                使用者登錄本網站服務之相關帳號時，自主填註的各項個人識別資"
+"料，包括姓名、電郵、以及服務單位，僅作為認證、授權標示，與相關通知、聯繫之"
+"用。\n"
+"                "
 msgstr ""
 "\n"
 "When a user logs into the relevant account of this website service, the "
@@ -2634,33 +2644,28 @@ msgstr ""
 "identification, contribution license labeling for authorship, and for "
 "related notification and contact."
 
-#: templates/data-policy.html:181
+#: templates/data-policy.html:196
 msgid ""
 "\n"
-"        若使用者未自設資訊屏蔽機制，TaiBIF 或將自動紀錄使用者連線時使用之IP位"
-"址、登入時間，及其他瀏覽器依其安全層級調校得提供之數據資訊，此等數據資訊之收"
-"集，僅供管理端分析流量及觀測網站服務之用。Cookies 的收集僅用於協助網站操作介"
-"面中英語系（繁體中文/ English）的轉換紀錄，使用者亦可調校瀏覽界的管理層級，將"
-"所有 cookies 收集的允許逕行關閉。\n"
-"        "
+"                TaiBIF使用新版Google分析(GA4)與Google代碼管理工具(GTM)進行流"
+"量分析及程式管理。相關流量分析與管理工具，有助於協助網站和應用程式管理者，掌"
+"握訪客與網站和應用程式的互動情形。新版Google分析並不直接從使用者的終端設備進"
+"行Cookies資訊的收集，僅透過浮動式的使用者代號，紀錄該代號於本網站上之使用行"
+"為，此等數據資訊之收集，僅供管理端分析流量及觀測網站服務之用。本平台亦不透過"
+"使用行為的紀錄，識別個別訪客的個人身分或紀錄使用者的真實IP位址。若使用者希望"
+"確保相關使用資訊不被收集，亦得於瀏覽器調校安全層級，或自設資訊屏蔽機制(Do "
+"Not Track)。\n"
+"                "
 msgstr ""
 "\n"
-"If a user does not set up an information shielding mechanism actively, "
-"TaiBIF may automatically record the IP address, the login time, and other "
-"digital information that can be getting access according to the browser "
-"security level that user sets when connecting. The digital information "
-"collected is only for traffic analysis and website service observation "
-"purpose only by the management authority. The cookies of that is only for "
-"conversion record of the website interface translation between Traditional "
-"Chinese and English language. However, a user can also adjust the protection "
-"level of browser to turn off all the collection permission by cookies."
+"The TaiBIF platform utilizes the latest version of Google Analytics (GA4) and Google Tag Manager (GTM) for traffic analysis and program management. These tools assist website and application administrators in understanding interactions between visitors and their sites or apps. The new version of Google Analytics does not collect cookie information directly from users' devices. Instead, it tracks user behavior through a floating user ID on this website. This data collection is solely for traffic analysis and website service monitoring by the management team. Additionally, the platform does not use behavioral records to identify individual visitors or capture users' actual IP addresses. If users wish to prevent their information from being collected, they can adjust their browser security settings or implement information blocking mechanisms (Do Not Track)."
 
-#: templates/data-policy.html:186
+#: templates/data-policy.html:201
 msgid ""
 "\n"
-"        貢獻者提供資料與素材，所記錄或內嵌之地理位置，相關資訊僅用於生物資訊"
-"之顯示、分析與彙整。\n"
-"        "
+"                貢獻者提供資料與素材，所記錄或內嵌之地理位置，相關資訊僅用於"
+"生物資訊之顯示、分析與彙整。\n"
+"                "
 msgstr ""
 "\n"
 "The related information of geographic locations, which is recorded or "
@@ -2668,14 +2673,14 @@ msgstr ""
 "only used for the display, analysis and compilation purpose of biological "
 "data."
 
-#: templates/data-policy.html:191
+#: templates/data-policy.html:206
 msgid ""
 "\n"
-"        本網站採CC授權條款及CC0公眾領域貢獻宣告來吸納貢獻，當貢獻者提供資料或"
-"素材之顯名資訊，涉及個人資料之描述時，該等個人資料視為當事人自行公開之個人資"
-"料，依個人資料相關法令之規範，後續蒐集處理毋須再經當事人書面同意，該等資料之"
-"提供使用範圍，將用於支持科學資料有效驗證之公益目的。\n"
-"        "
+"                本網站採CC授權條款及CC0公眾領域貢獻宣告來吸納貢獻，當貢獻者提"
+"供資料或素材之顯名資訊，涉及個人資料之描述時，該等個人資料視為當事人自行公開"
+"之個人資料，依個人資料相關法令之規範，後續蒐集處理毋須再經當事人書面同意，該"
+"等資料之提供使用範圍，將用於支持科學資料有效驗證之公益目的。\n"
+"                "
 msgstr ""
 "\n"
 "This website adopts CC license and CC0 public domain dedication to receive "
@@ -2688,14 +2693,14 @@ msgstr ""
 "rendering those personal data utilization scope as being reached for the "
 "purpose of scientific data verification support for public good."
 
-#: templates/data-policy.html:196
+#: templates/data-policy.html:211
 msgid ""
 "\n"
-"        本網站得將貢獻者提交之內容，依其指定之授權或宣告方式推送至其他平台，"
-"包括但不限於轉引或轉載至全球生物多樣性資訊機構(GBIF)之主資料庫或其他節點，或"
-"推送至臉書、推特等社群網路平台，此一推送模式涉及個人資料之國際傳輸，於推送後"
-"就該平台之個人資料使用事宜，轉依該平台依其隱私權政策進行處理。\n"
-"        "
+"                本網站得將貢獻者提交之內容，依其指定之授權或宣告方式推送至其"
+"他平台，包括但不限於轉引或轉載至全球生物多樣性資訊機構(GBIF)之主資料庫或其他"
+"節點，或推送至臉書、推特等社群網路平台，此一推送模式涉及個人資料之國際傳輸，"
+"於推送後就該平台之個人資料使用事宜，轉依該平台依其隱私權政策進行處理。\n"
+"                "
 msgstr ""
 "\n"
 "This website may push the content submitted by contributors forward to other "
@@ -2708,29 +2713,29 @@ msgstr ""
 "data shall be managed in accordance with the received platform’s privacy "
 "policy."
 
-#: templates/data-policy.html:201
+#: templates/data-policy.html:218
 msgid "TaiBIF 對相關資料之去識別化與量化處理"
 msgstr ""
 "TaiBIF’s de-identification and quantification of relevant personal data"
 
-#: templates/data-policy.html:204
+#: templates/data-policy.html:222
 msgid ""
 "\n"
-"          貢獻者同意 TaiBIF 得以對其回報資料與素材，進行合理妥適之去識別化或"
-"相關數據量化的處理。\n"
-"          "
+"                貢獻者同意 TaiBIF 得以對其回報資料與素材，進行合理妥適之去識"
+"別化或相關數據量化的處理。\n"
+"                "
 msgstr ""
 "\n"
 "Contributors agree that TaiBIF shall be able to process the de-"
 "identification or quantification disposal to the personal data involving in "
 "the data and materials they reported, in a reasonable and appropriate manner."
 
-#: templates/data-policy.html:209
+#: templates/data-policy.html:227
 msgid ""
 "\n"
-"          處理後的資料、素材，與其貢獻者或其他當事人個人識別狀態無法產生連結"
-"者，便不再屬於個人資料，後續將得以不受回報目的之限制，被進行利用。\n"
-"          "
+"                處理後的資料、素材，與其貢獻者或其他當事人個人識別狀態無法產"
+"生連結者，便不再屬於個人資料，後續將得以不受回報目的之限制，被進行利用。\n"
+"                "
 msgstr ""
 "\n"
 "The processed data and materials, which cannot be linked to the personal "
@@ -2738,27 +2743,27 @@ msgstr ""
 "personal data, and shall be able to use in the subsequent exploitation "
 "without restriction within the reported purpose."
 
-#: templates/data-policy.html:214
+#: templates/data-policy.html:235
 msgid "隱私權保護政策修訂"
 msgstr "Privacy Policy Amendment"
 
-#: templates/data-policy.html:217
+#: templates/data-policy.html:239
 msgid ""
 "\n"
-"          TaiBIF 將不定時修訂本項政策，以符合最新的個人資料與相關法定權利之保"
-"護規範。\n"
-"          "
+"                TaiBIF 將不定時修訂本項政策，以符合最新的個人資料與相關法定權"
+"利之保護規範。\n"
+"                "
 msgstr ""
 "\n"
 "TaiBIF shall revise this policy from time to time to comply with the latest "
 "personal data act and related lawful rights protection regulations."
 
-#: templates/data-policy.html:222
+#: templates/data-policy.html:244
 msgid ""
 "\n"
-"          隱私權政策經修訂後，將透過 IPT 資料發布工具的會員註冊時提供的聯繫電"
-"郵主動通知，亦會於本網站「最新消息」分類項下進行公告。\n"
-"          "
+"                隱私權政策經修訂後，將透過 IPT 資料發布工具的會員註冊時提供的"
+"聯繫電郵主動通知，亦會於本網站「最新消息」分類項下進行公告。\n"
+"                "
 msgstr ""
 "\n"
 "When the Privacy Policy is updated, it will be proactively notified through "
@@ -2766,28 +2771,28 @@ msgstr ""
 "registering, and will also be announced under the “Latest News” category of "
 "this website."
 
-#: templates/data-policy.html:227
+#: templates/data-policy.html:249
 msgid ""
 "\n"
-"          使用者對 TaiBIF 網站服務的繼續使用，視為明示同意更新版本的隱私權政"
-"策。\n"
-"          "
+"                使用者對 TaiBIF 網站服務的繼續使用，視為明示同意更新版本的隱"
+"私權政策。\n"
+"                "
 msgstr ""
 "\n"
 "By subsequently using TaiBIF website service, a user indicates his/her "
 "acceptance of the updated version of the privacy policy."
 
-#: templates/data-policy.html:232
+#: templates/data-policy.html:256
 msgid "回報機制"
 msgstr "Request Mechanism"
 
-#: templates/data-policy.html:235
+#: templates/data-policy.html:260
 msgid ""
 "\n"
-"          TaiBIF 對於相關資料的收集，已踐履個人資料保護法及其相關法規的基礎要"
-"求，並在資料的處理及利用上，透過彙整或去識別化流程，以強化使用者的隱私防護。"
-"相關資料在處理之後，將提供科學研究目的之分享。\n"
-"          "
+"                TaiBIF 對於相關資料的收集，已踐履個人資料保護法及其相關法規的"
+"基礎要求，並在資料的處理及利用上，透過彙整或去識別化流程，以強化使用者的隱私"
+"防護。相關資料在處理之後，將提供科學研究目的之分享。\n"
+"                "
 msgstr ""
 "\n"
 "TaiBIF has fulfilled the fundamental requirements of the Personal Data "
@@ -2797,15 +2802,15 @@ msgstr ""
 "of data. When the relevant data has been well processed, it will be shared "
 "for scientific research purposes."
 
-#: templates/data-policy.html:240
+#: templates/data-policy.html:265
 msgid ""
 "\n"
-"          若網站服務的使用者或資料素材之貢獻者，對於當事人自身之個人資料有隱"
-"私疑慮，請透過網站公告資訊聯絡維運團隊，相關當事人若對自身之個人資料有進行查"
-"閱、更正、停止利用，以及刪除的意見與要求，亦可透過網站回報機制進行提報，本網"
-"站之維運團隊，將於確認收受提交意見，並完成人別確認後，三十日內進行妥善處"
-"理。\n"
-"          "
+"                若網站服務的使用者或資料素材之貢獻者，對於當事人自身之個人資"
+"料有隱私疑慮，請透過網站公告資訊聯絡維運團隊，相關當事人若對自身之個人資料有"
+"進行查閱、更正、停止利用，以及刪除的意見與要求，亦可透過網站回報機制進行提"
+"報，本網站之維運團隊，將於確認收受提交意見，並完成人別確認後，三十日內進行妥"
+"善處理。\n"
+"                "
 msgstr ""
 "\n"
 "If the user of the website service or the contributor of the data and "
@@ -2997,79 +3002,80 @@ msgstr ""
 "We appreciate your anticipation and look forward to unveiling. Stay tuned "
 "for further updates and announcements. Thank you for your patience."
 
-#: templates/index.html:213
+#: templates/index.html:227
 msgid "生物多樣性資料開放的推手"
 msgstr "The Facilitator of Biodiversity Open Data"
 
-#: templates/index.html:254
+#: templates/index.html:268
 msgid "涵蓋物種數"
 msgstr "Number of Species"
 
-#: templates/index.html:276
-msgid "資料應用發表"
+#: templates/index.html:290
+msgid "臺灣資料應用發表"
 msgstr "Peer-reviewed Papers Using Data"
 
-#: templates/index.html:284
+#: templates/index.html:300
 msgid "看更多發布狀況"
 msgstr "See More Data Status"
 
-#: templates/index.html:298
+#: templates/index.html:314
 msgid "植物"
 msgstr "Plants"
 
-#: templates/index.html:313
+#: templates/index.html:329
 msgid "真菌"
 msgstr "Fungi"
 
-#: templates/index.html:328
+#: templates/index.html:344
 msgid "細菌"
 msgstr "Bacteria"
 
-#: templates/index.html:343
+#: templates/index.html:359
 msgid "昆蟲"
 msgstr "Insects"
 
-#: templates/index.html:358
+#: templates/index.html:374
 msgid "魚"
 msgstr "Fishes"
 
-#: templates/index.html:373
+#: templates/index.html:389
 msgid "爬蟲類"
 msgstr "Reptiles"
 
-#: templates/index.html:388
+#: templates/index.html:404
 msgid "兩棲類"
 msgstr "Amphibians"
 
-#: templates/index.html:403
+#: templates/index.html:419
 msgid "鳥類"
 msgstr "Birds"
 
-#: templates/index.html:420
+#: templates/index.html:436
 msgid "哺乳類"
 msgstr "Mammals"
 
-#: templates/index.html:435
+#: templates/index.html:451
 msgid "其他"
 msgstr "Others"
 
-#: templates/index.html:448
+#: templates/index.html:464
 msgid "看更多資訊視覺化"
 msgstr "See More"
 
-#: templates/index.html:587
+#: templates/index.html:603
 msgid "行事曆"
 msgstr "Calendar"
 
-#: templates/index.html:595
+#: templates/index.html:611
 msgid "指導單位"
 msgstr "Advisors"
 
-#: templates/index.html:638
+#: templates/index.html:654
 msgid "夥伴單位"
 msgstr "Partners"
 
-#: templates/open-license.html:12 templates/open-license.html:26
+#: templates/open-license.html:4 templates/open-license.html:12
+#: templates/open-license.html:26
 msgid "開放授權"
 msgstr "Open Data with CC License"
 
@@ -3101,11 +3107,13 @@ msgstr "Data Paper Publication"
 msgid "資料再利用"
 msgstr "Data Reuse"
 
-#: templates/open-standard.html:12 templates/open-standard.html:25
+#: templates/open-standard.html:4 templates/open-standard.html:12
+#: templates/open-standard.html:25
 msgid "資料標準化"
 msgstr "Data Standardization"
 
-#: templates/open-upload.html:13 templates/open-upload.html:27
+#: templates/open-upload.html:4 templates/open-upload.html:13
+#: templates/open-upload.html:27
 msgid "資料上傳"
 msgstr "Data Uploading"
 
@@ -3117,7 +3125,7 @@ msgstr ""
 msgid "發布單位"
 msgstr ""
 
-#: templates/search_all.html:78
+#: templates/search_all.html:93
 msgid "查無資料"
 msgstr ""
 
@@ -3125,54 +3133,187 @@ msgstr ""
 msgid "使用Excel模板準備調查活動資料構"
 msgstr "Prepare sampling-event data using Excel template"
 
-#: templates/tech-class-license.html:40 templates/tech-class-license.html:51
+#: templates/tech-class-license.html:44 templates/tech-class-license.html:55
 msgid "初階課程"
 msgstr ""
 
-#: templates/tech-class-license.html:41 templates/tech-class-license.html:77
+#: templates/tech-class-license.html:45 templates/tech-class-license.html:81
 msgid "進階課程"
 msgstr ""
 
-#: templates/tech-class-license.html:42 templates/tech-class-license.html:100
+#: templates/tech-class-license.html:46 templates/tech-class-license.html:104
 msgid "認證辦法"
 msgstr ""
 
-#: templates/tech-class-license.html:43 templates/tech-class-license.html:144
-#: templates/tech-class-license.html:151
+#: templates/tech-class-license.html:47 templates/tech-class-license.html:148
 msgid "線上自學工作坊課程認證"
 msgstr ""
 
-#: templates/tech-class-license.html:44
+#: templates/tech-class-license.html:48 templates/tech-class-license.html:155
 msgid "歷年通過認證名單"
 msgstr ""
 
-#: templates/tech-class-license.html:54
+#: templates/tech-class-license.html:58
 msgid "基礎概論"
 msgstr ""
 
-#: templates/tech-class-license.html:66 templates/tech-class-license.html:79
+#: templates/tech-class-license.html:70 templates/tech-class-license.html:83
 msgid "資料處理及上傳"
 msgstr ""
 
-#: templates/tech-class-license.html:87
+#: templates/tech-class-license.html:91
 msgid "資料管理及應用"
 msgstr ""
 
-#: templates/tech-class-license.html:106
+#: templates/tech-class-license.html:110
 msgid "指定作業項目（將持續更新）"
 msgstr ""
 
-#: templates/tech-class-license.html:124
+#: templates/tech-class-license.html:128
 msgid "作業評核標準"
 msgstr ""
 
-#: templates/tech-class-license.html:135
+#: templates/tech-class-license.html:139
 msgid "證書樣式"
 msgstr ""
 
-#: templates/web-navi.html:102
+#: templates/tech-online-class.html:53 templates/tech-online-class.html:72
+msgid "基礎00-TaiBIF簡介"
+msgstr ""
+
+#: templates/tech-online-class.html:54 templates/tech-online-class.html:91
+#, fuzzy
+#| msgid "開放資料流程"
+msgid "基礎01-開放資料流程"
+msgstr "Publish Your Data"
+
+#: templates/tech-online-class.html:55 templates/tech-online-class.html:110
+msgid "基礎02-資料發布類型"
+msgstr ""
+
+#: templates/tech-online-class.html:56 templates/tech-online-class.html:129
+msgid "基礎03-資料標準及共通欄位"
+msgstr ""
+
+#: templates/tech-online-class.html:57 templates/tech-online-class.html:148
+msgid "基礎04-開放資料的前置準備及清理"
+msgstr ""
+
+#: templates/tech-online-class.html:58 templates/tech-online-class.html:167
+msgid "基礎05-生物多樣性敏感資料處理原則"
+msgstr ""
+
+#: templates/tech-online-class.html:59 templates/tech-online-class.html:186
+#, fuzzy
+#| msgid "資料上傳 TaiBIF IPT"
+msgid "基礎06-資料上傳 IPT"
+msgstr "Data Uploading via TaiBIF IPT"
+
+#: templates/tech-online-class.html:60 templates/tech-online-class.html:199
+msgid "進階01-開放資料授權規範"
+msgstr ""
+
+#: templates/tech-online-class.html:61 templates/tech-online-class.html:218
+msgid "進階02-TBIA及入口網介紹"
+msgstr ""
+
+#: templates/tech-online-class.html:62 templates/tech-online-class.html:237
+msgid "進階03-如何下載及引用開放資料"
+msgstr ""
+
+#: templates/tech-online-class.html:63 templates/tech-online-class.html:256
+#, fuzzy
+#| msgid "關於資料論文"
+msgid "進階04-資料論文"
+msgstr "About Data Paper"
+
+#: templates/tech-online-class.html:64 templates/tech-online-class.html:275
+msgid "進階05-OpenRefine 資料清理工具介紹與實作"
+msgstr ""
+
+#: templates/tech-online-class.html:75 templates/tech-online-class.html:94
+#: templates/tech-online-class.html:113 templates/tech-online-class.html:132
+#: templates/tech-online-class.html:151 templates/tech-online-class.html:170
+#: templates/tech-online-class.html:202 templates/tech-online-class.html:221
+#: templates/tech-online-class.html:240 templates/tech-online-class.html:259
+#: templates/tech-online-class.html:278
+msgid "教學影片"
+msgstr ""
+
+#: templates/tech-online-class.html:81 templates/tech-online-class.html:100
+#: templates/tech-online-class.html:119 templates/tech-online-class.html:138
+#: templates/tech-online-class.html:157 templates/tech-online-class.html:176
+#: templates/tech-online-class.html:189 templates/tech-online-class.html:208
+#: templates/tech-online-class.html:227 templates/tech-online-class.html:246
+#: templates/tech-online-class.html:265 templates/tech-online-class.html:284
+msgid "教學講義"
+msgstr ""
+
+#: templates/web-navi.html:103
 msgid "全站搜尋"
 msgstr "Site Search"
+
+#, fuzzy
+#~| msgid "GBIF 介紹"
+#~ msgid "GBIF 簡介"
+#~ msgstr "About GBIF"
+
+#~ msgid "更新"
+#~ msgstr "Updates"
+
+#~ msgid "TaiBIF發表文章/海報"
+#~ msgstr "TaiBIF Academic Publication"
+
+#~ msgid "科普文章"
+#~ msgstr "Popular Science"
+
+#~ msgid "文章DOI"
+#~ msgstr "Article DOI"
+
+#, fuzzy
+#~| msgid ""
+#~| "\n"
+#~| "            TaiBIF每年皆有固定經費來贊助與生物多樣性相關之主題的資料論文"
+#~| "發表，欲知詳情如合作模式與適用條件，歡迎<a href=\"%(contact_us)s\">聯繫我"
+#~| "們</a>。\n"
+#~| "            "
+#~ msgid ""
+#~ "\n"
+#~ "                TaiBIF每年皆有固定經費來贊助與生物多樣性相關之主題的資料論"
+#~ "文發表，欲知詳情如合作模式與適用條件，歡迎<a href=\"%(contact_us)s\">聯繫"
+#~ "我們</a>。\n"
+#~ "                "
+#~ msgstr ""
+#~ "\n"
+#~ "            TaiBIF provides fixed funding annually to sponsor the "
+#~ "publication of data papers related to biodiversity. For details regarding "
+#~ "collaboration methods and applicable terms, please feel free to <a href="
+#~ "\"%(contact_us)s\">contact us</a>.\n"
+#~ "            "
+
+#~ msgid "網站及資料使用條款"
+#~ msgstr "TaiBIF Terms of Use and Copyright Policy"
+
+#~ msgid ""
+#~ "\n"
+#~ "        若使用者未自設資訊屏蔽機制，TaiBIF 或將自動紀錄使用者連線時使用之"
+#~ "IP位址、登入時間，及其他瀏覽器依其安全層級調校得提供之數據資訊，此等數據資"
+#~ "訊之收集，僅供管理端分析流量及觀測網站服務之用。Cookies 的收集僅用於協助網"
+#~ "站操作介面中英語系（繁體中文/ English）的轉換紀錄，使用者亦可調校瀏覽界的"
+#~ "管理層級，將所有 cookies 收集的允許逕行關閉。\n"
+#~ "        "
+#~ msgstr ""
+#~ "\n"
+#~ "If a user does not set up an information shielding mechanism actively, "
+#~ "TaiBIF may automatically record the IP address, the login time, and other "
+#~ "digital information that can be getting access according to the browser "
+#~ "security level that user sets when connecting. The digital information "
+#~ "collected is only for traffic analysis and website service observation "
+#~ "purpose only by the management authority. The cookies of that is only for "
+#~ "conversion record of the website interface translation between "
+#~ "Traditional Chinese and English language. However, a user can also adjust "
+#~ "the protection level of browser to turn off all the collection permission "
+#~ "by cookies."
 
 #~ msgid "出版品資料"
 #~ msgstr "Related Publication"
