@@ -278,7 +278,7 @@ function createHeatmap(data, yAxis, xAxis, yearPagination) {
     height = 500 - margin.top - margin.bottom;
 
     // 固定的 x 軸和 y 軸的值
-    let xAxisValues = axisMapping[xAxis] || Array.from(new Set(data.map(d => d.group)));;
+    let xAxisValues = axisMapping[xAxis] || Array.from(new Set(data.map(d => d.group)));
     let yAxisValues = axisMapping[yAxis] || Array.from(new Set(data.map(d => d.variable)));
     if (yAxis === 'taibif_year') {
         const {startYear, endYear} = getCurrentYear(yearPagination);
@@ -286,7 +286,7 @@ function createHeatmap(data, yAxis, xAxis, yearPagination) {
     } else if (xAxis === 'taibif_year') {
         const {startYear, endYear} = getCurrentYear(yearPagination);
         xAxisValues = d3.range(startYear, endYear + 1);
-    };
+    }
 
     // 創建 SVG 元素
     const svg = d3.select("#my_dataviz")
@@ -309,7 +309,7 @@ function createHeatmap(data, yAxis, xAxis, yearPagination) {
 
     // 定義顏色比例尺
     const colorScale = d3.scaleQuantize()
-        .range(["#FFE6D6", "#F5B9B2", "#E3A59D", "#8E5B53", "#4A3E3A"]) // 指定顏色分段，淺色前、深色後
+        .range(["#FFE6D6", "#F5B9B2", "#E3A59D", "#8E5B53", "#4A3E3A"])
         .domain([0, d3.max(data, d => d.count)]);
 
     // 繪製 x 軸和 y 軸
@@ -321,7 +321,10 @@ function createHeatmap(data, yAxis, xAxis, yearPagination) {
     svg.append("g")
         .attr("class", "axis")
         .call(d3.axisLeft(y))
-        .style("font-size", "12px");
+        .style("font-size", "12px")
+        .selectAll("text")
+        .attr("dx", -10)
+        .call(wrap, margin.left - 10);  // 對 y 軸標籤自動換行
 
     // 將數據轉換為熱力圖的格式
     const heatmapData = xAxisValues.flatMap(group =>
@@ -348,7 +351,7 @@ function createHeatmap(data, yAxis, xAxis, yearPagination) {
         .attr("y", d => y(d.variable))
         .attr("width", x.bandwidth())
         .attr("height", y.bandwidth())
-        .style("fill", d => d.count === 0 ? zeroColor : colorScale(d.count))
+        .style("fill", d => d.count === 0 ? zeroColor : colorScale(d.count));
 
     // 添加標籤或提示
     svg.selectAll(".text")
@@ -361,10 +364,36 @@ function createHeatmap(data, yAxis, xAxis, yearPagination) {
         .attr("text-anchor", "middle")
         .text(d => d.count)
         .style("fill", d => {
-            // 根據底色決定文字顏色
             const fillColor = d.count === 0 ? zeroColor : colorScale(d.count);
             return fillColor === '#FFE6D6' || fillColor === '#F5B9B2' || d.count === 0 ? "black" : "white";
         })
         .style("font-size", "12px");
+
+    // wrap function: 用來手動將長的標籤名稱換行
+    function wrap(text, width) {
+        text.each(function() {
+            const textElement = d3.select(this);
+            const words = textElement.text().split(/\s+/).reverse();  // 將標籤分成單字
+            let word;
+            let line = [];
+            let lineNumber = 0;
+            const lineHeight = 1.1; // 字行高度
+            const y = textElement.attr("y");
+            const dy = parseFloat(textElement.attr("dy")) || 0;
+            let tspan = textElement.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", `${dy}em`);
+            
+            while (word = words.pop()) {
+                line.push(word);
+                tspan.text(line.join(" "));
+                if (tspan.node().getComputedTextLength() > width) {
+                    line.pop();
+                    tspan.text(line.join(" "));
+                    line = [word];
+                    tspan = textElement.append("tspan").attr("x", 0).attr("y", y).attr("dy", `${++lineNumber * lineHeight + dy}em`).text(word);
+                }
+            }
+        });
+    }
 }
+
 
