@@ -200,7 +200,7 @@ function createBarchart(data, yAxis, yearPagination) {
     if (yAxis === 'taibif_country') {
         x = d3.scaleLinear()
         .range([0, width])
-        .domain([0, 20000000]);
+        .domain([0, 30000000]);
     } else {
         x = d3.scaleLinear()
         .range([0, width])
