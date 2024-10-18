@@ -1691,12 +1691,68 @@ def get_heatmap_data(request):
 
     # 分組和統計
     heatmap_data = defaultdict(lambda: defaultdict(int))
-    for bucket in pivot_results[pivot_key]:
-        variable = bucket['value']
-        for pivot in bucket['pivot']:
-            group = pivot['value']
-            count = pivot['count']
-            heatmap_data[group][variable] = count
+    has_more_results = True
+
+    if y_axis == 'taibif_country':
+        # 先取得所有 taibif_country 的列表
+        url = 'http://solr:8983/solr/taibif_occurrence/select'
+        params = {
+            'q': 'basisOfRecord:*',
+            'rows': 0, 
+            'indent': 'true',
+            'facet': 'true',
+            'facet.field': 'taibif_country'
+        } 
+
+        response = requests.get(url, params=params)
+        if response.status_code != 200:
+            return JsonResponse({'error': 'Failed to fetch data from Solr'}, status=response.status_code)
+        
+        solr_results = response.json()
+        # print(f'SOLR RESULTS: {solr_results}')
+        facet_counts = solr_results.get('facet_counts', {})
+        facet_data = facet_counts.get('facet_fields', {}).get('taibif_country', [])
+        country_list = [facet_data[i] for i in range(0, len(facet_data), 2)]
+
+        pagination_number = int(request.GET.get('countryPagination', 0))
+        range_start = (10 * pagination_number)
+        range_end = min(10 * (pagination_number + 1), len(country_list))
+        # 用國家名稱實現分頁功能
+        paginated_countries = country_list[range_start:range_end]
+
+        has_more_results = range_end < len(country_list)
+        
+        for bucket in pivot_results[pivot_key]:
+            variable = bucket['value']
+            print(f'bucket: {bucket}')
+            if 'pivot' in bucket: # 處理缺少 pivot 字段的問題
+                for pivot in bucket['pivot']:
+                    group = pivot['value']
+                    count = pivot['count']
+                    if group in paginated_countries: # 控制傳遞回前端的內容
+                        heatmap_data[group][variable] = count
+    elif x_axis == 'taibif_country':
+        pagination_number = int(request.GET.get('countryPagination', 0))
+        range_start = (10 * pagination_number)
+        range_end = min(10 * (pagination_number + 1), len(pivot_results[pivot_key]))
+
+        has_more_results = range_end < len(pivot_results[pivot_key])
+
+        paginated_buckets = pivot_results[pivot_key][range_start:range_end]
+        
+        for bucket in paginated_buckets:
+            variable = bucket['value']
+            for pivot in bucket['pivot']:
+                group = pivot['value']
+                count = pivot['count']
+                heatmap_data[group][variable] = count
+    else:
+        for bucket in pivot_results[pivot_key]:
+            variable = bucket['value']
+            for pivot in bucket['pivot']:
+                group = pivot['value']
+                count = pivot['count']
+                heatmap_data[group][variable] = count
     # print(f'HEATMAP DATA: {heatmap_data}')
 
     # 將結果轉換為繪製 heatmap 所需的格式
@@ -1711,7 +1767,7 @@ def get_heatmap_data(request):
     
     # print(f'HEATMAP RESULTS: {formatted_heatmap_data}')
 
-    return JsonResponse({'data': formatted_heatmap_data})
+    return JsonResponse({'data': formatted_heatmap_data, 'has_more_results': has_more_results})
 
 def get_barchart_data(request):
     facet_field = request.GET.get('yAxis')
@@ -1725,6 +1781,10 @@ def get_barchart_data(request):
         'facet': 'true',
         'facet.field': facet_field
     }
+
+    # 初始化所有回傳參數
+    bar_chart_data = []
+    has_more_results = False
 
     # 如果 facet_field 是 taibif_year，添加年份範圍過濾器
     if facet_field == 'taibif_year':
@@ -1746,9 +1806,27 @@ def get_barchart_data(request):
     # print(f'SOLR RESULTS: {solr_results}')
     facet_counts = solr_results.get('facet_counts', {})
     facet_data = facet_counts.get('facet_fields', {}).get(facet_field, [])
-    bar_chart_data = [{'name': facet_data[i], 'value': facet_data[i + 1]} for i in range(0, len(facet_data), 2)]
 
-    return JsonResponse({'chart_data': bar_chart_data})
+    if facet_field == 'taibif_country':
+        pagination_number = int(request.GET.get('countryPagination', 0))
+        range_start = (20 * pagination_number)
+        range_end = min(20 * (pagination_number + 1), len(facet_data))
+
+        if range_start >= len(facet_data):
+            has_more_results = False 
+        else:
+            bar_chart_data = [
+                {'name': facet_data[i], 'value': facet_data[i + 1]}
+                for i in range(range_start, range_end, 2) if i + 1 < len(facet_data)
+            ]
+            has_more_results = range_end < len(facet_data)
+    else:
+        bar_chart_data = [
+            {'name': facet_data[i], 'value': facet_data[i + 1]}
+            for i in range(0, len(facet_data), 2)
+        ]
+
+    return JsonResponse({'chart_data': bar_chart_data, 'has_more_results': has_more_results})
 
 
 

@@ -8,6 +8,7 @@ const axisMapping = { // 軸上預先排序好的值，也以防有些項目、�
     'taibif_taxonGroup': ['Unknown', 'Others', 'Mammals', 'Birds', 'Amphibia', 'Reptiles', 'Fishes', 'Insects', 'Bacteria', 'Fungi', 'Plants']
 };
 let yearPagination = 0;
+let countryPagination = 0;
 
 $(document).ready(function() {
     $('#heatmap-variable').select2();
@@ -19,9 +20,9 @@ $(document).ready(function() {
         const {yAxisValue, xAxisValue} = checkSelectorValue()
 
         if (xAxisValue === null) { // 只選擇紀錄項目（Ｙ軸）且紀錄分類（X軸）為空的話，繪製長條圖
-            fectchData('barchart', yAxisValue, null, yearPagination);
+            fectchData('barchart', yAxisValue, null, yearPagination, countryPagination);
         } else { // 紀錄項目（Ｙ軸）以及紀錄分類（X軸）都有選擇的話，繪製熱力圖
-            fectchData('heatmap', yAxisValue, xAxisValue, yearPagination);
+            fectchData('heatmap', yAxisValue, xAxisValue, yearPagination, countryPagination);
         };
     });
 
@@ -34,9 +35,9 @@ $(document).ready(function() {
         };
 
         if (xAxisValue != null & yAxisValue != null) { // 紀錄項目（Ｙ軸）以及紀錄分類（X軸）都有選擇的話，繪製熱力圖
-            fectchData('heatmap', yAxisValue, xAxisValue, yearPagination);
+            fectchData('heatmap', yAxisValue, xAxisValue, yearPagination, countryPagination);
         } else if (xAxisValue === null & yAxisValue != null) { // 紀錄分類（X軸）為無的話，繪製長條圖
-            fectchData('barchart', yAxisValue, null, yearPagination);
+            fectchData('barchart', yAxisValue, null, yearPagination, countryPagination);
         };
     });
 
@@ -48,6 +49,18 @@ $(document).ready(function() {
 
     $('#next-btn').on('click', function() {
         yearPagination -= 1;
+        checkBtnStatus();
+        triggerRenderPlot();
+    });
+
+    $('#prev-country-btn').on('click', function() {
+        countryPagination -= 1;
+        checkBtnStatus();
+        triggerRenderPlot();
+    });
+
+    $('#next-country-btn').on('click', function() {
+        countryPagination += 1;
         checkBtnStatus();
         triggerRenderPlot();
     });
@@ -71,9 +84,13 @@ function triggerRenderPlot() {
     */ 
     const {yAxisValue, xAxisValue} = checkSelectorValue()
     if (xAxisValue === null) { // 紀錄分類（X軸）為空則表示只選擇擇紀錄項目（Ｙ軸），重新繪製長條圖
-        fectchData('barchart', 'taibif_year', null, yearPagination);
+        if (yAxisValue === 'taibif_year') {
+            fectchData('barchart', 'taibif_year', null, yearPagination, countryPagination);
+        } else {
+            fectchData('barchart', yAxisValue, null, yearPagination, countryPagination);
+        }
     } else { // 若選擇雙軸，重新繪製熱力圖
-        fectchData('heatmap', yAxisValue, xAxisValue, yearPagination);
+        fectchData('heatmap', yAxisValue, xAxisValue, yearPagination, countryPagination);
     };
 };
 
@@ -95,6 +112,18 @@ function checkBtnStatus() {
     } else {
         $('#next-btn').removeClass('d-none');
     };
+
+    if ((yAxisValue === 'taibif_country') || (xAxisValue === 'taibif_country')) {
+        $('#chart-country-btn-container').removeClass('d-none');
+    } else {
+        $('#chart-country-btn-container').addClass('d-none');
+    }
+
+    if (countryPagination === 0) {
+        $('#prev-country-btn').addClass('d-none');
+    } else {
+        $('#prev-country-btn').removeClass('d-none');
+    };
 };
 
 function getCurrentYear(yearPagination) {
@@ -110,21 +139,29 @@ function getCurrentYear(yearPagination) {
     return {startYear, endYear}
 };
 
-function fectchData(chartType, yAxis, xAxis, yearPagination) {
+function fectchData(chartType, yAxis, xAxis, yearPagination, countryPagination) {
     const {startYear, endYear} = getCurrentYear(yearPagination);
     $('.loader').removeClass('d-none');
     const url = chartTypeMapping[chartType]
     $.ajax({
         type: 'GET',
         url: url,
-        data: { yAxis: yAxis, xAxis: xAxis, startYear: startYear, endYear: endYear },
+        data: { yAxis: yAxis, xAxis: xAxis, startYear: startYear, endYear: endYear, countryPagination: countryPagination },
         dataType: 'json',
         success: function(data) {
             if (chartType === 'heatmap') {
-                console.log(data.data);
+                if (data.has_more_results) {
+                    $('#next-country-btn').removeClass('d-none');
+                } else {
+                    $('#next-country-btn').addClass('d-none');
+                }
                 createHeatmap(data.data, yAxis, xAxis, yearPagination);
             } else {
-                console.log(data.chart_data);
+                if (data.has_more_results) {
+                    $('#next-country-btn').removeClass('d-none');
+                } else {
+                    $('#next-country-btn').addClass('d-none');
+                }
                 createBarchart(data.chart_data, yAxis, yearPagination);
             }
             $('.loader').addClass('d-none');
@@ -159,9 +196,16 @@ function createBarchart(data, yAxis, yearPagination) {
         .padding(0.1)
         .domain(yAxisValues);
 
-    const x = d3.scaleLinear()
+    let x;
+    if (yAxis === 'taibif_country') {
+        x = d3.scaleLinear()
+        .range([0, width])
+        .domain([0, 20000000]);
+    } else {
+        x = d3.scaleLinear()
         .range([0, width])
         .domain([0, d3.max(data, d => d.value)]);
+    }
 
     svg.selectAll(".bar")
         .data(data)
@@ -186,12 +230,44 @@ function createBarchart(data, yAxis, yearPagination) {
 
     const yAxisGroup = svg.append("g")
         .call(d3.axisLeft(y).tickSize(5));
-    yAxisGroup.selectAll("text").style("font-size", "12px");
+
+    // 自動換行處理
+    yAxisGroup.selectAll("text")
+        .style("font-size", "12px")
+        .attr("dx", -10)
+        .call(wrap, margin.left - 10);  // 呼叫wrap函數，控制換行寬度
     
     svg.append("g")
         .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(x).tickSize(5))
+        .call(d3.axisBottom(x).tickSize(5));
+
+    // wrap function: 用來手動將長的標籤名稱換行
+    function wrap(text, width) {
+        text.each(function() {
+            const textElement = d3.select(this);
+            const words = textElement.text().split(/\s+/).reverse();  // 將標籤分成單字
+            let word;
+            let line = [];
+            let lineNumber = 0;
+            const lineHeight = 1.1; // 字行高度
+            const y = textElement.attr("y");
+            const dy = parseFloat(textElement.attr("dy")) || 0;
+            let tspan = textElement.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", `${dy}em`);
+            
+            while (word = words.pop()) {
+                line.push(word);
+                tspan.text(line.join(" "));
+                if (tspan.node().getComputedTextLength() > width) {
+                    line.pop();
+                    tspan.text(line.join(" "));
+                    line = [word];
+                    tspan = textElement.append("tspan").attr("x", 0).attr("y", y).attr("dy", `${++lineNumber * lineHeight + dy}em`).text(word);
+                }
+            }
+        });
+    }
 };
+
 
 function createHeatmap(data, yAxis, xAxis, yearPagination) {
     // Clear the contents of the div
