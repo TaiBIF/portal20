@@ -27,7 +27,7 @@ from apps.data.models import (
     DatasetOrganization,
 )
 from apps.article.models import Article
-from apps.data.models import WorkshopCertificationList, TaibifParticipants, TaibiferList, DataPaperList
+from apps.data.models import WorkshopCertificationList, TaibifParticipants, TaibiferList, DataPaperList, Taibifer
 from .models import Post, Journal
 from utils.mail import taibif_mail_contact_us
 
@@ -35,7 +35,7 @@ from apps.data.helpers.stats import get_home_stats
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_GET
 from django.utils.translation import activate
-from datetime import datetime
+from collections import defaultdict
 
 def act_lang(func):
     def wrapper(*args, **kwargs):
@@ -470,7 +470,17 @@ def tech_class_license(request):
     return render(request, 'tech-class-license.html', context)
 
 def tech_volunteer(request):
-    context = {}
+    taibifer_entries = Taibifer.objects.prefetch_related('roles').order_by('-year')
+
+    grouped_by_roles = {}
+    for entry in taibifer_entries:
+        for role in entry.roles.all():
+            if role.name not in grouped_by_roles:
+                grouped_by_roles[role.name] = {}  
+            if entry.year not in grouped_by_roles[role.name]:
+                grouped_by_roles[role.name][entry.year] = []  
+            grouped_by_roles[role.name][entry.year].append(entry.name)
+    context = {'grouped_taibifer': grouped_by_roles}
     return render(request, 'tech-volunteer.html', context)
 
 def data_paper(request):

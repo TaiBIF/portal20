@@ -986,3 +986,24 @@ class DataPaperList(models.Model):
     class Meta:
         verbose_name = 'TaiBIF 歷年合作資料論文'
         verbose_name_plural = 'TaiBIF 歷年合作資料論文'
+
+class TaibiferRole(models.Model):
+    name = models.CharField('角色名稱', max_length=100, unique=True, blank=False)
+    description = models.TextField('角色描述', blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'TaiBIFer 角色'
+        verbose_name_plural = 'TaiBIFer 角色'
+
+class Taibifer(models.Model):
+    name = models.CharField('姓名', blank=False)
+    roles = models.ManyToManyField(TaibiferRole, verbose_name='TaiBIFer 角色')
+    year = models.IntegerField('認證年份', blank=False, help_text='（會依照發布年份顯示在前端，由新至舊排序）')
+    last_update = models.DateTimeField('最後修改日期', auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'TaiBIFer 志工名單'
+        verbose_name_plural = 'TaiBIFer 志工名單'

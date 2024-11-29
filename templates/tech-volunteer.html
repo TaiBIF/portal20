@@ -2,6 +2,9 @@
 {% load i18n %}
 {% load static %}
 {% block title %}{% trans "參與志工培訓" %}{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/tech-class-license.css' %}">
+{% endblock head %}
 
 
 {% block main %}
@@ -183,32 +186,23 @@
 
         <div data-cat="list" class="col-12 col-md-9 nav-item-content hide">
             <h1 class="heading-lg-ul">TaiBIFer 志工名單</h1>
-            <div class="article-content-wrapper">
-                <h3>TaiBIF 推廣大使</h3>
-            </div>
-            <div class="sub-heading-2">2023</div>
-            <ul>
-                <li>賴建成</li>
-                <li>何亞凡</li>
-            </ul>
-            <div class="sub-heading-2">2024</div>
-            <ul>
-                <li>姚箴</li>
-                <li>陳冠宇</li>
-                <li>陳佳微</li>
-            </ul>
-
-            <div class="article-content-wrapper">
-                <h3>TaiBIF 翻譯協作者</h3>
-            </div>
-            <div class="sub-heading-2">2023</div>
-            <ul>
-                <li>方品仁</li>
-                <li>Lyvia Chong</li>
-                <li>吳詠綺</li>
-                <li>姚箴</li>
-                <li>何芷倩</li>
-            </ul>
+            {% if grouped_taibifer %}
+                {% for role, years in grouped_taibifer.items %}
+                    <div class="article-content-wrapper">
+                        <h3>{{ role }}</h3>
+                    </div>
+                        {% for year, names in years.items %}
+                            <strong>{{ year }}年度</strong>
+                            <ul class="certification-list-container">
+                                {% for name in names %}
+                                    <li>{{ name }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endfor %}
+                {% endfor %}
+            {% else %}
+                <strong>目前沒有志工資料。</strong>
+            {% endif %}
             <div class="article-content-wrapper">
                 <h3>證書樣式</h3>
             </div>
