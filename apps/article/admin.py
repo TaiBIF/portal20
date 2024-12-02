@@ -1,10 +1,14 @@
 from django.contrib import admin
 
-from .models import Article, Tag, PostImage
+from .models import Article, Tag, PostImage, CaseType, CaseMedia
 
 class PostImageAdmin(admin.StackedInline):
     model = PostImage
     fields = ('post', 'images', 'cover_license_text')
+
+class CaseMediaAdmin(admin.StackedInline):
+    model = CaseMedia
+    fields = ('post', 'media_name', 'media_url')
 
 class ArticleAdmin(admin.ModelAdmin):
     model = Article
@@ -27,18 +31,25 @@ class ArticleAdmin(admin.ModelAdmin):
         'created',
         'changed',
         'is_data_case',
-        'case_type',
-        'media_url',
+        'new_case_type',
+        # 'media_url',
     )
-    inlines = [PostImageAdmin]
+    inlines = [CaseMediaAdmin, PostImageAdmin]
 
 class TagAdmin(admin.ModelAdmin):
     model = Tag
     list_display = ('name', 'sort')
     list_filter = ('name',)
 
+class CaseTypeAdmin(admin.ModelAdmin):
+    model = CaseType
+    list_display = ['name', 'description']
+    search_fields = ['name']
+    fields = ('name', 'description')
+
 
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Tag, TagAdmin)
+admin.site.register(CaseType, CaseTypeAdmin)
 
 

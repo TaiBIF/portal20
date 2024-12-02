@@ -132,16 +132,22 @@ def article_tag_list(request, tag_name):
     })
 
 def data_case(request):
-    articles = Article.objects.filter(is_data_case=True).values('created', 'title', 'case_type', 'media_url')
+    articles = Article.objects.filter(is_data_case=True).select_related('new_case_type').prefetch_related('case_media')
 
     results = []
     for article in articles:
+        case_type_name = article.new_case_type.name if article.new_case_type else ''
+        case_media_list = article.case_media.all()
+
+        media_data = [{'media_name': case_media.media_name, 'media_url': case_media.media_url} for case_media in case_media_list]
+
         results.append({
-            'year': article['created'].year,
-            'title': article['title'],
-            'literatureType': article['case_type'],
-            'identifiers': {'doi': article['media_url']},
+            'year': article.created.year, 
+            'title': article.title,
+            'literatureType': case_type_name,
+            'media': media_data,  
         })
     
     data = {'results': results}
+    print(data)
     return JsonResponse(data)

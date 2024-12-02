@@ -510,21 +510,21 @@ def data_visual(request):
     return render(request, 'data-visual.html', context)
 
 def data_case(request):
-    CASE_TYPE_MAP = {
-        'DATATHON': '數據松'
-    }
-    articles = Article.objects.filter(is_data_case=True).order_by('-created').values('id', 'created', 'title', 'case_type', 'content')[:3]
+    articles = Article.objects.filter(is_data_case=True).order_by('-created') \
+        .select_related('new_case_type')[:3]  # 只選最新三筆呈現
 
     results = []
     for article in articles:
-        formatted_date = article['created'].strftime('%Y/%m/%d')
+        formatted_date = article.created.strftime('%Y/%m/%d')
+        case_type_name = article.new_case_type.name if article.new_case_type else ''
         results.append({
-            'id': article['id'],
+            'id': article.id,
             'date': formatted_date,
-            'title': article['title'],
-            'case_type': CASE_TYPE_MAP.get(article['case_type'], ''),
-            'content':  article['content'],
+            'title': article.title,
+            'case_type': case_type_name,
+            'content': article.content,
         })
+
     context = {
         'articles': results
     }
