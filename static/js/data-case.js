@@ -44,12 +44,29 @@ function fetchData(tableId) {
         dataType: 'json',
         success: function(data) {
             // Append the fetched data
-            allData = allData.concat(data.results.map(row => [
-                row.year || '',
-                row.title || '',
-                row.literatureType || '',
-                (row.identifiers && row.identifiers.doi) ? `<a href="https://doi.org/${row.identifiers.doi}" target="_blank">${row.identifiers.doi}</a>` : ''
-            ]));
+            allData = allData.concat(data.results.map(row => {
+                let mediaContent = '';
+            
+                if (row.identifiers && row.identifiers.doi) {
+                    mediaContent = `<a href="https://doi.org/${row.identifiers.doi}" target="_blank">${row.identifiers.doi}</a>`;
+                }
+                
+                if (row.media && row.media.length > 0) {
+                    // 如果已有 identifiers.doi，則不顯示 media，反之顯示 media
+                    if (!mediaContent) {
+                        mediaContent = row.media.map(media => {
+                            return `<a href="https://doi.org/${media.media_url}" target="_blank">${media.media_name}</a>`;
+                        }).join(', ');
+                    }
+                }
+            
+                return [
+                    row.year || '',
+                    row.title || '',
+                    row.literatureType || '',
+                    mediaContent || '', 
+                ];
+            }));
             data.results.forEach(row => {
                 const keywords = row.keywords || '';
                 const topics = row.topics || '';
