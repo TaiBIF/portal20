@@ -75,15 +75,18 @@ export default function OccurrenceMap(props) {
     const API_URL_PREFIX = `/api/v2/occurrence/map`;
     const { filters } = props;
     const [mapGeoJSON, setMapGeoJSON] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const search = filtersToSearch(filters);
         const apiURL = `${API_URL_PREFIX}?${search}`;
         
+        setLoading(true);
         fetch(apiURL)
             .then(res => res.json())
             .then(
                 (jsonData) => {
+                    setLoading(false);
                     // console.log('resp: ', jsonData);
                     if (jsonData.solr_error_msg) {
                         alert(jsonData.solr_error_msg); // TODO: need better UI
@@ -94,6 +97,7 @@ export default function OccurrenceMap(props) {
                     setMapGeoJSON(mapGeoJSON); 
                 },
                 (error) => {
+                    setLoading(false);
                     console.error('Error fetching map data:', error);
                 }
             );
@@ -191,6 +195,19 @@ export default function OccurrenceMap(props) {
         };
             
             const featureGroupRef = useRef()
+
+            if (loading) {
+                return (
+                    <div className="col-xs-12 col-md-9">
+                        <div className="container">
+                            <div className="loader">
+                                <div className="loader-wheel"></div>
+                                <div className="loader-text"></div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
 
             return (
                 <div className="App">
