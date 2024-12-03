@@ -34,7 +34,8 @@ $(document).ready(function () {
         $(".dropdown-menu").removeClass("show");
         $(this).siblings(".dropdown-menu").addClass("show");
     });
-    $(".toggle-item").click(function () {
+    $(".toggle-item").click(function (event) {
+        event.preventDefault();
         const cat = $(this).data("cat");
         $(".toggle-item").removeClass("current-green");
         $(this).addClass("current-green");
