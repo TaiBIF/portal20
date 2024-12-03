@@ -43,12 +43,41 @@ function Accordion(props) {
   }
 
   const handleSliderCommitted = (event) => {
+    console.log(content.key, props.yearValue);
     onClick(event, content.key, props.yearValue.join(','))
   };
   const clearYearCondition = (event) => {
     props.onSilderChange(props.defaultYearRange);
     props.clearCondition(event,content.key)
   };
+
+  let yearMenuItems = null;
+  if (content.key === 'taibif_year') {
+    const handleChange = (event, newValue) => {
+        setYearValue(newValue);
+        onClick(event, content.key, newValue);
+    };
+
+    yearMenuItems = (
+        <div className="year_slider" key="taibif_year">
+            <Delete
+                style={{ position: 'absolute', right: 1, width: '10%' }}
+                onClick={clearYearCondition}
+            />
+
+            <Slider
+                style={{ width: '90%', color: "#846C5B" }}
+                value={props.yearValue}
+                onChange={(e, newRange) => props.onSilderChange(newRange)}
+                onChangeCommitted={handleSliderCommitted}
+                max={props.defaultYearRange[1]}
+                min={props.defaultYearRange[0]}
+                valueLabelDisplay="auto"
+                aria-labelledby="range-slider"
+            />
+        </div>
+    );
+}
   
   const datasetMenuItems = content.rows.map((x) => {
     if (content.key ===  'dataset'){   
@@ -71,28 +100,27 @@ function Accordion(props) {
   }})
   const menuItems = content.rows.map((x) => {
     if(content.key ===  'taibif_year'){
-      const handleChange = (event, newValue) => {
-        setYearValue(newValue);
-        onClick(event, content.key, newValue);
-      };
-    
-      // console.log(content.key, handleChange)
-      return (
-          <div className="year_slider" key={x}>
-          <Delete  style={{ position: 'absolute', right: 1 , width:'10%'}} onClick={clearYearCondition} />
+      // const handleChange = (event, newValue) => {
+      //   setYearValue(newValue);
+      //   onClick(event, content.key, newValue);
+      // };
+
+      // return (
+      //     <div className="year_slider" key={x}>
+      //     <Delete  style={{ position: 'absolute', right: 1 , width:'10%'}} onClick={clearYearCondition} />
           
-          <Slider 
-            style={{width:'90%',color: "#846C5B"}}
-            value={props.yearValue}
-            onChange={(e, newRange) => props.onSilderChange(newRange)}
-            onChangeCommitted={handleSliderCommitted}
-            max={props.defaultYearRange[1]}
-            min={props.defaultYearRange[0]}
-            valueLabelDisplay="auto"
-            aria-labelledby="range-slider"
-          />
-          </div>
-      );
+      //     <Slider 
+      //       style={{width:'90%',color: "#846C5B"}}
+      //       value={props.yearValue}
+      //       onChange={(e, newRange) => props.onSilderChange(newRange)}
+      //       onChangeCommitted={handleSliderCommitted}
+      //       max={props.defaultYearRange[1]}
+      //       min={props.defaultYearRange[0]}
+      //       valueLabelDisplay="auto"
+      //       aria-labelledby="range-slider"
+      //     />
+      //     </div>
+      // );
     } else if (content.key ===  'taibif_dataset_name_zh'){   
       const count = (x.count) >=0 ? x.count.toLocaleString() : null;
       const itemChecked = filters.has(`taibif_datasetKey=${x.key}`);
@@ -211,6 +239,7 @@ function Accordion(props) {
         )}
         {datasetMenuItems}
         {menuItems}
+        {yearMenuItems}
       </div>
     : null}
     </div>

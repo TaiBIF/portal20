@@ -242,13 +242,13 @@ class TaibifSearch extends React.Component {
       filters.delete(`${menuKey}=${itemKey}`);
     }
 
-    if(menuKey == 'year') {
+    if(menuKey == 'taibif_year') {
       filters.forEach(function(x){
-        if (x.indexOf('year=') >= 0) {
+        if (x.indexOf('taibif_year=') >= 0) {
           filters.delete(x);
         }
       });
-      filters.add(`year=${itemKey}`);
+      filters.add(`taibif_year=${itemKey}`);
     } 
 
     this.applyFilters(filters);
