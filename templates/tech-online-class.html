@@ -5,12 +5,54 @@
 
 {% block script %}
 <script>
-$(document).ready(function() {
-    var hash = window.location.hash.substring(1);
+$(document).ready(function () {
+    function updateBreadcrumb(dataCat, text) {
+        // 移除現有的動態生成的麵包屑
+        $('ol.breadcrumb li.dynamic-item').remove();
+
+        // 動態新增麵包屑
+        const dynamicBreadcrumb = 
+            '<li class="breadcrumb-item active dynamic-item" aria-current="page" data-cat="' + dataCat + '">' 
+            + text + 
+            '</li>';
+
+        $('ol.breadcrumb').append(dynamicBreadcrumb);
+    }
+
+    // 預設 hash 值
+    const defaultHash = 'standard-00';
+
+    // 進入頁面時，初始化 url 上的 hash
+    if (!window.location.hash) {
+        window.location.hash = defaultHash;
+    }
+
+    // 獲取當前 url 上的 hash，若不存在則使用預設值
+    const hash = window.location.hash.substring(1) || defaultHash;
     if (hash) {
         $('.dropdown-item[data-cat="' + hash + '"]').click();
     }
 
+    // 根據 hash 初始化麵包屑
+    const $matchedItem = $('.dropdown-item[data-cat="' + hash + '"]');
+    if ($matchedItem.length) {
+        const text = $matchedItem.text();
+        updateBreadcrumb(hash, text); 
+    }
+
+    // 點擊 dropdown-item 更新麵包屑
+    $('.dropdown-item').on('click', function (e) {
+
+        // 取得 data-cat 和文字內容
+        const dataCat = $(this).data('cat');
+        const text = $(this).text();
+
+        // 更新 url
+        window.location.hash = dataCat;
+
+        // 更新麵包屑
+        updateBreadcrumb(dataCat, text);
+    });
 });
 </script>
 {% endblock %}

@@ -3,6 +3,59 @@
 {% load static %}
 {% block title %}開放資料諮詢服務{% endblock %}
 
+{% block script %}
+<script>
+$(document).ready(function () {
+    function updateBreadcrumb(dataCat, text) {
+        // 移除現有的動態生成的麵包屑
+        $('ol.breadcrumb li.dynamic-item').remove();
+
+        // 動態新增麵包屑
+        const dynamicBreadcrumb = 
+            '<li class="breadcrumb-item active dynamic-item" aria-current="page" data-cat="' + dataCat + '">' 
+            + text + 
+            '</li>';
+
+        $('ol.breadcrumb').append(dynamicBreadcrumb);
+    }
+
+    // 預設 hash 值
+    const defaultHash = 'self-learning';
+
+    // 進入頁面時，初始化 url 上的 hash
+    if (!window.location.hash) {
+        window.location.hash = defaultHash;
+    }
+
+    // 獲取當前 url 上的 hash，若不存在則使用預設值
+    const hash = window.location.hash.substring(1) || defaultHash;
+    if (hash) {
+        $('.dropdown-item[data-cat="' + hash + '"]').click();
+    }
+
+    // 根據 hash 初始化麵包屑
+    const $matchedItem = $('.dropdown-item[data-cat="' + hash + '"]');
+    if ($matchedItem.length) {
+        const text = $matchedItem.text();
+        updateBreadcrumb(hash, text); 
+    }
+
+    // 點擊 dropdown-item 更新麵包屑
+    $('.dropdown-item').on('click', function (e) {
+
+        // 取得 data-cat 和文字內容
+        const dataCat = $(this).data('cat');
+        const text = $(this).text();
+
+        // 更新 url
+        window.location.hash = dataCat;
+
+        // 更新麵包屑
+        updateBreadcrumb(dataCat, text);
+    });
+});
+</script>
+{% endblock %}
 
 {% block main %}
 <div class="bg-main-pale">
@@ -30,15 +83,15 @@
                     開放資料諮詢服務
                 </a>
                 <div class="dropdown-menu-flexible d-md-block">
-                    <a data-cat="q1" class="dropdown-item nav-item current-sunset" href="#">申請線上自學工作坊</a>
-                    <a data-cat="q2" class="dropdown-item nav-item" href="#">申請資料清理服務</a>
-                    <a data-cat="q3" class="dropdown-item nav-item" href="#">資料發布問題諮詢</a>
-                    <a data-cat="q4" class="dropdown-item nav-item" href="#">資料論文合作</a>
+                    <a data-cat="self-learning" class="dropdown-item nav-item current-sunset" href="#self-learning">申請線上自學工作坊</a>
+                    <a data-cat="data-cleaning" class="dropdown-item nav-item" href="#data-cleaning">申請資料清理服務</a>
+                    <a data-cat="consulation" class="dropdown-item nav-item" href="#consulation">資料發布問題諮詢</a>
+                    <a data-cat="collaboration" class="dropdown-item nav-item" href="#collaboration">資料論文合作</a>
                 </div>
             </div>
         </div>
 
-        <div data-cat="q1" class="col-12 col-md-9 nav-item-content">
+        <div data-cat="self-learning" class="col-12 col-md-9 nav-item-content">
             <h4 class="headline-left-hr">申請線上自學工作坊</h4>
             <p>
                 歡迎申請 TaiBIF 線上自學工作坊！本課程適合對於開放資料發布及應用有興趣，但無法來上三天實體課程的公司、團體、組織、機關參加，
@@ -122,12 +175,12 @@
             <p>若您有申請線上自學工作坊，則請點選線上自學工作坊<a href="https://docs.google.com/forms/d/e/1FAIpQLSe1ATKg1kmK3zGxHWmgVEaKrOY4bDAqohht77tjeIG0zeXvag/viewform" target="_blank">作業繳交區</a>，上傳初階和進階認證作業，並聯繫我們告知您已完成作業。</p>
         </div>
 
-        <div data-cat="q2" class="col-12 col-md-9 nav-item-content hide">
+        <div data-cat="data-cleaning" class="col-12 col-md-9 nav-item-content hide">
             <h4 class="headline-left-hr">申請資料清理服務</h4>
             <p>即將上線，敬請期待！</p>
         </div>
 
-        <div data-cat="q3" class="col-12 col-md-9 nav-item-content hide">
+        <div data-cat="consulation" class="col-12 col-md-9 nav-item-content hide">
             <h4 class="headline-left-hr">資料發布問題諮詢</h4>
             <p>
                 TaiBIF 提供任何生物多樣性資料發布的諮詢服務及協助，常見問題可先參考<a href="{% url 'faq' %}">資料集發布常見問題</a>，
@@ -136,7 +189,7 @@
             </p>
         </div>
 
-        <div data-cat="q4" class="col-12 col-md-9 nav-item-content hide">
+        <div data-cat="collaboration" class="col-12 col-md-9 nav-item-content hide">
             <h4 class="headline-left-hr">資料論文合作</h4>
             <p>
                 TaiBIF每年皆有固定經費來贊助與生物多樣性相關之主題的資料論文發表，欲知詳情如合作模式與適用條件，歡迎<a href="{% url 'contact_us' %}">聯繫我們</a>。
