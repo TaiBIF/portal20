@@ -5,6 +5,7 @@ import datetime
 import csv
 import requests
 import json
+import os
 
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
@@ -39,10 +40,9 @@ from .helpers.mod_search import (
 )
 from utils.solr_query import SolrQuery
 from  utils.map_data import get_geojson
-
 from apps.data.models import DATA_MAPPING
-
 from conf.settings import ENV
+from itertools import product
 
 DWC_CORE_TYPE_MAP = {
     'MEATADATA': '詮釋資料',
@@ -50,6 +50,88 @@ DWC_CORE_TYPE_MAP = {
     'OCCURRENCE': '出現紀錄',
     'SAMPLINGEVENT': '調查活動',
 }
+
+def load_mappings(file_name):
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(base_dir, file_name)
+    
+    with open(file_path, 'r', encoding='utf-8') as file:
+        return json.load(file)
+
+mappings = load_mappings('mapping.json')
+variant_map = mappings['variant_map']
+synonyms_map = mappings['synonyms_map']
+
+def replace_synonyms(input_str, synonyms):
+    """
+    功能：
+    將輸入的字串逐字切割，遇到同義詞時替換成完整字
+
+    參數：
+    input_str: 使用者輸入的字串
+    synonyms: 同義詞對照表
+
+    回傳：
+    替換後的字串
+    """
+
+    # result = []
+    # i = 0
+    # while i < len(input_str):
+    #     replaced = False
+    #     # 匹配長度從2開始的詞組，直到整個字串
+    #     for length in range(2, len(input_str) - i + 1):
+    #         print(length, i)
+    #         word = input_str[i:i + length]
+    #         print(f'word: {word}')
+    #         if word in synonyms:
+    #             result.append(synonyms[word])  # 替換為同義詞
+    #             i += length  # 跳過已替換的詞組
+    #             replaced = True
+    #             break
+    #     # 如果沒有匹配，則保留當前字元
+    #     if not replaced:
+    #         result.append(input_str[i])
+    #         i += 1
+    # return ''.join(result)
+    result = []
+    i = 0
+    while i < len(input_str) - 1:  # 確保可以取到兩個字
+        word = input_str[i:i + 2]  # 取兩個字
+        if word in synonyms:
+            result.append(synonyms[word])  # 替換為同義詞
+            i += 2  # 跳過已替換的兩個字
+        else:
+            result.append(input_str[i])  # 保留當前字
+            i += 1  # 只處理一個字
+    # 若最後一個字沒有被處理（當字串長度為奇數時），將其添加到結果中
+    if i < len(input_str):
+        result.append(input_str[i])
+    return ''.join(result)
+
+
+def generate_variants(input_str, variant_map):
+    """
+    功能：
+    根據異體字映射表生成所有可能的異體字組合
+
+    參數：
+    input_str: 使用者輸入的字串
+    variant_map: 異體字對照表
+
+    回傳：
+    異體字組合列表
+    """
+    
+    # 逐一將字替換成異體字列表
+    char_variants = [
+        [char] + ([variant_map[char]] if char in variant_map else [])
+        for char in input_str
+    ]
+    
+    # 對 char_variants 的每個子列表進行笛卡兒積計算，產生所有可能的字元排列組合
+    return [''.join(combo) for combo in product(*char_variants)]
+
 
 def search_all(request):
     if request.method == 'POST':
@@ -63,9 +145,18 @@ def search_all(request):
         ## 預設最多每組 20 筆
         count = 0
 
+
+        # 同義字轉換
+        q_synonyms = replace_synonyms(q, synonyms_map)
+        # 生成所有可能的異體字組合
+        query_variants = generate_variants(q_synonyms, variant_map)
+
         # article
         article_rows = []
-        for x in Article.objects.filter(title__icontains=q).all()[:5]:
+        query = Q()
+        for variant in query_variants:
+            query |= Q(title__icontains=variant)
+        for x in Article.objects.filter(query).all()[:5]:
             article_rows.append({
                 'title': x.title,
                 'content': x.content,
@@ -75,7 +166,10 @@ def search_all(request):
 
         # dataset
         dataset_rows = []
-        for x in Dataset.objects.values('title', 'name','id','taibif_dataset_id', 'dwc_core_type').filter(Q(title__icontains=q) | Q(name__icontains=q)).exclude(status='PRIVATE').all()[:5]:
+        query = Q()
+        for variant in query_variants:
+            query |= Q(title__icontains=variant) | Q(name__icontains=variant)
+        for x in Dataset.objects.values('title', 'name','id','taibif_dataset_id', 'dwc_core_type').filter(query).exclude(status='PRIVATE').all()[:5]:
             tmp_content = Dataset_description.objects.filter(dataset=x['id']).order_by('seq')
             if len(tmp_content) > 0:
                 tmp_content = Dataset_description.objects.filter(dataset=x['id']).order_by('seq')[0].description
@@ -92,7 +186,10 @@ def search_all(request):
 
         # species
         species_rows = []
-        for x in Taxon.objects.filter(Q(name__icontains=q) | Q(name_zh__icontains=q)).exclude(taicol_taxon_id__isnull=True).all()[:5]:
+        query = Q()
+        for variant in query_variants:
+            query |= Q(name__icontains=variant) | Q(name_zh__icontains=variant)
+        for x in Taxon.objects.filter(query).exclude(taicol_taxon_id__isnull=True).all()[:5]:
             species_rows.append({
                 'title':  x.get_name(),
                 'species_rank': x.get_rank_display(),
@@ -102,7 +199,10 @@ def search_all(request):
 
         # publisher
         publisher_rows = []
-        for x in DatasetOrganization.objects.filter(name__icontains=q).all()[:5]:
+        query = Q()
+        for variant in query_variants:
+            query |= Q(name__icontains=variant)
+        for x in DatasetOrganization.objects.filter(query).all()[:5]:
             publisher_rows.append({
                 'title': x.name,
                 'content': x.description,
