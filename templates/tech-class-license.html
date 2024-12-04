@@ -95,8 +95,8 @@ $(document).ready(function () {
                     課程認證
                 </a>
                 <div class="dropdown-menu-flexible d-md-block">
-                    <a data-cat="standard-course" class="dropdown-item nav-item current-sunset" href="#standard-course">{% trans "初階課程" %}</a>
-                    <a data-cat="advanced-course" class="dropdown-item nav-item" href="#advanced-course">{% trans "進階課程" %}</a>
+                    <a data-cat="standard-course" class="dropdown-item nav-item current-sunset" href="#standard-course">{% trans "核心課程" %}</a>
+                    <a data-cat="advanced-course" class="dropdown-item nav-item" href="#advanced-course">{% trans "增能課程" %}</a>
                     <a data-cat="certification-method" class="dropdown-item nav-item" href="#certification-method">{% trans "認證辦法" %}</a>
                     <a data-cat="online-workshop-certification" class="dropdown-item nav-item" href="#online-workshop-certification">{% trans "線上自學工作坊課程認證" %}</a>
                     <a data-cat="certified-list" class="dropdown-item nav-item" href="#certified-list">{% trans "歷年通過認證名單" %}</a>
@@ -106,7 +106,7 @@ $(document).ready(function () {
         <!-- col left end -->
         <!-- col right begin -->
         <div data-cat="standard-course" class="col-12 col-md-9 nav-item-content">
-            <h1 class="heading-lg-ul">{% trans "初階課程" %}</h1>
+            <h1 class="heading-lg-ul">{% trans "核心課程" %}</h1>
             <p>此部分為開放資料所需學習之必修課程，亦為 IPT 帳號審核相關依據</p>
             <div class="article-content-wrapper">
                 <h3>{% trans "基礎概論" %}</h3>
@@ -132,13 +132,13 @@ $(document).ready(function () {
         </div>
 
         <div data-cat="advanced-course" class="col-12 col-md-9 nav-item-content hide">
-            <h1 class="heading-lg-ul">{% trans "進階課程" %}</h1>
+            <h1 class="heading-lg-ul">{% trans "增能課程" %}</h1>
             <div class="article-content-wrapper">
                 <h3>{% trans "資料處理及上傳" %}</h3>
             </div>
             <p>
                 <ul>
-                    <li><span class="highlight-box-primary">進階 HW</span> 用工具進行資料清理</li>
+                    <li><span class="highlight-box-primary">增能 HW</span> 用工具進行資料清理</li>
                 </ul>
             </p>
             <div class="article-content-wrapper">
@@ -147,7 +147,7 @@ $(document).ready(function () {
             <p>
                 <ul>
                     <li>介紹臺灣生物多樣性資訊聯盟（TBIA）及共通資料庫查詢系統（入口網） </li>
-                    <li><span class="highlight-box-primary">進階 HW</span> 怎麼下載GBIF資料及引用</li>
+                    <li><span class="highlight-box-primary">增能 HW</span> 怎麼下載GBIF資料及引用</li>
                     <li>資料應用案例介紹、資料論文、如何避免資料誤用</li>
                     <li>資料管理方案（DMP）實務探討（depositar）</li>
                 </ul>
@@ -157,21 +157,21 @@ $(document).ready(function () {
         <div data-cat="certification-method" class="col-12 col-md-9 nav-item-content hide">
             <h1 class="heading-lg-ul">{% trans "認證辦法" %}</h1>
             <p>
-                每期工作坊皆有5項課程指定作業，包含2項初階作業及3項進階作業。 完成課程指定作業，並於課後一個月內繳交至線上作業繳交表單，
+                每期工作坊皆有5項課程指定作業，包含2項核心作業及3項增能作業。 完成課程指定作業，並於課後一個月內繳交至線上作業繳交表單，
                 經各項主題課程講師評分後，分數達標即可獲得TaiBIF課程認證證書。
             </p>
             <div class="article-content-wrapper">
                 <h3>{% trans "指定作業項目（將持續更新）" %}</h3>
             </div>
             <p>
-                <strong>初階作業</strong>
+                <strong>核心作業</strong>
                 <ul>
                     <li>DwC 資料欄位對應 + Sampling Event 資料集整理</li>
                     <li>資料集上傳TaiBIF test IPT</li>
                 </ul>
             </p>
             <p>
-                <strong>進階作業</strong>
+                <strong>增能作業</strong>
                 <ul>
                     <li>openRefine 資料清理</li>
                     <li>開放資料下載</li>
@@ -182,12 +182,12 @@ $(document).ready(function () {
                 <h3>{% trans "作業評核標準" %}</h3>
             </div>
             <p>
-                <strong>初階認證</strong>
-                <p>初階作業每項滿分20分，累計各項作業總分達25分即通過。</p>
+                <strong>核心認證</strong>
+                <p>核心作業每項滿分20分，累計各項作業總分達25分即通過。</p>
             </p>
             <p>
-                <strong>進階認證</strong>
-                <p>此認證須完成包含初階作業在內所有作業，每項滿分20分 (DMP 資料管理方案滿分30分)，累計各項作業總分達70分即通過；40分以上未達70分者則給予初階認證。</p>
+                <strong>增能認證</strong>
+                <p>此認證須完成包含核心作業在內所有作業，每項滿分20分 (DMP 資料管理方案滿分30分)，累計各項作業總分達70分即通過；40分以上未達70分者則給予核心認證。</p>
             </p> 
             <div class="article-content-wrapper">
                 <h3>{% trans "證書樣式" %}</h3>
@@ -201,7 +201,7 @@ $(document).ready(function () {
         <div data-cat="online-workshop-certification" class="col-12 col-md-9 nav-item-content hide">
             <h1 class="heading-lg-ul">{% trans "線上自學工作坊課程認證" %}</h1>
             <p>
-                若您有申請<a href="{% url 'open-consulation' %}">線上自學工作坊</a>，則請點選<a href="https://forms.gle/DoG5epPyfyS3BsrJA" target="_blank">線上自學工作坊作業繳交區</a>，上傳初階和進階認證作業，並聯繫我們告知您已完成作業。
+                若您有申請<a href="{% url 'open-consulation' %}">線上自學工作坊</a>，則請點選<a href="https://forms.gle/DoG5epPyfyS3BsrJA" target="_blank">線上自學工作坊作業繳交區</a>，上傳核心和增能認證作業，並聯繫我們告知您已完成作業。
             </p>
         </div>
 
@@ -220,7 +220,7 @@ $(document).ready(function () {
                 </div>
                 {% if levels.basic %}
                     <div>
-                        <strong>初階課程通過名單</strong><small>（共計 {{ levels.basic|length }} 名）</small>
+                        <strong>核心課程通過名單</strong><small>（共計 {{ levels.basic|length }} 名）</small>
                         <ul class="certification-list-container">
                             {% for name in levels.basic %}
                                 <li>{{ name }}</li>
@@ -230,7 +230,7 @@ $(document).ready(function () {
                 {% endif %}
                 {% if levels.advanced %}
                     <div>
-                        <strong>進階課程通過名單</strong><small>（共計 {{ levels.advanced|length }} 名）</small>
+                        <strong>增能課程通過名單</strong><small>（共計 {{ levels.advanced|length }} 名）</small>
                         <ul class="certification-list-container">
                             {% for name in levels.advanced %}
                                 <li>{{ name }}</li>

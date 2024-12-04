@@ -943,8 +943,8 @@ class taibifcode(models.Model):
 
 class WorkshopCertificationList(models.Model):
     LEVEL_CHOICES = (
-        ('basic', '初階'),
-        ('advanced', '進階')
+        ('basic', '核心'),
+        ('advanced', '增能')
     )
     year = models.IntegerField('通過年份', blank=False)
     level = models.CharField('認證等級', choices=LEVEL_CHOICES, blank=False)
