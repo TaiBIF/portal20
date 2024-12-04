@@ -55,7 +55,7 @@ function fetchData(tableId) {
                     // 如果已有 identifiers.doi，則不顯示 media，反之顯示 media
                     if (!mediaContent) {
                         mediaContent = row.media.map(media => {
-                            return `<a href="https://doi.org/${media.media_url}" target="_blank">${media.media_name}</a>`;
+                            return `<a href="${media.media_url}" target="_blank">${media.media_name}</a>`;
                         }).join(', ');
                     }
                 }
