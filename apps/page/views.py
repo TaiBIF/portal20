@@ -522,7 +522,7 @@ def data_case(request):
             'date': formatted_date,
             'title': article.title,
             'case_type': case_type_name,
-            'content': article.content,
+            'content': article.summary,
         })
 
     context = {
