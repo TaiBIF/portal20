@@ -4882,3 +4882,10 @@ body {
 .publisher-dataset-table th, .publisher-dataset-table td {
     padding: 1rem 1rem !important;
 }
+
+.highlight-box-underline {
+    padding: 3px 6px;
+    border-radius: 4px;
+    text-decoration: underline;
+    font-weight: 600;
+}

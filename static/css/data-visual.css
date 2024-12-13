@@ -76,3 +76,9 @@ label {
     justify-content: flex-end;
     gap: 10px;
 }
+
+#chart-country-btn-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}

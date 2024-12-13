@@ -16,6 +16,7 @@ from apps.data.models import (
     DatasetOrganization,
     Dataset_description,
 )
+from apps.data.helpers.synonyms_variants_convertion import *
 
 
 class SuperSearch(object):
@@ -253,87 +254,121 @@ class DatasetSearch(SuperSearch):
         self.model = Dataset
         super().__init__(filters)
 
-        # filter query
+        # 預設查詢
         query = self.model.public_objects.filter().select_related('organization')
-        #query = self.query
+
+        # 加載映射
+        mappings = load_mappings()
+        variant_map = mappings['variant_map']
+        synonyms_map = mappings['synonyms_map']
+
+        # 遍歷過濾條件
         for key, values in self.filters:
+            if not values:  # 如果沒有值，跳過
+                continue
+
             if key == 'q':
-                v = values[0] # only get one
+                v = values[0].strip()  # 僅取第一個值
                 if not v:
                     continue
                 
-                desc = list(Dataset_description.objects.filter(description__icontains=v).values_list('id', flat=True))                  
-                query = query.filter(Q(title__icontains=v)| Q(pk__in=(desc)))
-            
-            if key == 'title' or key == 'datasetName':
+                # 同義字轉換
+                v_synonyms = replace_synonyms(v, synonyms_map)
+                # 生成所有可能的異體字組合
+                v_variants = generate_variants(v_synonyms, variant_map)
+
+                query = self._build_variant_query(query, v_variants)
+
+            elif key == 'title' or key == 'datasetName':
                 query = query.filter(title__contains=values[0])
-            if key == 'name':
+
+            elif key == 'name':
                 query = query.filter(name__contains=values[0])
-            if key == 'author':
+
+            elif key == 'author':
                 query = query.filter(author__contains=values[0])
-            if key == 'organization_id' or key == 'publisherID':
+
+            elif key == 'organization_id' or key == 'publisherID':
                 query = query.filter(organization_uuid=values[0])
-            if key == 'organization_name' or key == 'publisherName':
+
+            elif key == 'organization_name' or key == 'publisherName':
                 query = query.filter(organization_name__contains=values[0])
-            if key == 'dwc_core_type':
+
+            elif key == 'dwc_core_type':
                 query = query.filter(dwc_core_type__contains=values[0])
-            if key == 'gbif_dataset_id' or key == 'gbifDatasetID':
+
+            elif key == 'gbif_dataset_id' or key == 'gbifDatasetID':
                 query = query.filter(guid=values[0])
-            if key == 'pub_date' or key ==  'publicationDate':
-                date_range = values[0].split(',',1)
-                if len(date_range) ==2:
-                    start_date = datetime.strptime(date_range[0], "%Y-%m-%d")
-                    end_date = datetime.strptime(date_range[1], "%Y-%m-%d")
-                    query = query.filter(pub_date__range=(start_date,end_date))
-                elif len(date_range) ==1:
-                    start_date = datetime.strptime(date_range[0], "%Y-%m-%d")
-                    end_date = datetime.strptime(str(datetime.today().date()), "%Y-%m-%d")
-                    query = query.filter(pub_date__range=(start_date,end_date))
-            if key == 'mod_date' or key == 'datasetModifiedDate':
-                date_range = values[0].split(',',1)
-                if len(date_range) ==2:
-                    start_date = datetime.strptime(date_range[0], "%Y-%m-%d")
-                    end_date = datetime.strptime(date_range[1], "%Y-%m-%d")
-                    query = query.filter(mod_date__range=(start_date,end_date))
-                elif len(date_range) ==1:
-                    start_date = datetime.strptime(date_range[0], "%Y-%m-%d")
-                    end_date = datetime.strptime(str(datetime.today().date()), "%Y-%m-%d")
-                    query = query.filter(mod_date__range=(start_date,end_date))
-            if key == 'doi':
+
+            elif key == 'pub_date' or key == 'publicationDate':
+                query = self._apply_date_filter(query, values[0], 'pub_date')
+
+            elif key == 'mod_date' or key == 'datasetModifiedDate':
+                query = self._apply_date_filter(query, values[0], 'mod_date')
+
+            elif key == 'doi':
                 query = query.filter(doi_contains=values[0])
-                
-            if key == 'taibifDatasetID':
+
+            elif key == 'taibifDatasetID':
                 query = query.filter(taibif_dataset_id=values[0])
 
-            if key == 'core':
-                v = values[0] # only get one
-                if not v:
-                    continue
-                d = v
-                query = query.filter(dwc_core_type__exact=d)
-            if key == 'publisher':
+            elif key == 'core':
+                query = self._apply_core_filter(query, values)
+
+            elif key == 'publisher':
                 query = query.filter(organization__in=values)
-            if key == 'rights' or key == 'license':
-                if str(values[0]) == 'NA':
-                    query = query.filter(data_license__contains='unknown')
-                else:
-                    rights_reverse_map = {v: k for k,v in DATA_MAPPING['rights'].items()}
-                    rights_list = []
-                    for i in values:
-                        rights_list.append(rights_reverse_map[values[values.index(i)]])
-                    query = query.filter(data_license__in=rights_list)
-            if key == 'country':
+
+            elif key == 'rights' or key == 'license':
+                query = self._apply_license_filter(query, values)
+
+            elif key == 'country':
                 query = query.filter(country__in=values)
-            if key == 'is_most_project':
+
+            elif key == 'is_most_project':
                 query = query.filter(is_most_project=True)
 
-            if key == 'order_by':
+            elif key == 'order_by':
                 query = query.order_by(*values)
-                
-            if key == 'source':
+
+            elif key == 'source':
                 query = query.filter(source__in=values)
 
         self.query = query
+
+    def _build_variant_query(self, query, v_variants):
+        """處理異體字查詢邏輯"""
+        variant_query = Q()
+        for variant in v_variants:
+            variant_query |= Q(title__icontains=variant)
+        return query.filter(variant_query)
+
+    def _apply_date_filter(self, query, date_range_str, field):
+        """處理日期範圍過濾邏輯"""
+        date_range = date_range_str.split(',', 1)
+        if len(date_range) == 2:
+            start_date = datetime.strptime(date_range[0], "%Y-%m-%d")
+            end_date = datetime.strptime(date_range[1], "%Y-%m-%d")
+            return query.filter(**{f'{field}__range': (start_date, end_date)})
+        elif len(date_range) == 1:
+            start_date = datetime.strptime(date_range[0], "%Y-%m-%d")
+            end_date = datetime.strptime(str(datetime.today().date()), "%Y-%m-%d")
+            return query.filter(**{f'{field}__range': (start_date, end_date)})
+        return query
+
+    def _apply_core_filter(self, query, values):
+        """處理 core 查詢邏輯"""
+        v = values[0]  # 只取第一個值
+        if not v:
+            return query
+        return query.filter(dwc_core_type__exact=v)
+
+    def _apply_license_filter(self, query, values):
+        """處理 license 查詢邏輯"""
+        if str(values[0]) == 'NA':
+            return query.filter(data_license__contains='unknown')
+        rights_reverse_map = {v: k for k, v in DATA_MAPPING['rights'].items()}
+        rights_list = [rights_reverse_map[v] for v in values]
+        return query.filter(data_license__in=rights_list)
 
     def result_map(self, x):
         return {
@@ -361,12 +396,22 @@ class PublisherSearch(SuperSearch):
 
         # filter query
         query = self.query
+
+        mappings = load_mappings()
+        variant_map = mappings['variant_map']
+        synonyms_map = mappings['synonyms_map']
+
         for key, values in self.filters:
             if key == 'q' or key == 'publisherName':
                 v = values[0] # only get one
                 if not v:
                     continue
-                query = query.filter(name__icontains=v)
+                # 同義字轉換
+                v_synonyms = replace_synonyms(v, synonyms_map)
+                # 生成所有可能的異體字組合
+                v_variants = generate_variants(v_synonyms, variant_map)
+
+                query = self._build_variant_query(query, v_variants)
             if key == 'countrycode' or key == 'countryCode':
                 query = query.filter(country_code__in=values)
             if key == 'publisherGbifUuid' or key == 'publisherID':
@@ -374,6 +419,13 @@ class PublisherSearch(SuperSearch):
 
         self.query = query
 
+    def _build_variant_query(self, query, v_variants):
+        """處理異體字查詢邏輯"""
+        variant_query = Q()
+        for variant in v_variants:
+            variant_query |= Q(name__icontains=variant)
+        return query.filter(variant_query)
+    
     def result_map(self, x):
         return {
             'id': x.id,
@@ -390,33 +442,59 @@ class SpeciesSearch(SuperSearch):
     def __init__(self, filters):
         self.model = Taxon
         super().__init__(filters)
-        # filter query
-        query = self.query
+
+        # 預設查詢
+        query = self.model.objects.filter(taicol_taxon_id__isnull=False)
+
+        mappings = load_mappings()
+        variant_map = mappings['variant_map']
+        synonyms_map = mappings['synonyms_map']
+
+        # 遍歷過濾器
         for key, values in self.filters:
+            if not values:  # 如果沒有值，跳過
+                continue
+
             if key == 'q':
-                v = values[0].strip() # only get one
+                v = values[0].strip()  # 僅取第一個值
                 if not v:
                     continue
-                query = query.filter(Q(name__icontains=v) | Q(name_zh__icontains=v))
-            if key == 'rank':
+                
+                # 同義字轉換
+                v_synonyms = replace_synonyms(v, synonyms_map)
+                # 生成所有可能的異體字組合
+                v_variants = generate_variants(v_synonyms, variant_map)
+
+                query = self._build_variant_query(query, v_variants)
+
+            elif key == 'rank':
                 query = query.filter(rank__in=values)
-            if key == 'status':
-                v = values[0] # only get one
-                if not v:
-                    continue
+
+            elif key == 'status':
+                v = values[0]  # 只取第一個值
                 if v == 'accepted':
                     query = query.filter(is_accepted_name=True)
                 elif v == 'synonym':
                     query = query.filter(is_accepted_name=False)
-            if key == 'highertaxon':
-                final_q = Q()
-                for tmp_q in [Q(path__icontains=i) for i in values]:
-                    final_q = final_q | tmp_q;
-                query = query.filter(final_q)
 
-            self.query = query
-        
-        self.query = query.filter(taicol_taxon_id__isnull=False).order_by('taicol_taxon_id')
+            elif key == 'highertaxon':
+                query = self._build_higher_taxon_query(query, values)
+
+        self.query = query.order_by('taicol_taxon_id')
+
+    def _build_variant_query(self, query, v_variants):
+        """處理異體字查詢邏輯"""
+        variant_query = Q()
+        for variant in v_variants:
+            variant_query |= Q(name__icontains=variant) | Q(name_zh__icontains=variant)
+        return query.filter(variant_query)
+
+    def _build_higher_taxon_query(self, query, values):
+        """處理 higher taxon 查詢邏輯"""
+        higher_taxon_query = Q()
+        for value in values:
+            higher_taxon_query |= Q(path__icontains=value)
+        return query.filter(higher_taxon_query)
         
 
     def result_map(self, x):

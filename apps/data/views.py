@@ -1,10 +1,6 @@
-import time
-from urllib.parse import urlencode
-import re
 import datetime
 import csv
 import requests
-import json
 
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
@@ -37,11 +33,10 @@ from .helpers.mod_search import (
     PublisherSearch,
     SpeciesSearch,
 )
+from apps.data.helpers.synonyms_variants_convertion import *
 from utils.solr_query import SolrQuery
 from  utils.map_data import get_geojson
-
 from apps.data.models import DATA_MAPPING
-
 from conf.settings import ENV
 
 DWC_CORE_TYPE_MAP = {
@@ -50,6 +45,7 @@ DWC_CORE_TYPE_MAP = {
     'OCCURRENCE': '出現紀錄',
     'SAMPLINGEVENT': '調查活動',
 }
+
 
 def search_all(request):
     if request.method == 'POST':
@@ -63,9 +59,21 @@ def search_all(request):
         ## 預設最多每組 20 筆
         count = 0
 
+        mappings = load_mappings()
+        variant_map = mappings['variant_map']
+        synonyms_map = mappings['synonyms_map']
+
+        # 同義字轉換
+        q_synonyms = replace_synonyms(q, synonyms_map)
+        # 生成所有可能的異體字組合
+        query_variants = generate_variants(q_synonyms, variant_map)
+
         # article
         article_rows = []
-        for x in Article.objects.filter(title__icontains=q).all()[:5]:
+        query = Q()
+        for variant in query_variants:
+            query |= Q(title__icontains=variant)
+        for x in Article.objects.filter(query).all()[:5]:
             article_rows.append({
                 'title': x.title,
                 'content': x.content,
@@ -75,7 +83,10 @@ def search_all(request):
 
         # dataset
         dataset_rows = []
-        for x in Dataset.objects.values('title', 'name','id','taibif_dataset_id', 'dwc_core_type').filter(Q(title__icontains=q) | Q(name__icontains=q)).exclude(status='PRIVATE').all()[:5]:
+        query = Q()
+        for variant in query_variants:
+            query |= Q(title__icontains=variant) | Q(name__icontains=variant)
+        for x in Dataset.objects.values('title', 'name','id','taibif_dataset_id', 'dwc_core_type').filter(query).exclude(status='PRIVATE').all()[:5]:
             tmp_content = Dataset_description.objects.filter(dataset=x['id']).order_by('seq')
             if len(tmp_content) > 0:
                 tmp_content = Dataset_description.objects.filter(dataset=x['id']).order_by('seq')[0].description
@@ -92,7 +103,10 @@ def search_all(request):
 
         # species
         species_rows = []
-        for x in Taxon.objects.filter(Q(name__icontains=q) | Q(name_zh__icontains=q)).exclude(taicol_taxon_id__isnull=True).all()[:5]:
+        query = Q()
+        for variant in query_variants:
+            query |= Q(name__icontains=variant) | Q(name_zh__icontains=variant)
+        for x in Taxon.objects.filter(query).exclude(taicol_taxon_id__isnull=True).all()[:5]:
             species_rows.append({
                 'title':  x.get_name(),
                 'species_rank': x.get_rank_display(),
@@ -102,7 +116,10 @@ def search_all(request):
 
         # publisher
         publisher_rows = []
-        for x in DatasetOrganization.objects.filter(name__icontains=q).all()[:5]:
+        query = Q()
+        for variant in query_variants:
+            query |= Q(name__icontains=variant)
+        for x in DatasetOrganization.objects.filter(query).all()[:5]:
             publisher_rows.append({
                 'title': x.name,
                 'content': x.description,

@@ -6,6 +6,60 @@
 <link rel="stylesheet" href="{% static 'css/tech-class-license.css' %}">
 {% endblock head %}
 
+{% block script %}
+<script>
+$(document).ready(function () {
+    function updateBreadcrumb(dataCat, text) {
+        // 移除現有的動態生成的麵包屑
+        $('ol.breadcrumb li.dynamic-item').remove();
+
+        // 動態新增麵包屑
+        const dynamicBreadcrumb = 
+            '<li class="breadcrumb-item active dynamic-item" aria-current="page" data-cat="' + dataCat + '">' 
+            + text + 
+            '</li>';
+
+        $('ol.breadcrumb').append(dynamicBreadcrumb);
+    }
+
+    // 預設 hash 值
+    const defaultHash = 'standard-course';
+
+    // 進入頁面時，初始化 url 上的 hash
+    if (!window.location.hash) {
+        window.location.hash = defaultHash;
+    }
+
+    // 獲取當前 url 上的 hash，若不存在則使用預設值
+    const hash = window.location.hash.substring(1) || defaultHash;
+    if (hash) {
+        $('.dropdown-item[data-cat="' + hash + '"]').click();
+    }
+
+    // 根據 hash 初始化麵包屑
+    const $matchedItem = $('.dropdown-item[data-cat="' + hash + '"]');
+    if ($matchedItem.length) {
+        const text = $matchedItem.text();
+        updateBreadcrumb(hash, text); 
+    }
+
+    // 點擊 dropdown-item 更新麵包屑
+    $('.dropdown-item').on('click', function (e) {
+
+        // 取得 data-cat 和文字內容
+        const dataCat = $(this).data('cat');
+        const text = $(this).text();
+
+        // 更新 url
+        window.location.hash = dataCat;
+
+        // 更新麵包屑
+        updateBreadcrumb(dataCat, text);
+    });
+});
+</script>
+{% endblock %}
+
 
 {% block main %}
 <!-- topnav begin -->
@@ -41,18 +95,18 @@
                     課程認證
                 </a>
                 <div class="dropdown-menu-flexible d-md-block">
-                    <a data-cat="1" class="dropdown-item nav-item current-sunset" href="#">{% trans "初階課程" %}</a>
-                    <a data-cat="2" class="dropdown-item nav-item" href="#">{% trans "進階課程" %}</a>
-                    <a data-cat="3" class="dropdown-item nav-item" href="#">{% trans "認證辦法" %}</a>
-                    <a data-cat="4" class="dropdown-item nav-item" href="#">{% trans "線上自學工作坊課程認證" %}</a>
-                    <a data-cat="5" class="dropdown-item nav-item" href="#">{% trans "歷年通過認證名單" %}</a>
+                    <a data-cat="standard-course" class="dropdown-item nav-item current-sunset" href="#standard-course">{% trans "核心課程" %}</a>
+                    <a data-cat="advanced-course" class="dropdown-item nav-item" href="#advanced-course">{% trans "增能課程" %}</a>
+                    <a data-cat="certification-method" class="dropdown-item nav-item" href="#certification-method">{% trans "認證辦法" %}</a>
+                    <a data-cat="online-workshop-certification" class="dropdown-item nav-item" href="#online-workshop-certification">{% trans "線上自學工作坊課程認證" %}</a>
+                    <a data-cat="certified-list" class="dropdown-item nav-item" href="#certified-list">{% trans "歷年通過認證名單" %}</a>
                 </div>
             </div>
         </div>
         <!-- col left end -->
         <!-- col right begin -->
-        <div data-cat="1" class="col-12 col-md-9 nav-item-content">
-            <h1 class="heading-lg-ul">{% trans "初階課程" %}</h1>
+        <div data-cat="standard-course" class="col-12 col-md-9 nav-item-content">
+            <h1 class="heading-lg-ul">{% trans "核心課程" %}</h1>
             <p>此部分為開放資料所需學習之必修課程，亦為 IPT 帳號審核相關依據</p>
             <div class="article-content-wrapper">
                 <h3>{% trans "基礎概論" %}</h3>
@@ -62,7 +116,7 @@
                     <li>開放資料流程</li>
                     <li>資料發布類型</li>
                     <li>資料標準及共通欄位</li>
-                    <li><span class="highlight-box-primary">HW</span> 資料欄位對應(DwC) 實作練習</li>
+                    <li><span class="highlight-box-primary">HW</span> 資料欄位對應（DwC）實作練習</li>
                     <li>敏感物種資料處理原則</li>
                 </ul>
             </p>
@@ -77,14 +131,14 @@
             </p>
         </div>
 
-        <div data-cat="2" class="col-12 col-md-9 nav-item-content hide">
-            <h1 class="heading-lg-ul">{% trans "進階課程" %}</h1>
+        <div data-cat="advanced-course" class="col-12 col-md-9 nav-item-content hide">
+            <h1 class="heading-lg-ul">{% trans "增能課程" %}</h1>
             <div class="article-content-wrapper">
                 <h3>{% trans "資料處理及上傳" %}</h3>
             </div>
             <p>
                 <ul>
-                    <li><span class="highlight-box-primary">進階 HW</span> 用工具進行資料清理</li>
+                    <li><span class="highlight-box-primary">增能 HW</span> 用工具進行資料清理</li>
                 </ul>
             </p>
             <div class="article-content-wrapper">
@@ -92,48 +146,47 @@
             </div>
             <p>
                 <ul>
-                    <li>TBIA 及入口網介紹</li>
-                    <li><span class="highlight-box-primary">進階 HW</span> 怎麼下載及引用資料</li>
-                    <li>資料論文 data paper 、應用案例介紹</li>
-                    <li><span class="highlight-box-primary">進階 HW</span> 資料管理 (depositar)</li>
+                    <li>介紹臺灣生物多樣性資訊聯盟（TBIA）及共通資料庫查詢系統（入口網） </li>
+                    <li><span class="highlight-box-primary">增能 HW</span> 怎麼下載GBIF資料及引用</li>
+                    <li>資料應用案例介紹、資料論文、如何避免資料誤用</li>
+                    <li>資料管理方案（DMP）實務探討（depositar）</li>
                 </ul>
             </p>
         </div>
 
-        <div data-cat="3" class="col-12 col-md-9 nav-item-content hide">
+        <div data-cat="certification-method" class="col-12 col-md-9 nav-item-content hide">
             <h1 class="heading-lg-ul">{% trans "認證辦法" %}</h1>
             <p>
-                每期工作坊皆有5項課程指定作業，包含2項初階作業及3項進階作業。 完成課程指定作業，並於課後一個月內繳交至線上作業繳交表單，
+                每期工作坊皆有4項課程指定作業，包含2項核心作業及2項增能作業。 完成課程指定作業，並於課後一個月內繳交至線上作業繳交表單，
                 經各項主題課程講師評分後，分數達標即可獲得TaiBIF課程認證證書。
             </p>
             <div class="article-content-wrapper">
                 <h3>{% trans "指定作業項目（將持續更新）" %}</h3>
             </div>
             <p>
-                <strong>初階作業</strong>
+                <strong>核心作業</strong>
                 <ul>
                     <li>DwC 資料欄位對應 + Sampling Event 資料集整理</li>
                     <li>資料集上傳TaiBIF test IPT</li>
                 </ul>
             </p>
             <p>
-                <strong>進階作業</strong>
+                <strong>增能作業</strong>
                 <ul>
                     <li>openRefine 資料清理</li>
                     <li>開放資料下載</li>
-                    <li>DMP 資料管理方案規劃</li>
                 </ul>
             </p> 
             <div class="article-content-wrapper">
                 <h3>{% trans "作業評核標準" %}</h3>
             </div>
             <p>
-                <strong>初階認證</strong>
-                <p>初階作業每項滿分20分，累計各項作業總分達25分即通過。</p>
+                <strong>核心認證</strong>
+                <p>核心作業每項滿分20分，累計各項作業總分達25分即通過。</p>
             </p>
             <p>
-                <strong>進階認證</strong>
-                <p>此認證須完成包含初階作業在內所有作業，每項滿分20分 (DMP 資料管理方案滿分30分)，累計各項作業總分達70分即通過；40分以上未達70分者則給予初階認證。</p>
+                <strong>增能認證</strong>
+                <p>此認證須完成包含核心作業在內所有作業，每項滿分20分，累計各項作業總分達60分即通過；40分以上未達60分者則給予核心認證。</p>
             </p> 
             <div class="article-content-wrapper">
                 <h3>{% trans "證書樣式" %}</h3>
@@ -144,14 +197,14 @@
             </div>
         </div>
 
-        <div data-cat="4" class="col-12 col-md-9 nav-item-content hide">
+        <div data-cat="online-workshop-certification" class="col-12 col-md-9 nav-item-content hide">
             <h1 class="heading-lg-ul">{% trans "線上自學工作坊課程認證" %}</h1>
             <p>
-                若您有申請<a href="{% url 'open-consulation' %}">線上自學工作坊</a>，則請點選<a href="https://forms.gle/DoG5epPyfyS3BsrJA" target="_blank">線上自學工作坊作業繳交區</a>，上傳初階和進階認證作業，並聯繫我們告知您已完成作業。
+                若您有申請<a href="{% url 'open-consulation' %}">線上自學工作坊</a>，則請點選<a href="https://forms.gle/DoG5epPyfyS3BsrJA" target="_blank">線上自學工作坊作業繳交區</a>，上傳核心和增能認證作業，並聯繫我們告知您已完成作業。
             </p>
         </div>
 
-        <div data-cat="5" class="col-12 col-md-9 nav-item-content hide">
+        <div data-cat="certified-list" class="col-12 col-md-9 nav-item-content hide">
             <h1 class="heading-lg-ul">{% trans "歷年通過認證名單" %}</h1>
             <p>
                 課程認證制度自 2022-09-26 起（2022最後場次工作坊）實施
@@ -166,7 +219,7 @@
                 </div>
                 {% if levels.basic %}
                     <div>
-                        <strong>初階課程通過名單</strong><small>（共計 {{ levels.basic|length }} 名）</small>
+                        <strong>核心課程通過名單</strong><small>（共計 {{ levels.basic|length }} 名）</small>
                         <ul class="certification-list-container">
                             {% for name in levels.basic %}
                                 <li>{{ name }}</li>
@@ -176,7 +229,7 @@
                 {% endif %}
                 {% if levels.advanced %}
                     <div>
-                        <strong>進階課程通過名單</strong><small>（共計 {{ levels.advanced|length }} 名）</small>
+                        <strong>增能課程通過名單</strong><small>（共計 {{ levels.advanced|length }} 名）</small>
                         <ul class="certification-list-container">
                             {% for name in levels.advanced %}
                                 <li>{{ name }}</li>

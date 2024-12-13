@@ -48,7 +48,16 @@ class Tag(models.Model):
         verbose_name_plural = u'Tags'
         ordering = ['sort', ]
 
+class CaseType(models.Model):
+    name = models.CharField('案例類型名稱', max_length=100)
+    description = models.TextField('描述', blank=True)
 
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = '應用案例類型'
+        verbose_name_plural = '應用案例類型'
 
 class Article(models.Model):
     CATEGORY_CHOICE = (
@@ -87,6 +96,7 @@ class Article(models.Model):
     is_data_case = models.BooleanField('是否為應用案例', default=False, help_text='（勾選後才會呈現在 資料應用案例 頁面上）')
     media_url = models.TextField('多媒體檔案連結', blank=True)
     case_type = models.CharField('案例類型', max_length=50, choices=CASE_TYPE_CHOICE, blank=True, help_text='（若為以上應用案例打勾，請選擇案例類型）')
+    new_case_type = models.ForeignKey(CaseType, on_delete=models.SET_NULL, null=True, blank=True, help_text='（若為以上應用案例打勾，請選擇案例類型）', verbose_name='應用案例類型')
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -127,9 +137,6 @@ class Article(models.Model):
                         })
                 return {'files': files}
         return None
-    
-    def get_case_type(self):
-        return dict(self.CASE_TYPE_CHOICE).get(self.case_type, '')
 
     class Meta:
         verbose_name = u'文章'
@@ -144,4 +151,12 @@ class PostImage(models.Model):
 
     def __str__(self):
         return self.post.title
+
+class CaseMedia(models.Model):
+    post = models.ForeignKey(Article, default=None, on_delete=models.CASCADE, related_name='case_media')
+    media_name = models.CharField('多媒體名稱', max_length=128, blank=True)
+    media_url = models.CharField('多媒體檔案連結', max_length=500, blank=True)
     
+    class Meta:
+        verbose_name = '案例多媒體'
+        verbose_name_plural = '案例多媒體'

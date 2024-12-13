@@ -5,12 +5,61 @@
 
 {% block script %}
 <script>
-$(document).ready(function() {
-    var hash = window.location.hash.substring(1);
+$(document).ready(function () {
+    function updateBreadcrumb(dataCat, text) {
+        // 移除現有的動態生成的麵包屑
+        $('ol.breadcrumb li.dynamic-item').remove();
+
+        // 動態新增麵包屑
+        const dynamicBreadcrumb = 
+            '<li class="breadcrumb-item active dynamic-item" aria-current="page" data-cat="' + dataCat + '">' 
+            + text + 
+            '</li>';
+
+        $('ol.breadcrumb').append(dynamicBreadcrumb);
+    }
+
+    // 預設 hash 值
+    const defaultHash = 'standard-00';
+
+    // 進入頁面時，初始化 url 上的 hash
+    if (!window.location.hash) {
+        window.location.hash = defaultHash;
+    }
+
+    // 獲取當前 url 上的 hash，若不存在則使用預設值
+    const hash = window.location.hash.substring(1) || defaultHash;
     if (hash) {
         $('.dropdown-item[data-cat="' + hash + '"]').click();
     }
 
+    // 根據 hash 初始化麵包屑
+    const $matchedItem = $('.dropdown-item[data-cat="' + hash + '"]');
+    if ($matchedItem.length) {
+        const text = $matchedItem.text();
+        updateBreadcrumb(hash, text); 
+    }
+
+    // 點擊 dropdown-item 更新麵包屑
+    $('.dropdown-item').on('click', function (e) {
+
+        // 取得 data-cat 和文字內容
+        const dataCat = $(this).data('cat');
+        const text = $(this).text();
+
+        // 更新 url
+        window.location.hash = dataCat;
+
+        // 更新麵包屑
+        updateBreadcrumb(dataCat, text);
+
+        // 根據 dataCat 更新 iframe 的 src
+        const iframe = $('#pdf-frame');  // 假設 iframe 的 id 是 pdf-frame
+        const pdfUrl = getPdfUrlForCategory(dataCat); // 這是根據 dataCat 獲取對應 PDF URL 的方法
+
+        // 更新 iframe 的 src 來重新載入 PDF
+        iframe.attr('src', pdfUrl);
+    });
 });
 </script>
 {% endblock %}
@@ -50,18 +99,18 @@ $(document).ready(function() {
                     線上教材包
                 </a>
                 <div class="dropdown-menu-flexible d-md-block">
-                    <a data-cat="standard-00" class="dropdown-item nav-item current-sunset" href="#standard-00">{% trans "基礎00-TaiBIF簡介" %}</a>
-                    <a data-cat="standard-01" class="dropdown-item nav-item" href="#standard-01">{% trans "基礎01-開放資料流程" %}</a>
-                    <a data-cat="standard-02" class="dropdown-item nav-item" href="#standard-02">{% trans "基礎02-資料發布類型" %}</a>
-                    <a data-cat="standard-03" class="dropdown-item nav-item" href="#standard-03">{% trans "基礎03-資料標準及共通欄位" %}</a>
-                    <a data-cat="standard-04" class="dropdown-item nav-item" href="#standard-04">{% trans "基礎04-開放資料的前置準備及清理" %}</a>
-                    <a data-cat="standard-05" class="dropdown-item nav-item" href="#standard-05">{% trans "基礎05-生物多樣性敏感資料處理原則" %}</a>
-                    <a data-cat="standard-06" class="dropdown-item nav-item" href="#standard-06">{% trans "基礎06-資料上傳 IPT" %}</a>
-                    <a data-cat="advanced-01" class="dropdown-item nav-item" href="#advanced-01">{% trans "進階01-開放資料授權規範" %}</a>
-                    <a data-cat="advanced-02" class="dropdown-item nav-item" href="#advanced-02">{% trans "進階02-TBIA及入口網介紹" %}</a>
-                    <a data-cat="advanced-03" class="dropdown-item nav-item" href="#advanced-03">{% trans "進階03-如何下載及引用開放資料" %}</a>
-                    <a data-cat="advanced-04" class="dropdown-item nav-item" href="#advanced-04">{% trans "進階04-資料論文" %}</a>
-                    <a data-cat="advanced-05" class="dropdown-item nav-item" href="#advanced-05">{% trans "進階05-OpenRefine 資料清理工具介紹與實作" %}</a>
+                    <a data-cat="standard-00" class="dropdown-item nav-item current-sunset" href="#standard-00">{% trans "核心00-TaiBIF簡介" %}</a>
+                    <a data-cat="standard-01" class="dropdown-item nav-item" href="#standard-01">{% trans "核心01-開放資料流程" %}</a>
+                    <a data-cat="standard-02" class="dropdown-item nav-item" href="#standard-02">{% trans "核心02-資料發布類型" %}</a>
+                    <a data-cat="standard-03" class="dropdown-item nav-item" href="#standard-03">{% trans "核心03-資料標準及共通欄位" %}</a>
+                    <a data-cat="standard-04" class="dropdown-item nav-item" href="#standard-04">{% trans "核心04-開放資料的前置準備及清理" %}</a>
+                    <a data-cat="standard-05" class="dropdown-item nav-item" href="#standard-05">{% trans "核心05-生物多樣性敏感資料處理原則" %}</a>
+                    <a data-cat="standard-06" class="dropdown-item nav-item" href="#standard-06">{% trans "核心06-資料上傳 IPT" %}</a>
+                    <a data-cat="advanced-01" class="dropdown-item nav-item" href="#advanced-01">{% trans "增能01-開放資料授權規範" %}</a>
+                    <a data-cat="advanced-02" class="dropdown-item nav-item" href="#advanced-02">{% trans "增能02-TBIA及入口網介紹" %}</a>
+                    <a data-cat="advanced-03" class="dropdown-item nav-item" href="#advanced-03">{% trans "增能03-如何下載及引用開放資料" %}</a>
+                    <a data-cat="advanced-04" class="dropdown-item nav-item" href="#advanced-04">{% trans "增能04-資料論文" %}</a>
+                    <a data-cat="advanced-05" class="dropdown-item nav-item" href="#advanced-05">{% trans "增能05-OpenRefine 資料清理工具介紹與實作" %}</a>
                 </div>
             </div>
         </div>
@@ -69,7 +118,7 @@ $(document).ready(function() {
 
         <!-- col right begin -->
         <div data-cat="standard-00" class="col-12 col-md-9 nav-item-content">
-            <h1 class="heading-lg-ul">{% trans "基礎00-TaiBIF簡介" %}</h1>
+            <h1 class="heading-lg-ul">{% trans "核心00-TaiBIF簡介" %}</h1>
             <div class="article-content-wrapper">
                 <div class="article-content-wrapper">
                     <h3>{% trans "教學影片" %}</h3>
@@ -79,6 +128,7 @@ $(document).ready(function() {
                 </div>
                 <div class="article-content-wrapper">
                     <h3>{% trans "教學講義" %}</h3>
+                    <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
                 </div>
                 <div class="embed-responsive embed-responsive-3by2">
                     <iframe src="https://www.slideshare.net/slideshow/embed_code/key/sC16pqun40vjyV?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
@@ -88,7 +138,7 @@ $(document).ready(function() {
         </div>
 
         <div data-cat="standard-01" class="col-12 col-md-9 nav-item-content hide">
-            <h1 class="heading-lg-ul">{% trans "基礎01-開放資料流程" %}</h1>
+            <h1 class="heading-lg-ul">{% trans "核心01-開放資料流程" %}</h1>
             <div class="article-content-wrapper">
                 <div class="article-content-wrapper">
                     <h3>{% trans "教學影片" %}</h3>
@@ -98,6 +148,7 @@ $(document).ready(function() {
                 </div>
                 <div class="article-content-wrapper">
                     <h3>{% trans "教學講義" %}</h3>
+                    <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
                 </div>
                 <div class="embed-responsive embed-responsive-3by2">
                     <iframe src="https://www.slideshare.net/slideshow/embed_code/key/qLkhlr7AansjFq?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
@@ -107,7 +158,7 @@ $(document).ready(function() {
         </div>
 
         <div data-cat="standard-02" class="col-12 col-md-9 nav-item-content hide">
-            <h1 class="heading-lg-ul">{% trans "基礎02-資料發布類型" %}</h1>
+            <h1 class="heading-lg-ul">{% trans "核心02-資料發布類型" %}</h1>
             <div class="article-content-wrapper">
                 <div class="article-content-wrapper">
                     <h3>{% trans "教學影片" %}</h3>
@@ -117,6 +168,7 @@ $(document).ready(function() {
                 </div>
                 <div class="article-content-wrapper">
                     <h3>{% trans "教學講義" %}</h3>
+                    <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
                 </div>
                 <div class="embed-responsive embed-responsive-3by2">
                     <iframe src="https://www.slideshare.net/slideshow/embed_code/key/3ZgsImbD8GtGqW?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
@@ -126,7 +178,7 @@ $(document).ready(function() {
         </div>
 
         <div data-cat="standard-03" class="col-12 col-md-9 nav-item-content hide">
-            <h1 class="heading-lg-ul">{% trans "基礎03-資料標準及共通欄位" %}</h1>
+            <h1 class="heading-lg-ul">{% trans "核心03-資料標準及共通欄位" %}</h1>
             <div class="article-content-wrapper">
                 <div class="article-content-wrapper">
                     <h3>{% trans "教學影片" %}</h3>
@@ -136,6 +188,7 @@ $(document).ready(function() {
                 </div>
                 <div class="article-content-wrapper">
                     <h3>{% trans "教學講義" %}</h3>
+                    <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
                 </div>
                 <div class="embed-responsive embed-responsive-3by2">
                     <iframe src="https://www.slideshare.net/slideshow/embed_code/key/9doAWSglaZUzIs?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
@@ -145,7 +198,7 @@ $(document).ready(function() {
         </div>
 
         <div data-cat="standard-04" class="col-12 col-md-9 nav-item-content hide">
-            <h1 class="heading-lg-ul">{% trans "基礎04-開放資料的前置準備及清理" %}</h1>
+            <h1 class="heading-lg-ul">{% trans "核心04-開放資料的前置準備及清理" %}</h1>
             <div class="article-content-wrapper">
                 <div class="article-content-wrapper">
                     <h3>{% trans "教學影片" %}</h3>
@@ -155,6 +208,7 @@ $(document).ready(function() {
                 </div>
                 <div class="article-content-wrapper">
                     <h3>{% trans "教學講義" %}</h3>
+                    <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
                 </div>
                 <div class="embed-responsive embed-responsive-3by2">
                     <iframe src="https://www.slideshare.net/slideshow/embed_code/key/qR3uE5bEgJSm9u?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
@@ -164,7 +218,7 @@ $(document).ready(function() {
         </div>
 
         <div data-cat="standard-05" class="col-12 col-md-9 nav-item-content hide">
-            <h1 class="heading-lg-ul">{% trans "基礎05-生物多樣性敏感資料處理原則" %}</h1>
+            <h1 class="heading-lg-ul">{% trans "核心05-生物多樣性敏感資料處理原則" %}</h1>
             <div class="article-content-wrapper">
                 <div class="article-content-wrapper">
                     <h3>{% trans "教學影片" %}</h3>
@@ -174,6 +228,7 @@ $(document).ready(function() {
                 </div>
                 <div class="article-content-wrapper">
                     <h3>{% trans "教學講義" %}</h3>
+                    <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
                 </div>
                 <div class="embed-responsive embed-responsive-3by2">
                     <iframe src="https://www.slideshare.net/slideshow/embed_code/key/2kqzgnlttJaY9H?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
@@ -183,20 +238,21 @@ $(document).ready(function() {
         </div>
 
         <div data-cat="standard-06" class="col-12 col-md-9 nav-item-content hide">
-            <h1 class="heading-lg-ul">{% trans "基礎06-資料上傳 IPT" %}</h1>
+            <h1 class="heading-lg-ul">{% trans "核心06-資料上傳 IPT" %}</h1>
             <div class="article-content-wrapper">
                 <div class="article-content-wrapper">
                     <h3>{% trans "教學講義" %}</h3>
+                    <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
                 </div>
                 <div class="embed-responsive embed-responsive-3by2">
-                    <iframe src="https://www.slideshare.net/slideshow/embed_code/key/68wnofrPt4FlcO?hostedIn=slideshare&amp;page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen=""> </iframe>
+                    <iframe src="https://www.slideshare.net/slideshow/embed_code/key/jex9xY0EKJqy5Z?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"> </iframe>
                 </div>
-                <p class="mt-3">PDF 講義下載：<a href="/media/article/download/TaiBIF IPT操作說明 2023 v2.6.3.pdf" class="myicon icon-download-document"></a></p>
+                <p class="mt-3">PDF 講義下載：<a href="/media/online-workshop-handouts/使用IPT上傳資料-公告板v20241107.pdf" class="myicon icon-download-document"></a></p>
             </div>
         </div>
 
         <div data-cat="advanced-01" class="col-12 col-md-9 nav-item-content hide">
-            <h1 class="heading-lg-ul">{% trans "進階01-開放資料授權規範" %}</h1>
+            <h1 class="heading-lg-ul">{% trans "增能01-開放資料授權規範" %}</h1>
             <div class="article-content-wrapper">
                 <div class="article-content-wrapper">
                     <h3>{% trans "教學影片" %}</h3>
@@ -206,6 +262,7 @@ $(document).ready(function() {
                 </div>
                 <div class="article-content-wrapper">
                     <h3>{% trans "教學講義" %}</h3>
+                    <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
                 </div>
                 <div class="embed-responsive embed-responsive-3by2">
                     <iframe src="https://www.slideshare.net/slideshow/embed_code/key/DdVaLmtjx8Fm99?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
@@ -215,7 +272,7 @@ $(document).ready(function() {
         </div>
 
         <div data-cat="advanced-02" class="col-12 col-md-9 nav-item-content hide">
-            <h1 class="heading-lg-ul">{% trans "進階02-TBIA及入口網介紹" %}</h1>
+            <h1 class="heading-lg-ul">{% trans "增能02-TBIA及入口網介紹" %}</h1>
             <div class="article-content-wrapper">
                 <div class="article-content-wrapper">
                     <h3>{% trans "教學影片" %}</h3>
@@ -225,6 +282,7 @@ $(document).ready(function() {
                 </div>
                 <div class="article-content-wrapper">
                     <h3>{% trans "教學講義" %}</h3>
+                    <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
                 </div>
                 <div class="embed-responsive embed-responsive-3by2">
                     <iframe src="https://www.slideshare.net/slideshow/embed_code/key/rRI1Aiabd90wF9?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
@@ -234,7 +292,7 @@ $(document).ready(function() {
         </div>
 
         <div data-cat="advanced-03" class="col-12 col-md-9 nav-item-content hide">
-            <h1 class="heading-lg-ul">{% trans "進階03-如何下載及引用開放資料" %}</h1>
+            <h1 class="heading-lg-ul">{% trans "增能03-如何下載及引用開放資料" %}</h1>
             <div class="article-content-wrapper">
                 <div class="article-content-wrapper">
                     <h3>{% trans "教學影片" %}</h3>
@@ -244,6 +302,7 @@ $(document).ready(function() {
                 </div>
                 <div class="article-content-wrapper">
                     <h3>{% trans "教學講義" %}</h3>
+                    <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
                 </div>
                 <div class="embed-responsive embed-responsive-3by2">
                     <iframe src="https://www.slideshare.net/slideshow/embed_code/key/fRyr4Q1P43w2Tq?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
@@ -253,7 +312,7 @@ $(document).ready(function() {
         </div>
 
         <div data-cat="advanced-04" class="col-12 col-md-9 nav-item-content hide">
-            <h1 class="heading-lg-ul">{% trans "進階04-資料論文" %}</h1>
+            <h1 class="heading-lg-ul">{% trans "增能04-資料論文" %}</h1>
             <div class="article-content-wrapper">
                 <div class="article-content-wrapper">
                     <h3>{% trans "教學影片" %}</h3>
@@ -263,6 +322,7 @@ $(document).ready(function() {
                 </div>
                 <div class="article-content-wrapper">
                     <h3>{% trans "教學講義" %}</h3>
+                    <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
                 </div>
                 <div class="embed-responsive embed-responsive-3by2">
                     <iframe src="https://www.slideshare.net/slideshow/embed_code/key/5HTo588IJSl6wM?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
@@ -272,7 +332,7 @@ $(document).ready(function() {
         </div>
 
         <div data-cat="advanced-05" class="col-12 col-md-9 nav-item-content hide">
-            <h1 class="heading-lg-ul">{% trans "進階05-OpenRefine 資料清理工具介紹與實作" %}</h1>
+            <h1 class="heading-lg-ul">{% trans "增能05-OpenRefine 資料清理工具介紹與實作" %}</h1>
             <div class="article-content-wrapper">
                 <div class="article-content-wrapper">
                     <h3>{% trans "教學影片" %}</h3>
@@ -282,6 +342,7 @@ $(document).ready(function() {
                 </div>
                 <div class="article-content-wrapper">
                     <h3>{% trans "教學講義" %}</h3>
+                    <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
                 </div>
                 <div class="embed-responsive embed-responsive-3by2">
                     <iframe src="https://www.slideshare.net/slideshow/embed_code/key/mlPsZPWsFQuBNs?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
