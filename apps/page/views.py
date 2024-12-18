@@ -486,9 +486,11 @@ def tech_volunteer(request):
 def data_paper(request):
     data_paper_list = DataPaperList.objects.all().order_by('-year', '-last_update').values()
     latest_update = data_paper_list.last()['last_update'].strftime('%Y/%m/%d') if data_paper_list else None
+    journals = Journal.objects.all().order_by('sort').values()
     context = {
         'data_paper_list': data_paper_list,
-        'latest_update': latest_update
+        'latest_update': latest_update,
+        'journals': journals,
     }
     return render(request, 'data-paper.html', context)
 
