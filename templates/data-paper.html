@@ -161,14 +161,20 @@ $(document).ready(function () {
                 包括開放授權方式、投稿費以及期刊點數等。我們也推薦以下期刊：
                 {% endblocktrans %}
             </p>
-            <ul>
-                <li><a href="https://www.tbri.gov.tw/A15_2" target="_blank">台灣生物多樣性研究</a></li>
-                <li><a href="https://bdj.pensoft.net/" target="_blank">Biodiversity Data Journal</a></li>
-                <li><a href="https://www.sciencedirect.com/journal/data-in-brief" target="_blank">Data in Brief</a></li>
-                <li><a href="https://www.nature.com/sdata/" target="_blank">Scientific Data</a></li>
-                <li><a href="https://zookeys.pensoft.net/" target="_blank">ZooKeys</a></li>
-                <li><a href="https://academic.oup.com/gigascience" target="_blank">GigaScience</a></li>
-            </ul>
+            {% for journal in journals %}
+                <div class="card-tools-wrapper">
+                    <div class="title">{{ journal.title }}</div>
+                    <div class="content flex-container">
+                        <div class="left-container">
+                            <p>{{ journal.content }}</p>
+                            <a href="{{ journal.url }}" target="_blank" class="link-item"><span class="myicon icon-link"></span>{{ journal.title }}</a>
+                        </div>
+                        <div class="right-container">
+                            <img src="/media/{{ journal.upload }}">
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
 
         <div data-cat="history" class="col-12 col-md-9 nav-item-content hide">

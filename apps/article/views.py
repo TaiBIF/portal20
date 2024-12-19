@@ -140,12 +140,14 @@ def data_case(request):
         case_media_list = article.case_media.all()
 
         media_data = [{'media_name': case_media.media_name, 'media_url': case_media.media_url} for case_media in case_media_list]
+        article_url = f'{request.scheme}://{request.get_host()}/article/{article.id}'
 
         results.append({
             'year': article.created.year, 
             'title': article.title,
             'literatureType': case_type_name,
             'media': media_data,  
+            'article_url': article_url
         })
     
     data = {'results': results}

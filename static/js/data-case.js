@@ -59,10 +59,13 @@ function fetchData(tableId) {
                         }).join(', ');
                     }
                 }
+
+                const taibifCaseTitle = `<a href="${row.article_url}">${row.title}</a>`
+                const caseTitle = tableId === 'gbif-case' ? row.title : taibifCaseTitle
             
                 return [
                     row.year || '',
-                    row.title || '',
+                    caseTitle || '',
                     row.literatureType || '',
                     mediaContent || '', 
                 ];

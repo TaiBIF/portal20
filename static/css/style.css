@@ -4889,3 +4889,24 @@ body {
     text-decoration: underline;
     font-weight: 600;
 }
+
+.card-tools-wrapper .flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.card-tools-wrapper .flex-container .left-container {
+    flex: 1; /* 讓左側容器占據可用空間 */
+}
+
+.card-tools-wrapper .flex-container .right-container {
+    flex: 0 0 200px; /* 固定寬度 */
+    text-align: right; /* 確保內容對齊右側 */
+}
+
+.card-tools-wrapper .flex-container .right-container img {
+    max-width: 100%;
+    height: auto;
+}

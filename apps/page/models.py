@@ -1,4 +1,5 @@
 import os
+import uuid
 from datetime import datetime
 
 from django.db import models
@@ -19,6 +20,12 @@ def page_image_path(instance, filename):
         os.remove(exist_path)
 
     return cover_path
+
+def upload_image_path(instance, filename):
+    ext = filename.split('.')[-1].lower()
+    unique_id = uuid.uuid4().hex
+
+    return f'page/journal/{unique_id}/image.{ext}'
 
 
 
@@ -49,7 +56,7 @@ class Post(models.Model):
 class Journal(models.Model):
     title = models.CharField(u"網站名稱", max_length=200, default="")
     title_en = models.CharField(u"網站英文名稱", max_length=200, default="")
-    upload = models.ImageField(upload_to= page_image_path, blank=True)
+    upload = models.ImageField(upload_to=upload_image_path, blank=True)
     url = models.URLField(u"網站", max_length = 200, default="")
     content = models.CharField(u"內容", max_length=200, default="",blank=True)
     content_en = models.CharField(u"英文說明", max_length=200, default="",blank=True)
