@@ -379,7 +379,7 @@ class SolrQuery(object):
         '''
         menus = []
         resp = self.solr_response
-        if 'facet_counts' not in resp and 'facet_fields' not in resp['facet_counts']:
+        if not resp or 'facet_counts' not in resp or 'facet_fields' not in resp['facet_counts']:
             return None
 
         if data := resp['facet_counts']['facet_fields']['taibif_country']:
