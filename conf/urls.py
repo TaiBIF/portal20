@@ -32,6 +32,7 @@ from apps.page.views import (
     page_not_found_view,
     response_error_handler
 )
+from django.views.generic.base import TemplateView
 # from apps.api.views import (
 #     ChartMonth,
 #     ChartYear,
@@ -64,6 +65,7 @@ urlpatterns = [
     # path('test_m/', ChartMonth, name='ChartMonth'),
     # path('taxon_bar/', taxon_bar, name='taxon_bar'),
     path("i18n/", include("django.conf.urls.i18n")),
+    path("robots.txt",TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),),
 ]
 
 urlpatterns += i18n_patterns(
