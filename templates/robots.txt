@@ -1,0 +1,27 @@
+# 允許 Googlebot
+User-agent: Googlebot
+Allow: /
+Disallow: /admin
+Disallow: /api/*
+Disallow: /occurrence/*
+Disallow: /species/*
+Disallow: /dataset/*
+Disallow: /publisher/*
+Disallow: /zh-hant/search/
+Disallow: /en/search/
+
+# 允許 Bingbot
+User-agent: Bingbot
+Allow: /
+Disallow: /admin
+Disallow: /api/*
+Disallow: /occurrence/*
+Disallow: /species/*
+Disallow: /dataset/*
+Disallow: /publisher/*
+Disallow: /zh-hant/search/
+Disallow: /en/search/
+
+# 阻擋所有爬蟲
+User-agent: *
+Disallow: /
