@@ -414,68 +414,114 @@ def occurrence_view(request, taibif_id):
 def dataset_view(request, taibif_dataset_id):
 
     try:
-        dataset = Dataset.public_objects.get(taibif_dataset_id=taibif_dataset_id)
-        organization_name = None
-        try :
-            organization_name = DatasetOrganization.objects.get(id=dataset.organization_id).name 
-        except :
-            organization_name = None
-        contacts = []
-        citation =[]
-        description = []
-        keyword = []
-        for x in Dataset_Contact.objects.filter(dataset=dataset.id).values():
-            del x['id'],x['dataset_id']
+        dataset = Dataset.objects.select_related('organization') \
+        .prefetch_related('dataset_description_set') \
+        .prefetch_related('dataset_contact_set') \
+        .prefetch_related('dataset_citation_set') \
+        .prefetch_related('dataset_keyword_set') \
+        .get(status='PUBLIC', taibif_dataset_id=taibif_dataset_id)
+
+        contacts = dataset.dataset_contact_set.all()
+        citation = dataset.dataset_citation_set.all()
+        description = dataset.dataset_description_set.first()
+        keyword = dataset.dataset_keyword_set.all()
+
+        solr_facet_fields = 'facet.field=taibif_family&facet.field=taibif_genus&facet.field=grid_x&facet.field=grid_y&facet.field=taibif_year&facet.field=taibif_scientificName&facet.field=taxon_issue&facet.field=time_issue&facet.field=geo_issue'
+        url = f"http://solr:8983/solr/taibif_occurrence/select?{solr_facet_fields}&facet.mincount=1&facet=true&fq=taibif_datasetKey:{taibif_dataset_id}&indent=true&q.op=OR&q=*%3A*&rows=0"
+        solr_response = requests.get(url).json()
+        facet_results = solr_response.get('facet_counts').get('facet_fields')
+        record_counts = solr_response.get('response').get('numFound')
+
+        family_facet_result = facet_results.get('taibif_family')
+        taibif_counts = len(family_facet_result) // 2 if family_facet_result else 0
             
-            for key, value in x.items():
-                if value == '[]':
-                    x[key] = None
-                elif isinstance(value, str) and value.startswith('[') and value.endswith(']'):
-                    x[key] = value[2:-2] # Tricky part: eliminate '[' and ']'
-            contacts.append(x)
-            
-        for x in Dataset_citation.objects.filter(dataset=dataset.id).values():
-            del x['id'],x['dataset_id']
-            citation.append(x)
-
-        for x in Dataset_description.objects.filter(dataset=dataset.id).values():
-            del x['id'],x['dataset_id']
-            description.append(x)
+        genus_facet_result = facet_results.get('taibif_genus')
+        genus_counts = len(genus_facet_result) // 2 if genus_facet_result else 0
         
+        latitude_facet_result = facet_results.get('grid_x')
+        latitude_counts = sum(count for _, count in zip(latitude_facet_result[::2], latitude_facet_result[1::2])) if latitude_facet_result else 0
+        latitude_percent = round((latitude_counts / record_counts) * 100, 1) if record_counts > 0 else 0
 
-        for x in Dataset_keyword.objects.filter(dataset=dataset.id).values():
-            del x['id'],x['dataset_id']
-            keyword.append(x)        
+        longitude_facet_result = facet_results.get('grid_y')
+        longitude_counts = sum(count for _, count in zip(longitude_facet_result[::2], longitude_facet_result[1::2])) if longitude_facet_result else 0
+        longitude_percent = round((longitude_counts / record_counts) * 100, 1) if record_counts > 0 else 0
+
+        year_facet_result = facet_results.get('taibif_year')
+        year_counts = sum(count for _, count in zip(year_facet_result[::2], year_facet_result[1::2])) if year_facet_result else 0
+        year_percent = round((year_counts / record_counts) * 100, 1) if record_counts > 0 else 0
+
+        taxon_facet_result = facet_results.get('taibif_scientificName')
+        top_taxa = []
+        if taxon_facet_result:
+            taxa_dict = dict(zip(taxon_facet_result[::2], taxon_facet_result[1::2]))
+            for name, count in list(taxa_dict.items())[:5]:
+                taxon_data_from_db = Taxon.objects.filter(name=name).values('name_zh', 'taicol_taxon_id').first()
+                if taxon_data_from_db:
+                    top_taxa.append({
+                        'scientific_name': name,
+                        'count': count,
+                        'name_zh': taxon_data_from_db.get('name_zh'),
+                        'taicol_taxon_id': taxon_data_from_db.get('taicol_taxon_id'),
+                    })
+                else:
+                    top_taxa.append({
+                        'scientific_name': name,
+                        'count': count,
+                        'name_zh': None,
+                        'taicol_taxon_id': None,
+                    })
+            # top_taxa = [{"scientific_name": name, "count": count} for name, count in list(taxa_dict.items())[:5]]
+
+        taxon_issue_facet_result = facet_results.get('taxon_issue')
+        taxon_issue = []
+        if taxon_issue_facet_result:
+            issue_dict = dict(zip(taxon_issue_facet_result[::2], taxon_issue_facet_result[1::2]))
+            taxon_issue = [{"issue_type": name.upper(), "count": count} for name, count in list(issue_dict.items())]
+
+        time_issue_facet_result = facet_results.get('time_issue')
+        time_issue = []
+        if taxon_issue_facet_result:
+            issue_dict = dict(zip(time_issue_facet_result[::2], time_issue_facet_result[1::2]))
+            time_issue = [{"issue_type": name.upper(), "count": count} for name, count in list(issue_dict.items())]
+
+        geo_issue_facet_result = facet_results.get('geo_issue')
+        geo_issue = []
+        if geo_issue_facet_result:
+            issue_dict = dict(zip(geo_issue_facet_result[::2], geo_issue_facet_result[1::2]))
+            geo_issue = [{"issue_type": name.upper(), "count": count} for name, count in list(issue_dict.items())]
+
         
-        #Count the number of longitude and latitude
-        # dataset_s = SimpleData.objects.filter(taibif_dataset_name = name).values_list('longitude','latitude','year','taxon_family_id',
-        #                                                                               'taxon_family_id')
-
-        # count_long = [item[0] for item in dataset_s]
-        # LonNum =  "{:.0%}".format(sum(1 for _ in filter(None.__ne__, count_long))/len(dataset_s))
-
-        # count_lat = [item[1] for item in dataset_s]
-        # LatNum = "{:.0%}".format(sum(1 for _ in filter(None.__ne__, count_lat))/len(dataset_s))
-
-        # count_yr = [item[2] for item in dataset_s]
-        # YrNum = "{:.0%}".format(sum(1 for _ in filter(None.__ne__, count_yr)) / len(dataset_s))
-
-        # count_fam = [item[3] for item in dataset_s]
-        # TaxNum = "{:.0%}".format(sum(1 for _ in filter(None.__ne__, count_fam)) / len(dataset_s))
-        # FamNum = len(set(count_fam))
-
-        # count_sp = [item[4] for item in dataset_s]
-        # SpNum = len(set(count_sp))
-
-
-        
+        charts = {
+            'taxon': {
+                'family_counts': taibif_counts,
+                'genus_counts': genus_counts,
+                'top_taxa': top_taxa 
+            },
+            'location': {
+                'latitude_percent': latitude_percent,
+                'longitude_percent': longitude_percent
+            },
+            'time': {
+                'year_percent': year_percent
+            },
+            'issue': {
+                'taxon': taxon_issue,
+                'time': time_issue,
+                'geo': geo_issue
+            }
+        }
 
     except Dataset.DoesNotExist:
         raise Http404("Dataset does not exist")
-
-    # return render(request, 'dataset.html', {'dataset': dataset, 'LonNum':LonNum, 'LatNum':LatNum,'YrNum':YrNum, 'TaxNum':TaxNum,
-                                            # 'FamNum':FamNum, 'SpNum':SpNum})
-    return render(request,'dataset.html',{'dataset':dataset,'contacts':contacts,'citation':citation,'description': description, 'keyword':keyword,'organization_name':organization_name,})
+    
+    return render(request,'dataset.html',
+                  {'dataset':dataset,
+                   'contacts':contacts,
+                   'citation':citation,
+                   'description': description, 
+                   'keyword':keyword,
+                   'charts': charts
+                   })
 
 
 

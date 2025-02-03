@@ -4,7 +4,9 @@
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/dataset.css' %}">
 <script src="{% static 'js/dataset.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/6.0.0/d3.min.js"></script>
 {% endblock head %}
+
 
 {% block main %}
 <!-- container begin -->
@@ -25,7 +27,7 @@
         {% if keyword %}
         <ul class="article-keyword-wrapper">
             {% for i in keyword %}
-            <li> {{i.keyword}}</li>
+            <li> #{{i.keyword}}</li>
             {% endfor%}
         </ul>
         {% endif %}
@@ -37,34 +39,45 @@
         <!-- 簡介 begin -->
         <h3>簡介</h3>
         <p>
-            {% for i in description %}
-                {{i.description}}
-            {% endfor%}
+            {% if description %}
+                {{ description.description }}
+            {% endif %}
         </p>
 
         <p>
         <!-- 詮釋資料最後修改於：{{ dataset.mod_date|date:'Y/m/d' }}<br> -->
-        {% if  organization_name %}
-            發布單位：{{ organization_name }}<br>
+        {% if dataset.organization %}
+            發布單位：<a class="highlight-link" href="https://portal.taibif.tw/publisher/{{dataset.organization.id}}">{{ dataset.organization.name }}</a><br>
         {% endif %} 
         {% if dataset.mod_date %}
             發布日期：{{ dataset.mod_date|date:'Y/m/d' }}<br>
         {% endif %}
         <!-- 資料最後上傳日：{{ dataset.pub_date|date:'Y/m/d'}}<br> -->
         資料授權引用格式：{{ dataset.data_license }}<br>
-        {% if dataset.gbif_doi %} DOI:  <a href="{{ dataset.doi_link }}"  target="_blank" >{{ dataset.gbif_doi }}</a>{% endif %}
-        
-        {% if dataset.status == "PUBLIC" and dataset.source == 'TaiBIF IPT' %}資料集下載：<a href="{{ dataset.dwca_link }}">DwC-A</a><br>{% endif %}
-        {% if dataset.status == "PUBLIC" and not dataset.guid %}<div class="alert alert-warning" role="alert">This resource has not been registered with GBIF</div><br>{% endif %}
+        {% if dataset.gbif_doi %} 
+            DOI:  <a class="highlight-link" href="{{ dataset.doi_link }}"  target="_blank" >{{ dataset.gbif_doi }}</a><br>
+        {% endif %}
+        {% if dataset.status == "PUBLIC" and dataset.source == 'TaiBIF IPT' %}
+            資料集下載：<a class="highlight-link" href="{{ dataset.dwca_link }}">DwC-A</a><br>
+        {% endif %}
+        {% if dataset.source == 'TaiBIF IPT' %}
+            IPT 資料集頁面：<a class="highlight-link" href="https://ipt.taibif.tw/resource?r={{dataset.name}}" target="_blank">https://ipt.taibif.tw/resource?r={{dataset.name}}</a><br>
+        {% endif %}
+        {% if dataset.guid %}
+            GBIF 資料集頁面：<a class="highlight-link" href="https://www.gbif.org/dataset/{{dataset.guid}}" target="_blank">https://www.gbif.org/dataset/{{dataset.guid}}</a><br>
+        {% endif %}
+        {% if dataset.status == "PUBLIC" and not dataset.guid %}
+            <div class="alert alert-warning" role="alert">This resource has not been registered with GBIF</div><br>
+        {% endif %}
         </p>
 
-        <div class="row">
+        <div class="dataset-info-container">
         <!-- row begin -->
         {% if dataset.num_occurrence %}
-            <div class="col-xs-12 col-sm-6 col-md-3">
+            <div >
                 <div class="data-wall-ctn">
                     <span class="dtat-wall-name">出現紀錄筆數</span>
-                    <a href="{% url 'search-occurrence' cat='search' %}?taibif_datasetKey={{ dataset.taibif_dataset_id }}"> 
+                    <a class="highlight-link" href="{% url 'search-occurrence' cat='search' %}?taibif_datasetKey={{ dataset.taibif_dataset_id }}"> 
                         <span class="data-wall-numbers">{{ dataset.num_occurrence|intcomma:False }}</span>
                     </a>
                 </div>
@@ -72,31 +85,136 @@
         {% endif %}
         
         {% if dataset.num_checklist %}
-            <div class="col-xs-12 col-sm-6 col-md-3">
+            <div >
                 <div class="data-wall-ctn">
-                    <span class="dtat-wall-name">checklist筆數</span>
+                    <span class="dtat-wall-name">紀錄物種筆數</span>
                     <span class="data-wall-numbers">{{ dataset.num_checklist|intcomma:False }}</span>
                 </div>
             </div>
         {% endif %}
         {% if dataset.num_event %}
-            <div class="col-xs-12 col-sm-6 col-md-3">
+            <div >
                 <div class="data-wall-ctn">
-                    <span class="dtat-wall-name">event筆數</span>
+                    <span class="dtat-wall-name">調查活動數量</span>
                     <span class="data-wall-numbers">{{ dataset.num_event|intcomma:False }}</span>
                 </div>
             </div>
         {% endif %}
         {% if dataset.num_record and not dataset.num_occurrence%}
-            <div class="col-xs-12 col-sm-6 col-md-3">
+            <div >
                 <div class="data-wall-ctn">
-                    <span class="dtat-wall-name">紀錄筆數</span>
+                    <span class="dtat-wall-name">紀錄物種筆數</span>
                     <span class="data-wall-numbers">{{ dataset.num_record|intcomma:False }}</span>
+                </div>
+            </div>
+        {% endif %}
+        {% if charts.taxon %}
+            <div >
+                <div class="data-wall-ctn">
+                    <span class="dtat-wall-name">分類群（科）數</span>
+                    <span class="data-wall-numbers">{{ charts.taxon.family_counts|intcomma:False }}</span>
+                    <span class="dtat-wall-name">分類群（屬）數</span>
+                    <span class="data-wall-numbers">{{ charts.taxon.genus_counts|intcomma:False }}</span>
+                </div>
+            </div>
+        {% endif %}
+        {% if charts.location %}
+            <div >
+                <div class="data-wall-ctn">
+                    <span class="dtat-wall-name">含經度</span>
+                    <span class="data-wall-numbers">{{ charts.location.longitude_percent }}%</span>
+                    <span class="dtat-wall-name">含緯度</span>
+                    <span class="data-wall-numbers">{{ charts.location.latitude_percent }}%</span>
+                </div>
+            </div>
+        {% endif %}
+        {% if charts.time %}
+            <div >
+                <div class="data-wall-ctn">
+                    <span class="dtat-wall-name">含年份</span>
+                    <span class="data-wall-numbers">{{ charts.time.year_percent }}%</span>
                 </div>
             </div>
         {% endif %}
         </div>
         <!-- row end -->
+
+        <h3>資料統計</h3>
+        <div id="dataset-page-table-container">
+            <div class="table-container">
+                <div class="table-container-title">主要分類群（TOP 5）</div>
+                <table class="table dataset-table">
+                    <thead>
+                        <tr>
+                            <th>學名</th>
+                            <th>中文名</th>
+                            <th>數量</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in charts.taxon.top_taxa %}
+                        <tr>
+                            <td>
+                                {% if i.taicol_taxon_id %}
+                                    <a class="highlight-link" href="/species/{{i.taicol_taxon_id}}" target="_blank">{{ i.scientific_name }}</a>
+                                {% else %}
+                                    {{ i.scientific_name }}
+                                {% endif %}
+                            </td>
+                            <td>{% if i.name_zh %}{{ i.name_zh }}{% endif %}</td>
+                            <td>{{ i.count }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-container">
+                <div class="table-container-title">資料問題</div>
+                <table class="table dataset-table">
+                    <thead>
+                        <tr>
+                            <th>已知問題</th>
+                            <th>數量</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in charts.issue.taxon %}
+                        <tr>
+                            <td>{{ i.issue_type }}</td>
+                            <td>{{ i.count }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% for i in charts.issue.time %}
+                        <tr>
+                            <td>{{ i.issue_type }}</td>
+                            <td>{{ i.count }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% for i in charts.issue.geo %}
+                        <tr>
+                            <td>{{ i.issue_type }}</td>
+                            <td>{{ i.count }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-container" id="taxon-tree-loader-wrapper">
+                <div class="table-container-title">物種樹</div>
+                <div class="table-container-title">（點擊三角形可展開顯示其下階層物種及出現紀錄筆數；點擊物種名稱可跳轉至對應的物種詳細頁面）</div>
+                <div id="tree-container"></div>
+                <div class="loader-overlay d-none"></div>
+                <div class="loader d-none" id="taxon-tree-loader"></div>
+            </div>
+            <div class="table-container" id="barchart-loader-wrapper">
+                <div class="table-container-title">出現紀錄筆數分布</div>
+                <div id="year-barchart-container" class="barchart-container"></div>
+                <!-- <div class="loader-overlay d-none" id="year-barchart-loader-overlay"></div> -->
+                <div class="loader d-none" id="year-barchart-loader"></div>
+                <div id="month-barchart-container" class="barchart-container"></div>
+            </div>
+        </div>
+        
         
         <!-- 聯絡資訊 begin -->
         <h3>聯絡資訊</h3>
