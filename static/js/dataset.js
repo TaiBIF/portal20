@@ -1,12 +1,12 @@
 const rankMap = {
-    'taibif_kingdom': '界',
-    'taibif_phylum': '門',
-    'taibif_class': '綱',
-    'taibif_order': '目',
-    'taibif_family': '科',
-    'taibif_genus': '屬',
-    'taibif_scientificName': '種'
-}
+    'taibif_kingdom': { zh: '界', en: 'KINGDOM' },
+    'taibif_phylum': { zh: '門', en: 'PHYLUM' },
+    'taibif_class': { zh: '綱', en: 'CLASS' },
+    'taibif_order': { zh: '目', en: 'ORDER' },
+    'taibif_family': { zh: '科', en: 'FAMILY' },
+    'taibif_genus': { zh: '屬', en: 'GENUS' },
+    'taibif_scientificName': { zh: '種', en: 'SPECIES' }
+};
 
 $(document).ready(function() {
     const currentUrl = window.location.href;
@@ -21,6 +21,10 @@ $(document).ready(function() {
 
     // 獲取初始出現紀錄比數分布的資料
     createPlots(datasetId);
+
+    $('#download-chart-as-image').on('click', function() {
+        downloadCombinedSVG(['year-barchart-container', 'month-barchart-container']);
+    });
 });
 
 function toggleAccordion($element) {
@@ -49,13 +53,15 @@ function createTaxonTreeRoot(datasetId) {
                 const container = $('#tree-container');
     
                 data.root.forEach(node => {
-                    const rankInMandarin = rankMap[node.rank];
+                    const rankInMandarin = rankMap[node.rank]?.zh;
+                    const rankInEngUppercase = rankMap[node.rank]?.en;
                     const taxonNode = $(`
                         <div class="taxon-tree-wrapper">
                             <span class="myicon icon-triangle-right"></span>
                             <span class="taxon-tree-node">
                                 <label>
                                     <div class="taxon-tree-rank">${rankInMandarin}</div>
+                                    <div class="taxon-tree-rank-en">${rankInEngUppercase}</div>
                                     <div class="taxon-tree-name" data-rank="${node.rank}" data-name="${node.scientific_name}">
                                         <a href="/species/${node.taicol_taxon_id}" target="_blank">${node.scientific_name} ${node.name_zh}</a>
                                     </div>
@@ -82,7 +88,7 @@ function createTaxonTreeRoot(datasetId) {
 
 function toggleNode(taxonNode, datasetId) {
     $('#taxon-tree-loader').removeClass('d-none');
-    $('.loader-overlay').removeClass('d-none');
+    $('#taxon-tree-loader-overlay').removeClass('d-none');
     const isToggled = taxonNode.find('.myicon').hasClass('icon-triangle-down');
     const childContainer = taxonNode.find('.child-nodes');
     const toggledItem = taxonNode.find('.taxon-tree-name');
@@ -104,14 +110,15 @@ function toggleNode(taxonNode, datasetId) {
                 dataType: 'json',
                 success: function (childData) {
                     $('#taxon-tree-loader').addClass('d-none');
-                    $('.loader-overlay').addClass('d-none');
+                    $('#taxon-tree-loader-overlay').addClass('d-none');
                     // console.log(childData.node);
                     if (childData.node && Array.isArray(childData.node)) {
                         if (childData.node.length === 0){
                             alert('沒有更多下階層物種資訊');
                         }
                         childData.node.forEach(childNode => {
-                            const rankInMandarin = rankMap[childNode.rank];
+                            const rankInMandarin = rankMap[childNode.rank]?.zh;
+                            const rankInEngUppercase = rankMap[childNode.rank]?.en;
                             const nameInMandarin = childNode.name_zh ? childNode.name_zh : ''
                             const childTaxonNode = $(`
                                 <div class="dataset-taxon-tree-wrapper">
@@ -119,6 +126,7 @@ function toggleNode(taxonNode, datasetId) {
                                     <span class="taxon-tree-node">
                                         <label>
                                             <div class="taxon-tree-rank">${rankInMandarin}</div>
+                                            <div class="taxon-tree-rank-en">${rankInEngUppercase}</div>
                                             <div class="taxon-tree-name" data-rank="${childNode.rank}" data-name="${childNode.scientific_name}">
                                                 ${
                                                     childNode.taicol_taxon_id 
@@ -142,31 +150,33 @@ function toggleNode(taxonNode, datasetId) {
                         childContainer.slideDown(); 
                     } else {
                         $('#taxon-tree-loader').addClass('d-none');
-                        $('.loader-overlay').addClass('d-none');
+                        $('#taxon-tree-loader-overlay').addClass('d-none');
                         alert('獲取資料發生錯誤');
                     }
                 }
             });
         } else { // 已經有內容，展開下階層物種資訊
             $('#taxon-tree-loader').addClass('d-none');
-            $('.loader-overlay').addClass('d-none');
+            $('#taxon-tree-loader-overlay').addClass('d-none');
             childContainer.slideDown();
         }
     } else { // 隱藏下階層物種資訊時
         $('#taxon-tree-loader').addClass('d-none');
-        $('.loader-overlay').addClass('d-none');
+        $('#taxon-tree-loader-overlay').addClass('d-none');
         childContainer.slideUp();
     }
 }
 
 function createPlots(datasetId) {
     $('#year-barchart-loader').removeClass('d-none');
+    $('#year-barchart-loader-overlay').removeClass('d-none');
     $.ajax({
         type: 'GET',
         url: '/api/get_dataset_datetime_data',
         data: { dataset_id: datasetId },
         dataType: 'json',
         success: function (data) {
+            $('#year-barchart-loader-overlay').addClass('d-none');
             if (data) {
                 if (data.year && data.year.length > 0) {
                     createBarChart(data.year, 'year-barchart-container', '年份', 'taibif_year');
@@ -287,3 +297,62 @@ function createBarChart(data, containerID, xAxisLabel, searchParma) {
         alert('獲取資料發生錯誤');
     }
 }
+
+function downloadCombinedSVG(containerIDs, outputFileName = "records_distribution_chart.svg") {
+    const svgNS = "http://www.w3.org/2000/svg";
+    const serializer = new XMLSerializer();
+
+    // 創建新 SVG 容器
+    const combinedSVG = document.createElementNS(svgNS, "svg");
+    combinedSVG.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+
+    let totalWidth = 0, maxHeight = 0, maxBottomPadding = 0;
+
+    containerIDs.forEach((id, index) => {
+        const svg = document.querySelector(`#${id} svg`);
+        if (!svg) return;
+
+        const clonedSVG = svg.cloneNode(true);
+        const bbox = svg.getBBox(); // 取得尺寸
+
+        // 計算 x 軸標籤的額外空間
+        const axisText = svg.querySelector("text");
+        if (axisText) {
+            const axisBBox = axisText.getBBox();
+            maxBottomPadding = Math.max(maxBottomPadding, axisBBox.y + axisBBox.height);
+        }
+
+        if (index === 0) {
+            maxHeight = bbox.height;
+        } else {
+            maxHeight = Math.max(maxHeight, bbox.height);
+        }
+
+        clonedSVG.setAttribute("x", totalWidth);
+        clonedSVG.setAttribute("y", 0);
+
+        combinedSVG.appendChild(clonedSVG);
+        totalWidth += bbox.width;
+    });
+
+    // 增加 x 軸標籤的空間
+    const finalHeight = maxHeight + maxBottomPadding;
+
+    // 設定合併後的 SVG 大小
+    combinedSVG.setAttribute("width", totalWidth);
+    combinedSVG.setAttribute("height", finalHeight);
+    combinedSVG.setAttribute("viewBox", `0 0 ${totalWidth} ${finalHeight}`);
+
+    // 下載
+    const source = serializer.serializeToString(combinedSVG);
+    const blob = new Blob([source], { type: "image/svg+xml;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = outputFileName;
+    link.click();
+    
+    URL.revokeObjectURL(url);
+}
+

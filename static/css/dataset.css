@@ -157,6 +157,7 @@ h3::before {
 #tree-container {
     padding: 5px; 
     background-color: #f2f0ee;
+    overflow-x: scroll;
 }
 
 #tree-container .taxon-tree-node {
@@ -270,6 +271,29 @@ h3::before {
 
 .barchart-container .axis text {
     color: #525252;
+}
+
+.taxon-tree-rank-en {
+    font-size: 12px;
+    color: #846C5B;
+    font-weight: bold;
+}
+
+#download-chart-as-image {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 3px;
+    margin-bottom: 5px;
+}
+
+#download-chart-as-image  svg {
+    margin-bottom: 3px;
+}
+
+#download-chart-as-image:hover {
+    cursor: pointer;
 }
 
 /* .dataset-taxon-tree-wrapper:before {
