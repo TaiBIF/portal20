@@ -200,6 +200,7 @@ h3::before {
 
 .child-nodes {
     position: relative;
+    white-space: nowrap;
 }
 
 .loader-overlay {
