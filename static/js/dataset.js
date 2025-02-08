@@ -23,7 +23,7 @@ $(document).ready(function() {
     createPlots(datasetId);
 
     $('#download-chart-as-image').on('click', function() {
-        downloadCombinedSVG(['year-barchart-container', 'month-barchart-container']);
+        downloadCombinedJPEG(['year-barchart-container', 'month-barchart-container']);
     });
 });
 
@@ -298,7 +298,7 @@ function createBarChart(data, containerID, xAxisLabel, searchParma) {
     }
 }
 
-function downloadCombinedSVG(containerIDs, outputFileName = "records_distribution_chart.svg") {
+function downloadCombinedJPEG(containerIDs, outputFileName = "records_distribution_chart.jpg", scaleFactor = 2) {
     const svgNS = "http://www.w3.org/2000/svg";
     const serializer = new XMLSerializer();
 
@@ -313,46 +313,82 @@ function downloadCombinedSVG(containerIDs, outputFileName = "records_distributio
         if (!svg) return;
 
         const clonedSVG = svg.cloneNode(true);
-        const bbox = svg.getBBox(); // 取得尺寸
+        const bbox = svg.getBoundingClientRect();  // 使用 getBoundingClientRect() 避免裁切
+        const width = bbox.width;
+        const height = bbox.height;
 
         // 計算 x 軸標籤的額外空間
         const axisText = svg.querySelector("text");
         if (axisText) {
-            const axisBBox = axisText.getBBox();
-            maxBottomPadding = Math.max(maxBottomPadding, axisBBox.y + axisBBox.height);
+            const axisBBox = axisText.getBoundingClientRect();
+            maxBottomPadding = Math.max(maxBottomPadding, axisBBox.height);
         }
 
         if (index === 0) {
-            maxHeight = bbox.height;
+            maxHeight = height;
         } else {
-            maxHeight = Math.max(maxHeight, bbox.height);
+            maxHeight = Math.max(maxHeight, height);
         }
 
         clonedSVG.setAttribute("x", totalWidth);
         clonedSVG.setAttribute("y", 0);
 
         combinedSVG.appendChild(clonedSVG);
-        totalWidth += bbox.width;
+        totalWidth += width;
     });
 
     // 增加 x 軸標籤的空間
-    const finalHeight = maxHeight + maxBottomPadding;
+    const finalHeight = maxHeight + maxBottomPadding + 10; // +10 避免邊界被裁切
 
     // 設定合併後的 SVG 大小
     combinedSVG.setAttribute("width", totalWidth);
     combinedSVG.setAttribute("height", finalHeight);
     combinedSVG.setAttribute("viewBox", `0 0 ${totalWidth} ${finalHeight}`);
 
-    // 下載
+    // 修正裁切問題：添加白色背景
+    const rect = document.createElementNS(svgNS, "rect");
+    rect.setAttribute("width", totalWidth);
+    rect.setAttribute("height", finalHeight);
+    rect.setAttribute("fill", "white");
+    combinedSVG.insertBefore(rect, combinedSVG.firstChild);
+
+    // 將 SVG 轉換為字串
     const source = serializer.serializeToString(combinedSVG);
-    const blob = new Blob([source], { type: "image/svg+xml;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = outputFileName;
-    link.click();
-    
-    URL.revokeObjectURL(url);
+    const svgBlob = new Blob([source], { type: "image/svg+xml;charset=utf-8" });
+    const url = URL.createObjectURL(svgBlob);
+
+    // 建立 Canvas
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    // 提高解析度
+    canvas.width = totalWidth * scaleFactor;
+    canvas.height = finalHeight * scaleFactor;
+    ctx.scale(scaleFactor, scaleFactor);
+
+    // 建立 Image 來載入 SVG
+    const img = new Image();
+    img.onload = function () {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // 填充白色背景，防止變黑
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // 繪製 SVG 到 Canvas
+        ctx.drawImage(img, 0, 0);
+
+        // 轉換為 JPEG 並下載
+        const jpegURL = canvas.toDataURL("image/jpeg", 1.0);
+        const link = document.createElement("a");
+        link.href = jpegURL;
+        link.download = outputFileName;
+        link.click();
+
+        // 釋放記憶體
+        URL.revokeObjectURL(url);
+    };
+    img.src = url;
 }
+
 
