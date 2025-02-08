@@ -1,0 +1,52 @@
+pre {
+    border: #ddd solid 1px !important;
+    background-color: #f2f0ee !important;
+}
+
+/* ul li {
+    margin-bottom: 5px !important;
+}
+
+ul li div {
+    margin-bottom: 10px !important;
+} */
+
+h3::before {
+    content: ''; /* 必須的，表示這是一個空的內容 */
+    display: inline-block; /* 讓偽元素顯示出來 */
+    margin-right: 10px;
+    width: 4px;
+    height: 16px; /* 或指定高度，例如 16px */
+    background: #525252;
+}
+
+.table-container {
+    border: #ddd solid 1px;
+    padding: 16px 20px;
+    border-radius: 4px;
+    /* font-size: 14px; */
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.highlight-link:link {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #525252;
+}
+
+.highlight-link:hover {
+    color: #fff !important;
+    background-color: #cd7745;
+}
+
+.highlight-link:visited {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #525252;
+}
+
+/* .table-container table {
+    font-size: 14px !important;
+} */
+

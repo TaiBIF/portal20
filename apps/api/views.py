@@ -191,6 +191,50 @@ def get_map_species(request):
     
     return JsonResponse(resp)
 
+def dataset_api_v3(request):
+
+    params = request.GET
+
+    # params 送進 DatasetSearch 之前先檢查
+    validation_response = validate_params(params)
+    if validation_response:
+        return validation_response
+    
+    ds_search = DatasetSearch(list(params.lists()))
+    result_d =  ds_search.query.values()
+    
+    rows = [{
+        'datasetName' : x['title'] if 'title' in x else None,
+        'taibifDatasetID' : x['taibif_dataset_id'] if 'taibif_dataset_id' in x else None,
+        'publisherID' : x['organization_uuid'] if 'organization_uuid' in x else None,
+        'publisherName' : x['organization_name'] if 'organization_name' in x else None,
+        'author' : x['author'] if 'author' in x else None,
+        'datasetShortName' : x['name'] if 'name' in x else None,
+        'publicationDate' : x['pub_date'].strftime("%Y-%m-%d") if 'pub_date' in x and x['pub_date'] != None else None,
+        'datasetModifiedDate' : x['mod_date'].strftime("%Y-%m-%d") if 'mod_date' in x and x['mod_date'] != None else None,
+        'gbifDatasetID' : x['guid'] if 'guid' in x else None,
+        'core' : x['dwc_core_type'].upper() if 'dwc_core_type' in x else None,
+        'license' : x['data_license'] if 'data_license' in x else 'unknown',
+        'doi' : x['gbif_doi'] if 'gbif_doi' in x else 'test',
+        'numberRecord' : x['num_record'] if 'num_record' in x else None,
+        'numberOccurrence' : x['num_occurrence'] if 'num_occurrence' in x else None,
+        'source' : x['source'] if 'source' in x else None,
+    } for x in result_d ]
+
+    api_response = JsonResponse(
+        {
+            "status": {
+                "code": 200,
+                "message": "Success"
+            },
+            "params": params,
+            "count": len(rows),
+            "data": rows
+        }
+    )
+    
+    return api_response
+
 def dataset_api(request):
     
     ds_search = DatasetSearch(list(request.GET.lists()))
@@ -217,6 +261,43 @@ def dataset_api(request):
     } for x in result_d ]
     
     return HttpResponse(json.dumps(rows), content_type="application/json")
+
+def publisher_api_v3(request):
+
+    params = request.GET
+
+    # params 送進 PublisherSearch 之前先檢查
+    validation_response = validate_params(params)
+    if validation_response:
+        return validation_response
+
+    ds_search = PublisherSearch(list(params.lists()))
+    result_d =  ds_search.query.values()
+        
+    rows = [{
+        'publisherID' : x['organization_gbif_uuid'] if 'organization_gbif_uuid' in x else None,
+        'publisherName' : x['name'] if 'name' in x else None,
+        'description' : x['description'] if 'description' in x else None,
+        'administrativeContact' : x['administrative_contact'] if 'administrative_contact' in x else None,
+        'technicalContact' : x['technical_contact'] if 'technical_contact' in x else None,
+        'countryCode' : x['country_code'] if 'country_code' in x else None,
+        'countryOrArea' : x['country_or_area'] if 'country_or_area' in x else None,
+        'installations' : x['installations'] if 'installations' in x else None,
+    } for x in result_d ]
+    
+    api_response = JsonResponse(
+        {
+            "status": {
+                "code": 200,
+                "message": "Success"
+            },
+            "params": params,
+            "count": len(rows),
+            "data": rows
+        }
+    )
+    
+    return api_response
 
 def publisher_api(request):
     dataset = []
@@ -447,6 +528,771 @@ def taxon_tree_node(request, taicol_taxon_id):
         }
     # return HttpResponse(json.dumps(data), content_type="application/json")
     return HttpResponse(json.dumps(data), content_type="application/json")
+
+def to_float(value):
+    try:
+        return float(value)
+    except (ValueError, TypeError):
+        return None
+    
+
+def str_to_int(value):
+    try:
+        float_value = float(value)
+        if float_value.is_integer():
+            return int(float_value)
+        else:
+            return None
+    except (ValueError, TypeError):
+        return None
+    
+def is_valid_date(date_string):
+    try:
+        datetime.datetime.strptime(date_string, '%Y-%m-%d')
+        return True
+    except ValueError:
+        return False
+    
+def is_valid_int(value):
+    try:
+        int(value)
+        return True
+    except (ValueError, TypeError):
+        return False
+    
+def is_valid_float(value):
+    try:
+        float(value)
+        return True
+    except (ValueError, TypeError):
+        return False
+
+def is_valid_year(year_value, max_year):
+    if 1700 <= int(year_value) <= max_year :
+        return True
+    else:
+        return False
+
+def is_valid_month(month_value):
+    if 1 <= int(month_value) <= 12:
+        return True
+    else:
+        return False
+
+def validate_params(params):
+    '''
+    驗證 api 傳入的參數是否正確
+    '''
+    if 'basisOfRecord' in params:
+        CONTROLLED_VOCAB = [
+            '材料實體', '保存標本', '化石標本', '活體標本', '人為觀測', '材料樣本', 
+            '機器觀測', '調查活動', '名錄/分類群', '出現紀錄', '文獻紀錄'
+        ]
+        if params['basisOfRecord'] not in CONTROLLED_VOCAB:
+            return JsonResponse(
+                {
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. BasisOfRecord must be a controlled vocabulary"
+                    },
+                    "params": params
+                }
+            )
+    if 'kingdom' in params:
+        CONTROLLED_VOCAB = [
+            'Animalia', 'Archaea', 'Bacteria', 'Chromista', 'Fungi', 'Plantae', 
+            'Protozoa', 'Viruses'
+        ]
+        if params['kingdom'] not in CONTROLLED_VOCAB:
+            return JsonResponse(
+                {
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. Kingdom must be a controlled vocabulary"
+                    },
+                    "params": params
+                }
+            )
+    if 'taxonGroup' in params:
+        CONTROLLED_VOCAB = [
+            'Fishes', 'Insects', 'Amphibia', 'Reptiles', 'Birds', 'Mammals', 
+            'Others', 'Viruses', 'Plants', 'Fungi', 'Bacteria', 'Archaea'
+        ]
+        if params['taxonGroup'] not in CONTROLLED_VOCAB:
+            return JsonResponse(
+                {
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. TaxonGroup must be a controlled vocabulary"
+                    },
+                    "params": params
+                }
+            )
+    if 'establishmentMeans' in params:
+        CONTROLLED_VOCAB = [
+            '原生', '原生：再引進', '引進（外來、非原生、非原住）', '引進（協助拓殖）', 
+            '流浪的', '不確定的（未知、隱源性）' 
+        ]
+        if params['establishmentMeans'] not in CONTROLLED_VOCAB:
+            return JsonResponse(
+                {
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. EstablishmentMeans must be a controlled vocabulary"
+                    },
+                    "params": params
+                }
+            )
+    if 'occurrenceStatus' in params:
+        CONTROLLED_VOCAB = [
+            '出現', '未出現'
+        ]
+        if params['occurrenceStatus'] not in CONTROLLED_VOCAB:
+            return JsonResponse(
+                {
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. OccurrenceStatus must be a controlled vocabulary"
+                    },
+                    "params": params
+                }
+            )
+    if 'eventDate' in params:
+        event_date_list = params['eventDate'].split(',')
+        if len(event_date_list) == 2:
+            # 區間查詢
+            start_date, end_date = event_date_list
+            if not is_valid_date(start_date) or not is_valid_date(end_date):
+                return JsonResponse({
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. EventDate must be in valid yyyy-mm-dd format."
+                    },
+                    "params": params
+                })
+        elif len(event_date_list) == 1:
+            # 單個日期查詢
+            if not is_valid_date(params['eventDate']):
+                return JsonResponse({
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. EventDate must be in valid yyyy-mm-dd format."
+                    },
+                    "params": params
+                })
+        else:
+            return JsonResponse({
+                "status": {
+                    "code": 400,
+                    "message": "Invalid parameter. EventDate must follow specific format and pattern."
+                },
+                "params": params
+            })
+    if 'year' in params:
+        max_year = datetime.datetime.now().year
+        year_list = params['year'].split(',')
+        if len(year_list) == 2:
+            # 區間查詢
+            start_year, end_year = year_list
+            if not is_valid_int(start_year) or not is_valid_int(end_year):
+                return JsonResponse({
+                    "status": {
+                        "code": 400,
+                        "message": f"Invalid parameter. Year must be an integar."
+                    },
+                    "params": params
+                })
+            if not is_valid_year(start_year, max_year) or not is_valid_year(end_year, max_year):
+                return JsonResponse({
+                    "status": {
+                        "code": 400,
+                        "message": f"Invalid parameter. Year must range from 1700 to {max_year}."
+                    },
+                    "params": params
+                })
+        elif len(year_list) == 1:
+            # 單個年份查詢
+            if not is_valid_int(params['year']):
+                return JsonResponse({
+                    "status": {
+                        "code": 400,
+                        "message": f"Invalid parameter. Year must be an integar."
+                    },
+                    "params": params
+                })
+            if not is_valid_year(params['year'], max_year):
+                return JsonResponse({
+                    "status": {
+                        "code": 400,
+                        "message": f"Invalid parameter. Year must range from 1700 to {max_year}."
+                    },
+                    "params": params
+                })
+    if 'month' in params:
+        if not is_valid_int(params['month']):
+            return JsonResponse({
+                "status": {
+                    "code": 400,
+                    "message": f"Invalid parameter. Month must be an integar."
+                },
+                "params": params
+            })
+        if not is_valid_month(params['month']):
+            return JsonResponse({
+                "status": {
+                    "code": 400,
+                    "message": "Invalid parameter. Month must range from 1 to 12."
+                },
+                "params": params
+            })
+    if 'taibifModifiedDate' in params:
+        event_date_list = params['taibifModifiedDate'].split(',')
+        if len(event_date_list) == 2:
+            # 區間查詢
+            start_date, end_date = event_date_list
+            if not is_valid_date(start_date) or not is_valid_date(end_date):
+                return JsonResponse({
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. TaibifModifiedDate must be in valid yyyy-mm-dd format."
+                    },
+                    "params": params
+                })
+        elif len(event_date_list) == 1:
+            # 單個日期查詢
+            if not is_valid_date(params['taibifModifiedDate']):
+                return JsonResponse({
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. TaibifModifiedDate must be in valid yyyy-mm-dd format."
+                    },
+                    "params": params
+                })
+        else:
+            return JsonResponse({
+                "status": {
+                    "code": 400,
+                    "message": "Invalid parameter. TaibifModifiedDate must follow specific format and pattern."
+                },
+                "params": params
+            })
+    if 'county' in params:
+        CONTROLLED_VOCAB = [
+            'Keelung City', 'New Taipei City', 'Taipei City', 'Taoyuan City', 'Hsinchu County',
+            'Hsinchu City', 'Miaoli County', 'Taichung City', 'Changhua County', 'Nantou County', 
+            'Yunlin County', 'Chiayi County', 'Chiayi City', 'Tainan City', 'Kaohsiung City', 
+            'Pingtung County', 'Yilan County', 'Hualien County', 'Taitung County', 'Penghu County', 
+            'Kinmen County', 'Lienchiang County'
+        ]
+        if params['county'] not in CONTROLLED_VOCAB:
+            return JsonResponse(
+                {
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. County must be a controlled vocabulary"
+                    },
+                    "params": params
+                }
+            )
+    if 'selfProduced' in params:
+        CONTROLLED_VOCAB = [
+            'True', 'False'
+        ]
+        if params['selfProduced'] not in CONTROLLED_VOCAB:
+            return JsonResponse(
+                {
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. SelfProduced must be either True or False"
+                    },
+                    "params": params
+                }
+            )
+    if 'license' in params:
+        CONTROLLED_VOCAB = [
+            'CC0', 'CC-BY', 'CC-BY-NC', 'NA'
+        ]
+        if params['license'] not in CONTROLLED_VOCAB:
+            return JsonResponse(
+                {
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. License must be a controlled vocabulary"
+                    },
+                    "params": params
+                }
+            )
+    if 'source' in params:
+        CONTROLLED_VOCAB = [
+            'TaiBIF IPT', 'GBIF'
+        ]
+        if params['source'] not in CONTROLLED_VOCAB:
+            return JsonResponse(
+                {
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. Source must be a controlled vocabulary"
+                    },
+                    "params": params
+                }
+            )
+    if 'core' in params:
+        CONTROLLED_VOCAB = [
+            'SAMPLINGEVENT', 'OCCURRENCE', 'CHECKLIST', 'METADATA'
+        ]
+        if params['core'] not in CONTROLLED_VOCAB:
+            return JsonResponse(
+                {
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. Core must be a controlled vocabulary"
+                    },
+                    "params": params
+                }
+            )
+    if 'datasetModifiedDate' in params:
+        event_date_list = params['datasetModifiedDate'].split(',')
+        if len(event_date_list) == 2:
+            # 區間查詢
+            start_date, end_date = event_date_list
+            if not is_valid_date(start_date) or not is_valid_date(end_date):
+                return JsonResponse({
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. DatasetModifiedDate must be in valid yyyy-mm-dd format."
+                    },
+                    "params": params
+                })
+        elif len(event_date_list) == 1:
+            # 單個日期查詢
+            if not is_valid_date(params['datasetModifiedDate']):
+                return JsonResponse({
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. DatasetModifiedDate must be in valid yyyy-mm-dd format."
+                    },
+                    "params": params
+                })
+        else:
+            return JsonResponse({
+                "status": {
+                    "code": 400,
+                    "message": "Invalid parameter. DatasetModifiedDate must follow specific format and pattern."
+                },
+                "params": params
+            })
+    if 'publicationDate' in params:
+        event_date_list = params['publicationDate'].split(',')
+        if len(event_date_list) == 2:
+            # 區間查詢
+            start_date, end_date = event_date_list
+            if not is_valid_date(start_date) or not is_valid_date(end_date):
+                return JsonResponse({
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. PublicationDate must be in valid yyyy-mm-dd format."
+                    },
+                    "params": params
+                })
+        elif len(event_date_list) == 1:
+            # 單個日期查詢
+            if not is_valid_date(params['publicationDate']):
+                return JsonResponse({
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. PublicationDate must be in valid yyyy-mm-dd format."
+                    },
+                    "params": params
+                })
+        else:
+            return JsonResponse({
+                "status": {
+                    "code": 400,
+                    "message": "Invalid parameter. PublicationDate must follow specific format and pattern."
+                },
+                "params": params
+            })
+    if 'countryCode' in params:
+        pattern = r'^[A-Z]{2}$'
+        if not bool(re.match(pattern, params['countryCode'])):
+            return JsonResponse({
+                "status": {
+                    "code": 400,
+                    "message": "Invalid parameter. CountryCode must follow ISO 3166-1 alpha-2 format."
+                },
+                "params": params
+            })
+    if 'boundedBy' in params:
+        location_list = params['boundedBy'].split(',')
+        # 合理參數：最小經度,最小緯度,最大經度,最大緯度
+
+        if len(location_list) == 4: 
+            min_lon, min_lat, max_lon, max_lat = location_list
+
+            # 檢查經度是否都是浮點數
+            if not (is_valid_float(min_lon) and is_valid_float(min_lat) and is_valid_float(max_lon) and is_valid_float(max_lat)):
+                return JsonResponse({
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. Longitude and latitude must be valid decimal numbers."
+                    },
+                    "params": params
+                })
+
+            # 檢查最小經度是否小於最大經度
+            if (float(min_lon) > float(max_lon)):
+                return JsonResponse({
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. minLongitude must be less than maxLongitude."
+                    },
+                    "params": params
+                })
+            else:
+                # 檢查經度是否在合理範圍內
+                if not ((-180 <= float(min_lon) <= 180) and (-180 <= float(max_lon) <= 180)):
+                    return JsonResponse({
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. Longitude must range from -180 to 180."
+                    },
+                    "params": params
+                })
+            # 檢查最小緯度是否小於最大緯度
+            if (float(min_lat) > float(max_lat)):
+                return JsonResponse({
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. minLatitude must be less than maxLatitude."
+                    },
+                    "params": params
+                })
+            else:
+                # 檢查緯度是否在合理範圍內
+                if not ((-90 <= float(min_lat) <= 90) and (-90 <= float(max_lat) <= 90)):
+                    return JsonResponse({
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. Latitude must range from -90 to 90."
+                    },
+                    "params": params
+                })
+        else:
+            return JsonResponse({
+                "status": {
+                    "code": 400,
+                    "message": "Invalid parameter. BoundedBy must follow specific format and pattern."
+                },
+                "params": params
+            })
+
+    return None
+
+def build_solr_query(params):
+    '''處理 solr 中和 q 有關的參數，直接轉換成 solr 查詢的語法並合併'''
+    filters = []
+
+    ### 物種資訊
+    if 'originalOccurrenceID' in params:
+        filters.append(f'occurrenceID:{params["originalOccurrenceID"]}')
+    if 'taibifOccurrenceID' in params:
+        filters.append(f'taibif_occ_id:{params["taibifOccurrenceID"]}')
+    if 'basisOfRecord' in params:
+        filters.append(f'taibif_basisOfRecord:"{params["basisOfRecord"]}"')
+    if 'taibifScientificName' in params:
+        filters.append(f'taibif_scientificName:{params["taibifScientificName"]}')
+    if 'taxonRank' in params:
+        filters.append(f'taibif_taxonRank:{params["taxonRank"]}')
+    if 'kingdom' in params:
+        filters.append(f'taibif_kingdom:{params["kingdom"]}')
+    if 'phylum' in params:
+        filters.append(f'taibif_phylum:{params["phylum"]}')
+    if 'class' in params:
+        filters.append(f'taibif_class:{params["class"]}')
+    if 'family' in params:
+        filters.append(f'taibif_family:{params["family"]}')
+    if 'genus' in params:
+        filters.append(f'taibif_genus:{params["genus"]}')
+    if 'taxonGroup' in params:
+        filters.append(f'taibif_taxonGroup:{params["taxonGroup"]}')
+    if 'establishmentMeans' in params:
+        filters.append(f'taibif_establishmentMeans:"{params["establishmentMeans"]}"')
+    if 'occurrenceStatus' in params:
+        filters.append(f'taibif_occurrenceStatus:{params["occurrenceStatus"]}')
+    ### 時間資訊
+    if 'eventDate' in params:
+        if ',' in params['eventDate']:
+            start_date = params['eventDate'].split(',')[0]
+            end_date = params['eventDate'].split(',')[1]
+            filters.append(f'taibif_eventDate:[{start_date} TO {end_date}]')
+        else:
+            filters.append(f'taibif_eventDate:[{params["eventDate"]} TO * ]')
+    if 'year' in params:
+        if ',' in params['year']:
+            start_year = params['year'].split(',')[0]
+            end_year = params['year'].split(',')[1]
+            filters.append(f'taibif_year:[{start_year} TO {end_year}]')
+        else:
+            filters.append(f'taibif_year:[{params["year"]} TO * ]')
+    if 'month' in params:
+        if ',' in params['month']:
+            start_month = params['month'].split(',')[0]
+            end_month = params['month'].split(',')[1]
+            filters.append(f'taibif_month:[{start_month} TO {end_month}]')
+        else:
+            filters.append(f'taibif_month:[{params["month"]} TO * ]')
+    if 'taibifModifiedDate' in params:
+        if ',' in params['taibifModifiedDate']:
+            start_date = params['taibifModifiedDate'].split(',')[0]
+            end_date = params['taibifModifiedDate'].split(',')[1]
+            filters.append(f'taibif_lastInterpreted:[{start_date} TO {end_date}]')
+        else:
+            filters.append(f'taibif_lastInterpreted:[{params["taibifModifiedDate"]} TO * ]')
+    ### 地理資訊
+    if 'country' in params:
+        filters.append(f'taibif_country:{params["country"]}')
+    if 'county' in params:
+        # 有可能有會空格的參數內容要用 "" 包起來
+        county_list = params['county'].split(',') 
+        if len(county_list) > 1:  
+            county_multi_filters = " OR ".join([f'"{county}"' for county in county_list]) 
+            filters.append(f'taibif_county:({county_multi_filters})') 
+        else:  
+            filters.append(f'taibif_county:"{params["county"]}"')
+    if 'coordinateUncertaintyInMeters' in params:
+        filters.append(f'taibif_coordinateUncertaintyInMeters:[* TO {params["coordinateUncertaintyInMeters"]}]')
+    ### 其他資訊
+    if 'selfProduced' in params:
+        filters.append(f'selfProduced:{params["selfProduced"]}')
+    if 'license' in params:
+        # 有可能有特殊字元的參數內容要用 "" 包起來
+        MAPPING = {
+            'CC0': 'http://creativecommons.org/publicdomain/zero/1.0/legalcode',
+            'CC-BY': 'http://creativecommons.org/licenses/by/4.0/legalcode',
+            'CC-BY-NC': 'http://creativecommons.org/licenses/by-nc/4.0/legalcode',
+            'NA': 'unknown'
+        }
+        license_type = MAPPING.get(params["license"])
+        filters.append(f'taibif_license:"{license_type}"')
+    ### 資料集資訊
+    if 'taibifDatasetID' in params:
+        filters.append(f'taibif_datasetKey:{params["taibifDatasetID"]}')
+    if 'gbifDatasetID' in params:
+        filters.append(f'gbif_datasetKey:{params["gbifDatasetID"]}')
+    if 'datasetName' in params:
+        filters.append(f'taibif_dataset_name_zh:"{params["datasetName"]}"')
+
+    # 沒有提供參數時搜尋所有結果
+    if not filters:
+        filters.append('*:*')
+
+    return " AND ".join(filters)
+
+def build_solr_spatial_query(params):
+    '''處理 solr 中和空間搜尋有關的參數，直接轉換成 solr 查詢的語法並合併'''
+    filters = []
+    if 'boundedBy' in params:
+        location_list = params['boundedBy'].split(',')
+        min_lon, min_lat, max_lon, max_lat = location_list
+
+        lon_list = [float(min_lon), float(max_lon)]
+        grid_min_lon = convert_x_coor_to_grid(min(lon_list))
+        grid_max_lon = convert_x_coor_to_grid(max(lon_list))
+        filters.append(f'{{!frange l={str(grid_min_lon)} u={str(grid_max_lon)}}}grid_x')
+
+        lat_list = [float(min_lat), float(max_lat)]
+        grid_min_lat = convert_y_coor_to_grid(min(lat_list))
+        grid_max_lat = convert_y_coor_to_grid(max(lat_list))
+        filters.append(f'{{!frange l={str(grid_min_lat)} u={str(grid_max_lat)}}}grid_y')
+
+        return filters
+
+def validate_pagination(params):
+    '''
+    rows 預設為 10，最多為 20
+    超過 20：設為 20
+    非正整數：直接返回錯誤
+    '''
+    try:
+        rows = int(params.get('rows', 10))
+        if rows < 0:
+            return JsonResponse(
+                {
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. Rows must be a positive integar"
+                    },
+                    "params": params
+                }
+            )
+        rows = min(rows, 20) if rows > 0 else 10
+    except ValueError:
+        return JsonResponse(
+            {
+                "status": {
+                    "code": 400,
+                    "message": "Invalid parameter. Rows must be a positive integar"
+                },
+                "params": params
+            }
+        )
+    
+    '''
+    offset 預設為 0
+    非正整數：直接返回錯誤
+    '''
+    try:
+        start = int(params.get('offset', 0))
+        if start < 0:
+            return JsonResponse(
+                {
+                    "status": {
+                        "code": 400,
+                        "message": "Invalid parameter. Start must be a positive integar"
+                    },
+                    "params": params
+                }
+            )
+    except ValueError:
+        return JsonResponse(
+            {
+                "status": {
+                    "code": 400,
+                    "message": "Invalid parameter. Start must be a positive integar"
+                },
+                "params": params
+            }
+        )
+    
+    return rows, start
+    
+def clean_solr_response(solr_response):
+    cleaned_response = []
+
+    for i in solr_response:
+        cleaned_response.append({
+            ### 物種資訊
+            'gbifID': i['gbifID'] if 'gbifID' in i else None,
+            'originalOccurrenceID':i['occurrenceID'] if 'occurrenceID' in i else None,
+            'taibifOccurrenceID':i['taibif_occ_id'] if 'taibif_occ_id' in i else None,
+            'basisOfRecord':i['taibif_basisOfRecord'] if 'taibif_basisOfRecord' in i else None,
+            'originalScientificName':i['scientificName'] if 'scientificName' in i else None,
+            'taibifScientificName':i['taibif_scientificName'] if 'taibif_scientificName' in i else None,
+            'taxonRank':i['taibif_taxonRank'] if 'taibif_taxonRank' in i else None,
+            'scientificNameID':i['taibif_accepted_namecode'] if 'taibif_accepted_namecode' in i else None,
+            'taxonBackbone': i['taibif_taxonBackbone'] if 'taibif_taxonBackbone' in i else None,
+            'vernacularName':i['taibif_vernacularName'] if 'taibif_vernacularName' in i else None,
+            'kingdom':i['taibif_kingdom'] if 'taibif_kingdom' in i else None,
+            'phylum':i['taibif_phylum'] if 'taibif_phylum' in i else None,
+            'class':i['taibif_class'] if 'taibif_class' in i else None,
+            'family':i['taibif_family'] if 'taibif_family' in i else None,
+            'genus':i['taibif_genus'] if 'taibif_genus' in i else None,
+            'taxonGroup': i['taibif_taxonGroup'] if 'taibif_taxonGroup' in i else None,
+            'establishmentMeans':i['taibif_establishmentMeans'] if 'taibif_establishmentMeans' in i else None,
+            'occurrenceStatus':i['taibif_occurrenceStatus'] if 'taibif_occurrenceStatus' in i else None,
+            ### 時間資訊
+            'eventDate':i['taibif_eventDate'] if 'taibif_eventDate' in i else None,
+            'year':i['taibif_year'][0] if 'taibif_year' in i else None,
+            'month':i['taibif_month'][0] if 'taibif_month' in i else None,
+            'day':i['taibif_day'][0] if 'taibif_day' in i else None,
+            'taibifModifiedDate':i['mod_date'][0] if 'mod_date' in i else (i['taibif_lastInterpreted'] if 'taibif_lastInterpreted' in i else None),
+            ### 地理資訊
+            'geodeticDatum':i['taibif_geodeticDatum'] if 'taibif_geodeticDatum' in i else None,
+            'verbatimSRS':i['taibif_crs'] if 'taibif_crs' in i else None,
+            'decimalLongitude':to_float(i['taibif_decimalLongitude']) if 'taibif_decimalLongitude' in i else None,
+            'decimalLatitude':to_float(i['taibif_decimalLatitude']) if 'taibif_decimalLatitude' in i else None,
+            'coordinatePrecision':to_float(i['taibif_coordinatePrecision']) if 'taibif_coordinatePrecision' in i else None,
+            'coordinateUncertaintyInMeters':to_float(i['taibif_coordinateUncertaintyInMeters'][0]) if 'taibif_coordinateUncertaintyInMeters' in i else None,
+            'dataGeneralizations':i['dataGeneralizations'] if 'dataGeneralizations' in i else None,
+            'countryCode':i['taibif_countryCode'] if 'taibif_countryCode' in i else None,
+            'country':i['taibif_country'] if 'taibif_country' in i else None,
+            'county':i['taibif_county'] if 'taibif_county' in i else None,
+            'locality':i['taibif_locality'] if 'taibif_locality' in i  else None,
+            'habitatReserve':i['forest_reserves'] if 'forest_reserves' in i else None,
+            'wildlifeReserve':i['wildlife_refuges'] if 'wildlife_refuges' in i else None,
+            ### 其他資訊
+            'selfProduced':i['selfProduced'][0] if 'selfProduced' in i else None,
+            'typeStatus':i['taibif_typeStatus'] if 'taibif_typeStatus' in i else None,
+            'recordedBy':i['taibif_recordedBy'] if 'taibif_recordedBy' in i else None,
+            'recordNumber':i['taibif_recordNumber'] if 'taibif_recordNumber' in i else None,
+            'catalogNumber': i['catalogNumber'] if 'catalogNumber' in i else None,
+            'license':i['taibif_license'] if 'taibif_license' in i else None,
+            'organismQuantity':str_to_int(i['organismQuantity']) if 'organismQuantity' in i else None,
+            'organismQuantityType':i['organismQuantityType'] if 'organismQuantityType' in i else None,
+            'associatedMedia':i['taibif_mediaReferences']  if 'taibif_mediaReferences' in i else None,
+            'mediaLicense': i['taibif_mediaLicense'] if 'taibif_mediaLicense' in i else None,
+            'issue':i['taibif_issue'] if 'taibif_issue' in i else None,
+            ### 資料集資訊
+            'datasetName':i['taibif_dataset_name_zh'] if 'taibif_dataset_name_zh' in i else None,
+            'datasetShortName':i['taibif_dataset_name'] if 'taibif_dataset_name' in i else None,
+            'taibifDatasetID':i['taibif_datasetKey'] if 'taibif_datasetKey' in i else None,
+            'gbifDatasetID':i['gbif_datasetKey'] if 'gbif_datasetKey' in i else None,
+        })
+
+    return cleaned_response
+
+
+def occurrence_api_v3(request):
+
+    # 只提供有 basisOfRecord 的出現紀錄
+    BASE_SOLR_URL = f'http://solr:8983/solr/taibif_occurrence/select?indent=true&q.op=AND&fq=basisOfRecord:*'
+    params = request.GET
+
+    # 驗證 q
+    validation_response = validate_params(params)
+    if validation_response:
+        return validation_response # 參數無效直接回傳錯誤訊息
+
+    # 處理 q
+    solr_query = build_solr_query(params)
+    spatial_solr_query = build_solr_spatial_query(params)
+
+    # 驗證、處理分頁
+    pagination_query = validate_pagination(params)
+    if isinstance(pagination_query, JsonResponse):
+        return pagination_query
+    
+    rows, start = pagination_query
+
+    solr_params = {
+        'q': solr_query,
+        'rows': rows,
+        'start': start,
+        'wt': 'json'
+    }
+
+    print(f'spatial_solr_query: {spatial_solr_query}')
+
+    if spatial_solr_query and len(spatial_solr_query) > 0:
+        for filter_condition in spatial_solr_query:
+            if 'fq' not in solr_params:
+                solr_params['fq'] = [filter_condition]
+            else:
+                solr_params['fq'].append(filter_condition)
+
+    print(f'solr params: {solr_params}')
+
+    response = requests.get(BASE_SOLR_URL, params=solr_params)
+    response.raise_for_status()
+    solr_data = response.json()
+    cleaned_response = clean_solr_response(solr_data['response']['docs'])
+
+    api_response = JsonResponse(
+        {
+            "status": {
+                "code": 200,
+                "message": "Success"
+            },
+            "params": params,
+            "count": solr_data['response']['numFound'],
+            "data": cleaned_response
+        }
+    )
+    
+    return api_response
+
+
+
 
 def occurrence_api(request):
     solr_error = ''
@@ -1520,7 +2366,6 @@ def generateCSV(solr_url,request):
     if solr_url:
         downloadURL = f"https://{request.META['HTTP_HOST']}{conf_settings.MEDIA_URL}{os.path.join(CSV_MEDIA_FOLDER, filename)}"
         if type == 'species':
-            # 下载 CSV 文件到临时文件
             command = 'curl "' + solr_url + '" > ' + csvFileTempPath
             try:
                 subprocess.run(command, shell=True, check=True)
@@ -1827,6 +2672,183 @@ def get_barchart_data(request):
         ]
 
     return JsonResponse({'chart_data': bar_chart_data, 'has_more_results': has_more_results})
+
+def solr_pivot_to_d3_hierarchy(pivot_data, field_name="Root", color='#D3D3D3'):
+    """
+    將 Solr 的 facet_pivot 數據轉換為 D3 嵌套結構。
+    :param pivot_data: Solr 的 facet_pivot 數據（列表格式）
+    :param field_name: 當前層的名稱（默認為 "Root"）
+    :return: D3 的層次結構格式數據
+    """
+    kingdom_color_map = {
+    "Animalia": "#6C5B7B",  # 深紫灰
+    "Archaea": "#C06C84",  # 暗玫瑰紅
+    "Bacteria": "#F8B195",  # 柔暖杏色
+    "Chromista": "#355C7D",  # 深灰藍
+    "Fungi": "#A8B8A5",  # 橄欖灰綠
+    "Plantae": "#F67280",  # 莓果粉紅
+    "Protozoa": "#99B898",  # 柔嫩青綠
+    "Viruses": "#3E454C"   # 深煙灰
+}
+
+    hierarchy = {"name": field_name, "children": [], 'color':'#D3D3D3'}
+
+    for item in pivot_data:
+        kingdom_color = kingdom_color_map.get(item['value'], None)
+
+        if kingdom_color is not None:
+            color = kingdom_color
+        # 創建當前節點
+        node = {
+            "name": item["value"],
+            "value": item["count"],
+            'color': color
+        }
+
+        # 如果有子節點，遞歸處理
+        if "pivot" in item:
+            node["children"] = solr_pivot_to_d3_hierarchy(item["pivot"], item["field"], color)["children"]
+        else:
+            node["children"] = []
+
+        hierarchy["children"].append(node)
+
+    return hierarchy
+
+def get_dataset_sunburst_data(request):
+    taibif_dataset_id = '8a6e2a2e-85f9-44ce-a3c5-b0b10266a0ed'
+    solr_pivot_fields = '&facet.pivot=taibif_kingdom,taibif_phylum,taibif_class,taibif_order,taibif_family,taibif_genus'
+    url = f"http://solr:8983/solr/taibif_occurrence/select?{solr_pivot_fields}&facet.mincount=1&facet=true&fq=taibif_datasetKey:{taibif_dataset_id}&indent=true&q.op=OR&q=*%3A*&rows=0"
+    solr_response = requests.get(url).json()
+    pivot_results = solr_response.get('facet_counts').get('facet_pivot').get('taibif_kingdom,taibif_phylum,taibif_class,taibif_order,taibif_family,taibif_genus')
+    d3_data = solr_pivot_to_d3_hierarchy(pivot_results)
+    
+
+    return JsonResponse(d3_data)
+
+def fetch_facet_data(solr_url, facet_field):
+    '''向 solr 發送請求並解析 facet 結果'''
+    try:
+        response = requests.get(solr_url).json()
+        facet_results = (
+            response.get('facet_counts', {})
+                    .get('facet_fields', {})
+                    .get(facet_field, [])
+        )
+        if facet_results:
+            return dict(zip(facet_results[::2], facet_results[1::2]))
+        return {}
+    except requests.exceptions.RequestException as e:
+        raise Exception(f'Failed to fetch data from Solr: {e}')
+
+def get_dataset_taxon_tree_data(request):
+    taibif_dataset_id = request.GET.get('dataset_id')
+    parent_rank = request.GET.get('parent_rank')
+    parent_name = request.GET.get('parent_name')
+
+    rank_hierarchy = [
+        'taibif_kingdom', 'taibif_phylum', 'taibif_class', 
+        'taibif_order', 'taibif_family', 'taibif_genus', 'taibif_scientificName'
+    ]
+    
+    # 確定子層級
+    if parent_rank and parent_rank in rank_hierarchy:
+        parent_index = rank_hierarchy.index(parent_rank)
+        if parent_index + 1 < len(rank_hierarchy):
+            child_rank = rank_hierarchy[parent_index + 1]
+        else:
+            return JsonResponse({'node': []})  # 已是最底層
+    else:
+        child_rank = rank_hierarchy[0]  # 默認為最高層級
+
+    solr_facet_fields = f'facet.field={child_rank}'
+    filter_query = f'fq=taibif_datasetKey:{taibif_dataset_id}'
+    if parent_rank and parent_name:
+        filter_query += f'&fq={parent_rank}:{parent_name}'
+
+    solr_url = (
+        f"http://solr:8983/solr/taibif_occurrence/select?"
+        f"{solr_facet_fields}&facet.mincount=1&facet=true&{filter_query}"
+        f"&indent=true&q.op=OR&q=*:*&rows=0"
+    )
+
+    nodes = []
+    try:
+        facet_data = fetch_facet_data(solr_url, child_rank)
+        for name, count in facet_data.items():
+            taxon_data = Taxon.objects.filter(name=name).values('name_zh', 'taicol_taxon_id').first()
+            if taxon_data:
+                nodes.append({
+                    'scientific_name': name,
+                    'count': count,
+                    'rank': child_rank,
+                    'name_zh': taxon_data.get('name_zh'),
+                    'taicol_taxon_id': taxon_data.get('taicol_taxon_id'),
+                })
+            else:
+                nodes.append({
+                    'scientific_name': name,
+                    'count': count,
+                    'rank': child_rank,
+                    'name_zh': None,
+                    'taicol_taxon_id': None,
+                })
+        # nodes = [
+        #     {'scientific_name': name, 'count': count, 'rank': child_rank}
+        #     for name, count in facet_data.items()
+        # ]
+
+        response_data = {'root': nodes} if child_rank == rank_hierarchy[0] else {'node': nodes}
+        return JsonResponse(response_data)
+
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+    
+def parse_datetime_data(list_object, data):
+    if data is None:
+        return list_object
+    for label_str, count in data.items():
+        if int(label_str) > 0:
+            list_object.append({
+                'label': int(label_str),
+                'count': count
+            })
+    list_object = sorted(list_object, key=lambda x: x['label'])
+
+    return list_object
+
+def get_dataset_datetime_data(request):
+    taibif_dataset_id = request.GET.get('dataset_id')
+    facet_field_list = ['taibif_year', 'taibif_month']
+    year_data_list = []
+    month_data_list = []
+
+    solr_facet_fields = '&'.join([f'facet.field={field}' for field in facet_field_list])
+    filter_query = f'fq=taibif_datasetKey:{taibif_dataset_id}'
+
+    solr_url = (
+        f"http://solr:8983/solr/taibif_occurrence/select?"
+        f"{solr_facet_fields}&facet.mincount=1&facet=true&{filter_query}"
+        f"&indent=true&q.op=OR&q=*:*&rows=0"
+    )
+
+    try:
+        facet_data_year = fetch_facet_data(solr_url, 'taibif_year')
+        facet_data_month = fetch_facet_data(solr_url, 'taibif_month')
+
+        year_data_list = parse_datetime_data(year_data_list, facet_data_year)
+        month_data_list = parse_datetime_data(month_data_list, facet_data_month)
+
+        respoonse_data = {
+            'year': year_data_list,
+            'month': month_data_list
+        }
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+    return JsonResponse(respoonse_data)
+
+
 
 
 

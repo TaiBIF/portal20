@@ -2334,7 +2334,7 @@ a.clamp2row {
 
 .article-keyword-wrapper  li {
   display: inline-block;
-  margin: 0 10px 10px 0;
+  /* margin: 0 10px 10px 0; */
   background-color: #F2F0EE;
   color: #4A3E3A;
   padding: 8px 8px;

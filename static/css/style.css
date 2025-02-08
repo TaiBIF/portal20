@@ -4154,8 +4154,8 @@ body {
 
 .article-keyword-wrapper li {
     display: inline-block;
-    margin: 0 10px 10px 0;
-    background-color: rgba(132, 108, 91, 0.6);
+    /* margin: 0 10px 10px 0; */
+    background-color: #525252;
     color: #fff;
     padding: 8px 8px;
     border-radius: 4px;
