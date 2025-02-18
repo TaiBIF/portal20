@@ -2875,7 +2875,8 @@ def occurrence_search_gallery(request):
                 expanded_solr_data.append(
                     {
                         'taibif_scientificName': data.get('taibif_scientificName', ''),
-                        'taibif_mediaReferences': media
+                        'taibif_mediaReferences': media,
+                        'taibif_occurrence_id': data.get('taibif_occ_id', '')
                     }
                 )
 

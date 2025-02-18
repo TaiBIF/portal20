@@ -15,7 +15,11 @@ const Content = (props) => {
     return (
         <div className="occurrence_gallery">
             {galleryList.map((item, index) => (
-                <div key={index} className="occurrence_gallery_item">
+                <a
+                    key={index}
+                    className="occurrence_gallery_item"
+                    href={`/occurrence/${item.taibif_occurrence_id}`}
+                >
                     <img
                         src={item.taibif_mediaReferences}
                         className="occurrence_gallery_item__image"
@@ -25,7 +29,7 @@ const Content = (props) => {
                             {item.taibif_scientificName}
                         </div>
                     )}
-                </div>
+                </a>
             ))}
         </div>
     );

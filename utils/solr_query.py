@@ -320,7 +320,7 @@ class SolrQuery(object):
         
     #     return self.solr_url
     def generate_gallery_solr_url(self, queryset=None):
-        filter_field = 'taibif_scientificName,taibif_mediaReferences'
+        filter_field = 'taibif_scientificName,taibif_mediaReferences,taibif_occ_id'
 
         gallery_solr_tuples = OrderedDict([
             ('q.op', 'AND'),
