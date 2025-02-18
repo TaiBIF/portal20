@@ -15,6 +15,7 @@ urlpatterns = [
     path('v1/occurrence/charts', views.occurrence_search_v2, name='search-occurrence-v1-charts'),
     path('v2/occurrence/search', views.occurrence_search_v2, name='api-occurrence-search-v2'),
     path('v2/occurrence/map', views.occurrence_search_v2, name='api-occurrence-search-v2-map'),
+    path('v1/occurrence/gallery', views.occurrence_search_gallery, name='api-occurrence-search-v1-gallery'),
     path('dataset/export', views.export, name='export'),
     path('v2/occurrence/get_map_species', views.get_map_species, name='get_map_species'),
     path('get_map_geojson/', views.get_map_geojson, name='get_map_geojson'),

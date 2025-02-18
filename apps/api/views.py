@@ -2849,6 +2849,47 @@ def get_dataset_datetime_data(request):
     return JsonResponse(respoonse_data)
 
 
+def occurrence_search_gallery(request):
+    query_params = request.GET
+    solr = SolrQuery('taibif_occurrence')
+
+    if len(query_params) > 0:
+        solr_url = solr.generate_gallery_solr_url(query_params)
+    else:
+        solr_url = solr.generate_gallery_solr_url()
+
+    try:
+        response = requests.get(solr_url)
+        response.raise_for_status()
+        solr_data = response.json().get('response', {}).get('docs', [])
+        current_cursor = response.json().get('responseHeader', {}).get('params', {}).get('cursorMark')
+        next_cursor = response.json().get('nextCursorMark')
+    except requests.exceptions.RequestException as e:
+        return JsonResponse({'error': f'Solr request failed: {str(e)}'}, status=500)
+
+    expanded_solr_data = []
+    for data in solr_data:
+        if 'taibif_mediaReferences' in data and data['taibif_mediaReferences']:
+            mediaList = data['taibif_mediaReferences'].split('|')
+            for media in mediaList:
+                expanded_solr_data.append(
+                    {
+                        'taibif_scientificName': data.get('taibif_scientificName', ''),
+                        'taibif_mediaReferences': media
+                    }
+                )
+
+    response = {
+        'url': solr_url,
+        'current_cursor': current_cursor,
+        'next_cursor': next_cursor,
+        'data': expanded_solr_data
+    }
+    return JsonResponse(response, safe=False)
+
+
+
+
 
 
 
