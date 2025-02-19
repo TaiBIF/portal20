@@ -1,6 +1,11 @@
 import React from "react";
 
-const CursorPagination = ({ nextCursor, cursorHistory, onPageChange }) => {
+const CursorPagination = ({
+    galleryList,
+    nextCursor,
+    cursorHistory,
+    onPageChange,
+}) => {
     // 決定是否渲染上下一頁按鈕，並給各按鈕對應的 cursor
     return (
         <div className="cursor_btn_container">
@@ -12,7 +17,7 @@ const CursorPagination = ({ nextCursor, cursorHistory, onPageChange }) => {
                     上一頁
                 </button>
             )}
-            {nextCursor && (
+            {galleryList.length > 0 && nextCursor && (
                 <button
                     className="cursor_btn"
                     onClick={() => onPageChange("next", nextCursor)}

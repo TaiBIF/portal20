@@ -82,6 +82,7 @@ const OccurrenceGallery = (props) => {
                 <>
                     <Content galleryList={galleryList} />
                     <CursorPagination
+                        galleryList={galleryList}
                         nextCursor={nextCursor}
                         cursorHistory={cursorHistory}
                         onPageChange={onPageChange}

@@ -327,7 +327,7 @@ class SolrQuery(object):
             ('wt', 'json'),
             ('rows', 20),
             ('q', 'basisOfRecord:*'),
-            ('fq', 'taibif_mediaReferences:*'),
+            ('fq', ['taibif_mediaReferences:*']),
             ('sort', 'id asc'),
             ('cursorMark', '*')  
         ])
