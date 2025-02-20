@@ -5010,3 +5010,47 @@ a.btn-sunset-md {
 .cursor_btn:focus {
     background-color: #846c5b;
 }
+
+.occurrence_image_section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 10px;
+    margin-top: 30px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.occurrence_image_container {
+    display: grid;
+    grid-template-rows: subgrid; 
+    grid-row: 1 / 3; 
+    width: 100%;
+    justify-items: center;
+}
+
+.occurrence_image_container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.occurrence_image_container a {
+    color: #555;
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+@media (max-width: 991.98px) {
+    .occurrence_image_section {
+        display: flex;
+        flex-direction: column;
+    }
+
+    
+}
+
+
+
