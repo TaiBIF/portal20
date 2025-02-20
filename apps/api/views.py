@@ -1185,6 +1185,7 @@ def clean_solr_response(solr_response):
             'kingdom':i['taibif_kingdom'] if 'taibif_kingdom' in i else None,
             'phylum':i['taibif_phylum'] if 'taibif_phylum' in i else None,
             'class':i['taibif_class'] if 'taibif_class' in i else None,
+            'order':i['taibif_order'] if 'taibif_order' in i else None,
             'family':i['taibif_family'] if 'taibif_family' in i else None,
             'genus':i['taibif_genus'] if 'taibif_genus' in i else None,
             'taxonGroup': i['taibif_taxonGroup'] if 'taibif_taxonGroup' in i else None,
@@ -1261,7 +1262,7 @@ def occurrence_api_v3(request):
         'wt': 'json'
     }
 
-    print(f'spatial_solr_query: {spatial_solr_query}')
+    # print(f'spatial_solr_query: {spatial_solr_query}')
 
     if spatial_solr_query and len(spatial_solr_query) > 0:
         for filter_condition in spatial_solr_query:
@@ -1270,7 +1271,7 @@ def occurrence_api_v3(request):
             else:
                 solr_params['fq'].append(filter_condition)
 
-    print(f'solr params: {solr_params}')
+    # print(f'solr params: {solr_params}')
 
     response = requests.get(BASE_SOLR_URL, params=solr_params)
     response.raise_for_status()
