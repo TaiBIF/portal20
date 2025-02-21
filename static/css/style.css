@@ -5026,6 +5026,7 @@ a.btn-sunset-md {
     display: flex;
     width: 100%;
     align-items: center;
+    flex-direction: column;
 }
 
 .occurrence_image_container img {
