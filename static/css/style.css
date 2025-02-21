@@ -5023,11 +5023,9 @@ a.btn-sunset-md {
 }
 
 .occurrence_image_container {
-    display: grid;
-    grid-template-rows: subgrid; 
-    grid-row: 1 / 3; 
+    display: flex;
     width: 100%;
-    justify-items: center;
+    align-items: center;
 }
 
 .occurrence_image_container img {
@@ -5047,9 +5045,7 @@ a.btn-sunset-md {
     .occurrence_image_section {
         display: flex;
         flex-direction: column;
-    }
-
-    
+    }  
 }
 
 
