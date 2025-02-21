@@ -1185,6 +1185,7 @@ def clean_solr_response(solr_response):
             'kingdom':i['taibif_kingdom'] if 'taibif_kingdom' in i else None,
             'phylum':i['taibif_phylum'] if 'taibif_phylum' in i else None,
             'class':i['taibif_class'] if 'taibif_class' in i else None,
+            'order':i['taibif_order'] if 'taibif_order' in i else None,
             'family':i['taibif_family'] if 'taibif_family' in i else None,
             'genus':i['taibif_genus'] if 'taibif_genus' in i else None,
             'taxonGroup': i['taibif_taxonGroup'] if 'taibif_taxonGroup' in i else None,
@@ -1261,7 +1262,7 @@ def occurrence_api_v3(request):
         'wt': 'json'
     }
 
-    print(f'spatial_solr_query: {spatial_solr_query}')
+    # print(f'spatial_solr_query: {spatial_solr_query}')
 
     if spatial_solr_query and len(spatial_solr_query) > 0:
         for filter_condition in spatial_solr_query:
@@ -1270,7 +1271,7 @@ def occurrence_api_v3(request):
             else:
                 solr_params['fq'].append(filter_condition)
 
-    print(f'solr params: {solr_params}')
+    # print(f'solr params: {solr_params}')
 
     response = requests.get(BASE_SOLR_URL, params=solr_params)
     response.raise_for_status()
@@ -2847,6 +2848,48 @@ def get_dataset_datetime_data(request):
         return JsonResponse({'error': str(e)}, status=500)
 
     return JsonResponse(respoonse_data)
+
+
+def occurrence_search_gallery(request):
+    query_params = request.GET
+    solr = SolrQuery('taibif_occurrence')
+
+    if len(query_params) > 0:
+        solr_url = solr.generate_gallery_solr_url(query_params)
+    else:
+        solr_url = solr.generate_gallery_solr_url()
+
+    try:
+        response = requests.get(solr_url)
+        response.raise_for_status()
+        solr_data = response.json().get('response', {}).get('docs', [])
+        current_cursor = response.json().get('responseHeader', {}).get('params', {}).get('cursorMark')
+        next_cursor = response.json().get('nextCursorMark')
+    except requests.exceptions.RequestException as e:
+        return JsonResponse({'error': f'Solr request failed: {str(e)}'}, status=500)
+
+    expanded_solr_data = []
+    for data in solr_data:
+        if 'taibif_mediaReferences' in data and data['taibif_mediaReferences']:
+            mediaList = data['taibif_mediaReferences'].split('|')
+            for media in mediaList:
+                expanded_solr_data.append(
+                    {
+                        'taibif_scientificName': data.get('taibif_scientificName', ''),
+                        'taibif_mediaReferences': media,
+                        'taibif_occurrence_id': data.get('taibif_occ_id', '')
+                    }
+                )
+
+    response = {
+        'url': solr_url,
+        'current_cursor': current_cursor,
+        'next_cursor': next_cursor,
+        'data': expanded_solr_data
+    }
+    return JsonResponse(response, safe=False)
+
+
 
 
 

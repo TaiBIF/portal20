@@ -3,6 +3,7 @@ import logging
 import json
 import requests
 import datetime
+from collections import OrderedDict
 
 from apps.api.cached import COUNTRY_ROWS
 
@@ -246,6 +247,154 @@ class SolrQuery(object):
             self.solr_url = self.solr_url.replace(f'fq={last_query_item}', '')
         
         # print(f'SOLR URL: {self.solr_url}')
+        return self.solr_url
+    
+    # def generate_gallery_solr_url(self, queryset=None):
+    #     filter_field = 'taibif_scientificName,taibif_mediaReferences'
+    #     gallery_solr_tuples = [
+    #         ('q.op', 'AND'),
+    #         ('wt', 'json'),
+    #         ('rows', 20),
+    #         ('q', 'basisOfRecord:*'),
+    #         ('fq', 'taibif_mediaReferences:*'),
+    #         ('sort', 'id asc'),
+    #         ('cursorMark', '*')
+    #     ]
+    #     map_query = ''
+    #     if queryset is not None:
+    #         for key, values in queryset.lists():
+    #             if key == 'q' and values[0] != '':
+    #                 self.solr_q = values[0]
+    #                 gallery_solr_tuples.append(('fq', self.solr_q))
+    #             elif key == 'offset':
+    #                 gallery_solr_tuples.append(('start', values[0]))
+    #             elif key == 'taxon_key':
+    #                 taxon_key_list = []
+    #                 for v in values:
+    #                     klist = v.split(':')
+    #                     rank = klist[0]
+    #                     if len(klist) > 1:
+    #                         taxon_id = klist[1]
+    #                         taxon_key_list.append(f'{rank}_key:{taxon_id}')
+    #                 gallery_solr_tuples.append(('fq', ' OR '.join(taxon_key_list)))
+    #             elif key in JSON_FACET_MAP:
+    #                 field = JSON_FACET_MAP[key]['field']
+    #                 if len(values) == 1:
+    #                     value = values[0]
+    #                     if ',' in value:
+    #                         vlist = value.split(',')
+    #                         gallery_solr_tuples.append(('fq', f'{key}:[{vlist[0]} TO {vlist[1]}]'))
+    #                     else:
+    #                         if key == 'selfProduced':  # 布林值搜尋 value 不需要轉成 string
+    #                             gallery_solr_tuples.append(('fq', f'{field}:{value}'))
+    #                         else:
+    #                             gallery_solr_tuples.append(('fq', f'{field}:"{value}"'))
+    #                 else:
+    #                     gallery_solr_tuples.append(('fq', ' OR '.join([f'{field}:"{x}"' for x in values])))
+    #             elif key == 'lat':
+    #                 coor_list = [ float(c) for c in values]
+    #                 y1 = convert_y_coor_to_grid(min(coor_list))
+    #                 y2 = convert_y_coor_to_grid(max(coor_list))
+    #                 map_query = "{!frange l=" + str(y1) + " u=" + str(y2) + "}grid_y"
+    #                 gallery_solr_tuples.append(('fq', map_query))
+    #             elif key == 'lng':
+    #                 coor_list = [ float(c) for c in values]
+    #                 x1 = convert_x_coor_to_grid(min(coor_list))
+    #                 x2 = convert_x_coor_to_grid(max(coor_list))
+    #                 map_query = "{!frange l=" + str(x1) + " u=" + str(x2) + "}grid_x"
+    #                 gallery_solr_tuples.append(('fq', map_query))
+    #             elif key == 'taibif_taxonGroup':
+    #                 if len(values) > 1:
+    #                     query = ' OR '.join(['{}:"{}"'.format('taibif_taxonGroup', value) for value in values])
+    #                     gallery_solr_tuples.append(('fq', query))
+    #                 else:
+    #                     gallery_solr_tuples.append(('fq', '{}:{}'.format('taibif_taxonGroup', values[0])))
+    #             elif key == 'path':
+    #                 gallery_solr_tuples.append(('fq', 'path:*{}*'.format(values[0])))
+    #             elif key == 'taibif_taicolTaxonID':
+    #                 gallery_solr_tuples.append(('fq', f'taibif_taicolTaxonID:{values[0]}'))
+    #             elif key == 'cursorMark':
+    #                 gallery_solr_tuples = values[0]
+    #     query_string = urllib.parse.urlencode(gallery_solr_tuples)
+    #     self.solr_url = f'{SOLR_PREFIX}{self.core}/select?fl={filter_field}&{query_string}'
+        
+    #     return self.solr_url
+    def generate_gallery_solr_url(self, queryset=None):
+        filter_field = 'taibif_scientificName,taibif_mediaReferences,taibif_occ_id'
+
+        gallery_solr_tuples = OrderedDict([
+            ('q.op', 'AND'),
+            ('wt', 'json'),
+            ('rows', 20),
+            ('q', 'basisOfRecord:*'),
+            ('fq', ['taibif_mediaReferences:*']),
+            ('sort', 'id asc'),
+            ('cursorMark', '*')  
+        ])
+
+        if queryset is not None:
+            for key, values in queryset.lists():
+                if not values:
+                    continue 
+                
+                if key == 'q' and values[0]:
+                    self.solr_q = values[0]
+                    gallery_solr_tuples.setdefault('fq', []).append(self.solr_q)
+
+                elif key == 'offset':
+                    gallery_solr_tuples['start'] = values[0]
+
+                elif key == 'taxon_key':
+                    taxon_key_list = [f'{v.split(":")[0]}_key:{v.split(":")[1]}' for v in values if ":" in v]
+                    if taxon_key_list:
+                        gallery_solr_tuples.setdefault('fq', []).append(' OR '.join(taxon_key_list))
+
+                elif key in JSON_FACET_MAP:
+                    field = JSON_FACET_MAP[key]['field']
+                    if len(values) == 1:
+                        value = values[0]
+                        if ',' in value:
+                            vlist = value.split(',')
+                            gallery_solr_tuples.setdefault('fq', []).append(f'{key}:[{vlist[0]} TO {vlist[1]}]')
+                        else:
+                            formatted_value = f'{field}:"{value}"' if key != 'selfProduced' else f'{field}:{value}'
+                            gallery_solr_tuples.setdefault('fq', []).append(formatted_value)
+                    else:
+                        gallery_solr_tuples.setdefault('fq', []).append(' OR '.join([f'{field}:"{x}"' for x in values]))
+
+                elif key in ('lat', 'lng'):
+                    coor_list = [float(c) for c in values]
+                    if key == 'lat':
+                        y1, y2 = convert_y_coor_to_grid(min(coor_list)), convert_y_coor_to_grid(max(coor_list))
+                        map_query = f"{{!frange l={y1} u={y2}}}grid_y"
+                    else:
+                        x1, x2 = convert_x_coor_to_grid(min(coor_list)), convert_x_coor_to_grid(max(coor_list))
+                        map_query = f"{{!frange l={x1} u={x2}}}grid_x"
+                    gallery_solr_tuples.setdefault('fq', []).append(map_query)
+
+                elif key == 'taibif_taxonGroup':
+                    query = ' OR '.join([f'taibif_taxonGroup:"{value}"' for value in values])
+                    gallery_solr_tuples.setdefault('fq', []).append(query)
+
+                elif key == 'path':
+                    gallery_solr_tuples.setdefault('fq', []).append(f'path:*{values[0]}*')
+
+                elif key == 'taibif_taicolTaxonID':
+                    gallery_solr_tuples.setdefault('fq', []).append(f'taibif_taicolTaxonID:{values[0]}')
+
+                elif key == 'cursorMark':
+                    gallery_solr_tuples['cursorMark'] = values[0]
+
+        final_params = []
+        for k, v in gallery_solr_tuples.items():
+            if isinstance(v, list):
+                final_params.extend([(k, item) for item in v])
+            else:
+                final_params.append((k, v))
+
+        query_string = urllib.parse.urlencode(final_params)
+        self.solr_url = f'{SOLR_PREFIX}{self.core}/select?fl={filter_field}&{query_string}'
+        
         return self.solr_url
     
     def generate_export_solr_url(self, queryset=None):

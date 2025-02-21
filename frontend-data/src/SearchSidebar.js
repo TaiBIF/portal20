@@ -218,7 +218,7 @@ function Accordion(props) {
         <div className="dataResult" style={{zIndex:'9999',position:'absolute'}} >
           {filteredData.slice(0,15).map((value, key) => {
             const itemChecked = filters.has(`${content.key}=${value.key}`);
-            return (<div className="dataItem" key={key} onClick={(e)=> {e.persist(); onClick(e, content.key, value.key);}} >
+            return (<div className="dataItem" key={key} onClick={(e)=> {e.persist(); onClick(e, 'taibif_datasetKey', value.key);}} >
                <p checked={!itemChecked}>{value.label}</p>
             </div>
           )})}

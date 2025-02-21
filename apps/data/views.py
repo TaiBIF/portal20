@@ -206,6 +206,9 @@ def occurrence_view(request, taibif_id):
         intro['issues']=issues
         
 
+        # 多媒體資料
+        intro['taibif_mediaReferences'] = result[0].get('taibif_mediaReferences').split('|') if result[0].get('taibif_mediaReferences') else None
+
         # record
         record['modified'] = {
             'name_zh': '資料更新時間',
