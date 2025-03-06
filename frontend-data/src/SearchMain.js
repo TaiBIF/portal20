@@ -301,7 +301,7 @@ function SearchMain(props) {
     if (language === 'zh-hant'){
       tabNavs = (
         <div className="table-responsive">
-          <ul className="nav nav-tabs search-content-tab">
+          <ul className="nav nav-tabs nav-justified search-content-tab">
             <li className={tabActive == "menu1" ? "search-nav-active": null}><a data-toggle="tab" onClick={(e)=>toggleTab(e, 'menu1')}>資料列表</a></li>
             {q
              ? <li className={tabActive == "menu2" ? "search-nav-active" : null}><a data-toggle="tab" onClick={(e)=>toggleTab(e, 'menu2')}>瀏覽其他資料庫</a></li>
@@ -312,7 +312,7 @@ function SearchMain(props) {
     } else if (language === 'en'){
       tabNavs = (
         <div className="table-responsive">
-          <ul className="nav nav-tabs search-content-tab">
+          <ul className="nav nav-tabs nav-justified search-content-tab">
             <li className={tabActive == "menu1" ? "search-nav-active": null}><a data-toggle="tab" onClick={(e)=>toggleTab(e, 'menu1')}>Table</a></li>
             {q
              ? <li className={tabActive == "menu2" ? "search-nav-active" : null}><a data-toggle="tab" onClick={(e)=>toggleTab(e, 'menu2')}>Others</a></li>
@@ -326,15 +326,15 @@ function SearchMain(props) {
     if (language === 'zh-hant'){
       tabNavs = (
         <div className="table-responsive">
-          <ul className="nav nav-tabs search-content-tab">
-            <li className="active"><a data-toggle="tab">全部</a></li>
+          <ul className="nav nav-tabs nav-justified search-content-tab">
+            <li className="search-nav-active"><a data-toggle="tab">全部</a></li>
           </ul>
         </div>);
     } else if (language === 'en'){
       tabNavs = (
         <div className="table-responsive">
-          <ul className="nav nav-tabs search-content-tab">
-            <li className="active"><a data-toggle="tab">All</a></li>
+          <ul className="nav nav-tabs nav-justified search-content-tab">
+            <li className="search-nav-active"><a data-toggle="tab">All</a></li>
           </ul>
         </div>);
     }
