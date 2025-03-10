@@ -1109,8 +1109,8 @@ def build_solr_spatial_query(params):
 
 def validate_pagination(params):
     '''
-    rows 預設為 10，最多為 20
-    超過 20：設為 20
+    rows 預設為 10，最多為 1000
+    超過 1000：設為 10
     非正整數：直接返回錯誤
     '''
     try:
@@ -1125,7 +1125,7 @@ def validate_pagination(params):
                     "params": params
                 }
             )
-        rows = min(rows, 20) if rows > 0 else 10
+        rows = min(rows, 1000) if rows > 0 else 10
     except ValueError:
         return JsonResponse(
             {
