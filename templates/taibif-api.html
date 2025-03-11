@@ -35,6 +35,7 @@
                   <a data-cat="occurrence" class="dropdown-item nav-item" href="#">出現紀錄</a>
                   <a data-cat="dataset" class="dropdown-item nav-item" href="#">資料集</a>
                   <a data-cat="publisher" class="dropdown-item nav-item" href="#">發布單位</a>
+                  <a data-cat="documentation" class="dropdown-item nav-item" href="#">更新歷程</a>
                 </div>
             </div>
         </div>
@@ -1199,6 +1200,95 @@
                     </table>
                 </div>
             </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-9 nav-item-content" data-cat="documentation">
+            <h1 class="heading-lg-ul">
+                更新歷程 Update Documentation 
+            </h1>
+
+            <h3>2025-03</h3>
+            <ul>
+                <li>修改回傳資料架構，加入回傳狀態</li>
+                <li>查詢參數加入驗證機制</li>
+                <li>
+                    <div>欄位名稱修改</div>
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>類型</th>
+                                    <th>修改前</th>
+                                    <th>修改後</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>occurrence</td> 
+                                    <td>occurrenceID</td>
+                                    <td>originalOccurrenceID</td>
+                                </tr>
+                                <tr>
+                                    <td>occurrence</td> 
+                                    <td>scientificName</td>
+                                    <td>taibifScientificName</td>
+                                </tr>
+                                <tr>
+                                    <td>occurrence</td> 
+                                    <td>taicolTaxonID</td>
+                                    <td>（移除）</td>
+                                </tr>
+                                <tr>
+                                    <td>occurrence</td> 
+                                    <td>gbifAcceptedID</td>
+                                    <td>（移除）</td>
+                                </tr>
+                                <tr>
+                                    <td>occurrence</td> 
+                                    <td>taibifCreatedDate</td>
+                                    <td>（移除）</td>
+                                </tr>
+                                <tr>
+                                    <td>occurrence</td> 
+                                    <td>preservation</td>
+                                    <td>（移除）</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </li>
+                <li>
+                    <div>查詢參數修改</div>
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>類型</th>
+                                    <th>修改前</th>
+                                    <th>修改後</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>occurrence</td> 
+                                    <td>taibif_decimalLongitude, taibif_decimalLatitude</td>
+                                    <td>用 boundedBy 聯合搜尋</td>
+                                </tr>
+                                <tr>
+                                    <td>occurrence</td> 
+                                    <td>gbifDatasetID</td>
+                                    <td>（移除）</td>
+                                </tr>
+                                <tr>
+                                    <td>occurrence</td> 
+                                    <td>issue</td>
+                                    <td>（移除）</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
