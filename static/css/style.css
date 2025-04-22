@@ -5088,6 +5088,77 @@ a.btn-sunset-md {
     }
 }
 
+.article-table-container {
+    border: #ddd solid 1px;
+    padding: 16px;
+    border-radius: 4px;
+}
+
+.article-content-wrapper {
+    .dataset-table {
+        font-size: 14px;
+    }
+    .dataset-table th {
+        white-space: nowrap;  /* 不換行 */
+    }
+    
+    .dataset-table td {
+        white-space: normal;  /* 允許換行 */
+        word-break: break-word; 
+    }
+    .samplingevent-highlight-link {
+        color: #fff;
+        text-decoration: none;
+        background-color: #297ea8;
+        padding: 3px 5px;
+        border-radius: 8px;
+        font-weight: normal;
+    }
+    .occurrence-highlight-link {
+        color: #fff;
+        text-decoration: none;
+        background-color: #3e8622;
+        padding: 3px 5px;
+        border-radius: 8px;
+        font-weight: normal;
+    }
+    .checklist-highlight-link {
+        color: #fff;
+        text-decoration: none;
+        background-color: #947AB2;
+        padding: 3px 5px;
+        border-radius: 8px;
+        font-weight: normal;
+    }
+    .metadata-highlight-link {
+        color: #fff;
+        text-decoration: none;
+        background-color: #ffcd6d;
+        padding: 3px 5px;
+        border-radius: 8px;
+        font-weight: normal;
+    }
+}
+
+.highlight-link:link {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #525252;
+}
+
+.highlight-link:hover {
+    color: #fff !important;
+    background-color: #cd7745;
+}
+
+.highlight-link:visited {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #525252;
+}
+
+
+
 
 
 

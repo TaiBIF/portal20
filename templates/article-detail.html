@@ -64,17 +64,11 @@
     <hr>
 
     <div class="article-content-wrapper">
-        <p>
-            {% if article.memo|slice:"0:4" == "nid:" %}
-                {% if article.is_content_markdown %}
-                    {{ article.content | markdown | safe }}
-                {% else %}
-                    {{ article.content|safe }}
-                {% endif %}
-            {% else %}
-                {{ article.content | markdown | safe }}
-            {% endif %}
-        </p>
+        {% if article.is_content_markdown == False %}
+            {{ article.content | safe }}
+        {% else %}
+            {{ article.content | markdown | safe }}
+        {% endif %}
     </div>
     <!-- article content begin -->
 
