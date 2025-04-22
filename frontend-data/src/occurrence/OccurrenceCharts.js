@@ -154,7 +154,8 @@ function OccurrenceCharts(props) {
       setMonthData([true, month])
 
       let num_occurrence_max = 0;
-      const newData = data.charts[2].rows.map((row, i) => {
+      const filteredRows = data.charts[2].rows.filter(row => row.count > 0);
+      const newData = filteredRows.map((row, i) => {
         if (i === 0) {
           num_occurrence_max = row.count;
         }
@@ -192,7 +193,8 @@ function OccurrenceCharts(props) {
       setMonthData([true, month])
 
       let num_occurrence_max = 0;
-      const newData = data.charts[2].rows.map((row, i) => {
+      const filteredRows = data.charts[2].rows.filter(row => row.count > 0);
+      const newData = filteredRows.map((row, i) => {
         if (i === 0) {
           num_occurrence_max = row.count;
         }
@@ -207,7 +209,7 @@ function OccurrenceCharts(props) {
   }, [filters]);
 
   function DatasetDataBody() {
-    return datasetData[1].map((x,index) => {
+    return datasetData[1].map((x,index) => { 
       // const q = encodeURIComponent(x.label);
       return (
         index >= offset && index <= offset+limit ?
@@ -228,7 +230,7 @@ function OccurrenceCharts(props) {
           </div>
           </td>
         </tr>
-        : "");
+        : null);
     });
   }
 

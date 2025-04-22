@@ -102,7 +102,7 @@ class TaibifSearch extends React.Component {
       .then(res => res.json())
       .then(
         (json) => {
-          console.log('resp (key): ', json);
+          // console.log('resp (key): ', json);
           this.setState((prevState) => {
             let taxonData = prevState.taxonData;
             if (json.search.results.length > 0) {
@@ -273,7 +273,7 @@ class TaibifSearch extends React.Component {
     let offset = this.state.search.offset;
     let limit = this.state.search.limit;
     const filters = this.state.filters;
-    console.log(offset, limit, filters, 'page click');
+    // console.log(offset, limit, filters, 'page click');
   }
 
   getSearch(filters) {
@@ -315,7 +315,7 @@ class TaibifSearch extends React.Component {
 
     window.history.pushState({stateObj:url}, "", url);
 
-    console.log('fetch:', apiUrl)
+    // console.log('fetch:', apiUrl)
     //const resp = await fetch(url);
     // const json = await resp.json();
     // async/await will cause: "regeneratorRuntime is not defined"
@@ -324,7 +324,7 @@ class TaibifSearch extends React.Component {
       .then(res => res.json())
       .then(
         (jsonData) => {
-          console.log('resp: ', jsonData);
+          // console.log('resp: ', jsonData);
           if (jsonData.solr_error_msg) {
             alert(jsonData.solr_error_msg); // TODO: need better UI
             return
@@ -341,7 +341,7 @@ class TaibifSearch extends React.Component {
             // clear checked taxon
             taxonData.checked = [];
           }
-          console.log("json:",jsonData)
+          // console.log("json:",jsonData)
           this.setState({
             isLoaded: true,
             isLoadedMain: true,
@@ -387,7 +387,7 @@ class TaibifSearch extends React.Component {
             .then(res => res.json())
             .then(
               (json) => {
-                console.log('resp (tree): ', json);
+                // console.log('resp (tree): ', json);
                 const speciesName = json.data.name;
                 const taicol_taxon_id = json.taicol_taxon_id;
                 taxonData.checked[taicol_taxon_id] = speciesName;
