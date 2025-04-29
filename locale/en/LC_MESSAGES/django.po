@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-18 10:29+0800\n"
+"POT-Creation-Date: 2025-04-29 09:17+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: apps/page/views.py:539
+#: apps/page/views.py:551
 msgid "這裡放需要翻譯的文字"
 msgstr ""
 
@@ -40,16 +40,16 @@ msgstr "About GBIF"
 #: templates/article-detail.html:28 templates/article-list.html:120
 #: templates/cookbook-detail-1.html:41 templates/cookbook-detail-3.html:38
 #: templates/data-case.html:29 templates/data-clean.html:23
-#: templates/data-paper.html:22 templates/data-policy.html:26
+#: templates/data-paper.html:76 templates/data-policy.html:26
 #: templates/data-product.html:23 templates/data-stats.html:134
 #: templates/data-visual.html:39 templates/download-resources.html:23
 #: templates/faq.html:23 templates/links.html:25
-#: templates/open-consulation.html:20 templates/open-license.html:24
+#: templates/open-consulation.html:73 templates/open-license.html:24
 #: templates/open-process.html:25 templates/open-standard.html:23
 #: templates/open-timezone.html:25 templates/open-upload.html:25
-#: templates/taibif-achievement.html:24 templates/taibif-api.html:23
+#: templates/taibif-achievement.html:24 templates/taibif-api.html:24
 #: templates/tech-book.html:28 templates/tech-open.html:26
-#: templates/tech-volunteer.html:24 templates/tech-workshop.html:24
+#: templates/tech-volunteer.html:81 templates/tech-workshop.html:24
 #: templates/thanks-list.html:26 templates/tools.html:23
 #: templates/web-navi.html:27
 msgid "首頁"
@@ -327,7 +327,7 @@ msgid "更多資訊"
 msgstr "See More"
 
 #: templates/article-list.html:107 templates/article-list.html:121
-#: templates/data-paper.html:126
+#: templates/data-paper.html:187
 msgid "文章"
 msgstr "Article"
 
@@ -356,14 +356,14 @@ msgid "資料故事"
 msgstr "Data Stories"
 
 #: templates/article-list.html:157 templates/base.html:265
-#: templates/web-navi.html:127
+#: templates/web-navi.html:126
 msgid "出版品"
 msgstr "Publications"
 
 #: templates/article-list.html:162 templates/base.html:121
 #: templates/base.html:266 templates/taibif-achievement.html:4
 #: templates/taibif-achievement.html:12 templates/taibif-achievement.html:26
-#: templates/web-navi.html:42
+#: templates/web-navi.html:42 templates/web-navi.html:127
 msgid "TaiBIF 成果"
 msgstr "TaiBIF Achievements"
 
@@ -427,7 +427,7 @@ msgstr "Site Search"
 
 #: templates/base.html:189 templates/data-clean.html:24
 #: templates/data-stats.html:135 templates/index.html:103
-#: templates/open-consulation.html:21 templates/open-license.html:25
+#: templates/open-consulation.html:74 templates/open-license.html:25
 #: templates/open-process.html:26 templates/open-standard.html:24
 #: templates/open-timezone.html:26 templates/open-upload.html:26
 #: templates/tools.html:24 templates/web-navi.html:56
@@ -453,7 +453,7 @@ msgid "資料發布狀況"
 msgstr "Data Publishing Status"
 
 #: templates/base.html:196 templates/index.html:118
-#: templates/open-consulation.html:11 templates/open-consulation.html:22
+#: templates/open-consulation.html:64 templates/open-consulation.html:75
 #: templates/web-navi.html:62
 #, fuzzy
 #| msgid "開放資料"
@@ -463,7 +463,7 @@ msgstr "Open Data"
 #: templates/base.html:204 templates/cookbook-detail-1.html:42
 #: templates/cookbook-detail-2.html:45 templates/cookbook-detail-3.html:39
 #: templates/index.html:133 templates/tech-book.html:29
-#: templates/tech-open.html:27 templates/tech-volunteer.html:25
+#: templates/tech-open.html:27 templates/tech-volunteer.html:82
 #: templates/tech-workshop.html:25 templates/web-navi.html:70
 msgid "教育資源"
 msgstr "Educational Resources"
@@ -485,27 +485,27 @@ msgstr "Biodiversity Information Cookbook"
 
 #: templates/base.html:209 templates/cookbook-detail-2.html:34
 #: templates/cookbook-detail-3.html:26 templates/index.html:142
-#: templates/tech-class-license.html:29 templates/tech-online-class.html:38
+#: templates/tech-class-license.html:83 templates/tech-online-class.html:87
 #: templates/tech-workshop.html:4 templates/tech-workshop.html:12
 #: templates/tech-workshop.html:26 templates/web-navi.html:74
 msgid "資料開放與應用工作坊"
 msgstr "Data Mobilization and Application Workshop"
 
 #: templates/base.html:210 templates/index.html:145
-#: templates/tech-volunteer.html:4 templates/tech-volunteer.html:12
-#: templates/tech-volunteer.html:26 templates/web-navi.html:75
+#: templates/tech-volunteer.html:4 templates/tech-volunteer.html:69
+#: templates/tech-volunteer.html:83 templates/web-navi.html:75
 msgid "參與志工培訓"
 msgstr "Become A Volunteer"
 
 #: templates/base.html:218 templates/data-case.html:30
-#: templates/data-paper.html:23 templates/data-product.html:24
+#: templates/data-paper.html:77 templates/data-product.html:24
 #: templates/data-visual.html:40 templates/index.html:160
 #: templates/web-navi.html:83
 msgid "資料應用"
 msgstr "Data Use"
 
 #: templates/base.html:221 templates/data-paper.html:4
-#: templates/data-paper.html:11 templates/data-paper.html:24
+#: templates/data-paper.html:65 templates/data-paper.html:78
 #: templates/index.html:163 templates/web-navi.html:85
 msgid "資料期刊與論文"
 msgstr "Data Papers & Journals"
@@ -530,7 +530,7 @@ msgid "資料產品"
 msgstr "Data Products"
 
 #: templates/base.html:232 templates/index.html:187
-#: templates/taibif-api.html:24 templates/web-navi.html:96
+#: templates/taibif-api.html:25 templates/web-navi.html:96
 msgid "找資料"
 msgstr "Find Data"
 
@@ -562,7 +562,7 @@ msgstr "News & Notices"
 msgid "專題文章"
 msgstr "Articles"
 
-#: templates/base.html:264 templates/web-navi.html:126
+#: templates/base.html:264
 msgid "技術專欄"
 msgstr "Technical Memo"
 
@@ -1942,37 +1942,37 @@ msgstr "Data Cleaning"
 msgid "通則"
 msgstr ""
 
-#: templates/data-clean.html:39 templates/data-clean.html:52
+#: templates/data-clean.html:39 templates/data-clean.html:53
 msgid "敏感資料處理原則"
 msgstr ""
 
-#: templates/data-paper.html:37 templates/data-paper.html:48
+#: templates/data-paper.html:91 templates/data-paper.html:102
 msgid "關於資料論文"
 msgstr "About Data Paper"
 
-#: templates/data-paper.html:38 templates/data-paper.html:70
+#: templates/data-paper.html:92 templates/data-paper.html:124
 msgid "資料論文發表指引"
 msgstr "Data Paper Publication Process"
 
-#: templates/data-paper.html:39 templates/data-paper.html:102
+#: templates/data-paper.html:93 templates/data-paper.html:157
 msgid "資料期刊"
 msgstr "Data Journals"
 
-#: templates/data-paper.html:40 templates/data-paper.html:120
+#: templates/data-paper.html:94 templates/data-paper.html:181
 msgid "TaiBIF 歷年合作資料論文"
 msgstr "TaiBIF Data Paper Publication"
 
-#: templates/data-paper.html:41 templates/data-paper.html:147
+#: templates/data-paper.html:95 templates/data-paper.html:208
 #, fuzzy
 #| msgid "資料論文徵稿"
 msgid "資料論文合作"
 msgstr "Call for Data Paper"
 
-#: templates/data-paper.html:50
+#: templates/data-paper.html:104
 msgid "什麼是資料論文？"
 msgstr "What is a data paper?"
 
-#: templates/data-paper.html:53
+#: templates/data-paper.html:107
 msgid ""
 "資料論文（Data paper）是一個透過同儕審查（Peer reviewed）的論文形式發表於相關"
 "的期刊上。"
@@ -1980,19 +1980,19 @@ msgstr ""
 "A data paper is a form of academic paper published in relevant data journals "
 "through peer review."
 
-#: templates/data-paper.html:54
+#: templates/data-paper.html:108
 msgid "與傳統的研究論文不同，資料論文不提假設和結論，"
 msgstr ""
 "Unlike traditional research papers, data papers do not present hypotheses "
 "and conclusions."
 
-#: templates/data-paper.html:55
+#: templates/data-paper.html:109
 msgid "內容主要為描述作者所開放的資料集相關資訊，"
 msgstr ""
 "Instead, they primarily describe relevant information about the dataset(s) "
 "the author has made publicly available."
 
-#: templates/data-paper.html:56
+#: templates/data-paper.html:110
 msgid ""
 "包含如何產生及收集資料、資料類型、涵蓋的物種、資料開放於何處及此資料集背景資"
 "訊（Metadata）等等，"
@@ -2001,7 +2001,7 @@ msgstr ""
 "types, species covered, where is the location of the data resources, and "
 "background information about the dataset (metadata)."
 
-#: templates/data-paper.html:57
+#: templates/data-paper.html:111
 msgid ""
 "透過作者於此資料集所開放的資料授權方式，可作為日後學術論文應用其資料時所引用"
 "的依據。"
@@ -2009,38 +2009,38 @@ msgstr ""
 "Through the licensing of data provided by the author, data papers serve as a "
 "basis for citing data in future academic papers."
 
-#: templates/data-paper.html:60
+#: templates/data-paper.html:114
 msgid "發表資料論文的好處與目的包括："
 msgstr "The benefits and purposes of publishing data papers include:"
 
-#: templates/data-paper.html:62
+#: templates/data-paper.html:116
 msgid "提供可引用的期刊出版物（如DOI），為資料發布者帶來學術上的認可"
 msgstr ""
 "Providing citable journal publications (e.g., with a DOI) to bring scholarly "
 "credit to the data publishers"
 
-#: templates/data-paper.html:63
+#: templates/data-paper.html:117
 msgid "人類可讀的結構化資料描述"
 msgstr "Structured, human-readable data descriptions"
 
-#: templates/data-paper.html:64
+#: templates/data-paper.html:118
 msgid "增加您發布的資料資源的可見性、可用性和可信度"
 msgstr ""
 "Increasing the visibility, usability, and credibility of the data resources "
 "you publish"
 
-#: templates/data-paper.html:65
+#: templates/data-paper.html:119
 msgid "更有效地追蹤您發布的資料的使用情況和引用情況"
 msgstr ""
 "More effectively tracking the usage and citation of the data you publish"
 
-#: templates/data-paper.html:72
+#: templates/data-paper.html:126
 msgid "大致上，您的資料集將決定您適合投稿的主題性資料期刊。"
 msgstr ""
 "In general, your dataset will determine the thematic-focused data journals "
 "that are suitable for submission."
 
-#: templates/data-paper.html:73
+#: templates/data-paper.html:127
 #, fuzzy
 #| msgid ""
 #| "\n"
@@ -2082,7 +2082,7 @@ msgstr ""
 "and publishing data papers.\n"
 "            "
 
-#: templates/data-paper.html:81
+#: templates/data-paper.html:135
 #, fuzzy
 #| msgid ""
 #| "\n"
@@ -2105,7 +2105,7 @@ msgstr ""
 "streamline the process of publishing data papers.\n"
 "            "
 
-#: templates/data-paper.html:84
+#: templates/data-paper.html:138
 msgid ""
 "當您透過TaiBIF的資料發布工具IPT上傳您的資料並發布後，可下載其自動產生的RTF/"
 "EML檔案（含GBIF資料集metadata資訊）並上傳至工具裡，此工具會自動將相關資訊填補"
@@ -2115,7 +2115,7 @@ msgstr ""
 "publish it, you can download the automatically generated RTF/EML files "
 "(containing GBIF dataset metadata information) and upload them to the tool."
 
-#: templates/data-paper.html:85
+#: templates/data-paper.html:139
 #, fuzzy
 #| msgid ""
 #| "\n"
@@ -2141,14 +2141,14 @@ msgstr ""
 "pensoft.net/\" target=\"_blank\">Biodiversity Data Journal</a>\n"
 "            "
 
-#: templates/data-paper.html:88
+#: templates/data-paper.html:142
 msgid ""
 "下列的PDF講義帶領大家一步一步的操作了解資料集如何通過此工具發布資料文章。"
 msgstr ""
 "The following PDF tutorial will guide you step by step on how to use this "
 "tool to publish data articles."
 
-#: templates/data-paper.html:92
+#: templates/data-paper.html:147
 #, fuzzy
 #| msgid ""
 #| "\n"
@@ -2169,7 +2169,7 @@ msgstr ""
 "download-document\"></a></p>\n"
 "        "
 
-#: templates/data-paper.html:96
+#: templates/data-paper.html:151
 #, fuzzy
 #| msgid ""
 #| "\n"
@@ -2190,7 +2190,7 @@ msgstr ""
 "document\"></a></p>\n"
 "        "
 
-#: templates/data-paper.html:104
+#: templates/data-paper.html:159
 #, fuzzy
 #| msgid ""
 #| "\n"
@@ -2215,20 +2215,20 @@ msgstr ""
 "the following journals:\n"
 "            "
 
-#: templates/data-paper.html:121 templates/data-policy.html:46
+#: templates/data-paper.html:182 templates/data-policy.html:46
 #: templates/data-policy.html:168
 msgid "更新日期："
 msgstr "last update: "
 
-#: templates/data-paper.html:127
+#: templates/data-paper.html:188
 msgid "發表期刊"
 msgstr "Data Journal"
 
-#: templates/data-paper.html:128
+#: templates/data-paper.html:189
 msgid "文章 DOI"
 msgstr ""
 
-#: templates/data-paper.html:129
+#: templates/data-paper.html:190
 #, fuzzy
 #| msgid "相關資料集"
 msgid "相關資料集 DOI"
@@ -2658,7 +2658,18 @@ msgid ""
 "                "
 msgstr ""
 "\n"
-"The TaiBIF platform utilizes the latest version of Google Analytics (GA4) and Google Tag Manager (GTM) for traffic analysis and program management. These tools assist website and application administrators in understanding interactions between visitors and their sites or apps. The new version of Google Analytics does not collect cookie information directly from users' devices. Instead, it tracks user behavior through a floating user ID on this website. This data collection is solely for traffic analysis and website service monitoring by the management team. Additionally, the platform does not use behavioral records to identify individual visitors or capture users' actual IP addresses. If users wish to prevent their information from being collected, they can adjust their browser security settings or implement information blocking mechanisms (Do Not Track)."
+"The TaiBIF platform utilizes the latest version of Google Analytics (GA4) "
+"and Google Tag Manager (GTM) for traffic analysis and program management. "
+"These tools assist website and application administrators in understanding "
+"interactions between visitors and their sites or apps. The new version of "
+"Google Analytics does not collect cookie information directly from users' "
+"devices. Instead, it tracks user behavior through a floating user ID on this "
+"website. This data collection is solely for traffic analysis and website "
+"service monitoring by the management team. Additionally, the platform does "
+"not use behavioral records to identify individual visitors or capture users' "
+"actual IP addresses. If users wish to prevent their information from being "
+"collected, they can adjust their browser security settings or implement "
+"information blocking mechanisms (Do Not Track)."
 
 #: templates/data-policy.html:201
 msgid ""
@@ -3133,121 +3144,140 @@ msgstr ""
 msgid "使用Excel模板準備調查活動資料構"
 msgstr "Prepare sampling-event data using Excel template"
 
-#: templates/tech-class-license.html:44 templates/tech-class-license.html:55
-msgid "初階課程"
+#: templates/tech-class-license.html:98 templates/tech-class-license.html:109
+msgid "核心課程"
 msgstr ""
 
-#: templates/tech-class-license.html:45 templates/tech-class-license.html:81
-msgid "進階課程"
+#: templates/tech-class-license.html:99 templates/tech-class-license.html:135
+msgid "增能課程"
 msgstr ""
 
-#: templates/tech-class-license.html:46 templates/tech-class-license.html:104
+#: templates/tech-class-license.html:100 templates/tech-class-license.html:158
 msgid "認證辦法"
 msgstr ""
 
-#: templates/tech-class-license.html:47 templates/tech-class-license.html:148
+#: templates/tech-class-license.html:101 templates/tech-class-license.html:201
 msgid "線上自學工作坊課程認證"
 msgstr ""
 
-#: templates/tech-class-license.html:48 templates/tech-class-license.html:155
+#: templates/tech-class-license.html:102 templates/tech-class-license.html:208
 msgid "歷年通過認證名單"
 msgstr ""
 
-#: templates/tech-class-license.html:58
+#: templates/tech-class-license.html:112
 msgid "基礎概論"
 msgstr ""
 
-#: templates/tech-class-license.html:70 templates/tech-class-license.html:83
+#: templates/tech-class-license.html:124 templates/tech-class-license.html:137
 msgid "資料處理及上傳"
 msgstr ""
 
-#: templates/tech-class-license.html:91
+#: templates/tech-class-license.html:145
 msgid "資料管理及應用"
 msgstr ""
 
-#: templates/tech-class-license.html:110
+#: templates/tech-class-license.html:164
 msgid "指定作業項目（將持續更新）"
 msgstr ""
 
-#: templates/tech-class-license.html:128
+#: templates/tech-class-license.html:181
 msgid "作業評核標準"
 msgstr ""
 
-#: templates/tech-class-license.html:139
+#: templates/tech-class-license.html:192
 msgid "證書樣式"
 msgstr ""
 
-#: templates/tech-online-class.html:53 templates/tech-online-class.html:72
-msgid "基礎00-TaiBIF簡介"
+#: templates/tech-online-class.html:102 templates/tech-online-class.html:121
+msgid "核心00-TaiBIF簡介"
 msgstr ""
 
-#: templates/tech-online-class.html:54 templates/tech-online-class.html:91
+#: templates/tech-online-class.html:103 templates/tech-online-class.html:141
 #, fuzzy
 #| msgid "開放資料流程"
-msgid "基礎01-開放資料流程"
+msgid "核心01-開放資料流程"
 msgstr "Publish Your Data"
 
-#: templates/tech-online-class.html:55 templates/tech-online-class.html:110
-msgid "基礎02-資料發布類型"
+#: templates/tech-online-class.html:104 templates/tech-online-class.html:161
+msgid "核心02-資料發布類型"
 msgstr ""
 
-#: templates/tech-online-class.html:56 templates/tech-online-class.html:129
-msgid "基礎03-資料標準及共通欄位"
+#: templates/tech-online-class.html:105 templates/tech-online-class.html:181
+msgid "核心03-資料標準及共通欄位"
 msgstr ""
 
-#: templates/tech-online-class.html:57 templates/tech-online-class.html:148
-msgid "基礎04-開放資料的前置準備及清理"
+#: templates/tech-online-class.html:106 templates/tech-online-class.html:201
+msgid "核心04-開放資料的前置準備及清理"
 msgstr ""
 
-#: templates/tech-online-class.html:58 templates/tech-online-class.html:167
-msgid "基礎05-生物多樣性敏感資料處理原則"
+#: templates/tech-online-class.html:107 templates/tech-online-class.html:221
+msgid "核心05-生物多樣性敏感資料處理原則"
 msgstr ""
 
-#: templates/tech-online-class.html:59 templates/tech-online-class.html:186
+#: templates/tech-online-class.html:108 templates/tech-online-class.html:241
 #, fuzzy
 #| msgid "資料上傳 TaiBIF IPT"
-msgid "基礎06-資料上傳 IPT"
+msgid "核心06-資料上傳 IPT"
 msgstr "Data Uploading via TaiBIF IPT"
 
-#: templates/tech-online-class.html:60 templates/tech-online-class.html:199
-msgid "進階01-開放資料授權規範"
+#: templates/tech-online-class.html:109 templates/tech-online-class.html:255
+#, fuzzy
+#| msgid "開放資料流程"
+msgid "增能01-開放資料授權規範"
+msgstr "Publish Your Data"
+
+#: templates/tech-online-class.html:110 templates/tech-online-class.html:275
+msgid "增能02-TBIA及入口網介紹"
 msgstr ""
 
-#: templates/tech-online-class.html:61 templates/tech-online-class.html:218
-msgid "進階02-TBIA及入口網介紹"
+#: templates/tech-online-class.html:111 templates/tech-online-class.html:295
+msgid "增能03-如何下載及引用開放資料"
 msgstr ""
 
-#: templates/tech-online-class.html:62 templates/tech-online-class.html:237
-msgid "進階03-如何下載及引用開放資料"
-msgstr ""
-
-#: templates/tech-online-class.html:63 templates/tech-online-class.html:256
+#: templates/tech-online-class.html:112 templates/tech-online-class.html:315
 #, fuzzy
 #| msgid "關於資料論文"
-msgid "進階04-資料論文"
+msgid "增能04-資料論文"
 msgstr "About Data Paper"
 
-#: templates/tech-online-class.html:64 templates/tech-online-class.html:275
-msgid "進階05-OpenRefine 資料清理工具介紹與實作"
+#: templates/tech-online-class.html:113 templates/tech-online-class.html:335
+msgid "增能05-OpenRefine 資料清理工具介紹與實作"
 msgstr ""
 
-#: templates/tech-online-class.html:75 templates/tech-online-class.html:94
-#: templates/tech-online-class.html:113 templates/tech-online-class.html:132
-#: templates/tech-online-class.html:151 templates/tech-online-class.html:170
-#: templates/tech-online-class.html:202 templates/tech-online-class.html:221
-#: templates/tech-online-class.html:240 templates/tech-online-class.html:259
-#: templates/tech-online-class.html:278
+#: templates/tech-online-class.html:124 templates/tech-online-class.html:144
+#: templates/tech-online-class.html:164 templates/tech-online-class.html:184
+#: templates/tech-online-class.html:204 templates/tech-online-class.html:224
+#: templates/tech-online-class.html:258 templates/tech-online-class.html:278
+#: templates/tech-online-class.html:298 templates/tech-online-class.html:318
+#: templates/tech-online-class.html:338
 msgid "教學影片"
 msgstr ""
 
-#: templates/tech-online-class.html:81 templates/tech-online-class.html:100
-#: templates/tech-online-class.html:119 templates/tech-online-class.html:138
-#: templates/tech-online-class.html:157 templates/tech-online-class.html:176
-#: templates/tech-online-class.html:189 templates/tech-online-class.html:208
-#: templates/tech-online-class.html:227 templates/tech-online-class.html:246
-#: templates/tech-online-class.html:265 templates/tech-online-class.html:284
+#: templates/tech-online-class.html:130 templates/tech-online-class.html:150
+#: templates/tech-online-class.html:170 templates/tech-online-class.html:190
+#: templates/tech-online-class.html:210 templates/tech-online-class.html:230
+#: templates/tech-online-class.html:244 templates/tech-online-class.html:264
+#: templates/tech-online-class.html:284 templates/tech-online-class.html:304
+#: templates/tech-online-class.html:324 templates/tech-online-class.html:344
 msgid "教學講義"
 msgstr ""
+
+#: templates/tools.html:80
+msgid ""
+"\n"
+"                        提供全天候協助的數位 TaiBIFer，隨時為您解答有關生物多"
+"樣性領域開放資料的相關問題。本服務由大型語言模型支援，旨在即時提供協助與建"
+"議，惟部分內容可能受限於模型訓練資料與推論方式，建議在應用前多方查證以確保資"
+"訊準確性。\n"
+"                        "
+msgstr ""
+"\n"
+"The Digital TaiBIFer is a 24/7 helpdesk, ready to answer your questions "
+"about biodiversity open data. This service is supported by a large language "
+"model and is designed to provide real-time assistance and advice. However, "
+"some of the content may be limited by the model's training data and "
+"inference methods, and it is recommended to verify the information before "
+"use to ensure its accuracy."
 
 #: templates/web-navi.html:103
 msgid "全站搜尋"
