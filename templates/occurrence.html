@@ -212,15 +212,11 @@ L.marker([{{ map_view.0 }}, {{ map_view.1}}]).addTo(map);
                 <tr>
                     <td>{{ v.name_zh }}</td>
                     <td>
-                    {% if v.value.1 is not None %}
                     {{ v.value.1 }}
-                    {% elif v.value.1 is None %}
-                    {{ v.value.0 }}
-                    {% endif %}
                     </td>
                     <td>
                     {% if v.value.0 != None %}
-                    {{ v.value.0 }}
+                        {{ v.value.0 }}
                     {% endif %}
                     </td>
                     <td>
@@ -251,11 +247,11 @@ L.marker([{{ map_view.0 }}, {{ map_view.1}}]).addTo(map);
             <tr>
                 <td>{{ v.name_zh }}</td>
                 <td>
-                {% if v.value.1 is not None %}
-                    {{ v.value.1 }}
-                {% elif v.value.1 is None %}
-                    {{ v.value.0 }}
-                {% endif %}
+                    {% if v.value.1 is not None %}
+                        {{ v.value.1 }}
+                    {% else %}
+                        
+                    {% endif %}
                 </td>
                 <td>
                 {% if v.value.0 != None %}
@@ -294,9 +290,9 @@ L.marker([{{ map_view.0 }}, {{ map_view.1}}]).addTo(map);
                 <tr><td>{{ v.name_zh }}</td>
                 <td>
                     {% if v.value.1 is not None %}
-                    {{ v.value.1 }}
-                    {% elif v.value.1 is None %}
-                    {{ v.value.0 }}
+                        {{ v.value.1 }}
+                    {% else %}
+                        
                     {% endif %}
                 </td>
                 <td>
@@ -353,13 +349,18 @@ L.marker([{{ map_view.0 }}, {{ map_view.1}}]).addTo(map);
                             {{ v.name_zh }}
                         </td>
                         <td>
-                            <a href="https://nametool.taicol.tw/zh-tw/taxon-names/{{ v.value.1 }}">{{ v.value.1 }}</a>
+                            {% if v.value.1 is not None %}
+                                <a href="https://nametool.taicol.tw/zh-tw/taxon-names/{{ v.value.1 }}">{{ v.value.1 }}</a>
+                            {% else %}
+                                
+                            {% endif %}
+                            
                         </td>
                         <td>
                             {% if v.value.1 is not None %}
                                 {{ v.value.1 }}
-                            {% elif v.value.1 is None %}
-                                {{ v.value.0 }}
+                            {% else %}
+                                
                             {% endif %}
                         </td>
                         <td>
@@ -401,10 +402,10 @@ L.marker([{{ map_view.0 }}, {{ map_view.1}}]).addTo(map);
                 <tr>
                     <td>{{ v.name_zh }}</td>
                     <td>
-                    {% if v.value.1 != None and v.value.1 != ''%}
+                    {% if v.value.1 is not None %}
                         {{ v.value.1 }}
-                    {% elif v.value.1 == None %}
-                        {{ v.value.0 }}
+                    {% else %}
+                        
                     {% endif %}
                     </td>
                     <td>
@@ -446,8 +447,8 @@ L.marker([{{ map_view.0 }}, {{ map_view.1}}]).addTo(map);
                 <td>
                 {% if v.value.1 is not None %}
                     {{ v.value.1 }}
-                {% elif v.value.1 is None %}
-                    {{ v.value.0 }}
+                {% else %}
+                    
                 {% endif %}
                 </td>
                 <td>
