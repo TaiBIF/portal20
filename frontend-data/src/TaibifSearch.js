@@ -289,7 +289,7 @@ class TaibifSearch extends React.Component {
     // }
     // else 
     if (myRe.exec(pathname)){
-      apiUrl = `${window.location.origin}/api/v2/occurrence/search`;
+      apiUrl = `${window.location.origin}/api/v3/occurrence/search`;
       isOccurrence = true;
     }else{
       apiUrl = `${window.location.origin}/api${window.location.pathname}`;

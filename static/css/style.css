@@ -4730,7 +4730,7 @@ a.btn-sunset-md {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    height: 560px;
+    /* height: 560px; */
 }
 
 .article-content-wrapper p img[alt~="small-size"] {
@@ -5046,7 +5046,7 @@ a.btn-sunset-md {
     .occurrence_image_section {
         display: flex;
         flex-direction: column;
-    }  
+    }
 }
 
 /* 手機版新 UI */
@@ -5070,7 +5070,7 @@ a.btn-sunset-md {
         background-color: #eee;
         border-radius: 4px;
     }
-    .nav-tabs>li>a:hover {
+    .nav-tabs > li > a:hover {
         border-color: transparent !important;
     }
     .table-responsive {
@@ -5099,12 +5099,12 @@ a.btn-sunset-md {
         font-size: 14px;
     }
     .dataset-table th {
-        white-space: nowrap;  /* 不換行 */
+        white-space: nowrap; /* 不換行 */
     }
-    
+
     .dataset-table td {
-        white-space: normal;  /* 允許換行 */
-        word-break: break-word; 
+        white-space: normal; /* 允許換行 */
+        word-break: break-word;
     }
     .samplingevent-highlight-link {
         color: #fff;
@@ -5125,7 +5125,7 @@ a.btn-sunset-md {
     .checklist-highlight-link {
         color: #fff;
         text-decoration: none;
-        background-color: #947AB2;
+        background-color: #947ab2;
         padding: 3px 5px;
         border-radius: 8px;
         font-weight: normal;
@@ -5156,9 +5156,3 @@ a.btn-sunset-md {
     font-weight: bold;
     color: #525252;
 }
-
-
-
-
-
-
