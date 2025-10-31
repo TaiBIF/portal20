@@ -5156,3 +5156,13 @@ a.btn-sunset-md {
     font-weight: bold;
     color: #525252;
 }
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .gbif-award-logo {
+        height: 100px;
+    }
+}
