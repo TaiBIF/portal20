@@ -73,19 +73,18 @@
     <!-- article content begin -->
 
 
-    <!--Post images 位置-->
+    <!-- Post images 位置 -->
     {% if imagesList %}
     <div id="carousel-postImages" class="carousel slide" data-ride="carousel">
-        <!-- Wrapper for slides -->
         <div class="carousel-inner">
             {% for image in imagesList %}
             <div class="item {% if forloop.counter == 1 %} active{% endif %}">
-                <img src="/media/{{ image.images }}" style="max-height:560px;margin-left:auto;margin-right:auto;display: block;">
-                <p>{{image.cover_license_text}}</p> 
+                <img src="/media/{{ image.images }}" style="max-height:560px;margin-left:auto;margin-right:auto;display:block;">
+                <p>{{ image.cover_license_text }}</p>
             </div>
             {% endfor %}
-        </div> 
-        
+        </div>
+
         {% if imagesList|length > 1 %}
         <!-- Controls -->
         <a class="left carousel-control" href="#carousel-postImages" role="button" data-slide="prev">
@@ -98,8 +97,9 @@
             <span class="sr-only">Next</span>
         </a>
         {% endif %}
-    </div> 
+    </div>
     {% endif %}
+
 
     {% if article.category == "PUB" and article.memo_text|slice:"0:9" == "__files__" %}
     <ul class="article-attachment-wrapper">
