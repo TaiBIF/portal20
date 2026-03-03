@@ -22,7 +22,7 @@
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v18.0&appId=882646719245598" nonce="LwF89EaC"></script>
 <!-- container begin -->
-<div class="container">
+<div class="container article-detail-page container-1340">
     <nav class="article-breadcrumb" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
@@ -47,16 +47,11 @@
     <!-- story title & share btns end -->
 
     <!-- article content begin -->
-    <div class="carousel slide" data-interval="4000" data-ride="carousel">
+    <div class="carousel slide article-cover-card" data-interval="4000" data-ride="carousel">
         <div class="carousel-inner" >
         {% if  article.cover %}
             <div class="head-carousel-wrapper item active">
                 <img src="/media/{{ article.cover }}">
-            </div>
-            <div class="head-carousel-wrapper item active">
-                <p style="background-color:white;color:black;">
-                    {{article.cover_license_text}}
-                </p>
             </div>
         {% endif %}
         </div>

@@ -1,0 +1,31 @@
+<div class="swiper-slide">
+    <a href="{% url 'article-detail-id' pk=i.id %}">
+        <div class="pic-area">
+            <img src="{{ i.card_image_url }}" alt="{{ i.title|default:'新聞標題' }}" />
+        </div>
+        <div class="class-date-area">
+            {% if i.is_pinned == 'Y' %}
+                <div class="pin-badge" title="置頂文章" aria-label="置頂文章">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none">
+                        <path d="M8 3L16 3L15 9L19 12L5 12L9 9L8 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                        <path d="M12 12L12 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    </svg>
+                    <span>置頂</span>
+                </div>
+            {% endif %}
+            {% if i.category == 'NEWS' %}
+                <div class="class-item color-1">新聞</div>
+            {% elif i.category == 'EVENT' %}
+                <div class="class-item color-2">活動</div>
+            {% elif i.category == 'SCI' %}
+                <div class="class-item color-3">科普</div>
+            {% elif i.category == 'STORY' %}
+                <div class="class-item color-4">資料故事</div>
+            {% else %}
+                <div class="class-item color-5">其他</div>
+            {% endif %}
+            <div class="date">{{ i.created|date:'Y/m/d' }}</div>
+        </div>
+        <h2 class="news-title fs-20">{{ i.title|truncatechars:40|safe }}</h2>
+    </a>
+</div>

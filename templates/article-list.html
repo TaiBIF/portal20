@@ -30,13 +30,22 @@
         window.location = `?start=${start_date}&end=${end_date}`;
       });
 
+      function runArticleSearch() {
+        const keyword = $('#article-search-input').val() || '';
+        const query = "q=" + encodeURIComponent(keyword);
+        window.location.href = `/article/search/?${query}`;
+      }
+
       // topic type select
       $('#article-search-input').keypress(function(e){
         if (e.key=="Enter"){
-          var keyword = e.target.value;
-          query="q=" + keyword;
-          window.location.href= `/article/search/?${query}`;
+          e.preventDefault();
+          runArticleSearch();
         }
+      });
+      $('#article-search-btn').click(function(e){
+        e.preventDefault();
+        runArticleSearch();
       });
       $('.select-category-sci').click(function(e){
         const url = window.location.search.substring(1)
@@ -112,7 +121,7 @@
   {% comment %} {% include "inc_breadcrumb.html" with tab="04" %} {% endcomment %}
  
   <!-- container begin -->
-  <div class="container">
+  <div class="container container-1340 article-search-page">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
@@ -124,10 +133,12 @@
     <div class="heading-sort-ctn">
       <form class="form-inline">
         <span class="heading-sort-name">{% trans "篩選" %}</span>
-          <input type="text" placeholder="關鍵字查詢" name="q" id="article-search-input" value={{ article_search_keyword }}>
-          {% comment %} <button class="btn"type="submit">
+          <div class="article-search-input-wrap">
+            <input type="text" placeholder="關鍵字查詢" name="q" id="article-search-input" value="{{ article_search_keyword|default:'' }}">
+            <button type="button" id="article-search-btn" class="article-search-btn" aria-label="搜尋">
             <span class="myicon icon-search-lens"></span>
-          </button> {% endcomment %}
+            </button>
+          </div>
         <label class="custom-input-ctn">
           <input type="checkbox" class="select-category-sci" data-type="news" {% if "NEWS" in article_cat %} checked="checked"{% endif %}>
           <span class="checkmark"></span>
@@ -162,30 +173,28 @@
     </div>
     <!-- sort by end -->
     {% for article in article_list %}
-    <div class="row listbox-img-right-wrapper">
-      <div class="col-xs-8">
-        <span class="listbox-inner-date">{{ article.created|date:'Y/m/d' }}</span>
-        <h3 class="listbox-inner-title"><a href="{{ article.get_absolute_url }}" target="_blank" rel="noreferrer noopener">{{ article.title }}</a></h3>
-        <p class="listbox-inner-summary hidden-xs">
-            {% if article.memo|slice:"0:4" == "nid:" %}
-              {# old article content #}
-              {% if article.category == "UPDATE" %}
-              {% else %}
-                {{ article.summary|striptags|truncatechars:150 }}
-                <p><a href="{% url 'article-detail-id' pk=article.id %}" target="_blank" rel="noreferrer noopener">閱讀更多</a></p>
-              {% endif %}
+    <article class="listbox-img-right-wrapper article-list-card">
+      <a class="article-card-link" href="{{ article.get_absolute_url }}">
+        <div class="row">
+          <div class="{% if article.cover %}col-xs-8{% else %}col-xs-12{% endif %}">
+            <span class="listbox-inner-date">{{ article.created|date:'Y/m/d' }}</span>
+            <h3 class="listbox-inner-title">{{ article.title }}</h3>
+
+            {% if article.memo|slice:"0:4" == "nid:" and article.category == "UPDATE" %}
             {% else %}
-              {{ article.summary|striptags|truncatechars:150 }}
-              <p><a href="{% url 'article-detail-id' pk=article.id %}" target="_blank" rel="noreferrer noopener">閱讀更多</a></p>
+              <p class="listbox-inner-summary hidden-xs">{{ article.summary|striptags|truncatechars:150 }}</p>
             {% endif %}
-        </p>
-      </div>
-      {% if article.cover %}
-      <div class="col-xs-4">
-        <a href="{% url 'article-detail-id' pk=article.id %}"><img src="/media/{{ article.cover }}" class="img-responsive"></a>
-      </div>
-      {% endif %}
-    </div>
+          </div>
+          {% if article.cover %}
+          <div class="col-xs-4">
+            <div class="article-thumb-link">
+              <img src="/media/{{ article.cover }}" class="img-responsive" alt="{{ article.title|default:'文章縮圖' }}">
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </a>
+    </article>
     {% endfor %}
 
     {% include "inc_pagination.html" with object_list=article_list %}

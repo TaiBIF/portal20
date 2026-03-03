@@ -1,310 +1,522 @@
-{% load static %}
-{% load helper_tags %}
-{% load i18n %}
-  
-<!DOCTYPE html>
+{% load static %} {% load helper_tags %} {% load i18n %}
+
+<!doctype html>
 <html>
     <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="" />
+        <title>{% block title %}TaiBIF{% endblock title %}</title>
 
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <title>{% block title %}TaiBIF{% endblock title %}</title>
+        {% block style %}{% endblock style %}
+        <link
+            rel="icon"
+            type="image/x-icon"
+            href="{% static 'images/favicon.ico' %}"
+        />
+        <!-- owl carousel -->
+        <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" />
+        <link
+            rel="stylesheet"
+            href="{% static 'css/owl.theme.default.min.css' %}"
+        />
+        <!-- Data Table -->
+        <!-- <link rel="stylesheet" href="{% static 'css/jquery.dataTables.min.css' %}"> -->
+        <link
+            href="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.7/b-3.0.2/datatables.min.css"
+            rel="stylesheet"
+        />
 
-    {% block style %}{% endblock style %}
-    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
-    <!-- owl carousel -->
-    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
-    <!-- Data Table -->
-    <!-- <link rel="stylesheet" href="{% static 'css/jquery.dataTables.min.css' %}"> -->
-    <link href="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.7/b-3.0.2/datatables.min.css" rel="stylesheet">
-    <link href="{%  static 'favicon.ico' %}" rel="icon" type="image/x-icon" />
-    
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-55MVPTLZ');</script>
-    <!-- End Google Tag Manager -->
-    {% block meta %}
-    {% endblock %}
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <!-- multiselect -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap-multiselect.css' %}">
-    <!-- leaflet -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    {% if taibif_env == "local" %}
-    <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
-    {% else %}
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"
-        integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
-        crossorigin="anonymous"></script>
-    {% endif %}
+        <!-- Google Tag Manager -->
+        <script>
+            (function (w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({
+                    "gtm.start": new Date().getTime(),
+                    event: "gtm.js",
+                });
+                var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s),
+                    dl = l != "dataLayer" ? "&l=" + l : "";
+                j.async = true;
+                j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+                f.parentNode.insertBefore(j, f);
+            })(window, document, "script", "dataLayer", "GTM-55MVPTLZ");
+        </script>
+        <!-- End Google Tag Manager -->
+        {% block meta %} {% endblock %}
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{% static 'taibif-home/tw/theme.css' %}"
+        />
+        <!-- multiselect -->
+        <link
+            rel="stylesheet"
+            href="{% static 'css/bootstrap-multiselect.css' %}"
+        />
+        <!-- leaflet -->
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet/dist/leaflet.css"
+        />
+        <link
+            rel="stylesheet"
+            href="//cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"
+        />
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        {% if taibif_env == "local" %}
+        <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+        {% else %}
+        <script
+            src="https://code.jquery.com/jquery-1.12.4.min.js"
+            integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
+            crossorigin="anonymous"
+        ></script>
+        {% endif %}
 
-    <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script> -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="{% static 'js/bootstrap-multiselect.min.js' %}"></script>
-    <!-- owl carousel JS -->
-    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
-    <!-- data table JS -->
-    <!-- <script src="{% static 'js/jquery.dataTables.min.js' %}"></script> -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.colVis.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.flash.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
-    
-    <!-- Optional JavaScript -->
-    <script src="{% static 'js/all.js' %}"></script>
-    <script src="{% static 'js/base.js' %}"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"
+        ></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script> -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="{% static 'js/bootstrap-multiselect.min.js' %}"></script>
+        <!-- owl carousel JS -->
+        <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+        <!-- data table JS -->
+        <!-- <script src="{% static 'js/jquery.dataTables.min.js' %}"></script> -->
+        <script
+            type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.colVis.min.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.flash.min.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"
+        ></script>
 
-    {% block head %}
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-55MVPTLZ');</script>
-    <!-- End Google Tag Manager -->
-    {% endblock head %}
+        <!-- Optional JavaScript -->
+        <script src="{% static 'js/all.js' %}"></script>
+        <script src="{% static 'js/base.js' %}"></script>
+
+        {% block head %} {% endblock head %}
     </head>
 
     <body>
         <!-- Google Tag Manager (noscript) -->
-        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-55MVPTLZ"height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <noscript
+            ><iframe
+                src="https://www.googletagmanager.com/ns.html?id=GTM-55MVPTLZ"
+                height="0"
+                width="0"
+                style="display: none; visibility: hidden"
+            ></iframe
+        ></noscript>
         <!-- End Google Tag Manager (noscript) -->
 
-        <!-- shortcut begin -->
-        <div class="shortcut-menu-wrapper dropup">
-            <a class="btn" href="{% url 'web-navi' %}" data-toggle="dropdown" aria-expanded="false">
-                <img src="{% static 'images/mascot-fish.png' %}" alt="" class="stamp">
-                {% trans "網站捷徑" %}
-            </a>
-            <div class="dropdown-menu">
-                <a href="https://ipt.taibif.tw" class="dropdown-item">TaiBIF IPT</a>
-                <a href="{% url 'open-consulation' %}" class="dropdown-item">{% trans "線上自學工作坊" %}</a>
-                <a href="{% url 'tools' %}" class="dropdown-item">{% trans "開放資料工具" %}</a>
-                <a href="{% url 'open-standard' %}" class="dropdown-item">{% trans "資料標準模板" %}</a>
-                <a href="https://taicol.tw" class="dropdown-item">TaiCOL</a>
-                <a href="https://tbiadata.tw" class="dropdown-item">TBIA</a>
-                <a href="{% url 'web-navi' %}" class="dropdown-item">{% trans "網站導覽" %}</a>
-            </div>
-        </div>
-
-        <div class="container-header">
-            <div class="masthead-wrapper">
-                <div class="col-auto masthead-brand-wrapper">
-                    <a href="{% url 'index'%}" class="header-brand pc">
-                        <img src="{% static 'images/taibif-logo.png' %}">
-                    </a>
-                    <a href="{% url 'index'%}" class="header-brand mobile">
-                        <img src="{% static 'images/taibif-logotype.png' %}">
-                    </a>
-                </div>
-
-                <div class="col-auto masthead-menu-wrapper">
-                    <div class="masthead-dropdown">
-                        <a class="masthead-block-menu" href="#">
-                            <span class="myicon icon-info-about"></span>
-                            <span class="menu-title">{% trans "關於我們" %}</span>
-                        </a>
-                        <div class="dropdown-content">
-                            <div class="dropdown-row about">
-                                <ul class="dropdown-col">
-                                    <li><a href="{% url 'about_taibif' %}" class="item">{% trans "TaiBIF 介紹" %}</a></li>
-                                    <li><a href="{% url 'about_gbif' %}" class="item">{% trans "GBIF 介紹" %}</a></li>
-                                    <li><a href="{% url 'taibif-achievement' %}" class="item">{% trans "TaiBIF 成果" %}</a></li>
-                                    <li><a href="{% url 'thanks-list' %}" class="item">{% trans "感謝名單" %}</a></li>
-                                    <li><a href="{% url 'web-navi' %}" class="item">{% trans "網站導覽" %}</a></li>
-                                </ul>
-                                <ul class="dropdown-col">
-                                    <li><a href="{% url 'links' %}" class="item">{% trans "相關連結" %}</a></li>
-                                    <li><a href="{% url 'faq' %}" class="item">FAQ</a></li>
-                                    <li><a href="{% url 'download-resources' %}" class="item">{% trans "TaiBIF 資源下載專區" %}</a></li>
-                                    <li><a href="{% url 'data-policy' %}" class="item">{% trans "使用條款暨隱私權政策" %}</a></li>
-                                </ul>
+        <header>
+            <div class="header-bottom">
+                <div class="main-1340">
+                    <div class="logo">
+                        <h1>
+                            <a href="{% url 'index' %}">
+                                <img
+                                    src="{% static 'taibif-home/image/taibif-logo.png' %}"
+                                    alt="Taibif 台灣生物多樣性資訊機構"
+                                />
+                            </a>
+                        </h1>
+                    </div>
+                    <div class="mb-ham">
+                        <svg
+                            class="ham hamRotate ham8"
+                            viewBox="0 0 100 100"
+                            width="60"
+                        >
+                            <path
+                                class="line top"
+                                d="m 30,33 h 40 c 3.722839,0 7.5,3.126468 7.5,8.578427 0,5.451959 -2.727029,8.421573 -7.5,8.421573 h -20"
+                            />
+                            <path class="line middle" d="m 30,50 h 40" />
+                            <path
+                                class="line bottom"
+                                d="m 70,67 h -40 c 0,0 -7.5,-0.802118 -7.5,-8.365747 0,-7.563629 7.5,-8.634253 7.5,-8.634253 h 20"
+                            />
+                        </svg>
+                    </div>
+                    <div class="right-menu">
+                        <div class="header-top">
+                            <div class="main-1340">
+                                <div class="icon-set">
+                                    <a
+                                        href="https://www.facebook.com/TaiBIF.tw/"
+                                        target="_blank"
+                                        class="link-icon"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="7.238"
+                                            height="15.003"
+                                            viewBox="0 0 7.238 15.003"
+                                        >
+                                            <path
+                                                id="facebook-svgrepo-com_2_"
+                                                data-name="facebook-svgrepo-com (2)"
+                                                d="M-332.54,276.212c0-.6.539-.82,1.143-.82a5.2,5.2,0,0,1,1.248.188l.387-2.3A9.636,9.636,0,0,0-332.54,273a2.76,2.76,0,0,0-2.409,1.131,4.061,4.061,0,0,0-.5,2.327v1.506H-337v2.245h1.553V288h2.907v-7.795h2.3l.17-2.245h-2.473Z"
+                                                transform="translate(337 -273)"
+                                                fill="#fff"
+                                            />
+                                        </svg>
+                                    </a>
+                                    <a
+                                        href="https://www.youtube.com/@taibif_brcas"
+                                        target="_blank"
+                                        class="link-icon"
+                                    >
+                                        <svg
+                                            id="Group_288"
+                                            data-name="Group 288"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="15.192"
+                                            height="10.635"
+                                            viewBox="0 0 15.192 10.635"
+                                        >
+                                            <g
+                                                id="Group_286"
+                                                data-name="Group 286"
+                                                transform="translate(0 0)"
+                                            >
+                                                <path
+                                                    id="Path_202"
+                                                    data-name="Path 202"
+                                                    d="M14.874,1.661A1.9,1.9,0,0,0,13.531.318,45.366,45.366,0,0,0,7.6,0,45.366,45.366,0,0,0,1.661.318,1.9,1.9,0,0,0,.318,1.661,19.756,19.756,0,0,0,0,5.317,19.756,19.756,0,0,0,.318,8.974a1.9,1.9,0,0,0,1.343,1.343,45.363,45.363,0,0,0,5.935.318,45.363,45.363,0,0,0,5.935-.318,1.9,1.9,0,0,0,1.343-1.343,19.755,19.755,0,0,0,.318-3.657A19.872,19.872,0,0,0,14.874,1.661Z"
+                                                    transform="translate(0 0)"
+                                                    fill="#fff"
+                                                />
+                                                <path
+                                                    id="Path_203"
+                                                    data-name="Path 203"
+                                                    d="M65.3,37.22l3.947-2.278L65.3,32.663Z"
+                                                    transform="translate(-59.221 -29.624)"
+                                                    fill="#68554b"
+                                                />
+                                            </g>
+                                        </svg>
+                                    </a>
+                                    <a
+                                        href="https://ipt.taibif.tw/"
+                                        target="_blank"
+                                        class="link-icon"
+                                    >
+                                        <p>IPT</p>
+                                    </a>
+                                    <!--手機點擊搜尋icon直接連到搜尋頁-->
+                                    <div class="btn-icon pc">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="15"
+                                            height="14"
+                                            viewBox="0 0 15 14"
+                                        >
+                                            <path
+                                                id="Union_1"
+                                                data-name="Union 1"
+                                                d="M14.146,13.854,11.24,10.947a6.487,6.487,0,1,1,.63-.784l2.984,2.984a.5.5,0,1,1-.707.707ZM1,6.5A5.5,5.5,0,1,0,6.5,1,5.506,5.506,0,0,0,1,6.5Z"
+                                                fill="#fff"
+                                            />
+                                        </svg>
+                                        <div class="search-box">
+                                            <div class="rel">
+                                                <input type="text" />
+                                                <button class="search-btn">
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        width="15"
+                                                        height="14"
+                                                        viewBox="0 0 15 14"
+                                                    >
+                                                        <path
+                                                            id="Union_1"
+                                                            data-name="Union 1"
+                                                            d="M14.146,13.854,11.24,10.947a6.487,6.487,0,1,1,.63-.784l2.984,2.984a.5.5,0,1,1-.707.707ZM1,6.5A5.5,5.5,0,1,0,6.5,1,5.506,5.506,0,0,0,1,6.5Z"
+                                                            fill="#4a3e3a"
+                                                        />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a
+                                        href="https://portal.taibif.tw/zh-hant/search/?q="
+                                        class="btn-icon mb"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="15"
+                                            height="14"
+                                            viewBox="0 0 15 14"
+                                        >
+                                            <path
+                                                id="Union_1"
+                                                data-name="Union 1"
+                                                d="M14.146,13.854,11.24,10.947a6.487,6.487,0,1,1,.63-.784l2.984,2.984a.5.5,0,1,1-.707.707ZM1,6.5A5.5,5.5,0,1,0,6.5,1,5.506,5.506,0,0,0,1,6.5Z"
+                                                fill="#fff"
+                                            />
+                                        </svg>
+                                    </a>
+                                    <a href="/contact-us" class="btn-icon">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="18"
+                                            height="12"
+                                            viewBox="0 0 18 12"
+                                        >
+                                            <path
+                                                id="Path_313"
+                                                data-name="Path 313"
+                                                d="M0,10.7V1.3A1.583,1.583,0,0,1,1.553,0L16.394,0A1.53,1.53,0,0,1,18,1.378v9.247A1.521,1.521,0,0,1,16.43,12L1.553,12A1.586,1.586,0,0,1,0,10.7M9.405,7.449,16.19,1H1.825l6.8,6.457a.649.649,0,0,0,.784-.009M5.6,6,1.056,1.685v8.63Zm11.361,4.312V1.687L12.419,6Zm-5.283-3.6L10.122,8.184a1.746,1.746,0,0,1-2.239-.011L6.341,6.711,1.827,11H16.189Z"
+                                                transform="translate(0 0)"
+                                                fill="#fff"
+                                            />
+                                        </svg>
+                                    </a>
+                                    <div class="btn-icon mb-language">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="18"
+                                            height="18"
+                                            viewBox="0 0 18 18"
+                                        >
+                                            <path
+                                                id="Path_216"
+                                                data-name="Path 216"
+                                                d="M9.562,0a.451.451,0,0,0,.18.031A8.995,8.995,0,1,1,.031,9.742.453.453,0,0,0,0,9.562V8.437a1.294,1.294,0,0,0,.032-.2A9.018,9.018,0,0,1,8.239.032.7.7,0,0,0,8.437,0ZM5.621,5.277A12.888,12.888,0,0,1,7.669,1.251,7.847,7.847,0,0,0,2.631,4.388a16.275,16.275,0,0,0,2.99.888m9.748-.89A7.851,7.851,0,0,0,10.324,1.25,12.863,12.863,0,0,1,12.38,5.282a16.6,16.6,0,0,0,2.988-.9M11.253,5.451A11.563,11.563,0,0,0,9,1.423,11.544,11.544,0,0,0,6.746,5.449a17.08,17.08,0,0,0,4.506,0M5.338,11.627a12.815,12.815,0,0,1,0-5.244,18.281,18.281,0,0,1-3.31-1.019,7.819,7.819,0,0,0,0,7.273,18.539,18.539,0,0,1,3.317-1.01m10.644,1a7.823,7.823,0,0,0-.005-7.268,18.242,18.242,0,0,1-3.313,1.018,12.825,12.825,0,0,1,0,5.244,18.929,18.929,0,0,1,3.32,1.006M11.544,6.548a16.575,16.575,0,0,1-5.094,0,11.634,11.634,0,0,0,0,4.9,18.835,18.835,0,0,1,5.092,0,11.608,11.608,0,0,0,0-4.9M9,16.575a11.58,11.58,0,0,0,2.251-4.025,16.975,16.975,0,0,0-4.5,0A11.5,11.5,0,0,0,9,16.575m-1.33.172A12.88,12.88,0,0,1,5.619,12.72a16.422,16.422,0,0,0-2.987.891,7.834,7.834,0,0,0,5.04,3.135m7.7-3.135a16.81,16.81,0,0,0-2.987-.894,12.877,12.877,0,0,1-2.056,4.032,7.841,7.841,0,0,0,5.043-3.138"
+                                                fill="#fff"
+                                            />
+                                        </svg>
+                                        <div class="smenu">
+                                            <a href="#">繁體中文</a>
+                                            <a href="#">English</a>
+                                        </div>
+                                        <!--繁中時出現En，英文版時出現繁中-->
+                                        <div class="mb-language-menu">
+                                            <a href="#" style="display: none"
+                                                >繁中
+                                            </a>
+                                            <a href="#">En</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                
-                    <a class="masthead-block-menu" href="{% url 'contact_us' %}">
-                        <span class="myicon icon-contact-mail"></span>
-                        <span class="menu-title">{% trans "聯絡我們" %}</span>
-                    </a>
-            
-                    <div class="masthead-dropdown">
-                        <a class="masthead-block-menu" href="#">
-                            <span class="myicon icon-lang-switch"></span>
-                            <span class="menu-title">{% trans "選擇語言" %}</span>
-                        </a>
-                        <div class="dropdown-content">
-                            <div class="dropdown-row lang">            
-                                <form action="{% url 'set_language' %}" method="post" id="lang_form">{% csrf_token %}
-                                    <input name="next" type="hidden" value="{{ redirect_to }}">
-                                    {% get_current_language as LANGUAGE_CODE %}
-                                    {% get_available_languages as LANGUAGES %}
-                                    {% get_language_info_list for LANGUAGES as languages %}
-                                    {% for language in languages %}
-                                    <ul class="dropdown-col"></ul>
-                                        <li class="item">
-                                            <button type="submit" name="language" value="{{ language.code }}" class="{% if language.code == LANGUAGE_CODE %}selected{% else %}demo-text-black{% endif %}">
-                                                {{ language.name_local }}
-                                            </button>
-                                        </li>
-                                    </ul>
-                                    {% endfor %}  
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-auto masthead-search-wrapper px-shrink">
-                    <form action="">
-                        <div class="row row-flex">
-                            <input type="text" class="form-control" id="navbar-search-input" placeholder="{% trans "全站搜尋..." %}">
-                        </div>
-                    </form>
-                    <button id="navbar-search-btn" class="btn"><span class="myicon icon-search-lens"></span></button>
-                </div>
-            </div>
-        </div>
-        
-        {% block navbar %}
-        <!-- navbar begin -->
-        <nav class="navbar navbar-expand-lg navbar-caption">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                    <div class="dropdown dropdown-caption">
-                        <a class="btn-caption dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                        {% trans "開放資料" %}
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{% url 'open-process' %}">{% trans "開放資料流程" %}</a>
-                            <a class="dropdown-item" href="{% url 'open-timezone' %}">{% trans "計畫資料繳交依據與時程" %}</a>
-                            <a class="dropdown-item" href="{% url 'tools' %}">{% trans "開放資料工具" %}</a>
-                            <a class="dropdown-item" href="{% url 'data_stats' %}">{% trans "資料發布狀況" %}</a>
-                            <a class="dropdown-item" href="{% url 'open-consulation' %}">{% trans "開放資料諮詢服務" %}</a>
-                        </div>
-                    </div> 
-                    </li>
-
-                    <li class="nav-item">
-                    <div class="dropdown dropdown-caption">
-                        <a class="btn-caption dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                        {% trans "教育資源" %}
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{% url 'tech-open' %}">{% trans "什麼是開放資料" %}</a>
-                            <a class="dropdown-item" href="{% url 'tech-book' %}">{% trans "生物多樣性資訊概論" %}</a>
-                            <a class="dropdown-item" href="{% url 'tech-workshop' %}">{% trans "資料開放與應用工作坊" %}</a>
-                            <a class="dropdown-item" href="{% url 'tech-volunteer' %}">{% trans "參與志工培訓" %}</a>
-                        </div>
-                    </div>
-                    </li>
-
-                    <li class="nav-item">
-                    <div class="dropdown dropdown-caption">
-                        <a class="btn-caption dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                        {% trans "資料應用" %}
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{% url 'data-paper' %}">{% trans "資料期刊與論文" %}</a>
-                            <a class="dropdown-item" href="{% url 'data-visual' %}">{% trans "資料視覺化" %}</a>
-                            <a class="dropdown-item" href="{% url 'data-case' %}">{% trans "資料應用案例" %}</a>
-                            <a class="dropdown-item" href="{% url 'data-product' %}">{% trans "資料產品" %}</a>
-                        </div>
-                    </div>
-                    </li>
-
-                    <li class="nav-item">
-                    <div class="dropdown dropdown-caption">
-                        <a class="btn-caption dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                        {% trans "找資料" %}
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{% url 'search-occurrence' cat='search' %}">{% trans "物種出現紀錄" %}</a>
-                            <a class="dropdown-item" href="{% url 'search-species' %}">{% trans "物種" %}</a>
-                            <a class="dropdown-item" href="{% url 'search-dataset' %}">{% trans "資料集" %}</a>
-                            <a class="dropdown-item" href="{% url 'search-publisher' %}">{% trans "資料發布單位" %}</a>
-                            <a class="dropdown-item" href="{% url 'taibif-api' %}">API</a>
-                        </div>
-                    </div>
-                    </li>
-
-                    <li class="nav-item">
-                    <div class="dropdown dropdown-caption">
-                        <a class="btn-caption dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                        {% trans "最新消息" %}
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{% url 'article-search' %}?category=news">{% trans "新聞" %}</a>
-                            <a class="dropdown-item" href="{% url 'article-search' %}?category=event">{% trans "活動" %}</a>
-                            <a class="dropdown-item" href="{% url 'article-search' %}?category=sci">{% trans "科普" %}</a>
-                        </div>
-                    </div>
-                    </li>
-
-                    <li class="nav-item">
-                    <div class="dropdown dropdown-caption">
-                        <a class="btn-caption dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                        {% trans "專題文章" %}
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{% url 'article-search' %}?category=story">{% trans "資料故事" %}</a>
-                            <!-- <a class="dropdown-item" href="{% url 'article-search' %}?category=tech">{% trans "技術專欄" %}</a> -->
-                            <a class="dropdown-item" href="{% url 'article-search' %}?category=pub">{% trans "出版品" %}</a>
-                            <a class="dropdown-item" href="{% url 'article-search' %}?category=pos">{% trans "TaiBIF 成果" %}</a>
-                        </div>
-                    </div>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        <!-- navbar end -->
-        {% endblock %}
-
-        {% block main %}
-        {% endblock %}
-        
-        <div class="footer-wrapper">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 col-md-4 col-lg-5">
-                        <img src="{% static 'images/footer-mreevesi.jpg' %}" alt="" class="img-fluid">
-                        <p class="footer-cc-post">Muntiacus reevesi (Ogilby, 1839) Observed in Taiwan by Liu JimFood. Photo via iNaturalist (CC BY-NC 4.0)</p>
-                    </div>
-                    <div class="col-12 col-md-8 col-lg-7">
-                        <div class="footer-info-ctn">
-                            <div class="footer-logo">
-                                <img src="{% static 'images/taibif-logo-w.png' %}" alt="" class="footer-brand">
-                                <img src="{% static 'images/node-awards-winner-badge-white.svg' %}" alt="" class="gbif-award-logo">
-                            </div>
-                            <p class="contact-info">
-                                <span class="myicon icon-pin-stroke mr-1"></span>
-                                <span>{% trans "11574 台北市南港區研究院路二段70巷28號 跨領域科技研究大樓 C301室" %}</span>
-                            </p>
-                            <p class="copywrite">{% trans "Copyright © TaiBIF 臺灣生物多樣性資訊機構" %}</p>
-                            <ul class="social-btn-wrapper">
-                                <li><a href="https://www.facebook.com/TaiBIF.tw/" target="_blank" class="btn"><span class="myicon icon-social-fb"></span></a></li>
-                                <li><a href="https://www.youtube.com/@taibif1617" target="_blank" class="btn"><span class="myicon icon-social-yt"></span></a></li>
-                            </ul>
-                        </div>
+                        <ul class="menu1">
+                            <li>
+                                <p class="btitle">我想開放資料</p>
+                                <div class="menu2">
+                                    <div class="w-bg">
+                                        <a href="#">有哪些步驟</a>
+                                        <a href="#">有哪工具可以使用</a>
+                                        <a href="#">我需要幫忙</a>
+                                        <a href="#">開放資料常見問題</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <p class="btitle">我想探索教育資源</p>
+                                <div class="menu2">
+                                    <div class="w-bg">
+                                        <a href="#">什麼是開放資料</a>
+                                        <a href="#">開放資料的好處</a>
+                                        <a href="#">線上教材包</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <p class="btitle">開放資料怎麼應用</p>
+                                <div class="menu2">
+                                    <div class="w-bg">
+                                        <a href="#">給我一些例子</a>
+                                        <a href="#">資料論文</a>
+                                        <a href="#">有哪些資料產品</a>
+                                        <a href="#">TaiBIF API</a>
+                                        <a href="#">首先要找到資料</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <p class="btitle">我想參與社群</p>
+                                <div class="menu2">
+                                    <div class="w-bg">
+                                        <a href="#">參加 TaiBIF 工作坊</a>
+                                        <a href="#">參與志工培訓</a>
+                                        <a href="#">我想成為發布單位</a>
+                                        <a href="#">我願意收到電子報</a>
+                                        <a href="#">年度資料貢獻</a>
+                                        <a href="#">感謝名單</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <p class="btitle">最新消息</p>
+                                <div class="menu2">
+                                    <div class="w-bg">
+                                        <a href="#">新聞</a>
+                                        <a href="#">活動</a>
+                                        <a href="#">科普</a>
+                                        <a href="#">資料故事</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <p class="btitle">專題文章</p>
+                                <div class="menu2">
+                                    <div class="w-bg">
+                                        <a href="#">資料故事</a>
+                                        <a href="#">出版品</a>
+                                        <a href="#">TaiBIF 成果</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <p class="btitle">關於我們</p>
+                                <div class="menu2">
+                                    <div class="w-bg">
+                                        <a href="#">TaiBIF 介紹</a>
+                                        <a href="#">GBIF 介紹</a>
+                                        <a href="#">TaiBIF 成果</a>
+                                        <a href="#">感謝名單</a>
+                                        <a href="#">網站導覽</a>
+                                        <a href="#">相關連結</a>
+                                        <a href="#">FAQ</a>
+                                        <a href="#">TaiBIF 資源下載專區</a>
+                                        <a href="#">使用條款暨隱私權政策</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
-        </div>
+        </header>
 
+        {% block main %} {% endblock %}
+
+        <footer class="footerbox">
+            <div class="main-1340">
+                <div class="left-box">
+                    <img
+                        src="{% static 'taibif-home/image/footer-mreevesi.jpg' %}"
+                        alt=""
+                    />
+                    <p>
+                        Muntiacus reevesi (Ogilby, 1839) Observed in Taiwan by
+                        Liu JimFood. Photo via iNaturalist (CC BY-NC 4.0)
+                    </p>
+                </div>
+                <div class="right-box">
+                    <div class="logo-area">
+                        <img
+                            class="logow"
+                            src="{% static 'taibif-home/image/taibif-logo-w.png' %}"
+                            alt=""
+                        />
+                        <img
+                            class="node"
+                            src="{% static 'taibif-home/image/node-awards-winner-badge-white.svg' %}"
+                            alt=""
+                        />
+                    </div>
+                    <div class="map-area">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="27.095"
+                            viewBox="0 0 20 27.095"
+                        >
+                            <path
+                                id="Union_25"
+                                data-name="Union 25"
+                                d="M9.787,27.1a1.766,1.766,0,0,1-.891-.618c-2.251-3.727-5.111-7.291-7.274-11.05-2.1-3.645-2.28-7.6.157-11.142a10.025,10.025,0,0,1,16.589.222c2.293,3.539,2.056,7.34.008,10.92-2.151,3.76-5.027,7.326-7.274,11.05a1.763,1.763,0,0,1-.891.618ZM9.776,1.161a8.768,8.768,0,0,0-8.277,11,15.4,15.4,0,0,0,2.2,4.317c1.712,2.667,3.487,5.306,5.243,7.944a13.961,13.961,0,0,0,.932,1.4c.041.044.076.124.149.108,2.091-3.15,4.241-6.268,6.282-9.45a15.25,15.25,0,0,0,2.209-4.359A8.767,8.767,0,0,0,9.972,1.159ZM5.311,12.48a5.306,5.306,0,1,1,9.357.034,5.318,5.318,0,0,1-9.357-.034ZM9.776,5.875a4.109,4.109,0,1,0,.259-.008C9.949,5.867,9.863,5.87,9.776,5.875Z"
+                                fill="#fff"
+                            />
+                        </svg>
+
+                        <p>
+                            11574 台北市南港區研究院路二段70巷28號
+                            跨領域科技研究大樓 C301室
+                        </p>
+                    </div>
+                    <div class="soci-area">
+                        <a href="#" class="icon">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="13.283"
+                                height="27.533"
+                                viewBox="0 0 13.283 27.533"
+                            >
+                                <path
+                                    id="facebook-svgrepo-com_2_"
+                                    data-name="facebook-svgrepo-com (2)"
+                                    d="M-328.815,278.894c0-1.108.989-1.506,2.1-1.506a9.541,9.541,0,0,1,2.291.344l.71-4.216a17.684,17.684,0,0,0-5.1-.516,5.064,5.064,0,0,0-4.42,2.076c-.882,1.172-.914,3.055-.914,4.27v2.764H-337v4.119h2.85v14.3h5.335v-14.3h4.227l.312-4.119h-4.539Z"
+                                    transform="translate(337 -273)"
+                                    fill="#4A3E3A"
+                                />
+                            </svg>
+                        </a>
+                        <a href="#" class="icon">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="27.879"
+                                height="19.516"
+                                viewBox="0 0 27.879 19.516"
+                            >
+                                <path
+                                    id="Subtraction_12"
+                                    data-name="Subtraction 12"
+                                    d="M13.94,19.517c-.087,0-8.744-.007-10.893-.583A3.494,3.494,0,0,1,.583,16.469,36.437,36.437,0,0,1,0,9.759,36.445,36.445,0,0,1,.583,3.047,3.494,3.494,0,0,1,3.047.583C5.2.007,13.853,0,13.94,0s8.743.007,10.892.583A3.494,3.494,0,0,1,27.3,3.047a36.626,36.626,0,0,1,.583,6.711,36.437,36.437,0,0,1-.583,6.71,3.494,3.494,0,0,1-2.464,2.464C22.683,19.51,14.027,19.517,13.94,19.517ZM11.149,5.577V13.94l7.243-4.181Z"
+                                    fill="#4A3E3A"
+                                />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>
         {% block script %}{% endblock %}
     </body>
 </html>

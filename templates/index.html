@@ -1,680 +1,585 @@
-{% extends "base.html" %} {% load static %} {% load i18n %} {% load humanize %}
-{% block title %}TaiBIF 臺灣生物多樣性資訊機構{% endblock %} {% block head %}
+{% extends "base.html" %}
+{% load static %}
+{% block title %}TaiBIF 台灣生物多樣性資訊機構{% endblock %}
 
-<style type="text/css">
-    @keyframes owlBgc {
-        0% {
-            background-color: #3a4a47; /* 最後一個輪播圖片的背景色 */
-        }
-        33% {
-            background-color: #212121; /* 輪播圖片一的背景色 */
-        }
-        66% {
-            background-color: #8a6853; /* 輪播圖片二的背景色 */
-        }
-        100% {
-            background-color: #3a4a47; /* 輪播圖片三的背景色 */
-        }
-    }
-    .openmap-bg-ani {
-        animation: owlBgc 9.3s infinite; /* 動畫秒數為輪播圖片張數乘 3.1 秒 */
-    }
-</style>
-{% endblock %} 
-
-{% block navbar %}
-    {# 這個頁面不顯示 nav #}
+{% block head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+<script src="{% static 'taibif-home/js/gsap.min.js' %}"></script>
+<script src="{% static 'taibif-home/js/ScrollTrigger.min.js' %}"></script>
 {% endblock %}
 
 {% block main %}
-<!-- openmap begin -->
-<div class="openmap-wrapper openmap-bg-ani">
-    <div class="container">
-        <div class="row no-gutters">
-            <!-- col-openmap begin -->
-            <div class="col-12 col-lg-6 col-openmap">
-                <!-- openmap-carousel begin -->
-                <div class="owl-carousel" id="openmap-carousel">
-                    <div class="item">
-                        <img
-                            src="{% static 'images/carousel-img/Oncorhynchus-masou-formosanus.webp' %}"
-                            alt=""
-                            class="img-fluid"
-                        />
-                        <p class="openmap-cc-post">
-                            Oncorhynchus masou formosanus (Jordan & Oshima, 1919) Observed in Yousheng Creek, 
-                            Taiwan by Kuan Hsun Chen. (CC BY-NC 4.0)
-                        </p>
-                    </div>
-                    <div class="item">
-                        <img
-                            src="{% static 'images/carousel-img/Taenioptynx-brodiei-pardalotus.webp' %}"
-                            alt=""
-                            class="img-fluid"
-                        />
-                        <p class="openmap-cc-post">
-                            Taenioptynx brodiei pardalotus (Swinhoe, 1863) Observed in Daxueshan National Forest, 
-                            Taiwan by yichang. Photo via iNaturalist (CC BY-NC 4.0)
-                        </p>
-                    </div>
-                    <div class="item">
-                        <img
-                            src="{% static 'images/carousel-img/Halophila-ovalis.webp' %}"
-                            alt=""
-                            class="img-fluid"
-                        />
-                        <p class="openmap-cc-post">
-                            Halophila ovalis (R.Br.) Hook.f. Observed in Dongsha Atoll National Park, 
-                            Taiwan by astersu. Photo via iNaturalist (CC BY-NC 4.0)
-                        </p>
-                    </div>
-                    <div class="item">
-                        <img
-                            src="{% static 'images/carousel-img/Pachyrhynchus-sarcitis-kotoensis.webp' %}"
-                            alt=""
-                            class="img-fluid"
-                        />
-                        <p class="openmap-cc-post">
-                            Pachyrhynchus sarcitis kotoensis Observed in Lanyu Island, Taiwan by Chih-Wei Chen (CC BY-NC 4.0)
-                        </p>
-                    </div>
-                    <div class="item">
-                        <img
-                            src="{% static 'images/carousel-img/Mycena-indigotica.webp' %}"
-                            alt=""
-                            class="img-fluid"
-                        />
-                        <p class="openmap-cc-post">
-                            Mycena indigotica C.L.Wei & R.Kirschner. Observed in Yangmingshan, 
-                            Taiwan by chofungi. Photo via iNaturalist (CC BY-NC 4.0)
-                        </p>
-                    </div>
-                </div>
-                <!-- openmap-carousel end -->
-            </div>
-            <!-- col-menu begin -->
+	<!--說話魚-->
+	<div class="right-fixed">
+		<div class="rel">
+			<a href="#" class="bubble-message">
+				<div class="rel">
+					<p>活動資訊活動資訊活動資訊活動資訊活動資訊活動資訊活動資訊活動資訊</p>
+					<div class="arr-bottom">
+						<svg xmlns="http://www.w3.org/2000/svg" width="12" height="10" viewBox="0 0 12 10">
+							<path id="Polygon_1" data-name="Polygon 1" d="M6,0l6,10H0Z" transform="translate(12 10) rotate(180)" fill="#6891bc" opacity="0.8"/>
+						</svg>
+					</div>
+				</div>
+			</a>
+			<img class="fish" src="{% static 'taibif-home/image/fish.png' %}" alt="">
+		</div>
+	</div>
 
-            <div class="col-12 col-lg-6 col-menu">
-                <!-- row-master-menu begin -->
-                <div class="row row-master-menu">
-                    <!-- col-master-menu begin -->
-                    <div class="col-master-menu">
-                        <div class="block-btn-ctn">
-                            <h1 class="heading">{% trans "開放資料" %}</h1>
-                            <ul class="menu-items">
-                                <li>
-                                    <a href="{% url 'open-process'%}">{% trans "開放資料流程" %}</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'open-timezone'%}">{% trans "計畫資料繳交依據與時程" %}</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'tools'%}">{% trans "開放資料工具" %}</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'data_stats'%}">{% trans "資料發布狀況" %}</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'open-consulation'%}">{% trans "開放資料諮詢服務" %}</a>
-                                </li>
-                            </ul>
-                            <img
-                                src="{% static 'images/mascot-Mreevesi.png' %}"
-                                alt=""
-                                class="stamp"
-                            />
-                            <div class="overlay"></div>
-                        </div>
-                    </div>
-                    <!-- col-master-menu end -->
-                    <!-- col-master-menu begin -->
-                    <div class="col-master-menu">
-                        <div class="block-btn-ctn">
-                            <h1 class="heading">{% trans "教育資源" %}</h1>
-                            <ul class="menu-items">
-                                <li>
-                                    <a href="{% url 'tech-open'%}">{% trans "什麼是開放資料" %}</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'tech-book'%}">{% trans "生物多樣性資訊概論" %}</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'tech-workshop'%}">{% trans "資料開放與應用工作坊" %}</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'tech-volunteer'%}">{% trans "參與志工培訓" %}</a>
-                                </li>
-                            </ul>
-                            <img
-                                src="{% static 'images/mascot-frog.png' %}"
-                                alt=""
-                                class="stamp"
-                            />
-                            <div class="overlay"></div>
-                        </div>
-                    </div>
-                    <!-- col-master-menu end -->
-                    <!-- col-master-menu begin -->
-                    <div class="col-master-menu">
-                        <div class="block-btn-ctn">
-                            <h1 class="heading">{% trans "資料應用" %}</h1>
-                            <ul class="menu-items">
-                                <li>
-                                    <a href="{% url 'data-paper' %}">{% trans "資料期刊與論文" %}</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'data-visual' %}">{% trans "資料視覺化" %}</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'data-case' %}">{% trans "資料應用案例" %}</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'data-product' %}">{% trans "資料產品" %}</a>
-                                </li>
-                            </ul>
-                            <img
-                                src="{% static 'images/mascot-flower.png' %}"
-                                alt=""
-                                class="stamp"
-                            />
-                            <div class="overlay"></div>
-                        </div>
-                    </div>
-                    <!-- col-master-menu end -->
-                    <!-- col-master-menu begin -->
-                    <div class="col-master-menu">
-                        <div class="block-btn-ctn">
-                            <h1 class="heading">{% trans "找資料" %}</h1>
-                            <ul class="menu-items">
-                                <li>
-                                    <a href="{%  url 'search-occurrence' cat='search' %}">{% trans "物種出現紀錄" %}</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'search-species' %}">{% trans "物種" %}</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'search-dataset' %}">{% trans "資料集" %}</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'search-publisher'%}">{% trans "資料發布單位" %}</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'taibif-api' %}">API</a>
-                                </li>
-                            </ul>
-                            <img
-                                src="{% static 'images/mascot-butterfly.png' %}"
-                                alt=""
-                                class="stamp"
-                            />
-                            <div class="overlay"></div>
-                        </div>
-                    </div>
-                    <!-- col-master-menu end -->
-                </div>
-                <!-- row-master-menu end -->
-            </div>
-        </div>
-    </div>
-</div>
-<!-- openmap end -->
+	<!--KV-->
+	<section class="s1-kv-area">
+		<div class="bg-colorbox">
+			<div class="left-swiperbox">
+				<div class="slogan">
+					<h2 class="fs-35">TaiBIF — <br>
+						生物多樣性資料開放的推手
+					</h2>
+				</div>
+				<div class="bottom-pic-note">
+					<p>Taenioptynx brodiei pardalotus (Swinhoe, 1863) Observed in Daxueshan National Forest, Taiwan by yichang. Photo via iNaturalist (CC BY-NC 4.0)</p>
+				</div>
+				<div class="mask-bottom">
+					<svg xmlns="http://www.w3.org/2000/svg" width="1321" height="321" viewBox="0 0 1321 321">
+						<defs>
+							<linearGradient id="linear-gradient" x1="1" y1="0.5" x2="0" y2="0.5" gradientUnits="objectBoundingBox">
+								<stop id="dynamic-stop" offset="0" stop-color="#3c6d13" />
+								<stop id="dynamic-stop-end" offset="1" stop-color="#3c6d13" stop-opacity="0" />
+							</linearGradient>
+						</defs>
+						<rect id="Rectangle_48" width="321" height="1321" transform="translate(1321) rotate(90)" opacity="0.569" fill="url(#linear-gradient)"/>
+					</svg>
+				</div>
+				<div class="mask-right">
+					<svg xmlns="http://www.w3.org/2000/svg" width="321" height="843" viewBox="0 0 321 843">
+						<defs>
+							<linearGradient id="linear-gradient2" x1="1" y1="0.5" x2="0" y2="0.5" gradientUnits="objectBoundingBox">
+								<stop id="dynamic-stop-right" offset="0" stop-color="#558e24" />
+								<stop id="dynamic-stop-right-end" offset="1" stop-color="#558e24" stop-opacity="0" />
+							</linearGradient>
+						</defs>
+						<rect id="Rectangle_58" width="321" height="843" fill="url(#linear-gradient2)"/>
+					</svg>
+				</div>
+				<div class="swiper kvSwiper">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide">
+							<img src="{% static 'taibif-home/image/bn-1.jpg' %}" alt="">
+						</div>
+						<div class="swiper-slide"><img src="{% static 'taibif-home/image/bn-2.jpg' %}" alt=""></div>
+						<div class="swiper-slide"><img src="{% static 'taibif-home/image/bn-3.jpg' %}" alt=""></div>
+						<div class="swiper-slide"><img src="{% static 'taibif-home/image/bn-4.jpg' %}" alt=""></div>
+						<div class="swiper-slide"><img src="{% static 'taibif-home/image/bn-5.jpg' %}" alt=""></div>
+						<div class="swiper-slide"><img src="{% static 'taibif-home/image/bn-6.jpg' %}" alt=""></div>
+						<div class="swiper-slide"><img src="{% static 'taibif-home/image/bn-7.jpg' %}" alt=""></div>
+					</div>
+				</div>
+			</div>
+			<div class="right-main-menu">
+				<div class="line-h1">
+					<div class="dline"></div>
+				</div>
+				<div class="line-h2">
+					<div class="dline"></div>
+				</div>
+				<div class="line-w1">
+					<div class="dline"></div>
+				</div>
+				<div class="four-item">
+					<div class="item-box">
+						<div class="title-box">
+							<div class="line"></div>
+							<h2 class="fs-24">我想開放資料</h2>
+							<h3>Open source</h3>
+						</div>
+						<div class="bottom-linkarea">
+							<a href="#">
+								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
+									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
+								</svg>
+								<p>有哪些步驟</p>
+							</a>
+							<a href="#">
+								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
+									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
+								</svg>
+								<p>有哪工具可以使用
+								</p>
+							</a>
+							<a href="#">
+								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
+									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
+								</svg>
+								<p>我需要幫忙</p>
+							</a>
+							<a href="#">
+								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
+									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
+								</svg>
+								<p>開放資料常見問題</p>
+							</a>
+						</div>
+						<div class="animal-img">
+							<img src="{% static 'taibif-home/image/an1.png' %}">
+						</div>
+					</div>
+					<div class="item-box">
+						<div class="title-box">
+							<div class="line"></div>
+							<h2 class="fs-24">我想探索教育資源</h2>
+							<h3>Educational Resources</h3>
+						</div>
+						<div class="bottom-linkarea">
+							<a href="#">
+								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
+									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
+								</svg>
+								<p>什麼是開放資料</p>
+							</a>
+							<a href="#">
+								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
+									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
+								</svg>
+								<p>開放資料的好處
+								</p>
+							</a>
+							<a href="#">
+								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
+									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
+								</svg>
+								<p>線上教材包</p>
+							</a>
+						</div>
+						<div class="animal-img">
+							<img src="{% static 'taibif-home/image/an2.png' %}">
+						</div>
+					</div>
+					<div class="item-box">
+						<div class="title-box">
+							<div class="line"></div>
+							<h2 class="fs-24">開放資料怎麼應用</h2>
+							<h3>DATA Application</h3>
+						</div>
+						<div class="bottom-linkarea">
+							<a href="#">
+								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
+									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
+								</svg>
+								<p>給我一些例子</p>
+							</a>
+							<a href="#">
+								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
+									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
+								</svg>
+								<p>資料論文
+								</p>
+							</a>
+							<a href="#">
+								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
+									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
+								</svg>
+								<p>有哪些資料產品</p>
+							</a>
+							<a href="#">
+								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
+									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
+								</svg>
+								<p>TaiBIF API</p>
+							</a>
+                            <a href="#">
+								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
+									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
+								</svg>
+								<p>首先要找到資料</p>
+							</a>
+						</div>
+						<div class="animal-img">
+							<img src="{% static 'taibif-home/image/an3.png' %}">
+						</div>
+					</div>
+					<div class="item-box">
+						<div class="title-box">
+							<div class="line"></div>
+							<h2 class="fs-24">我想參與社群</h2>
+							<h3>Community Involvement</h3>
+						</div>
+						<div class="bottom-linkarea">
+							<a href="#">
+								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
+									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
+								</svg>
+								<p>參加 TaiBIF 工作坊</p>
+							</a>
+							<a href="#">
+								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
+									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
+								</svg>
+								<p>參與志工培訓
+								</p>
+							</a>
+							<a href="#">
+								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
+									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
+								</svg>
+								<p>我想成為發布單位</p>
+							</a>
+							<a href="#">
+								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
+									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
+								</svg>
+								<p>我願意收到電子報</p>
+							</a>
+							<a href="#">
+								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
+									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
+								</svg>
+								<p>年度資料貢獻</p>
+							</a>
+                            <a href="#">
+								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
+									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
+								</svg>
+								<p>感謝名單</p>
+							</a>
+						</div>
+						<div class="animal-img">
+							<img src="{% static 'taibif-home/image/an4.png' %}">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
-<!-- taiBIF slogan begin -->
-<div class="container hero-container">
-    <div class="slogan-wrapper">
-        <p class="quote-content">
-            <span class="segment-eng">TaiBIF —</span>
-            <span class="segment-main">{% trans "生物多樣性資料開放的推手" %}</span>
-        </p>
-    </div>
-</div>
-<!-- taiBIF slogan end -->
-
-<!-- data wall begin -->
-<div class="bg-main-pale">
-    <!-- container begin -->
-    <div class="container py-5">
-        <h1 class="headline-center-md">{% trans "資料發布狀況" %}</h1>
-        <!-- 資料發布狀況 row begin -->
-        <div class="row justify-content-center wrap">
-            <!-- col begin -->
-            <div class="col-card-brick">
-                <div class="card-brick card-glowing">
-                    <p class="title">
-                        <span class="myicon icon-data-stats mr-1"></span>{% trans "物種出現紀錄" %}
-                    </p>
-                    <p class="content">
-                        <a href="/occurrence/search/">{{occ_num|intcomma:False}}</a>
-                    </p>
+	<!--NEWS-->
+	<section class="s2-news">
+		<div class="main-1340">
+			<div class="index-maintitle">
+				<h2 class="fs-35">最新消息</h2>
+				<div class="line-mark"></div>
+			</div>
+			<ul class="news-tab">
+				<!--目前的給now-->
+				<li class="now" data-tab="all">全部</li>
+				<li data-tab="news">新聞</li>
+				<li data-tab="event">活動</li>
+				<li data-tab="sci">科普</li>
+				<li data-tab="story">資料故事</li>
+			</ul>
+			<div class="swiper newsSwiper">
+				<div class="swiper-wrapper" id="news-swiper-wrapper">
+                    {% for i in news_all_list %}
+                        {% include "inc_news_slide.html" %}
+                    {% endfor %}
+				</div>
+			</div>
+            <div id="news-tab-templates" style="display: none;">
+                <div data-tab="all">
+                    {% for i in news_all_list %}
+                        {% include "inc_news_slide.html" %}
+                    {% endfor %}
                 </div>
-            </div>
-            <!-- col end -->
-            <!-- col begin -->
-            <div class="col-card-brick">
-                <div class="card-brick card-glowing">
-                    <p class="title">
-                        <span class="myicon icon-data-folder mr-1"></span>{% trans "資料集" %}
-                    </p>
-                    <p class="content">
-                        <a href="/dataset/search/">{{dataset_num|intcomma:False}}</a>
-                    </p>
-                </div>
-            </div>
-            <!-- col end -->
-            <!-- col begin -->
-            <div class="col-card-brick">
-                <div class="card-brick card-glowing">
-                    <p class="title">
-                        <span class="myicon icon-data-tw mr-1"></span>{% trans "涵蓋物種數" %}
-                    </p>
-                    <p class="content"><a href="/species/search/">45,525</a></p>
-                </div>
-            </div>
-            <!-- col end -->
-            <!-- col begin -->
-            <div class="col-card-brick">
-                <div class="card-brick card-glowing">
-                    <p class="title">
-                        <span class="myicon icon-data-org mr-1"></span>{% trans "資料發布單位" %}
-                    </p>
-                    <p class="content">
-                        <a href="/publisher/search/">{{publisher_num}}</a>
-                    </p>
-                </div>
-            </div>
-            <!-- col end -->
-            <!-- col begin -->
-            <div class="col-card-brick">
-                <div class="card-brick card-glowing">
-                    <p class="title">
-                        <span class="myicon icon-data-paper mr-1"></span>{% trans "臺灣資料應用發表" %}
-                    </p>
-                    <p class="content">
-                        <a href="{% url 'data-case' %}">{{ case_count }}</a>
-                    </p>
-                </div>
-            </div>
-            <!-- col end -->
-            <!-- btn begin -->
-            <div class="col-12 text-center my-4">
-                <a href="{% url 'data_stats'%}" class="btn btn-outline-main">{% trans "看更多發布狀況" %}
-                    <span class="myicon icon-indicator-right ml-1"></span>
-                </a>
-            </div>
-            <!-- btn end -->
-        </div>
-        <!-- 資料發布狀況 row end -->
-
-        <!-- 資訊視覺化 row begin -->
-        <div class="row justify-content-center wrap">
-            <!-- col begin -->
-            <div class="col col-icon-stat">
-                <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Plants" class="d-block">
-                    <span class="myicon icon-species-icon-plantae"></span>
-                    <p class="title">{% trans "植物" %}</p>
-                    <p class="amount">
-                        {% for k,v in taxonGroup_dict.items %} 
-                            {% if k == 'Plants' %} 
-                                {{ v|intcomma:False }} 
-                            {% endif %} 
-                        {% endfor %}
-                    </p>
-                </a>
-            </div>
-            <!-- col end -->
-            <!-- col begin -->
-            <div class="col col-icon-stat">
-                <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Fungi" class="d-block">
-                    <span class="myicon icon-species-icon-fungi"></span>
-                    <p class="title">{% trans "真菌" %}</p>
-                    <p class="amount">
-                        {% for k,v in taxonGroup_dict.items %} 
-                            {% if k == 'Fungi' %} 
-                                {{ v|intcomma:False }} 
-                            {% endif %} 
-                        {% endfor %}
-                    </p>
-                </a>
-            </div>
-            <!-- col end -->
-            <!-- col begin -->
-            <div class="col col-icon-stat">
-                <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Bacteria" class="d-block">
-                    <span class="myicon icon-species-icon-bacteria"></span>
-                    <p class="title">{% trans "細菌" %}</p>
-                    <p class="amount">
-                        {% for k,v in taxonGroup_dict.items %} 
-                            {% if k == 'Bacteria' %} 
-                                {{ v|intcomma:False }}
-                            {% endif %}
-                        {% endfor %}
-                    </p>
-                </a>
-            </div>
-            <!-- col end -->
-            <!-- col begin -->
-            <div class="col col-icon-stat">
-                <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Insects" class="d-block">
-                    <span class="myicon icon-species-icon-Insecta"></span>
-                    <p class="title">{% trans "昆蟲" %}</p>
-                    <p class="amount">
-                        {% for k,v in taxonGroup_dict.items %} 
-                            {% if k == 'Insects' %} 
-                                {{ v|intcomma:False }} 
-                            {% endif %}
-                        {% endfor %}
-                    </p>
-                </a>
-            </div>
-            <!-- col end -->
-            <!-- col begin -->
-            <div class="col col-icon-stat">
-                <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Fishes" class="d-block">
-                    <span class="myicon icon-species-icon-fish"></span>
-                    <p class="title">{% trans "魚" %}</p>
-                    <p class="amount">
-                        {% for k,v in taxonGroup_dict.items %} 
-                            {% if k == 'Fishes' %} 
-                                {{ v|intcomma:False }}
-                            {% endif %}
-                        {% endfor %}
-                    </p>
-                </a>
-            </div>
-            <!-- col end -->
-            <!-- col begin -->
-            <div class="col col-icon-stat">
-                <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Reptiles" class="d-block">
-                    <span class="myicon icon-species-icon-gecko"></span>
-                    <p class="title">{% trans "爬蟲類" %}</p>
-                    <p class="amount">
-                        {% for k,v in taxonGroup_dict.items %} 
-                            {% if k == 'Reptiles' %} 
-                                {{ v|intcomma:False }}
-                            {% endif %}
-                        {% endfor %}
-                    </p>
-                </a>
-            </div>
-            <!-- col end -->
-            <!-- col begin -->
-            <div class="col col-icon-stat">
-                <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Amphibia" class="d-block">
-                    <span class="myicon icon-species-icon-frog"></span>
-                    <p class="title">{% trans "兩棲類" %}</p>
-                    <p class="amount">
-                        {% for k,v in taxonGroup_dict.items %} 
-                            {% if k == 'Amphibia' %} 
-                                {{ v|intcomma:False }} 
-                            {% endif %} 
-                        {% endfor %}
-                    </p>
-                </a>
-            </div>
-            <!-- col end -->
-            <!-- col begin -->
-            <div class="col col-icon-stat">
-                <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Birds" class="d-block">
-                    <span class="myicon icon-species-icon-bird"></span>
-                    <p class="title">{% trans "鳥類" %}</p>
-                    <p class="amount">
-                        {% for k,v in taxonGroup_dict.items %} 
-                            {% if k == 'Birds' %} 
-                                {{ v|intcomma:False }}
-                            {% endif %} 
-                        {% endfor %}
-                    </p>
-                </a>
-            </div>
-            <!-- col end -->
-            <!-- col begin -->
-            <div class="col col-icon-stat">
-                <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Mammals" class="d-block">
-                    <span
-                        class="myicon icon-species-icon-muntiacus-reevesi"
-                    ></span>
-                    <p class="title">{% trans "哺乳類" %}</p>
-                    <p class="amount">
-                        {% for k,v in taxonGroup_dict.items %} 
-                            {% if k == 'Mammals' %} 
-                                {{ v|intcomma:False }} 
-                            {% endif %} 
-                        {% endfor %}
-                    </p>
-                </a>
-            </div>
-            <!-- col end -->
-            <!-- col begin -->
-            <div class="col col-icon-stat">
-                <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Others&taibif_taxonGroup=Archaea" class="d-block">
-                    <span class="myicon icon-species-icon-more"></span>
-                    <p class="title">{% trans "其他" %}</p>
-                    <p class="amount">
-                        {% for k,v in taxonGroup_dict.items %}
-                            {% if k == 'Others' %} 
-                                {{ v|intcomma:False }} 
-                            {% endif %}
-                        {% endfor %}
-                    </p>
-                </a>
-            </div>
-            <!-- col end -->
-            <!-- btn begin -->
-            <div class="col-12 text-center mt-3 mb-6">
-                <a href="{% url 'data-visual' %} " class="btn btn-outline-main">{% trans "看更多資訊視覺化" %}
-                    <span class="myicon icon-indicator-right ml-1" ></span>
-                </a>
-            </div>
-            <!-- btn end -->
-        </div>
-        <!-- 資訊視覺化 row end -->
-    </div>
-    <!-- container end -->
-</div>
-<!-- data wall end -->
-
-<!-- 最新消息 container begin -->
-<div class="container my-5">
-    <h1 class="headline-center-md">{% trans "最新消息" %}</h1>
-    <!-- row begin -->
-    <div class="row">
-        <!-- news list begin -->
-        <div class="col-12 col-md-4">
-            <div class="news-card-wrapper">
-                <div class="news-card-img-wrapper">
-                    <a
-                        class="tag"
-                        href="{% url 'article-search' %}?category=news"
-                        >{% trans "新聞" %}</a
-                    >
-                    <img src="{% static 'images/002.jpg' %}" />
-                    <p class="img-cc-post">
-                        Fratercula arctica (Linnaeus, 1758) Observed in Canada
-                        by crgillette. Photo via iNaturalist (CC BY-NC 4.0)
-                    </p>
-                </div>
-                <ul class="news-card-list-ctn">
+                <div data-tab="news">
                     {% for i in news_list %}
-                    <li class="news-card-list-ctn-li">
-                        <a href="{{ i.get_absolute_url }}" class="clamp2row"
-                            >{{ i.title|truncatechars:40|safe }}</a
-                        >
-                        <span>{{ i.created|date:'Y/m/d' }}</span>
-                    </li>
+                        {% include "inc_news_slide.html" %}
                     {% endfor %}
-                </ul>
-            </div>
-        </div>
-        <!-- news list end -->
-        <!-- event list begin -->
-        <div class="col-12 col-md-4">
-            <div class="news-card-wrapper">
-                <div class="news-card-img-wrapper">
-                    <a
-                        class="tag"
-                        href="{% url 'article-search' %}?category=event"
-                        >{% trans "活動" %}</a
-                    >
-                    <img src="{% static 'images/005.jpg' %}" />
-                    <p class="img-cc-post">
-                        Fratercula arctica (Linnaeus, 1758) Observed in Canada
-                        by crgillette. Photo via iNaturalist (CC BY-NC 4.0)
-                    </p>
                 </div>
-                <ul class="news-card-list-ctn">
+                <div data-tab="event">
                     {% for i in event_list %}
-                    <li class="news-card-list-ctn-li">
-                        <a href="{{ i.get_absolute_url }}"
-                            >{{ i.title|truncatechars:40|safe }}</a
-                        >
-                        <span>{{ i.created|date:'Y/m/d' }}</span>
-                    </li>
+                        {% include "inc_news_slide.html" %}
                     {% endfor %}
-                </ul>
-            </div>
-        </div>
-        <!-- event list end -->
-        <!-- update list begin -->
-        <div class="col-12 col-md-4">
-            <div class="news-card-wrapper">
-                <div class="news-card-img-wrapper">
-                    <a
-                        class="tag"
-                        href="{% url 'article-search' %}?category=sci"
-                        >{% trans "科普" %}</a
-                    >
-                    <img src="{% static 'images/007.jpg' %}" />
-                    <p class="img-cc-post">
-                        Fratercula arctica (Linnaeus, 1758) Observed in Canada
-                        by crgillette. Photo via iNaturalist (CC BY-NC 4.0)
-                    </p>
                 </div>
-                <ul class="news-card-list-ctn">
+                <div data-tab="sci">
                     {% for i in update_list %}
-                    <li class="news-card-list-ctn-li">
-                        <a href="{{ i.get_absolute_url }}" class="clamp2row"
-                            >{{ i.title|truncatechars:40|safe }}</a
-                        >
-                        <span>{{ i.created|date:'Y/m/d' }}</span>
-                    </li>
+                        {% include "inc_news_slide.html" %}
                     {% endfor %}
-                </ul>
+                </div>
+                <div data-tab="story">
+                    {% for i in story_list %}
+                        {% include "inc_news_slide.html" %}
+                    {% endfor %}
+                </div>
             </div>
-        </div>
-        <!-- update list end -->
-    </div>
-    <!-- row end -->
-</div>
-<!-- 最新消息 container end -->
+			<div class="center-btn">
+				<div class="swiper-button btn-prev1">
+					<svg xmlns="http://www.w3.org/2000/svg" width="11.854" height="21.706" viewBox="0 0 11.854 21.706">
+						<path id="Union_3" data-name="Union 3" d="M8323.146,21.413l-9.853-9.853a1,1,0,0,1,0-1.414l9.853-9.853a1,1,0,0,1,1.415,1.414l-9.146,9.146L8324.561,20a1,1,0,0,1-1.415,1.414Z" transform="translate(-8313 0)" fill="#fff"/>
+					</svg>
 
-<!-- div bg-main-pale begin -->
-<div class="bg-main-pale">
-    <!-- container begin -->
-    <div class="container py-5">
-        <h1 class="headline-center-md">{% trans "資料故事" %}</h1>
+				</div>
+				<div class="swiper-button btn-next1">
+					<svg xmlns="http://www.w3.org/2000/svg" width="11.854" height="21.706" viewBox="0 0 11.854 21.706">
+						<path id="Union_4" data-name="Union 4" d="M8313.294,21.413a1,1,0,0,1,0-1.414l9.146-9.146-9.146-9.146a1,1,0,0,1,1.414-1.414l9.854,9.853a1,1,0,0,1,0,1.414l-9.854,9.853a1,1,0,0,1-1.414,0Z" transform="translate(-8313.001 0)" fill="#fff"/>
+					</svg>
+				</div>
+				<a href="/article/search/" class="btn-style1">
+					<p>更多消息</p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="8.83" height="15.656" viewBox="0 0 8.83 15.656">
+						<path id="Union_2" data-name="Union 2" d="M8313.292,15.363a1,1,0,0,1,0-1.414l6.123-6.121-6.123-6.122a1,1,0,1,1,1.414-1.414l6.83,6.829a1,1,0,0,1,0,1.414l-6.83,6.827a1,1,0,0,1-1.414,0Z" transform="translate(-8312.999 0)" fill="#846c5b"/>
+					</svg>
 
-        <!-- owl-carousel begin -->
-        <div class="owl-carousel owl-theme" id="article-carousel">
-            <!-- item begin -->
-            {% for i in story_list %}
-            <div class="card-plain-article">
-                <a
-                    class="tag"
-                    href="{% url 'article-search' %}?category={{i.category|lower}}"
-                    >{% trans i.get_case_type %}</a
-                >
-                <p class="topic-content">
-                    <a href="{{ i.get_absolute_url }}"
-                        >{{ i.title }}</a
-                    >
-                </p>
-            </div>
-            {% endfor %}
-            <!-- item end -->
-        </div>
-        <!-- owl-carousel end -->
-    </div>
-    <!-- container end -->
-</div>
-<!-- div bg-main-pale end -->
+				</a>
+			</div>
+		</div>
+	</section>
 
-<!-- container begin -->
-<div class="container my-5">
-    <h1 class="headline-center-md">{% trans "行事曆" %}</h1>
-    <!-- embed-responsive begin -->
-    <div class="embed-responsive embed-responsive-2by1">
-        <iframe id="home-page-calendar" src="https://calendar.google.com/calendar/embed?height=353&wkst=2&ctz=Asia%2FTaipei&bgcolor=%23ffffff&showTitle=0&showNav=0&showDate=0&showPrint=0&showTabs=0&showCalendars=0&showTz=0&hl=zh_TW&src=ZDZkNTBmNmQwYWYxYzNmZjFmZjk2YzA0MjkyNDdmMjZhNjE4ZGM2MThiMWEwZjdhNjZjZGFkZDk0MWQxZDg1ZEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23AD1457" width="706" height="353" frameborder="0" scrolling="no"></iframe>
-    </div>
-    <!-- embed-responsive end -->
-    <!-- 專題文章 begin -->
-    <div class="my-5">
-        <h1 class="headline-center-md">{% trans "指導單位" %}</h1>
-        <div class="supervisor-logo-container">
-            <div class="col-supervisor-logo">
-                <a href="https://www.nstc.gov.tw/" target="_blank">
-                    <img
-                        src="{% static 'images/logo-supervisor/logo-supervisor-nstc.svg' %}"
-                        alt=""
-                        class=""
-                    />
-                </a>
-            </div>
-            <div class="col-supervisor-logo">
-                <a href="https://www.moa.gov.tw/" target="_blank">
-                    <img
-                        src="{% static 'images/logo-supervisor/logo-supervisor-coa.svg' %}"
-                        alt=""
-                        class=""
-                    />
-                </a>
-            </div>
-            <div class="col-supervisor-logo">
-                <a href="https://www.sinica.edu.tw/ch" target="_blank">
-                    <img
-                        src="{% static 'images/logo-supervisor/logo-supervisor-sinica.svg' %}"
-                        alt=""
-                        class=""
-                    />
-                </a>
-            </div>
-            <div class="col-supervisor-logo">
-                <a href="https://www.biodiv.tw" target="_blank">
-                    <img
-                        src="{% static 'images/logo-supervisor/logo-supervisor-brcas.svg' %}"
-                        alt=""
-                        class=""
-                    />
-                </a>
-            </div>
-        </div>
-    </div>
-    <!-- 專題文章 end -->
-    <!-- 夥伴單位 begin -->
-    <div class="my-5">
-        <h1 class="headline-center-md">{% trans "夥伴單位" %}</h1>
-        <div class="partner-logo-container">
-            <div class="col-partner-logo">
-                <a href="https://tbiadata.tw/" target="_blank">
-                    <img
-                        src="{% static 'images/logo-partner/logo-partner-tbia.png' %}"
-                        alt=""
-                        class="img-fluid"
-                    />
-                </a>
-            </div>
-            <div class="col-partner-logo">
-                <a href="https://data.depositar.io/en/">
-                    <img
-                        src="{% static 'images/logo-partner/logo-partner-depositar.png' %}"
-                        alt=""
-                        class="img-fluid"
-                    />
-                </a>
-            </div>
-        </div>
-    </div>
-    <!-- 夥伴單位 end -->
-</div>
-<!-- container end -->
+	<!--資料發布狀況-->
+	<section class="s3-data">
+		<div class="maskbg">
+			<img src="{% static 'taibif-home/image/s3mask.png' %}">
+		</div>
+		<div class="main-1340">
+			<div class="index-maintitle">
+				<h2 class="fs-35">資料發布狀況</h2>
+				<div class="line-mark"></div>
+			</div>
+			<ul class="five-item">
+				<li>
+					<h3>物種出現紀錄</h3>
+					<h2>25,282,324</h2>
+					<div class="iconbox">
+						<svg xmlns="http://www.w3.org/2000/svg" width="50.008" height="50.254" viewBox="0 0 50.008 50.254">
+							<path id="Union_5" data-name="Union 5" d="M6300.576,50.243c-.225-.043-.564-.382-.485-.686l1.046-3.992a6.288,6.288,0,0,1-7.354-.217.744.744,0,0,1-.3-.9,6.17,6.17,0,0,1,2.774-3.208,9.766,9.766,0,0,1-3.137-8.887.748.748,0,0,1,.569-.617,9.778,9.778,0,0,1,6.783,1.278,9.777,9.777,0,0,1,6.106-6.674.826.826,0,0,1,.73.184,9.729,9.729,0,0,1,1.95,8.834,9.854,9.854,0,0,1,6.483,2.254.781.781,0,0,1,.244.782,9.787,9.787,0,0,1-7.2,6.2,6.07,6.07,0,0,1,.8,4.2.758.758,0,0,1-.593.585,6.318,6.318,0,0,1-6.594-3.451l-1.056,3.852a.658.658,0,0,1-.647.482A.669.669,0,0,1,6300.576,50.243Zm2.6-6.254a4.933,4.933,0,0,0,5.2,4.158,4.664,4.664,0,0,0-1.211-3.575.909.909,0,0,1-.133-.715.721.721,0,0,1,.548-.384,8.494,8.494,0,0,0,7.045-5.112,8.412,8.412,0,0,0-6.208-1.645.793.793,0,0,1-.609-.285.882.882,0,0,1-.06-.579,8.41,8.41,0,0,0-1.134-8.148,8.45,8.45,0,0,0-5.071,6.52.705.705,0,0,1-.387.466.944.944,0,0,1-.6-.068,8.419,8.419,0,0,0-6.206-1.687,8.428,8.428,0,0,0,3.567,7.967.806.806,0,0,1,.233.652.755.755,0,0,1-.383.442,4.69,4.69,0,0,0-2.907,2.549,4.947,4.947,0,0,0,6.654-1.133,2.629,2.629,0,0,0,.509-1.16c-.6.254-2.769,1.9-3.017.7a.671.671,0,0,1,.423-.8,8.506,8.506,0,0,0,2.665-1.679c-.641-.4-3.133-1.679-2.131-2.517a.691.691,0,0,1,.84.038,6.348,6.348,0,0,0,2.021,1.339l1.064-3.939a.652.652,0,0,1,.818-.445.669.669,0,0,1,.4.843l-1.034,3.871a3.787,3.787,0,0,0,1.677-.025c.758-.133,1.371-.266,1.5.342.257,1.179-2.3.988-3.121,1.041a8.51,8.51,0,0,0,1.468,2.784.677.677,0,0,1-.042.908c-.9.823-1.84-1.585-2.257-2.148A3.033,3.033,0,0,0,6303.174,43.989ZM6283.4,49.3l-.013-3.674c0-.179-.455-.369-.607-.323a7.456,7.456,0,0,1-12.663.021c-.138-.09-.615.122-.615.29l-.016,3.739a.759.759,0,0,1-.674.74.736.736,0,0,1-.812-.737L6268,45.169a.915.915,0,0,1,.439-.75l.951-.556a10.772,10.772,0,0,1-.428-2.769l-1.457-.029a.743.743,0,1,1,.09-1.484l1.386-.021,0-2.749-2.219-.013a.767.767,0,0,1-.753-.671.738.738,0,0,1,.626-.805l2.336-.027a1.933,1.933,0,0,1,2.018-1.81,5.6,5.6,0,0,1,2.625-3.987l-3.125-3.14a.768.768,0,0,1-.032-1.041.745.745,0,0,1,1.083-.019l3.583,3.581a6.252,6.252,0,0,1,2.634-.019l3.6-3.6a.749.749,0,0,1,1.049,1.065l-3.14,3.15a5.639,5.639,0,0,1,2.638,3.987,1.972,1.972,0,0,1,2.024,1.837l2.151,0a.752.752,0,1,1-.009,1.5l-2.148,0,0,2.755,1.416.019a.746.746,0,1,1-.03,1.49l-1.36.017a11.658,11.658,0,0,1-.433,2.777l.975.563a.95.95,0,0,1,.417.737l-.006,4.188a.771.771,0,0,1-.687.74h-.043A.739.739,0,0,1,6283.4,49.3ZM6270.468,35.44l.016,6a5.938,5.938,0,0,0,5.206,5.838l.014-9.9a.733.733,0,0,1,.8-.672.754.754,0,0,1,.687.785v9.784a6.051,6.051,0,0,0,5.239-6.159l-.014-5.776a.546.546,0,0,0-.411-.349h-11.1A.464.464,0,0,0,6270.468,35.44Zm2.035-1.955,7.861.01a3.968,3.968,0,0,0-3.865-3.272h-.035A4,4,0,0,0,6272.5,33.486ZM6297.312,15.9a4.9,4.9,0,0,1-4.892-.829,5,5,0,0,1,2.766-5.274,5.833,5.833,0,0,1-3.914-3.865,5.663,5.663,0,0,1,1.474-5.7.843.843,0,0,1,.843-.176.849.849,0,0,1,.442.682,4.216,4.216,0,0,0,4.261,4.3l10.563-.011a4.193,4.193,0,0,0,4.153-4.28.824.824,0,0,1,.442-.691.836.836,0,0,1,.843.174,5.659,5.659,0,0,1,1.5,5.624,5.765,5.765,0,0,1-3.957,3.939,5.281,5.281,0,0,1,2.882,4.859,1,1,0,0,1-.3.632,5.235,5.235,0,0,1-4.714.621,5.123,5.123,0,0,1-4.995,5.681l-2.248.008h-.022A5.172,5.172,0,0,1,6297.312,15.9Zm2.07,2.49a3.8,3.8,0,0,0,3.5,1.722l1.713-.019a3.552,3.552,0,0,0,3.041-1.7,3.543,3.543,0,0,0-2.934-1.69l-2.254-.011h-.018A3.622,3.622,0,0,0,6299.382,18.393Zm-.581-7.7.016,5.992a5.323,5.323,0,0,1,3.632-1.492l2.311,0a5.443,5.443,0,0,1,3.443,1.481l0-6.1a3.613,3.613,0,0,0-3.608-3.621l-2.149,0h0A3.644,3.644,0,0,0,6298.8,10.694Zm10.913,3.5a3.422,3.422,0,0,0,3.5.063,3.7,3.7,0,0,0-1.9-3.023l-1.606-.9Zm-14.118-2.89a3.545,3.545,0,0,0-1.777,2.969,3.421,3.421,0,0,0,3.492-.094l-.006-3.838Zm-2.2-4.462a4.466,4.466,0,0,0,4.4,1.58,6.229,6.229,0,0,1,1.412-1.853c-.3-.024-.566-.044-.814-.04a5.765,5.765,0,0,1-5.543-3.784A4.056,4.056,0,0,0,6293.4,6.846Zm14.419-.277a7.377,7.377,0,0,1,1.446,1.888l.878.027a4.2,4.2,0,0,0,3.551-1.7,4.054,4.054,0,0,0,.5-4.034,5.768,5.768,0,0,1-5.545,3.787h-.087C6308.313,6.535,6308.058,6.552,6307.815,6.569ZM6275.75,19.853l-.021-4.836a8.638,8.638,0,0,1-7.523-8.753L6267,6.877a.788.788,0,0,1-.919-.379.764.764,0,0,1,.371-1.018l1.755-.931c.011-.3.024-.607.016-.918a3.481,3.481,0,1,1,6.959-.109l.014,2.216,10.767,0a.745.745,0,0,1,.777.775l-.067,1.1,3.57.006a.762.762,0,0,1,.738.715l0,3.43a.766.766,0,0,1-.749.739h-7.273l-1.066.9,0,6.328a.743.743,0,0,1-.786.761.752.752,0,0,1-.7-.808l-.009-5.375a9.911,9.911,0,0,1-3.142.766l-.013,4.608a.762.762,0,0,1-.639.807.524.524,0,0,1-.089.007A.74.74,0,0,1,6275.75,19.853Zm-6.033-16.332,0,2.891a7.133,7.133,0,0,0,2.957,5.834,6.907,6.907,0,0,0,6.814.775,6.547,6.547,0,0,1-5.789-6.388l-.014-3.11A2,2,0,0,0,6271.7,1.5h-.006A1.987,1.987,0,0,0,6269.717,3.521Zm10.525,8.012a5.021,5.021,0,0,0,4.935-4.294h-9.942A5.031,5.031,0,0,0,6280.242,11.532Zm5.968-2.41a13.035,13.035,0,0,1-1.23,1.883h4.5l-.008-1.891Zm14.411,3.773a1,1,0,0,1,.458-1.393.991.991,0,0,1,1.363.536,1.008,1.008,0,0,1-.568,1.316.915.915,0,0,1-.355.069A1.017,1.017,0,0,1,6300.622,12.9Zm5.217-.035a1.007,1.007,0,0,1,.5-1.37.992.992,0,0,1,1.339.547,1,1,0,0,1-.623,1.335.914.914,0,0,1-.3.05A1.015,1.015,0,0,1,6305.838,12.861Zm-34.879-8.687a.81.81,0,1,1,.964.441.652.652,0,0,1-.207.032A.846.846,0,0,1,6270.959,4.174Z" transform="translate(-6266 0)" fill="#fff"/>
+						</svg>
+					</div>
+				</li>
+				<li>
+					<h3>資料集</h3>
+					<h2>2,091</h2>
+					<div class="iconbox">
+						<svg xmlns="http://www.w3.org/2000/svg" width="52" height="41" viewBox="0 0 52 41">
+							<path id="Path_230" data-name="Path 230" d="M52,8.333V31.867c0,2.052-2.282,3.65-4.016,3.7l-1.466.039-.02,1.254A4.2,4.2,0,0,1,42.329,41H4.137A4.123,4.123,0,0,1,0,37.113l.01-27.9c0-2.18,2.191-3.737,4.084-3.772l1.348-.025.023-1.248A4.21,4.21,0,0,1,9.73.006L24.754,0a1.1,1.1,0,0,1,.562.271l3.715,4.384,18.787.008A4.286,4.286,0,0,1,52,8.333M47.7,34.316a2.907,2.907,0,0,0,3-2.972l.02-22.492a2.885,2.885,0,0,0-2.856-2.895L28.838,5.946a1.045,1.045,0,0,1-.66-.311L24.521,1.3,9.527,1.32A2.9,2.9,0,0,0,6.752,4.148l.025,1.279H19.249a1.119,1.119,0,0,1,.606.3l3.681,4.349,18.8.015a4.16,4.16,0,0,1,4.156,4.133l.017,20.063ZM45.2,14.268A2.87,2.87,0,0,0,42.334,11.4l-18.984-.009a1.065,1.065,0,0,1-.588-.249l-3.724-4.4L4.162,6.753a2.9,2.9,0,0,0-2.9,2.911V36.825a2.9,2.9,0,0,0,2.9,2.909H42.286A2.9,2.9,0,0,0,45.2,36.826Z" fill="#fff"/>
+						</svg>
+					</div>
+				</li>
+				<li>
+					<h3>涵蓋物種數</h3>
+					<h2>45,525</h2>
+					<div class="iconbox">
+						<svg xmlns="http://www.w3.org/2000/svg" width="49.52" height="49.1" viewBox="0 0 49.52 49.1">
+							<path id="Union_6" data-name="Union 6" d="M6275.872,47.3V36.925a1.774,1.774,0,0,1,1.764-1.778l3.891,0a1.787,1.787,0,0,1,1.8,1.772v10.4a1.768,1.768,0,0,1-1.751,1.775l-3.858.011A1.8,1.8,0,0,1,6275.872,47.3Zm1.831-10.321,0,10.28,3.793-.011,0-10.272ZM6271.594,49.1l-3.788,0A1.789,1.789,0,0,1,6266,47.206V25.745a1.788,1.788,0,0,1,1.8-1.854l3.894,0a1.767,1.767,0,0,1,1.763,1.764V47.25a1.83,1.83,0,0,1-.547,1.344,1.89,1.89,0,0,1-1.315.5ZM6271.6,49.049Zm-3.764-1.793,3.8-.01V25.728l-3.8,0Zm18.448,1.331a1.762,1.762,0,0,1-.534-1.281V32.158a1.775,1.775,0,0,1,1.81-1.778l3.891.006a1.766,1.766,0,0,1,1.751,1.772V47.309a1.742,1.742,0,0,1-1.694,1.772l-3.953.014A1.817,1.817,0,0,1,6286.281,48.588Zm1.3-16.373V47.26l3.8-.013,0-15.034Zm6.82,15.823a.9.9,0,0,1,.661-1.135,21.223,21.223,0,0,0,6.151-2.855,21.6,21.6,0,0,0,8.107-10.3,21.124,21.124,0,0,0,1.325-6.557l-21.4,0a.922.922,0,0,1-.9-1.008l0-21.3a21.226,21.226,0,0,0-7,1.493,21.549,21.549,0,0,0-10.561,9.046,21.241,21.241,0,0,0-2.562,6.752.893.893,0,0,1-.894.688.859.859,0,0,1-.212-.027.906.906,0,0,1-.661-1.078,22.95,22.95,0,0,1,2.907-7.5,23.393,23.393,0,0,1,11.954-9.813,22.965,22.965,0,0,1,8.091-1.4l.013,0a.941.941,0,0,1,.742.983V25.368l21.418,0a.907.907,0,0,1,.915.843v.008a22.976,22.976,0,0,1-1.227,7.53,23.319,23.319,0,0,1-15.8,14.923.74.74,0,0,1-.2.029A.944.944,0,0,1,6294.4,48.038Zm-1.447-24.559a.914.914,0,0,1-.9-.905V.919a.92.92,0,0,1,.894-.919,22.533,22.533,0,0,1,15.482,6.155,22.92,22.92,0,0,1,7.1,14.969v1.756l-.015.014c-.031.035-.063.074-.1.114a1.034,1.034,0,0,1-.742.472Zm.926-1.837,19.789-.011a20.742,20.742,0,0,0-19.786-19.771Z" transform="translate(-6266)" fill="#fff"/>
+						</svg>
+					</div>
+				</li>
+				<li>
+					<h3>資料發布單位</h3>
+					<h2>42</h2>
+					<div class="iconbox">
+						<svg xmlns="http://www.w3.org/2000/svg" width="50.578" height="47.092" viewBox="0 0 50.578 47.092">
+							<path id="Union_6" data-name="Union 6" d="M6266.9,47.092a.864.864,0,0,1-.9-.888V21.818a.866.866,0,0,1,.878-.886l13.075,0,0-6.11a1.231,1.231,0,0,1,.387-.728l10.074-6.707.011-6.512a.875.875,0,0,1,.867-.873l6.979,0a.875.875,0,0,1,.869.866v3.5a.875.875,0,0,1-.866.864l-6.113,0,.022,2.158,10,6.656a1.071,1.071,0,0,1,.444.77V20.93l13.075,0a.855.855,0,0,1,.877.839V46.2a.866.866,0,0,1-.9.889Zm14.8-31.8V45.332l5.233.022V32.274a.878.878,0,0,1,.874-.88l7.027,0a.868.868,0,0,1,.819.873V45.349l5.233,0V15.29L6291.292,8.9Zm6.977,30.058,5.233-.01v-12.2h-5.233Zm13.952,0,12.21,0V22.674h-12.21Zm-34.88,0,12.208,0V22.674h-12.208Zm24.417-43.6V3.489h5.231l0-1.745Zm14.82,40.113a.885.885,0,0,1-.869-.87V35.754a.886.886,0,0,1,.869-.872h3.5a.886.886,0,0,1,.869.872v5.235a.9.9,0,0,1-.81.872Zm.875-5.231v3.489l1.746-.006V36.626ZM6272.1,41.859a.885.885,0,0,1-.869-.87V35.754a.886.886,0,0,1,.869-.872h3.494a.888.888,0,0,1,.87.872v5.235a.9.9,0,0,1-.81.872Zm.875-5.231v3.489l1.746-.006V36.626Zm34.007-3.489a.885.885,0,0,1-.869-.87V27.033a.886.886,0,0,1,.869-.872h3.5a.886.886,0,0,1,.869.872v5.235a.9.9,0,0,1-.81.872Zm.875-5.231V31.4l1.746-.006V27.905ZM6272.1,33.138a.885.885,0,0,1-.869-.87V27.033a.886.886,0,0,1,.869-.872h3.494a.888.888,0,0,1,.87.872v5.235a.9.9,0,0,1-.81.872Zm.875-5.231V31.4l1.746-.006V27.905ZM6287,22.545a4.354,4.354,0,1,1,4.291,3.614A4.342,4.342,0,0,1,6287,22.545Zm3.746-3.293a2.594,2.594,0,1,0,.563-.061A2.676,2.676,0,0,0,6290.743,19.253Z" transform="translate(-6266)" fill="#fff"/>
+						</svg>
+					</div>
+				</li>
+				<li>
+					<h3>臺灣資料應用發表</h3>
+					<h2>45,525</h2>
+					<div class="iconbox">
+						<svg xmlns="http://www.w3.org/2000/svg" width="43.849" height="49.747" viewBox="0 0 43.849 49.747">
+							<path id="Union_7" data-name="Union 7" d="M6271.346,48.478,6266.141,36a2.018,2.018,0,0,1,1.061-2.57l3.139-1.31a2.018,2.018,0,0,1,.779-.158,2.159,2.159,0,0,1,1.921,1.283l.266.575,5.579-2.662.955-.41V29.675a2.158,2.158,0,0,1,1.379-2.067,12.118,12.118,0,0,0-2.257-6.2,8.03,8.03,0,0,1-1.47-4.534,9.082,9.082,0,0,1,9.076-9.321c.1,0,.206,0,.309.006a9.084,9.084,0,0,1,8.729,10.027,8.016,8.016,0,0,1-1.46,3.873,11.951,11.951,0,0,0-2.22,6.147,2.127,2.127,0,0,1,1.371,1.967l.008,2.919a3.524,3.524,0,0,1-.253,1.121l-.018.052a3.627,3.627,0,0,1,2.209,1.726l8.488-2.462a7.646,7.646,0,0,1,2.131-.31,6.9,6.9,0,0,1,1.481.158,3.028,3.028,0,0,1,2.494,3.238,4.363,4.363,0,0,1-2.58,3.758l-13.175,5.085a13.7,13.7,0,0,1-4.428,1.006,4.388,4.388,0,0,1-1.2-.15l-6.545-1.883a3.012,3.012,0,0,0-.841-.12,2.808,2.808,0,0,0-1.241.287l-1.9.925.3.771a2.044,2.044,0,0,1-1.144,2.64l-3.042,1.254a2.057,2.057,0,0,1-2.7-1.109Zm-.388-14.987-3.111,1.292a.59.59,0,0,0-.3.668l5.183,12.425a.555.555,0,0,0,.534.35.781.781,0,0,0,.2-.027l3.021-1.249a.59.59,0,0,0,.34-.713l-5.181-12.423a.61.61,0,0,0-.546-.337A.7.7,0,0,0,6270.958,33.491Zm11.356,8.886,6.531,1.881a3.208,3.208,0,0,0,.875.108,11.3,11.3,0,0,0,3.607-.83l13.3-5.124a2.923,2.923,0,0,0,1.709-2.516,1.573,1.573,0,0,0-1.4-1.682,5.956,5.956,0,0,0-1.026-.089,6.619,6.619,0,0,0-1.861.276l-8.4,2.448a3.476,3.476,0,0,1-3.457,3.619,3.73,3.73,0,0,1-.969-.131l-7.644-2.046a.642.642,0,0,1-.4-.32.826.826,0,0,1-.071-.622.753.753,0,0,1,.916-.494l7.75,2.059a1.715,1.715,0,0,0,.448.059,1.966,1.966,0,0,0,1.85-1.463,1.932,1.932,0,0,0-1.346-2.356l-5.9-1.639a3.446,3.446,0,0,1-1.064-.6,3.265,3.265,0,0,0-1.126-.611l-.011,0a4.934,4.934,0,0,0-2.244-.54,5.541,5.541,0,0,0-2.382.559l-6.127,2.909,3.46,8.29,1.854-.882a4.4,4.4,0,0,1,1.9-.437A4.494,4.494,0,0,1,6282.313,42.377Zm5.105-10.214,3.641.979a.585.585,0,0,0,.552-.147.569.569,0,0,0,.176-.413V29.574a.663.663,0,0,0-.616-.6l-9.2,0a.623.623,0,0,0-.434.195.567.567,0,0,0-.179.393l.006.776a6.06,6.06,0,0,1,1.051-.093A8.907,8.907,0,0,1,6287.419,32.163Zm3.356-16.463a.78.78,0,0,1,.09.6.717.717,0,0,1-.339.451l-3.193,1.845v8.868h3.082a13.425,13.425,0,0,1,2.358-6.659,7.836,7.836,0,0,0,.9-1.59,7.559,7.559,0,0,0-11.552-8.7,7.638,7.638,0,0,0-2.748,3.791,7.375,7.375,0,0,0,.036,4.713,8.122,8.122,0,0,0,1.017,1.854,13.332,13.332,0,0,1,2.313,6.594h3.085V18.6l-3.2-1.848a.723.723,0,0,1-.339-.453.772.772,0,0,1,.09-.6.747.747,0,0,1,.635-.344.765.765,0,0,1,.383.1l3.2,1.829,3.166-1.835a.739.739,0,0,1,.373-.1A.767.767,0,0,1,6290.775,15.7Zm7.083,17.423a1.354,1.354,0,0,1-1.338-1.34,1.142,1.142,0,0,0-.858-1.142c-.353-.16-.687-.31-.662-.816a.749.749,0,0,1,.682-.7.485.485,0,0,1,.084.006,2.664,2.664,0,0,1,2.266,2.475l1.43.013a2.74,2.74,0,0,1,1.572-2.284,2.877,2.877,0,0,1,1.2-.271,2.758,2.758,0,0,1,1.772.673l1.023-1.018a2.677,2.677,0,0,1-.426-2.917,2.735,2.735,0,0,1,2.3-1.607l.008-1.419a2.787,2.787,0,0,1-2.289-1.573,2.673,2.673,0,0,1,.4-2.963l-1.012-1.02a2.715,2.715,0,0,1-2.911.431,2.721,2.721,0,0,1-1.629-2.3l-1.436,0c-.215.412-.5.6-.833.565a.758.758,0,0,1-.67-.86,1.336,1.336,0,0,1,1.33-1.219l1.8,0a1.338,1.338,0,0,1,1.324,1.343,1.208,1.208,0,0,0,.711,1.09,1.239,1.239,0,0,0,.513.112,1.226,1.226,0,0,0,.842-.344,1.4,1.4,0,0,1,.961-.4,1.376,1.376,0,0,1,.974.413l1.2,1.2a1.359,1.359,0,0,1,.016,1.932,1.216,1.216,0,0,0,.865,2.06,1.35,1.35,0,0,1,1.343,1.324l0,1.791a1.35,1.35,0,0,1-1.326,1.337,1.247,1.247,0,0,0-1.107.7,1.2,1.2,0,0,0,.222,1.367,1.354,1.354,0,0,1-.009,1.929l-1.254,1.245a1.3,1.3,0,0,1-.92.377,1.363,1.363,0,0,1-.921-.359,1.336,1.336,0,0,0-.906-.378,1.183,1.183,0,0,0-.429.081,1.2,1.2,0,0,0-.779,1.116,1.355,1.355,0,0,1-1.359,1.349ZM6299.627,33.073Zm-5.49-9.278a4.61,4.61,0,0,1,4.423-4.923c.068,0,.138,0,.206,0a4.616,4.616,0,0,1,.231,9.226c-.081,0-.161.006-.242.006A4.629,4.629,0,0,1,6294.137,23.8Zm3.837-3.321a3.085,3.085,0,0,0-1.911,1.432,3.115,3.115,0,0,0,2.693,4.689,3.077,3.077,0,0,0,.732-.089,3.111,3.111,0,0,0-.711-6.135A3.24,3.24,0,0,0,6297.974,20.474Zm-24.656-8.931-2.355-1.351a.757.757,0,0,1,.383-1.414.614.614,0,0,1,.315.082l2.315,1.322a.762.762,0,0,1-.339,1.444A.642.642,0,0,1,6273.317,11.543Zm25.52-.321a.774.774,0,0,1,.3-1.017l2.35-1.348a.584.584,0,0,1,.3-.076.806.806,0,0,1,.664.347.772.772,0,0,1-.266,1.063l-2.322,1.335a.7.7,0,0,1-.353.1A.783.783,0,0,1,6298.837,11.221Zm-5.085-5.112a.788.788,0,0,1-.436-.472.674.674,0,0,1,.047-.556l1.353-2.35a.755.755,0,0,1,.665-.367.853.853,0,0,1,.315.062.743.743,0,0,1,.393.448.673.673,0,0,1-.043.565l-1.325,2.307a.814.814,0,0,1-.7.415A.685.685,0,0,1,6293.752,6.109Zm-15.305-.333-1.35-2.341a.661.661,0,0,1-.049-.515.75.75,0,0,1,.32-.453.832.832,0,0,1,.407-.108.743.743,0,0,1,.653.369l1.339,2.318a.71.71,0,0,1,.07.553.788.788,0,0,1-.369.473.741.741,0,0,1-.35.086A.772.772,0,0,1,6278.447,5.777Zm7.375-2.364,0-2.717v0a.761.761,0,0,1,1.516,0V.7l0,2.672a.755.755,0,1,1-1.509.041Z" transform="translate(-6266)" fill="#fff"/>
+						</svg>
+					</div>
+				</li>
+			</ul>
+			<div class="center-btn">
+				<a href="#" class="btn-style2">
+					<p>查看更多發布狀況</p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="8.829" height="15.657" viewBox="0 0 8.829 15.657">
+						<path id="Union_8" data-name="Union 8" d="M6266.293,15.364a1,1,0,0,1,0-1.414l6.121-6.121-6.121-6.121a1,1,0,0,1,1.414-1.414l6.829,6.828a1,1,0,0,1,0,1.414l-6.829,6.828a1,1,0,0,1-1.414,0Z" transform="translate(-6266)" fill="#fff"/>
+					</svg>
+				</a>
+			</div>
+		</div>
+	</section>
 
-{% endblock %} {% block script %}{% endblock %}
+	<!--相關單位-->
+	<section class="s4-link-area">
+		<div class="bg">
+			<img src="{% static 'taibif-home/image/linkbg.png' %}" alt="">
+		</div>
+		<div class="main-1340">
+			<div class="index-maintitle">
+				<h2 class="fs-35">指導單位</h2>
+				<div class="line-mark"></div>
+			</div>
+			<div class="link-list marb_60">
+				<a href="https://www.nstc.gov.tw/" target="_blank">
+					<img src="{% static 'taibif-home/image/plogo1.png' %}" alt="">
+				</a>
+				<a href="https://www.moa.gov.tw/" target="_blank">
+					<img src="{% static 'taibif-home/image/plogo2.png' %}" alt="">
+				</a>
+				<a href="https://www.sinica.edu.tw/" target="_blank">
+					<img src="{% static 'taibif-home/image/plogo3.png' %}" alt="">
+				</a>
+				<a href="https://biodiv.tw/" target="_blank">
+					<img src="{% static 'taibif-home/image/plogo4.png' %}" alt="">
+				</a>
+			</div>
+
+			<div class="index-maintitle">
+				<h2 class="fs-35">夥伴單位</h2>
+				<div class="line-mark"></div>
+			</div>
+			<div class="link-list">
+				<a href="https://tbiadata.tw/" target="_blank">
+					<img src="{% static 'taibif-home/image/plogo5.png' %}" alt="">
+				</a>
+				<a href="https://data.depositar.io/" target="_blank">
+					<img src="{% static 'taibif-home/image/plogo6.png' %}" alt="">
+				</a>
+			</div>
+		</div>
+	</section>
+
+{% endblock %}
+
+{% block script %}
+<script>
+
+	document.documentElement.style.setProperty('--mask-color', '#3c6d13');
+
+	$(function() {
+		const maskColors = ['#3c6d13', '#558E24', '#020200', '#D49177', '#030E29', '#4A3E3A', '#4A3E3A'];
+
+		const swiper = new Swiper('.kvSwiper', {
+			effect: 'fade',
+			fadeEffect: { crossFade: true },
+			loop: true,
+			speed: 1000,
+			autoplay: { delay: 3000 },
+			on: {
+				init: function () {
+					document.documentElement.style.setProperty('--mask-color', maskColors[0]);
+					document.body.classList.add('is-ready');
+					// 這裡是關鍵：Swiper 初始化後，通知 ScrollTrigger 重新計算
+					if (window.ScrollTrigger) ScrollTrigger.refresh();
+				},
+				slideChange: function () {
+					const activeColor = maskColors[this.realIndex];
+					document.documentElement.style.setProperty('--mask-color', activeColor);
+				},
+			},
+		});
+	});
+	$('.ham8').on('click', function() {
+		if ($(window).width() < 1024) {
+			$(this).toggleClass('active');
+			$('.right-menu').stop().slideToggle();
+
+			// 判斷是否有 active 類別來控制捲軸
+			if ($(this).hasClass('active')) {
+				$('body').css('overflow', 'hidden');
+			} else {
+				$('body').css('overflow', 'auto');
+			}
+		}
+	});
+	$('.menu1 .btitle').on('click', function() {
+		if ($(window).width() < 1024) {
+			$(this).siblings('.menu2').stop().slideToggle();
+		}
+	});
+	$(window).on('resize', function() {
+		if ($(window).width() >= 1024) {
+			// 當回到電腦版時，移除 jQuery 殘留的 inline style 與 active 類別
+			$('.right-menu').removeAttr('style');
+			$('.ham8').removeClass('active');
+			$('.menu2').removeAttr('style');
+		}
+	});
+
+	$(window).on('load', function() {
+		let currentNewsTab = 'all';
+
+		const initNewsSwiper = () => {
+			if (window.newsswiper) {
+				window.newsswiper.destroy(true, true);
+			}
+			window.newsswiper = new Swiper(".newsSwiper", {
+			slidesPerView: 1,
+			spaceBetween: 30,
+			navigation: {
+				nextEl: ".btn-next1",
+				prevEl: ".btn-prev1",
+			},
+			// 響應式中斷點
+			breakpoints: {
+				// 當螢幕寬度 >= 768px (平板)
+				768: {
+					slidesPerView: 2,
+					spaceBetween: 20
+				},
+				// 當螢幕寬度 >= 1024px (桌機)
+				1024: {
+					slidesPerView: 3,
+					spaceBetween: 30
+				}
+			}
+		});
+		};
+
+		const renderNewsTab = (tab) => {
+			if (tab === currentNewsTab) return;
+
+			const wrapper = document.getElementById("news-swiper-wrapper");
+			const tpl = document.querySelector(`#news-tab-templates [data-tab="${tab}"]`);
+			if (!wrapper || !tpl) return;
+
+			currentNewsTab = tab;
+			wrapper.innerHTML = tpl.innerHTML;
+			initNewsSwiper();
+		};
+
+		$('.news-tab li').on('click', function() {
+			const tab = $(this).data('tab');
+			$('.news-tab li').removeClass('now');
+			$(this).addClass('now');
+			renderNewsTab(tab);
+		});
+
+		initNewsSwiper();
+		gsap.registerPlugin(ScrollTrigger);
+
+		ScrollTrigger.create({
+			trigger: ".s1-kv-area",
+			start: "bottom center", // 當 .s1-kv-area 的底部到達螢幕中間時觸發
+			// markers: true,
+			onEnter: () => {
+				gsap.to(".right-fixed", { opacity: 1, pointerEvents: "auto", duration: 0.3 });
+			},
+			onLeaveBack: () => {
+				gsap.to(".right-fixed", { opacity: 0, pointerEvents: "none", duration: 0.3 });
+			}
+		});
+
+		ScrollTrigger.create({
+			trigger: ".s2-news",
+			start: "top-=500 top",
+			// markers: true,
+			onEnter: function () {
+				$('.s2-news').addClass('vivi');
+			}
+		});
+		ScrollTrigger.create({
+			trigger: ".s3-data",
+			start: "top 85%", //
+			// markers: true,    // 暫時開啟，確認有沒有紅綠線出現
+			onEnter: function () {
+				$('.s3-data').addClass('vivi');
+			}
+		});
+		ScrollTrigger.create({
+			trigger: ".s4-link-area",
+			start: "top 85%", //
+			// markers: true,    // 暫時開啟，確認有沒有紅綠線出現
+			onEnter: function () {
+				$('.s4-link-area').addClass('vivi');
+			}
+		});
+		// 關鍵：強制延遲刷新，確保所有背景圖、Swiper 都定位了
+		setTimeout(() => {
+			ScrollTrigger.refresh();
+		}, 300);
+	});
+</script>
+{% endblock %}

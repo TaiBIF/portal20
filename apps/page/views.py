@@ -46,6 +46,12 @@ def act_lang(func):
 
 # @act_lang
 def index(request):
+    news_all_list = (
+        Article.objects.filter(category__in=["NEWS", "EVENT", "SCI", "STORY"])
+        .order_by("-is_pinned", "-created")
+        .all()[0:12]
+    )
+
     news_list = (
         Article.objects.filter(category="NEWS")
         .order_by("-is_pinned", "-created")
@@ -67,6 +73,29 @@ def index(request):
         .order_by("-created")
         .all()[0:6]
     )
+
+    def assign_card_image(articles):
+        # Priority: cover image > media_url > fallback image.
+        for article in articles:
+            if article.cover:
+                article.card_image_url = article.cover.url
+                continue
+
+            if article.media_url:
+                media_url = article.media_url.strip()
+                if media_url.startswith("http://") or media_url.startswith("https://"):
+                    article.card_image_url = media_url
+                else:
+                    article.card_image_url = f"{settings.MEDIA_URL}{media_url.lstrip('/')}"
+                continue
+
+            article.card_image_url = f"{settings.STATIC_URL}taibif-home/image/ubpic.jpg"
+
+    assign_card_image(news_all_list)
+    assign_card_image(news_list)
+    assign_card_image(event_list)
+    assign_card_image(update_list)
+    assign_card_image(story_list)
 
     url = f"http://solr:8983/solr/taibif_occurrence/select?q=basisOfRecord:*&indent=true&q.op=OR&rows=0"
     r = requests.get(url).json()
@@ -107,6 +136,7 @@ def index(request):
     total_case_count = gbif_data_case_count + taibif_case_count
 
     context = {
+        "news_all_list": news_all_list,
         "news_list": news_list,
         "event_list": event_list,
         "update_list": update_list,
