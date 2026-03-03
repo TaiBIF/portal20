@@ -4441,6 +4441,126 @@ body {
     border-bottom-color: #ddd;
 }
 
+/* Tech-book accordion styled like tools cards */
+.tech-book-page .tech-book-accordion {
+    margin-top: 8px;
+}
+.tech-book-page .panel.panel-main.card-tools-wrapper.tools-card {
+    margin-bottom: 14px;
+    border: 1px solid #eae3df;
+    border-left: 4px solid #9e8a7b;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(74, 62, 58, 0.08);
+    background: #fff;
+    overflow: hidden;
+}
+.tech-book-page .panel-main > .panel-heading {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+}
+.tech-book-page .panel-main > .panel-heading .panel-title.title {
+    margin: 0;
+}
+.tech-book-page .panel-main > .panel-heading .panel-title.title a {
+    display: block;
+    padding: 14px 18px 12px;
+    color: #4a3e3a !important;
+    font-size: 20px;
+    line-height: 1.45;
+    text-decoration: none;
+}
+.tech-book-page
+    .panel-main
+    > .panel-heading
+    .panel-title
+    a[aria-expanded="false"]::after,
+.tech-book-page
+    .panel-main
+    > .panel-heading
+    .panel-title
+    a[aria-expanded="true"]::after {
+    right: 14px;
+}
+.tech-book-page
+    .panel-main
+    > .panel-heading
+    + .panel-collapse
+    > .panel-body.content {
+    margin: 0;
+    padding: 6px 18px 16px;
+    list-style: none;
+}
+.tech-book-page
+    .panel-main
+    > .panel-heading
+    + .panel-collapse
+    > .panel-body.content
+    li {
+    margin: 0;
+    border-bottom: 1px solid #f0ebe8;
+}
+.tech-book-page
+    .panel-main
+    > .panel-heading
+    + .panel-collapse
+    > .panel-body.content
+    li
+    a {
+    display: block;
+    padding: 10px 2px;
+    color: #5f5551 !important;
+    font-size: 16px;
+    line-height: 1.7;
+    text-decoration: none;
+}
+.tech-book-page
+    .panel-main
+    > .panel-heading
+    + .panel-collapse
+    > .panel-body.content
+    li
+    a:hover {
+    color: #6e584b !important;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+.tech-book-page
+    .panel-main
+    > .panel-heading
+    + .panel-collapse
+    > .panel-body
+    li
+    a:before {
+    content: none;
+}
+
+@media (max-width: 767.98px) {
+    .tech-book-page .panel-main > .panel-heading .panel-title.title a {
+        padding: 12px 40px 10px 12px;
+        font-size: 18px;
+    }
+    .tech-book-page
+        .panel-main
+        > .panel-heading
+        + .panel-collapse
+        > .panel-body.content {
+        padding: 4px 12px 12px;
+    }
+    .tech-book-page
+        .panel-main
+        > .panel-heading
+        + .panel-collapse
+        > .panel-body.content
+        li
+        a {
+        padding: 9px 2px;
+        font-size: 15px;
+        line-height: 1.6;
+    }
+}
+
 .pagination {
     margin: 30px auto;
     border-radius: 0;

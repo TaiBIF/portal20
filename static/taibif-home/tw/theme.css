@@ -2392,3 +2392,8 @@ body {
         width: 1340px;
     }
 }
+
+blockquote {
+    padding: 10px 20px !important;
+    margin: 0 0 20px !important;
+}
