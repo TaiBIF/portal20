@@ -5706,6 +5706,107 @@ a.btn-sunset-md {
     height: auto;
 }
 
+/* data-paper#journal cards aligned with tools page style */
+.data-paper-page [data-cat="journal"] .card-tools-wrapper.tools-card {
+    position: relative;
+    margin-bottom: 16px;
+    border: 1px solid #e9dfd9;
+    border-left: 4px solid #b9a392;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(74, 62, 58, 0.08);
+    overflow: hidden;
+}
+.data-paper-page [data-cat="journal"] .card-tools-wrapper.tools-card .title {
+    margin: 0;
+    padding: 14px 18px 0;
+    color: #4a3e3a;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.45;
+    background-color: transparent;
+}
+.data-paper-page [data-cat="journal"] .card-tools-wrapper.tools-card .content {
+    padding: 10px 18px 16px;
+    color: #5f5551;
+    font-size: 15px !important;
+    line-height: 1.8;
+}
+.data-paper-page
+    [data-cat="journal"]
+    .card-tools-wrapper.tools-card
+    .content
+    p {
+    font-size: 15px !important;
+}
+.data-paper-page
+    [data-cat="journal"]
+    .card-tools-wrapper.tools-card
+    .content
+    p {
+    margin-bottom: 10px;
+}
+.data-paper-page [data-cat="journal"] .card-tools-wrapper.tools-card .link-item,
+.data-paper-page
+    [data-cat="journal"]
+    .card-tools-wrapper.tools-card
+    .content
+    a {
+    color: #846c5b;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+.data-paper-page
+    [data-cat="journal"]
+    .card-tools-wrapper.tools-card
+    .link-item:hover,
+.data-paper-page
+    [data-cat="journal"]
+    .card-tools-wrapper.tools-card
+    .content
+    a:hover {
+    color: #6e584b;
+}
+
+@media (max-width: 767.98px) {
+    .data-paper-page [data-cat="journal"] .card-tools-wrapper.tools-card {
+        border-left-width: 3px;
+        border-radius: 10px;
+    }
+    .data-paper-page
+        [data-cat="journal"]
+        .card-tools-wrapper.tools-card
+        .title {
+        padding: 12px 12px 0;
+        font-size: 18px;
+    }
+    .data-paper-page
+        [data-cat="journal"]
+        .card-tools-wrapper.tools-card
+        .content {
+        padding: 8px 12px 12px;
+        font-size: 14px;
+        line-height: 1.65;
+    }
+    .data-paper-page
+        [data-cat="journal"]
+        .card-tools-wrapper.tools-card
+        .flex-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .data-paper-page
+        [data-cat="journal"]
+        .card-tools-wrapper.tools-card
+        .flex-container
+        .right-container {
+        flex: 0 0 auto;
+        width: 100%;
+        text-align: left;
+    }
+}
+
 .occurrence_gallery {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
