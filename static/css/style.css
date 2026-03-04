@@ -2503,6 +2503,9 @@ a.btn-dataicon-downlod {
     padding: 4px 8px 8px;
     color: #4f4642;
 }
+.content-readable-full-panel {
+    max-width: 100% !important;
+}
 .content-readable-panel h4 {
     margin-bottom: 14px;
     font-size: 30px;
