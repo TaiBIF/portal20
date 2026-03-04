@@ -2619,6 +2619,13 @@ a.btn-dataicon-downlod {
         padding: 8px 10px;
     }
 }
+.content-readable-panel {
+    .content-readable-flex-center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
 
 .heading-sort-ctn {
     margin-top: -8px;
