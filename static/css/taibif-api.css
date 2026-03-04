@@ -1,6 +1,21 @@
-pre {
-    border: #ddd solid 1px !important;
-    background-color: #f2f0ee !important;
+.api-code-block {
+    margin-top: 8px;
+    margin-bottom: 12px;
+    padding: 12px 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f7f5f3;
+    overflow-x: auto;
+    white-space: pre;
+}
+
+.api-code-block code {
+    display: block;
+    color: #3f3733;
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+        "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
 }
 
 /* ul li {
@@ -11,12 +26,12 @@ ul li div {
     margin-bottom: 10px !important;
 } */
 
-h3::before {
-    content: ''; /* 必須的，表示這是一個空的內容 */
-    display: inline-block; /* 讓偽元素顯示出來 */
+/* h3::before {
+    content: ''; 
+    display: inline-block;
     margin-right: 10px;
     width: 4px;
-    height: 16px; /* 或指定高度，例如 16px */
+    height: 16px; 
     background: #525252;
 }
 
@@ -24,7 +39,6 @@ h3::before {
     border: #ddd solid 1px;
     padding: 16px 20px;
     border-radius: 4px;
-    /* font-size: 14px; */
     margin-top: 10px;
     margin-bottom: 30px;
 }
@@ -44,9 +58,8 @@ h3::before {
     text-decoration: underline;
     font-weight: bold;
     color: #525252;
-}
+} */
 
 /* .table-container table {
     font-size: 14px !important;
 } */
-
