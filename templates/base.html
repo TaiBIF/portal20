@@ -361,10 +361,33 @@
                                         </div>
                                         <!--繁中時出現En，英文版時出現繁中-->
                                         <div class="mb-language-menu">
-                                            <a href="#" style="display: none"
-                                                >繁中
-                                            </a>
-                                            <a href="#">En</a>
+                                            {% if request.path|slice:':8' == '/zh-hant' %}
+                                            <a
+                                                href="{{ request.get_full_path }}"
+                                                style="display: none"
+                                                >繁中</a
+                                            >
+                                            <a
+                                                href="/en{{ request.get_full_path|slice:'8:'|default:'/' }}"
+                                                >English</a
+                                            >
+                                            {% elif request.path|slice:':3' == '/en' %}
+                                            <a
+                                                href="/zh-hant{{ request.get_full_path|slice:'3:'|default:'/' }}"
+                                                >繁中</a
+                                            >
+                                            <a
+                                                href="{{ request.get_full_path }}"
+                                                style="display: none"
+                                                >English</a
+                                            >
+                                            {% else %}
+                                            <a
+                                                href="/zh-hant{{ request.get_full_path }}"
+                                                >繁中</a
+                                            >
+                                            <a href="{{ request.get_full_path }}">English</a>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
