@@ -299,7 +299,10 @@
                                             />
                                         </svg>
                                     </a>
-                                    <a href="{% url 'contact_us' %}" class="btn-icon">
+                                    <a
+                                        href="{% url 'contact_us' %}"
+                                        class="btn-icon"
+                                    >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             width="18"
@@ -329,17 +332,33 @@
                                                 fill="#fff"
                                             />
                                         </svg>
-                                    <div class="smenu">
-                                        {% if request.path|slice:":8" == '/zh-hant' %}
-                                        {% with request.get_full_path as full_path %}
-                                        <a href="{{ full_path }}">繁體中文</a>
-                                        <a href="{% with full_path|slice:'8:' as en_path %}{% if en_path %}{{ en_path }}{% else %}/{% endif %}{% endwith %}">English</a>
-                                        {% endwith %}
-                                        {% else %}
-                                        <a href="/zh-hant{{ request.get_full_path }}">繁體中文</a>
-                                        <a href="{{ request.get_full_path }}">English</a>
-                                        {% endif %}
-                                    </div>
+                                        <div class="smenu">
+                                            {% if request.path|slice:':8' == '/zh-hant' %}
+                                            <a href="{{ request.get_full_path }}"
+                                                >繁體中文</a
+                                            >
+                                            <a
+                                                href="/en{{ request.get_full_path|slice:'8:'|default:'/' }}"
+                                                >English</a
+                                            >
+                                            {% elif request.path|slice:':3' == '/en' %}
+                                            <a href="/zh-hant{{ request.get_full_path|slice:'3:'|default:'/' }}"
+                                                >繁體中文</a
+                                            >
+                                            <a
+                                                href="{{ request.get_full_path }}"
+                                                >English</a
+                                            >
+                                            {% else %}
+                                            <a href="/zh-hant{{ request.get_full_path }}"
+                                                >繁體中文</a
+                                            >
+                                            <a
+                                                href="{{ request.get_full_path }}"
+                                                >English</a
+                                            >
+                                            {% endif %}
+                                        </div>
                                         <!--繁中時出現En，英文版時出現繁中-->
                                         <div class="mb-language-menu">
                                             <a href="#" style="display: none"
@@ -356,10 +375,19 @@
                                 <p class="btitle">我想開放資料</p>
                                 <div class="menu2">
                                     <div class="w-bg">
-                                        <a href="{% url 'open-process' %}">有哪些步驟</a>
-                                        <a href="{% url 'tools' %}">有哪工具可以使用</a>
-                                        <a href="{% url 'open-consulation' %}#self-learning">我需要幫忙</a>
-                                        <a href="{% url 'faq' %}">開放資料常見問題</a>
+                                        <a href="{% url 'open-process' %}"
+                                            >有哪些步驟</a
+                                        >
+                                        <a href="{% url 'tools' %}"
+                                            >有哪工具可以使用</a
+                                        >
+                                        <a
+                                            href="{% url 'open-consulation' %}#self-learning"
+                                            >我需要幫忙</a
+                                        >
+                                        <a href="{% url 'faq' %}"
+                                            >開放資料常見問題</a
+                                        >
                                     </div>
                                 </div>
                             </li>
@@ -367,9 +395,14 @@
                                 <p class="btitle">我想探索教育資源</p>
                                 <div class="menu2">
                                     <div class="w-bg">
-                                        <a href="{% url 'tech-book' %}">什麼是開放資料</a>
+                                        <a href="{% url 'tech-book' %}"
+                                            >什麼是開放資料</a
+                                        >
                                         <a href="#">開放資料的好處</a>
-                                        <a href="{% url 'tech-online-class' %}#standard-00">線上教材包</a>
+                                        <a
+                                            href="{% url 'tech-online-class' %}#standard-00"
+                                            >線上教材包</a
+                                        >
                                     </div>
                                 </div>
                             </li>
@@ -378,9 +411,13 @@
                                 <div class="menu2">
                                     <div class="w-bg">
                                         <a href="#">給我一些例子</a>
-                                        <a href="{% url 'data-paper' %}#about">資料論文</a>
+                                        <a href="{% url 'data-paper' %}#about"
+                                            >資料論文</a
+                                        >
                                         <a href="#">有哪些資料產品</a>
-                                        <a href="{% url 'taibif-api' %}">TaiBIF API</a>
+                                        <a href="{% url 'taibif-api' %}"
+                                            >TaiBIF API</a
+                                        >
                                         <a href="#">首先要找到資料</a>
                                     </div>
                                 </div>
@@ -389,12 +426,18 @@
                                 <p class="btitle">我想參與社群</p>
                                 <div class="menu2">
                                     <div class="w-bg">
-                                        <a href="{% url 'tech-workshop' %}">參加 TaiBIF 工作坊</a>
-                                        <a href="{% url 'tech-volunteer' %}">參與志工培訓</a>
+                                        <a href="{% url 'tech-workshop' %}"
+                                            >參加 TaiBIF 工作坊</a
+                                        >
+                                        <a href="{% url 'tech-volunteer' %}"
+                                            >參與志工培訓</a
+                                        >
                                         <a href="#">我想成為發布單位</a>
                                         <a href="#">我願意收到電子報</a>
                                         <a href="#">年度資料貢獻</a>
-                                        <a href="{% url 'thanks-list' %}">感謝名單</a>
+                                        <a href="{% url 'thanks-list' %}"
+                                            >感謝名單</a
+                                        >
                                     </div>
                                 </div>
                             </li>
@@ -402,10 +445,22 @@
                                 <p class="btitle">最新消息</p>
                                 <div class="menu2">
                                     <div class="w-bg">
-                                        <a href="{% url 'article-search' %}?category=news">新聞</a>
-                                        <a href="{% url 'article-search' %}?category=event">活動</a>
-                                        <a href="{% url 'article-search' %}?category=sci">科普</a>
-                                        <a href="{% url 'article-search' %}?category=story">資料故事</a>
+                                        <a
+                                            href="{% url 'article-search' %}?category=news"
+                                            >新聞</a
+                                        >
+                                        <a
+                                            href="{% url 'article-search' %}?category=event"
+                                            >活動</a
+                                        >
+                                        <a
+                                            href="{% url 'article-search' %}?category=sci"
+                                            >科普</a
+                                        >
+                                        <a
+                                            href="{% url 'article-search' %}?category=story"
+                                            >資料故事</a
+                                        >
                                     </div>
                                 </div>
                             </li>
@@ -413,9 +468,18 @@
                                 <p class="btitle">專題文章</p>
                                 <div class="menu2">
                                     <div class="w-bg">
-                                        <a href="{% url 'article-search' %}?category=story">資料故事</a>
-                                        <a href="{% url 'article-search' %}?category=pub">出版品</a>
-                                        <a href="{% url 'article-search' %}?category=pos">TaiBIF 成果</a>
+                                        <a
+                                            href="{% url 'article-search' %}?category=story"
+                                            >資料故事</a
+                                        >
+                                        <a
+                                            href="{% url 'article-search' %}?category=pub"
+                                            >出版品</a
+                                        >
+                                        <a
+                                            href="{% url 'article-search' %}?category=pos"
+                                            >TaiBIF 成果</a
+                                        >
                                     </div>
                                 </div>
                             </li>
@@ -423,13 +487,19 @@
                                 <p class="btitle">關於我們</p>
                                 <div class="menu2">
                                     <div class="w-bg">
-                                        <a href="{% url 'about-taibif' %}">TaiBIF 介紹</a>
-                                        <a href="{% url 'about-gbif' %}">GBIF 介紹</a>
+                                        <a href="{% url 'about-taibif' %}"
+                                            >TaiBIF 介紹</a
+                                        >
+                                        <a href="{% url 'about-gbif' %}"
+                                            >GBIF 介紹</a
+                                        >
                                         <a href="#">TaiBIF 成果</a>
                                         <a href="#">網站導覽</a>
                                         <a href="#">相關連結</a>
                                         <a href="#">TaiBIF 資源下載專區</a>
-                                        <a href="{% url 'data-policy' %}">使用條款暨隱私權政策</a>
+                                        <a href="{% url 'data-policy' %}"
+                                            >使用條款暨隱私權政策</a
+                                        >
                                     </div>
                                 </div>
                             </li>
@@ -487,7 +557,7 @@
                         </p>
                     </div>
                     <div class="soci-area">
-                        <a href="#" class="icon">
+                        <a href="https://www.facebook.com/TaiBIF.tw/" class="icon" target="_blank">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="13.283"
@@ -503,7 +573,7 @@
                                 />
                             </svg>
                         </a>
-                        <a href="#" class="icon">
+                        <a href="https://www.youtube.com/@taibif_brcas" class="icon" target="_blank">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="27.879"
