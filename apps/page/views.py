@@ -28,7 +28,7 @@ from apps.data.models import (
 )
 from apps.article.models import Article
 from apps.data.models import WorkshopCertificationList, TaibifParticipants, TaibiferList, DataPaperList, Taibifer
-from .models import Post, Journal
+from .models import Post, Journal, IndexBubbleSetting
 from utils.mail import taibif_mail_contact_us
 
 from apps.data.helpers.stats import get_home_stats
@@ -134,6 +134,7 @@ def index(request):
     
     taibif_case_count = Article.objects.filter(is_data_case=True).count()
     total_case_count = gbif_data_case_count + taibif_case_count
+    index_bubble = IndexBubbleSetting.get_solo()
 
     context = {
         "news_all_list": news_all_list,
@@ -147,7 +148,8 @@ def index(request):
         'taxon_num': taxon_num,
         'taxonGroup_dict':taxonGroup_dict,
         'publisher_num': publisher_num,
-        'case_count': total_case_count
+        'case_count': total_case_count,
+        'index_bubble': index_bubble
     }
 
     return render(request, "index.html", context)

@@ -2467,9 +2467,7 @@ a.btn-toggle-flexible.visible-xs {
 }
 .tools-page .card-tools-wrapper.tools-card .link-item,
 .tools-page .card-tools-wrapper.tools-card .content a {
-    color: #846c5b;
-    text-decoration: underline;
-    text-underline-offset: 3px;
+    color: #0000ee !important;
 }
 .tools-page .card-tools-wrapper.tools-card .link-item:hover,
 .tools-page .card-tools-wrapper.tools-card .content a:hover {

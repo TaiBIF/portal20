@@ -3,6 +3,7 @@
 {% load static %}
 {% load helper_tags %}
 {% load i18n %}
+{% url 'article-search' as article_search_url %}
 
 {% block title %}{{ article_cat_label }}{% endblock %}
 
@@ -17,7 +18,9 @@
   <!-- date range picker -->
   <script src="{% static 'js/daterangepicker/moment.min.js' %}"></script>
   <script src="{% static 'js/daterangepicker/daterangepicker.js' %}"></script>
-  <script>
+    <script>
+      const ARTICLE_SEARCH_URL = "{{ article_search_url|escapejs }}";
+
     $(function () {
       //Date range picker
       $('#newsFilter').daterangepicker({
@@ -33,7 +36,7 @@
       function runArticleSearch() {
         const keyword = $('#article-search-input').val() || '';
         const query = "q=" + encodeURIComponent(keyword);
-        window.location.href = `/article/search/?${query}`;
+        window.location.href = `${ARTICLE_SEARCH_URL}?${query}`;
       }
 
       // topic type select
@@ -63,7 +66,7 @@
           }
         }else{q.push(selectedType)}
         query = q.join('&')
-        window.location = `${window.location.origin}/article/search/?${query}`;
+        window.location = `${ARTICLE_SEARCH_URL}?${query}`;
       });
     });
   </script>

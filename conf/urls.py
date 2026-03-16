@@ -32,7 +32,7 @@ from apps.page.views import (
     page_not_found_view,
     response_error_handler
 )
-from django.views.generic.base import TemplateView
+from django.views.generic.base import TemplateView, RedirectView
 # from apps.api.views import (
 #     ChartMonth,
 #     ChartYear,
@@ -43,6 +43,7 @@ urlpatterns = [
     re_path('media/(?P<path>.*)$', serve, {
             'document_root': settings.MEDIA_ROOT,
         }),
+    path('', RedirectView.as_view(url='/zh-hant/')),
     path('api/', include('apps.api.urls')),
     # path('search/', include('apps.data.urls')),
     #path('occurrence/search|map/', search_view, name='search-occurrence'),
@@ -56,8 +57,7 @@ urlpatterns = [
     path('dataset/<uuid:taibif_dataset_id>/', dataset_view, name='dataset-detail'),
     path('publisher/<int:pk>/', publisher_view, name='publisher-detail'),
     path('species/<str:taicol_taxon_id>/', species_view, name='species-detail'),
-    path('article/', include('apps.article.urls')),
-    path('',  include('apps.page.urls')),
+    # keep localized homepage at /zh-hant/... and /en/... via i18n_patterns below
     path('admin/', admin.site.urls),
     path('500', response_error_handler),
     ##Kuan-Yu added for API hichart function
@@ -72,6 +72,7 @@ urlpatterns += i18n_patterns(
     path("i18n/", include("django.conf.urls.i18n")),
     path('',  include('apps.page.urls')),
     path('search/', include('apps.data.urls')),
+    path('article/', include('apps.article.urls')),
 )
 
 

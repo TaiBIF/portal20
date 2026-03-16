@@ -69,7 +69,7 @@ def article_list(request, category):
     return render(request, 'article-list.html', {
         'article_list': article_list,
         'cover_list': cover_list,
-        'article_cat': category,
+        'article_cat': category.upper(),
         'article_cat_ch': CODE_MAPPING['cat'][category],
         'article_cat_label': valid_category[0][1],
         'layout_type': layout_type,
