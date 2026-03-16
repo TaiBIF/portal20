@@ -4,9 +4,9 @@
 
 {% block head %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
-<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
-<script src="{% static 'taibif-home/js/gsap.min.js' %}"></script>
-<script src="{% static 'taibif-home/js/ScrollTrigger.min.js' %}"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+<script defer src="{% static 'taibif-home/js/gsap.min.js' %}"></script>
+<script defer src="{% static 'taibif-home/js/ScrollTrigger.min.js' %}"></script>
 {% endblock %}
 
 {% block main %}
@@ -24,7 +24,7 @@
 					</div>
 				</div>
 			</a>
-			<img class="fish" src="{% static 'taibif-home/image/fish.png' %}" alt="">
+			<img class="fish" src="{% static 'taibif-home/image/fish.png' %}" alt="" loading="eager" decoding="async">
 		</div>
 	</div>
 	{% endif %}
@@ -66,14 +66,14 @@
 				<div class="swiper kvSwiper">
 					<div class="swiper-wrapper">
 						<div class="swiper-slide">
-							<img src="{% static 'taibif-home/image/bn-1.jpg' %}" alt="">
+							<img src="{% static 'taibif-home/image/bn-1.jpg' %}" alt="" loading="eager" decoding="async">
 						</div>
-						<div class="swiper-slide"><img src="{% static 'taibif-home/image/bn-2.jpg' %}" alt=""></div>
-						<div class="swiper-slide"><img src="{% static 'taibif-home/image/bn-3.jpg' %}" alt=""></div>
-						<div class="swiper-slide"><img src="{% static 'taibif-home/image/bn-4.jpg' %}" alt=""></div>
-						<div class="swiper-slide"><img src="{% static 'taibif-home/image/bn-5.jpg' %}" alt=""></div>
-						<div class="swiper-slide"><img src="{% static 'taibif-home/image/bn-6.jpg' %}" alt=""></div>
-						<div class="swiper-slide"><img src="{% static 'taibif-home/image/bn-7.jpg' %}" alt=""></div>
+						<div class="swiper-slide"><img src="{% static 'taibif-home/image/bn-2.jpg' %}" alt="" loading="lazy" decoding="async"></div>
+						<div class="swiper-slide"><img src="{% static 'taibif-home/image/bn-3.jpg' %}" alt="" loading="lazy" decoding="async"></div>
+						<div class="swiper-slide"><img src="{% static 'taibif-home/image/bn-4.jpg' %}" alt="" loading="lazy" decoding="async"></div>
+						<div class="swiper-slide"><img src="{% static 'taibif-home/image/bn-5.jpg' %}" alt="" loading="lazy" decoding="async"></div>
+						<div class="swiper-slide"><img src="{% static 'taibif-home/image/bn-6.jpg' %}" alt="" loading="lazy" decoding="async"></div>
+						<div class="swiper-slide"><img src="{% static 'taibif-home/image/bn-7.jpg' %}" alt="" loading="lazy" decoding="async"></div>
 					</div>
 				</div>
 			</div>
@@ -122,7 +122,7 @@
 							</a>
 						</div>
 						<div class="animal-img">
-							<img src="{% static 'taibif-home/image/an1.png' %}">
+							<img src="{% static 'taibif-home/image/an1.png' %}" alt="" loading="lazy" decoding="async">
 						</div>
 					</div>
 					<div class="item-box">
@@ -153,7 +153,7 @@
 							</a>
 						</div>
 						<div class="animal-img">
-							<img src="{% static 'taibif-home/image/an2.png' %}">
+							<img src="{% static 'taibif-home/image/an2.png' %}" alt="" loading="lazy" decoding="async">
 						</div>
 					</div>
 					<div class="item-box">
@@ -196,7 +196,7 @@
 							</a>
 						</div>
 						<div class="animal-img">
-							<img src="{% static 'taibif-home/image/an3.png' %}">
+							<img src="{% static 'taibif-home/image/an3.png' %}" alt="" loading="lazy" decoding="async">
 						</div>
 					</div>
 					<div class="item-box">
@@ -245,7 +245,7 @@
 							</a>
 						</div>
 						<div class="animal-img">
-							<img src="{% static 'taibif-home/image/an4.png' %}">
+							<img src="{% static 'taibif-home/image/an4.png' %}" alt="" loading="lazy" decoding="async">
 						</div>
 					</div>
 				</div>
@@ -327,7 +327,7 @@
 	<!--資料發布狀況-->
 	<section class="s3-data">
 		<div class="maskbg">
-			<img src="{% static 'taibif-home/image/s3mask.png' %}">
+			<img src="{% static 'taibif-home/image/s3mask.png' %}" alt="" loading="lazy" decoding="async">
 		</div>
 		<div class="main-1340">
 			<div class="index-maintitle">
@@ -395,7 +395,7 @@
 	<!--相關單位-->
 	<section class="s4-link-area">
 		<div class="bg">
-			<img src="{% static 'taibif-home/image/linkbg.png' %}" alt="">
+			<img src="{% static 'taibif-home/image/linkbg.png' %}" alt="" loading="lazy" decoding="async">
 		</div>
 		<div class="main-1340">
 			<div class="index-maintitle">
@@ -404,16 +404,16 @@
 			</div>
 			<div class="link-list marb_60">
 				<a href="https://www.nstc.gov.tw/" target="_blank">
-					<img src="{% static 'taibif-home/image/plogo1.png' %}" alt="">
+					<img src="{% static 'taibif-home/image/plogo1.png' %}" alt="" loading="lazy" decoding="async">
 				</a>
 				<a href="https://www.moa.gov.tw/" target="_blank">
-					<img src="{% static 'taibif-home/image/plogo2.png' %}" alt="">
+					<img src="{% static 'taibif-home/image/plogo2.png' %}" alt="" loading="lazy" decoding="async">
 				</a>
 				<a href="https://www.sinica.edu.tw/" target="_blank">
-					<img src="{% static 'taibif-home/image/plogo3.png' %}" alt="">
+					<img src="{% static 'taibif-home/image/plogo3.png' %}" alt="" loading="lazy" decoding="async">
 				</a>
 				<a href="https://biodiv.tw/" target="_blank">
-					<img src="{% static 'taibif-home/image/plogo4.png' %}" alt="">
+					<img src="{% static 'taibif-home/image/plogo4.png' %}" alt="" loading="lazy" decoding="async">
 				</a>
 			</div>
 
@@ -423,10 +423,10 @@
 			</div>
 			<div class="link-list">
 				<a href="https://tbiadata.tw/" target="_blank">
-					<img src="{% static 'taibif-home/image/plogo5.png' %}" alt="">
+					<img src="{% static 'taibif-home/image/plogo5.png' %}" alt="" loading="lazy" decoding="async">
 				</a>
 				<a href="https://data.depositar.io/" target="_blank">
-					<img src="{% static 'taibif-home/image/plogo6.png' %}" alt="">
+					<img src="{% static 'taibif-home/image/plogo6.png' %}" alt="" loading="lazy" decoding="async">
 				</a>
 			</div>
 		</div>

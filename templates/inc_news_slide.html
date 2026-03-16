@@ -1,7 +1,12 @@
 <div class="swiper-slide">
     <a href="{% url 'article-detail-id' pk=i.id %}">
         <div class="pic-area">
-            <img src="{{ i.card_image_url }}" alt="{{ i.title|default:'新聞標題' }}" />
+            <img
+                src="{{ i.card_image_url }}"
+                alt="{{ i.title|default:'新聞標題' }}"
+                loading="lazy"
+                decoding="async"
+            />
         </div>
         <div class="class-date-area">
             {% if i.is_pinned == 'Y' %}
