@@ -200,6 +200,14 @@ def tools(request):
     return render(request, "tools.html")
 
 
+def coordinate_converter(request):
+    return render(request, "coordinate-converter.html")
+
+
+def coordinate_converter_legacy(request):
+    return redirect("coordinate-converter")
+
+
 # @act_lang
 def contact_us(request):
     if request.method == "GET":

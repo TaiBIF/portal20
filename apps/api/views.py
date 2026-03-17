@@ -6,6 +6,7 @@ import urllib
 import csv
 import os
 import subprocess
+import math
 import requests
 # import pandas as pd
 from django.core import serializers
@@ -71,6 +72,138 @@ init_solr_resp['menus'] = init_solr_menus
 init_solr_resp['elapsed'] = init_solr_req['solr_response']['responseHeader']['QTime'] / 1000
 init_solr_resp['tree'] = [{'id': 't0000005', 'data': {'name': '細菌界 Bacteria', 'count': None}}, {'id': 't0000007', 'data': {'name': '原藻界 Chromista', 'count': None}}, {'id': 't0000004', 'data': {'name': '古菌界 Archaea', 'count': None}}, {'id': 't0000008', 'data': {'name': '真菌界 Fungi', 'count': None}}, {'id': 't0000009', 'data': {'name': '動物界 Animalia', 'count': None}}, {'id': 't0000003', 'data': {'name': '植物界 Plantae', 'count': None}}, {'id': 't0000006', 'data': {'name': '原生生物界 Protozoa', 'count': None}}]
 cache.set('init_solr_resp', init_solr_resp, 2592000)
+
+COORDINATE_SYSTEM_MAP = {
+    "1": "EPSG:4326",
+    "2": "EPSG:3821",
+    "3": "EPSG:3824",
+    "4": "EPSG:3825",
+    "5": "EPSG:3826",
+    "6": "EPSG:3827",
+    "7": "EPSG:3828",
+}
+
+
+def _get_epsg(code):
+    return COORDINATE_SYSTEM_MAP.get((code or "1").strip())
+
+
+def _format_coordinate_value(value):
+    if value is None or not math.isfinite(value):
+        return "NaN"
+    return f"{value:.6f}"
+
+
+def _get_transformer(source_system, destination_system):
+    source_epsg = _get_epsg(source_system)
+    if source_epsg is None:
+        return None, "invalid source"
+
+    destination_epsg = _get_epsg(destination_system)
+    if destination_epsg is None:
+        return None, "invalid destination"
+
+    try:
+        from pyproj import Transformer
+    except ImportError:
+        return None, "pyproj not installed"
+
+    transformer = Transformer.from_crs(source_epsg, destination_epsg, always_xy=True)
+    return (transformer, source_epsg, destination_epsg), None
+
+
+def coordinate_convert(request):
+    source_system = request.GET.get("source", request.GET.get("sourceSystem", "1"))
+    destination_system = request.GET.get(
+        "destination", request.GET.get("targetSystem", request.GET.get("tgt", "1"))
+    )
+
+    x = request.GET.get("x")
+    y = request.GET.get("y")
+    if x is None or y is None:
+        return JsonResponse(
+            {"error": "missing coord", "message": "x and y are required"},
+            status=400,
+        )
+
+    try:
+        x = float(x)
+        y = float(y)
+    except ValueError:
+        return JsonResponse(
+            {"error": "invalid coord", "message": "x and y must be numeric"},
+            status=400,
+        )
+
+    transformer_result, err = _get_transformer(source_system, destination_system)
+    if transformer_result is None:
+        if err == "pyproj not installed":
+            return JsonResponse({"error": err}, status=500)
+        return JsonResponse({"error": err}, status=400)
+    transformer, source_epsg, destination_epsg = transformer_result
+
+    converted_x, converted_y = transformer.transform(x, y)
+    return JsonResponse(
+        {
+            "src": {"x": x, "y": y, "datum": source_epsg},
+            "dest": {
+                "x": converted_x,
+                "y": converted_y,
+                "datum": destination_epsg,
+            },
+        }
+    )
+
+
+def coordinate_convert_batch(request):
+    source_system = request.GET.get("source", request.GET.get("sourceSystem", "1"))
+    destination_system = request.GET.get(
+        "destination", request.GET.get("targetSystem", request.GET.get("tgt", "1"))
+    )
+    source_xy = request.GET.get("sourceXY")
+
+    if request.method == "POST":
+        source_xy = request.POST.get("sourceXY", source_xy)
+
+    source_xy = (source_xy or "").strip()
+    if not source_xy:
+        return coordinate_convert(request)
+
+    transformer_result, err = _get_transformer(source_system, destination_system)
+    if transformer_result is None:
+        if err == "pyproj not installed":
+            return JsonResponse({"error": err}, status=500)
+        return JsonResponse({"error": err}, status=400)
+    transformer, source_epsg, destination_epsg = transformer_result
+
+    lines = source_xy.split("\n")
+    converted = []
+
+    for line in lines:
+        raw = line.strip()
+        if not raw:
+            converted.append("NaN,NaN")
+            continue
+
+        tokens = [p for p in re.split(r"[\s,]+", raw) if p != ""]
+        if len(tokens) < 2:
+            converted.append("NaN,NaN")
+            continue
+
+        source_x, source_y = tokens[0], tokens[-1]
+        try:
+            source_x = float(source_x)
+            source_y = float(source_y)
+        except ValueError:
+            converted.append("NaN,NaN")
+            continue
+
+        dest_x, dest_y = transformer.transform(source_x, source_y)
+        converted.append(
+            f"{_format_coordinate_value(dest_x)},{_format_coordinate_value(dest_y)}"
+        )
+
+    return HttpResponse("\n".join(converted), content_type="text/plain; charset=utf-8")
 
 
 def search_occurrence_v1_charts(request):
@@ -2888,8 +3021,6 @@ def occurrence_search_gallery(request):
         'data': expanded_solr_data
     }
     return JsonResponse(response, safe=False)
-
-
 
 
 

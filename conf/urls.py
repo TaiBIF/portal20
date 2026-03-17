@@ -28,6 +28,7 @@ from apps.data.views import (
     species_view,
     search_occurrence_download_view,
 )
+from apps.api import views as api_views
 from apps.page.views import (
     page_not_found_view,
     response_error_handler
@@ -44,6 +45,8 @@ urlpatterns = [
             'document_root': settings.MEDIA_ROOT,
         }),
     path('', RedirectView.as_view(url='/zh-hant/')),
+    path("api/coordinate/convert/", api_views.coordinate_convert, name="coordinate-convert-direct"),
+    path("api/coordinate/convert/batch/", api_views.coordinate_convert_batch, name="coordinate-convert-batch-direct"),
     path('api/', include('apps.api.urls')),
     # path('search/', include('apps.data.urls')),
     #path('occurrence/search|map/', search_view, name='search-occurrence'),

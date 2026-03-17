@@ -24,6 +24,12 @@ urlpatterns = [
     path("data-policy", views.data_policy, name="data-policy"),
     path("journals", views.journals, name="journals"),
     path("tools", views.tools, name="tools"),
+    path("coordinate-converter", views.coordinate_converter, name="coordinate-converter"),
+    path(
+        "coordinateConverter.php",
+        views.coordinate_converter_legacy,
+        name="coordinate-converter-legacy",
+    ),
     path(
         "common-name-checker",
         views.common_name_checker,

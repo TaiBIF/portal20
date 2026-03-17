@@ -62,6 +62,16 @@ urlpatterns = [
         views.get_dataset_datetime_data,
         name="get_dataset_datetime_data",
     ),
+    path(
+        "coordinate/convert/",
+        views.coordinate_convert,
+        name="api-coordinate-convert",
+    ),
+    path(
+        "coordinate/convert/batch/",
+        views.coordinate_convert_batch,
+        name="api-coordinate-convert-batch",
+    ),
     # 外部使用的API
     path("v2/dataset", views.dataset_api, name="api_dataset"),
     # path('v1/taxon', views.taxon_api, name='api_taxon'),

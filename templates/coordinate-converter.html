@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "地理分布線上座標轉換" %}{% endblock %}
+{% block head %}
+<style>
+  .coordinate-converter-page .form-select {
+    min-height: 42px;
+    padding-left: 0.85rem;
+    padding-right: 2.2rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #fff;
+    color: #4a3e3a;
+    font-weight: 400;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23846c5b' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.8rem center;
+    background-size: 12px 8px;
+  }
+
+  .coordinate-converter-page .form-select:hover {
+    border-color: #cdbfb7;
+    background-color: #fffdfb;
+  }
+
+  .coordinate-converter-page .form-select:focus {
+    border-color: #bb998b;
+    box-shadow: 0 0 0 0.15rem rgba(187, 153, 139, 0.2);
+    background-color: #fff;
+  }
+
+  .coordinate-converter-page .btn.btn-primary {
+    font-size: 14px;
+    min-width: 110px;
+    border: 1px solid #846c5b;
+    border-radius: 6px;
+    background-color: #846c5b;
+    color: #fff;
+    font-weight: 500;
+    transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .coordinate-converter-page .btn.btn-primary:hover,
+  .coordinate-converter-page .btn.btn-primary:focus {
+    border-color: #6f5a4d;
+    background-color: #6f5a4d;
+    color: #fff;
+    box-shadow: 0 0 0 0.15rem rgba(132, 108, 91, 0.2);
+  }
+</style>
+{% endblock %}
+
+{% block main %}
+<div class="bg-main-pale">
+    <div class="container">
+        <div class="caption-mascot-wrapper">
+            <h1 class="title">{% trans "地理分布線上座標轉換" %}</h1>
+            <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
+        </div>
+    </div>
+</div>
+
+<div class="container my-5 tools-page container-1340 coordinate-converter-page">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
+            <li class="breadcrumb-item">{% trans "開放資料" %}</li>
+            <li class="breadcrumb-item"><a href="{% url 'tools' %}">{% trans "有哪工具可以使用" %}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans "地理分布線上座標轉換" %}</li>
+        </ol>
+    </nav>
+
+    <div class="col-12">
+        <div class="card-tools-wrapper tools-card">
+            <div class="title">{% trans "地理分布線上座標轉換" %}</div>
+            <div class="content">
+                <p>{% trans "本工具支援 WGS 84、TWD67、TWD97 等座標系統互轉，適合單筆查詢與大量資料整理。輸入時每列代表一筆資料，支援「x y」或「x,y」兩種格式，系統會依行數逐筆輸出轉換結果。" %}</p>
+
+                <form id="coord-converter-form" class="mb-3" onsubmit="return false;">
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label for="sourceSystem" class="form-label">{% trans "來源座標系統" %}</label>
+                            <select id="sourceSystem" class="form-select">
+                                <option value="1">WGS 84 經緯度</option>
+                                <option value="2">TWD 67 經緯度</option>
+                                <option value="3">TWD 97 經緯度</option>
+                                <option value="4">TWD97/ 澎湖地區</option>
+                                <option value="5">TWD97/ 臺灣地區</option>
+                                <option value="6">TWD67/ 澎湖地區</option>
+                                <option value="7">TWD67/ 臺灣地區</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="targetSystem" class="form-label">{% trans "目標座標系統" %}</label>
+                            <select id="targetSystem" class="form-select">
+                                <option value="1">WGS 84 經緯度</option>
+                                <option value="2">TWD 67 經緯度</option>
+                                <option value="3">TWD 97 經緯度</option>
+                                <option value="4">TWD97/ 澎湖地區</option>
+                                <option value="5">TWD97/ 臺灣地區</option>
+                                <option value="6">TWD67/ 澎湖地區</option>
+                                <option value="7">TWD67/ 臺灣地區</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-lg-6">
+                            <label for="sourceXY" class="form-label">{% trans "原始坐標" %}</label>
+                            <textarea id="sourceXY" class="form-control" rows="10" placeholder="121 23&#10;121,23"></textarea>
+                        </div>
+                        <div class="col-lg-6">
+                            <label for="resultXY" class="form-label">{% trans "轉換結果" %}</label>
+                            <textarea id="resultXY" class="form-control" rows="10" readonly></textarea>
+                        </div>
+                    </div>
+
+                    <div class="mt-3">
+                        <button id="submitBtn" class="btn btn-primary">{% trans "送出" %}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  document.getElementById('submitBtn').addEventListener('click', async function () {
+    const sourceSystem = document.getElementById('sourceSystem').value
+    const targetSystem = document.getElementById('targetSystem').value
+    const sourceXY = document.getElementById('sourceXY').value
+
+    const payload = new URLSearchParams()
+    payload.append('sourceSystem', sourceSystem)
+    payload.append('targetSystem', targetSystem)
+    payload.append('sourceXY', sourceXY)
+
+    const apiUrl = '/api/coordinate/convert/batch/?' + payload.toString()
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+    })
+
+    if (!response.ok) {
+      let msg = 'Conversion failed'
+      try {
+        const j = await response.json()
+        msg = j.message || j.error || msg
+      } catch (e) {}
+      document.getElementById('resultXY').value = msg
+      return
+    }
+
+    const text = await response.text()
+    document.getElementById('resultXY').value = text
+  })
+</script>
+{% endblock %}
