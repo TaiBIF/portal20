@@ -205,7 +205,7 @@ def coordinate_converter(request):
 
 
 def coordinate_converter_legacy(request):
-    return redirect("coordinate-converter")
+    return redirect("coordinate-converter", permanent=True)
 
 
 # @act_lang
