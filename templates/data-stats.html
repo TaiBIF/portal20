@@ -118,7 +118,6 @@ checkboxes.forEach(checkbox => {
 $('#search-input').on('keypress', function(event) {
     if (event.which === 13) {
         var inputValue = $(this).val();
-        // console.log(inputValue);
         window.location.href = `${baseURL}?search_query=${inputValue}`
     };
 })
@@ -126,7 +125,6 @@ $('#search-input').on('keypress', function(event) {
 if (window.location.href.includes('search_query')) {
     const URLParmas = window.location.href.split('?')[1];
     const searchValue = URLParmas.split('=')[1];
-    // console.log(searchValue)
     $('#search-input').val(searchValue);
 };
 

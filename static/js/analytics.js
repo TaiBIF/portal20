@@ -333,10 +333,6 @@
     const chart = createSvg(selector);
     const { svg, width, height, padding } = chart;
 
-    svg.on('mouseenter', function () {
-      console.log('svg mouseenter', selector);
-    });
-
     const xScale = d3.scaleBand()
       .rangeRound([padding, width - padding])
       .padding(0.5)
@@ -446,10 +442,6 @@
     const isOccurrence = selector === '#taibif-stats__trend_occurrence';
     const chart = createSvg(selector);
     const { svg, width, height, padding } = chart;
-
-    svg.on('mouseenter', function () {
-      console.log('svg mouseenter', selector);
-    });
 
     const xScale = d3.scaleBand()
       .rangeRound([padding, width - padding])
