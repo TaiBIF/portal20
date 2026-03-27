@@ -479,10 +479,6 @@
                                             href="{% url 'article-search' %}?category=sci"
                                             >科普</a
                                         >
-                                        <a
-                                            href="{% url 'article-search' %}?category=story"
-                                            >資料故事</a
-                                        >
                                     </div>
                                 </div>
                             </li>
@@ -491,13 +487,12 @@
                                 <div class="menu2">
                                     <div class="w-bg">
                                         <a href="{% url 'about-taibif' %}"
-                                            >TaiBIF 介紹</a
+                                            >TaiBIF 介紹與成果</a
                                         >
                                         <a href="{% url 'about-gbif' %}"
                                             >GBIF 介紹</a
                                         >
-                                        <a href="#">TaiBIF 成果</a>
-                                        <a href="#">TaiBIF 資源下載專區</a>
+                                        <a href="{% url 'download-resources' %}">TaiBIF logo 下載</a>
                                         <a href="{% url 'data-policy' %}"
                                             >使用條款暨隱私權政策</a
                                         >

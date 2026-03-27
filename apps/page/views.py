@@ -35,6 +35,7 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_GET
 from django.utils.translation import activate
 from collections import defaultdict
+from django.core.paginator import Paginator
 
 
 def act_lang(func):
@@ -254,7 +255,25 @@ def links(request):
 
 # @act_lang
 def about_taibif(request):
-    return render(request, "about-taibif.html")
+    achievement_qs = Article.objects.filter(category="POS").order_by("-created")
+    achievement_years = sorted(
+        set(achievement_qs.values_list("created__year", flat=True)),
+        reverse=True,
+    )
+
+    selected_year = request.GET.get("achievement_year", "")
+    if selected_year:
+        achievement_qs = achievement_qs.filter(created__year=selected_year)
+
+    paginator = Paginator(achievement_qs, 20)
+    achievements_page = paginator.get_page(request.GET.get("page", ""))
+
+    context = {
+        "achievement_years": achievement_years,
+        "achievement_year": selected_year,
+        "achievements_page": achievements_page,
+    }
+    return render(request, "about-taibif.html", context)
 
 
 # @act_lang

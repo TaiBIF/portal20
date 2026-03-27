@@ -2698,6 +2698,19 @@ a.btn-dataicon-downlod {
     border-color: #b59e90;
     box-shadow: 0 0 0 3px rgba(132, 108, 91, 0.12);
 }
+.article-search-page .heading-sort-ctn select.form-control {
+    height: 36px;
+    min-width: 120px;
+    padding: 0 14px;
+    border: 1px solid #d9cfca;
+    border-radius: 999px;
+    background: #fff;
+    color: #4a3e3a;
+}
+.article-search-page .heading-sort-ctn select.form-control:focus {
+    border-color: #b59e90;
+    box-shadow: 0 0 0 3px rgba(132, 108, 91, 0.12);
+}
 .article-search-page .heading-sort-ctn .form-inline .custom-input-ctn {
     display: inline-flex;
     align-items: center;
@@ -4567,6 +4580,65 @@ body {
         font-size: 15px;
         line-height: 1.6;
     }
+}
+
+/* About-taibif: keep mission accordion links consistent with project blue links */
+.about-taibif-page
+    .tech-book-page
+    .panel-main
+    > .panel-heading
+    .panel-title.title
+    ol
+    a {
+    color: #0000ee !important;
+}
+
+.about-taibif-page
+    .tech-book-page
+    .panel-main
+    > .panel-heading
+    + .panel-collapse
+    > .panel-body.content
+    li
+    a,
+.about-taibif-page
+    .tech-book-page
+    .panel-main
+    > .panel-heading
+    + .panel-collapse
+    > .panel-body.content
+    p
+    a,
+.about-taibif-page
+    .tech-book-page
+    .panel-main
+    > .panel-heading
+    + .panel-collapse
+    > .panel-body.content
+    ol
+    a {
+    color: #0000ee !important;
+}
+
+.about-taibif-page
+    .tech-book-page
+    .panel-main
+    > .panel-heading
+    + .panel-collapse
+    > .panel-body.content
+    ol
+    a:visited {
+    color: #551a8b !important;
+}
+
+.about-taibif-page
+    .tech-book-page
+    .panel-main
+    > .panel-heading
+    + .panel-collapse
+    > .panel-body.content
+    li {
+    border-bottom: none;
 }
 
 .pagination {
