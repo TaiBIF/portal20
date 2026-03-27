@@ -5185,6 +5185,10 @@ a.btn-sunset-md {
 .download-resource-container {
     display: flex;
     flex-wrap: wrap;
+
+    a {
+        color:#0000ee !important;
+    }
 }
 
 .links-container {
