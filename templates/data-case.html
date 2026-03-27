@@ -4,8 +4,8 @@
 {% block title %}{% trans "資料應用案例" %}{% endblock %}
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/data-case.css' %}">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
-<script src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js"></script>
+<script src="{% static 'js/d3.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-cloud@1/build/d3.layout.cloud.js"></script>
 <script src="{% static 'js/data-case.js' %}"></script>
 {% endblock head %}
 
@@ -22,7 +22,7 @@
 <!-- topnav end -->
 
 <!-- container begin -->
-<div class="container my-5">
+<div class="container my-5 container-1340 data-case-page">
     <!-- breadcrumb begin -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -33,75 +33,67 @@
     </nav>
     <!-- breadcrumb end -->
 
-    <!-- row begin -->
-    <div class="row">
-        <!-- col begin -->
-        <div class="col-12">
-            <div class="my-5">
-                <h1 class="headline-left-hr">
-                    資料應用案例
-                </h1>
-                <section>
-                    <div class="word-cloud-container">
-                        <div class="loader"></div>
-                        <div id="data_viz"></div>
-                        <small>
-                            上圖的文字雲為<a href="https://www.gbif.org/resource/search?contentType=literature&countriesOfCoverage=TW" target="_blank"> GBIF 文獻追蹤系統</a>來源之臺灣資料應用案例主題與關鍵詞所產生。
-                        </small>
-                    </div>
-                </section>
-                <section>
-                    <h3 class="headline-left sub-heading">
-                        資料故事
-                    </h3>
-                    <div class="story-container">
-                        <img id="story-banner" src="{% static '/images/banner/012.svg'%}"/>
-                        <div class="story-list-container">
-                            <ul class="story-list">
-                                {% for article in articles %}
-                                <li>
-                                    <a href="{% url 'article-detail-id' article.id %}">
-                                        <span class="tag" id="story-tag">{{ article.case_type }}</span>
-                                        <span id="story-title">{{ article.title }}</span>
-                                        <span id="story-date">{{ article.date }}</span>
-                                        <div id="story-content">{{ article.content|slice:":100" }}{% if article.content|length > 30 %}...{% endif %}</div>
-                                    </a>
-                                </li>
-                                {% endfor %}
-                                <li>
-                                    <button class="table-btn" id="to-article-search-story" data-url="{% url 'article-search' %}?category=story">更多資料故事
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right" viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd" d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0z"/>
-                                        </svg>
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="img-cc">油彩蠟膜蝦 Hymenocera picta (Dana, 1852) Observed in Longdon, Taiwan by Melissa Liu (CC BY-NC 4.0)</div>
-                </section>
-                <section>
-                    <h3 class="headline-left sub-heading">
-                        臺灣資料應用案例列表
-                    </h3>
-                    <p>
-                        這個列表有兩個分頁：(1) <strong>GBIF 應用案例：</strong><a href="https://www.gbif.org/resource/search?contentType=literature&countriesOfCoverage=TW" target="_blank"> GBIF 文獻追蹤系統</a>來源的台灣相關文獻整理，以及 (2) <strong>TaiBIF 應用案例：</strong>我們自行整理的國內應用案例。
-                    </p>
-                    <div class="data-table-btn-container">
-                        <button class="table-btn" id="gbif-case-btn">GBIF 應用案例</button>
-                        <button class="table-btn" id="taibif-case-btn">TaiBIF 應用案例</button>
-                    </div>
-                    <div class="data-table-container">
-                        <div class="loader"></div>
-                        <table id="gbif-case" class="table table-ltmilo"></table>
-                        <table id="taibif-case" class="table table-ltmilo d-none"></table>
-                    </div>
-                </section>
+    <div>
+        <section>
+            <div class="word-cloud-container">
+                <div class="loader"></div>
+                <div id="data_viz"></div>
+                <small>
+                    上圖的文字雲為<a href="https://www.gbif.org/resource/search?contentType=literature&countriesOfCoverage=TW" target="_blank"> GBIF 文獻追蹤系統</a>來源之臺灣資料應用案例主題與關鍵詞所產生。
+                </small>
             </div>
-        </div>
-        <!-- col end -->
+        </section>
+        <section>
+            <div class="article-content-wrapper">
+                <h3>資料故事</h3>
+            </div>
+            
+            <div class="story-list-container">
+                    <ul class="story-list">
+                        {% for article in articles %}
+                        <li class="listbox-img-right-wrapper article-list-card">
+                            <a class="article-card-link" href="{% url 'article-detail-id' article.id %}">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <span class="listbox-inner-date">{{ article.date }}</span>
+                                        <h3 class="listbox-inner-title">{{ article.title }}</h3>
+                                        <p class="listbox-inner-summary">{{ article.content|slice:":100" }}{% if article.content|length > 30 %}...{% endif %}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        {% endfor %}
+                        <li class="story-list-more">
+                    </li>
+                </ul>
+            </div>
+            <div class="data-case-btn-container">
+                <a href="{% url 'article-search' %}?category=story" class="btn-style1 data-case-btn">
+                    <p class="remove-margin-bottom">更多資料故事</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="8.83" height="15.656" viewBox="0 0 8.83 15.656">
+                        <path id="Union_2" data-name="Union 2" d="M8313.292,15.363a1,1,0,0,1,0-1.414l6.123-6.121-6.123-6.122a1,1,0,1,1,1.414-1.414l6.83,6.829a1,1,0,0,1,0,1.414l-6.83,6.827a1,1,0,0,1-1.414,0Z" transform="translate(-8312.999 0)" fill="#846c5b"/>
+                    </svg>
+                </a>
+            </div>     
+        </section>
+        <section>
+            <div class="article-content-wrapper">
+                <h3>臺灣資料應用案例列表</h3>
+            </div>
+            <p>
+                這個列表有兩個分頁：(1) <strong>GBIF 應用案例：</strong><a href="https://www.gbif.org/resource/search?contentType=literature&countriesOfCoverage=TW" target="_blank"> GBIF 文獻追蹤系統</a>來源的台灣相關文獻整理，以及 (2) <strong>TaiBIF 應用案例：</strong>我們自行整理的國內應用案例。
+            </p>
+            <div class="data-table-btn-container">
+                <button class="table-btn is-active" id="gbif-case-btn">GBIF 應用案例</button>
+                <button class="table-btn" id="taibif-case-btn">TaiBIF 應用案例</button>
+            </div>
+            <div class="data-table-container">
+                <div class="loader"></div>
+                <table id="gbif-case" class="table content-readable-table"></table>
+                <table id="taibif-case" class="table content-readable-table d-none"></table>
+            </div>
+        </section>
     </div>
-    <!-- row end -->
 </div>
 <!-- container end -->
 {% endblock %}

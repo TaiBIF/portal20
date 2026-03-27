@@ -6,6 +6,8 @@ $(document).ready(function () {
     fetchData('gbif-case');
 
     $('#taibif-case-btn').on('click', function() {
+        $('#taibif-case-btn').addClass('is-active');
+        $('#gbif-case-btn').removeClass('is-active');
         $('#taibif-case').removeClass('d-none');
         $('#taibif-case_wrapper').removeClass('d-none');
         $('#gbif-case').addClass('d-none');
@@ -18,6 +20,8 @@ $(document).ready(function () {
     });
 
     $('#gbif-case-btn').on('click', function() {
+        $('#gbif-case-btn').addClass('is-active');
+        $('#taibif-case-btn').removeClass('is-active');
         $('#gbif-case').removeClass('d-none');
         $('#gbif-case_wrapper').removeClass('d-none');
         $('#taibif-case').addClass('d-none');
@@ -128,15 +132,29 @@ function fetchData(tableId) {
 
 // Encapsulate the word cloud functionality
 function wordCloud(selector) {
+    if (!d3.layout || typeof d3.layout.cloud !== 'function') {
+        console.error('d3-cloud is not loaded; skip rendering word cloud');
+        return { update: function() {} };
+    }
+    var CLOUD_WIDTH = 500;
+    var CLOUD_HEIGHT = 300;
 
-    var fill = d3.scale.category20();
+    var palette = [
+        '#846c5b', '#bb998b', '#4a3e3a', '#6b5a51', '#8a7b73',
+        '#5f5551', '#d0c1b8', '#7d8f69', '#4f6f52', '#9a7f3f',
+        '#3e6b8a', '#7a5f9e', '#b56f5d', '#5d8f88', '#a15b7a',
+        '#6f6f6f', '#8f8179', '#a8b07f', '#6b8ea7', '#9c8b6c'
+    ];
+    var fill = function(i) {
+        return palette[i % palette.length];
+    };
 
     //Construct the word cloud's SVG element
     var svg = d3.select(selector).append("svg")
-        .attr("width", 500)
-        .attr("height", 500)
+        .attr("width", CLOUD_WIDTH)
+        .attr("height", CLOUD_HEIGHT)
         .append("g")
-        .attr("transform", "translate(250,250)");
+        .attr("transform", "translate(" + (CLOUD_WIDTH / 2) + "," + (CLOUD_HEIGHT / 2) + ")");
 
 
     //Draw the word cloud
@@ -145,13 +163,23 @@ function wordCloud(selector) {
                         .data(words, function(d) { return d.text; })
 
         //Entering words
-        cloud.enter()
+        var cloudEnter = cloud.enter()
             .append("text")
             .style("font-family", "Impact")
             .style("fill", function(d, i) { return fill(i); })
             .attr("text-anchor", "middle")
             .attr('font-size', 1)
             .text(function(d) { return d.text; });
+
+        // 讓新加入的詞也套用 layout 計算後的位置與字級，避免卡在中心 (0,0)
+        cloudEnter
+            .transition()
+                .duration(600)
+                .style("font-size", function(d) { return d.size + "px"; })
+                .attr("transform", function(d) {
+                    return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                })
+                .style("fill-opacity", 1);
 
         //Entering and existing words
         cloud
@@ -182,14 +210,36 @@ function wordCloud(selector) {
         //The outside world will need to call this function, so make it part
         // of the wordCloud return value.
         update: function(words) {
-            d3.layout.cloud().size([500, 500])
-                .words(words)
-                .padding(5)
-                .rotate(function() { return ~~(Math.random() * 2) * 90; })
-                .font("Impact")
-                .fontSize(function(d) { return d.size; })
-                .on("end", draw)
-                .start();
+            var targetCount = words.length;
+            var scaleSteps = [1, 0.9, 0.8, 0.72, 0.65, 0.58];
+            var minFontSize = 9;
+
+            function runAttempt(stepIndex) {
+                var scale = scaleSteps[Math.min(stepIndex, scaleSteps.length - 1)];
+                var attemptWords = words.map(function(w) {
+                    return {
+                        text: w.text,
+                        size: Math.max(minFontSize, Math.round(w.size * scale))
+                    };
+                });
+
+                d3.layout.cloud().size([CLOUD_WIDTH, CLOUD_HEIGHT])
+                    .words(attemptWords)
+                    .padding(stepIndex >= 2 ? 4 : 6)
+                    .rotate(function() { return 0; })
+                    .font("Impact")
+                    .fontSize(function(d) { return d.size; })
+                    .on("end", function(placedWords) {
+                        if (placedWords.length < targetCount && stepIndex < scaleSteps.length - 1) {
+                            runAttempt(stepIndex + 1);
+                            return;
+                        }
+                        draw(placedWords);
+                    })
+                    .start();
+            }
+
+            runAttempt(0);
         }
     }
 }
@@ -197,28 +247,36 @@ function wordCloud(selector) {
 //Prepare one of the sample sentences by removing punctuation,
 // creating an array of words and computing a random size attribute.
 function getWords() {
-    // 將陣列打亂順序
-    const shuffledWords = words
-        .map(word => ({ word, sort: Math.random() })) // 為每個元素生成隨機值
-        .sort((a, b) => a.sort - b.sort) // 按隨機值排序
-        .map(({ word }) => word); // 提取原始單詞
+    const tokenPool = words
+        .flatMap(function(entry) {
+            if (entry === null || entry === undefined) {
+                return [];
+            }
 
-    // 選取前 20 個元素
-    const sampleWords = shuffledWords.slice(0, 20);
-    
-    return sampleWords
-        .map(function(d) {
-            // 移除標點符號並分割成單詞
-            const cleanedWords = d
-                .replace(/[!\.,:;\?]/g, '')
-                .split(' ');
+            const raw = String(entry);
+            return raw
+                .replace(/[!\.,:;\?\(\)\[\]\/]/g, ' ')
+                .split(/[\s,，、|]+/)
+                .map(function(token) { return token.trim(); })
+                .filter(function(token) { return token.length > 0; });
+        });
 
-            // 為每個單詞創建一個對象，並計算隨機大小
-            return cleanedWords.map(function(word) {
-                return { text: word, size: 10 + Math.random() * 60 };
-            });
-        })
-        .flat(); // 將結果展平為單一陣列
+    // 去重，避免 d3 以 text 作為 key 時把重複詞合併掉
+    const uniqueTokens = Array.from(new Set(tokenPool));
+
+    if (uniqueTokens.length === 0) {
+        return [];
+    }
+
+    // 先打亂，再取前 20 個（不重複）
+    const shuffled = uniqueTokens
+        .map(function(word) { return { word: word, sort: Math.random() }; })
+        .sort(function(a, b) { return a.sort - b.sort; })
+        .map(function(item) { return item.word; });
+
+    return shuffled.slice(0, 20).map(function(word) {
+        return { text: word, size: 12 + Math.random() * 24 };
+    });
 }
 
 //This method tells the word cloud to redraw with a new set of words.
@@ -230,4 +288,3 @@ function showNewWords(vis, i) {
     vis.update(getWords(i ++ % words.length))
     setTimeout(function() { showNewWords(vis, i + 1)}, 5000)
 }
-
