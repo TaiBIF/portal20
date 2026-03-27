@@ -16,7 +16,7 @@
 </div>
  <!-- topnav end -->
 <!-- container begin -->
-<div class="container my-5">
+<div class="container my-5 container-1340">
     <!-- breadcrumb begin -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -43,10 +43,10 @@
         </div>
         <!-- col left end -->
         <!-- col right begin -->
-        <div data-cat="about" class="col-12 col-md-9 nav-item-content">
-            <h1 class="heading-lg-ul">{% trans "什麼是「資料產品」？" %}</h1>
+        <div data-cat="about" class="col-12 col-md-9 nav-item-content content-readable-panel">
+            <h4 class="heading-lg-ul">{% trans "什麼是「資料產品」？" %}</h4>
             <p>
-                {% trans "TL;DR 最直接，簡短的定義：" %}<br>
+                {% trans "TL;DR 最直接，簡短的定義：" %}
                 <strong>{% trans "主要目的為使用資料來實現特定目標的產品" %}</strong>
             </p>
             <p>
@@ -107,8 +107,8 @@
             </p>
         </div>
 
-        <div data-cat="map" class="col-12 col-md-9 nav-item-content hide">
-            <h1 class="heading-lg-ul">{% trans "資料下載API" %}</h1>
+        <div data-cat="map" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
+            <h4 class="heading-lg-ul">{% trans "資料下載API" %}</h4>
             {% url 'taibif-api' as api %}
             {% blocktrans %}
             <p>下載資料歡迎使用 <a href="{{ api }}" target="_blank">TaiBIF API</a></p>
