@@ -2665,6 +2665,14 @@ a.btn-dataicon-downlod {
     font-weight: 700;
     margin-right: 4px;
 }
+.article-search-page .heading-sort-ctn button {
+    color: #f4f3f2;
+    background-color: #4a3e3a;
+    font-weight: 700;
+    font-size: 14px;
+    border: 1px solid #e8e2de;
+    border-radius: 50px;
+}
 .article-search-page .heading-sort-ctn #article-search-input {
     height: 38px;
     min-width: 220px;

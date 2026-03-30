@@ -539,7 +539,7 @@ def publisher_view(request, pk):
         dataset.append({
             'name': x.name,
             'name_zh': x.title,
-            'core_type':  DATA_MAPPING['publisher_dwc'][x.dwc_core_type],
+            'core_type': DATA_MAPPING['publisher_dwc'].get(x.dwc_core_type, x.dwc_core_type or '未知'),
             'num_record':  x.num_record,
             'taibif_dataset_id': x.taibif_dataset_id,
         })

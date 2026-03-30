@@ -16,6 +16,7 @@ from django.conf import settings
 from django.contrib import messages
 from apps.data.models import (
     Dataset,
+    DatasetUpdateEvent,
     Taxon,
     DatasetOrganization,
 )
@@ -731,3 +732,83 @@ def open_consulation(request):
 
 def open_benefits(request):
     return render(request, "open-benefits.html")
+
+
+def monthly_status(request):
+    try:
+        selected_year = int(request.GET.get("year", 2026))
+    except (TypeError, ValueError):
+        selected_year = 2026
+
+    try:
+        selected_month = int(request.GET.get("month", 3))
+    except (TypeError, ValueError):
+        selected_month = 3
+
+    if selected_month < 1 or selected_month > 12:
+        selected_month = 3
+
+    core_type_mapping = {
+        "CHECKLIST": "物種名錄",
+        "OCCURRENCE": "出現紀錄",
+        "SAMPLINGEVENT": "調查活動",
+        "METADATA": "詮釋資料",
+        "metadata": "詮釋資料",
+    }
+
+    event_queryset = DatasetUpdateEvent.objects.all()
+
+    available_years = list(
+        event_queryset.values_list("dataset_mod_date__year", flat=True)
+        .distinct()
+        .order_by("-dataset_mod_date__year")
+    )
+    if not available_years:
+        available_years = [2026]
+
+    monthly_events = (
+        event_queryset.filter(
+            dataset_mod_date__year=selected_year,
+            dataset_mod_date__month=selected_month,
+        )
+        .values(
+            "dataset_id",
+            "dataset_title",
+            "dataset_name",
+            "dwc_core_type",
+            "organization_name",
+            "taibif_dataset_id",
+            "dataset_mod_date",
+        )
+        .order_by("-dataset_mod_date", "dataset_name")
+    )
+
+    # Keep only the latest event per dataset in the selected month.
+    dataset_latest_event_map = {}
+    for event in monthly_events:
+        if event["dataset_id"] not in dataset_latest_event_map:
+            dataset_latest_event_map[event["dataset_id"]] = event
+
+    dataset_rows = []
+    for event in dataset_latest_event_map.values():
+        dataset_rows.append(
+            {
+                "title": event["dataset_title"] or event["dataset_name"],
+                "dwc_core_type": core_type_mapping.get(
+                    event["dwc_core_type"], event["dwc_core_type"]
+                ),
+                "organization_name": event["organization_name"] or "－",
+                "taibif_dataset_id": event["taibif_dataset_id"],
+                "ipt_link": f"https://ipt.taibif.tw/resource?r={event['dataset_name']}",
+            }
+        )
+
+    context = {
+        "selected_year": selected_year,
+        "selected_month": selected_month,
+        "selected_month_label": f"{selected_year:04d}-{selected_month:02d}",
+        "available_years": available_years,
+        "available_months": list(range(1, 13)),
+        "dataset_rows": dataset_rows,
+    }
+    return render(request, "monthly-status.html", context)

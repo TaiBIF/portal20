@@ -19,21 +19,36 @@
     <div class="article-content-wrapper content-readable-panel content-readable-full-panel">
         <p>{{ publisher.description }}</p>
         <ul>
+            {% if info.dataset_num %}
             <li>
-                {% if info.dataset_num %}資料集數量：{{ info.dataset_num }}{% endif %}
+                資料集數量：{{ info.dataset_num }}
             </li>
+            {% endif %}
+
+            {% if info.sum_occurrence %}
             <li>
-                {% if info.sum_occurrence %}發現紀錄總筆數：{{ info.sum_occurrence|intcomma:False }}{% endif %}
+                發現紀錄總筆數：{{ info.sum_occurrence|intcomma:False }}
             </li>
+            {% endif %}
+
+            {% if publisher.country_or_area %}
             <li>
-                {% if publisher.country_or_area %}國家或地區：{{publisher.country_or_area}}{% endif %}
+                國家或地區：{{publisher.country_or_area}}
             </li>
+            {% endif %}
+
+            {% if publisher.administrative_contact %}
             <li>
-                {% if publisher.administrative_contact %}行政聯絡人：{{ publisher.administrative_contact }}{% endif %}
+                行政聯絡人：{{ publisher.administrative_contact }}
             </li>
+            {% endif %}
+            
+            {% if publisher.technical_contact %}
             <li>
-                {% if publisher.technical_contact %}技術聯絡人：{{ publisher.technical_contact }}{% endif %}
+                技術聯絡人：{{ publisher.technical_contact }}
             </li>
+            {% endif %}
+            
         </ul>
 
         <div>
