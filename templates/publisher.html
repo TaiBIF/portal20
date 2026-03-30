@@ -4,7 +4,7 @@
 
 {% block main %}
 <!-- container begin -->
-<div class="container my-5">
+<div class="container my-5 container-1340">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'index' %}">首頁</a></li>
@@ -16,37 +16,46 @@
         <h1>{{ publisher.name }}</h1>
     </div>
 
-    <div class="article-content-wrapper">
-        <h3>簡介</h3>
-    </div>
-    <p>{{ publisher.description }}</p>
-    <p>
-        {% if info.dataset_num %}資料集數量：{{ info.dataset_num }}<br> {% endif %}
-        {% if info.sum_occurrence %}發現紀錄總筆數：{{ info.sum_occurrence|intcomma:False }}<br>{% endif %}
-        {% if publisher.country_or_area %}國家或地區：{{publisher.country_or_area}}<br>{% endif %}
-        {% if publisher.administrative_contact %}行政聯絡人：{{ publisher.administrative_contact }}<br>{% endif %}
-        {% if publisher.technical_contact %}技術聯絡人：{{ publisher.technical_contact }}<br>{% endif %}
-    </p>
+    <div class="article-content-wrapper content-readable-panel content-readable-full-panel">
+        <p>{{ publisher.description }}</p>
+        <ul>
+            <li>
+                {% if info.dataset_num %}資料集數量：{{ info.dataset_num }}{% endif %}
+            </li>
+            <li>
+                {% if info.sum_occurrence %}發現紀錄總筆數：{{ info.sum_occurrence|intcomma:False }}{% endif %}
+            </li>
+            <li>
+                {% if publisher.country_or_area %}國家或地區：{{publisher.country_or_area}}{% endif %}
+            </li>
+            <li>
+                {% if publisher.administrative_contact %}行政聯絡人：{{ publisher.administrative_contact }}{% endif %}
+            </li>
+            <li>
+                {% if publisher.technical_contact %}技術聯絡人：{{ publisher.technical_contact }}{% endif %}
+            </li>
+        </ul>
 
-    <div>
-        <table id="dataset-table" class="table table-ltmilo publisher-dataset-table">
-            <thead>
-                <tr>
-                    <th>資料集</th>
-                    <th>達爾文核心集</th>
-                    <th>核心集資料筆數</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for set in dataset %}
+        <div>
+            <table id="dataset-table" class="table content-readable-table">
+                <thead>
                     <tr>
-                        <td><a href="{% url 'dataset-detail'  taibif_dataset_id=set.taibif_dataset_id %}">{{ set.name_zh }}</a></td>
-                        <td>{{ set.core_type }}</td>
-                        <td>{{ set.num_record|intcomma:False }}</td>
+                        <th>資料集</th>
+                        <th>達爾文核心集</th>
+                        <th>核心集資料筆數</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for set in dataset %}
+                        <tr>
+                            <td><a href="{% url 'dataset-detail'  taibif_dataset_id=set.taibif_dataset_id %}">{{ set.name_zh }}</a></td>
+                            <td>{{ set.core_type }}</td>
+                            <td>{{ set.num_record|intcomma:False }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 <!-- container end -->

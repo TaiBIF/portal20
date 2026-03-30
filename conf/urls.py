@@ -67,14 +67,14 @@ urlpatterns = [
         name="search-occurrence",
     ),
     # path('occurrence/downloadlink', search_occurrence_download_view, name='search-occurrence-download'),
-    path("dataset/search/", search_view, name="search-dataset"),
-    path("publisher/search/", search_view, name="search-publisher"),
-    path("species/search/", search_view, name="search-species"),
+    # path("dataset/search/", search_view, name="search-dataset"),
+    # path("publisher/search/", search_view, name="search-publisher"),
+    # path("species/search/", search_view, name="search-species"),
     # path('species/search/', search_view_species, name='search-species'),
-    path("occurrence/<str:taibif_id>", occurrence_view, name="occurrence-detail"),
+    # path("occurrence/<str:taibif_id>", occurrence_view, name="occurrence-detail"),
     path("dataset/<uuid:taibif_dataset_id>/", dataset_view, name="dataset-detail"),
     path("publisher/<int:pk>/", publisher_view, name="publisher-detail"),
-    path("species/<str:taicol_taxon_id>/", species_view, name="species-detail"),
+    # path("species/<str:taicol_taxon_id>/", species_view, name="species-detail"),
     # keep localized homepage at /zh-hant/... and /en/... via i18n_patterns below
     path("admin/", admin.site.urls),
     path("500", response_error_handler),
@@ -94,6 +94,8 @@ urlpatterns += i18n_patterns(
     path("", include("apps.page.urls")),
     path("search/", include("apps.data.urls")),
     path("article/", include("apps.article.urls")),
+    path("dataset/<uuid:taibif_dataset_id>/", dataset_view, name="dataset-detail-i18n"),
+    path("publisher/<int:pk>/", publisher_view, name="publisher-detail-i18n"),
 )
 
 

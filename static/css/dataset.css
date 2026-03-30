@@ -1,11 +1,4 @@
-h3::before {
-    content: ''; /* 必須的，表示這是一個空的內容 */
-    display: inline-block; /* 讓偽元素顯示出來 */
-    margin-right: 10px;
-    width: 4px;
-    height: 16px; /* 或指定高度，例如 16px */
-    background: #525252;
-}
+
 
 .dataset-info-container {
     display: flex;
@@ -22,7 +15,7 @@ h3::before {
     min-width: 200px; /* 設定最小寬度，避免過窄 */
 }
 
-.highlight-link:link {
+/* .highlight-link:link {
     text-decoration: underline;
     font-weight: bold;
     color: #525252;
@@ -37,7 +30,7 @@ h3::before {
     text-decoration: underline;
     font-weight: bold;
     color: #525252;
-}
+} */
 
 .d-none {
     display: none !important;
@@ -220,7 +213,7 @@ h3::before {
 #dataset-page-table-container .table-container-title {
     color: #888;
     margin-bottom: 10px;
-    font-size: 1.45rem;
+    /* font-size: 1.45rem; */
 }
 
 #tree-container a {
@@ -306,3 +299,19 @@ h3::before {
     height: 100%;
     border-left: #cec4bd solid 1px;
 } */
+
+.dataset-warning {
+    color: #4a3e3a;
+    background-color: #f2f0ee;
+    border-color: #cec4bd;
+}
+
+.dataset-warning .close {
+    color: #4a3e3a;
+    opacity: 0.7;
+}
+
+.dataset-warning .close:hover,
+.dataset-warning .close:focus {
+    opacity: 1;
+}

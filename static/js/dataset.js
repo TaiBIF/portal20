@@ -63,7 +63,7 @@ function createTaxonTreeRoot(datasetId) {
                                     <div class="taxon-tree-rank">${rankInMandarin}</div>
                                     <div class="taxon-tree-rank-en">${rankInEngUppercase}</div>
                                     <div class="taxon-tree-name" data-rank="${node.rank}" data-name="${node.scientific_name}">
-                                        <a href="/species/${node.taicol_taxon_id}" target="_blank">${node.scientific_name} ${node.name_zh}</a>
+                                        ${node.scientific_name} ${node.name_zh}
                                     </div>
                                     <div class="taxon-tree-count">${node.count}</div>
                                 </label>
@@ -128,11 +128,7 @@ function toggleNode(taxonNode, datasetId) {
                                             <div class="taxon-tree-rank">${rankInMandarin}</div>
                                             <div class="taxon-tree-rank-en">${rankInEngUppercase}</div>
                                             <div class="taxon-tree-name" data-rank="${childNode.rank}" data-name="${childNode.scientific_name}">
-                                                ${
-                                                    childNode.taicol_taxon_id 
-                                                        ? `<a href="/species/${childNode.taicol_taxon_id}" target="_blank">${childNode.scientific_name} ${nameInMandarin}</a>` 
-                                                        : `${childNode.scientific_name} ${nameInMandarin}`
-                                                }
+                                                ${childNode.scientific_name} ${nameInMandarin}
                                             </div>
                                             <div class="taxon-tree-count">${childNode.count}</div>
                                         </label>
@@ -288,10 +284,10 @@ function createBarChart(data, containerID, xAxisLabel, searchParma) {
         .on("mouseout", function() {
             tooltip.style("visibility", "hidden");
         })
-        .on("click", function (event, d) {
-            const url = `/occurrence/search/?taibif_datasetKey=${datasetId}&${searchParma}=${d.label}`;
-            window.location.href = url; // 跳轉到目標頁面
-        });
+        // .on("click", function (event, d) {
+        //     const url = `/occurrence/search/?taibif_datasetKey=${datasetId}&${searchParma}=${d.label}`;
+        //     window.location.href = url; // 跳轉到目標頁面
+        // });
     } else {
         $('#year-barchart-loader').addClass('d-none');
         alert('獲取資料發生錯誤');
