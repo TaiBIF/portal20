@@ -727,3 +727,7 @@ def response_error_handler(request, exception=None):
 
 def open_consulation(request):
     return render(request, "open-consulation.html")
+
+
+def open_benefits(request):
+    return render(request, "open-benefits.html")

@@ -24,7 +24,9 @@ urlpatterns = [
     path("data-policy", views.data_policy, name="data-policy"),
     path("journals", views.journals, name="journals"),
     path("tools", views.tools, name="tools"),
-    path("coordinate-converter", views.coordinate_converter, name="coordinate-converter"),
+    path(
+        "coordinate-converter", views.coordinate_converter, name="coordinate-converter"
+    ),
     path(
         "coordinateConverter.php",
         views.coordinate_converter_legacy,
@@ -52,6 +54,7 @@ urlpatterns = [
     path("faq", views.faq, name="faq"),
     path("download-resources", views.download_resources, name="download-resources"),
     path("thanks-list", views.thanks_list, name="thanks-list"),
+    path("open-benefits", views.open_benefits, name="open-benefits"),
     path("open-process", views.open_process, name="open-process"),
     path("open-standard", views.open_standard, name="open-standard"),
     path("open-metadata", views.open_metadata, name="open-metadata"),
