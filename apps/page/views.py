@@ -789,8 +789,14 @@ def monthly_status(request):
         if event["dataset_id"] not in dataset_latest_event_map:
             dataset_latest_event_map[event["dataset_id"]] = event
 
+    dataset_ids = list(dataset_latest_event_map.keys())
+    dataset_org_map = dict(
+        Dataset.objects.filter(id__in=dataset_ids).values_list("id", "organization_id")
+    )
+
     dataset_rows = []
     for event in dataset_latest_event_map.values():
+        publisher_id = dataset_org_map.get(event["dataset_id"])
         dataset_rows.append(
             {
                 "title": event["dataset_title"] or event["dataset_name"],
@@ -798,6 +804,7 @@ def monthly_status(request):
                     event["dwc_core_type"], event["dwc_core_type"]
                 ),
                 "organization_name": event["organization_name"] or "－",
+                "publisher_id": publisher_id,
                 "taibif_dataset_id": event["taibif_dataset_id"],
                 "ipt_link": f"https://ipt.taibif.tw/resource?r={event['dataset_name']}",
             }

@@ -74,7 +74,15 @@
                                 </a>
                             </td>
                             <td>{{ row.dwc_core_type }}</td>
-                            <td>{{ row.organization_name }}</td>
+                            <td>
+                                {% if row.publisher_id %}
+                                    <a class="highlight-link" href="{% url 'publisher-detail-i18n' pk=row.publisher_id %}">
+                                        {{ row.organization_name }}
+                                    </a>
+                                {% else %}
+                                    {{ row.organization_name }}
+                                {% endif %}
+                            </td>
                             <td>
                                 <a class="highlight-link" href="{{ row.ipt_link }}" target="_blank" rel="noopener noreferrer">連結</a>
                             </td>

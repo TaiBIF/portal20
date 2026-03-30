@@ -6127,12 +6127,13 @@ a.btn-sunset-md {
         word-break: break-word;
     }
     .samplingevent-highlight-link {
-        color: #fff;
+        color: #fff !important;
         text-decoration: none;
         background-color: #297ea8;
         padding: 3px 5px;
         border-radius: 8px;
         font-weight: normal;
+        width: fit-content;
     }
     .occurrence-highlight-link {
         color: #fff !important;
@@ -6141,22 +6142,25 @@ a.btn-sunset-md {
         padding: 3px 5px;
         border-radius: 8px;
         font-weight: normal;
+        width: fit-content;
     }
     .checklist-highlight-link {
-        color: #fff;
+        color: #fff !important;
         text-decoration: none;
         background-color: #947ab2;
         padding: 3px 5px;
         border-radius: 8px;
         font-weight: normal;
+        width: fit-content;
     }
     .metadata-highlight-link {
-        color: #fff;
+        color: #fff !important;
         text-decoration: none;
         background-color: #ffcd6d;
         padding: 3px 5px;
         border-radius: 8px;
         font-weight: normal;
+        width: fit-content;
     }
 }
 

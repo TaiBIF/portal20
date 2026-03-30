@@ -2,12 +2,14 @@ from datetime import datetime
 from apps.data.models import Dataset
 from apps.article.models import Article
 from django.utils.text import slugify
+from django.urls import reverse
+from django.utils.translation import override
 
 CORE_TYPE_MAPPING = {
-    "CHECKLIST": f'<a class="checklist-highlight-link" href="/dataset/search/?core=CHECKLIST" target="_blank">物種名錄</a>',
-    "OCCURRENCE": f'<a class="occurrence-highlight-link" href="/dataset/search/?core=OCCURRENCE" target="_blank">出現紀錄</a>',
-    "SAMPLINGEVENT": f'<a class="samplingevent-highlight-link" href="/dataset/search/?core=SAMPLINGEVENT" target="_blank">調查活動</a>',
-    "METADATA": f'<a class="metadata-highlight-link" href="/dataset/search/?core=METADATA" target="_blank">詮釋資料</a>',
+    "CHECKLIST": f'<div class="checklist-highlight-link">物種名錄</div>',
+    "OCCURRENCE": f'<div class="occurrence-highlight-link">出現紀錄</div>',
+    "SAMPLINGEVENT": f'<div class="samplingevent-highlight-link">調查活動</div>',
+    "METADATA": f'<div class="metadata-highlight-link">詮釋資料</div>',
 }
 
 current_year = datetime.now().year
@@ -60,14 +62,16 @@ else:
             </table>
         </div>
         """
+        with override("zh-hant"):
+            monthly_status_url = reverse("monthly-status")
 
         article_content = f"""
-        <h2>TaiBIF 本月資料更新總覽（{current_year} 年 {current_month} 月）</h2>
         <p>🎉 本月 TaiBIF 平台又有新氣象啦！</p>
-        <p>以下是來自 TaiBIF IPT 的資料來源中，標記為公開（PUBLIC）並在這個月有「上傳」或「更新」的資料集✨</p>
+        <p>以下是透過 TaiBIF IPT 發布，並在這個月有「上傳」或「更新」的資料集✨</p>
         <p>我們一共整理了 {len(updated_dataset_this_month)} 筆資料集，主題多元、內容豐富，等你來探索 📚🔍</p>
         <p>趕快來看看這些本月的新鮮資料吧👇👇</p>
         {table_html}
+        <div class="content-readable-panel">若想查看各月份的資料集更新歷程，可以利用 <a href="{monthly_status_url}" rel="noopener noreferrer">每月資料發佈狀況</a> 頁面。</div>
         """
 
         article = Article(
