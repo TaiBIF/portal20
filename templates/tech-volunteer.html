@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load static %}
-{% block title %}{% trans "參與志工培訓" %}{% endblock %}
+{% block title %}{% trans "參與協作者培訓" %}{% endblock %}
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/tech-class-license.css' %}">
 {% endblock head %}
@@ -66,7 +66,7 @@ $(document).ready(function () {
 <div class="bg-main-pale">
     <div class="container">
         <div class="caption-mascot-wrapper">
-            <h1 class="title">{% trans "參與志工培訓" %}</h1>
+            <h1 class="title">{% trans "參與協作者培訓" %}</h1>
             <img src="{% static 'images/mascot-frog.png'%}" alt="" class="symbol">
         </div>
     </div>
@@ -80,7 +80,7 @@ $(document).ready(function () {
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
             <li class="breadcrumb-item">{% trans "教育資源" %}</li>
-            <li class="breadcrumb-item active" aria-current="page">{% trans "參與志工培訓" %}</li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans "參與協作者培訓" %}</li>
         </ol>
     </nav>
     <!-- breadcrumb end -->
@@ -89,12 +89,12 @@ $(document).ready(function () {
     <div class="col-12 col-md-3">
         <div class="dropdown dropdown-flexible-wrapper">
             <a class="btn btn-toggle-flexible visible-xs" href="#" data-toggle="dropdown" aria-expanded="false">
-            參與志工培訓
+            參與協作者培訓
             </a>
             <div class="dropdown-menu-flexible d-md-block">
-                <a data-cat="training" class="dropdown-item nav-item current-sunset" href="#training">TaiBIFer 志工培訓制度</a>
-                <a data-cat="application" class="dropdown-item nav-item" href="#application">申請成為 TaiBIFer 志工</a>
-                <a data-cat="list" class="dropdown-item nav-item" href="#list">TaiBIFer 志工名單</a>
+                <a data-cat="training" class="dropdown-item nav-item current-sunset" href="#training">TaiBIFer 協作者培訓制度</a>
+                <a data-cat="application" class="dropdown-item nav-item" href="#application">申請成為 TaiBIFer 協作者</a>
+                <a data-cat="list" class="dropdown-item nav-item" href="#list">TaiBIFer 協作者名單</a>
             </div>
         </div>
     </div>
@@ -102,7 +102,7 @@ $(document).ready(function () {
 
     <!-- col right begin -->
     <div data-cat="training" class="col-12 col-md-9 nav-item-content content-readable-panel">
-        <h4 class="heading-lg-ul">志工培訓制度說明</h4>
+        <h4 class="heading-lg-ul">協作者培訓制度說明</h4>
         <div class="article-content-wrapper">
             <h3>培訓目的</h3>
         </div>
@@ -115,7 +115,7 @@ $(document).ready(function () {
         </p>
 
         <div class="article-content-wrapper">
-            <h3>志工類型及內容</h3>
+            <h3>協作者類型及內容</h3>
         </div>
         <ul>
             <li class="sub-heading-2">翻譯協作者</li>
@@ -157,7 +157,7 @@ $(document).ready(function () {
                     <li>TaiCOL工作坊：名錄資料協作者</li>
                 </ul>
             <li><span class="highlight-box-primary">必要</span> 全部通過作業及基本測驗並拿到證書</li>
-            <li><span class="highlight-box-secondary">選擇</span><strong> 翻譯協作者</strong>：試譯一段文章段落，進階拿到翻譯志工認證</li>
+            <li><span class="highlight-box-secondary">選擇</span><strong> 翻譯協作者</strong>：試譯一段文章段落，進階拿到翻譯協作者認證</li>
             <li><span class="highlight-box-secondary">選擇</span><strong> 推廣大使</strong>：至少擔任過一次實習助教，拿到實習證明；若要擔任講師，則需另外安排試講</li>
             <li><span class="highlight-box-secondary">選擇</span><strong> 資料清理協作者</strong>：TaiBIF 提供原始資料集，需按照情境題完成資料發布</li>
             <li><span class="highlight-box-secondary">選擇</span><strong> 名錄資料協作者</strong>：完成TaiCOL工作坊考核要求，至少新增/補充20筆資料，或至少建立10筆學名使用（單筆文獻或多筆文獻總和）。</li>
@@ -174,12 +174,12 @@ $(document).ready(function () {
         <ul>
             <li><strong>翻譯協作者</strong>：TaiBIF 安排所需翻譯文件，放到Crowdin上，翻譯者可自行到專案翻譯，完成後按照字數計酬。</li>
             <li><strong>推廣大使</strong>：每年TaiBIF 會舉辦1-2次對外實體工作坊，會寄發通知招募助教，並按實際協助教學時數計酬，差旅費另計。</li>
-            <li><strong>資料清理協作者</strong>：針對客製化個案（需要整理資料的單位提出申請，TBIA夥伴單位可優先）徵詢處理的志工，並分派適合人選（按背景、專長、興趣），由申請單位按件計酬，NGO組織可另議。</li>
+            <li><strong>資料清理協作者</strong>：針對客製化個案（需要整理資料的單位提出申請，TBIA夥伴單位可優先）徵詢處理的協作者，並分派適合人選（按背景、專長、興趣），由申請單位按件計酬，NGO組織可另議。</li>
             <li><strong>名錄資料協作者</strong>：於TaiCOL學名管理工具上幫忙補充缺少資訊，看到有缺就可以幫忙補。可回報欲認領之類群或是期刊後，自行安排定期巡邏有無新的分類相關文獻發表，自行到工具上登錄資訊。資料庫會自動記錄編輯動作，無需另外回報。</li>
         </ul>
 
         <div class="article-content-wrapper">
-            <h3>志工福利</h3>
+            <h3>協作者福利</h3>
         </div>
         <ul>
             <li>每年可安排一次中研院博物館導覽</li>
@@ -190,10 +190,10 @@ $(document).ready(function () {
     </div>
 
     <div data-cat="application" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
-        <h4 class="heading-lg-ul">申請成為 TaiBIFer 志工</h4>
+        <h4 class="heading-lg-ul">申請成為 TaiBIFer 協作者</h4>
         <p>
             要成為TaiBIFer，必要條件為參與TaiBIF 所辦理的「生物多樣性資料發布及應用工作坊」並完成核心及增能課程認證，每年會舉辦兩次，
-            開放報名時間請隨時關注<a href="https://www.facebook.com/TaiBIF.tw/" target="_blank">TaiBIF粉絲頁</a>最新消息。完成課程認證後，我們將會依據您於報名時所選的志工類型，與您聯繫進一步的考核事宜。
+            開放報名時間請隨時關注<a href="https://www.facebook.com/TaiBIF.tw/" target="_blank">TaiBIF粉絲頁</a>最新消息。完成課程認證後，我們將會依據您於報名時所選的協作者類型，與您聯繫進一步的考核事宜。
         </p>
 
         <div class="article-content-wrapper">
@@ -236,7 +236,7 @@ $(document).ready(function () {
     </div>
 
     <div data-cat="list" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
-        <h4 class="heading-lg-ul">TaiBIFer 志工名單</h4>
+        <h4 class="heading-lg-ul">TaiBIFer 協作者名單</h4>
         {% if grouped_taibifer %}
             {% for role, years in grouped_taibifer.items %}
                 <div class="article-content-wrapper">
@@ -264,7 +264,7 @@ $(document).ready(function () {
                 </div>
             {% endfor %}
         {% else %}
-            <strong>目前沒有志工資料。</strong>
+            <strong>目前沒有協作者資料。</strong>
         {% endif %}
         <div class="article-content-wrapper">
             <h3>證書樣式</h3>
