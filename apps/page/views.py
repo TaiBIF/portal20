@@ -35,6 +35,7 @@ from apps.data.helpers.stats import get_home_stats
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_GET
 from django.utils.translation import activate
+from django.utils import timezone
 from collections import defaultdict
 from django.core.paginator import Paginator
 
@@ -735,18 +736,22 @@ def open_benefits(request):
 
 
 def monthly_status(request):
-    try:
-        selected_year = int(request.GET.get("year", 2026))
-    except (TypeError, ValueError):
-        selected_year = 2026
+    today = timezone.localdate()
+    current_year = today.year
+    current_month = today.month
 
     try:
-        selected_month = int(request.GET.get("month", 3))
+        selected_year = int(request.GET.get("year", current_year))
     except (TypeError, ValueError):
-        selected_month = 3
+        selected_year = current_year
+
+    try:
+        selected_month = int(request.GET.get("month", current_month))
+    except (TypeError, ValueError):
+        selected_month = current_month
 
     if selected_month < 1 or selected_month > 12:
-        selected_month = 3
+        selected_month = current_month
 
     core_type_mapping = {
         "CHECKLIST": "物種名錄",
@@ -764,7 +769,7 @@ def monthly_status(request):
         .order_by("-dataset_mod_date__year")
     )
     if not available_years:
-        available_years = [2026]
+        available_years = [current_year]
 
     monthly_events = (
         event_queryset.filter(
