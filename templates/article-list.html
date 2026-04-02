@@ -5,7 +5,7 @@
 {% load i18n %}
 {% url 'article-search' as article_search_url %}
 
-{% block title %}{{ article_cat_label }}{% endblock %}
+{% block title %}最新消息{% endblock %}
 
 {% block head %}
     <!-- date range picker CSS -->
@@ -115,7 +115,7 @@
   <div class="bg-main-pale">
     <div class="container">
       <div class="caption-mascot-wrapper">
-        <h1 class="title">{% trans "文章" %}</h1>
+        <h1 class="title">{% trans "最新消息" %}</h1>
         <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
       </div>
     </div>
@@ -128,7 +128,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
-        <li class="breadcrumb-item" aria-current="page">{% trans "文章" %}</li>
+        <li class="breadcrumb-item" aria-current="page">{% trans "最新消息" %}</li>
       </ol>
     </nav>
     
@@ -137,7 +137,7 @@
       <form class="form-inline">
         <span class="heading-sort-name">{% trans "篩選" %}</span>
           <div class="article-search-input-wrap">
-            <input type="text" placeholder="關鍵字查詢" name="q" id="article-search-input" value="{{ article_search_keyword|default:'' }}">
+            <input type="text" placeholder="請輸入關鍵字" name="q" id="article-search-input" value="{{ article_search_keyword|default:'' }}">
             <button type="button" id="article-search-btn" class="article-search-btn" aria-label="搜尋">
             <span class="myicon icon-search-lens"></span>
             </button>
@@ -157,7 +157,7 @@
           <span class="checkmark"></span>
           {% trans "科普" %}
         </label> 
-        <label class="custom-input-ctn">
+        <!-- <label class="custom-input-ctn">
           <input type="checkbox" class="select-category-sci" data-type="story"{% if "STORY" in article_cat %} checked="checked"{% endif %}>
           <span class="checkmark"></span>
           {% trans "資料故事" %}
@@ -171,7 +171,7 @@
           <input type="checkbox" class="select-category-sci" data-type="pos"{% if "POS"  in article_cat%} checked="checked"{% endif %}>
           <span class="checkmark"></span>
           {% trans "TaiBIF 成果" %}
-        </label> 
+        </label>  -->
       </form>
     </div>
     <!-- sort by end -->

@@ -1,16 +1,23 @@
 $(document).ready(function () {
+    function submitNavbarSearch() {
+        const $input = $("#navbar-search-input");
+        const q = ($input.val() || "").trim();
+        const $form = $input.closest("form");
+        const action = $form.attr("action") || "/search/";
+        window.location.href = `${action}?q=${encodeURIComponent(q)}`;
+    }
+
     //navbar-search
     $("#navbar-search-input").keydown(function (event) {
         if (event.key === "Enter") {
             event.preventDefault();
-            const q = $(this).val();
-            window.location.href = `/search/?q=${q}`;
+            submitNavbarSearch();
         }
     });
 
-    $("#navbar-search-btn").click(function () {
-        const q = $("#navbar-search-input").val();
-        window.location.href = `/search/?q=${q}`;
+    $("#navbar-search-btn").click(function (event) {
+        event.preventDefault();
+        submitNavbarSearch();
     });
 
     $(".head-carousel-search-btn").click(function (event) {

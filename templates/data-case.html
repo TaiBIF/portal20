@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load static %}
-{% block title %}{% trans "資料應用案例" %}{% endblock %}
+{% block title %}{% trans "給我一些例子" %}{% endblock %}
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/data-case.css' %}">
 <script src="{% static 'js/d3.min.js' %}"></script>
@@ -14,7 +14,7 @@
 <div class="bg-main-pale">
     <div class="container">
         <div class="caption-mascot-wrapper">
-            <h1 class="title">{% trans "資料應用案例" %}</h1>
+            <h1 class="title">{% trans "給我一些例子" %}</h1>
             <img src="{% static 'images/mascot-flower.png' %}" alt="" class="symbol">
         </div>
     </div>
@@ -27,8 +27,8 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
-            <li class="breadcrumb-item">{% trans "資料應用" %}</li>
-            <li class="breadcrumb-item active" aria-current="page">{% trans "資料應用案例" %}</li>
+            <li class="breadcrumb-item">{% trans "開放資料怎麼應用" %}</li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans "給我一些例子" %}</li>
         </ol>
     </nav>
     <!-- breadcrumb end -->

@@ -261,28 +261,36 @@
                                             />
                                         </svg>
                                         <div class="search-box">
-                                            <div class="rel">
-                                                <input type="text" />
-                                                <button class="search-btn">
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        width="15"
-                                                        height="14"
-                                                        viewBox="0 0 15 14"
-                                                    >
-                                                        <path
-                                                            id="Union_1"
-                                                            data-name="Union 1"
-                                                            d="M14.146,13.854,11.24,10.947a6.487,6.487,0,1,1,.63-.784l2.984,2.984a.5.5,0,1,1-.707.707ZM1,6.5A5.5,5.5,0,1,0,6.5,1,5.506,5.506,0,0,0,1,6.5Z"
-                                                            fill="#4a3e3a"
-                                                        />
-                                                    </svg>
-                                                </button>
-                                            </div>
+                                            <form action="{% url 'search_all' %}" method="get">
+                                                <div class="rel">
+                                                    <input
+                                                        id="navbar-search-input"
+                                                        type="text"
+                                                        name="q"
+                                                        placeholder="全站搜尋"
+                                                        value="{{ request.GET.q|default:'' }}"
+                                                    />
+                                                    <button id="navbar-search-btn" class="search-btn" type="submit">
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="15"
+                                                            height="14"
+                                                            viewBox="0 0 15 14"
+                                                        >
+                                                            <path
+                                                                id="Union_1"
+                                                                data-name="Union 1"
+                                                                d="M14.146,13.854,11.24,10.947a6.487,6.487,0,1,1,.63-.784l2.984,2.984a.5.5,0,1,1-.707.707ZM1,6.5A5.5,5.5,0,1,0,6.5,1,5.506,5.506,0,0,0,1,6.5Z"
+                                                                fill="#4a3e3a"
+                                                            />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                     <a
-                                        href="https://portal.taibif.tw/zh-hant/search/?q="
+                                        href="{% url 'search_all' %}"
                                         class="btn-icon mb"
                                     >
                                         <svg
