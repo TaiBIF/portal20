@@ -142,6 +142,12 @@ def index(request):
     total_case_count = gbif_data_case_count + taibif_case_count
     index_bubble = IndexBubbleSetting.get_solo()
 
+    occ_num_display = f"{occ_num:,}"
+    dataset_num_display = f"{dataset_num:,}"
+    taxon_num_display = f"{taxon_num:,}"
+    publisher_num_display = f"{publisher_num:,}"
+    case_count_display = f"{total_case_count:,}"
+
     context = {
         "news_all_list": news_all_list,
         "news_list": news_list,
@@ -152,9 +158,14 @@ def index(request):
         "dataset_num": dataset_num,
         "occ_num": occ_num,
         "taxon_num": taxon_num,
+        "occ_num_display": occ_num_display,
+        "dataset_num_display": dataset_num_display,
+        "taxon_num_display": taxon_num_display,
         # "taxonGroup_dict": taxonGroup_dict,
         "publisher_num": publisher_num,
         "case_count": total_case_count,
+        "publisher_num_display": publisher_num_display,
+        "case_count_display": case_count_display,
         "index_bubble": index_bubble,
     }
 
