@@ -651,7 +651,7 @@ def data_visual(request):
 
 def data_case(request):
     articles = (
-        Article.objects.filter(is_data_case=True)
+        Article.objects.filter(is_data_case=True, category="SCI")
         .order_by("-created")
         .select_related("new_case_type")[:3]
     )  # 只選最新三筆呈現
