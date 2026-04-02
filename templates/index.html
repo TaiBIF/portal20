@@ -40,7 +40,7 @@
 					</h2>
 				</div>
 				<div class="bottom-pic-note">
-					<p>Taenioptynx brodiei pardalotus (Swinhoe, 1863) Observed in Daxueshan National Forest, Taiwan by yichang. Photo via iNaturalist (CC BY-NC 4.0)</p>
+					<p id="kv-credit-text">Taenioptynx brodiei pardalotus (Swinhoe, 1863) Observed in Daxueshan National Forest, Taiwan by yichang. Photo via iNaturalist (CC BY-NC 4.0)</p>
 				</div>
 				<div class="mask-bottom">
 					<svg xmlns="http://www.w3.org/2000/svg" width="1321" height="321" viewBox="0 0 1321 321">
@@ -66,15 +66,15 @@
 				</div>
 				<div class="swiper kvSwiper">
 					<div class="swiper-wrapper">
-						<div class="swiper-slide">
+						<div class="swiper-slide" data-credit="Taenioptynx brodiei pardalotus (Swinhoe, 1863) Observed in Daxueshan National Forest, Taiwan by yichang. Photo via iNaturalist (CC BY-NC 4.0)">
 							<img src="{% static 'taibif-home/image/bn-1.jpg' %}" alt="" loading="eager" decoding="async">
 						</div>
-						<div class="swiper-slide"><img src="{% static 'taibif-home/image/bn-2.jpg' %}" alt="" loading="lazy" decoding="async"></div>
-						<div class="swiper-slide"><img src="{% static 'taibif-home/image/bn-3.jpg' %}" alt="" loading="lazy" decoding="async"></div>
-						<div class="swiper-slide"><img src="{% static 'taibif-home/image/bn-4.jpg' %}" alt="" loading="lazy" decoding="async"></div>
-						<div class="swiper-slide"><img src="{% static 'taibif-home/image/bn-5.jpg' %}" alt="" loading="lazy" decoding="async"></div>
-						<div class="swiper-slide"><img src="{% static 'taibif-home/image/bn-6.jpg' %}" alt="" loading="lazy" decoding="async"></div>
-						<div class="swiper-slide"><img src="{% static 'taibif-home/image/bn-7.jpg' %}" alt="" loading="lazy" decoding="async"></div>
+						<div class="swiper-slide" data-credit="Halophila ovalis (R.Br.) Hook.f. Observed in Dongsha Atoll National Park, Taiwan by astersu. Photo via iNaturalist (CC BY-NC 4.0)"><img src="{% static 'taibif-home/image/bn-2.jpg' %}" alt="" loading="lazy" decoding="async"></div>
+						<div class="swiper-slide" data-credit="Pachyrhynchus sarcitis kotoensis Observed in Lanyu Island, Taiwan by Chih-Wei Chen (CC BY-NC 4.0)"><img src="{% static 'taibif-home/image/bn-3.jpg' %}" alt="" loading="lazy" decoding="async"></div>
+						<div class="swiper-slide" data-credit="Mycena indigotica C.L.Wei & R.Kirschner. Observed in Yangmingshan, Taiwan by chofungi. Photo via iNaturalist (CC BY-NC 4.0)"><img src="{% static 'taibif-home/image/bn-4.jpg' %}" alt="" loading="lazy" decoding="async"></div>
+						<div class="swiper-slide" data-credit=""><img src="{% static 'taibif-home/image/bn-5.jpg' %}" alt="" loading="lazy" decoding="async"></div>
+						<div class="swiper-slide" data-credit=""><img src="{% static 'taibif-home/image/bn-6.jpg' %}" alt="" loading="lazy" decoding="async"></div>
+						<div class="swiper-slide" data-credit="Hymenocera picta (Dana, 1852) Observed in Longdon, Taiwan by Melissa Liu (CC BY-NC 4.0)"><img src="{% static 'taibif-home/image/bn-7.jpg' %}" alt="" loading="lazy" decoding="async"></div>
 					</div>
 				</div>
 			</div>
@@ -442,6 +442,15 @@
 
 	$(function() {
 		const maskColors = ['#3c6d13', '#558E24', '#020200', '#D49177', '#030E29', '#4A3E3A', '#4A3E3A'];
+		const kvSlides = document.querySelectorAll('.kvSwiper .swiper-wrapper > .swiper-slide');
+		const kvCreditText = document.getElementById('kv-credit-text');
+
+		const updateKvCredit = (index) => {
+			if (!kvCreditText || !kvSlides.length) return;
+			const targetSlide = kvSlides[index];
+			const credit = targetSlide?.dataset.credit?.trim();
+			kvCreditText.textContent = credit || '';
+		};
 
 		const swiper = new Swiper('.kvSwiper', {
 			effect: 'fade',
@@ -452,6 +461,7 @@
 			on: {
 				init: function () {
 					document.documentElement.style.setProperty('--mask-color', maskColors[0]);
+					updateKvCredit(0);
 					document.body.classList.add('is-ready');
 					// 這裡是關鍵：Swiper 初始化後，通知 ScrollTrigger 重新計算
 					if (window.ScrollTrigger) ScrollTrigger.refresh();
@@ -459,6 +469,7 @@
 				slideChange: function () {
 					const activeColor = maskColors[this.realIndex];
 					document.documentElement.style.setProperty('--mask-color', activeColor);
+					updateKvCredit(this.realIndex);
 				},
 			},
 		});
