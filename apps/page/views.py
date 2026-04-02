@@ -100,11 +100,11 @@ def index(request):
     assign_card_image(update_list)
     assign_card_image(story_list)
 
-    url = f"http://solr:8983/solr/taibif_occurrence/select?q=basisOfRecord:*&indent=true&q.op=OR&rows=0"
+    url = f"http://solr:8983/solr/taibif_occurrence/select?q=basisOfRecord:*&fq=selfProduced:true&indent=true&q.op=OR&rows=0"
     r = requests.get(url).json()
     occ_num = r["response"]["numFound"]
 
-    dataset_num = Dataset.objects.filter(status="PUBLIC").count()
+    dataset_num = Dataset.objects.filter(status="PUBLIC", source="TaiBIF IPT").count()
 
     taxon_num = Taxon.objects.values("name").distinct().count()
 
@@ -297,12 +297,12 @@ def data_stats(request):
     query = Dataset.objects
     if most:
         query = query.filter(is_most_project=True)
-    url = f"http://solr:8983/solr/taibif_occurrence/select?q=basisOfRecord:*&indent=true&q.op=OR&rows=0"
-    r = requests.get(url).json()
-    occ_num = r["response"]["numFound"]
+    # url = f"http://solr:8983/solr/taibif_occurrence/select?q=basisOfRecord:*&indent=true&q.op=OR&rows=0"
+    # r = requests.get(url).json()
+    # occ_num = r["response"]["numFound"]
 
-    dataset_num = Dataset.objects.filter(status="PUBLIC").count()
-    publisher_num = DatasetOrganization.objects.count()
+    # dataset_num = Dataset.objects.filter(status="PUBLIC", source="TaiBIF IPT").count()
+    # publisher_num = DatasetOrganization.objects.count()
 
     dataset_orm = Dataset.objects.filter(source="TaiBIF IPT", status="PUBLIC").order_by(
         "-pub_date"
@@ -373,9 +373,9 @@ def data_stats(request):
 
     context = {
         "dataset_list": query.order_by(F("pub_date").desc(nulls_last=True)).all(),
-        "dataset_num": dataset_num,
-        "publisher_num": publisher_num,
-        "occ_num": occ_num,
+        # "dataset_num": dataset_num,
+        # "publisher_num": publisher_num,
+        # "occ_num": occ_num,
         "env": settings.ENV,
         "dataset": modified_dataset,
         "case_count": total_case_count,

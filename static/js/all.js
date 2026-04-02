@@ -87,11 +87,13 @@ $(document).ready(function () {
     buttons: [
       {
         extend: 'excel',
-        text: '下載 excel 格式'
+        text: '下載 XLSX 格式',
+        className: 'table-btn'
       },
       {
         extend: 'csv',
-        text: '下載 csv 格式'
+        text: '下載 CSV 格式',
+        className: 'table-btn'
       },
     ]
   });

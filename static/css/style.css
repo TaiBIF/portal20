@@ -2566,6 +2566,9 @@ a.btn-dataicon-downlod {
     overflow: hidden;
     background: #fff;
 }
+.content-readable-table a {
+    color: #0000ee !important;
+}
 .content-readable-table th,
 .content-readable-table td {
     padding: 10px 12px;
@@ -6193,4 +6196,109 @@ a.btn-sunset-md {
 
 .remove-margin-bottom {
   margin-bottom: 0 !important;
+}
+
+.data-table-btn-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.table-btn {
+    margin-top: 20px;
+    background-color: #fff;
+    border: 1px solid #d8ccc6;
+    border-radius: 999px;
+    box-shadow: none;
+    color: #6a5a52;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 0 16px;
+    min-height: 36px;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.table-btn:hover {
+    border-color: #b9a79d;
+    color: #4a3e3a;
+}
+
+.table-btn:focus-visible {
+    outline: none;
+    border-color: #846c5b;
+    box-shadow: 0 0 0 3px rgba(132, 108, 91, 0.12);
+}
+
+.table-btn.is-active {
+    background: #846c5b;
+    border-color: #846c5b;
+    color: #fff;
+}
+
+.table-btn.is-active:hover {
+    background: #755f52;
+    border-color: #755f52;
+    color: #fff;
+}
+
+.dataTables_wrapper .dt-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.dataTables_wrapper .dt-buttons .dt-button.table-btn {
+    margin-top: 20px;
+    background-color: #fff !important;
+    background: #fff !important;
+    border: 1px solid #d8ccc6 !important;
+    border-radius: 999px !important;
+    box-shadow: none !important;
+    color: #6a5a52 !important;
+    cursor: pointer;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 14px !important;
+    padding: 0 16px !important;
+    min-height: 36px;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.dataTables_wrapper .dt-buttons .dt-button.table-btn:hover {
+    background: #fff !important;
+    border-color: #b9a79d !important;
+    color: #4a3e3a !important;
+}
+
+.dataTables_wrapper .dt-buttons .dt-button.table-btn:focus-visible {
+    outline: none;
+    border-color: #846c5b !important;
+    box-shadow: 0 0 0 3px rgba(132, 108, 91, 0.12) !important;
 }

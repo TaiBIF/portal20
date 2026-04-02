@@ -180,7 +180,7 @@ $('#clean-search').on('click', function() {
 
         <!-- <h3 class="headline-left sub-heading">統整數據</h3> -->
 
-        <div class="card-tools-wrapper data-stats-chart">
+        <!-- <div class="card-tools-wrapper data-stats-chart">
         <div class="title">
             TaiBIF IPT 今年度上傳出現紀錄資料筆數
         </div>
@@ -196,7 +196,7 @@ $('#clean-search').on('click', function() {
         <div class="content responsive">
             <div id="taibif-stats__this_year_dataset"></div>
         </div>
-        </div>
+        </div> -->
 
         <div class="card-tools-wrapper data-stats-chart">
         <div class="title">
@@ -217,42 +217,48 @@ $('#clean-search').on('click', function() {
         </div>
         <!-- <div id="dataset-table-container" lang="zh-hant"></div> -->
 
-        <h3 class="headline-left sub-heading">
-            資料集列表
-        </h3>
+        <div class="article-content-wrapper">
+            <h3>
+                資料集列表
+            </h3>
+            <p>
+                以下資料集列表為透過 <a href="https://ipt.taibif.tw/" target="_blank">TaiBIF IPT</a> 發布的公開資料。可使用下方按鈕分別下載 XLSX 與 CSV 格式的資料列表。
+            </p>
 
-        <div class="table-responsive">
-            <table class="table table-ltmilo" id="opendata-table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>資料集名稱</th>
-                        <th>發布單位</th>
-                        <th>資料類型</th>
-                        <th>資料筆數</th>
-                        <th>出現紀錄</th>
-                        <th>發佈時間</th>
-                        <th>地區</th>
-                        <th>NSTC 計畫</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for i in dataset %}
-                    <tr>
-                        <td>{{ forloop.counter }}</td>
-                        <td><a href="/dataset/{{ i.taibif_dataset_id }}/">{{ i.title }}</a></td>
-                        <td>{{ i.organization_name }}</td>
-                        <td>{{ i.dwc_core_type }}</td>
-                        <td>{{ i.num_record }}</td>
-                        <td>{{ i.num_occurrence }}</td>
-                        <td>{{ i.pub_date|date:"Y-m-d"}}</td>
-                        <td>{{ i.country }}</td>
-                        <td>{{ i.is_most_project }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div> 
+
+            <div class="table-responsive">
+                <table class="table content-readable-table" id="opendata-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>資料集名稱</th>
+                            <th>發布單位</th>
+                            <th>資料類型</th>
+                            <th>資料筆數</th>
+                            <th>出現紀錄</th>
+                            <th>發佈時間</th>
+                            <th>地區</th>
+                            <th>NSTC 計畫</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in dataset %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td><a href="/dataset/{{ i.taibif_dataset_id }}/">{{ i.title }}</a></td>
+                            <td>{{ i.organization_name }}</td>
+                            <td>{{ i.dwc_core_type }}</td>
+                            <td>{{ i.num_record }}</td>
+                            <td>{{ i.num_occurrence }}</td>
+                            <td>{{ i.pub_date|date:"Y-m-d"}}</td>
+                            <td>{{ i.country }}</td>
+                            <td>{{ i.is_most_project }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div> 
+        </div>
     </div>
     <!-- col end -->
 
