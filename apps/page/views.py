@@ -10,6 +10,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import (
     HttpResponse,
     HttpResponseNotFound,
+    JsonResponse,
 )
 from django.db.models import Q, F, Count, Sum, ExpressionWrapper, fields
 from django.conf import settings
@@ -29,11 +30,13 @@ from apps.data.models import (
     Taibifer,
 )
 from .models import Post, Journal, IndexBubbleSetting
+from .models import NewsletterSubscription
 from utils.mail import taibif_mail_contact_us
 
 from apps.data.helpers.stats import get_home_stats
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_POST
 from django.utils.translation import activate
 from django.utils import timezone
 from collections import defaultdict
@@ -220,6 +223,27 @@ def coordinate_converter(request):
 
 def coordinate_converter_legacy(request):
     return redirect("coordinate-converter", permanent=True)
+
+
+@require_POST
+def newsletter_subscribe(request):
+    email = (request.POST.get("email") or "").strip().lower()
+    confirm_email = (request.POST.get("confirm_email") or "").strip().lower()
+
+    if not email or not confirm_email:
+        return JsonResponse({"ok": False, "message": "請填寫電子信箱與確認信箱。"}, status=400)
+
+    if email != confirm_email:
+        return JsonResponse({"ok": False, "message": "兩次輸入的電子信箱不一致。"}, status=400)
+
+    email_validator = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+    if not email_validator.match(email):
+        return JsonResponse({"ok": False, "message": "電子信箱格式不正確。"}, status=400)
+
+    _, created = NewsletterSubscription.objects.get_or_create(email=email)
+    if created:
+        return JsonResponse({"ok": True, "message": "已成功訂閱電子報。"})
+    return JsonResponse({"ok": True, "message": "此信箱已在訂閱名單中。"})
 
 
 # @act_lang

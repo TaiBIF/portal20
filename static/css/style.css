@@ -5270,7 +5270,7 @@ a.btn-sunset-md {
     flex-wrap: wrap;
 
     a {
-        color:#0000ee !important;
+        color: #0000ee !important;
     }
 }
 
@@ -6195,7 +6195,7 @@ a.btn-sunset-md {
 }
 
 .remove-margin-bottom {
-  margin-bottom: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 .data-table-btn-container {
@@ -6301,4 +6301,88 @@ a.btn-sunset-md {
     outline: none;
     border-color: #846c5b !important;
     box-shadow: 0 0 0 3px rgba(132, 108, 91, 0.12) !important;
+}
+
+.newsletter-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 9999;
+    padding: 20px;
+}
+.newsletter-modal.is-open {
+    display: flex;
+}
+.newsletter-modal__panel {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+}
+.newsletter-modal__title {
+    margin: 0 0 8px;
+    font-size: 24px;
+    color: #1d2d38;
+}
+.newsletter-modal__desc {
+    margin: 0 0 16px;
+    font-size: 14px;
+    color: #4f5b64;
+}
+.newsletter-modal__list {
+    margin: -6px 0 16px 18px;
+    padding: 0;
+    color: #4f5b64;
+    font-size: 14px;
+    line-height: 1.6;
+}
+.newsletter-modal__list li + li {
+    margin-top: 4px;
+}
+.newsletter-modal__field {
+    margin-bottom: 12px;
+}
+.newsletter-modal__field input {
+    width: 100%;
+    height: 44px;
+    border: 1px solid #c6ced4;
+    border-radius: 8px;
+    padding: 0 12px;
+    font-size: 14px;
+}
+.newsletter-modal__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 12px;
+}
+.newsletter-modal__btn {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
+    cursor: pointer;
+}
+.newsletter-modal__btn--cancel {
+    background: #dbe2e7;
+    color: #2d3f49;
+}
+.newsletter-modal__btn--submit {
+    background: #2d7f3b;
+    color: #fff;
+}
+.newsletter-modal__msg {
+    min-height: 22px;
+    margin-top: 8px;
+    font-size: 14px;
+}
+.newsletter-modal__msg.error {
+    color: #c03a2b;
+}
+.newsletter-modal__msg.success {
+    color: #1f7a37;
 }

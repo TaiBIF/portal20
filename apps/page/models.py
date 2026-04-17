@@ -101,3 +101,16 @@ class IndexBubbleSetting(models.Model):
     class Meta:
         verbose_name = u'首頁說話魚設定'
         verbose_name_plural = u'首頁說話魚設定'
+
+
+class NewsletterSubscription(models.Model):
+    email = models.EmailField(u"電子信箱", max_length=254, unique=True)
+    created_at = models.DateTimeField(u"訂閱時間", auto_now_add=True)
+
+    def __str__(self):
+        return self.email
+
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name = u"電子報訂閱名單"
+        verbose_name_plural = u"電子報訂閱名單"

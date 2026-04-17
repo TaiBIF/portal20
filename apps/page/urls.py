@@ -42,6 +42,11 @@ urlpatterns = [
     path("cookbook/2", views.cookbook_detail_2, name="cookbook_detail_2"),
     path("cookbook/3", views.cookbook_detail_3, name="cookbook_detail_3"),
     path("contact-us", views.contact_us, name="contact_us"),
+    path(
+        "newsletter/subscribe",
+        views.newsletter_subscribe,
+        name="newsletter-subscribe",
+    ),
     path("plans", views.plans, name="plans"),
     path("links", views.links, name="links"),
     path("about-taibif", views.about_taibif, name="about-taibif"),

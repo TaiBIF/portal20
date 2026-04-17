@@ -451,7 +451,7 @@
                                             >參與協作者培訓</a
                                         >
                                         <a href="#">我想成為發布單位</a>
-                                        <a href="#">我願意收到電子報</a>
+                                        <a href="#" class="js-newsletter-open">我願意收到電子報</a>
                                         <a href="{% url 'thanks-list' %}"
                                             >感謝名單</a
                                         >
@@ -599,6 +599,113 @@
                 </div>
             </div>
         </footer>
+
+        <div id="newsletter-modal" class="newsletter-modal" aria-hidden="true">
+            <div class="newsletter-modal__panel" role="dialog" aria-modal="true" aria-labelledby="newsletter-modal-title">
+                <h3 id="newsletter-modal-title" class="newsletter-modal__title">TaiBIF電子報：掌握開放資料的第一手資訊</h3>
+                <p class="newsletter-modal__desc">電子報採不定期發送（約每半年一次），訂閱後，您將收到以下資訊：</p>
+                <ul class="newsletter-modal__list">
+                    <li>活動推廣：包含線上活動、工作坊、數據松，以及實體社群交流活動。</li>
+                    <li>領域新知：分享國內外資料開放的應用案例或最新進展。</li>
+                </ul>
+                <form id="newsletter-form" action="{% url 'newsletter-subscribe' %}" method="post">
+                    {% csrf_token %}
+                    <div class="newsletter-modal__field">
+                        <input type="email" name="email" placeholder="電子信箱" required />
+                    </div>
+                    <div class="newsletter-modal__field">
+                        <input type="email" name="confirm_email" placeholder="再次確認電子信箱" required />
+                    </div>
+                    <div id="newsletter-message" class="newsletter-modal__msg"></div>
+                    <div class="newsletter-modal__actions">
+                        <button type="button" id="newsletter-cancel-btn" class="newsletter-modal__btn newsletter-modal__btn--cancel">取消</button>
+                        <button type="submit" class="newsletter-modal__btn newsletter-modal__btn--submit">送出</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         {% block script %}{% endblock %}
+        <script>
+            (function () {
+                const triggers = document.querySelectorAll(".js-newsletter-open");
+                const newsletterModal = document.getElementById("newsletter-modal");
+                const newsletterCancelBtn = document.getElementById("newsletter-cancel-btn");
+                const newsletterForm = document.getElementById("newsletter-form");
+                const newsletterMessage = document.getElementById("newsletter-message");
+                if (!triggers.length || !newsletterModal || !newsletterForm) return;
+
+                const openNewsletterModal = () => {
+                    newsletterModal.classList.add("is-open");
+                    newsletterModal.setAttribute("aria-hidden", "false");
+                    document.body.style.overflow = "hidden";
+                };
+
+                const closeNewsletterModal = () => {
+                    newsletterModal.classList.remove("is-open");
+                    newsletterModal.setAttribute("aria-hidden", "true");
+                    document.body.style.overflow = "";
+                    newsletterForm.reset();
+                    if (newsletterMessage) {
+                        newsletterMessage.textContent = "";
+                        newsletterMessage.className = "newsletter-modal__msg";
+                    }
+                };
+
+                triggers.forEach((trigger) => {
+                    trigger.addEventListener("click", function (e) {
+                        e.preventDefault();
+                        openNewsletterModal();
+                    });
+                });
+
+                if (newsletterCancelBtn) {
+                    newsletterCancelBtn.addEventListener("click", closeNewsletterModal);
+                }
+
+                newsletterModal.addEventListener("click", function (e) {
+                    if (e.target === newsletterModal) closeNewsletterModal();
+                });
+
+                document.addEventListener("keydown", function (e) {
+                    if (e.key === "Escape" && newsletterModal.classList.contains("is-open")) {
+                        closeNewsletterModal();
+                    }
+                });
+
+                newsletterForm.addEventListener("submit", async function (e) {
+                    e.preventDefault();
+                    const formData = new FormData(newsletterForm);
+                    const email = ((formData.get("email") || "") + "").trim().toLowerCase();
+                    const confirmEmail = ((formData.get("confirm_email") || "") + "").trim().toLowerCase();
+
+                    if (email !== confirmEmail) {
+                        newsletterMessage.textContent = "兩次輸入的電子信箱不一致。";
+                        newsletterMessage.className = "newsletter-modal__msg error";
+                        return;
+                    }
+
+                    try {
+                        const response = await fetch(newsletterForm.action, {
+                            method: "POST",
+                            headers: {
+                                "X-CSRFToken": formData.get("csrfmiddlewaretoken"),
+                                "X-Requested-With": "XMLHttpRequest",
+                            },
+                            body: formData,
+                        });
+                        const result = await response.json();
+                        newsletterMessage.textContent = result.message || "送出完成。";
+                        newsletterMessage.className = `newsletter-modal__msg ${response.ok ? "success" : "error"}`;
+                        if (response.ok) {
+                            setTimeout(closeNewsletterModal, 1000);
+                        }
+                    } catch (err) {
+                        newsletterMessage.textContent = "送出失敗，請稍後再試。";
+                        newsletterMessage.className = "newsletter-modal__msg error";
+                    }
+                });
+            })();
+        </script>
     </body>
 </html>

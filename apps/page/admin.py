@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Journal, IndexBubbleSetting
+from .models import Post, Journal, IndexBubbleSetting, NewsletterSubscription
 
 # Register your models here.
 admin.site.register(Post)
@@ -18,3 +18,13 @@ class IndexBubbleSettingAdmin(admin.ModelAdmin):
 
 
 admin.site.register(IndexBubbleSetting, IndexBubbleSettingAdmin)
+
+
+class NewsletterSubscriptionAdmin(admin.ModelAdmin):
+    list_display = ("email", "created_at")
+    search_fields = ("email",)
+    ordering = ("-created_at",)
+    readonly_fields = ("created_at",)
+
+
+admin.site.register(NewsletterSubscription, NewsletterSubscriptionAdmin)
