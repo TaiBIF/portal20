@@ -84,74 +84,74 @@ $(document).ready(function () {
     <div class="col-12 col-md-3">
         <div class="dropdown dropdown-flexible-wrapper">
             <div class="dropdown-menu-flexible d-md-block">
-                <a data-cat="usage" class="dropdown-item nav-item current-sunset" href="#usage">說明</a>
-                <a data-cat="occurrence" class="dropdown-item nav-item" href="#occurrence">出現紀錄</a>
-                <a data-cat="dataset" class="dropdown-item nav-item" href="#dataset">資料集</a>
-                <a data-cat="publisher" class="dropdown-item nav-item" href="#publisher">發布單位</a>
-                <a data-cat="updates" class="dropdown-item nav-item" href="#updates">更新歷程</a>
+                <a data-cat="usage" class="dropdown-item nav-item current-sunset" href="#usage">{% trans "說明" %}</a>
+                <a data-cat="occurrence" class="dropdown-item nav-item" href="#occurrence">{% trans "出現紀錄" %}</a>
+                <a data-cat="dataset" class="dropdown-item nav-item" href="#dataset">{% trans "資料集" %}</a>
+                <a data-cat="publisher" class="dropdown-item nav-item" href="#publisher">{% trans "發布單位" %}</a>
+                <a data-cat="updates" class="dropdown-item nav-item" href="#updates">{% trans "更新歷程" %}</a>
             </div>
         </div>
     </div>
 
     <div class="col-12 col-md-9 nav-item-content content-readable-panel" data-cat="usage">
-        <h4 class="heading-lg-ul">說明</h4>
-        <small>最後修改：2025/01/24</small>
+        <h4 class="heading-lg-ul">{% trans "說明" %}</h4>
+        <small>{% trans "最後修改：2025/01/24" %}</small>
         <div class="pub-data-section">
             <div class="article-content-wrapper">
-                <h3>使用規範</h3>
+                <h3>{% trans "使用規範" %}</h3>
             </div>
             
-            <p>本 API 採「<a href="https://data.gov.tw/license" target="_blank">政府資料開放授權條款－第1版</a>」</p>
+            <p>{% trans "本 API 採「" %}<a href="https://data.gov.tw/license" target="_blank">{% trans "政府資料開放授權條款－第1版" %}</a>」</p>
 
             <div class="article-content-wrapper">
-                <h3>格式說明</h3>
+                <h3>{% trans "格式說明" %}</h3>
             </div>
             
             <ul>
-                <li>服務網址格式為 <b>https://portal.taibif.tw/api/v3/{類型}?{參數}</b></li>
+                <li>{% trans "服務網址格式為" %} <b>https://portal.taibif.tw/api/v3/{類型}?{參數}</b></li>
                 <li>
-                    <div>使用範例</div>
+                    <div>{% trans "使用範例" %}</div>
                     <div>
                         <table class="table content-readable-table">
                             <thead>
                                 <tr>
-                                    <th>類型</th>
-                                    <th>說明</th>
-                                    <th>範例</th>
+                                    <th>{% trans "類型" %}</th>
+                                    <th>{% trans "說明" %}</th>
+                                    <th>{% trans "範例" %}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>occurrence</td> 
-                                    <td>查詢物種的出現紀錄</td>
-                                    <td>https://portal.taibif.tw/api/v3/occurrence?{參數} </td>
+                                    <td>{% trans "查詢物種的出現紀錄" %}</td>
+                                    <td>{% trans "https://portal.taibif.tw/api/v3/occurrence?{參數}" %}</td>
                                 </tr>
                                 <tr>
                                     <td>dataset</td> 
-                                    <td>查詢資料集</td>
-                                    <td>https://portal.taibif.tw/api/v3/dataset?{參數}</td>
+                                    <td>{% trans "查詢資料集" %}</td>
+                                    <td>{% trans "https://portal.taibif.tw/api/v3/dataset?{參數}" %}</td>
                                 </tr>
                                 <tr>
                                     <td>publisher</td> 
-                                    <td>查詢資料集的發布單位</td>
-                                    <td>https://portal.taibif.tw/api/v3/publisher?{參數}</td>
+                                    <td>{% trans "查詢資料集的發布單位" %}</td>
+                                    <td>{% trans "https://portal.taibif.tw/api/v3/publisher?{參數}" %}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </li>
                 <li>
-                    <div>回傳範例（JSON 格式）</div>
+                    <div>{% trans "回傳範例（JSON 格式）" %}</div>
                     <pre class="api-code-block">
                         <code>
                             {
                                 "status": {
-                                    "code": 回傳狀態代碼,
-                                    "message": 回傳狀態說明
+                                    {% trans "\"code\": 回傳狀態代碼," %}
+                                    {% trans "\"message\": 回傳狀態說明" %}
                                 },
-                                "params": {查詢參數字典},
-                                "count": 結果筆數,
-                                "data": [結果陣列]
+                                {% trans "\"params\": {查詢參數字典}," %}
+                                {% trans "\"count\": 結果筆數," %}
+                                {% trans "\"data\": [結果陣列]" %}
                             }
                         </code>
                     </pre>
@@ -159,7 +159,7 @@ $(document).ready(function () {
             </ul>
 
             <div class="article-content-wrapper">
-                <h3>分頁參數說明</h3>
+                <h3>{% trans "分頁參數說明" %}</h3>
             </div>
             
             <div>
@@ -167,24 +167,24 @@ $(document).ready(function () {
                     <thead>
                         <tr>
                             <th>
-                                <strong>參數</strong> 
+                                <strong>{% trans "參數" %}</strong> 
                             </th>
                             <th>
-                                <strong>說明</strong>
+                                <strong>{% trans "說明" %}</strong>
                             </th>
                             <th>
-                                <strong>範例</strong></th>
+                                <strong>{% trans "範例" %}</strong></th>
                             </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>rows</td><td>每頁回傳筆數。預設為 10 筆，1000 筆為上限</td>
+                            <td>rows</td><td>{% trans "每頁回傳筆數。預設為 10 筆，1000 筆為上限" %}</td>
                             <td>
                                 <a href="/api/v3/occurrence?rows=10" target="_blank">/api/v3/occurrence?rows=10</a>
                             </td>
                         </tr>
                         <tr>
-                            <td>offset</td><td> 起始回傳資料位置。預設為 0</td>
+                            <td>offset</td><td> {% trans "起始回傳資料位置。預設為 0" %}</td>
                             <td>
                                 <a href="/api/v3/occurrence?offset=0" target="_blank">/api/v3/occurrence?offset=0</a>
                             </td>
@@ -193,37 +193,37 @@ $(document).ready(function () {
                 </table>
             </div>
         </div>
-        <small>如有建議或額外需求，歡迎<a href="https://portal.taibif.tw/contact-us" target="_blank">聯絡我們</a></small>
+        <small>{% trans "如有建議或額外需求，歡迎" %}<a href="https://portal.taibif.tw/contact-us" target="_blank">{% trans "聯絡我們" %}</a></small>
     </div>
 
 
     <div class="col-12 col-md-9 nav-item-content hide content-readable-panel" data-cat="occurrence">
         <h4 class="heading-lg-ul">
-            出現紀錄
+            {% trans "出現紀錄" %}
         </h4>
 
         <div class="pub-data-section">
             <div class="article-content-wrapper">
-                <h3>查詢參數說明</h3>
+                <h3>{% trans "查詢參數說明" %}</h3>
             </div>
             
             <ul>
                 <li>
-                    <div>物種資訊</div>
+                    <div>{% trans "物種資訊" %}</div>
                     <div>
                         <table class="table content-readable-table">
                             <thead>
                                 <tr>
-                                    <th>名稱</th>
-                                    <th>備註</th>
-                                    <th>範例</th>
+                                    <th>{% trans "名稱" %}</th>
+                                    <th>{% trans "備註" %}</th>
+                                    <th>{% trans "範例" %}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>originalOccurrenceID</td>
                                     <td>
-                                        以資料提供者之物種出現紀錄 ID 查詢指定的出現紀錄資料
+                                        {% trans "以資料提供者之物種出現紀錄 ID 查詢指定的出現紀錄資料" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?originalOccurrenceID=b92ca705-d4de-4319-820c-1bbad1079844" target="_blank">
@@ -234,7 +234,7 @@ $(document).ready(function () {
                                 <tr>
                                     <td>taibifOccurrenceID</td>
                                     <td>
-                                        以本網站之物種出現紀錄 ID 查詢指定的出現紀錄資料
+                                        {% trans "以本網站之物種出現紀錄 ID 查詢指定的出現紀錄資料" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?taibifOccurrenceID=797223337" target="_blank">
@@ -245,19 +245,19 @@ $(document).ready(function () {
                                 <tr>
                                     <td>basisOfRecord</td>
                                     <td>
-                                        以出現紀錄類型查詢。需要以控制詞彙查詢，控制詞彙如下：材料實體, 保存標本, 化石標本, 活體標本, 人為觀測, 材料樣本, 
-                                        機器觀測, 調查活動, 名錄/分類群, 出現紀錄, 文獻紀錄
+                                        {% trans "以出現紀錄類型查詢。需要以控制詞彙查詢，控制詞彙如下：材料實體, 保存標本, 化石標本, 活體標本, 人為觀測, 材料樣本," %}
+                                        {% trans "機器觀測, 調查活動, 名錄/分類群, 出現紀錄, 文獻紀錄" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?basisOfRecord=人為觀測" target="_blank">
-                                            /api/v3/occurrence?basisOfRecord=人為觀測
+                                            {% trans "/api/v3/occurrence?basisOfRecord=人為觀測" %}
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>taibifScientificName</td>
                                     <td>
-                                        以本網站對應物種 backbone 之學名查詢，物種 backbone 包含 TaiCOL 以及 GBIF
+                                        {% trans "以本網站對應物種 backbone 之學名查詢，物種 backbone 包含 TaiCOL 以及 GBIF" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?taibifScientificName=Muntiacus reevesi micrurus (Sclater, 1875)" target="_blank">
@@ -268,7 +268,7 @@ $(document).ready(function () {
                                 <tr>
                                     <td>taxonRank</td>
                                     <td>
-                                        以物種分類階層查詢，包含 kingdom, phylum, class, order, family, genus, species
+                                        {% trans "以物種分類階層查詢，包含 kingdom, phylum, class, order, family, genus, species" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?taxonRank=species" target="_blank">
@@ -279,7 +279,7 @@ $(document).ready(function () {
                                 <tr>
                                     <td>kingdom</td>
                                     <td>
-                                        物種分類階層之界。需要用控制詞彙查詢，控制詞彙如下：Animalia, Archaea, Bacteria, Chromista, Fungi, Plantae, Protozoa, Viruses
+                                        {% trans "物種分類階層之界。需要用控制詞彙查詢，控制詞彙如下：Animalia, Archaea, Bacteria, Chromista, Fungi, Plantae, Protozoa, Viruses" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?kingdom=Plantae" target="_blank">
@@ -290,7 +290,7 @@ $(document).ready(function () {
                                 <tr>
                                     <td>phylum</td>
                                     <td>
-                                        物種分類階層之門
+                                        {% trans "物種分類階層之門" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?phylum=Tracheophyta" target="_blank">
@@ -301,7 +301,7 @@ $(document).ready(function () {
                                 <tr>
                                     <td>class</td>
                                     <td>
-                                        物種分類階層之綱
+                                        {% trans "物種分類階層之綱" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?class=Elasmobranchii" target="_blank">
@@ -312,7 +312,7 @@ $(document).ready(function () {
                                 <tr>
                                     <td>order</td>
                                     <td>
-                                        物種分類階層之目
+                                        {% trans "物種分類階層之目" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?order=Magnoliales" target="_blank">
@@ -323,7 +323,7 @@ $(document).ready(function () {
                                 <tr>
                                     <td>family</td>
                                     <td>
-                                        物種分類階層之科
+                                        {% trans "物種分類階層之科" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?family=Erebidae" target="_blank">
@@ -334,7 +334,7 @@ $(document).ready(function () {
                                 <tr>
                                     <td>genus</td>
                                     <td>
-                                        物種分類階層之屬
+                                        {% trans "物種分類階層之屬" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?genus=Grevillea" target="_blank">
@@ -345,7 +345,7 @@ $(document).ready(function () {
                                 <tr>
                                     <td>taxonGroup</td>
                                     <td>
-                                        以本網站分類之物種類群查詢。需要用控制詞彙查詢，控制詞彙如下：Fishes, Insects, Amphibia, Reptiles, Birds, Mammals, Others, Viruses, Plants, Fungi, Bacteria, Archaea
+                                        {% trans "以本網站分類之物種類群查詢。需要用控制詞彙查詢，控制詞彙如下：Fishes, Insects, Amphibia, Reptiles, Birds, Mammals, Others, Viruses, Plants, Fungi, Bacteria, Archaea" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?taxonGroup=Fishes" target="_blank">
@@ -356,22 +356,22 @@ $(document).ready(function () {
                                 <tr>
                                     <td>establishmentMeans</td>
                                     <td>
-                                        以原生或引入定義評估查詢。需要用控制詞彙查詢，控制詞彙如下：原生, 原生：再引進, 引進（外來、非原生、非原住）, 引進（協助拓殖）, 流浪的, 不確定的（未知、隱源性）
+                                        {% trans "以原生或引入定義評估查詢。需要用控制詞彙查詢，控制詞彙如下：原生, 原生：再引進, 引進（外來、非原生、非原住）, 引進（協助拓殖）, 流浪的, 不確定的（未知、隱源性）" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?establishmentMeans=原生" target="_blank">
-                                            /api/v3/occurrence?establishmentMeans=原生
+                                            {% trans "/api/v3/occurrence?establishmentMeans=原生" %}
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>occurrenceStatus</td>
                                     <td>
-                                        以出現狀態查詢。需要用控制詞彙查詢，控制詞彙如下：出現, 未出現
+                                        {% trans "以出現狀態查詢。需要用控制詞彙查詢，控制詞彙如下：出現, 未出現" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?occurrenceStatus=出現" target="_blank">
-                                            /api/v3/occurrence?occurrenceStatus=出現
+                                            {% trans "/api/v3/occurrence?occurrenceStatus=出現" %}
                                         </a>
                                     </td>
                                 </tr>
@@ -380,21 +380,21 @@ $(document).ready(function () {
                     </div>
                 </li>
                 <li>
-                    <div>時間資訊</div>
+                    <div>{% trans "時間資訊" %}</div>
                     <div>
                         <table class="table content-readable-table">
                             <thead>
                                 <tr>
-                                    <th>名稱</th>
-                                    <th>備註</th>
-                                    <th>範例</th>
+                                    <th>{% trans "名稱" %}</th>
+                                    <th>{% trans "備註" %}</th>
+                                    <th>{% trans "範例" %}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>eventDate</td>
                                     <td>
-                                        以觀測日期查詢。日期格式包含 yyyy-mm-dd（單一日期）以及 yyyy-mm-dd,yyyy-mm-dd（區間日期）
+                                        {% trans "以觀測日期查詢。日期格式包含 yyyy-mm-dd（單一日期）以及 yyyy-mm-dd,yyyy-mm-dd（區間日期）" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?eventDate=2022-01-01" target="_blank">
@@ -405,7 +405,7 @@ $(document).ready(function () {
                                 <tr>
                                     <td>year</td>
                                     <td>
-                                        以觀測年查詢。格式包含 yyyy（單一年份）以及 yyyy,yyyy（區間年份）
+                                        {% trans "以觀測年查詢。格式包含 yyyy（單一年份）以及 yyyy,yyyy（區間年份）" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?year=2022" target="_blank">
@@ -416,7 +416,7 @@ $(document).ready(function () {
                                 <tr>
                                     <td>month</td>
                                     <td>
-                                        以觀測月查詢。格式包含 mm（單一月份）以及 mm,mm（區間月份）
+                                        {% trans "以觀測月查詢。格式包含 mm（單一月份）以及 mm,mm（區間月份）" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?month=01" target="_blank">
@@ -427,7 +427,7 @@ $(document).ready(function () {
                                 <tr>
                                     <td>taibifModifiedDate</td>
                                     <td>
-                                        以本網站資料更新日期查詢。日期格式包含 yyyy-mm-dd（單一日期）以及 yyyy-mm-dd,yyyy-mm-dd（區間日期）
+                                        {% trans "以本網站資料更新日期查詢。日期格式包含 yyyy-mm-dd（單一日期）以及 yyyy-mm-dd,yyyy-mm-dd（區間日期）" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?taibifModifiedDate=2022-01-01" target="_blank">
@@ -440,21 +440,21 @@ $(document).ready(function () {
                     </div>
                 </li>
                 <li>
-                    <div>地理資訊</div>
+                    <div>{% trans "地理資訊" %}</div>
                     <div>
                         <table class="table content-readable-table">
                             <thead>
                                 <tr>
-                                    <th>名稱</th>
-                                    <th>備註</th>
-                                    <th>範例</th>
+                                    <th>{% trans "名稱" %}</th>
+                                    <th>{% trans "備註" %}</th>
+                                    <th>{% trans "範例" %}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>boundedBy</td>
                                     <td>
-                                        取得指定四邊形座標範圍內物種出現紀錄資料，格式為：最小經度,最小緯度,最大經度,最大緯度
+                                        {% trans "取得指定四邊形座標範圍內物種出現紀錄資料，格式為：最小經度,最小緯度,最大經度,最大緯度" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?boundedBy=121.1,22.1,121.2,22.2" target="_blank">
@@ -465,7 +465,7 @@ $(document).ready(function () {
                                 <tr>
                                     <td>coordinateUncertaintyInMeters</td>
                                     <td>
-                                        取得座標誤差（含以下）之物種出現紀錄資料，單位為公尺
+                                        {% trans "取得座標誤差（含以下）之物種出現紀錄資料，單位為公尺" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?coordinateUncertaintyInMeters=100" target="_blank">
@@ -476,7 +476,7 @@ $(document).ready(function () {
                                 <tr>
                                     <td>country</td>
                                     <td>
-                                        以國家名稱查詢
+                                        {% trans "以國家名稱查詢" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?country=Taiwan" target="_blank">
@@ -487,7 +487,7 @@ $(document).ready(function () {
                                 <tr>
                                     <td>county</td>
                                     <td>
-                                        以臺灣縣市名稱查詢。需要用控制詞彙查詢，控制詞彙如下：
+                                        {% trans "以臺灣縣市名稱查詢。需要用控制詞彙查詢，控制詞彙如下：" %}
                                         Keelung City, New Taipei City, Taipei City, Taoyuan City, Hsinchu County, 
                                         Hsinchu City, Miaoli County, Taichung City, Changhua County, Nantou County,
                                         Yunlin County, Chiayi County, Tainan City, Kaohsiung City, Pingtung County, 
@@ -505,32 +505,32 @@ $(document).ready(function () {
                     </div>
                 </li>
                 <li>
-                    <div>資料集資訊</div>
+                    <div>{% trans "資料集資訊" %}</div>
                     <div>
                         <table class="table content-readable-table">
                             <thead>
                                 <tr>
-                                    <th>名稱</th>
-                                    <th>備註</th>
-                                    <th>範例</th>
+                                    <th>{% trans "名稱" %}</th>
+                                    <th>{% trans "備註" %}</th>
+                                    <th>{% trans "範例" %}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>datasetName</td>
                                     <td>
-                                        以資料集名稱查詢
+                                        {% trans "以資料集名稱查詢" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?datasetName=Sea turtle sightings in Taiwan | 台灣海龜目擊紀錄" target="_blank">
-                                            /api/v3/occurrence?datasetName=Sea turtle sightings in Taiwan | 台灣海龜目擊紀錄
+                                            {% trans "/api/v3/occurrence?datasetName=Sea turtle sightings in Taiwan | 台灣海龜目擊紀錄" %}
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>taibifDatasetID</td>
                                     <td>
-                                        以本網站之資料集 ID 查詢指定的出現紀錄資料
+                                        {% trans "以本網站之資料集 ID 查詢指定的出現紀錄資料" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?taibifDatasetID=2e0a47e6-07f2-4b3d-9ed7-cfac5abccbb2" target="_blank">
@@ -543,21 +543,21 @@ $(document).ready(function () {
                     </div>
                 </li>
                 <li>
-                    <div>其他資訊</div>
+                    <div>{% trans "其他資訊" %}</div>
                     <div>
                         <table class="table content-readable-table">
                             <thead>
                                 <tr>
-                                    <th>名稱</th>
-                                    <th>備註</th>
-                                    <th>範例</th>
+                                    <th>{% trans "名稱" %}</th>
+                                    <th>{% trans "備註" %}</th>
+                                    <th>{% trans "範例" %}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>selfProduced</td>
                                     <td>
-                                        以是否透過 TaiBIF IPT 上傳查詢。True 為透過 TaiBIF IPT 上傳之出現紀錄；False 為介接 GBIF 上點位為臺灣之出現紀錄
+                                        {% trans "以是否透過 TaiBIF IPT 上傳查詢。True 為透過 TaiBIF IPT 上傳之出現紀錄；False 為介接 GBIF 上點位為臺灣之出現紀錄" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?selfProduced=True" target="_blank">
@@ -568,7 +568,7 @@ $(document).ready(function () {
                                 <tr>
                                     <td>license</td>
                                     <td>
-                                        以出現紀錄授權方式查詢。需要用控制詞彙查詢，控制詞彙如下：CC0, CC-BY, CC-BY-NC, NA
+                                        {% trans "以出現紀錄授權方式查詢。需要用控制詞彙查詢，控制詞彙如下：CC0, CC-BY, CC-BY-NC, NA" %}
                                     </td>
                                     <td>
                                         <a class="highlight-link" href="/api/v3/occurrence?license=CC0" target="_blank">
@@ -583,345 +583,345 @@ $(document).ready(function () {
             </ul>
 
             <div class="article-content-wrapper">
-                <h3>回傳欄位說明</h3>
+                <h3>{% trans "回傳欄位說明" %}</h3>
             </div>
             
             <ul>
                 <li>
-                    <div>物種資訊</div>
+                    <div>{% trans "物種資訊" %}</div>
                     <div>
                         <table class="table content-readable-table">
                             <thead>
                                 <tr>
-                                    <th>名稱</th>
-                                    <th>類型</th>
-                                    <th>說明</th>
+                                    <th>{% trans "名稱" %}</th>
+                                    <th>{% trans "類型" %}</th>
+                                    <th>{% trans "說明" %}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>gbifID</td>
-                                    <td>字串</td>
-                                    <td>GBIF 資料辨識碼</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "GBIF 資料辨識碼" %}</td>
                                 </tr>
                                 <tr>
                                     <td>originalOccurrenceID</td>
-                                    <td>字串</td>
-                                    <td>資料發布者提供的資料辨識碼</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "資料發布者提供的資料辨識碼" %}</td>
                                 </tr>
                                 <tr>
                                     <td>taibifOccurrenceID</td>
-                                    <td>字串</td>
-                                    <td>TaiBIF 資料辨識碼</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "TaiBIF 資料辨識碼" %}</td>
                                 </tr>
                                 <tr>
                                     <td>basisOfRecord</td>
-                                    <td>字串</td>
-                                    <td>紀錄類型</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "紀錄類型" %}</td>
                                 </tr>
                                 <tr>
                                     <td>originalScientificName</td>
-                                    <td>字串</td>
-                                    <td>資料發布者提供的物種學名</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "資料發布者提供的物種學名" %}</td>
                                 </tr>
                                 <tr>
                                     <td>taibifScientificName</td>
-                                    <td>字串</td>
-                                    <td>TaiBIF 轉譯後的物種學名</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "TaiBIF 轉譯後的物種學名" %}</td>
                                 </tr>
                                 <tr>
                                     <td>taxonRank</td>
-                                    <td>字串</td>
-                                    <td>物種分類階層</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "物種分類階層" %}</td>
                                 </tr>
                                 <tr>
                                     <td>scientificNameID</td>
-                                    <td>字串</td>
-                                    <td>物種名稱代碼，使用的分類觀依據 taxonBackbone</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "物種名稱代碼，使用的分類觀依據 taxonBackbone" %}</td>
                                 </tr>
                                 <tr>
                                     <td>taxonBackbone</td>
-                                    <td>字串</td>
-                                    <td>物種 Backbone 來源</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "物種 Backbone 來源" %}</td>
                                 </tr>
                                 <tr>
                                     <td>vernacularName</td>
-                                    <td>字串</td>
-                                    <td>物種中文俗名</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "物種中文俗名" %}</td>
                                 </tr>
                                 <tr>
                                     <td>kingdom</td>
-                                    <td>字串</td>
-                                    <td>界</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "界" %}</td>
                                 </tr>
                                 <tr>
                                     <td>phylum</td>
-                                    <td>字串</td>
-                                    <td>門</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "門" %}</td>
                                 </tr>
                                 <tr>
                                     <td>class</td>
-                                    <td>字串</td>
-                                    <td>綱</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "綱" %}</td>
                                 </tr>
                                 <tr>
                                     <td>order</td>
-                                    <td>字串</td>
-                                    <td>目</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "目" %}</td>
                                 </tr>
                                 <tr>
                                     <td>family</td>
-                                    <td>字串</td>
-                                    <td>科</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "科" %}</td>
                                 </tr>
                                 <tr>
                                     <td>genus</td>
-                                    <td>字串</td>
-                                    <td>屬</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "屬" %}</td>
                                 </tr>
                                 <tr>
                                     <td>taxonGroup</td>
-                                    <td>字串</td>
-                                    <td>分類階層</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "分類階層" %}</td>
                                 </tr>
                                 <tr>
                                     <td>establishmentMeans</td>
-                                    <td>字串</td>
-                                    <td>類群當地原生性</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "類群當地原生性" %}</td>
                                 </tr>
                                 <tr>
                                     <td>occurrenceStatus</td>
-                                    <td>字串</td>
-                                    <td>觀測狀態</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "觀測狀態" %}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </li>
                 <li>
-                    <div>時間資訊</div>
+                    <div>{% trans "時間資訊" %}</div>
                     <div>
                         <table class="table content-readable-table">
                             <thead>
                                 <tr>
-                                    <th>名稱</th>
-                                    <th>類型</th>
-                                    <th>說明</th>
+                                    <th>{% trans "名稱" %}</th>
+                                    <th>{% trans "類型" %}</th>
+                                    <th>{% trans "說明" %}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>eventDate</td>
-                                    <td>字串</td>
-                                    <td>觀測日期</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "觀測日期" %}</td>
                                 </tr>
                                 <tr>
                                     <td>year</td>
-                                    <td>數字</td>
-                                    <td>觀測年</td>
+                                    <td>{% trans "數字" %}</td>
+                                    <td>{% trans "觀測年" %}</td>
                                 </tr>
                                 <tr>
                                     <td>month</td>
-                                    <td>數字</td>
-                                    <td>觀測月</td>
+                                    <td>{% trans "數字" %}</td>
+                                    <td>{% trans "觀測月" %}</td>
                                 </tr>
                                 <tr>
                                     <td>day</td>
-                                    <td>數字</td>
-                                    <td>觀測日</td>
+                                    <td>{% trans "數字" %}</td>
+                                    <td>{% trans "觀測日" %}</td>
                                 </tr>
                                 <tr>
                                     <td>taibifModifiedDate</td>
-                                    <td>字串</td>
-                                    <td>TaiBIF 更新日期</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "TaiBIF 更新日期" %}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </li>
                 <li>
-                    <div>地理資訊</div>
+                    <div>{% trans "地理資訊" %}</div>
                     <div>
                         <table class="table content-readable-table">
                             <thead>
                                 <tr>
-                                    <th>名稱</th>
-                                    <th>類型</th>
-                                    <th>說明</th>
+                                    <th>{% trans "名稱" %}</th>
+                                    <th>{% trans "類型" %}</th>
+                                    <th>{% trans "說明" %}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>geodeticDatum</td>
-                                    <td>字串</td>
-                                    <td>座標系統</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "座標系統" %}</td>
                                 </tr>
                                 <tr>
                                     <td>verbatimSRS</td>
-                                    <td>字串</td>
-                                    <td>空間參考系統</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "空間參考系統" %}</td>
                                 </tr>
                                 <tr>
                                     <td>decimalLongitude</td>
-                                    <td>浮點數</td>
-                                    <td>經度</td>
+                                    <td>{% trans "浮點數" %}</td>
+                                    <td>{% trans "經度" %}</td>
                                 </tr>
                                 <tr>
                                     <td>decimalLatitude</td>
-                                    <td>浮點數</td>
-                                    <td>緯度</td>
+                                    <td>{% trans "浮點數" %}</td>
+                                    <td>{% trans "緯度" %}</td>
                                 </tr>
                                 <tr>
                                     <td>coordinatePrecision</td>
-                                    <td>浮點數</td>
-                                    <td>座標模糊化程度</td>
+                                    <td>{% trans "浮點數" %}</td>
+                                    <td>{% trans "座標模糊化程度" %}</td>
                                 </tr>
                                 <tr>
                                     <td>coordinateUncertaintyInMeters</td>
-                                    <td>浮點數</td>
-                                    <td>原始座標誤差（公尺）</td>
+                                    <td>{% trans "浮點數" %}</td>
+                                    <td>{% trans "原始座標誤差（公尺）" %}</td>
                                 </tr>
                                 <tr>
                                     <td>dataGeneralizations</td>
-                                    <td>字串</td>
-                                    <td>座標模糊化方式</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "座標模糊化方式" %}</td>
                                 </tr>
                                 <tr>
                                     <td>countryCode</td>
-                                    <td>字串</td>
-                                    <td>國家代碼</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "國家代碼" %}</td>
                                 </tr>
                                 <tr>
                                     <td>country</td>
-                                    <td>字串</td>
-                                    <td>國家</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "國家" %}</td>
                                 </tr>
                                 <tr>
                                     <td>county</td>
-                                    <td>字串</td>
-                                    <td>臺灣縣市</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "臺灣縣市" %}</td>
                                 </tr>
                                 <tr>
                                     <td>locality</td>
-                                    <td>字串</td>
-                                    <td>出現地</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "出現地" %}</td>
                                 </tr>
                                 <tr>
                                     <td>habitatReserve</td>
-                                    <td>字串</td>
-                                    <td>自然生態保護區</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "自然生態保護區" %}</td>
                                 </tr>
                                 <tr>
                                     <td>wildlifeReserve</td>
-                                    <td>字串</td>
-                                    <td>野生動物保護區</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "野生動物保護區" %}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </li>
                 <li>
-                    <div>資料集資訊</div>
+                    <div>{% trans "資料集資訊" %}</div>
                     <div>
                         <table class="table content-readable-table">
                             <thead>
                                 <tr>
-                                    <th>名稱</th>
-                                    <th>類型</th>
-                                    <th>說明</th>
+                                    <th>{% trans "名稱" %}</th>
+                                    <th>{% trans "類型" %}</th>
+                                    <th>{% trans "說明" %}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>datasetName</td>
-                                    <td>字串</td>
-                                    <td>資料集名稱</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "資料集名稱" %}</td>
                                 </tr>
                                 <tr>
                                     <td>datasetShortName</td>
-                                    <td>字串</td>
-                                    <td>資料集短名稱</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "資料集短名稱" %}</td>
                                 </tr>
                                 <tr>
                                     <td>taibifDatasetID</td>
-                                    <td>字串</td>
-                                    <td>TaiBIF 資料集 ID</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "TaiBIF 資料集 ID" %}</td>
                                 </tr>
                                 <tr>
                                     <td>gbifDatasetID</td>
-                                    <td>字串</td>
-                                    <td>GBIF 資料集 ID</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "GBIF 資料集 ID" %}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </li>
                 <li>
-                    <div>其他資訊</div>
+                    <div>{% trans "其他資訊" %}</div>
                     <div>
                         <table class="table content-readable-table">
                             <thead>
                                 <tr>
-                                    <th>名稱</th>
-                                    <th>類型</th>
-                                    <th>說明</th>
+                                    <th>{% trans "名稱" %}</th>
+                                    <th>{% trans "類型" %}</th>
+                                    <th>{% trans "說明" %}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>selfProduced</td>
-                                    <td>布林值</td>
-                                    <td>是否為 TaiBIF IPT 來源的資料</td>
+                                    <td>{% trans "布林值" %}</td>
+                                    <td>{% trans "是否為 TaiBIF IPT 來源的資料" %}</td>
                                 </tr>
                                 <tr>
                                     <td>license</td>
-                                    <td>字串</td>
-                                    <td>出現紀錄授權方式</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "出現紀錄授權方式" %}</td>
                                 </tr>
                                 <tr>
                                     <td>typeStatus</td>
-                                    <td>字串</td>
-                                    <td>標本模式</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "標本模式" %}</td>
                                 </tr>
                                 <tr>
                                     <td>recordedBy</td>
-                                    <td>字串</td>
-                                    <td>記錄（採集）者</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "記錄（採集）者" %}</td>
                                 </tr>
                                 <tr>
                                     <td>recordNumber</td>
-                                    <td>字串</td>
-                                    <td>採集號</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "採集號" %}</td>
                                 </tr>
                                 <tr>
                                     <td>catalogNumber</td>
-                                    <td>字串</td>
-                                    <td>館藏號</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "館藏號" %}</td>
                                 </tr>
                                 <tr>
                                     <td>organismQuantity</td>
-                                    <td>數字</td>
-                                    <td>數量</td>
+                                    <td>{% trans "數字" %}</td>
+                                    <td>{% trans "數量" %}</td>
                                 </tr>
                                 <tr>
                                     <td>organismQuantityType</td>
-                                    <td>字串</td>
-                                    <td>數量單位</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "數量單位" %}</td>
                                 </tr>
                                 <tr>
                                     <td>associatedMedia</td>
-                                    <td>字串</td>
-                                    <td>多媒體連結</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "多媒體連結" %}</td>
                                 </tr>
                                 <tr>
                                     <td>mediaLicense</td>
-                                    <td>字串</td>
-                                    <td>多媒體授權方式</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "多媒體授權方式" %}</td>
                                 </tr>
                                 <tr>
                                     <td>issue</td>
-                                    <td>字串</td>
-                                    <td>資料問題</td>
+                                    <td>{% trans "字串" %}</td>
+                                    <td>{% trans "資料問題" %}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -933,39 +933,39 @@ $(document).ready(function () {
     
     <div class="col-12 col-md-9 nav-item-content hide content-readable-panel" data-cat="dataset">
         <h4 class="heading-lg-ul">
-            資料集
+            {% trans "資料集" %}
         </h4>
 
         <div class="pub-data-section">
             <div class="article-content-wrapper">
-                <h3>查詢參數說明</h3>
+                <h3>{% trans "查詢參數說明" %}</h3>
             </div>
             
             <div>
                 <table class="table content-readable-table">
                     <thead>
                         <tr>
-                            <th>名稱</th>
-                            <th>備註</th>
-                            <th>範例</th>
+                            <th>{% trans "名稱" %}</th>
+                            <th>{% trans "備註" %}</th>
+                            <th>{% trans "範例" %}</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>datasetName</td>
                             <td>
-                                以資料集名稱查詢
+                                {% trans "以資料集名稱查詢" %}
                             </td>
                             <td>
                                 <a class="highlight-link" href="/api/v3/dataset?datasetName=Sea turtle sightings in Taiwan | 台灣海龜目擊紀錄" target="_blank">
-                                    /api/v3/dataset?datasetName=Sea turtle sightings in Taiwan | 台灣海龜目擊紀錄
+                                    {% trans "/api/v3/dataset?datasetName=Sea turtle sightings in Taiwan | 台灣海龜目擊紀錄" %}
                                 </a>
                             </td>
                         </tr>
                         <tr>
                             <td>taibifDatasetID</td>
                             <td>
-                                以本網站之資料集 ID 查詢指定的出現紀錄資料
+                                {% trans "以本網站之資料集 ID 查詢指定的出現紀錄資料" %}
                             </td>
                             <td>
                                 <a class="highlight-link" href="/api/v3/dataset?taibifDatasetID=2e0a47e6-07f2-4b3d-9ed7-cfac5abccbb2" target="_blank">
@@ -976,7 +976,7 @@ $(document).ready(function () {
                         <tr>
                             <td>publisherID</td>
                             <td>
-                                以本網站之發布單位 ID 查詢指定的出現紀錄資料
+                                {% trans "以本網站之發布單位 ID 查詢指定的出現紀錄資料" %}
                             </td>
                             <td>
                                 <a class="highlight-link" href="/api/v3/dataset?publisherID=e506ec0c-b3c5-4c3d-ae69-ebc56596fc52" target="_blank">
@@ -987,25 +987,25 @@ $(document).ready(function () {
                         <tr>
                             <td>publisherName</td>
                             <td>
-                                以發布單位名稱查詢
+                                {% trans "以發布單位名稱查詢" %}
                             </td>
                             <td>
                                 <a class="highlight-link" href="/api/v3/dataset?publisherName=TurtleSpot Taiwan 海龜點點名" target="_blank">
-                                    /api/v3/dataset?publisherName=TurtleSpot Taiwan 海龜點點名
+                                    {% trans "/api/v3/dataset?publisherName=TurtleSpot Taiwan 海龜點點名" %}
                                 </a>
                             </td>
                         </tr>
                         <tr>
                             <td>author</td>
                             <td>
-                                以發布者查詢
+                                {% trans "以發布者查詢" %}
                             </td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>publicationDate</td>
                             <td>
-                                以資料集發布日期查詢。日期格式包含 yyyy-mm-dd（單一日期）以及 yyyy-mm-dd,yyyy-mm-dd（區間日期）
+                                {% trans "以資料集發布日期查詢。日期格式包含 yyyy-mm-dd（單一日期）以及 yyyy-mm-dd,yyyy-mm-dd（區間日期）" %}
                             </td>
                             <td>
                                 <a class="highlight-link" href="/api/v3/dataset?publicationDate=2022-01-01" target="_blank">
@@ -1016,7 +1016,7 @@ $(document).ready(function () {
                         <tr>
                             <td>datasetModifiedDate</td>
                             <td>
-                                以資料集更新日期查詢。日期格式包含 yyyy-mm-dd（單一日期）以及 yyyy-mm-dd,yyyy-mm-dd（區間日期）
+                                {% trans "以資料集更新日期查詢。日期格式包含 yyyy-mm-dd（單一日期）以及 yyyy-mm-dd,yyyy-mm-dd（區間日期）" %}
                             </td>
                             <td>
                                 <a class="highlight-link" href="/api/v3/dataset?datasetModifiedDate=2022-01-01" target="_blank">
@@ -1027,7 +1027,7 @@ $(document).ready(function () {
                         <tr>
                             <td>gbifDatasetID</td>
                             <td>
-                                以 GBIF 資料集 ID 查詢指定的出現紀錄資料
+                                {% trans "以 GBIF 資料集 ID 查詢指定的出現紀錄資料" %}
                             </td>
                             <td>
                                 <a class="highlight-link" href="/api/v3/dataset?gbifDatasetID=336b6790-062f-407f-a783-2f1d8874e6c3" target="_blank">
@@ -1038,7 +1038,7 @@ $(document).ready(function () {
                         <tr>
                             <td>core</td>
                             <td>
-                                以資料集核心類型查詢。需要用控制詞彙查詢，控制詞彙如下：SAMPLINGEVENT, OCCURRENCE, CHECKLIST, METADATA
+                                {% trans "以資料集核心類型查詢。需要用控制詞彙查詢，控制詞彙如下：SAMPLINGEVENT, OCCURRENCE, CHECKLIST, METADATA" %}
                             </td>
                             <td>
                                 <a class="highlight-link" href="/api/v3/dataset?core=SAMPLINGEVENT" target="_blank">
@@ -1049,7 +1049,7 @@ $(document).ready(function () {
                         <tr>
                             <td>license</td>
                             <td>
-                                以出現紀錄授權方式查詢。需要用控制詞彙查詢，控制詞彙如下：CC0, CC-BY, CC-BY-NC, NA
+                                {% trans "以出現紀錄授權方式查詢。需要用控制詞彙查詢，控制詞彙如下：CC0, CC-BY, CC-BY-NC, NA" %}
                             </td>
                             <td>
                                 <a class="highlight-link" href="/api/v3/dataset?license=CC0" target="_blank">
@@ -1060,7 +1060,7 @@ $(document).ready(function () {
                         <tr>
                             <td>source</td>
                             <td>
-                                以資料集來源查詢。需要用控制詞彙查詢，控制詞彙如下：TaiBIF IPT, GBIF
+                                {% trans "以資料集來源查詢。需要用控制詞彙查詢，控制詞彙如下：TaiBIF IPT, GBIF" %}
                             </td>
                             <td>
                                 <a class="highlight-link" href="/api/v3/dataset?source=TaiBIF IPT" target="_blank">
@@ -1073,93 +1073,93 @@ $(document).ready(function () {
             </div>
 
             <div class="article-content-wrapper">
-                <h3>回傳欄位說明</h3>
+                <h3>{% trans "回傳欄位說明" %}</h3>
             </div>
             
             <div>
                 <table class="table content-readable-table">
                     <thead>
                         <tr>
-                            <th>名稱</th>
-                            <th>類型</th>
-                            <th>說明</th>
+                            <th>{% trans "名稱" %}</th>
+                            <th>{% trans "類型" %}</th>
+                            <th>{% trans "說明" %}</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>datasetName</td>
-                            <td>字串</td>
-                            <td>資料集名稱</td>
+                            <td>{% trans "字串" %}</td>
+                            <td>{% trans "資料集名稱" %}</td>
                         </tr>
                         <tr>
                             <td>taibifDatasetID</td>
-                            <td>字串</td>
-                            <td>TaiBIF 資料集 ID</td>
+                            <td>{% trans "字串" %}</td>
+                            <td>{% trans "TaiBIF 資料集 ID" %}</td>
                         </tr>
                         <tr>
                             <td>publisherID</td>
-                            <td>字串</td>
-                            <td>發布單位 ID</td>
+                            <td>{% trans "字串" %}</td>
+                            <td>{% trans "發布單位 ID" %}</td>
                         </tr>
                         <tr>
                             <td>publisherName</td>
-                            <td>字串</td>
-                            <td>發布單位名稱</td>
+                            <td>{% trans "字串" %}</td>
+                            <td>{% trans "發布單位名稱" %}</td>
                         </tr>
                         <tr>
                             <td>author</td>
-                            <td>字串</td>
-                            <td>發布者</td>
+                            <td>{% trans "字串" %}</td>
+                            <td>{% trans "發布者" %}</td>
                         </tr>
                         <tr>
                             <td>datasetShortName</td>
-                            <td>字串</td>
-                            <td>資料集在 TaiBIF IPT 上的簡稱</td>
+                            <td>{% trans "字串" %}</td>
+                            <td>{% trans "資料集在 TaiBIF IPT 上的簡稱" %}</td>
                         </tr>
                         <tr>
                             <td>publicationDate</td>
-                            <td>字串</td>
-                            <td>資料集發布日期</td>
+                            <td>{% trans "字串" %}</td>
+                            <td>{% trans "資料集發布日期" %}</td>
                         </tr>
                         <tr>
                             <td>datasetModifiedDate</td>
-                            <td>字串</td>
-                            <td>資料集更新日期</td>
+                            <td>{% trans "字串" %}</td>
+                            <td>{% trans "資料集更新日期" %}</td>
                         </tr>
                         <tr>
                             <td>gbifDatasetID</td>
-                            <td>字串</td>
-                            <td>GBIF 資料集 ID</td>
+                            <td>{% trans "字串" %}</td>
+                            <td>{% trans "GBIF 資料集 ID" %}</td>
                         </tr>
                         <tr>
                             <td>core</td>
-                            <td>字串</td>
-                            <td>資料集核心類型</td>
+                            <td>{% trans "字串" %}</td>
+                            <td>{% trans "資料集核心類型" %}</td>
                         </tr>
                         <tr>
                             <td>license</td>
-                            <td>字串</td>
-                            <td>出現紀錄授權方式</td>
+                            <td>{% trans "字串" %}</td>
+                            <td>{% trans "出現紀錄授權方式" %}</td>
                         </tr>
                         <tr>
                             <td>doi</td>
-                            <td>字串</td>
-                            <td>數位物件識別號（Digital Object Identifier）</td>
+                            <td>{% trans "字串" %}</td>
+                            <td>{% trans "數位物件識別號（Digital Object Identifier）" %}</td>
                         </tr>
                         <tr>
                             <td>numberRecord</td>
-                            <td>數字</td>
-                            <td>資料筆數</td>
+                            <td>{% trans "數字" %}</td>
+                            <td>{% trans "資料筆數" %}</td>
                         </tr>
                         <tr>
                             <td>numberOccurrence</td>
-                            <td>數字</td>
-                            <td>出現紀錄筆數</td>
+                            <td>{% trans "數字" %}</td>
+                            <td>{% trans "出現紀錄筆數" %}</td>
                         </tr>
                         <tr>
                             <td>source</td>
-                            <td>字串</td>
-                            <td>資料集來源</td>
+                            <td>{% trans "字串" %}</td>
+                            <td>{% trans "資料集來源" %}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1169,28 +1169,28 @@ $(document).ready(function () {
 
     <div class="col-12 col-md-9 nav-item-content hide content-readable-panel" data-cat="publisher">
         <h4 class="heading-lg-ul">
-            發布單位 
+            {% trans "發布單位" %}
         </h4>
         
         <div class="pub-data-section">
             <div class="article-content-wrapper">
-                <h3>查詢參數說明</h3>
+                <h3>{% trans "查詢參數說明" %}</h3>
             </div>
             
             <div>
                 <table class="table content-readable-table">
                     <thead>
                         <tr>
-                            <th>名稱</th>
-                            <th>備註</th>
-                            <th>範例</th>
+                            <th>{% trans "名稱" %}</th>
+                            <th>{% trans "備註" %}</th>
+                            <th>{% trans "範例" %}</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>publisherID</td>
                             <td>
-                                以本網站之發布單位 ID 查詢指定的出現紀錄資料
+                                {% trans "以本網站之發布單位 ID 查詢指定的出現紀錄資料" %}
                             </td>
                             <td>
                                 <a class="highlight-link" href="/api/v3/publisher?publisherID=e506ec0c-b3c5-4c3d-ae69-ebc56596fc52" target="_blank">
@@ -1201,18 +1201,18 @@ $(document).ready(function () {
                         <tr>
                             <td>publisherName</td>
                             <td>
-                                以發布單位名稱查詢
+                                {% trans "以發布單位名稱查詢" %}
                             </td>
                             <td>
                                 <a class="highlight-link" href="/api/v3/publisher?publisherName=TurtleSpot Taiwan 海龜點點名" target="_blank">
-                                    /api/v3/publisher?publisherName=TurtleSpot Taiwan 海龜點點名
+                                    {% trans "/api/v3/publisher?publisherName=TurtleSpot Taiwan 海龜點點名" %}
                                 </a>
                             </td>
                         </tr>
                         <tr>
                             <td>countryCode</td>
                             <td>
-                                以發布單位國家代碼查詢。需使用 ISO 3166-1 兩碼
+                                {% trans "以發布單位國家代碼查詢。需使用 ISO 3166-1 兩碼" %}
                             </td>
                             <td>
                                 <a class="highlight-link" href="/api/v3/publisher?countryCode=TW" target="_blank">
@@ -1225,58 +1225,58 @@ $(document).ready(function () {
             </div>
 
             <div class="article-content-wrapper">
-                <h3>回傳欄位說明</h3>
+                <h3>{% trans "回傳欄位說明" %}</h3>
             </div>
             
             <div>
                 <table class="table content-readable-table">
                     <thead>
                         <tr>
-                            <th>名稱</th>
-                            <th>類型</th>
-                            <th>說明</th>
+                            <th>{% trans "名稱" %}</th>
+                            <th>{% trans "類型" %}</th>
+                            <th>{% trans "說明" %}</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>publisherID</td>
-                            <td>字串</td>
-                            <td>發布單位 ID</td>
+                            <td>{% trans "字串" %}</td>
+                            <td>{% trans "發布單位 ID" %}</td>
                         </tr>
                         <tr>
                             <td>publisherName</td>
-                            <td>字串</td>
-                            <td>發布單位名稱</td>
+                            <td>{% trans "字串" %}</td>
+                            <td>{% trans "發布單位名稱" %}</td>
                         </tr>
                         <tr>
                             <td>description</td>
-                            <td>字串</td>
-                            <td>發布單位描述</td>
+                            <td>{% trans "字串" %}</td>
+                            <td>{% trans "發布單位描述" %}</td>
                         </tr>
                         <tr>
                             <td>administrativeContact</td>
-                            <td>字串</td>
-                            <td>發布單位聯絡人</td>
+                            <td>{% trans "字串" %}</td>
+                            <td>{% trans "發布單位聯絡人" %}</td>
                         </tr>
                         <tr>
                             <td>technicalContact</td>
-                            <td>字串</td>
-                            <td>技術聯絡人</td>
+                            <td>{% trans "字串" %}</td>
+                            <td>{% trans "技術聯絡人" %}</td>
                         </tr>
                         <tr>
                             <td>countryCode</td>
-                            <td>字串</td>
-                            <td>發布單位國家代碼</td>
+                            <td>{% trans "字串" %}</td>
+                            <td>{% trans "發布單位國家代碼" %}</td>
                         </tr>
                         <tr>
                             <td>countryOrArea</td>
-                            <td>字串</td>
-                            <td>發布單位國家</td>
+                            <td>{% trans "字串" %}</td>
+                            <td>{% trans "發布單位國家" %}</td>
                         </tr>
                         <tr>
                             <td>installations</td>
-                            <td>字串</td>
-                            <td>裝置</td>
+                            <td>{% trans "字串" %}</td>
+                            <td>{% trans "裝置" %}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1286,7 +1286,7 @@ $(document).ready(function () {
 
     <div class="col-12 col-md-9 nav-item-content hide content-readable-panel" data-cat="updates">
         <h4 class="heading-lg-ul">
-            更新歷程 
+            {% trans "更新歷程" %}
         </h4>
 
         <div class="article-content-wrapper">
@@ -1294,17 +1294,17 @@ $(document).ready(function () {
         </div>
         
         <ul>
-            <li>修改回傳資料架構，加入回傳狀態</li>
-            <li>查詢參數加入驗證機制</li>
+            <li>{% trans "修改回傳資料架構，加入回傳狀態" %}</li>
+            <li>{% trans "查詢參數加入驗證機制" %}</li>
             <li>
-                <div>欄位名稱修改</div>
+                <div>{% trans "欄位名稱修改" %}</div>
                 <div>
                     <table class="table content-readable-table">
                         <thead>
                             <tr>
-                                <th>類型</th>
-                                <th>修改前</th>
-                                <th>修改後</th>
+                                <th>{% trans "類型" %}</th>
+                                <th>{% trans "修改前" %}</th>
+                                <th>{% trans "修改後" %}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1321,53 +1321,53 @@ $(document).ready(function () {
                             <tr>
                                 <td>occurrence</td> 
                                 <td>taicolTaxonID</td>
-                                <td>（移除）</td>
+                                <td>{% trans "（移除）" %}</td>
                             </tr>
                             <tr>
                                 <td>occurrence</td> 
                                 <td>gbifAcceptedID</td>
-                                <td>（移除）</td>
+                                <td>{% trans "（移除）" %}</td>
                             </tr>
                             <tr>
                                 <td>occurrence</td> 
                                 <td>taibifCreatedDate</td>
-                                <td>（移除）</td>
+                                <td>{% trans "（移除）" %}</td>
                             </tr>
                             <tr>
                                 <td>occurrence</td> 
                                 <td>preservation</td>
-                                <td>（移除）</td>
+                                <td>{% trans "（移除）" %}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </li>
             <li>
-                <div>查詢參數修改</div>
+                <div>{% trans "查詢參數修改" %}</div>
                 <div>
                     <table class="table content-readable-table">
                         <thead>
                             <tr>
-                                <th>類型</th>
-                                <th>修改前</th>
-                                <th>修改後</th>
+                                <th>{% trans "類型" %}</th>
+                                <th>{% trans "修改前" %}</th>
+                                <th>{% trans "修改後" %}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>occurrence</td> 
                                 <td>taibif_decimalLongitude, taibif_decimalLatitude</td>
-                                <td>用 boundedBy 聯合搜尋</td>
+                                <td>{% trans "用 boundedBy 聯合搜尋" %}</td>
                             </tr>
                             <tr>
                                 <td>occurrence</td> 
                                 <td>gbifDatasetID</td>
-                                <td>（移除）</td>
+                                <td>{% trans "（移除）" %}</td>
                             </tr>
                             <tr>
                                 <td>occurrence</td> 
                                 <td>issue</td>
-                                <td>（移除）</td>
+                                <td>{% trans "（移除）" %}</td>
                             </tr>
                         </tbody>
                     </table>

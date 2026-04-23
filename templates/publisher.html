@@ -1,14 +1,15 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
+{% load i18n %}
 
 {% block main %}
 <!-- container begin -->
 <div class="container my-5 container-1340">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'index' %}">首頁</a></li>
-            <li class="breadcrumb-item">發布單位</li>
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
+            <li class="breadcrumb-item">{% trans "發布單位" %}</li>
         </ol>
     </nav>
 
@@ -21,31 +22,31 @@
         <ul>
             {% if info.dataset_num %}
             <li>
-                資料集數量：{{ info.dataset_num }}
+                {% blocktrans trimmed %}資料集數量：{{ info.dataset_num }}{% endblocktrans %}
             </li>
             {% endif %}
 
             {% if info.sum_occurrence %}
             <li>
-                發現紀錄總筆數：{{ info.sum_occurrence|intcomma:False }}
+                {% blocktrans trimmed with sum_occurrence=info.sum_occurrence|intcomma:False %}發現紀錄總筆數：{{ sum_occurrence }}{% endblocktrans %}
             </li>
             {% endif %}
 
             {% if publisher.country_or_area %}
             <li>
-                國家或地區：{{publisher.country_or_area}}
+                {% blocktrans trimmed %}國家或地區：{{ publisher.country_or_area }}{% endblocktrans %}
             </li>
             {% endif %}
 
             {% if publisher.administrative_contact %}
             <li>
-                行政聯絡人：{{ publisher.administrative_contact }}
+                {% blocktrans trimmed %}行政聯絡人：{{ publisher.administrative_contact }}{% endblocktrans %}
             </li>
             {% endif %}
             
             {% if publisher.technical_contact %}
             <li>
-                技術聯絡人：{{ publisher.technical_contact }}
+                {% blocktrans trimmed %}技術聯絡人：{{ publisher.technical_contact }}{% endblocktrans %}
             </li>
             {% endif %}
             
@@ -55,9 +56,9 @@
             <table id="dataset-table" class="table content-readable-table">
                 <thead>
                     <tr>
-                        <th>資料集</th>
-                        <th>達爾文核心集</th>
-                        <th>核心集資料筆數</th>
+                        <th>{% trans "資料集" %}</th>
+                        <th>{% trans "達爾文核心集" %}</th>
+                        <th>{% trans "核心集資料筆數" %}</th>
                     </tr>
                 </thead>
                 <tbody>

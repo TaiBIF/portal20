@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
-{% block title %}TaiBIF 台灣生物多樣性資訊機構{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "TaiBIF 台灣生物多樣性資訊機構" %}{% endblock %}
 
 {% block head %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
@@ -36,7 +37,7 @@
 			<div class="left-swiperbox">
 				<div class="slogan">
 					<h2 class="fs-35">TaiBIF — <br>
-						生物多樣性資料開放的推手
+						{% trans "生物多樣性資料開放的推手" %}
 					</h2>
 				</div>
 				<div class="bottom-pic-note">
@@ -93,33 +94,33 @@
 						<div class="title-box">
 							<div class="line"></div>
 							<h2 class="fs-24">我想開放資料</h2>
-							<h3>Open source</h3>
+							<h3>Open Data</h3>
 						</div>
 						<div class="bottom-linkarea">
 							<a href="{% url 'open-process' %}">
 								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
 									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
 								</svg>
-								<p>有哪些步驟</p>
+								<p>{% trans "有哪些步驟" %}</p>
 							</a>
 							<a href="{% url 'tools' %}">
 								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
 									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
 								</svg>
-								<p>有哪工具可以使用
-								</p>
+									<p>{% trans "有哪工具可以使用" %}
+									</p>
 							</a>
 							<a href="{% url 'open-consulation' %}#self-learning">
 								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
 									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
 								</svg>
-								<p>我需要幫忙</p>
+								<p>{% trans "我需要幫忙" %}</p>
 							</a>
 							<a href="{% url 'faq' %}">
 								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
 									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
 								</svg>
-								<p>開放資料常見問題</p>
+								<p>{% trans "開放資料常見問題" %}</p>
 							</a>
 						</div>
 						<div class="animal-img">
@@ -137,20 +138,20 @@
 								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
 									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
 								</svg>
-								<p>什麼是開放資料</p>
+								<p>{% trans "什麼是開放資料" %}</p>
 							</a>
 							<a href="{% url 'open-benefits' %}">
 								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
 									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
 								</svg>
-								<p>開放資料的好處
-								</p>
+									<p>{% trans "開放資料的好處" %}
+									</p>
 							</a>
 							<a href="{% url 'tech-online-class' %}#standard-00">
 								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
 									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
 								</svg>
-								<p>線上教材包</p>
+								<p>{% trans "線上教材包" %}</p>
 							</a>
 						</div>
 						<div class="animal-img">
@@ -168,38 +169,38 @@
 								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
 									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
 								</svg>
-								<p>每月資料發佈狀況</p>
+								<p>{% trans "每月資料發佈狀況" %}</p>
 							</a>
 							<a href="{% url 'tech-workshop' %}">
 								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
 									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
 								</svg>
-								<p>參加 TaiBIF 工作坊</p>
+								<p>{% trans "參加 TaiBIF 工作坊" %}</p>
 							</a>
 							<a href="{% url 'tech-volunteer' %}">
 								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
 									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
 								</svg>
-								<p>參與協作者培訓
-								</p>
+									<p>{% trans "參與協作者培訓" %}
+									</p>
 							</a>
-							<a href="#" class="js-newsletter-open" data-modal-mode="coming-soon" data-modal-title="內容籌備中" data-modal-desc="此頁面目前正在籌備中，敬請期待。">
+							<a href="#" class="js-newsletter-open" data-modal-mode="coming-soon" data-modal-title="{% trans "內容籌備中" %}" data-modal-desc="此頁面目前正在籌備中，敬請期待。">
 								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
 									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
 								</svg>
-								<p>我想成為發布單位</p>
+								<p>{% trans "我想成為發布單位" %}</p>
 							</a>
 							<a href="#" class="js-newsletter-open">
 								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
 									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
 								</svg>
-								<p>我願意收到電子報</p>
+								<p>{% trans "我願意收到電子報" %}</p>
 							</a>
                             <a href="{% url 'thanks-list' %}">
 								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
 									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
 								</svg>
-								<p>感謝名單</p>
+								<p>{% trans "感謝名單" %}</p>
 							</a>
 						</div>
 						<div class="animal-img">
@@ -217,20 +218,20 @@
 								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
 									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
 								</svg>
-								<p>給我一些例子</p>
+								<p>{% trans "給我一些例子" %}</p>
 							</a>
 							<a href="{% url 'data-paper' %}#about">
 								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
 									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
 								</svg>
-								<p>資料期刊與論文
-								</p>
+									<p>{% trans "資料期刊與論文" %}
+									</p>
 							</a>
 							<a href="{% url 'data-product' %}">
 								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
 									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
 								</svg>
-								<p>有哪些資料產品</p>
+								<p>{% trans "有哪些資料產品" %}</p>
 							</a>
 							<a href="{% url 'taibif-api' %}">
 								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
@@ -238,11 +239,11 @@
 								</svg>
 								<p>TaiBIF API</p>
 							</a>
-                            <a href="#" class="js-newsletter-open" data-modal-mode="coming-soon" data-modal-title="內容籌備中" data-modal-desc="此頁面目前正在籌備中，敬請期待。">
+                            <a href="#" class="js-newsletter-open" data-modal-mode="coming-soon" data-modal-title="{% trans "內容籌備中" %}" data-modal-desc="此頁面目前正在籌備中，敬請期待。">
 								<svg class="arr" xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16">
 									<path id="Polygon_2" data-name="Polygon 2" d="M6.3,2.768a2,2,0,0,1,3.407,0l4.421,7.184A2,2,0,0,1,12.421,13H3.579a2,2,0,0,1-1.7-3.048Z" transform="translate(13) rotate(90)" fill="#fff"/>
 								</svg>
-								<p>首先要找到資料</p>
+								<p>{% trans "首先要找到資料" %}</p>
 							</a>
 						</div>
 						<div class="animal-img">
@@ -258,15 +259,15 @@
 	<section class="s2-news">
 		<div class="main-1340">
 			<div class="index-maintitle">
-				<h2 class="fs-35">最新消息</h2>
+				<h2 class="fs-35">{% trans "最新消息" %}</h2>
 				<div class="line-mark"></div>
 			</div>
 			<ul class="news-tab">
 				<!--目前的給now-->
-				<li class="now" data-tab="all">全部</li>
-				<li data-tab="news">新聞</li>
-				<li data-tab="event">活動</li>
-				<li data-tab="sci">科普</li>
+				<li class="now" data-tab="all">{% trans "全部" %}</li>
+				<li data-tab="news">{% trans "新聞" %}</li>
+				<li data-tab="event">{% trans "活動" %}</li>
+				<li data-tab="sci">{% trans "科普" %}</li>
 			</ul>
 			<div class="swiper newsSwiper">
 				<div class="swiper-wrapper" id="news-swiper-wrapper">
@@ -315,7 +316,7 @@
 					</svg>
 				</div>
 				<a href="{% url 'article-search' %}" class="btn-style1">
-					<p>更多消息</p>
+					<p>{% trans "更多消息" %}</p>
 					<svg xmlns="http://www.w3.org/2000/svg" width="8.83" height="15.656" viewBox="0 0 8.83 15.656">
 						<path id="Union_2" data-name="Union 2" d="M8313.292,15.363a1,1,0,0,1,0-1.414l6.123-6.121-6.123-6.122a1,1,0,1,1,1.414-1.414l6.83,6.829a1,1,0,0,1,0,1.414l-6.83,6.827a1,1,0,0,1-1.414,0Z" transform="translate(-8312.999 0)" fill="#846c5b"/>
 					</svg>
@@ -331,12 +332,12 @@
 		</div>
 		<div class="main-1340">
 			<div class="index-maintitle">
-				<h2 class="fs-35">資料發布狀況</h2>
+				<h2 class="fs-35">{% trans "資料發布狀況" %}</h2>
 				<div class="line-mark"></div>
 			</div>
 			<ul class="five-item">
 					<li>
-						<h3>物種出現紀錄</h3>
+						<h3>{% trans "物種出現紀錄" %}</h3>
 						<h2>{{ occ_num_display }}</h2>
 					<div class="iconbox">
 						<svg xmlns="http://www.w3.org/2000/svg" width="50.008" height="50.254" viewBox="0 0 50.008 50.254">
@@ -345,7 +346,7 @@
 					</div>
 				</li>
 					<li>
-						<h3>資料集</h3>
+						<h3>{% trans "資料集" %}</h3>
 						<h2>{{ dataset_num_display }}</h2>
 					<div class="iconbox">
 						<svg xmlns="http://www.w3.org/2000/svg" width="52" height="41" viewBox="0 0 52 41">
@@ -354,7 +355,7 @@
 					</div>
 				</li>
 					<li>
-						<h3>涵蓋物種數</h3>
+						<h3>{% trans "涵蓋物種數" %}</h3>
 						<h2>{{ taxon_num_display }}</h2>
 					<div class="iconbox">
 						<svg xmlns="http://www.w3.org/2000/svg" width="49.52" height="49.1" viewBox="0 0 49.52 49.1">
@@ -363,7 +364,7 @@
 					</div>
 				</li>
 					<li>
-						<h3>資料發布單位</h3>
+						<h3>{% trans "資料發布單位" %}</h3>
 						<h2>{{ publisher_num_display }}</h2>
 					<div class="iconbox">
 						<svg xmlns="http://www.w3.org/2000/svg" width="50.578" height="47.092" viewBox="0 0 50.578 47.092">
@@ -372,7 +373,7 @@
 					</div>
 				</li>
 					<li>
-						<h3>臺灣資料應用發表</h3>
+						<h3>{% trans "臺灣資料應用發表" %}</h3>
 						<h2>{{ case_count_display }}</h2>
 					<div class="iconbox">
 						<svg xmlns="http://www.w3.org/2000/svg" width="43.849" height="49.747" viewBox="0 0 43.849 49.747">
@@ -383,7 +384,7 @@
 			</ul>
 			<div class="center-btn">
 				<a href="{% url 'data-stats' %}" class="btn-style2">
-					<p>查看更多發布狀況</p>
+					<p>{% trans "查看更多發布狀況" %}</p>
 					<svg xmlns="http://www.w3.org/2000/svg" width="8.829" height="15.657" viewBox="0 0 8.829 15.657">
 						<path id="Union_8" data-name="Union 8" d="M6266.293,15.364a1,1,0,0,1,0-1.414l6.121-6.121-6.121-6.121a1,1,0,0,1,1.414-1.414l6.829,6.828a1,1,0,0,1,0,1.414l-6.829,6.828a1,1,0,0,1-1.414,0Z" transform="translate(-6266)" fill="#fff"/>
 					</svg>
@@ -399,7 +400,7 @@
 		</div>
 		<div class="main-1340">
 			<div class="index-maintitle">
-				<h2 class="fs-35">指導單位</h2>
+				<h2 class="fs-35">{% trans "指導單位" %}</h2>
 				<div class="line-mark"></div>
 			</div>
 			<div class="link-list marb_60">
@@ -418,7 +419,7 @@
 			</div>
 
 			<div class="index-maintitle">
-				<h2 class="fs-35">夥伴單位</h2>
+				<h2 class="fs-35">{% trans "夥伴單位" %}</h2>
 				<div class="line-mark"></div>
 			</div>
 			<div class="link-list">

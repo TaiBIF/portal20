@@ -31,38 +31,38 @@
     <!-- col begin -->
     <div class="col-12 content-readable-panel content-readable-full-panel article-search-page">
         <p>
-            本頁依每週更新後建立的資料集更新事件表彙整內容，僅納入來源為 TaiBIF IPT、狀態為公開的資料集。每次資料更新都會被記錄為一筆事件，並依事件發生月份統整呈現。可透過下拉選單篩選年份與月份，查看各月份的資料集更新總覽。
+            {% trans "本頁依每週更新後建立的資料集更新事件表彙整內容，僅納入來源為 TaiBIF IPT、狀態為公開的資料集。每次資料更新都會被記錄為一筆事件，並依事件發生月份統整呈現。可透過下拉選單篩選年份與月份，查看各月份的資料集更新總覽。" %}
         </p>
 
         <div class="heading-sort-ctn">
             <form class="form-inline" method="get">
-                <span class="heading-sort-name">年份</span>
+                <span class="heading-sort-name">{% trans "年份" %}</span>
                 <select name="year" class="form-control">
                     {% for year in available_years %}
                         <option value="{{ year }}" {% if year == selected_year %}selected{% endif %}>{{ year }}</option>
                     {% endfor %}
                 </select>
 
-                <span class="heading-sort-name">月份</span>
+                <span class="heading-sort-name">{% trans "月份" %}</span>
                 <select name="month" class="form-control">
                     {% for month in available_months %}
                         <option value="{{ month }}" {% if month == selected_month %}selected{% endif %}>{{ month }}</option>
                     {% endfor %}
                 </select>
-                <button type="submit" class="btn">篩選</button>
+                <button type="submit" class="btn">{% trans "篩選" %}</button>
             </form>
         </div>
 
-        <h3>{{ selected_month_label }} 資料集更新總覽</h3>
+        <h3>{% blocktrans trimmed %}{{ selected_month_label }} 資料集更新總覽{% endblocktrans %}</h3>
 
         {% if dataset_rows %}
             <table class="table content-readable-table">
                 <thead>
                     <tr>
-                        <th>資料集名稱</th>
-                        <th>資料集類型</th>
-                        <th>發布單位</th>
-                        <th>IPT 頁面</th>
+                        <th>{% trans "資料集名稱" %}</th>
+                        <th>{% trans "資料集類型" %}</th>
+                        <th>{% trans "發布單位" %}</th>
+                        <th>{% trans "IPT 頁面" %}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -84,7 +84,7 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <a class="highlight-link" href="{{ row.ipt_link }}" target="_blank" rel="noopener noreferrer">連結</a>
+                                <a class="highlight-link" href="{{ row.ipt_link }}" target="_blank" rel="noopener noreferrer">{% trans "連結" %}</a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -92,7 +92,7 @@
             </table>
         {% else %}
             <div>
-                沒有符合條件的資料集更新。
+                {% trans "沒有符合條件的資料集更新。" %}
             </div>
         {% endif %}
     </div>

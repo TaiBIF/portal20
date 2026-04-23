@@ -4,7 +4,7 @@
 {% load static %}
 {% load helper_tags %}
 
-{% block title %}更多資訊 :: {{ article.title }}{% endblock %}
+{% block title %}{% blocktrans trimmed %}更多資訊 :: {{ article.title }}{% endblocktrans %}{% endblock %}
 
 {% block meta %}
 <meta property="og:title" content="{{ article.title }} "/>
@@ -99,13 +99,13 @@
     {% if article.category == "PUB" and article.memo_text|slice:"0:9" == "__files__" %}
     <ul class="article-attachment-wrapper">
         {% for i in article.get_legacy_info.files %}
-        <li>附件下載：<a href="{{ i.url }}" class="myicon icon-download-document">{{ i.descr }}</a></li>
+        <li>{% trans "附件下載：" %}<a href="{{ i.url }}" class="myicon icon-download-document">{{ i.descr }}</a></li>
         {% endfor %}
         </ul>
     {% endif %}
     <!-- related article begin -->
     <div class="article-related-wrapper">
-        <h4 class="heading-md">推薦文章</h4>
+        <h4 class="heading-md">{% trans "推薦文章" %}</h4>
         <!-- owl-carousel begin -->
         <div class="owl-carousel owl-theme" id="topic-board">
             {% for i in recommended %}

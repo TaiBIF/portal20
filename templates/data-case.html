@@ -39,13 +39,13 @@
                 <div class="loader"></div>
                 <div id="data_viz"></div>
                 <small>
-                    上圖的文字雲為<a href="https://www.gbif.org/resource/search?contentType=literature&countriesOfCoverage=TW" target="_blank"> GBIF 文獻追蹤系統</a>來源之臺灣資料應用案例主題與關鍵詞所產生。
+                    上圖的文字雲為<a href="https://www.gbif.org/resource/search?contentType=literature&countriesOfCoverage=TW" target="_blank"> {% trans "GBIF 文獻追蹤系統" %}</a>來源之臺灣資料應用案例主題與關鍵詞所產生。
                 </small>
             </div>
         </section>
         <section>
             <div class="article-content-wrapper">
-                <h3>資料故事</h3>
+                <h3>{% trans "資料故事" %}</h3>
             </div>
             
             <div class="story-list-container">
@@ -69,7 +69,7 @@
             </div>
             <div class="data-case-btn-container">
                 <a href="{% url 'article-search' %}?category=story" class="btn-style1 data-case-btn">
-                    <p class="remove-margin-bottom">更多資料故事</p>
+                    <p class="remove-margin-bottom">{% trans "更多資料故事" %}</p>
                     <svg xmlns="http://www.w3.org/2000/svg" width="8.83" height="15.656" viewBox="0 0 8.83 15.656">
                         <path id="Union_2" data-name="Union 2" d="M8313.292,15.363a1,1,0,0,1,0-1.414l6.123-6.121-6.123-6.122a1,1,0,1,1,1.414-1.414l6.83,6.829a1,1,0,0,1,0,1.414l-6.83,6.827a1,1,0,0,1-1.414,0Z" transform="translate(-8312.999 0)" fill="#846c5b"/>
                     </svg>
@@ -78,14 +78,14 @@
         </section>
         <section>
             <div class="article-content-wrapper">
-                <h3>臺灣資料應用案例列表</h3>
+                <h3>{% trans "臺灣資料應用案例列表" %}</h3>
             </div>
             <p>
-                這個列表有兩個分頁：(1) <strong>GBIF 應用案例：</strong><a href="https://www.gbif.org/resource/search?contentType=literature&countriesOfCoverage=TW" target="_blank"> GBIF 文獻追蹤系統</a>來源的台灣相關文獻整理，以及 (2) <strong>TaiBIF 應用案例：</strong>我們自行整理的國內應用案例。
+                這個列表有兩個分頁：(1) <strong>{% trans "GBIF 應用案例：" %}</strong><a href="https://www.gbif.org/resource/search?contentType=literature&countriesOfCoverage=TW" target="_blank"> {% trans "GBIF 文獻追蹤系統" %}</a>{% trans "來源的台灣相關文獻整理，以及 (2)" %} <strong>{% trans "TaiBIF 應用案例：" %}</strong>我們自行整理的國內應用案例。
             </p>
             <div class="data-table-btn-container">
-                <button class="table-btn is-active" id="gbif-case-btn">GBIF 應用案例</button>
-                <button class="table-btn" id="taibif-case-btn">TaiBIF 應用案例</button>
+                <button class="table-btn is-active" id="gbif-case-btn">{% trans "GBIF 應用案例" %}</button>
+                <button class="table-btn" id="taibif-case-btn">{% trans "TaiBIF 應用案例" %}</button>
             </div>
             <div class="data-table-container">
                 <div class="loader"></div>

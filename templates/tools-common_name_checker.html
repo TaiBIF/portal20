@@ -21,7 +21,7 @@
 <div class="bg-main-pale">
   <div class="container">
     <div class="caption-mascot-wrapper">
-      <h1 class="title">開放資料工具</h1>
+      <h1 class="title">{% trans "開放資料工具" %}</h1>
       <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
     </div>
   </div>
@@ -36,10 +36,10 @@
 <!-- breadcrumb begin -->
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'index' %}">首頁</a></li>
-        <li class="breadcrumb-item">開放資料</li>
-        <li class="breadcrumb-item">開放資料工具</li>
-        <li class="breadcrumb-item active" aria-current="page">物種中文名比對</li>
+        <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
+        <li class="breadcrumb-item">{% trans "開放資料" %}</li>
+        <li class="breadcrumb-item">{% trans "開放資料工具" %}</li>
+        <li class="breadcrumb-item active" aria-current="page">{% trans "物種中文名比對" %}</li>
       </ol>
     </nav>
 
@@ -51,25 +51,25 @@
     </div>
     {% endif %}
 
-    <h1 class="heading-lg-ul"> 物種中文名比對 </h1>
+    <h1 class="heading-lg-ul"> {% trans "物種中文名比對" %} </h1>
 
     <div class="article-content-wrapper">
-      <p>此工具提供使用者上傳多筆中文名稱，工具會針對所上傳的物種中文名稱比對出臺灣物種名錄中所對應的物種學名與物種代碼（name code），若比對不到中文名稱則傳回「no match」之訊息。</p>
+      <p>{% trans "此工具提供使用者上傳多筆中文名稱，工具會針對所上傳的物種中文名稱比對出臺灣物種名錄中所對應的物種學名與物種代碼（name code），若比對不到中文名稱則傳回「no match」之訊息。" %}</p>
       <form method="POST" action="{% url 'tools-common_name_checker' %}">
         {% csrf_token %}
         <div class="form-group">
-          <label for="query-sep">分隔</label>
+          <label for="query-sep">{% trans "分隔" %}</label>
           <div class="row">
             <div class="col-xs-2">
-              <select name="sep" id="query-sep" class="form-control"><option value="">-- 請選擇--</option><option value="n"{% if sep and sep == "n" %} selected{% endif %}>換行符號(\n)</option><option value=","{% if sep and sep == "," %} selected{% endif %}>,</option></select>
+              <select name="sep" id="query-sep" class="form-control"><option value="">{% trans "-- 請選擇--" %}</option><option value="n"{% if sep and sep == "n" %} selected{% endif %}>{% trans "換行符號(\\n)" %}</option><option value=","{% if sep and sep == "," %} selected{% endif %}>,</option></select>
             </div>
           </div>
         </div>
         <div class="form-group">
-          <label for="query-cn">輸入中文名</label>
+          <label for="query-cn">{% trans "輸入中文名" %}</label>
           <textarea name="q" id="query-cn" class="form-control" rows="5">{% if q %}{{ q }}{% endif %}</textarea>
         </div>
-        <button type="submit" class="btn btn-primary" name="compare" >比對</button>
+        <button type="submit" class="btn btn-primary" name="compare" >{% trans "比對" %}</button>
         <button type="submit" class="btn btn-primary" name="export_csv">export to csv</button>
       </form>
       {% if results %}
@@ -84,10 +84,10 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>輸入中文名</th>
-            <th>比對</th>
-            <th>結果: 學名(中文名) [name_code]</th>
-            <th>搜尋替換</th>
+            <th>{% trans "輸入中文名" %}</th>
+            <th>{% trans "比對" %}</th>
+            <th>{% trans "結果: 學名(中文名) [name_code]" %}</th>
+            <th>{% trans "搜尋替換" %}</th>
           </tr>
         </thead>
         <tbody>

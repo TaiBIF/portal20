@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
+{% load i18n %}
 
 {% block head %}
 <link href="{% static 'css/taibif.css' %}" rel="stylesheet">
@@ -92,18 +93,18 @@
 <div class="container my-5">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'index' %}">首頁</a></li>
-            <li class="breadcrumb-item">物種</li>
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
+            <li class="breadcrumb-item">{% trans "物種" %}</li>
         </ol>
     </nav>
 
     <!-- amchor btns begin -->
     <ul class="article-scroll-nav-wrapper">
         {% if taxon.synonyms %}
-        <li><a href="#section1">同物異名</a></li>
+        <li><a href="#section1">{% trans "同物異名" %}</a></li>
         {% endif %}
-        <li><a href="#section2">地理分佈</a></li>
-        <li><a href="#section3">資料集出現次數</a></li>
+        <li><a href="#section2">{% trans "地理分佈" %}</a></li>
+        <li><a href="#section3">{% trans "資料集出現次數" %}</a></li>
     </ul>
     <!-- amchor btns begin -->
 
@@ -112,7 +113,7 @@
         <h1 class="heading-lg">
             {{ taxon.scientific_name_full.formatted_name|safe }}
             {% if taxon.name_zh %} {{ taxon.name_zh }}{% endif %} 
-            {% if not taxon.is_accepted_name %}<small><span class="label label-warning">同物異名</span></small>{% endif %}
+            {% if not taxon.is_accepted_name %}<small><span class="label label-warning">{% trans "同物異名" %}</span></small>{% endif %}
         </h1>
     </div>
     <!-- story title end -->
@@ -120,7 +121,7 @@
     <!-- article content begin -->
     <div class="article-content-wrapper">
         <!-- 學名 begin -->
-        <!-- <h4 class="heading-md-ul">學名</h4> -->
+        <!-- <h4 class="heading-md-ul">{% trans "學名" %}</h4> -->
         <ul class="scientific-name-wrapper">
             {% for i in taxon.rank_list %}
             <li><a href={{ i.scientific_name_full.url }} >{{ i.scientific_name_full.formatted_name|safe }} {% if i.name_zh %} {{ i.name_zh }}{% endif %}</a></li>
@@ -131,11 +132,11 @@
         <!-- 同物異名 begin -->
         <div id="section1">
             {% if not taxon.is_accepted_name %}
-            <h4 class="heading-md-ul">有效學名</h4>
+            <h4 class="heading-md-ul">{% trans "有效學名" %}</h4>
             <p><i>{{ taxon.accepted_name.name }}</i>{% if taxon.accepted_name.name_zh %} {{ taxon.accepted_name.name_zh }}{% endif %}</p>
             {% endif %}
             {% if taxon.synonyms %}
-            <h4 class="heading-md-ul">同物異名</h4>
+            <h4 class="heading-md-ul">{% trans "同物異名" %}</h4>
             {% for i in taxon.synonyms %}
             <p><i>{{ i.name }}</i>{% if i.name_zh %} {{ i.name_zh }}{% endif %}</p>
             {% endfor %}
@@ -144,12 +145,12 @@
         <!-- 同物異名 end -->
 
         <!-- TaiCoL編號 begin -->
-        <p align="right"><a href="{{ taxon.taicol_namecode_link }}"><span class="myicon icon-link"></span>來源：TaiCOL</a></p>
+        <p align="right"><a href="{{ taxon.taicol_namecode_link }}"><span class="myicon icon-link"></span>{% trans "來源：TaiCOL" %}</a></p>
         <!-- TaiCoL編號 end -->
 
         <!-- 地理分佈 begin -->
         <div id="section2">
-            <h3>地理分佈</h3>
+            <h3>{% trans "地理分佈" %}</h3>
 
             {% if map_view %}
                 <div id="map"></div>
@@ -162,13 +163,13 @@
 
         <!-- 資料集出現次數 begin -->
         <div id="section3">
-            <h3>資料集出現次數</h3>
+            <h3>{% trans "資料集出現次數" %}</h3>
             <table id="dataset-table" class="table table-ltmilo">
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>資料集</th>
-                        <th>紀錄筆數</th>
+                        <th>{% trans "資料集" %}</th>
+                        <th>{% trans "紀錄筆數" %}</th>
                     </tr>
                 </thead>
                 <tbody>

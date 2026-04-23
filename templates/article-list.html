@@ -5,7 +5,7 @@
 {% load i18n %}
 {% url 'article-search' as article_search_url %}
 
-{% block title %}最新消息{% endblock %}
+{% block title %}{% trans "最新消息" %}{% endblock %}
 
 {% block head %}
     <!-- date range picker CSS -->
@@ -137,8 +137,8 @@
       <form class="form-inline">
         <span class="heading-sort-name">{% trans "篩選" %}</span>
           <div class="article-search-input-wrap">
-            <input type="text" placeholder="請輸入關鍵字" name="q" id="article-search-input" value="{{ article_search_keyword|default:'' }}">
-            <button type="button" id="article-search-btn" class="article-search-btn" aria-label="搜尋">
+            <input type="text" placeholder="{% trans "請輸入關鍵字" %}" name="q" id="article-search-input" value="{{ article_search_keyword|default:'' }}">
+            <button type="button" id="article-search-btn" class="article-search-btn" aria-label="{% trans "搜尋" %}">
             <span class="myicon icon-search-lens"></span>
             </button>
           </div>
@@ -191,7 +191,7 @@
           {% if article.cover %}
           <div class="col-xs-4">
             <div class="article-thumb-link">
-              <img src="/media/{{ article.cover }}" class="img-responsive" alt="{{ article.title|default:'文章縮圖' }}">
+              <img src="/media/{{ article.cover }}" class="img-responsive" alt="{% firstof article.title _('文章縮圖') %}">
             </div>
           </div>
           {% endif %}

@@ -6,7 +6,7 @@
 {% get_current_language as LANGUAGE_CODE %}
 
 {% block title %}
-資料發布狀況
+{% trans "資料發布狀況" %}
 {% endblock %}
 {% block head %}
 <style>
@@ -168,21 +168,21 @@ $('#clean-search').on('click', function() {
                 <label class="custom-input-ctn">
                     <input type="checkbox" class="check-all">
                     <span class="checkmark"></span>
-                    檢視 TaiBIF IPT 裡所有資料的發布狀況
+                    {% trans "檢視 TaiBIF IPT 裡所有資料的發布狀況" %}
                 </label>
                 <label class="custom-input-ctn">
                     <input type="checkbox"  class="check-most" {% if request.GET.most %} checked {% endif %}>
                     <span class="checkmark"></span>
-                    僅檢視國科會發布狀況 (TaiBIF 的資料庫及基礎建設乃由國科會之經費及相關計畫支持，勾選此項可了解國科會生物多樣性計畫物種資料開放狀況)
+                    {% trans "僅檢視國科會發布狀況 (TaiBIF 的資料庫及基礎建設乃由國科會之經費及相關計畫支持，勾選此項可了解國科會生物多樣性計畫物種資料開放狀況)" %}
                 </label>
             </form>
         </div>
 
-        <!-- <h3 class="headline-left sub-heading">統整數據</h3> -->
+        <!-- <h3 class="headline-left sub-heading">{% trans "統整數據" %}</h3> -->
 
         <!-- <div class="card-tools-wrapper data-stats-chart">
         <div class="title">
-            TaiBIF IPT 今年度上傳出現紀錄資料筆數
+            {% trans "TaiBIF IPT 今年度上傳出現紀錄資料筆數" %}
         </div>
         <div class="content responsive">
             <div id="taibif-stats__this_year_occurrence"></div>
@@ -191,7 +191,7 @@ $('#clean-search').on('click', function() {
 
         <div class="card-tools-wrapper data-stats-chart">
         <div class="title">
-            TaiBIF IPT 今年度上傳資料集數量
+            {% trans "TaiBIF IPT 今年度上傳資料集數量" %}
         </div>
         <div class="content responsive">
             <div id="taibif-stats__this_year_dataset"></div>
@@ -200,7 +200,7 @@ $('#clean-search').on('click', function() {
 
         <div class="card-tools-wrapper data-stats-chart">
         <div class="title">
-            TaiBIF IPT 累積出現紀錄資料筆數
+            {% trans "TaiBIF IPT 累積出現紀錄資料筆數" %}
         </div>
         <div class="content responsive">
             <div id="taibif-stats__trend_occurrence"></div>
@@ -209,7 +209,7 @@ $('#clean-search').on('click', function() {
 
         <div class="card-tools-wrapper data-stats-chart">
         <div class="title">
-            TaiBIF IPT 累積資料集數量
+            {% trans "TaiBIF IPT 累積資料集數量" %}
         </div>
         <div class="content responsive">
             <div id="taibif-stats__trend_dataset"></div>
@@ -219,10 +219,12 @@ $('#clean-search').on('click', function() {
 
         <div class="article-content-wrapper">
             <h3>
-                資料集列表
+                {% trans "資料集列表" %}
             </h3>
             <p>
+                {% blocktrans %}
                 以下資料集列表為透過 <a href="https://ipt.taibif.tw/" target="_blank">TaiBIF IPT</a> 發布的公開資料。可使用下方按鈕分別下載 XLSX 與 CSV 格式的資料列表。
+                {% endblocktrans %}
             </p>
 
 
@@ -231,14 +233,14 @@ $('#clean-search').on('click', function() {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>資料集名稱</th>
-                            <th>發布單位</th>
-                            <th>資料類型</th>
-                            <th>資料筆數</th>
-                            <th>出現紀錄</th>
-                            <th>發佈時間</th>
-                            <th>地區</th>
-                            <th>NSTC 計畫</th>
+                            <th>{% trans "資料集名稱" %}</th>
+                            <th>{% trans "發布單位" %}</th>
+                            <th>{% trans "資料類型" %}</th>
+                            <th>{% trans "資料筆數" %}</th>
+                            <th>{% trans "出現紀錄" %}</th>
+                            <th>{% trans "發佈時間" %}</th>
+                            <th>{% trans "地區" %}</th>
+                            <th>{% trans "NSTC 計畫" %}</th>
                         </tr>
                     </thead>
                     <tbody>

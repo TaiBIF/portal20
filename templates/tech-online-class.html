@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load static %}
-{% block title %}線上教材包{% endblock %}
+{% block title %}{% trans "線上教材包" %}{% endblock %}
 
 {% block script %}
 <script>
@@ -65,7 +65,7 @@ $(document).ready(function () {
 <div class="bg-main-pale">
     <div class="container">
         <div class="caption-mascot-wrapper">
-            <h1 class="title">線上教材包</h1>
+            <h1 class="title">{% trans "線上教材包" %}</h1>
             <img src="{% static 'images/mascot-frog.png'%}" alt="" class="symbol">
         </div>
     </div>
@@ -77,10 +77,10 @@ $(document).ready(function () {
     <!-- breadcrumb begin -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'index' %}">首頁</a></li>
-            <li class="breadcrumb-item">教育資源</li>
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
+            <li class="breadcrumb-item">{% trans "教育資源" %}</li>
             <li class="breadcrumb-item active" ><a href="{% url 'tech-workshop' %}">{% trans "資料開放與應用工作坊" %}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">線上教材包</li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans "線上教材包" %}</li>
         </ol>
     </nav>
     <!-- breadcrumb end -->
@@ -118,12 +118,12 @@ $(document).ready(function () {
             </div>
             <div class="article-content-wrapper">
                 <h3>{% trans "教學講義" %}</h3>
-                <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
+                <small>{% trans "若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。" %}</small>
             </div>
             <div class="embed-responsive embed-responsive-3by2">
                 <iframe src="https://www.slideshare.net/slideshow/embed_code/key/sC16pqun40vjyV?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
             </div>
-            <p class="mt-3">PDF 講義下載：<a href="/media/online-workshop-handouts/20240520-TaiBIF和GBIF介紹-劉璟儀.pdf" target="_blank" class="myicon icon-download-document"></a></p>
+            <p class="mt-3">{% trans "PDF 講義下載：" %}<a href="/media/online-workshop-handouts/20240520-TaiBIF和GBIF介紹-劉璟儀.pdf" target="_blank" class="myicon icon-download-document"></a></p>
         </div>
     </div>
 
@@ -138,12 +138,12 @@ $(document).ready(function () {
             </div>
             <div class="article-content-wrapper">
                 <h3>{% trans "教學講義" %}</h3>
-                <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
+                <small>{% trans "若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。" %}</small>
             </div>
             <div class="embed-responsive embed-responsive-3by2">
                 <iframe src="https://www.slideshare.net/slideshow/embed_code/key/qLkhlr7AansjFq?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
             </div>
-            <p class="mt-3">PDF 講義下載：<a href="/media/online-workshop-handouts/20230913-開放資料流程-柯智仁.pdf" target="_blank" class="myicon icon-download-document"></a></p>
+            <p class="mt-3">{% trans "PDF 講義下載：" %}<a href="/media/online-workshop-handouts/20230913-開放資料流程-柯智仁.pdf" target="_blank" class="myicon icon-download-document"></a></p>
         </div>
     </div>
 
@@ -158,12 +158,12 @@ $(document).ready(function () {
             </div>
             <div class="article-content-wrapper">
                 <h3>{% trans "教學講義" %}</h3>
-                <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
+                <small>{% trans "若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。" %}</small>
             </div>
             <div class="embed-responsive embed-responsive-3by2">
                 <iframe src="https://www.slideshare.net/slideshow/embed_code/key/3ZgsImbD8GtGqW?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
             </div>
-            <p class="mt-3">PDF 講義下載：<a href="/media/online-workshop-handouts/20230913 資料發布類型-陳建文.pdf" target="_blank" class="myicon icon-download-document"></a></p>
+            <p class="mt-3">{% trans "PDF 講義下載：" %}<a href="/media/online-workshop-handouts/20230913 資料發布類型-陳建文.pdf" target="_blank" class="myicon icon-download-document"></a></p>
         </div>
     </div>
 
@@ -178,12 +178,12 @@ $(document).ready(function () {
             </div>
             <div class="article-content-wrapper">
                 <h3>{% trans "教學講義" %}</h3>
-                <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
+                <small>{% trans "若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。" %}</small>
             </div>
             <div class="embed-responsive embed-responsive-3by2">
                 <iframe src="https://www.slideshare.net/slideshow/embed_code/key/9doAWSglaZUzIs?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
             </div>
-            <p class="mt-3">PDF 講義下載：<a href="/media/online-workshop-handouts/20230913-資料標準-劉璟儀.pdf" target="_blank" class="myicon icon-download-document"></a></p>
+            <p class="mt-3">{% trans "PDF 講義下載：" %}<a href="/media/online-workshop-handouts/20230913-資料標準-劉璟儀.pdf" target="_blank" class="myicon icon-download-document"></a></p>
         </div>
     </div>
 
@@ -198,12 +198,12 @@ $(document).ready(function () {
             </div>
             <div class="article-content-wrapper">
                 <h3>{% trans "教學講義" %}</h3>
-                <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
+                <small>{% trans "若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。" %}</small>
             </div>
             <div class="embed-responsive embed-responsive-3by2">
                 <iframe src="https://www.slideshare.net/slideshow/embed_code/key/qR3uE5bEgJSm9u?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
             </div>
-            <p class="mt-3">PDF 講義下載：<a href="/media/online-workshop-handouts/20240521-開放資料的前置準備與清理-楊富鈞.pdf" target="_blank" class="myicon icon-download-document"></a></p>
+            <p class="mt-3">{% trans "PDF 講義下載：" %}<a href="/media/online-workshop-handouts/20240521-開放資料的前置準備與清理-楊富鈞.pdf" target="_blank" class="myicon icon-download-document"></a></p>
         </div>
     </div>
 
@@ -218,12 +218,12 @@ $(document).ready(function () {
             </div>
             <div class="article-content-wrapper">
                 <h3>{% trans "教學講義" %}</h3>
-                <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
+                <small>{% trans "若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。" %}</small>
             </div>
             <div class="embed-responsive embed-responsive-3by2">
                 <iframe src="https://www.slideshare.net/slideshow/embed_code/key/2kqzgnlttJaY9H?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
             </div>
-            <p class="mt-3">PDF 講義下載：<a href="/media/online-workshop-handouts/20240520-敏感資料處理原則-柯智仁.pptx.pdf" target="_blank" class="myicon icon-download-document"></a></p>
+            <p class="mt-3">{% trans "PDF 講義下載：" %}<a href="/media/online-workshop-handouts/20240520-敏感資料處理原則-柯智仁.pptx.pdf" target="_blank" class="myicon icon-download-document"></a></p>
         </div>
     </div>
 
@@ -232,12 +232,12 @@ $(document).ready(function () {
         <div class="article-content-wrapper">
             <div class="article-content-wrapper">
                 <h3>{% trans "教學講義" %}</h3>
-                <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
+                <small>{% trans "若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。" %}</small>
             </div>
             <div class="embed-responsive embed-responsive-3by2">
                 <iframe src="https://www.slideshare.net/slideshow/embed_code/key/jex9xY0EKJqy5Z?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"> </iframe>
             </div>
-            <p class="mt-3">PDF 講義下載：<a href="/media/online-workshop-handouts/使用IPT上傳資料-公告板v20241107.pdf" class="myicon icon-download-document"></a></p>
+            <p class="mt-3">{% trans "PDF 講義下載：" %}<a href="/media/online-workshop-handouts/使用IPT上傳資料-公告板v20241107.pdf" class="myicon icon-download-document"></a></p>
         </div>
     </div>
 
@@ -252,12 +252,12 @@ $(document).ready(function () {
             </div>
             <div class="article-content-wrapper">
                 <h3>{% trans "教學講義" %}</h3>
-                <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
+                <small>{% trans "若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。" %}</small>
             </div>
             <div class="embed-responsive embed-responsive-3by2">
                 <iframe src="https://www.slideshare.net/slideshow/embed_code/key/DdVaLmtjx8Fm99?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
             </div>
-            <p class="mt-3">PDF 講義下載：<a href="/media/online-workshop-handouts/20220317-開放授權規範-林誠夏.pdf" target="_blank" class="myicon icon-download-document"></a></p>
+            <p class="mt-3">{% trans "PDF 講義下載：" %}<a href="/media/online-workshop-handouts/20220317-開放授權規範-林誠夏.pdf" target="_blank" class="myicon icon-download-document"></a></p>
         </div>
     </div>
 
@@ -272,12 +272,12 @@ $(document).ready(function () {
             </div>
             <div class="article-content-wrapper">
                 <h3>{% trans "教學講義" %}</h3>
-                <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
+                <small>{% trans "若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。" %}</small>
             </div>
             <div class="embed-responsive embed-responsive-3by2">
                 <iframe src="https://www.slideshare.net/slideshow/embed_code/key/rRI1Aiabd90wF9?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
             </div>
-            <p class="mt-3">PDF 講義下載：<a href="/media/online-workshop-handouts/20240522-如何下載與引用TBIA資料-張俊怡.pdf" target="_blank" class="myicon icon-download-document"></a></p>
+            <p class="mt-3">{% trans "PDF 講義下載：" %}<a href="/media/online-workshop-handouts/20240522-如何下載與引用TBIA資料-張俊怡.pdf" target="_blank" class="myicon icon-download-document"></a></p>
         </div>
     </div>
 
@@ -292,12 +292,12 @@ $(document).ready(function () {
             </div>
             <div class="article-content-wrapper">
                 <h3>{% trans "教學講義" %}</h3>
-                <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
+                <small>{% trans "若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。" %}</small>
             </div>
             <div class="embed-responsive embed-responsive-3by2">
                 <iframe src="https://www.slideshare.net/slideshow/embed_code/key/fRyr4Q1P43w2Tq?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
             </div>
-            <p class="mt-3">PDF 講義下載：<a href="/media/online-workshop-handouts/20220325-如何下載與引用資料-柯智仁.pdf" target="_blank" class="myicon icon-download-document"></a></p>
+            <p class="mt-3">{% trans "PDF 講義下載：" %}<a href="/media/online-workshop-handouts/20220325-如何下載與引用資料-柯智仁.pdf" target="_blank" class="myicon icon-download-document"></a></p>
         </div>
     </div>
 
@@ -312,12 +312,12 @@ $(document).ready(function () {
             </div>
             <div class="article-content-wrapper">
                 <h3>{% trans "教學講義" %}</h3>
-                <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
+                <small>{% trans "若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。" %}</small>
             </div>
             <div class="embed-responsive embed-responsive-3by2">
                 <iframe src="https://www.slideshare.net/slideshow/embed_code/key/5HTo588IJSl6wM?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
             </div>
-            <p class="mt-3">PDF 講義下載：<a href="/media/online-workshop-handouts/20230513-datapaper-何芷蔚.pdf" target="_blank" class="myicon icon-download-document"></a></p>
+            <p class="mt-3">{% trans "PDF 講義下載：" %}<a href="/media/online-workshop-handouts/20230513-datapaper-何芷蔚.pdf" target="_blank" class="myicon icon-download-document"></a></p>
         </div>
     </div>
 
@@ -332,12 +332,12 @@ $(document).ready(function () {
             </div>
             <div class="article-content-wrapper">
                 <h3>{% trans "教學講義" %}</h3>
-                <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
+                <small>{% trans "若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。" %}</small>
             </div>
             <div class="embed-responsive embed-responsive-3by2">
                 <iframe src="https://www.slideshare.net/slideshow/embed_code/key/mlPsZPWsFQuBNs?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
             </div>
-            <p class="mt-3">PDF 講義下載：<a href="/media/online-workshop-handouts/20240521-資料清理-OpenRefine-劉璟儀.pdf" target="_blank" class="myicon icon-download-document"></a></p>
+            <p class="mt-3">{% trans "PDF 講義下載：" %}<a href="/media/online-workshop-handouts/20240521-資料清理-OpenRefine-劉璟儀.pdf" target="_blank" class="myicon icon-download-document"></a></p>
         </div>
     </div>
     <!-- col right end -->

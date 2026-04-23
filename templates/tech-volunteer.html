@@ -89,12 +89,12 @@ $(document).ready(function () {
     <div class="col-12 col-md-3">
         <div class="dropdown dropdown-flexible-wrapper">
             <a class="btn btn-toggle-flexible visible-xs" href="#" data-toggle="dropdown" aria-expanded="false">
-            參與協作者培訓
+            {% trans "參與協作者培訓" %}
             </a>
             <div class="dropdown-menu-flexible d-md-block">
-                <a data-cat="training" class="dropdown-item nav-item current-sunset" href="#training">TaiBIFer 協作者培訓制度</a>
-                <a data-cat="application" class="dropdown-item nav-item" href="#application">申請成為 TaiBIFer 協作者</a>
-                <a data-cat="list" class="dropdown-item nav-item" href="#list">TaiBIFer 協作者名單</a>
+                <a data-cat="training" class="dropdown-item nav-item current-sunset" href="#training">{% trans "TaiBIFer 協作者培訓制度" %}</a>
+                <a data-cat="application" class="dropdown-item nav-item" href="#application">{% trans "申請成為 TaiBIFer 協作者" %}</a>
+                <a data-cat="list" class="dropdown-item nav-item" href="#list">{% trans "TaiBIFer 協作者名單" %}</a>
             </div>
         </div>
     </div>
@@ -102,132 +102,132 @@ $(document).ready(function () {
 
     <!-- col right begin -->
     <div data-cat="training" class="col-12 col-md-9 nav-item-content content-readable-panel">
-        <h4 class="heading-lg-ul">協作者培訓制度說明</h4>
+        <h4 class="heading-lg-ul">{% trans "協作者培訓制度說明" %}</h4>
         <div class="article-content-wrapper">
-            <h3>培訓目的</h3>
+            <h3>{% trans "培訓目的" %}</h3>
         </div>
         <p>
-            生物多樣性資訊為台灣近年越趨興盛的跨領域學門，乃結合了生物多樣性及資訊學領域的知識，
-            將資料加以分析並可應用於研究、政策等各個層面。然而，由於這個學門所需的知識門檻較高，
-            許多想參與的人往往因知識或技術不足而望之卻步，在台灣目前也缺乏相關人才培訓的體制，
-            所以 TaiBIF 團隊希望能透過培訓制度的建立，除了吸引更多人投入生物多樣性資訊領域，
-            也能培育出更多專業人力，甚至創造出許多新興的職涯發展機會。
+            {% trans "生物多樣性資訊為台灣近年越趨興盛的跨領域學門，乃結合了生物多樣性及資訊學領域的知識，" %}
+            {% trans "將資料加以分析並可應用於研究、政策等各個層面。然而，由於這個學門所需的知識門檻較高，" %}
+            {% trans "許多想參與的人往往因知識或技術不足而望之卻步，在台灣目前也缺乏相關人才培訓的體制，" %}
+            {% trans "所以 TaiBIF 團隊希望能透過培訓制度的建立，除了吸引更多人投入生物多樣性資訊領域，" %}
+            {% trans "也能培育出更多專業人力，甚至創造出許多新興的職涯發展機會。" %}
         </p>
 
         <div class="article-content-wrapper">
-            <h3>協作者類型及內容</h3>
+            <h3>{% trans "協作者類型及內容" %}</h3>
         </div>
         <ul>
-            <li class="sub-heading-2">翻譯協作者</li>
+            <li class="sub-heading-2">{% trans "翻譯協作者" %}</li>
             <ul>
-                <li><strong>任務內容</strong>： 協助翻譯文件，文件來源主要來自GBIF或其他國際組織的專業技術資源，將以英翻中為主。</li>
-                <li><strong>條件門檻</strong>： 需有良好中英文讀寫能力，附上相關英文檢定證明或翻譯作品者佳。</li>
-                <li><strong>報酬回饋</strong>： 按照原文字數計酬，依照TaiBIF 團隊評估試譯的結果訂定，每千字 1,610-2,800 元。</li>
+                <li><strong>{% trans "任務內容" %}</strong>{% trans "： 協助翻譯文件，文件來源主要來自GBIF或其他國際組織的專業技術資源，將以英翻中為主。" %}</li>
+                <li><strong>{% trans "條件門檻" %}</strong>{% trans "： 需有良好中英文讀寫能力，附上相關英文檢定證明或翻譯作品者佳。" %}</li>
+                <li><strong>{% trans "報酬回饋" %}</strong>{% trans "： 按照原文字數計酬，依照TaiBIF 團隊評估試譯的結果訂定，每千字 1,610-2,800 元。" %}</li>
             </ul>
 
-            <li class="sub-heading-2">推廣大使</li>
+            <li class="sub-heading-2">{% trans "推廣大使" %}</li>
             <ul>
-                <li><strong>任務內容</strong>： 協助工作坊教學，以擔任課程助教為主，可進階成為講師。</li>
-                <li><strong>條件門檻</strong>： 須對開放資料有一點基礎了解，以生物多樣性背景為佳，且表達清晰。</li>
-                <li><strong>報酬回饋</strong>： 協助工作坊教學每小時1,000元，進階成為講師則以每小時2,000元計。</li>
+                <li><strong>{% trans "任務內容" %}</strong>{% trans "： 協助工作坊教學，以擔任課程助教為主，可進階成為講師。" %}</li>
+                <li><strong>{% trans "條件門檻" %}</strong>{% trans "： 須對開放資料有一點基礎了解，以生物多樣性背景為佳，且表達清晰。" %}</li>
+                <li><strong>{% trans "報酬回饋" %}</strong>{% trans "： 協助工作坊教學每小時1,000元，進階成為講師則以每小時2,000元計。" %}</li>
             </ul>
 
-            <li class="sub-heading-2">資料清理協作者</li>
+            <li class="sub-heading-2">{% trans "資料清理協作者" %}</li>
             <ul>
-                <li><strong>任務內容</strong>： 協助客製化的資料清理。</li>
-                <li><strong>條件門檻</strong>： 需有開放資料經驗，且對資料具敏感度，至少要會使用excel處理基本資料問題。</li>
-                <li><strong>報酬回饋</strong>： 依據需要資料清理的團隊組織的需求為主，根據資料量和處理難度來按件計酬。</li>
+                <li><strong>{% trans "任務內容" %}</strong>{% trans "： 協助客製化的資料清理。" %}</li>
+                <li><strong>{% trans "條件門檻" %}</strong>{% trans "： 需有開放資料經驗，且對資料具敏感度，至少要會使用excel處理基本資料問題。" %}</li>
+                <li><strong>{% trans "報酬回饋" %}</strong>{% trans "： 依據需要資料清理的團隊組織的需求為主，根據資料量和處理難度來按件計酬。" %}</li>
             </ul>
 
-            <li class="sub-heading-2">名錄資料協作者</li>
+            <li class="sub-heading-2">{% trans "名錄資料協作者" %}</li>
             <ul>
-                <li><strong>任務內容</strong>： 協助臺灣物種名錄補充相關資料。</li>
-                <li><strong>條件門檻</strong>： 需至少有生物分類學基礎，分類研究者尤佳。</li>
-                <li><strong>報酬回饋</strong>： 每年年末依據建立資料量，提供修訂補助。</li>
+                <li><strong>{% trans "任務內容" %}</strong>{% trans "： 協助臺灣物種名錄補充相關資料。" %}</li>
+                <li><strong>{% trans "條件門檻" %}</strong>{% trans "： 需至少有生物分類學基礎，分類研究者尤佳。" %}</li>
+                <li><strong>{% trans "報酬回饋" %}</strong>{% trans "： 每年年末依據建立資料量，提供修訂補助。" %}</li>
             </ul>
         </ul>
 
         <div class="article-content-wrapper">
-            <h3>培訓機制</h3>
+            <h3>{% trans "培訓機制" %}</h3>
         </div>
         <ul class="volunteer-mechanism-list">
-            <li><span class="highlight-box-primary">必要</span> 至少上過一次完整工作坊課程</li>
+            <li><span class="highlight-box-primary">{% trans "必要" %}</span> {% trans "至少上過一次完整工作坊課程" %}</li>
                 <ul>
-                    <li>TaiBIF工作坊：翻譯協作者、推廣大使、資料清理協作者</li>
-                    <li>TaiCOL工作坊：名錄資料協作者</li>
+                    <li>{% trans "TaiBIF工作坊：翻譯協作者、推廣大使、資料清理協作者" %}</li>
+                    <li>{% trans "TaiCOL工作坊：名錄資料協作者" %}</li>
                 </ul>
-            <li><span class="highlight-box-primary">必要</span> 全部通過作業及基本測驗並拿到證書</li>
-            <li><span class="highlight-box-secondary">選擇</span><strong> 翻譯協作者</strong>：試譯一段文章段落，進階拿到翻譯協作者認證</li>
-            <li><span class="highlight-box-secondary">選擇</span><strong> 推廣大使</strong>：至少擔任過一次實習助教，拿到實習證明；若要擔任講師，則需另外安排試講</li>
-            <li><span class="highlight-box-secondary">選擇</span><strong> 資料清理協作者</strong>：TaiBIF 提供原始資料集，需按照情境題完成資料發布</li>
-            <li><span class="highlight-box-secondary">選擇</span><strong> 名錄資料協作者</strong>：完成TaiCOL工作坊考核要求，至少新增/補充20筆資料，或至少建立10筆學名使用（單筆文獻或多筆文獻總和）。</li>
-            <li><span class="highlight-box-primary">有條件必要</span> 培訓通過考核後可開始與TaiBIF合作提供相關服務，但若完成認證後<strong>一年內未執行任何一次服務且未接觸其他任何生物多樣性資訊相關工作者 (翻譯協作者三年內)</strong>，則需重新跑過下列流程：</li>
+            <li><span class="highlight-box-primary">{% trans "必要" %}</span> {% trans "全部通過作業及基本測驗並拿到證書" %}</li>
+            <li><span class="highlight-box-secondary">{% trans "選擇" %}</span><strong> {% trans "翻譯協作者" %}</strong>{% trans "：試譯一段文章段落，進階拿到翻譯協作者認證" %}</li>
+            <li><span class="highlight-box-secondary">{% trans "選擇" %}</span><strong> {% trans "推廣大使" %}</strong>{% trans "：至少擔任過一次實習助教，拿到實習證明；若要擔任講師，則需另外安排試講" %}</li>
+            <li><span class="highlight-box-secondary">{% trans "選擇" %}</span><strong> {% trans "資料清理協作者" %}</strong>{% trans "：TaiBIF 提供原始資料集，需按照情境題完成資料發布" %}</li>
+            <li><span class="highlight-box-secondary">{% trans "選擇" %}</span><strong> {% trans "名錄資料協作者" %}</strong>{% trans "：完成TaiCOL工作坊考核要求，至少新增/補充20筆資料，或至少建立10筆學名使用（單筆文獻或多筆文獻總和）。" %}</li>
+            <li><span class="highlight-box-primary">{% trans "有條件必要" %}</span> {% trans "培訓通過考核後可開始與TaiBIF合作提供相關服務，但若完成認證後" %}<strong>{% trans "一年內未執行任何一次服務且未接觸其他任何生物多樣性資訊相關工作者 (翻譯協作者三年內)" %}</strong>{% trans "，則需重新跑過下列流程：" %}</li>
                 <ul>
-                    <li>必要條件第二項，須重新繳交作業和完成測驗（不需再參加一次工作坊）。</li>
-                    <li>選擇條件：依據類別重新執行一次（翻譯協作者須再次完成試譯；推廣大使須再擔任一次實習助教；資料清理協作者須再次接受資料發布測驗）</li>
+                    <li>{% trans "必要條件第二項，須重新繳交作業和完成測驗（不需再參加一次工作坊）。" %}</li>
+                    <li>{% trans "選擇條件：依據類別重新執行一次（翻譯協作者須再次完成試譯；推廣大使須再擔任一次實習助教；資料清理協作者須再次接受資料發布測驗）" %}</li>
                 </ul>
         </ul>
 
         <div class="article-content-wrapper">
-            <h3>服務流程</h3>
+            <h3>{% trans "服務流程" %}</h3>
         </div>
         <ul>
-            <li><strong>翻譯協作者</strong>：TaiBIF 安排所需翻譯文件，放到Crowdin上，翻譯者可自行到專案翻譯，完成後按照字數計酬。</li>
-            <li><strong>推廣大使</strong>：每年TaiBIF 會舉辦1-2次對外實體工作坊，會寄發通知招募助教，並按實際協助教學時數計酬，差旅費另計。</li>
-            <li><strong>資料清理協作者</strong>：針對客製化個案（需要整理資料的單位提出申請，TBIA夥伴單位可優先）徵詢處理的協作者，並分派適合人選（按背景、專長、興趣），由申請單位按件計酬，NGO組織可另議。</li>
-            <li><strong>名錄資料協作者</strong>：於TaiCOL學名管理工具上幫忙補充缺少資訊，看到有缺就可以幫忙補。可回報欲認領之類群或是期刊後，自行安排定期巡邏有無新的分類相關文獻發表，自行到工具上登錄資訊。資料庫會自動記錄編輯動作，無需另外回報。</li>
+            <li><strong>{% trans "翻譯協作者" %}</strong>{% trans "：TaiBIF 安排所需翻譯文件，放到Crowdin上，翻譯者可自行到專案翻譯，完成後按照字數計酬。" %}</li>
+            <li><strong>{% trans "推廣大使" %}</strong>{% trans "：每年TaiBIF 會舉辦1-2次對外實體工作坊，會寄發通知招募助教，並按實際協助教學時數計酬，差旅費另計。" %}</li>
+            <li><strong>{% trans "資料清理協作者" %}</strong>{% trans "：針對客製化個案（需要整理資料的單位提出申請，TBIA夥伴單位可優先）徵詢處理的協作者，並分派適合人選（按背景、專長、興趣），由申請單位按件計酬，NGO組織可另議。" %}</li>
+            <li><strong>{% trans "名錄資料協作者" %}</strong>{% trans "：於TaiCOL學名管理工具上幫忙補充缺少資訊，看到有缺就可以幫忙補。可回報欲認領之類群或是期刊後，自行安排定期巡邏有無新的分類相關文獻發表，自行到工具上登錄資訊。資料庫會自動記錄編輯動作，無需另外回報。" %}</li>
         </ul>
 
         <div class="article-content-wrapper">
-            <h3>協作者福利</h3>
+            <h3>{% trans "協作者福利" %}</h3>
         </div>
         <ul>
-            <li>每年可安排一次中研院博物館導覽</li>
-            <li>可獲得TaiBIF & TaiCOL 精美紀念品</li>
-            <li>TBiA 夥伴單位相關福利（安排中）</li>
-            <li>其他不定期小驚喜安排中</li>
+            <li>{% trans "每年可安排一次中研院博物館導覽" %}</li>
+            <li>{% trans "可獲得TaiBIF & TaiCOL 精美紀念品" %}</li>
+            <li>{% trans "TBiA 夥伴單位相關福利（安排中）" %}</li>
+            <li>{% trans "其他不定期小驚喜安排中" %}</li>
         </ul>
     </div>
 
     <div data-cat="application" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
-        <h4 class="heading-lg-ul">申請成為 TaiBIFer 協作者</h4>
+        <h4 class="heading-lg-ul">{% trans "申請成為 TaiBIFer 協作者" %}</h4>
         <p>
-            要成為TaiBIFer，必要條件為參與TaiBIF 所辦理的「生物多樣性資料發布及應用工作坊」並完成核心及增能課程認證，每年會舉辦兩次，
-            開放報名時間請隨時關注<a href="https://www.facebook.com/TaiBIF.tw/" target="_blank">TaiBIF粉絲頁</a>最新消息。完成課程認證後，我們將會依據您於報名時所選的協作者類型，與您聯繫進一步的考核事宜。
+            {% trans "要成為TaiBIFer，必要條件為參與TaiBIF 所辦理的「生物多樣性資料發布及應用工作坊」並完成核心及增能課程認證，每年會舉辦兩次，" %}
+            開放報名時間請隨時關注<a href="https://www.facebook.com/TaiBIF.tw/" target="_blank">{% trans "TaiBIF粉絲頁" %}</a>最新消息。完成課程認證後，我們將會依據您於報名時所選的協作者類型，與您聯繫進一步的考核事宜。
         </p>
 
         <div class="article-content-wrapper">
-            <h3>工作坊課程認證辦法</h3>
+            <h3>{% trans "工作坊課程認證辦法" %}</h3>
         </div>
         <p>
-            每期工作坊皆有4項課程指定作業，包含2項核心作業及2項增能作業。完成課程指定作業，
-            並於課後一個月內繳交至線上作業繳交表單，經各項主題課程講師評分後，分數達標即可獲得TaiBIF課程認證證書。
+            {% trans "每期工作坊皆有4項課程指定作業，包含2項核心作業及2項增能作業。完成課程指定作業，" %}
+            {% trans "並於課後一個月內繳交至線上作業繳交表單，經各項主題課程講師評分後，分數達標即可獲得TaiBIF課程認證證書。" %}
         </p>
 
         <div class="article-content-wrapper">
-            <h3>指定作業項目 <span class="highlight-box-primary highlight-box-small">將持續更新</span></h3>
+            <h3>{% trans "指定作業項目" %} <span class="highlight-box-primary highlight-box-small">{% trans "將持續更新" %}</span></h3>
         </div>
-        <div class="sub-heading-2">核心作業</div>
+        <div class="sub-heading-2">{% trans "核心作業" %}</div>
         <ol>
-            <li>DwC 資料欄位對應 + Sampling Event 資料集整理</li>
-            <li>資料集上傳TaiBIF test IPT</li>
+            <li>{% trans "DwC 資料欄位對應 + Sampling Event 資料集整理" %}</li>
+            <li>{% trans "資料集上傳TaiBIF test IPT" %}</li>
         </ol>
-        <div class="sub-heading-2">增能作業</div>
+        <div class="sub-heading-2">{% trans "增能作業" %}</div>
         <ol>
-            <li>openRefine 資料清理</li>
-            <li>開放資料下載</li>
+            <li>{% trans "openRefine 資料清理" %}</li>
+            <li>{% trans "開放資料下載" %}</li>
         </ol>
 
         <div class="article-content-wrapper">
-            <h3>作業評核標準</h3>
+            <h3>{% trans "作業評核標準" %}</h3>
         </div>
-        <div class="sub-heading-2">核心作業</div>
-        <p>核心作業每項滿分20分，累計各項作業總分達25分即通過。</p>
-        <div class="sub-heading-2">增能作業</div>
-        <p>此認證須完成包含核心作業在內所有作業，每項滿分20分，累計各項作業總分達60分即通過；40分以上未達60分者則給予核心認證。</p>
+        <div class="sub-heading-2">{% trans "核心作業" %}</div>
+        <p>{% trans "核心作業每項滿分20分，累計各項作業總分達25分即通過。" %}</p>
+        <div class="sub-heading-2">{% trans "增能作業" %}</div>
+        <p>{% trans "此認證須完成包含核心作業在內所有作業，每項滿分20分，累計各項作業總分達60分即通過；40分以上未達60分者則給予核心認證。" %}</p>
 
         <div class="article-content-wrapper">
-            <h3>證書樣式</h3>
+            <h3>{% trans "證書樣式" %}</h3>
         </div>
         <div class="certification-container">
             <img src="{% static 'images/workshop_certification.png'%}"/>
@@ -236,7 +236,7 @@ $(document).ready(function () {
     </div>
 
     <div data-cat="list" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
-        <h4 class="heading-lg-ul">TaiBIFer 協作者名單</h4>
+        <h4 class="heading-lg-ul">{% trans "TaiBIFer 協作者名單" %}</h4>
         {% if grouped_taibifer %}
             {% for role, years in grouped_taibifer.items %}
                 <div class="article-content-wrapper">
@@ -246,15 +246,15 @@ $(document).ready(function () {
                     <table class="table content-readable-table">
                         <thead>
                             <tr>
-                                <th>年度</th>
-                                <th>名單</th>
+                                <th>{% trans "年度" %}</th>
+                                <th>{% trans "名單" %}</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for year, names in years.items %}
                                 {% for name in names %}
                                     <tr>
-                                        <td>{{ year }}年度</td>
+                                        <td>{% blocktrans trimmed %}{{ year }}年度{% endblocktrans %}</td>
                                         <td>{{ name }}</td>
                                     </tr>
                                 {% endfor %}
@@ -264,10 +264,10 @@ $(document).ready(function () {
                 </div>
             {% endfor %}
         {% else %}
-            <strong>目前沒有協作者資料。</strong>
+            <strong>{% trans "目前沒有協作者資料。" %}</strong>
         {% endif %}
         <div class="article-content-wrapper">
-            <h3>證書樣式</h3>
+            <h3>{% trans "證書樣式" %}</h3>
         </div>
         <div class="certification-volunteer-container">
             <img src="{% static 'images/workshop_certification_promotor.jpg'%}"/>

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load static %}
-{% block title %}課程認證{% endblock %}
+{% block title %}{% trans "課程認證" %}{% endblock %}
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/tech-class-license.css' %}">
 {% endblock head %}
@@ -66,7 +66,7 @@ $(document).ready(function () {
 <div class="bg-main-pale">
     <div class="container">
         <div class="caption-mascot-wrapper">
-            <h1 class="title">課程認證</h1>
+            <h1 class="title">{% trans "課程認證" %}</h1>
             <img src="{% static 'images/mascot-frog.png'%}" alt="" class="symbol">
         </div>
     </div>
@@ -78,10 +78,10 @@ $(document).ready(function () {
     <!-- breadcrumb begin -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'index' %}">首頁</a></li>
-            <li class="breadcrumb-item">教育資源</li>
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
+            <li class="breadcrumb-item">{% trans "教育資源" %}</li>
             <li class="breadcrumb-item active" ><a href="{% url 'tech-workshop' %}">{% trans "資料開放與應用工作坊" %}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">課程認證</li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans "課程認證" %}</li>
         </ol>
     </nav>
     <!-- breadcrumb end -->
@@ -90,7 +90,7 @@ $(document).ready(function () {
     <div class="col-12 col-md-3">
         <div class="dropdown dropdown-flexible-wrapper">
             <a class="btn btn-toggle-flexible visible-xs" href="#" data-toggle="dropdown" aria-expanded="false">
-                課程認證
+                {% trans "課程認證" %}
             </a>
             <div class="dropdown-menu-flexible d-md-block">
                 <a data-cat="standard-course" class="dropdown-item nav-item current-sunset" href="#standard-course">{% trans "核心課程" %}</a>
@@ -105,17 +105,17 @@ $(document).ready(function () {
     <!-- col right begin -->
     <div data-cat="standard-course" class="col-12 col-md-9 nav-item-content content-readable-panel">
         <h4 class="heading-lg-ul">{% trans "核心課程" %}</h4>
-        <p>此部分為開放資料所需學習之必修課程，亦為 IPT 帳號審核相關依據</p>
+        <p>{% trans "此部分為開放資料所需學習之必修課程，亦為 IPT 帳號審核相關依據" %}</p>
         <div class="article-content-wrapper">
             <h3>{% trans "基礎概論" %}</h3>
         </div>
         <p>
             <ol>
-                <li>開放資料流程</li>
-                <li>資料發布類型</li>
-                <li>資料標準及共通欄位</li>
-                <li><span class="highlight-box-primary">HW</span> 資料欄位對應（DwC）實作練習</li>
-                <li>敏感物種資料處理原則</li>
+                <li>{% trans "開放資料流程" %}</li>
+                <li>{% trans "資料發布類型" %}</li>
+                <li>{% trans "資料標準及共通欄位" %}</li>
+                <li><span class="highlight-box-primary">HW</span> {% trans "資料欄位對應（DwC）實作練習" %}</li>
+                <li>{% trans "敏感物種資料處理原則" %}</li>
             </ol>
         </p>
         <div class="article-content-wrapper">
@@ -123,8 +123,8 @@ $(document).ready(function () {
         </div>
         <p>
             <ul>
-                <li><span class="highlight-box-primary">HW</span> 開放資料的前置準備</li>
-                <li><span class="highlight-box-primary">HW</span> 如何上傳資料至 IPT</li>
+                <li><span class="highlight-box-primary">HW</span> {% trans "開放資料的前置準備" %}</li>
+                <li><span class="highlight-box-primary">HW</span> {% trans "如何上傳資料至 IPT" %}</li>
             </ul>
         </p>
     </div>
@@ -136,7 +136,7 @@ $(document).ready(function () {
         </div>
         <p>
             <ol>
-                <li><span class="highlight-box-primary">增能 HW</span> 用工具進行資料清理</li>
+                <li><span class="highlight-box-primary">{% trans "增能 HW" %}</span> {% trans "用工具進行資料清理" %}</li>
             </ol>
         </p>
         <div class="article-content-wrapper">
@@ -144,10 +144,10 @@ $(document).ready(function () {
         </div>
         <p>
             <ol>
-                <li>介紹臺灣生物多樣性資訊聯盟（TBIA）及共通資料庫查詢系統（入口網） </li>
-                <li><span class="highlight-box-primary">增能 HW</span> 怎麼下載GBIF資料及引用</li>
-                <li>資料應用案例介紹、資料論文、如何避免資料誤用</li>
-                <li>資料管理方案（DMP）實務探討（depositar）</li>
+                <li>{% trans "介紹臺灣生物多樣性資訊聯盟（TBIA）及共通資料庫查詢系統（入口網）" %} </li>
+                <li><span class="highlight-box-primary">{% trans "增能 HW" %}</span> {% trans "怎麼下載GBIF資料及引用" %}</li>
+                <li>{% trans "資料應用案例介紹、資料論文、如何避免資料誤用" %}</li>
+                <li>{% trans "資料管理方案（DMP）實務探討（depositar）" %}</li>
             </ol>
         </p>
     </div>
@@ -155,36 +155,36 @@ $(document).ready(function () {
     <div data-cat="certification-method" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
         <h4 class="heading-lg-ul">{% trans "認證辦法" %}</h4>
         <p>
-            每期工作坊皆有4項課程指定作業，包含2項核心作業及2項增能作業。 完成課程指定作業，並於課後一個月內繳交至線上作業繳交表單，
-            經各項主題課程講師評分後，分數達標即可獲得TaiBIF課程認證證書。
+            {% trans "每期工作坊皆有4項課程指定作業，包含2項核心作業及2項增能作業。 完成課程指定作業，並於課後一個月內繳交至線上作業繳交表單，" %}
+            {% trans "經各項主題課程講師評分後，分數達標即可獲得TaiBIF課程認證證書。" %}
         </p>
         <div class="article-content-wrapper">
             <h3>{% trans "指定作業項目（將持續更新）" %}</h3>
         </div>
         <p>
-            <strong>核心作業</strong>
+            <strong>{% trans "核心作業" %}</strong>
             <ol>
-                <li>DwC 資料欄位對應 + Sampling Event 資料集整理</li>
-                <li>資料集上傳TaiBIF test IPT</li>
+                <li>{% trans "DwC 資料欄位對應 + Sampling Event 資料集整理" %}</li>
+                <li>{% trans "資料集上傳TaiBIF test IPT" %}</li>
             </ol>
         </p>
         <p>
-            <strong>增能作業</strong>
+            <strong>{% trans "增能作業" %}</strong>
             <ol>
-                <li>openRefine 資料清理</li>
-                <li>開放資料下載</li>
+                <li>{% trans "openRefine 資料清理" %}</li>
+                <li>{% trans "開放資料下載" %}</li>
             </ol>
         </p> 
         <div class="article-content-wrapper">
             <h3>{% trans "作業評核標準" %}</h3>
         </div>
         <p>
-            <strong>核心認證</strong>
-            <p>核心作業每項滿分20分，累計各項作業總分達25分即通過。</p>
+            <strong>{% trans "核心認證" %}</strong>
+            <p>{% trans "核心作業每項滿分20分，累計各項作業總分達25分即通過。" %}</p>
         </p>
         <p>
-            <strong>增能認證</strong>
-            <p>此認證須完成包含核心作業在內所有作業，每項滿分20分，累計各項作業總分達60分即通過；40分以上未達60分者則給予核心認證。</p>
+            <strong>{% trans "增能認證" %}</strong>
+            <p>{% trans "此認證須完成包含核心作業在內所有作業，每項滿分20分，累計各項作業總分達60分即通過；40分以上未達60分者則給予核心認證。" %}</p>
         </p> 
         <div class="article-content-wrapper">
             <h3>{% trans "證書樣式" %}</h3>
@@ -198,14 +198,14 @@ $(document).ready(function () {
     <div data-cat="online-workshop-certification" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
         <h1 class="heading-lg-ul">{% trans "線上自學工作坊課程認證" %}</h1>
         <p>
-            若您有申請<a href="{% url 'open-consulation' %}">線上自學工作坊</a>，則請點選<a href="https://forms.gle/DoG5epPyfyS3BsrJA" target="_blank">線上自學工作坊作業繳交區</a>，上傳核心和增能認證作業，並聯繫我們告知您已完成作業。
+            若您有申請<a href="{% url 'open-consulation' %}">{% trans "線上自學工作坊" %}</a>{% trans "，則請點選" %}<a href="https://forms.gle/DoG5epPyfyS3BsrJA" target="_blank">{% trans "線上自學工作坊作業繳交區" %}</a>，上傳核心和增能認證作業，並聯繫我們告知您已完成作業。
         </p>
     </div>
 
     <div data-cat="certified-list" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
         <h4 class="heading-lg-ul">{% trans "歷年通過認證名單" %}</h4>
         <p>
-            課程認證制度自 2022-09-26 起（2022最後場次工作坊）實施
+            {% trans "課程認證制度自 2022-09-26 起（2022最後場次工作坊）實施" %}
         </p>
         <div class="certification-container">
             <img src="{% static 'images/workshop_certification.png'%}"/>
@@ -213,11 +213,11 @@ $(document).ready(function () {
         </div>
         {% for year, levels in certification_data.items %}
             <div class="article-content-wrapper">
-                <h3>{{ year }}年度</h3>
+                <h3>{% blocktrans trimmed %}{{ year }}年度{% endblocktrans %}</h3>
             </div>
             {% if levels.basic %}
                 <div>
-                    <strong>核心課程通過名單</strong><small>（共計 {{ levels.basic|length }} 名）</small>
+                    <strong>{% trans "核心課程通過名單" %}</strong><small>（共計 {{ levels.basic|length }} 名）</small>
                     <ul class="certification-list-container">
                         {% for name in levels.basic %}
                             <li>{{ name }}</li>
@@ -227,7 +227,7 @@ $(document).ready(function () {
             {% endif %}
             {% if levels.advanced %}
                 <div>
-                    <strong>增能課程通過名單</strong><small>（共計 {{ levels.advanced|length }} 名）</small>
+                    <strong>{% trans "增能課程通過名單" %}</strong><small>（共計 {{ levels.advanced|length }} 名）</small>
                     <ul class="certification-list-container">
                         {% for name in levels.advanced %}
                             <li>{{ name }}</li>
