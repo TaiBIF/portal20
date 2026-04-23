@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load static %}
-{% block title %}{% trans "資料開放與應用工作坊" %}{% endblock %}
+{% block title %}{% trans "參加 TaiBIF 工作坊" %}{% endblock %}
 
 
 {% block main %}
@@ -9,7 +9,7 @@
 <div class="bg-main-pale">
     <div class="container">
         <div class="caption-mascot-wrapper">
-            <h1 class="title">{% trans "資料開放與應用工作坊" %}</h1>
+            <h1 class="title">{% trans "參加 TaiBIF 工作坊" %}</h1>
             <img src="{% static 'images/mascot-frog.png'%}" alt="" class="symbol">
         </div>
     </div>
@@ -17,86 +17,82 @@
 <!-- topnav end -->
 
 <!-- container begin -->
-<div class="container my-5">
+<div class="container my-5 container-1340">
     <!-- breadcrumb begin -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
-            <li class="breadcrumb-item">{% trans "教育資源" %}</li>
-            <li class="breadcrumb-item active" aria-current="page">{% trans "資料開放與應用工作坊" %}</li>
+            <li class="breadcrumb-item">{% trans "我想參與社群" %}</li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans "參加 TaiBIF 工作坊" %}</li>
         </ol>
     </nav>
     <!-- breadcrumb end -->
 
-    <!-- row begin -->
-    <div class="row justify-content-center">
-        <!-- col begin -->
-        <div class="col-12 col-md-10 offset-md-1">
-            <p>
-                為了讓資料提供者及大眾更加了解生物多樣性資料開放的概念，形成資料共享的文化，我們每年會於上半年和下半年各舉辦一場 TaiBIF 資料發布及應用工作坊，並針對下列主題進行說明（三天課程），也會依照工作坊的主題或學員背景不同進行微調：
-            </p>
-            <div class="article-content-wrapper">
-                <h3>核心— 基礎概論</h3>
-            </div>
-            <ul>
-                <li>開放資料流程 45 min</li>
-                <li>資料發布類型 60 min</li>
-                <li>資料標準及共通欄位 75 min</li>
-                <li><span class="highlight-box-primary">HW</span> 資料欄位對應(DwC) 實作練習 75 min</li>
-                <li>敏感物種資料處理原則 30 min</li>
-            </ul>
-            <div class="article-content-wrapper">
-                <h3>增能— 資料處理及上傳</h3>
-            </div>
-            <ul>
-                <li><span class="highlight-box-primary">HW</span> 開放資料的前置準備 70 min</li>
-                <li><span class="highlight-box-primary">增能 HW</span> 用工具進行資料清理 100 min</li>
-                <li><span class="highlight-box-primary">HW</span> 如何上傳資料至 IPT  2 hr</li>
-            </ul>
-            <div class="article-content-wrapper">
-                <h3>增能— 資料管理及應用</h3>
-            </div>
-            <ul>
-                <li>介紹臺灣生物多樣性資訊聯盟(TBIA)及共通資料庫查詢系統(入口網)  40 min</li>
-                <li><span class="highlight-box-primary">增能 HW</span> 怎麼下載GBIF資料及引用 60 min</li>
-                <li>資料應用案例介紹、資料論文、如何避免資料誤用 60 min</li>
-                <li>資料管理方案（DMP）實務探討（depositar） 2 hr</li>
-            </ul>
-            <div class="article-content-wrapper">
-                <h3>線上教材包</h3>
-            </div>
-            <p>
-                為提供無法參加實體工作坊之資料開放者線上學習資源，我們將部分工作坊主題之上課錄影檔及講義開放上線，
-                歡迎大家多多利用，內容詳情請點選下方按鈕。另外，也歡迎有興趣做線上學習並希望拿到認證的來申請<a href="{% url 'open-consulation' %}">線上自學工作坊</a>！
-            </p>
-            <div class="article-content-wrapper">
-                <h3>課程認證</h3>
-            </div>
-            <p>工作坊作業繳交</p>
-            <ul>
-                <li>時程：需要證書者，可於參加完工作坊一個月內完成作業並繳交，經過審核後通過課程認證並核發證書。</li>
-                <li>核心課程證書：完成 <span class="highlight-box-primary">HW</span> 即可獲得，亦將成為IPT 帳號審核相關依據</li>
-                <li>增能課程證書：完成 <span class="highlight-box-primary">HW</span> 及 <span class="highlight-box-primary">增能  HW</span> 即可獲得，可進一步選擇成為 TaiBIFer 志工（表示已完成志工培訓的必要條件）</li>
-            </ul>
-            <p>歡迎點選下方按鈕了解詳細的課程認證方式，若已上過線上自學工作坊者，也請點選下方按進行課後認證。</p>
+    <!-- col begin -->
+    <div class="col-12 content-readable-panel content-readable-full-panel">
+        <p>
+            {% trans "為了讓資料提供者及大眾更加了解生物多樣性資料開放的概念，形成資料共享的文化，我們每年會於上半年和下半年各舉辦一場 TaiBIF 資料發布及應用工作坊，並針對下列主題進行說明（三天課程），也會依照工作坊的主題或學員背景不同進行微調：" %}
+        </p>
+        <div class="article-content-wrapper">
+            <h3>{% trans "核心— 基礎概論" %}</h3>
+        </div>
+        <ul>
+            <li>{% trans "開放資料流程 45 min" %}</li>
+            <li>{% trans "資料發布類型 60 min" %}</li>
+            <li>{% trans "資料標準及共通欄位 75 min" %}</li>
+            <li><span class="highlight-box-primary">HW</span> {% trans "資料欄位對應(DwC) 實作練習 75 min" %}</li>
+            <li>{% trans "敏感物種資料處理原則 30 min" %}</li>
+        </ul>
+        <div class="article-content-wrapper">
+            <h3>{% trans "增能— 資料處理及上傳" %}</h3>
+        </div>
+        <ul>
+            <li><span class="highlight-box-primary">HW</span> {% trans "開放資料的前置準備 70 min" %}</li>
+            <li><span class="highlight-box-primary">{% trans "增能 HW" %}</span> {% trans "用工具進行資料清理 100 min" %}</li>
+            <li><span class="highlight-box-primary">HW</span> {% trans "如何上傳資料至 IPT  2 hr" %}</li>
+        </ul>
+        <div class="article-content-wrapper">
+            <h3>{% trans "增能— 資料管理及應用" %}</h3>
+        </div>
+        <ul>
+            <li>{% trans "介紹臺灣生物多樣性資訊聯盟(TBIA)及共通資料庫查詢系統(入口網)  40 min" %}</li>
+            <li><span class="highlight-box-primary">{% trans "增能 HW" %}</span> {% trans "怎麼下載GBIF資料及引用 60 min" %}</li>
+            <li>{% trans "資料應用案例介紹、資料論文、如何避免資料誤用 60 min" %}</li>
+            <li>{% trans "資料管理方案（DMP）實務探討（depositar） 2 hr" %}</li>
+        </ul>
+        <div class="article-content-wrapper">
+            <h3>{% trans "線上教材包" %}</h3>
+        </div>
+        <p>
+            {% trans "為提供無法參加實體工作坊之資料開放者線上學習資源，我們將部分工作坊主題之上課錄影檔及講義開放上線，" %}
+            歡迎大家多多利用，內容詳情請點選下方按鈕。另外，也歡迎有興趣做線上學習並希望拿到認證的來申請<a href="{% url 'open-consulation' %}">{% trans "線上自學工作坊" %}</a>！
+        </p>
+        <div class="article-content-wrapper">
+            <h3>{% trans "課程認證" %}</h3>
+        </div>
+        <p>{% trans "工作坊作業繳交" %}</p>
+        <ul>
+            <li>{% trans "時程：需要證書者，可於參加完工作坊一個月內完成作業並繳交，經過審核後通過課程認證並核發證書。" %}</li>
+            <li>{% trans "核心課程證書：完成" %} <span class="highlight-box-primary">HW</span> {% trans "即可獲得，亦將成為IPT 帳號審核相關依據" %}</li>
+            <li>{% trans "增能課程證書：完成" %} <span class="highlight-box-primary">HW</span> {% trans "及" %} <span class="highlight-box-primary">{% trans "增能  HW" %}</span> {% trans "即可獲得，可進一步選擇成為 TaiBIFer 協作者（表示已完成協作者培訓的必要條件）" %}</li>
+        </ul>
+        <p>{% trans "歡迎點選下方按鈕了解詳細的課程認證方式，若已上過線上自學工作坊者，也請點選下方按進行課後認證。" %}</p>
 
-            <div class="row">
-                <div class="col-12 col-md-6 my-3">
-                    <a href="{% url 'tech-online-class' %}" class="btn-cta-learning">
-                        <span class="heading">線上教材包</span>
-                        <img src="{% static 'images/edu-video.png'%}" alt="">
-                        
-                    </a>
-                </div>
-                <div class="col-12 col-md-6 my-3">
-                    <a href="{% url 'tech-class-license' %}" class="btn-cta-learning">
-                        <span class="heading">課程認證</span>
-                        <img src="{% static 'images/edu-lesson.png'%}" alt="">
-                    </a>
-                </div>
+        <div class="row">
+            <div class="col-12 col-md-6 my-3">
+                <a href="{% url 'tech-online-class' %}" class="btn-cta-learning">
+                    <span class="heading">{% trans "線上教材包" %}</span>
+                    <img src="{% static 'images/edu-video.png'%}" alt="">
+                    
+                </a>
+            </div>
+            <div class="col-12 col-md-6 my-3">
+                <a href="{% url 'tech-class-license' %}" class="btn-cta-learning">
+                    <span class="heading">{% trans "課程認證" %}</span>
+                    <img src="{% static 'images/edu-lesson.png'%}" alt="">
+                </a>
             </div>
         </div>
-        <!-- col end -->
     </div>
     <!-- row end -->
 </div>

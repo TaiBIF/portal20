@@ -3,7 +3,7 @@
 {% load i18n %}
 
 
-{% block title %}Cookbook 2 - 資料標準化{% endblock %}
+{% block title %}{% trans "Cookbook 2 - 資料標準化" %}{% endblock %}
 
 {% block main %}
 
@@ -41,7 +41,7 @@ hr {
     <!-- breadcrumb begin -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'index' %}">首頁</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
             <li class="breadcrumb-item">{% trans "教育資源" %}</li>
             <li class="breadcrumb-item">{% trans "生物多樣性資訊概論" %}</li>
             <li class="breadcrumb-item active" aria-current="page">{% trans "第二章：資料標準化" %}</li>
@@ -103,8 +103,8 @@ hr {
                 <tr>
                     <td>1</td>
                     <td>4094</td>
-                    <td>北部</td>
-                    <td>鵝兒腸</td>
+                    <td>{% trans "北部" %}</td>
+                    <td>{% trans "鵝兒腸" %}</td>
                     <td><l>Stellaria aquatica (L.) Scop.</l></td>
                     <td>120.9785</td>
                     <td>24.68604</td>
@@ -112,8 +112,8 @@ hr {
                 <tr>
                     <td>2</td>
                     <td>4094</td>
-                    <td>北部</td>
-                    <td>藿香薊</td>
+                    <td>{% trans "北部" %}</td>
+                    <td>{% trans "藿香薊" %}</td>
                     <td><l>Ageratum conyzoides L.</l></td>
                     <td>120.9785</td>
                     <td>24.68604</td>
@@ -121,8 +121,8 @@ hr {
                 <tr>
                     <td>3</td>
                     <td>4094</td>
-                    <td>北部</td>
-                    <td>大花咸豐草</td>
+                    <td>{% trans "北部" %}</td>
+                    <td>{% trans "大花咸豐草" %}</td>
                     <td><l>Bidens pilosa L. var. radiata</l>(Sch. Bip.) J. A. Schmidt</td>
                     <td>120.9785</td>
                     <td>24.68604</td>
@@ -130,8 +130,8 @@ hr {
                 <tr>
                     <td>4</td>
                     <td>4094</td>
-                    <td>北部</td>
-                    <td>野茼蒿</td>
+                    <td>{% trans "北部" %}</td>
+                    <td>{% trans "野茼蒿" %}</td>
                     <td><l>Conyza sumatrensis</l>(Retz.) E. Walker</td>
                     <td>120.9785</td>
                     <td>24.68604</td>
@@ -139,8 +139,8 @@ hr {
                 <tr>
                     <td>5</td>
                     <td>4094</td>
-                    <td>北部</td>
-                    <td>粗毛小米菊</td>
+                    <td>{% trans "北部" %}</td>
+                    <td>{% trans "粗毛小米菊" %}</td>
                     <td><l>Galinsoga quadriradiata</l>Ruiz & Pav.</td>
                     <td>120.9785</td>
                     <td>24.68604</td>
@@ -169,9 +169,9 @@ hr {
             </thead>
             <tbody>
                 <tr>
-                    <td>麻雀</td>
-                    <td>上午7:00, 2015.04.01</td>
-                    <td>台北，台灣</td>
+                    <td>{% trans "麻雀" %}</td>
+                    <td>{% trans "上午7:00, 2015.04.01" %}</td>
+                    <td>{% trans "台北，台灣" %}</td>
                 </tr>
             </tbody>
         </table>
@@ -196,10 +196,10 @@ hr {
                         <td>Longistipitata</td>
                         <td>Hosoya</td>
                         <td>2015-iv-1</td>
-                        <td>日本茨城，筑波，植物園</td>
+                        <td>{% trans "日本茨城，筑波，植物園" %}</td>
                         <td>T. Hosoya</td>
                         <td>T. Hosoya</td>
-                        <td>日本山毛櫸殼斗</td>
+                        <td>{% trans "日本山毛櫸殼斗" %}</td>
                     </tr>
                 </tbody>
             </table>
@@ -219,7 +219,7 @@ hr {
                     <tr>
                         <td>Dasyscyphella longistipitata</td>
                         <td>2015/04/01</td>
-                        <td>青森，八甲田山</td>
+                        <td>{% trans "青森，八甲田山" %}</td>
                         <td>40.523591</td>
                         <td>140.970943</td>
                     </tr>
@@ -283,9 +283,9 @@ hr {
         </p>
             <p>{% trans "相關連結：" %}<br>
         <ul>
-            <li><a href="http://www.tdwg.org/" class="myicon icon-link" target="_blank">生物分類學資料庫工作小組（TWDG)</a> </li>
-            <li><a href="http://rs.tdwg.org/dwc/terms/" class="myicon icon-link" target="_blank">達爾文核心集</a></li>
-            <li><a href="http://dublincore.org/" class="myicon icon-link" target="_blank">都柏林核心集</a></li>
+            <li><a href="http://www.tdwg.org/" class="myicon icon-link" target="_blank">{% trans "生物分類學資料庫工作小組（TWDG)" %}</a> </li>
+            <li><a href="http://rs.tdwg.org/dwc/terms/" class="myicon icon-link" target="_blank">{% trans "達爾文核心集" %}</a></li>
+            <li><a href="http://dublincore.org/" class="myicon icon-link" target="_blank">{% trans "都柏林核心集" %}</a></li>
         </ul>
 
         <hr>

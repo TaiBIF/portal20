@@ -6,7 +6,7 @@
 {% get_current_language as LANGUAGE_CODE %}
 
 {% block title %}
-資料發布狀況
+{% trans "資料發布狀況" %}
 {% endblock %}
 {% block head %}
 <style>
@@ -41,19 +41,45 @@ svg text.label {
   text-anchor: middle;
 }
 
+.data-stats-chart .content.responsive {
+    width: 100%;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.data-stats-chart .content.responsive > div {
+    min-height: 360px;
+    width: 100%;
+}
+
+.data-stats-chart .content.responsive svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.data-stats-tooltip {
+    position: fixed;
+    z-index: 9999;
+    pointer-events: none;
+    max-width: 240px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: rgba(74, 62, 58, 0.92);
+    color: #fff;
+    font-size: 13px;
+    line-height: 1.35;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
 </style>
 {% endblock %}
 
 {% block script %}
-{#<script src="https://d3js.org/d3.v3.min.js"></script>#}
 <script src="{% static 'js/d3.min.js' %}"></script>
 <script src="{% static 'js/analytics.js' %}"></script>
-
-{% if env == "dev" %}
-<script src="{% static 'js/dataset-table.dev.js' %}"></script>
-{% elif env == "prod" or env == "stag" %}
-<script src="{% static 'js/dataset-table.min.js' %}"></script>
-{% endif %}
 
 <script>
 const checkboxes = document.querySelectorAll('input[type=checkbox]');
@@ -92,7 +118,6 @@ checkboxes.forEach(checkbox => {
 $('#search-input').on('keypress', function(event) {
     if (event.which === 13) {
         var inputValue = $(this).val();
-        // console.log(inputValue);
         window.location.href = `${baseURL}?search_query=${inputValue}`
     };
 })
@@ -100,7 +125,6 @@ $('#search-input').on('keypress', function(event) {
 if (window.location.href.includes('search_query')) {
     const URLParmas = window.location.href.split('?')[1];
     const searchValue = URLParmas.split('=')[1];
-    // console.log(searchValue)
     $('#search-input').val(searchValue);
 };
 
@@ -126,7 +150,7 @@ $('#clean-search').on('click', function() {
 </div>
 <!-- topnav end -->
 <!-- container begin -->
-<div class="container my-5" >
+<div class="container my-5 container-1340 article-search-page">
     <!-- breadcrumb begin -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -137,106 +161,55 @@ $('#clean-search').on('click', function() {
     </nav>
     <!-- breadcrumb end -->
 
-    <!-- 資料發布狀況 row begin -->
-    <p class="mt-6">以下是關於 TaiBIF 官網上所有資料的統計結果，包含上傳至 TaiBIF IPT 的資料集以及 GBIF 上包含台灣點位的資料集。</p>
-    <div class="row justify-content-center mb-4">
-    <!-- col begin -->
-    <div class="col-card-brick">
-        <div class="card-brick card-glowing">
-            <p class="title"><span class="myicon icon-data-stats mr-1"></span>出現紀錄</p>
-            <p class="content"><a href="/occurrence/search/" >{{occ_num|intcomma:False}}</a></p>
-        </div>
-    </div>
-    <!-- col end -->
-    <!-- col begin -->
-    <div class="col-card-brick">
-        <div class="card-brick card-glowing">
-            <p class="title"><span class="myicon icon-data-folder mr-1"></span>資料集</p>
-            <p class="content"><a href="/dataset/search/">{{dataset_num|intcomma}}</a></p>
-        </div>
-    </div>
-    <!-- col end -->
-    <!-- col begin -->
-    <div class="col-card-brick">
-        <div class="card-brick card-glowing">
-            <p class="title"><span class="myicon icon-data-tw mr-1"></span>涵蓋物種數</p>
-            <p class="content">46,553</p>
-        </div>
-    </div>
-    <!-- col end -->
-    <!-- col begin -->
-    <div class="col-card-brick">
-        <div class="card-brick card-glowing">
-            <p class="title"><span class="myicon icon-data-org mr-1"></span>資料發布單位</p>
-            <p class="content"><a href="/publisher/search/">{{publisher_num}}</a></p>
-        </div>
-    </div>
-    <!-- col end -->
-    <!-- col begin -->
-    <div class="col-card-brick">
-        <div class="card-brick card-glowing">
-            <p class="title"><span class="myicon icon-data-paper mr-1"></span>臺灣資料應用發表</p>
-            <p class="content">
-                <a href="{% url 'data-case' %}">{{ case_count }}</a>
-            </p>
-        </div>
-    </div>
-    <!-- col end -->
-    </div>
-    <!-- 資料發布狀況 row begin -->
-
-    <!-- row begin -->
-    <div class="row">
     <!-- col begin -->
     <div class="col-12">
-        <h1 class="headline-left-hr">
-        資料發布狀況
-        </h1>
         <div class="heading-sort-ctn">
-            <label class="custom-input-ctn">
-                <input type="checkbox" class="check-all">
-                <span class="checkmark"></span>
-                檢視 TaiBIF IPT 裡所有資料的發布狀況
-            </label>
-            <label class="custom-input-ctn">
-                <input type="checkbox"  class="check-most" {% if request.GET.most %} checked {% endif %}>
-                <span class="checkmark"></span>
-                僅檢視國科會發布狀況 (TaiBIF 的資料庫及基礎建設乃由國科會之經費及相關計畫支持，勾選此項可了解國科會生物多樣性計畫物種資料開放狀況)
-            </label>
+            <form class="form-inline">
+                <label class="custom-input-ctn">
+                    <input type="checkbox" class="check-all">
+                    <span class="checkmark"></span>
+                    {% trans "檢視 TaiBIF IPT 裡所有資料的發布狀況" %}
+                </label>
+                <label class="custom-input-ctn">
+                    <input type="checkbox"  class="check-most" {% if request.GET.most %} checked {% endif %}>
+                    <span class="checkmark"></span>
+                    {% trans "僅檢視國科會發布狀況 (TaiBIF 的資料庫及基礎建設乃由國科會之經費及相關計畫支持，勾選此項可了解國科會生物多樣性計畫物種資料開放狀況)" %}
+                </label>
+            </form>
         </div>
 
-        <h3 class="headline-left sub-heading">統整數據</h3>
+        <!-- <h3 class="headline-left sub-heading">{% trans "統整數據" %}</h3> -->
 
-        <div class="card-tools-wrapper">
+        <!-- <div class="card-tools-wrapper data-stats-chart">
         <div class="title">
-            TaiBIF IPT 今年度上傳出現紀錄資料筆數
+            {% trans "TaiBIF IPT 今年度上傳出現紀錄資料筆數" %}
         </div>
         <div class="content responsive">
             <div id="taibif-stats__this_year_occurrence"></div>
         </div>
         </div>
 
-        <div class="card-tools-wrapper">
+        <div class="card-tools-wrapper data-stats-chart">
         <div class="title">
-            TaiBIF IPT 今年度上傳資料集數量
+            {% trans "TaiBIF IPT 今年度上傳資料集數量" %}
         </div>
         <div class="content responsive">
             <div id="taibif-stats__this_year_dataset"></div>
         </div>
-        </div>
+        </div> -->
 
-        <div class="card-tools-wrapper">
+        <div class="card-tools-wrapper data-stats-chart">
         <div class="title">
-            TaiBIF IPT 累積出現紀錄資料筆數
+            {% trans "TaiBIF IPT 累積出現紀錄資料筆數" %}
         </div>
         <div class="content responsive">
             <div id="taibif-stats__trend_occurrence"></div>
         </div>
         </div>
 
-        <div class="card-tools-wrapper">
+        <div class="card-tools-wrapper data-stats-chart">
         <div class="title">
-            TaiBIF IPT 累積資料集數量
+            {% trans "TaiBIF IPT 累積資料集數量" %}
         </div>
         <div class="content responsive">
             <div id="taibif-stats__trend_dataset"></div>
@@ -244,46 +217,52 @@ $('#clean-search').on('click', function() {
         </div>
         <!-- <div id="dataset-table-container" lang="zh-hant"></div> -->
 
-        <h3 class="headline-left sub-heading">
-            資料集列表
-        </h3>
+        <div class="article-content-wrapper">
+            <h3>
+                {% trans "資料集列表" %}
+            </h3>
+            <p>
+                {% blocktrans %}
+                以下資料集列表為透過 <a href="https://ipt.taibif.tw/" target="_blank">TaiBIF IPT</a> 發布的公開資料。可使用下方按鈕分別下載 XLSX 與 CSV 格式的資料列表。
+                {% endblocktrans %}
+            </p>
 
-        <div class="table-responsive">
-            <table class="table table-ltmilo" id="opendata-table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>資料集名稱</th>
-                        <th>發布單位</th>
-                        <th>資料類型</th>
-                        <th>資料筆數</th>
-                        <th>出現紀錄</th>
-                        <th>發佈時間</th>
-                        <th>地區</th>
-                        <th>NSTC 計畫</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for i in dataset %}
-                    <tr>
-                        <td>{{ forloop.counter }}</td>
-                        <td><a href="/dataset/{{ i.taibif_dataset_id }}/">{{ i.title }}</a></td>
-                        <td>{{ i.organization_name }}</td>
-                        <td>{{ i.dwc_core_type }}</td>
-                        <td>{{ i.num_record }}</td>
-                        <td>{{ i.num_occurrence }}</td>
-                        <td>{{ i.pub_date|date:"Y-m-d"}}</td>
-                        <td>{{ i.country }}</td>
-                        <td>{{ i.is_most_project }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div> 
+
+            <div class="table-responsive">
+                <table class="table content-readable-table" id="opendata-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>{% trans "資料集名稱" %}</th>
+                            <th>{% trans "發布單位" %}</th>
+                            <th>{% trans "資料類型" %}</th>
+                            <th>{% trans "資料筆數" %}</th>
+                            <th>{% trans "出現紀錄" %}</th>
+                            <th>{% trans "發佈時間" %}</th>
+                            <th>{% trans "地區" %}</th>
+                            <th>{% trans "NSTC 計畫" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in dataset %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td><a href="/dataset/{{ i.taibif_dataset_id }}/">{{ i.title }}</a></td>
+                            <td>{{ i.organization_name }}</td>
+                            <td>{{ i.dwc_core_type }}</td>
+                            <td>{{ i.num_record }}</td>
+                            <td>{{ i.num_occurrence }}</td>
+                            <td>{{ i.pub_date|date:"Y-m-d"}}</td>
+                            <td>{{ i.country }}</td>
+                            <td>{{ i.is_most_project }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div> 
+        </div>
     </div>
     <!-- col end -->
-    </div>
-    <!-- row end -->
 
     </div>
     <!-- container end -->

@@ -1,14 +1,46 @@
 {% extends "base.html" %}
 {% load i18n %} 
 {% load static %}
-{% block title %}FAQ{% endblock %}
+{% block title %}{% trans "開放資料常見問題" %}{% endblock %}
+
+{% block script %}
+<script>
+$(document).ready(function () {
+    const defaultHash = "q2-1";
+
+    function switchFaqTab(cat) {
+        const $item = $('.dropdown-item.nav-item[data-cat="' + cat + '"]');
+        if (!$item.length) return;
+
+        $(".dropdown-item.nav-item").removeClass("current-sunset");
+        $item.addClass("current-sunset");
+
+        $(".nav-item-content").addClass("hide");
+        $('.nav-item-content[data-cat="' + cat + '"]').removeClass("hide");
+    }
+
+    const hash = window.location.hash.substring(1) || defaultHash;
+    if (!window.location.hash) {
+        window.location.hash = defaultHash;
+    }
+    switchFaqTab(hash);
+
+    $(".dropdown-item.nav-item").on("click", function (e) {
+        e.preventDefault();
+        const cat = $(this).data("cat");
+        window.location.hash = cat;
+        switchFaqTab(cat);
+    });
+});
+</script>
+{% endblock %}
 
 {% block main %}
 <!-- topnav begin -->
 <div class="bg-main-pale">
     <div class="container">
         <div class="caption-mascot-wrapper">
-            <h1 class="title">FAQ</h1>
+            <h1 class="title">{% trans "開放資料常見問題" %}</h1>
             <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
         </div>
     </div>
@@ -16,247 +48,124 @@
 <!-- topnav end -->
 
 <!-- container begin -->
-<div class="container my-5">
+<div class="container my-5 container-1340">
     <!-- breadcrumb begin -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
             <li class="breadcrumb-item">{% trans "關於我們" %}</li>
-            <li class="breadcrumb-item active" aria-current="page">FAQ</li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans "開放資料常見問題" %}</li>
         </ol>
     </nav>
     <!-- breadcrumb end -->
-
-    <!-- row begin -->
-    <div class="row">
-        <!-- col left begin -->
-        <div class="col-12 col-md-3">
-            <!-- <div class="dropdown dropdown-flexible-wrapper">
-                <a class="btn btn-toggle-flexible toggle-item" href="#">
-                    開放資料諮詢服務
-                </a>
-                <div class="dropdown-menu dropdown-menu-flexible">
-                    <a data-cat="q1-1" class="dropdown-item toggle-item" href="#">申請資料清理服務</a>
-                    <a data-cat="q1-2" class="dropdown-item toggle-item" href="#">申請線上自學工作坊</a>
-                    <a data-cat="q1-3" class="dropdown-item toggle-item" href="#">資料發布問題諮詢</a>
-                    <a data-cat="q1-4" class="dropdown-item toggle-item" href="#">資料論文合作</a>
-                </div>
-            </div> -->
-
-            <div class="dropdown dropdown-flexible-wrapper">
-                <a class="btn btn-toggle-flexible" href="#" data-toggle="dropdown">
-                    資料集發布常見問題
-                </a>
-                <div class="dropdown-menu dropdown-menu-flexible show">
-                    <a data-cat="q2-1" class="dropdown-item toggle-item" href="#">要如何註冊成為資料發布單位？</a>
-                    <a data-cat="q2-2" class="dropdown-item toggle-item" href="#">資料發布的流程為何？</a>
-                    <a data-cat="q2-3" class="dropdown-item toggle-item" href="#">我已經檢核好資料，也在 IPT 上成功發布，為什麼在 GBIF 看不到最新的資料筆數？</a>
-                    <a data-cat="q2-4"class="dropdown-item toggle-item" href="#">我想新增資料，需要重新上傳整個檔案嗎？</a>
-                    <a data-cat="q2-5" class="dropdown-item toggle-item" href="#">資料只能選一種授權類型嗎？</a>
-                    <a data-cat="q2-6" class="dropdown-item toggle-item" href="#">如果資料用一樣的調查方法收集，但計畫隨著不同年份有所修改，建議如何填寫？</a>
-                    <a data-cat="q2-7" class="dropdown-item toggle-item" href="#">如果想將發布過的資料集換發布單位，要怎麼處理？</a>
-                    <a data-cat="q2-8" class="dropdown-item toggle-item" href="#">IPT上的詮釋資料 Metadata 怎麼寫？</a>
-                    <a data-cat="q2-9" class="dropdown-item toggle-item" href="#">我能自己安裝 IPT 嗎？</a>
-                    <a data-cat="q2-10" class="dropdown-item toggle-item" href="#">我已經發布了資料集到GBIF，想改變資料集類型可以嗎？</a>
-                </div>
-            </div>
-
-            <p class="text-gray-8">如果找不到想詢問的問題，也可以直接詢問</p>
-            <a href="{% url 'contact_us' %}" class="btn btn-block btn-sunset-md mb-3">
-            <span class="myicon icon-contact-mail mr-1"></span>聯絡我們
-            </a>
-        </div>
-        <!-- col left end -->
-
-        <!-- col right begin -->
-        <!-- <div data-cat="q1-1" class="col-12 col-md-9 toggle-item-content hide">
-            <h4 class="headline-left-hr">申請資料清理服務</h4>
-            <p>即將上線，敬請期待！</p>
-        </div>
-
-        <div data-cat="q1-2" class="col-12 col-md-9 toggle-item-content hide">
-            <h4 class="headline-left-hr">申請線上自學工作坊</h4>
-            <p>
-                歡迎申請 TaiBIF 線上自學工作坊！本課程適合對於開放資料發布及應用有興趣，但無法來上三天實體課程的公司、團體、組織、機關參加，
-                透過填寫申請表，我們將與您聯繫並提供貴單位適合的線上免費課程方案，並可依需求提供線上預約諮詢。若您對於課程認證有興趣，也歡迎繳交指定作業來獲得認證及相關建議！
-            </p>
-            <p>
-                有興趣者請填寫<a href="https://docs.google.com/forms/d/e/1FAIpQLSfqOJTqON13PMbNZbmLFSk6KXDaSa6S8RJ8vnOk5BB59PsxMQ/viewform" target="_blank">申請表單</a>，課程主題及說明如下：
-            </p>
-            <table class="table online-workshop-course-table">
-                <tr>
-                    <th>主題</th>
-                    <th>等級</th>
-                    <th>說明</th>
-                </tr>
-                <tr>
-                    <td>00-TaiBIF簡介</td>
-                    <td><span class="highlight-box-primary">基礎</span></td>
-                    <td>簡介臺灣生物多樣性資訊機構（TaiBIF）及提供的服務</td>
-                </tr>
-                <tr>
-                    <td>01-開放資料流程</td>
-                    <td><span class="highlight-box-primary">基礎</span></td>
-                    <td>為什麼要開放資料？<br>理想中的資料流通是如何成形的？</td>
-                </tr>
-                <tr>
-                    <td>02-資料發布類型</td>
-                    <td><span class="highlight-box-primary">基礎</span></td>
-                    <td>介紹物種清單 checklist、出現紀錄 occurrence、調查活動 sampling event，認識自己的資料屬於哪種類型</td>
-                </tr>
-                <tr>
-                    <td>03-資料標準及共通欄位</td>
-                    <td><span class="highlight-box-primary">基礎</span></td>
-                    <td>介紹國際通用標準 Darwin Core (DwC)</td>
-                </tr>
-                <tr>
-                    <td>04-開放資料的前置準備及清理</td>
-                    <td><span class="highlight-box-primary">基礎</span></td>
-                    <td>瞭解 GBIF 的資料結構及如何提升自己資料的品質</td>
-                </tr>
-                <tr>
-                    <td>05-生物多樣性敏感資料處理原則</td>
-                    <td><span class="highlight-box-primary">基礎</span></td>
-                    <td>介紹敏感物種的資料發布、地理資訊屏蔽原則及指引</td>
-                </tr>
-                <tr>
-                    <td>01-開放資料授權規範</td>
-                    <td><span class="highlight-box-secondary">進階</span></td>
-                    <td>了解開放資料的授權規範及不同角色使用授權的權利義務</td>
-                </tr>
-                <tr>
-                    <td>02-TBIA及入口網介紹</td>
-                    <td><span class="highlight-box-secondary">進階</span></td>
-                    <td>介紹臺灣生物多樣性資訊聯盟（TBIA）及共通資料庫查詢系統（入口網）</td>
-                </tr>
-                <tr>
-                    <td>03-如何下載及引用開放資料</td>
-                    <td><span class="highlight-box-secondary">進階</span></td>
-                    <td>如何從GBIF下載及引用開放資料</td>
-                </tr>
-                <tr>
-                    <td>04-資料論文</td>
-                    <td><span class="highlight-box-secondary">進階</span></td>
-                    <td>什麼是資料論文？如何準備？</td>
-                </tr>
-                <tr>
-                    <td>05-OpenRefine 資料清理工具介紹與實作</td>
-                    <td><span class="highlight-box-secondary">進階</span></td>
-                    <td>使用小工具和 OpenRefine 來清理自己的或範例資料</td>
-                </tr>
-            </table>
-        </div>
-
-        <div data-cat="q1-3" class="col-12 col-md-9 toggle-item-content hide">
-            <h4 class="headline-left-hr">資料發布問題諮詢</h4>
-            <p>
-                TaiBIF 提供任何生物多樣性資料發布的諮詢服務及協助，常見問題可先參考<strong>資料集發布常見問題</strong>，
-                若沒有找到您需要的解答，可加入FB社團：<a href="https://www.facebook.com/groups/3176539809245108" target="_blank">TaiBIF/GBIF 資料發布問題討論</a>並發問，
-                或進一步<a href="{% url 'contact_us' %}">聯繫我們</a>。
-            </p>
-        </div>
-
-        <div data-cat="q1-4" class="col-12 col-md-9 toggle-item-content hide">
-            <h4 class="headline-left-hr">資料論文合作</h4>
-            <p>
-                TaiBIF每年皆有固定經費來贊助與生物多樣性相關之主題的資料論文發表，欲知詳情如合作模式與適用條件，歡迎<a href="{% url 'contact_us' %}">聯繫我們</a>。
-            </p>
-            <p>
-                相關條件：
-                <ol>
-                    <li>須將資料集上傳至TaiBIF 和 GBIF，上傳流程請參照<a href="{% url 'open-process' %}">開放資料流程</a></li>
-                    <li>須將TaiBIF 團隊中至少一位成員列為共同作者（該成員將可協助資料發布）</li>
-                    <li>須於致謝（Acknowledgement）中提及 Taiwan Biodiversity Information Facility, TaiBIF</li>
-                </ol>
-            </p>
-        </div> -->
-
-        <div data-cat="q2-1" class="col-12 col-md-9 toggle-item-content">
-            <h4 class="headline-left-hr">要如何註冊成為資料發布單位？</h4>
-            <p>
-                原則上註冊成為資料發布單位（GBIF data publisher），可以組織、團體、公司企業、公部門、大專院校系所為單位，不建議以個人名義註冊成為資料發布單位，步驟如下：
-                <ul class="alphabet-list">
-                    <li>a. 先至GBIF 網頁填寫<a href="https://www.gbif.org/become-a-publisher" target="_blank">註冊申請表單</a>（Become a publisher），須以英文為主</li>
-                    <li>b. 等待3-5個工作天，經由GBIF秘書處及委員審核核可後，會收到註冊成功確認信</li>
-                    <li>c. 請將註冊成功確認信裡附上的組織密碼（token），轉寄給<a href="mailto:taibif.brcas@gmail.com" target="_blank">TaiBIF helpdesk</a></li>
-                    <li>d. 由TaiBIF將貴單位匯入IPT組織清單中，完成後即可以貴單位名義發布資料集</li>
-                </ul>
-            </p>
-        </div>
-
-        <div data-cat="q2-2" class="col-12 col-md-9 toggle-item-content hide">
-            <h4 class="headline-left-hr">資料發布的流程為何？</h4>
-            <p>詳細的步驟與說明，請見<a href="{% url 'open-process' %}">開放資料流程</a>，點選每個步驟的按鈕即可檢視指引文件。</p>
-        </div>
-
-        <div data-cat="q2-3" class="col-12 col-md-9 toggle-item-content hide">
-            <h4 class="headline-left-hr">我已經檢核好資料，也在 IPT 上成功發布，為什麼在 GBIF 看不到最新的資料筆數？</h4>
-            <p>
-                有幾種可能原因：
-                <ul class="alphabet-list">
-                    <li>a. <strong>資料筆數過大</strong>，GBIF 需要時間更新，可以過一兩天後再確認，如果過三天還是沒有，歡迎<a href="mailto:taibif.brcas@gmail.com" target="_blank">聯繫 TaiBIF</a>。</li>
-                    <li>b. 更新資料集時，<strong>換掉超過 50% 的舊資料 ID</strong>，導致 GBIF 暫停此次更新。需要聯繫 TaiBIF，或是自己換回原本的資料ID再重新上傳（盡量不要更改已發布的資料ID）。</li>
-                    <li>c. 若資料集的 Core 為調查活動 Sampling Event，可能是<strong> Occurrence Extension 沒有對應到 core 的 eventID</strong>，所以系統無法順利將 core 和 extension 連結，請再次檢查每筆 occurrence 是否都有對應到 eventID。</li>
-                </ul>
-            </p>
-        </div>
-
-        <div data-cat="q2-4" class="col-12 col-md-9 toggle-item-content hide">
-            <h4 class="headline-left-hr">我想新增資料，需要重新上傳整個檔案嗎？</h4>
-            <p>以下兩點需要特別注意：
-                <ul class="alphabet-list">
-                    <li>a. <strong>不需要</strong>，只要上傳新的檔案就好，但要注意<strong>欄位和舊資料一致</strong></li>
-                    <li>b. 如果必須整個檔案上傳，<strong>不要換掉超過 50% 的舊資料 ID</strong> (eventID, occurrence ID 等)，超過比例會導致 GBIF 暫停此次更新。</li>
-                </ul>
-            </p>
-        </div>
-
-        <div data-cat="q2-5" class="col-12 col-md-9 toggle-item-content hide">
-            <h4 class="headline-left-hr">資料只能選一種授權類型嗎？</h4>
-            <p>
-                資料集、每筆出現紀錄、多媒體檔案的授權類型<strong>都可以不同</strong>。
-                <ul class="license-list">
-                    <li><span class="highlight-box-primary">資料集</span> 在 IPT 中的 metadata 中定義</li>
-                    <li><span class="highlight-box-primary">出現紀錄</span> 用 core/extension 中的 DwC 欄位 license 定義</li>
-                    <li><span class="highlight-box-primary">多媒體檔案</span> 用 extension Simple Multimedia 中的欄位 license 定義</li>
-                </ul>
-            </p>
-            
-        </div>
-
-        <div data-cat="q2-6" class="col-12 col-md-9 toggle-item-content hide">
-            <h4 class="headline-left-hr">如果資料用一樣的調查方法收集，但計畫隨著不同年份有所修改，建議如何填寫？</h4>
-            <p>
-                建議持續更新成一個<strong>更大的</strong>資料集，並修改詮釋資料（metadata）的年份範圍（temporal coverage），保持資料集是<strong>活的</strong>，也能提高資料的能見度和再利用性。
-            </p>
-        </div>
-
-        <div data-cat="q2-7" class="col-12 col-md-9 toggle-item-content hide">
-            <h4 class="headline-left-hr">如果想將發布過的資料集換發布單位，要怎麼處理？</h4>
-            <p>如果已發布並註冊到 GBIF.org，則無法自己更改發布單位，請<a href="mailto:taibif.brcas@gmail.com" target="_blank">聯繫 TaiBIF</a> 協助處理。</p>
-        </div>
-
-        <div data-cat="q2-8" class="col-12 col-md-9 toggle-item-content hide">
-            <h4 class="headline-left-hr">IPT上的詮釋資料 Metadata 怎麼寫？</h4>
-            <p>填寫的說明和範例參考，請見：<a href="https://docs.google.com/document/d/1Bj6gi6igKphUM7ISIkfASAiHM_je5YXHRT3WvhwQ3dA/edit" target="_blank">詮釋資料(範本)</a>。</p>
-        </div>
-
-        <div data-cat="q2-9" class="col-12 col-md-9 toggle-item-content hide">
-            <h4 class="headline-left-hr">我能自己安裝 IPT 嗎？</h4>
-            <p>可以自己部署，程式碼全是開源的，但<strong>完全不建議</strong>，因為需要一定技術力、花費部署以及維護成本。如果要發布資料到 GBIF 還會需要與 GBIF 秘書處聯繫來設定串連。</p>
-            <p>TaiBIF 目前是<strong>全亞洲唯一個</strong>通過 GBIF 認證的<a href="https://www.gbif.org/data-hosting-centres" target="_blank">資料託管中心（Data-hosting center）</a>，提供及維運 IPT 相關服務。</p>
-        </div>
-
-        <div data-cat="q2-10" class="col-12 col-md-9 toggle-item-content hide">
-            <h4 class="headline-left-hr">我已經發布了資料集到GBIF，想改變資料集類型可以嗎？</h4>
-            <p><strong>可以！</strong>在IPT上把 Mapping 過的資料檔案刪掉，即可於詮釋資料(metadata)修改資料集類型，然後再重新 Mapping資料檔案並publish。</p>
-            <div id="ipt-mapping">
-                <img src="{% static 'images/ipt-mapping.png' %}"/>
+    <!-- col left begin -->
+    <div class="col-12 col-md-3">
+        <div class="dropdown dropdown-flexible-wrapper">
+            <div class="dropdown-menu dropdown-menu-flexible show">
+                <a data-cat="q2-1" class="dropdown-item nav-item current-sunset" href="#q2-1">{% trans "要如何註冊成為資料發布單位？" %}</a>
+                <a data-cat="q2-2" class="dropdown-item nav-item" href="#q2-2">{% trans "資料發布的流程為何？" %}</a>
+                <a data-cat="q2-3" class="dropdown-item nav-item" href="#q2-3">{% trans "我已經檢核好資料，也在 IPT 上成功發布，為什麼在 GBIF 看不到最新的資料筆數？" %}</a>
+                <a data-cat="q2-4"class="dropdown-item nav-item" href="#q2-4">{% trans "我想新增資料，需要重新上傳整個檔案嗎？" %}</a>
+                <a data-cat="q2-5" class="dropdown-item nav-item" href="#q2-5">{% trans "資料只能選一種授權類型嗎？" %}</a>
+                <a data-cat="q2-6" class="dropdown-item nav-item" href="#q2-6">{% trans "如果資料用一樣的調查方法收集，但計畫隨著不同年份有所修改，建議如何填寫？" %}</a>
+                <a data-cat="q2-7" class="dropdown-item nav-item" href="#q2-7">{% trans "如果想將發布過的資料集換發布單位，要怎麼處理？" %}</a>
+                <a data-cat="q2-8" class="dropdown-item nav-item" href="#q2-8">{% trans "IPT上的詮釋資料 Metadata 怎麼寫？" %}</a>
+                <a data-cat="q2-9" class="dropdown-item nav-item" href="#q2-9">{% trans "我能自己安裝 IPT 嗎？" %}</a>
+                <a data-cat="q2-10" class="dropdown-item nav-item" href="#q2-10">{% trans "我已經發布了資料集到GBIF，想改變資料集類型可以嗎？" %}</a>
             </div>
         </div>
-        <!-- col right end -->
+
+        <p class="text-gray-8">{% trans "如果找不到想詢問的問題，也可以直接詢問" %}</p>
+        <a href="{% url 'contact_us' %}" class="btn btn-block btn-sunset-md mb-3">
+        <span class="myicon icon-contact-mail mr-1"></span>{% trans "聯絡我們" %}
+        </a>
     </div>
-    <!-- row end -->
+    <!-- col left end -->
+
+    <div data-cat="q2-1" class="col-12 col-md-9 nav-item-content content-readable-panel">
+        <h4 class="headline-left-hr content-readable-title">{% trans "要如何註冊成為資料發布單位？" %}</h4>
+        <p>
+            {% trans "原則上註冊成為資料發布單位（GBIF data publisher），可以組織、團體、公司企業、公部門、大專院校系所為單位，不建議以個人名義註冊成為資料發布單位，步驟如下：" %}
+            <ol>
+                <li>{% trans "先至GBIF 網頁填寫" %}<a href="https://www.gbif.org/become-a-publisher" target="_blank">{% trans "註冊申請表單" %}</a>{% trans "（Become a publisher），須以英文為主" %}</li>
+                <li>{% trans "等待3-5個工作天，經由GBIF秘書處及委員審核核可後，會收到註冊成功確認信" %}</li>
+                <li>{% trans "請將註冊成功確認信裡附上的組織密碼（token），轉寄給" %}<a href="mailto:taibif.brcas@gmail.com" target="_blank">TaiBIF helpdesk</a></li>
+                <li>{% trans "由TaiBIF將貴單位匯入IPT組織清單中，完成後即可以貴單位名義發布資料集" %}</li>
+            </ol>
+        </p>
+    </div>
+
+    <div data-cat="q2-2" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
+        <h4 class="headline-left-hr content-readable-title">{% trans "資料發布的流程為何？" %}</h4>
+        <p>{% trans "詳細的步驟與說明，請見" %}<a href="{% url 'open-process' %}">{% trans "開放資料流程" %}</a>{% trans "，點選每個步驟的按鈕即可檢視指引文件。" %}</p>
+    </div>
+
+    <div data-cat="q2-3" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
+        <h4 class="headline-left-hr">{% trans "我已經檢核好資料，也在 IPT 上成功發布，為什麼在 GBIF 看不到最新的資料筆數？" %}</h4>
+        <p>
+            {% trans "有幾種可能原因：" %}
+            <ol>
+                <li><strong>{% trans "資料筆數過大" %}</strong>{% trans "，GBIF 需要時間更新，可以過一兩天後再確認，如果過三天還是沒有，歡迎" %}<a href="mailto:taibif.brcas@gmail.com" target="_blank">{% trans "聯繫 TaiBIF" %}</a>。</li>
+                <li>{% trans "更新資料集時，" %}<strong>{% trans "換掉超過 50% 的舊資料 ID" %}</strong>{% trans "，導致 GBIF 暫停此次更新。需要聯繫 TaiBIF，或是自己換回原本的資料ID再重新上傳（盡量不要更改已發布的資料ID）。" %}</li>
+                <li>{% trans "若資料集的 Core 為調查活動 Sampling Event，可能是" %}<strong> {% trans "Occurrence Extension 沒有對應到 core 的 eventID" %}</strong>{% trans "，所以系統無法順利將 core 和 extension 連結，請再次檢查每筆 occurrence 是否都有對應到 eventID。" %}</li>
+            </ol>
+        </p>
+    </div>
+
+    <div data-cat="q2-4" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
+        <h4 class="headline-left-hr">{% trans "我想新增資料，需要重新上傳整個檔案嗎？" %}</h4>
+        <p>{% trans "以下兩點需要特別注意：" %}
+            <ol>
+                <li><strong>{% trans "不需要" %}</strong>{% trans "，只要上傳新的檔案就好，但要注意" %}<strong>{% trans "欄位和舊資料一致" %}</strong></li>
+                <li>{% trans "如果必須整個檔案上傳，" %}<strong>{% trans "不要換掉超過 50% 的舊資料 ID" %}</strong> {% trans "(eventID, occurrence ID 等)，超過比例會導致 GBIF 暫停此次更新。" %}</li>
+            </ol>
+        </p>
+    </div>
+
+    <div data-cat="q2-5" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
+        <h4 class="headline-left-hr">{% trans "資料只能選一種授權類型嗎？" %}</h4>
+        <p>
+            資料集、每筆出現紀錄、多媒體檔案的授權類型<strong>{% trans "都可以不同" %}</strong>。
+            <ul class="license-list">
+                <li><span class="highlight-box-primary">{% trans "資料集" %}</span> {% trans "在 IPT 中的 metadata 中定義" %}</li>
+                <li><span class="highlight-box-primary">{% trans "出現紀錄" %}</span> {% trans "用 core/extension 中的 DwC 欄位 license 定義" %}</li>
+                <li><span class="highlight-box-primary">{% trans "多媒體檔案" %}</span> {% trans "用 extension Simple Multimedia 中的欄位 license 定義" %}</li>
+            </ul>
+        </p>
+        
+    </div>
+
+    <div data-cat="q2-6" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
+        <h4 class="headline-left-hr">{% trans "如果資料用一樣的調查方法收集，但計畫隨著不同年份有所修改，建議如何填寫？" %}</h4>
+        <p>
+            建議持續更新成一個<strong>{% trans "更大的" %}</strong>{% trans "資料集，並修改詮釋資料（metadata）的年份範圍（temporal coverage），保持資料集是" %}<strong>{% trans "活的" %}</strong>，也能提高資料的能見度和再利用性。
+        </p>
+    </div>
+
+    <div data-cat="q2-7" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
+        <h4 class="headline-left-hr">{% trans "如果想將發布過的資料集換發布單位，要怎麼處理？" %}</h4>
+        <p>{% trans "如果已發布並註冊到 GBIF.org，則無法自己更改發布單位，請" %}<a href="mailto:taibif.brcas@gmail.com" target="_blank">{% trans "聯繫 TaiBIF" %}</a> {% trans "協助處理。" %}</p>
+    </div>
+
+    <div data-cat="q2-8" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
+        <h4 class="headline-left-hr">{% trans "IPT上的詮釋資料 Metadata 怎麼寫？" %}</h4>
+        <p>{% trans "填寫的說明和範例參考，請見：" %}<a href="https://docs.google.com/document/d/1Bj6gi6igKphUM7ISIkfASAiHM_je5YXHRT3WvhwQ3dA/edit" target="_blank">{% trans "詮釋資料(範本)" %}</a>。</p>
+    </div>
+
+    <div data-cat="q2-9" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
+        <h4 class="headline-left-hr">{% trans "我能自己安裝 IPT 嗎？" %}</h4>
+        <p>{% trans "可以自己部署，程式碼全是開源的，但" %}<strong>{% trans "完全不建議" %}</strong>{% trans "，因為需要一定技術力、花費部署以及維護成本。如果要發布資料到 GBIF 還會需要與 GBIF 秘書處聯繫來設定串連。" %}</p>
+        <p>{% trans "TaiBIF 目前是" %}<strong>{% trans "全亞洲唯一個" %}</strong>{% trans "通過 GBIF 認證的" %}<a href="https://www.gbif.org/data-hosting-centres" target="_blank">{% trans "資料託管中心（Data-hosting center）" %}</a>{% trans "，提供及維運 IPT 相關服務。" %}</p>
+    </div>
+
+    <div data-cat="q2-10" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
+        <h4 class="headline-left-hr">{% trans "我已經發布了資料集到GBIF，想改變資料集類型可以嗎？" %}</h4>
+        <p><strong>{% trans "可以！" %}</strong>{% trans "在IPT上把 Mapping 過的資料檔案刪掉，即可於詮釋資料（metadata）修改資料集類型，然後再重新 Mapping資料檔案並publish。" %}</p>
+        <div id="ipt-mapping">
+            <img src="{% static 'images/ipt-mapping.png' %}"/>
+        </div>
+    </div>
+    <!-- col right end -->
 </div>
 <!-- container end -->
 {% endblock %}

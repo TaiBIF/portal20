@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load i18n %}
-{% block title %}{% trans "資料產品" %}{% endblock %}
+{% block title %}{% trans "有哪些資料產品" %}{% endblock %}
 
 
 {% block main %}
@@ -9,20 +9,20 @@
 <div class="bg-main-pale">
     <div class="container">
         <div class="caption-mascot-wrapper">
-            <h1 class="title">{% trans "資料產品" %}</h1>
+            <h1 class="title">{% trans "有哪些資料產品" %}</h1>
             <img src="{% static 'images/mascot-flower.png' %}" alt="" class="symbol">
         </div>
     </div>
 </div>
  <!-- topnav end -->
 <!-- container begin -->
-<div class="container my-5">
+<div class="container my-5 container-1340">
     <!-- breadcrumb begin -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
-            <li class="breadcrumb-item">{% trans "資料應用" %}</li>
-            <li class="breadcrumb-item active" aria-current="page">{% trans "資料產品" %}</li>
+            <li class="breadcrumb-item">{% trans "開放資料怎麼應用" %}</li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans "有哪些資料產品" %}</li>
         </ol>
     </nav>
     <!-- breadcrumb end -->
@@ -43,10 +43,10 @@
         </div>
         <!-- col left end -->
         <!-- col right begin -->
-        <div data-cat="about" class="col-12 col-md-9 nav-item-content">
-            <h1 class="heading-lg-ul">{% trans "什麼是「資料產品」？" %}</h1>
+        <div data-cat="about" class="col-12 col-md-9 nav-item-content content-readable-panel">
+            <h4 class="heading-lg-ul">{% trans "什麼是「資料產品」？" %}</h4>
             <p>
-                {% trans "TL;DR 最直接，簡短的定義：" %}<br>
+                {% trans "TL;DR 最直接，簡短的定義：" %}
                 <strong>{% trans "主要目的為使用資料來實現特定目標的產品" %}</strong>
             </p>
             <p>
@@ -107,8 +107,8 @@
             </p>
         </div>
 
-        <div data-cat="map" class="col-12 col-md-9 nav-item-content hide">
-            <h1 class="heading-lg-ul">{% trans "資料下載API" %}</h1>
+        <div data-cat="map" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
+            <h4 class="heading-lg-ul">{% trans "資料下載API" %}</h4>
             {% url 'taibif-api' as api %}
             {% blocktrans %}
             <p>下載資料歡迎使用 <a href="{{ api }}" target="_blank">TaiBIF API</a></p>

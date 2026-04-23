@@ -502,8 +502,6 @@
   <field name="geo_error" type="string"/>
   <field name="geodeticDatum" type="string"/>
   <field name="geologicalContextID" type="text_general"/>
-  <field name="geom" type="location_rpt" uninvertible="true" indexed="true" stored="true"/>
-  <field name="geometry" type="location_rpt" uninvertible="true" indexed="true" stored="true"/>
   <field name="georeferenceProtocol" type="string"/>
   <field name="georeferenceRemarks" type="string"/>
   <field name="georeferenceSources" type="string"/>
@@ -539,7 +537,6 @@
   <field name="locationAccordingTo" type="string"/>
   <field name="locationID" type="string"/>
   <field name="locationRemarks" type="string"/>
-  <field name="location_rpt" type="location_rpt"/>
   <field name="materialSampleID" type="string"/>
   <field name="maximumDepthInMeters" type="string"/>
   <field name="maximumElevationInMeters" type="string"/>

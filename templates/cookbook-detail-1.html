@@ -47,9 +47,9 @@
 
     <div class="container">
         <div class="thumbnail">
-            <img src="{% static 'images/content-cookbook-ch1.jpg' %}" alt="Pandion haliaetus haliaetus (Linnaeus, 1758) 魚鷹，李豐曉 攝 (CC BY-NC)">
+            <img src="{% static 'images/content-cookbook-ch1.jpg' %}" alt="{% trans "Pandion haliaetus haliaetus (Linnaeus, 1758) 魚鷹，李豐曉 攝 (CC BY-NC)" %}">
             <div class="caption justify-content-center">
-                <div class="text-muted"><em>Pandion haliaetus haliaetus</em> (Linnaeus, 1758) 魚鷹，李豐曉 攝 (CC BY-NC)</div>
+                <div class="text-muted"><em>Pandion haliaetus haliaetus</em> {% trans "(Linnaeus, 1758) 魚鷹，李豐曉 攝 (CC BY-NC)" %}</div>
             </div>
         </div>
     </div>
@@ -138,9 +138,9 @@
 
         <p>{% trans "相關連結：" %}</p>
         <ul>
-            <li>生命大百科 <a href="https://eol.org" class="myicon icon-link" target="_blank">Encyclopedia of Life (EOL)</a> </li>
-            <li>生命大百科特徵資料庫 <a href="http://www.semantic-web-journal.net/content/traitbank-practical-semantics-organism-attribute-data" class="myicon icon-link" target="_blank">EOL TraitBank</a> </li>
-            <li>物種形態資料庫<a href="https://morphobank.org/" class="myicon icon-link" target="_blank">MorphoBank</a></li>
+            <li>{% trans "生命大百科" %} <a href="https://eol.org" class="myicon icon-link" target="_blank">Encyclopedia of Life (EOL)</a> </li>
+            <li>{% trans "生命大百科特徵資料庫" %} <a href="http://www.semantic-web-journal.net/content/traitbank-practical-semantics-organism-attribute-data" class="myicon icon-link" target="_blank">EOL TraitBank</a> </li>
+            <li>{% trans "物種形態資料庫" %}<a href="https://morphobank.org/" class="myicon icon-link" target="_blank">MorphoBank</a></li>
         </ul>
 
         <h4>1.5.2 {% trans "分類學 / 文獻" %}</h4>
@@ -183,8 +183,8 @@
         </p>
         <p>{% trans "相關連結：" %}</p>
         <ul>
-            <li><a href="https://www.gbif.org/" class="myicon icon-link" target="_blank">GBIF 全球生物多樣性資訊機構</a></li>
-            <li><a href="https://obis.org" class="myicon icon-link" target="_blank">OBIS 海洋生物地理資訊系統</a></li>
+            <li><a href="https://www.gbif.org/" class="myicon icon-link" target="_blank">{% trans "GBIF 全球生物多樣性資訊機構" %}</a></li>
+            <li><a href="https://obis.org" class="myicon icon-link" target="_blank">{% trans "OBIS 海洋生物地理資訊系統" %}</a></li>
         </ul>
 
         <h4>1.5.5 {% trans "生態資料" %}</h4>

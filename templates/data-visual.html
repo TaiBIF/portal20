@@ -43,7 +43,7 @@
     </nav>
     <!-- breadcrumb end -->
     <h1 class="headline-left-hr">
-        資料視覺化
+        {% trans "資料視覺化" %}
     </h1>
 
     <!-- 資訊視覺化 row begin -->
@@ -52,7 +52,7 @@
         <div class="col col-icon-stat">
             <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Plants" class="d-block">
                 <span class="myicon icon-species-icon-plantae"></span>
-                <p class="title">植物</p>
+                <p class="title">{% trans "植物" %}</p>
                 <p class="amount">
                     {% for k,v in taxonGroup_dict.items %}
                         {% if k == 'Plants' %} {{ v|intcomma:False  }} {% endif %}
@@ -65,7 +65,7 @@
         <div class="col col-icon-stat">
             <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Fungi" class="d-block">
                 <span class="myicon icon-species-icon-fungi"></span>
-                <p class="title">真菌</p>
+                <p class="title">{% trans "真菌" %}</p>
                 <p class="amount">
                     {% for k,v in taxonGroup_dict.items %}
                         {% if k == 'Fungi' %} {{ v|intcomma:False  }} {% endif %}
@@ -78,7 +78,7 @@
         <div class="col col-icon-stat">
             <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Bacteria" class="d-block">
                 <span class="myicon icon-species-icon-bacteria"></span>
-                <p class="title">細菌</p>
+                <p class="title">{% trans "細菌" %}</p>
                 <p class="amount">
                     {% for k,v in taxonGroup_dict.items %}
                         {% if k == 'Bacteria' %} {{ v|intcomma:False  }} {% endif %}
@@ -91,7 +91,7 @@
         <div class="col col-icon-stat">
             <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Insects" class="d-block">
                 <span class="myicon icon-species-icon-Insecta"></span>
-                <p class="title">昆蟲</p>
+                <p class="title">{% trans "昆蟲" %}</p>
                 <p class="amount">
                     {% for k,v in taxonGroup_dict.items %}
                         {% if k == 'Insects' %} {{ v|intcomma:False  }} {% endif %}
@@ -104,7 +104,7 @@
         <div class="col col-icon-stat">
             <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Fishes" class="d-block">
                 <span class="myicon icon-species-icon-fish"></span>
-                <p class="title">魚</p>
+                <p class="title">{% trans "魚" %}</p>
                 <p class="amount">
                     {% for k,v in taxonGroup_dict.items %}
                         {% if k == 'Fishes' %} {{ v|intcomma:False  }} {% endif %}
@@ -117,7 +117,7 @@
         <div class="col col-icon-stat">
             <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Reptiles" class="d-block">
                 <span class="myicon icon-species-icon-gecko"></span>
-                <p class="title">爬蟲類</p>
+                <p class="title">{% trans "爬蟲類" %}</p>
                 <p class="amount">
                     {% for k,v in taxonGroup_dict.items %}
                         {% if k == 'Reptiles' %} {{ v|intcomma:False  }} {% endif %}
@@ -130,7 +130,7 @@
         <div class="col col-icon-stat">
             <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Amphibia" class="d-block">
                 <span class="myicon icon-species-icon-frog"></span>
-                <p class="title">兩棲類</p>
+                <p class="title">{% trans "兩棲類" %}</p>
                 <p class="amount">
                     {% for k,v in taxonGroup_dict.items %}
                         {% if k == 'Amphibia' %} {{ v|intcomma:False  }} {% endif %}
@@ -143,7 +143,7 @@
         <div class="col col-icon-stat">
             <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Birds" class="d-block">
                 <span class="myicon icon-species-icon-bird"></span>
-                <p class="title">鳥類</p>
+                <p class="title">{% trans "鳥類" %}</p>
                 <p class="amount">
                     {% for k,v in taxonGroup_dict.items %}
                         {% if k == 'Birds' %} {{ v|intcomma:False  }} {% endif %}
@@ -156,7 +156,7 @@
         <div class="col col-icon-stat">
             <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Mammals" class="d-block">
                 <span class="myicon icon-species-icon-muntiacus-reevesi"></span>
-                <p class="title">哺乳類</p>
+                <p class="title">{% trans "哺乳類" %}</p>
                 <p class="amount">
                     {% for k,v in taxonGroup_dict.items %}
                         {% if k == 'Mammals' %} {{ v|intcomma:False  }} {% endif %}
@@ -169,7 +169,7 @@
         <div class="col col-icon-stat">
             <a href="{%  url 'search-occurrence' cat='search' %}?taibif_taxonGroup=Others" class="d-block">
                 <span class="myicon icon-species-icon-more"></span>
-                <p class="title">其他</p>
+                <p class="title">{% trans "其他" %}</p>
                 <p class="amount">
                     {% for k,v in taxonGroup_dict.items %}
                         {% if k == 'Others' %} {{ v|intcomma:False  }} {% endif %}
@@ -183,46 +183,46 @@
 
     <section>
         <h3 class="headline-left sub-heading">
-            視覺化觀測資料
+            {% trans "視覺化觀測資料" %}
         </h3>
         <div id="selector-container">
             <p>
-                選擇下拉式選單中的項目，即可呈現對應的圖表，
+                {% trans "選擇下拉式選單中的項目，即可呈現對應的圖表，" %}
             </p>
             <span>
-                <label>顯示觀測紀錄項目</label>
+                <label>{% trans "顯示觀測紀錄項目" %}</label>
                 <select id="heatmap-variable"> <!-- Heatmap X軸 -->
-                    <option value="" disabled selected>請選擇項目</option>
-                    <option value="taibif_basisOfRecord">記錄類型</option>
-                    <option value="taibif_country">國家或地區</option>
-                    <option value="taibif_year">年份</option>
-                    <option value="taibif_kingdom">界</option>
-                    <option value="taibif_taxonGroup">類群</option>
+                    <option value="" disabled selected>{% trans "請選擇項目" %}</option>
+                    <option value="taibif_basisOfRecord">{% trans "記錄類型" %}</option>
+                    <option value="taibif_country">{% trans "國家或地區" %}</option>
+                    <option value="taibif_year">{% trans "年份" %}</option>
+                    <option value="taibif_kingdom">{% trans "界" %}</option>
+                    <option value="taibif_taxonGroup">{% trans "類群" %}</option>
                 </select>
             </span>
             <span>
-                <label>，將觀測紀錄分類成</label>
+                <label>{% trans "，將觀測紀錄分類成" %}</label>
                 <select id="heatmap-group"> <!-- Heatmap Y軸 -->
-                    <option value="" disabled selected>請選擇分類</option>
-                    <option value="">無</option>
-                    <option value="taibif_basisOfRecord">記錄類型</option>
-                    <option value="taibif_country">國家或地區</option>
-                    <option value="taibif_year">年份</option>
-                    <option value="taibif_kingdom">界</option>
-                    <option value="taibif_taxonGroup">類群</option>
+                    <option value="" disabled selected>{% trans "請選擇分類" %}</option>
+                    <option value="">{% trans "無" %}</option>
+                    <option value="taibif_basisOfRecord">{% trans "記錄類型" %}</option>
+                    <option value="taibif_country">{% trans "國家或地區" %}</option>
+                    <option value="taibif_year">{% trans "年份" %}</option>
+                    <option value="taibif_kingdom">{% trans "界" %}</option>
+                    <option value="taibif_taxonGroup">{% trans "類群" %}</option>
                 </select>
             </span>
         </div>
         <div id="plot-container">
             <div class="loader d-none"></div>
             <div id="chart-country-btn-container" class="d-none">
-                <button class="chart-btn" id="prev-country-btn">前十個國家</button>
-                <button class="chart-btn" id="next-country-btn">後十個國家</button>
+                <button class="chart-btn" id="prev-country-btn">{% trans "前十個國家" %}</button>
+                <button class="chart-btn" id="next-country-btn">{% trans "後十個國家" %}</button>
             </div>
             <div id="my_dataviz"></div>
             <div id="chart-btn-container" class="d-none">
-                <button class="chart-btn" id="next-btn">後十年</button>
-                <button class="chart-btn" id="prev-btn">前十年</button>
+                <button class="chart-btn" id="next-btn">{% trans "後十年" %}</button>
+                <button class="chart-btn" id="prev-btn">{% trans "前十年" %}</button>
             </div>
         </div>
     </section>

@@ -18,7 +18,7 @@
 <!-- topnav end -->
 
  <!-- container begin -->
- <div class="container my-5">
+ <div class="container my-5 container-1340">
 
     <!-- breadcrumb begin -->
     <nav aria-label="breadcrumb">
@@ -30,15 +30,18 @@
     </nav>
     <!-- breadcrumb end -->
     <!-- 致謝名單 begin -->
-    <div class="my-5">
-      <h1 class="headline-center-sm">TaiBIF 參與人員致謝名單</h1>
-      <div class="table-responsive mt-3">
-        <table class="table table-ltmilo">
+    <div class="content-readable-panel content-readable-full-panel">
+      <div class="article-content-wrapper">
+        <h3 >{% trans "TaiBIF 參與人員致謝名單" %}</h3>
+      </div>
+      
+      <div>
+        <table class="table content-readable-table">
           <thead>
             <tr>
-              <th class="col-3 col-md-2">姓名</th>
-              <th class="col-auto col-md-5">角色類型</th>
-              <th class="col-auto col-md-5">參與任務</th>
+              <th class="col-3 col-md-2">{% trans "姓名" %}</th>
+              <th class="col-auto col-md-5">{% trans "角色類型" %}</th>
+              <th class="col-auto col-md-5">{% trans "參與任務" %}</th>
             </tr>
           </thead>
           <tbody>
@@ -55,29 +58,30 @@
     </div>
     <!-- 致謝名單 end -->
 
-    <!-- 志工名單 begin -->
-    <div class="my-5">
-      <h1 class="headline-center-sm">TaiBIF 專業人員/志工名單</h1>
-      <div class="table-responsive mt-3">
-        <table class="table table-ltmilo">
-          <thead>
+    <!-- 協作者名單 begin -->
+    <div class="article-content-wrapper">
+      <h3>{% trans "TaiBIF 專業人員/協作者名單" %}</h3>
+    </div>
+    
+    <div>
+      <table class="table content-readable-table">
+        <thead>
+          <tr>
+            <th class="col-3 col-md-2">{% trans "TaiBIFer 姓名" %}</th>
+            <th class="col-auto col-md-5">{% trans "角色類型" %}</th>
+            <th class="col-auto col-md-5">{% trans "參與任務" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for taibifer in taibifers %}
             <tr>
-              <th class="col-3 col-md-2">TaiBIFer 姓名</th>
-              <th class="col-auto col-md-5">角色類型</th>
-              <th class="col-auto col-md-5">參與任務</th>
+              <td>{{ taibifer.name }}</td>
+              <td>{{ taibifer.role }}</td>
+              <td>{{ taibifer.missions }}</td>
             </tr>
-          </thead>
-          <tbody>
-            {% for taibifer in taibifers %}
-              <tr>
-                <td>{{ taibifer.name }}</td>
-                <td>{{ taibifer.role }}</td>
-                <td>{{ taibifer.missions }}</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
   <!-- container end -->

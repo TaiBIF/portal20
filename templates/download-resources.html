@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %} 
 {% load static %}
-{% block title %}{% trans "TaiBIF 資源下載專區" %}{% endblock %}
+{% block title %}{% trans "TaiBIF logo 下載" %}{% endblock %}
 
 
 {% block main %}
@@ -9,31 +9,31 @@
 <div class="bg-main-pale">
   <div class="container">
     <div class="caption-mascot-wrapper">
-      <h1 class="title">{% trans "TaiBIF 資源下載專區" %}</h1>
+      <h1 class="title">{% trans "TaiBIF logo 下載" %}</h1>
       <img src="{% static 'images/mascot-Mreevesi.png'%}" alt="" class="symbol">
     </div>
   </div>
 </div>
 <!-- topnav end -->
     <!-- container begin -->
-    <div class="container my-5">
+    <div class="container my-5 container-1340">
       <!-- breadcrumb begin -->
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
           <li class="breadcrumb-item">{% trans "關於我們" %}</li>
-          <li class="breadcrumb-item active" aria-current="page">{% trans "TaiBIF 資源下載專區" %}</li>
+          <li class="breadcrumb-item active" aria-current="page">{% trans "TaiBIF logo 下載" %}</li>
         </ol>
       </nav>
       <!-- breadcrumb end -->
       <!-- row begin -->
-      <div class="row download-resource-container">
+      <div class="row download-resource-container ">
         <!-- col begin -->
         <div class="col-12 col-card-asset">
           <div class="card-asset-img">
             <img src="{% static 'images/logo-asset/logo-asset-taibif-logotype.png'%}" alt="" class="symbol">
           </div>
-          <p class="card-asset-link"><a target="_blank" href="{% static 'images/logo-asset/logo-asset-taibif-logotype.png'%}" download>下載</a></p>
+          <p class="card-asset-link"><a target="_blank" href="{% static 'images/logo-asset/logo-asset-taibif-logotype.png'%}" download>{% trans "下載" %}</a></p>
         </div>
         <!-- col end -->
         <!-- col begin -->
@@ -41,7 +41,7 @@
           <div class="card-asset-img">
             <img src="{% static 'images/logo-asset/logo-asset-taibif.png'%}" alt="" class="symbol">
           </div>
-          <p class="card-asset-link"><a target="_blank" href="{% static 'images/logo-asset/logo-asset-taibif.png'%}" download>下載</a></p>
+          <p class="card-asset-link"><a target="_blank" href="{% static 'images/logo-asset/logo-asset-taibif.png'%}" download>{% trans "下載" %}</a></p>
         </div>
         <!-- col end -->
         <!-- col begin -->
@@ -50,33 +50,7 @@
             <img src="{% static 'images/logo-asset/logo-asset-taibif-w.png'%}" alt="" class="symbol">
 
           </div>
-          <p class="card-asset-link"><a target="_blank" href="{% static 'images/logo-asset/logo-asset-taibif-w.png'%}" download>下載</a></p>
-        </div>
-        <!-- col end -->
-        <!-- col begin -->
-        <div class="col-12 col-card-asset">
-          <div class="card-asset-img">
-            <img src="{% static 'images/logo-asset/logo-asset-sinica.png'%}" alt="" class="symbol">
-          </div>
-          <p class="card-asset-link"><a target="_blank" href="{% static 'images/logo-asset/logo-asset-sinica.png'%}" download>下載</a></p>
-
-        </div>
-        <!-- col end -->
-        <!-- col begin -->
-        <div class="col-12 col-card-asset">
-          <div class="card-asset-img">
-            <img src="{% static 'images/logo-asset/logo-asset-brcas.png'%}" alt="" class="symbol">
-
-          </div>
-          <p class="card-asset-link"><a target="_blank" href="{% static 'images/logo-asset/logo-asset-brcas.png'%}" download>下載</a></p>
-        </div>
-        <!-- col end -->
-        <!-- col begin -->
-        <div class="col-12 col-card-asset">
-          <div class="card-asset-img">
-            <img src="{% static 'images/logo-asset/logo-asset-gbif.png'%}" alt="" class="symbol">
-          </div>
-          <p class="card-asset-link"><a target="_blank" href="https://www.gbif.org/logos" download>下載</a></p>
+          <p class="card-asset-link"><a target="_blank" href="{% static 'images/logo-asset/logo-asset-taibif-w.png'%}" download>{% trans "下載" %}</a></p>
         </div>
         <!-- col end -->
       </div>

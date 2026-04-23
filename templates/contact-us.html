@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}聯絡我們{% endblock %}
+{% block title %}{% trans "聯絡我們" %}{% endblock %}
 
 {% block main %}
 
@@ -93,7 +94,7 @@ document.addEventListener("click", closeAllSelect);
 <div class="bg-main-pale">
     <div class="container">
         <div class="caption-mascot-wrapper">
-            <h1 class="title">聯絡我們</h1>
+            <h1 class="title">{% trans "聯絡我們" %}</h1>
             <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
         </div>
     </div>
@@ -103,8 +104,8 @@ document.addEventListener("click", closeAllSelect);
 <div class="container my-5">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'index' %}">首頁</a></li>
-            <li class="breadcrumb-item" aria-current="page">聯絡我們</li>
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
+            <li class="breadcrumb-item" aria-current="page">{% trans "聯絡我們" %}</li>
         </ol>
     </nav>
 
@@ -125,8 +126,8 @@ document.addEventListener("click", closeAllSelect);
 
     <div>
         <h1 class="heading-lg-ul">
-            聯絡我們
-            <span class="footnote">以下皆為必填</span>
+            {% trans "聯絡我們" %}
+            <span class="footnote">{% trans "以下皆為必填" %}</span>
         </h1>
         <!-- contact form begin -->
         <div class="contact-form-wrapper clearfix">
@@ -136,11 +137,11 @@ document.addEventListener("click", closeAllSelect);
                     <div class="col-sm-4 col-xs-12">
                         <div class="custom-select">
                             <select name="cat" required>
-                                <option>請選擇問題分類...</option>
-                                <option value="物種資料相關諮詢">物種資料相關諮詢</option>
-                                <option value="操作問題詢問">操作問題詢問</option>
-                                <option value="錯誤回報">錯誤回報</option>
-                                <option value="其他">其他</option>
+                                <option>{% trans "請選擇問題分類..." %}</option>
+                                <option value="{% trans "物種資料相關諮詢" %}">{% trans "物種資料相關諮詢" %}</option>
+                                <option value="{% trans "操作問題詢問" %}">{% trans "操作問題詢問" %}</option>
+                                <option value="{% trans "錯誤回報" %}">{% trans "錯誤回報" %}</option>
+                                <option value="{% trans "其他" %}">{% trans "其他" %}</option>
                             </select>
                         </div>
                     </div>
@@ -148,7 +149,7 @@ document.addEventListener("click", closeAllSelect);
                     <div class="col-sm-4 col-xs-12">
                         <div class="input-group">
                             <div class="input-group-addon"><i class="myicon icon-user"></i></div>
-                            <input type="text" class="form-control" placeholder="姓名" name="name" required>
+                            <input type="text" class="form-control" placeholder="{% trans "姓名" %}" name="name" required>
                         </div>
                     </div>
 
@@ -162,13 +163,13 @@ document.addEventListener("click", closeAllSelect);
                     <div class="col-xs-12" id="contact-content">
                         <div class="input-group">
                             <div class="input-group-addon"><i class="myicon icon-write"></i></div>
-                            <textarea class="form-control textarea" placeholder="留言內容" rows="3" name="content" required></textarea>
+                            <textarea class="form-control textarea" placeholder="{% trans "留言內容" %}" rows="3" name="content" required></textarea>
                         </div>
                     </div>
 
                     <div class="col-xs-12 contact-btn-wrapper">
                         <div class="h-captcha" data-sitekey="2bf3ce93-dd10-46d6-be61-55a687f72557"></div>
-                        <button type="submit" class="btn btn-block btn-sunset-md mt-3">送出</button>
+                        <button type="submit" class="btn btn-block btn-sunset-md mt-3">{% trans "送出" %}</button>
                     </div>
                 </div>
             </form>

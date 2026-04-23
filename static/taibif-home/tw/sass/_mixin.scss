@@ -1,0 +1,94 @@
+@use "sass:map"; // 必須加上這行，才能使用 map.get()
+
+$col-brown1: #846C5B;
+$col-brown2:#4A3E3A;
+$col-yel:#FAE58D;
+$main:1220px;
+$pc_m:"only screen and (max-width: 1599px)";
+$pc_s:"only screen and (max-width: 1279px)";
+$pc:"only screen and (min-width: 1000px)";
+$pad:"only screen and (max-width: 999px)";
+$mobile:"only screen and (max-width: 767px)";
+$breakpoints: (
+mobile: 0,
+tablet: 768px,
+laptop: 1024px,
+desktop: 1280px,
+desktop-xl: 1600px
+);
+@mixin respond($device) {
+	// 將 map.get 改為 map-get，並移除對 sass:map 的依賴
+	$value: map-get($breakpoints, $device);
+
+	@if $value != null {
+		@media (min-width: $value) {
+			@content;
+		}
+	} @else {
+		@warn "⚠️ 沒有定義 '#{$device}' 的斷點。";
+	}
+}
+/*css3*/
+@mixin keyframes($name){
+	@-webkit-keyframes #{$name} {
+		@content;
+	}
+  	@-moz-keyframes #{$name} {
+    	@content;
+  	}
+  	@-ms-keyframes #{$name} {
+    	@content;
+  	}
+  	@keyframes #{$name} {
+    	@content;
+  	}
+}
+@mixin transform($transforms){
+	-moz-transform:$transforms;
+	-ms-transform:$transforms;
+	-o-transform:$transforms;
+	-webkit-transform:$transforms;
+	transform:$transforms;
+}
+@mixin scale($scale){
+	@include transform(scale($scale));
+}
+@mixin rotate($rotate){
+	@include transform(rotate($rotate));
+}
+@mixin skew($skew){
+	@include transform(skew($skew));
+}
+@mixin translate($translateX,$translateY){
+	@include transform(translate($translateX,$translateY));
+}
+@mixin transform-origin($origin){
+	-moz-transform-origin:$origin;
+	-ms-transform-origin:$origin;
+	-o-transform-origin:$origin;
+	-webkit-transform-origin:$origin;
+	transform-origin:$origin;
+}
+@mixin transition($transition){
+	transition:$transition;
+	-moz-transition:$transition;
+	-o-transition:$transition;
+	-ms-transition:$transition;
+	-webkit-transition:$transition;
+}
+@mixin bg_change($sec){
+	@include transition(all $sec);
+}
+@mixin alpha($alpha:1,$ie_alpha:100){
+	opacity:$alpha;
+	-moz-opacity:$alpha;
+	filter:alpha(opacity=$ie_alpha);
+}
+
+
+
+@mixin rwd($width){
+	@media only screen and (max-width:$width){
+		@content;
+	}
+}

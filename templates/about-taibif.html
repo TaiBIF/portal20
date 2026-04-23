@@ -1,7 +1,62 @@
 {% extends "base.html" %}
 {% load static %}
 {% load i18n %}
-{% block title %}{% trans "TaiBIF 介紹" %}{% endblock %}
+{% load helper_tags %}
+{% block title %}{% trans "TaiBIF 介紹與成果" %}{% endblock %}
+
+{% block script %}
+<script>
+$(document).ready(function () {
+    function updateBreadcrumb(dataCat, text) {
+        // 移除現有的動態生成的麵包屑
+        $('ol.breadcrumb li.dynamic-item').remove();
+
+        // 動態新增麵包屑
+        const dynamicBreadcrumb = 
+            '<li class="breadcrumb-item active dynamic-item" aria-current="page" data-cat="' + dataCat + '">' 
+            + text + 
+            '</li>';
+
+        $('ol.breadcrumb').append(dynamicBreadcrumb);
+    }
+
+    // 預設 hash 值
+    const defaultHash = 'about';
+
+    // 進入頁面時，初始化 url 上的 hash
+    if (!window.location.hash) {
+        window.location.hash = defaultHash;
+    }
+
+    // 獲取當前 url 上的 hash，若不存在則使用預設值
+    const hash = window.location.hash.substring(1) || defaultHash;
+    if (hash) {
+        $('.dropdown-item[data-cat="' + hash + '"]').click();
+    }
+
+    // 根據 hash 初始化麵包屑
+    const $matchedItem = $('.dropdown-item[data-cat="' + hash + '"]');
+    if ($matchedItem.length) {
+        const text = $matchedItem.text();
+        updateBreadcrumb(hash, text); 
+    }
+
+    // 點擊 dropdown-item 更新麵包屑
+    $('.dropdown-item').on('click', function (e) {
+
+        // 取得 data-cat 和文字內容
+        const dataCat = $(this).data('cat');
+        const text = $(this).text();
+
+        // 更新 url
+        window.location.hash = dataCat;
+
+        // 更新麵包屑
+        updateBreadcrumb(dataCat, text);
+    });
+});
+</script>
+{% endblock %}
 
 {% block main %}
 
@@ -15,48 +70,60 @@
 <div class="bg-main-pale">
   <div class="container">
     <div class="caption-mascot-wrapper">
-      <h1 class="title">{% trans "TaiBIF 介紹" %}</h1>
+      <h1 class="title">{% trans "TaiBIF 介紹與成果" %}</h1>
       <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
     </div>
   </div>
 </div>
 <!-- topnav end -->
 <!-- container begin -->
-<div class="container my-5">
+<div class="container my-5 container-1340 about-taibif-page">
   <!-- breadcrumb begin -->
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
       <li class="breadcrumb-item">{% trans "關於我們" %}</li>
-      <li class="breadcrumb-item active" aria-current="page">{% trans "TaiBIF 介紹" %}</li>
+      <li class="breadcrumb-item active" aria-current="page">{% trans "TaiBIF 介紹與成果" %}</li>
     </ol>
   </nav>
   <!-- breadcrumb end -->
 
-
-  <h1 class="heading-lg-ul">
-    臺灣生物多樣性資訊機構
-  <br>
-    (Taiwan Biodiversity Information Facility, TaiBIF)
-  </h1>
-
-  <div class="article-content-wrapper">
-    <h3>{% trans "關於 TaiBIF" %}</h3>
-      <p>  
-      {% url 'about_gbif' as about_gbif %}
-      {% blocktrans %}
-      臺灣生物多樣性資訊機構 (Taiwan Biodiversity Information Facility, TaiBIF) 是<a href="{{ about_gbif }}" target="_blank">全球生物多樣性資訊機構 (GBIF) </a>在臺灣的國家節點，也是臺灣生物多樣性資訊與國際平台接軌之窗口。
-       GBIF.org 國際平台上，所有授權條件明確之公開生物多樣性資料，均提供全球科學研究、政策制定以及公共建設使用。
-      TaiBIF 於 2004 年由國科會委託中央研究院生物多樣性研究中心成立及運作，主要任務為推動、建置臺灣生物多樣性資訊相關基礎建設，
-      包含生物多樣性資訊的開放分享、研究資料管理流程的建置與交流，以及資訊服務的設計與開發。
-      2008 年 3 月，TaiBIF 於中央研究院成立全球生物多樣性資訊機構中華民國委員會 (GBIF-ROC)，促進跨部會在生物多樣性資訊議題上的對話，以推動資訊的流通與整合。
-      {% endblocktrans %}
-    </p>
+  <div class="col-12 col-md-3">
+      <div class="dropdown dropdown-flexible-wrapper">
+          <a class="btn btn-toggle-flexible visible-xs" href="#" data-toggle="dropdown" aria-expanded="false">
+              {% trans "TaiBIF 介紹與成果" %}
+          </a>
+          <div class="dropdown-menu-flexible d-md-block">
+              <a data-cat="about" class="dropdown-item nav-item current-sunset" href="#about">{% trans "TaiBIF 介紹" %}</a>
+              <a data-cat="mission" class="dropdown-item nav-item" href="#mission">{% trans "TaiBIF 任務" %}</a>
+              <a data-cat="achievements" class="dropdown-item nav-item" href="#achievements">{% trans "TaiBIF 成果" %}</a>
+          </div>
+      </div>
   </div>
 
+  <div data-cat="about" class="col-12 col-md-9 nav-item-content content-readable-panel">
+    <h4 class="heading-lg-ul">{% trans "TaiBIF 介紹" %}</h4>
+
     <div class="article-content-wrapper">
-      <h3>{% trans "目標及任務" %}</h3>
-      <p>
+      <h3>{% trans "關於 TaiBIF" %}</h3>
+    </div>
+
+    <p>  
+        {% url 'about_gbif' as about_gbif %}
+        {% blocktrans %}
+        臺灣生物多樣性資訊機構 (Taiwan Biodiversity Information Facility, TaiBIF) 是<a href="{{ about_gbif }}" target="_blank">全球生物多樣性資訊機構 (GBIF) </a>在臺灣的國家節點，也是臺灣生物多樣性資訊與國際平台接軌之窗口。
+        GBIF.org 國際平台上，所有授權條件明確之公開生物多樣性資料，均提供全球科學研究、政策制定以及公共建設使用。
+        TaiBIF 於 2004 年由國科會委託中央研究院生物多樣性研究中心成立及運作，主要任務為推動、建置臺灣生物多樣性資訊相關基礎建設，
+        包含生物多樣性資訊的開放分享、研究資料管理流程的建置與交流，以及資訊服務的設計與開發。
+        2008 年 3 月，TaiBIF 於中央研究院成立全球生物多樣性資訊機構中華民國委員會 (GBIF-ROC)，促進跨部會在生物多樣性資訊議題上的對話，以推動資訊的流通與整合。
+        {% endblocktrans %}
+    </p>
+
+    <div class="article-content-wrapper">
+      <h3>{% trans "TaiBIF 目標" %}</h3>
+    </div>
+
+    <p>
         {% trans "我們致力於推動生物多樣性資訊的整合、管理、流通及應用，並包含兩個層面：" %}
         <ol>
           <li>
@@ -70,25 +137,262 @@
             {% endblocktrans %}
           </li>
         </ol>
-      </p>
-      <p>
-        {% trans "根據上述的目標，本專題中心主要有下列任務：" %}
-        <ul>
-          <li>{% trans "建置生物多樣性資訊基礎建設" %}</li>
-          <li>{% trans "推廣開放資料的概念" %}</li>
-          <li>{% trans "促進生物多樣性資料的開放與整合" %}</li>
-          <li>{% trans "支持生物多樣性科學研究與政策制定" %}</li>
-          <li>{% trans "連結臺灣與國際的生物多樣性資訊" %}</li>
-        </ul>
-      </p>
-    </div>
+    </p>
 
     <div class="article-content-wrapper">
       <h3>{% trans "團隊成員" %}</h3>
-      <p>
-        <img src="{% static 'images/taibif-members.png' %}" alt="taibif-team-members" class="member-structure"/>
-      </p>
     </div>
+
+    <div class="content-readable-flex-center">
+        <img src="{% static 'images/taibif-members.png' %}" alt="taibif-team-members" class="member-structure"/>
+    </div>
+  </div>
+
+  <div data-cat="mission" class="col-12 col-md-9 nav-item-content content-readable-panel tech-book-page">
+    <h4 class="heading-lg-ul">{% trans "TaiBIF 任務" %}</h4>
+
+    <!-- panel-group begin -->
+      <div class="panel-group tech-book-accordion" id="accordion" role="tablist" aria-multiselectable="true">
+          <!-- 1st accordion-panel begin -->
+          <div class="panel panel-main card-tools-wrapper tools-card">
+              <!-- accordion heading begin -->
+              <div class="panel-heading" role="tab" id="headingOne">
+                  <h4 class="panel-title title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                      {% trans "一、建置生物多樣性資訊基礎建設" %}
+                  </a>
+                  </h4>
+              </div>
+              <!-- accordion heading end -->
+              <!-- accordion collapse begin -->
+              <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                  <div class="panel-body content">
+                      <p>{% trans "我們提供了五項平台服務：" %}</p>
+                      <ol>
+                          <li><a href="http://taibif.tw/" target="_blank">{% trans "臺灣生物多樣性資訊機構平台" %}</a>{% trans "提供國內生物多樣性開放資料搜尋、資料開放概念介紹及發布資料的相關引導、相關新聞及推廣活動發布，以及 TaiBIF 開發的資料清理工具等內容。不僅能讓資料使用者看到臺灣的資料開放現況，亦可檢視物種分布資料地圖，同時也能閱讀資源，獲取相關知識。" %}</li>
+                          <li><a href="http://ipt.taibif.tw/" target="_blank">{% trans "資料發布工具 IPT" %}</a>{% trans "是目前國內開放資料並與國際平台 GBIF 連結的唯一管道，除可上傳及開放自己的生物多樣性資料，也可以是免費的個人生物多樣性資料倉儲及管理的空間，亦提供版本管理的功能，讓使用者方便管理不同的資料發布版本。" %}</li>
+                          <li><a href="http://taicol.tw/" target="_blank">{% trans "臺灣物種名錄" %}</a>{% trans "透過各物種類群的分類學專家的名錄審訂，此資料庫提供了國內的所有物種有效學名及分類資訊搜尋，還可檢視學名變動的歷史及相關文獻。為目前國內生物多樣性領域工作者確認物種學名的重要參考依據。" %}</li>
+                          <li><a href="http://nametool.taicol.tw/" target="_blank">{% trans "物種學名管理工具" %}</a>{% trans "為名錄資料管理與分類資訊紀錄的網頁平台，除了名錄的整合查詢檢視，其管理流程貼近分類學者的工作流程，包含管理學名名錄與文獻資訊的功能，並可產出發表文章的分類處理架構等，也是提升分類資訊更新的工具，另提供專有名詞說明，以期降低分類學研究的門檻。" %}</li>
+                          <li><a href="http://camera-trap.tw/" target="_blank">{% trans "臺灣自動相機資訊系" %}</a>{% trans "自動相機資料管理及共享的平台，亦呈現視覺化的資料統計數據供主管機關及大眾了解現況。" %}</li>
+                      </ol>
+                      <p>
+                          {% trans "此外，本團隊亦致力於推動共通的資料交換標準，除了與 TBIA 聯盟合作發布了" %}
+                          <a href="https://tbiadata.tw/media/resources/%E7%94%9F%E7%89%A9%E5%A4%9A%E6%A8%A3%E6%80%A7%E9%A0%98%E5%9F%9F%E8%B3%87%E6%96%99%E6%A8%99%E6%BA%96.pdf" target="_blank">{% trans "生物多樣性領域資料標準" %}</a>，
+                          也陸續規劃推出<strong>{% trans "主題式資料標準模板" %}</strong>（如生態檢核、典藏標本資料等），
+                          {% trans "讓不同專業背景的生物多樣性領域人士皆可依循參考，將彼此的資料開放共享，促進更多生物多樣性資料的流通。" %}
+                      </p>
+                  </div>
+              </div>
+              <!-- accordion collapse end -->
+          </div>
+          <!-- 1st accordion-panel begin -->
+
+          <!-- 2nd accordion-panel begin -->
+          <div class="panel panel-main card-tools-wrapper tools-card">
+              <!-- accordion heading begin -->
+              <div class="panel-heading" role="tab" id="headingTwo">
+                  <h4 class="panel-title title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      {% trans "二、推廣開放資料概念" %}
+                  </a>
+                  </h4>
+              </div>
+              <!-- accordion heading end -->
+              <!-- accordion collapse begin -->
+              <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                  <div class="panel-body content">
+                      <p>
+                          {% trans "自2022年9月起，TaiBIF 首度試辦課程認證制度及協作者培訓，學員繳交指定作業可獲得課程的核心或增能認證，亦可在報名工作坊時選擇是否有想當協作者的意願。" %}
+                          {% trans "培訓的協作者類型主要分成三種：翻譯協作者、推廣大使與資料清理協作者。翻譯協作者將協助翻譯文件、推廣大使主要協助工作坊教學，" %}
+                          {% trans "也可進階成為講師、以及資料清理協作者協助客製化的資料清理。" %}
+                      </p>
+                      <ol>
+                          <li>{% trans "開放資料流程" %}</li>
+                          <li>{% trans "資料發布類型" %}</li>
+                          <li>{% trans "開放資料授權" %}</li>
+                          <li>{% trans "資料標準及共通欄位" %}</li>
+                          <li>{% trans "敏感物種資料開放原則" %}</li>
+                          <li>{% trans "開放資料的前置準備" %}</li>
+                          <li>{% trans "用工具驗證及清理資料" %}</li>
+                          <li>{% trans "如何上傳資料" %}</li>
+                          <li>{% trans "資料論文data paper" %}</li>
+                          <li>{% trans "資料管理方案規劃" %}</li>
+                          <li>{% trans "怎麼下載及引用資料、應用案例介紹" %}</li>
+                          <li>{% trans "用rgbif 下載及清理資料" %}</li>
+                      </ol>
+                  </div>
+              </div>
+              <!-- accordion collapse end -->
+          </div>
+          <!-- 2nd accordion-panel begin -->
+
+          <!-- 3rd accordion-panel begin -->
+          <div class="panel panel-main card-tools-wrapper tools-card">
+              <!-- accordion heading begin -->
+              <div class="panel-heading" role="tab" id="headingThree">
+                  <h4 class="panel-title title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      {% trans "三、促進生物多樣性資料的開放與整合" %}
+                  </a>
+                  </h4>
+              </div>
+              <!-- accordion heading end -->
+              <!-- accordion collapse begin -->
+              <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                  <div class="panel-body content">
+                    <p>
+                      {% trans "我們以 TaiBIF 做為國家連結國際的資訊整合窗口，近年來持續在推動國內的生物多樣性資料開放，並整合至 GBIF ，截至 2024年 5月，" %}
+                      {% trans "臺灣已開放了 1千7百多萬筆物種出現紀錄至 GBIF 上，包含了 24 個資料發布單位，共計 111 個資料集，為目前亞洲區域資料筆數第二名（第一名為印度，第三名為日本）。" %}
+                      除了國際知名的<a href="https://www.gbif.org/dataset/4fa7b334-ce0d-4e88-aaae-2e0c138d049e" target="_blank">{% trans "鳥類公民科學資料集 (EOD - eBird Observation Dataset)" %} </a>{% trans "外，" %}<a href="https://www.gbif.org/dataset/78fc169f-cef0-4054-88ec-9b694bcbf6e4" target="_blank">{% trans "中華民國野鳥學會 (Chinese Wild Bird Federation Bird Records Database)" %} </a> 、
+                      <a href="https://www.gbif.org/dataset/4410edca-3bdd-4475-98a2-de823b2266bc" target="_blank">{% trans "玉山國家公園鳥音AI辨識資料集 (Acoustic detections of birds using the SILIC in Yushan National Park, Taiwan)" %} </a>和
+                      <a href="https://www.gbif.org/dataset/eb7681c5-5c9c-4e28-954f-f328991c7004" target="_blank">{% trans "林試所植物標本典藏資料庫 (Herbarium of Taiwan Forestry Research Institute)" %} </a>亦為貢獻良多的大型開放資料集。
+                    </p>
+                    <p>
+                        {% trans "而在國內的部分，我們亦與國內的生物多樣性資料庫管理機關結盟成為合作夥伴，促成「臺灣生物多樣性資訊聯盟 (Taiwan Biodiversity Information Alliance, TBIA)」，" %}
+                        {% trans "定期舉行例會，針對物種名錄整合、共同資料標準、資料庫介接、敏感物種開放原則、生物時空分布圖資、國家級生物多樣性網絡等議題討論，並提出相關解決方針或參考文件，" %}
+                        期望能達成十年共同願景。2023年12月，我們發布了<a href="https://tbiadata.tw/" target="_blank">{% trans "TBIA生物多樣性資料庫共通查詢系統" %}</a>（簡稱TBIA入口網），將TBIA各夥伴單位所屬的生物多樣性開放資料庫入口串連，
+                        {% trans "提供資料使用者一個共通的窗口來查詢分散各處的生物多樣性資料。" %}
+                    </p>
+                  </div>
+              </div>
+              <!-- accordion collapse end -->
+          </div>
+          <!-- 3rd accordion-panel begin -->
+
+          <!-- 4th accordion-panel begin -->
+          <div class="panel panel-main card-tools-wrapper tools-card">
+              <!-- accordion heading begin -->
+              <div class="panel-heading" role="tab" id="headingFour">
+                  <h4 class="panel-title title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                      {% trans "四、支持生物多樣性科學研究與政策制定" %}
+                  </a>
+                  </h4>
+              </div>
+              <!-- accordion heading end -->
+              <!-- accordion collapse begin -->
+              <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                  <div class="panel-body content">
+                    <p>
+                      {% trans "為推廣資料開放的應用及好處，TaiBIF 長期提供國內外研究學者、單位與團體資料發布諮詢服務及發表合作，協助將生物多樣性資料整理成資料集並發布至 GBIF。" %}
+                      自2022年起也提供相關經費支援，與申請者合作發表資料論文，並由TaiBIF補助資料論文發表費用。歷年合作資料論文請見：<a href="{% url 'data-paper' %}">{% trans "資料期刊與論文" %}</a>
+                    </p>
+                  </div>
+              </div>
+              <!-- accordion collapse end -->
+          </div>
+          <!-- 4th accordion-panel begin -->
+
+          <!-- 5th accordion-panel begin -->
+          <div class="panel panel-main card-tools-wrapper tools-card">
+              <!-- accordion heading begin -->
+              <div class="panel-heading" role="tab" id="headingFive">
+                  <h4 class="panel-title title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                      {% trans "五、連結臺灣與國際的生物多樣性資訊" %}
+                  </a>
+                  </h4>
+              </div>
+              <!-- accordion heading end -->
+              <!-- accordion collapse begin -->
+              <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                  <div class="panel-body content">
+                    <p>
+                        {% trans "我們與 GBIF 保持密切互動及合作關係，除協助過去的亞洲生物多樣性資訊基金 (BIFA)計畫審查及工作坊辦理，與來自亞洲各國的計畫團隊成員交流，" %}
+                        {% trans "團隊成員亦長期擔任GBIF亞洲工作坊的講師及助教，並有部分成員同時加入GBIF Asia Regional Support Team，建立起亞洲各國家或組織節點的交流社群；" %}
+                        {% trans "同時，我們也投入翻譯工作，協助將GBIF或國際組織相關文件翻譯成中文，讓臺灣社群對於汲取國際生物多樣性資訊知識可以更加容易。" %}
+                        目前已於 <a href="http://gbif.org/" target="_blank">GBIF.org</a> {% trans "推出官網" %}<a href="https://www.gbif.org/zh-tw/" target="_blank">{% trans "繁體中文版介面" %}</a>{% trans "，亦將持續推出 GBIF 主題資料發布指引" %}<a href="{% url 'open-standard' %}">{% trans "中文版" %}</a>。
+                        {% trans "此外，亦曾與日本節點 JBIF 合作，共同撰寫生物多樣性資訊教學手冊 (Biodiversity Information Cookbook)，目前中文版已部分公開於 TaiBIF 官網，將陸續更新各章節。" %}
+                    </p>
+                    <p>
+                        {% trans "TaiBIF 身為GBIF的節點之一，節點經理及部分團隊成員每年皆出席GBIF全球理事會議，以及每兩年舉行一次的亞洲區域節點會議。" %}
+                        {% trans "同時，TaiBIF執行長端木茂甯副研究員更是自2021起擔任亞洲區節點副代表，並將TaiBIF的節點經驗分享亞洲其他節點。" %}
+                        {% trans "GBIF 2022 亞洲區域會議暨資料應用及開放科學研討會中，林業保育署亦代表台灣受邀赴泰國曼谷，向亞洲各國介紹臺灣在應用生物多樣性開放資料於政策決策上的成果。" %}
+                    </p>
+                  </div>
+              </div>
+              <!-- accordion collapse end -->
+          </div>
+          <!-- 5th accordion-panel begin -->
+      </div>
+      <!-- panel-group end -->
+  </div>
+
+  <div data-cat="achievements" class="col-12 col-md-9 nav-item-content content-readable-panel article-search-page">
+    <h4 class="heading-lg-ul">{% trans "TaiBIF 成果" %}</h4>
+
+    <div class="heading-sort-ctn">
+      <form class="form-inline" method="get" action="" onsubmit="return false;">
+        <span class="heading-sort-name">{% trans "篩選年份" %}</span>
+        <select
+          name="achievement_year"
+          class="form-control"
+          onchange="window.location.href=(this.value ? ('?achievement_year=' + encodeURIComponent(this.value)) : '?') + '#achievements';"
+        >
+          <option value="">{% trans "全部年份" %}</option>
+          {% for year in achievement_years %}
+          <option value="{{ year }}" {% if achievement_year == year|stringformat:"s" %}selected{% endif %}>{{ year }}</option>
+          {% endfor %}
+        </select>
+      </form>
+    </div>
+
+    {% for article in achievements_page %}
+    <article class="listbox-img-right-wrapper article-list-card">
+      <a class="article-card-link" href="{{ article.get_absolute_url }}">
+        <div class="row">
+          <div class="{% if article.cover %}col-xs-8{% else %}col-xs-12{% endif %}">
+            <span class="listbox-inner-date">{{ article.created|date:'Y/m/d' }}</span>
+            <h3 class="listbox-inner-title">{{ article.title }}</h3>
+            <p class="listbox-inner-summary hidden-xs">{{ article.summary|striptags|truncatechars:150 }}</p>
+          </div>
+          {% if article.cover %}
+          <div class="col-xs-4">
+            <div class="article-thumb-link">
+              <img src="/media/{{ article.cover }}" class="img-responsive" alt="{% firstof article.title _('文章縮圖') %}">
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </a>
+    </article>
+    {% empty %}
+    <p>{% trans "目前沒有符合條件的 TaiBIF 成果文章。" %}</p>
+    {% endfor %}
+
+    {% if achievements_page.paginator.num_pages > 1 %}
+    {% get_pagination_info achievements_page request.GET as page_info %}
+    <nav class="center-block text-center pagination-nav" aria-label="Pagination">
+      <ul class="pagination pagination-modern">
+        {% if achievements_page.has_previous %}
+        <li class="page-prev">
+          <a href="?page={{ achievements_page.previous_page_number }}{% if achievement_year %}&achievement_year={{ achievement_year }}{% endif %}#achievements" aria-label="Previous page">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        {% endif %}
+
+        {% for p in page_info.page_range %}
+          {% if achievements_page.number == p %}
+            <li class="active"><span aria-current="page">{{ p }}</span></li>
+          {% elif p == '...' %}
+            <li class="disabled pagination-ellipsis"><span aria-hidden="true">{{ p }}</span></li>
+          {% else %}
+            <li><a href="?page={{ p }}{% if achievement_year %}&achievement_year={{ achievement_year }}{% endif %}#achievements">{{ p }}</a></li>
+          {% endif %}
+        {% endfor %}
+
+        {% if achievements_page.has_next %}
+        <li class="page-next">
+          <a href="?page={{ achievements_page.next_page_number }}{% if achievement_year %}&achievement_year={{ achievement_year }}{% endif %}#achievements" aria-label="Next page">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+  </div>
 </div>
 
 <!-- container end -->

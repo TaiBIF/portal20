@@ -1,0 +1,46 @@
+@use "mixin" as *;
+
+@include keyframes(alpha01){
+  0%{@include alpha(0);}
+  100%{@include alpha(1);}
+}
+
+@include keyframes(alphatop30){
+  0%{@include alpha(0); transform: translateY(30px);}
+  100%{@include alpha(1);transform: translateY(0px);}
+}
+@include keyframes(alphabottom30){
+  0%{@include alpha(0); transform: translateY(-30px);}
+  100%{@include alpha(1);transform: translateY(0px);}
+}
+@include keyframes(alphleft30){
+  0%{@include alpha(0); transform: translateX(-30px);}
+  100%{@include alpha(1);transform: translateY(0px);}
+}
+@include keyframes(alphright50){
+  0%{@include alpha(0); transform: translateX(50px);}
+  100%{@include alpha(1);transform: translateY(0px);}
+}
+@include keyframes(rotate360) {
+  0% {
+    @include rotate(0deg);
+  }
+  100% {
+    @include rotate(360deg);
+  }
+}
+
+@include keyframes(h-100){
+  0%{height: 0;}
+  100%{height: 100%}
+}
+
+@include keyframes(w-100){
+  0%{width: 0;}
+  100%{width: 100%}
+}
+@include keyframes(float-5){
+  0%{transform: translateY(0px);}
+  50%{transform: translateY(-5px);}
+  100%{transform: translateY(0px);}
+}

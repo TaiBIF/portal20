@@ -9,124 +9,120 @@
 <div class="bg-main-pale">
     <div class="container">
     <div class="caption-mascot-wrapper">
-        <h1 class="title">{% trans "開放資料工具" %}</h1>
+        <h1 class="title">{% trans "有哪工具可以使用" %}</h1>
         <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
     </div>
     </div>
 </div>
 <!-- topnav end -->
 <!-- container begin -->
-<div class="container my-5">
+<div class="container my-5 tools-page container-1340">
     <!-- breadcrumb begin -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
             <li class="breadcrumb-item">{% trans "開放資料" %}</li>
-            <li class="breadcrumb-item active" aria-current="page">{% trans "開放資料工具" %}</li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans "有哪工具可以使用" %}</li>
         </ol>
     </nav>
     <!-- breadcrumb end -->
-    <!-- row begin -->
-    <div class="row">
-        <!-- col begin -->
-        <div class="col-12">
-            <p>生物多樣性資料校對轉換工具為 TaiBIF 資訊團隊研發，目前提供學名檢查、中文名批次比對與座標轉換。本研究目前由中研院「台灣生物多樣性資訊平台之學術、社會推廣與國際接軌」、國科會「建置與維護及整合臺灣生物多樣性資訊國家入口網 (TaiBIF) 及與 GBIF 接軌」及林務局「生態資源資料庫分組整合推動計畫」等計畫經費支持，引用網址：<a href="https://portal.taibif.tw/coordinateConverter.php" target="_blank">https://portal.taibif.tw/coordinateConverter.php</a></p>
-            <div class="card-tools-wrapper ">
-                <div class="title">地理分布線上座標轉換</div>
-                <div class="content">
-                    <p>
-                    有鑑於過去物種生態分布之地理座標系統不同，造成整合地理資訊上之困難，及物種於地圖上標記之錯誤，因此本系統可提供線上地理座標資訊，以便使用者更新老舊生態分布之資料，得以進一步比較分析與研究，系統提供 WGS 84、TM2 67 與 TM2 97 三種格式之間的相互轉換。
-                    </p>
-                    <a href="https://portal.taibif.tw/coordinateConverter.php" target="_blank" class="link-item"><span class="myicon icon-link"></span> 座標轉換</a>
-                </div>
-            </div>
-
-            <div class="card-tools-wrapper ">
-                <div class="title">物種中文名比對</div>
-                <div class="content">
-                    <p>
-                    此工具提供使用者上傳多筆中文名稱，工具會針對所上傳的物種中文名稱比對出臺灣物種名錄中所對應的物種學名與物種代碼（name code），若比對不到中文名稱則傳回「no match」之訊息。
-                    </p>
-                    <a href="{% url 'tools-common_name_checker' %}" target="_blank"><span class="myicon icon-link"></span> 物種中文名比對</a>
-                    {% comment %} <a href="/common-name-checker" target="_blank" class="link-item"><span class="myicon icon-link"></span> 物種中文名比對</a> {% endcomment %}
-                </div>
-            </div>
-
-            <div class="card-tools-wrapper ">
-                <div class="title">有效學名比對</div>
-                <div class="content">
-                    <p>
-                    物種在分類學上往往存在同物異名，本工具提供批次的物種學名比對，可提供該學名是否為有效學名及物種代碼等相關資訊。
-                    </p>
-                    <a href="http://match.taibif.tw/" target="_blank" class="link-item"><span class="myicon icon-link"></span> NomenMatch</a>
-                </div>
-            </div>
-
-            <div class="card-tools-wrapper ">
-                <div class="title">GBIF 資料驗證工具</div>
-                <div class="content">
-                    <p>
-                    為全球生物多樣性資訊機構 GBIF 所開發的網頁版資料驗證工具，可將文字檔或excel上傳，並顯示資料檔案中的資料問題及錯誤之處。上傳的資料檔案欄位須符合 DwC，使用前亦須先登入GBIF會員（可用google帳號註冊）。
-                    </p>
-                    <a href="https://www.gbif.org/tools/data-validator" target="_blank" class="link-item"><span class="myicon icon-link"></span> GBIF Data Validator </a>
-                </div>
-            </div>
-
-            <div class="card-tools-wrapper ">
-                <div class="title">數位 TaiBIFer</div>
-                <div class="content">
-                    <p>
-                        {% blocktrans %}
-                        提供全天候協助的數位 TaiBIFer，隨時為您解答有關生物多樣性領域開放資料的相關問題。本服務由大型語言模型支援，旨在即時提供協助與建議，惟部分內容可能受限於模型訓練資料與推論方式，建議在應用前多方查證以確保資訊準確性。
-                        {% endblocktrans %}
-                    </p>
-                    <a href="https://chatgpt.com/g/g-67e4ab141e4c81919e6635141b4fcf4d-digital-taibifer" target="_blank" class="link-item"><span class="myicon icon-link"></span> Digital TaiBIFer </a>
-                </div>
-            </div>
-
-            <div class="card-tools-wrapper ">
-                <div class="title">TaiBIF Open Data Toolkit</div>
-                <div class="content">
-                    <p>
-                        TaiBIF Open Data Toolkit 是一個專門針對生物多樣性資料整合的工具，採用了國際生物多樣性領域常用的 Darwin Core 資料標準， 旨在幫助使用者建立並有效管理、編輯、驗證和清理生物多樣性資料集。若想要建立資料模板、資料編輯管理和發布，此工具將能引導您進入理想的資料管理流程，並協助管控資料品質。
-                    </p>
-                    <a href="/media/ODT/TaiBIF-Open-Data-Toolkit-Installer_Windows.zip" target="_blank" class="link-item">
-                        <span class="myicon icon-link"></span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-windows" viewBox="0 0 16 16">
-                            <path d="M6.555 1.375 0 2.237v5.45h6.555zM0 13.795l6.555.933V8.313H0zm7.278-5.4.026 6.378L16 16V8.395zM16 0 7.33 1.244v6.414H16z"/>
-                        </svg>
-                        Windows 安裝程式
-                    </a>
-                    <a href="/media/ODT/TaiBIF-Open-Data-Toolkit-Installer_MacOS_Arm.zip" target="_blank" class="link-item">
-                        <span class="myicon icon-link"></span> 
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-apple" viewBox="0 0 16 16">
-                            <path d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516s1.52.087 2.475-1.258.762-2.391.728-2.43m3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422s1.675-2.789 1.698-2.854-.597-.79-1.254-1.157a3.7 3.7 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56s.625 1.924 1.273 2.796c.576.984 1.34 1.667 1.659 1.899s1.219.386 1.843.067c.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758q.52-1.185.473-1.282"/>
-                            <path d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516s1.52.087 2.475-1.258.762-2.391.728-2.43m3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422s1.675-2.789 1.698-2.854-.597-.79-1.254-1.157a3.7 3.7 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56s.625 1.924 1.273 2.796c.576.984 1.34 1.667 1.659 1.899s1.219.386 1.843.067c.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758q.52-1.185.473-1.282"/>
-                        </svg>
-                        MacOS Arm 安裝程式
-                    </a>
-                    <a href="/media/ODT/TaiBIF-Open-Data-Toolkit-Installer_MacOS_Intel.zip" target="_blank" class="link-item">
-                        <span class="myicon icon-link"></span> 
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-apple" viewBox="0 0 16 16">
-                            <path d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516s1.52.087 2.475-1.258.762-2.391.728-2.43m3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422s1.675-2.789 1.698-2.854-.597-.79-1.254-1.157a3.7 3.7 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56s.625 1.924 1.273 2.796c.576.984 1.34 1.667 1.659 1.899s1.219.386 1.843.067c.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758q.52-1.185.473-1.282"/>
-                            <path d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516s1.52.087 2.475-1.258.762-2.391.728-2.43m3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422s1.675-2.789 1.698-2.854-.597-.79-1.254-1.157a3.7 3.7 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56s.625 1.924 1.273 2.796c.576.984 1.34 1.667 1.659 1.899s1.219.386 1.843.067c.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758q.52-1.185.473-1.282"/>
-                        </svg>
-                        MacOS Intel 安裝程式
-                    </a>
-                    <a href="https://github.com/TaiBIF/data-tool" target="_blank" class="link-item">
-                        <span class="myicon icon-link"></span> 
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
-                            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
-                        </svg>
-                        GitHub 專案
-                    </a>
-                    <a href="https://hackmd.io/D8z1rDOHTHSmB1N1Nm-tiw?view" target="_blank" class="link-item"><span class="myicon icon-link"></span> 教學手冊 </a>
-                </div>
+    <!-- col begin -->
+    <div class="col-12">
+        <div class="card-tools-wrapper tools-card">
+            <div class="title">{% trans "地理分布線上座標轉換" %}</div>
+            <div class="content">
+                <p>
+                {% trans "生物多樣性資料校對轉換工具為 TaiBIF 資訊團隊研發，目前提供學名檢查、中文名批次比對與座標轉換。本研究目前由中研院「台灣生物多樣性資訊平台之學術、社會推廣與國際接軌」、國科會「建置與維護及整合臺灣生物多樣性資訊國家入口網 (TaiBIF) 及與 GBIF 接軌」及林務局「生態資源資料庫分組整合推動計畫」等計畫經費支持。" %}
+                {% trans "有鑑於過去物種生態分布之地理座標系統不同，造成整合地理資訊上之困難，及物種於地圖上標記之錯誤，因此本系統可提供線上地理座標資訊，以便使用者更新老舊生態分布之資料，得以進一步比較分析與研究，系統提供 WGS 84、TM2 67 與 TM2 97 三種格式之間的相互轉換。" %}
+                </p>
+                <a href="{% url 'coordinate-converter' %}" target="_blank" class="link-item"><span class="myicon icon-link"></span> {% trans "座標轉換" %}</a>
             </div>
         </div>
-        <!-- col end -->
+
+        <div class="card-tools-wrapper tools-card">
+            <div class="title">{% trans "物種中文名比對" %}</div>
+            <div class="content">
+                <p>
+                {% trans "此工具提供使用者上傳多筆中文名稱，工具會針對所上傳的物種中文名稱比對出臺灣物種名錄中所對應的物種學名與物種代碼（name code），若比對不到中文名稱則傳回「no match」之訊息。" %}
+                </p>
+                <a href="{% url 'tools-common_name_checker' %}" target="_blank"><span class="myicon icon-link"></span> {% trans "物種中文名比對" %}</a>
+                {% comment %} <a href="/common-name-checker" target="_blank" class="link-item"><span class="myicon icon-link"></span> {% trans "物種中文名比對" %}</a> {% endcomment %}
+            </div>
+        </div>
+
+        <div class="card-tools-wrapper tools-card">
+            <div class="title">{% trans "有效學名比對" %}</div>
+            <div class="content">
+                <p>
+                {% trans "物種在分類學上往往存在同物異名，本工具提供批次的物種學名比對，可提供該學名是否為有效學名及物種代碼等相關資訊。" %}
+                </p>
+                <a href="http://match.taibif.tw/" target="_blank" class="link-item"><span class="myicon icon-link"></span> NomenMatch</a>
+            </div>
+        </div>
+
+        <div class="card-tools-wrapper tools-card">
+            <div class="title">{% trans "GBIF 資料驗證工具" %}</div>
+            <div class="content">
+                <p>
+                {% trans "為全球生物多樣性資訊機構 GBIF 所開發的網頁版資料驗證工具，可將文字檔或excel上傳，並顯示資料檔案中的資料問題及錯誤之處。上傳的資料檔案欄位須符合 DwC，使用前亦須先登入GBIF會員（可用google帳號註冊）。" %}
+                </p>
+                <a href="https://www.gbif.org/tools/data-validator" target="_blank" class="link-item"><span class="myicon icon-link"></span> GBIF Data Validator </a>
+            </div>
+        </div>
+
+        <div class="card-tools-wrapper tools-card">
+            <div class="title">{% trans "數位 TaiBIFer" %}</div>
+            <div class="content">
+                <p>
+                    {% blocktrans %}
+                    提供全天候協助的數位 TaiBIFer，隨時為您解答有關生物多樣性領域開放資料的相關問題。本服務由大型語言模型支援，旨在即時提供協助與建議，惟部分內容可能受限於模型訓練資料與推論方式，建議在應用前多方查證以確保資訊準確性。
+                    {% endblocktrans %}
+                </p>
+                <a href="https://chatgpt.com/g/g-67e4ab141e4c81919e6635141b4fcf4d-digital-taibifer" target="_blank" class="link-item"><span class="myicon icon-link"></span> Digital TaiBIFer </a>
+            </div>
+        </div>
+
+        <div class="card-tools-wrapper tools-card">
+            <div class="title">TaiBIF Open Data Toolkit</div>
+            <div class="content">
+                <p>
+                    {% trans "TaiBIF Open Data Toolkit 是一個專門針對生物多樣性資料整合的工具，採用了國際生物多樣性領域常用的 Darwin Core 資料標準， 旨在幫助使用者建立並有效管理、編輯、驗證和清理生物多樣性資料集。若想要建立資料模板、資料編輯管理和發布，此工具將能引導您進入理想的資料管理流程，並協助管控資料品質。" %}
+                </p>
+                <a href="/media/ODT/TaiBIF-Open-Data-Toolkit-Installer_Windows.zip" target="_blank" class="link-item">
+                    <span class="myicon icon-link"></span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-windows" viewBox="0 0 16 16">
+                        <path d="M6.555 1.375 0 2.237v5.45h6.555zM0 13.795l6.555.933V8.313H0zm7.278-5.4.026 6.378L16 16V8.395zM16 0 7.33 1.244v6.414H16z"/>
+                    </svg>
+                    {% trans "Windows 安裝程式" %}
+                </a>
+                <a href="/media/ODT/TaiBIF-Open-Data-Toolkit-Installer_MacOS_Arm.zip" target="_blank" class="link-item">
+                    <span class="myicon icon-link"></span> 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-apple" viewBox="0 0 16 16">
+                        <path d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516s1.52.087 2.475-1.258.762-2.391.728-2.43m3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422s1.675-2.789 1.698-2.854-.597-.79-1.254-1.157a3.7 3.7 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56s.625 1.924 1.273 2.796c.576.984 1.34 1.667 1.659 1.899s1.219.386 1.843.067c.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758q.52-1.185.473-1.282"/>
+                        <path d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516s1.52.087 2.475-1.258.762-2.391.728-2.43m3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422s1.675-2.789 1.698-2.854-.597-.79-1.254-1.157a3.7 3.7 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56s.625 1.924 1.273 2.796c.576.984 1.34 1.667 1.659 1.899s1.219.386 1.843.067c.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758q.52-1.185.473-1.282"/>
+                    </svg>
+                    {% trans "MacOS Arm 安裝程式" %}
+                </a>
+                <a href="/media/ODT/TaiBIF-Open-Data-Toolkit-Installer_MacOS_Intel.zip" target="_blank" class="link-item">
+                    <span class="myicon icon-link"></span> 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-apple" viewBox="0 0 16 16">
+                        <path d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516s1.52.087 2.475-1.258.762-2.391.728-2.43m3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422s1.675-2.789 1.698-2.854-.597-.79-1.254-1.157a3.7 3.7 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56s.625 1.924 1.273 2.796c.576.984 1.34 1.667 1.659 1.899s1.219.386 1.843.067c.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758q.52-1.185.473-1.282"/>
+                        <path d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516s1.52.087 2.475-1.258.762-2.391.728-2.43m3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422s1.675-2.789 1.698-2.854-.597-.79-1.254-1.157a3.7 3.7 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56s.625 1.924 1.273 2.796c.576.984 1.34 1.667 1.659 1.899s1.219.386 1.843.067c.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758q.52-1.185.473-1.282"/>
+                    </svg>
+                    {% trans "MacOS Intel 安裝程式" %}
+                </a>
+                <a href="https://github.com/TaiBIF/data-tool" target="_blank" class="link-item">
+                    <span class="myicon icon-link"></span> 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+                    </svg>
+                    {% trans "GitHub 專案" %}
+                </a>
+                <a href="https://hackmd.io/D8z1rDOHTHSmB1N1Nm-tiw?view" target="_blank" class="link-item"><span class="myicon icon-link"></span> {% trans "教學手冊" %} </a>
+            </div>
+        </div>
     </div>
-    <!-- row end -->
+    <!-- col end -->
 </div>
 <!-- container end -->
 {% endblock %}

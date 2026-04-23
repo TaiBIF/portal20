@@ -10,7 +10,7 @@ RUN yarn build-dev
 ##
 # stage 2
 ##
-FROM python:3.10-slim-buster as final
+FROM python:3.10-slim-bookworm as final
 
 # set environment varibles
 ENV PYTHONDONTWRITEBYTECODE 1

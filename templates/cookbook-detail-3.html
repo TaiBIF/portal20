@@ -2,7 +2,7 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}Cookbook 3 - 準備用於發布的資料集{% endblock %}
+{% block title %}{% trans "Cookbook 3 - 準備用於發布的資料集" %}{% endblock %}
 
 {% block main %}
 
@@ -43,10 +43,10 @@ hr {
     </nav>
     <!-- breadcrumb end -->
     <div class="thumbnail">
-        <img src="{% static 'images/content-cookbook-ch3.jpg' %}" alt="Callosciurus erythraeus subsp. thaiwanensis (Bonhote, 1901) 赤腹松鼠, 尹若宇 攝, Photo via iNaturalist (CC BY-NC 4.0)">
+        <img src="{% static 'images/content-cookbook-ch3.jpg' %}" alt="{% trans "Callosciurus erythraeus subsp. thaiwanensis (Bonhote, 1901) 赤腹松鼠, 尹若宇 攝, Photo via iNaturalist (CC BY-NC 4.0)" %}">
     </div>
     <div class="caption justify-content-center">
-        <div class="text-muted"><em>Callosciurus erythraeus </em>subsp. <em>thaiwanensis</em> (Bonhote, 1901) 赤腹松鼠, 尹若宇 攝, Photo via iNaturalist (CC BY-NC 4.0)</div>
+        <div class="text-muted"><em>Callosciurus erythraeus </em>subsp. <em>thaiwanensis</em> {% trans "(Bonhote, 1901) 赤腹松鼠, 尹若宇 攝, Photo via iNaturalist (CC BY-NC 4.0)" %}</div>
     </div>
     <!-- story title & share btns begin -->
     <div class="article-head-wrapper">
@@ -93,60 +93,60 @@ hr {
         <table class="table table-bordered">
             <tbody>
                 <tr>
-                    <td>調查活動識別碼（eventID**）</td>
-                    <td>最低海拔（公尺）（minimumElevationInMeters）</td>
+                    <td>{% trans "調查活動識別碼（eventID**）" %}</td>
+                    <td>{% trans "最低海拔（公尺）（minimumElevationInMeters）" %}</td>
                 </tr>
                 <tr>
-                    <td>父階調查活動識別碼（parentEventID）</td>
-                    <td>最高海拔（公尺） （maximumElevationInMeters）</td>
+                    <td>{% trans "父階調查活動識別碼（parentEventID）" %}</td>
+                    <td>{% trans "最高海拔（公尺） （maximumElevationInMeters）" %}</td>
                 </tr>
                 <tr>
-                    <td>調查活動日期（eventDate**）</td>
-                    <td>最小深度（公尺） （minimumDepthInMeters）</td>
+                    <td>{% trans "調查活動日期（eventDate**）" %}</td>
+                    <td>{% trans "最小深度（公尺） （minimumDepthInMeters）" %}</td>
                 </tr>
                 <tr>
-                    <td>棲息地（Habitat）</td>
-                    <td>最大深度（公尺） （maximumDepthInMeters）</td>
+                    <td>{% trans "棲息地（Habitat）" %}</td>
+                    <td>{% trans "最大深度（公尺） （maximumDepthInMeters）" %}</td>
                 </tr>
                 <tr>
-                    <td>調查採樣流程（samplingProtocol**）</td>
-                    <td>與海平面最小距離（公尺） （minimumDistanceAboveSurfaceIn Meters）</td>
+                    <td>{% trans "調查採樣流程（samplingProtocol**）" %}</td>
+                    <td>{% trans "與海平面最小距離（公尺） （minimumDistanceAboveSurfaceIn Meters）" %}</td>
                 </tr>
                 <tr>
-                    <td>樣本大小值（sampleSizeValue**）</td>
-                    <td>與海平面最大距離（公尺） （maximumDistanceAboveSurfaceIn Meters）</td>
+                    <td>{% trans "樣本大小值（sampleSizeValue**）" %}</td>
+                    <td>{% trans "與海平面最大距離（公尺） （maximumDistanceAboveSurfaceIn Meters）" %}</td>
                 </tr>
                 <tr>
-                    <td>樣本大小單位（sampleSizeUnit**）</td>
-                    <td>洲（Continent）</td>
+                    <td>{% trans "樣本大小單位（sampleSizeUnit**）" %}</td>
+                    <td>{% trans "洲（Continent）" %}</td>
                 </tr>
                 <tr>
-                    <td>調查採樣努力量（samplingEffort）</td>
-                    <td>國家（Country）</td>
+                    <td>{% trans "調查採樣努力量（samplingEffort）" %}</td>
+                    <td>{% trans "國家（Country）" %}</td>
                 </tr>
 
                 <tr>
-                    <td>地點識別碼（locationID）</td>
-                    <td>國碼（countryCode）</td>
+                    <td>{% trans "地點識別碼（locationID）" %}</td>
+                    <td>{% trans "國碼（countryCode）" %}</td>
                 </tr>
                 <tr>
-                    <td>十進位緯度（decimalLatitude）</td>
-                    <td>州/省（stateProvince）</td>
+                    <td>{% trans "十進位緯度（decimalLatitude）" %}</td>
+                    <td>{% trans "州/省（stateProvince）" %}</td>
                 </tr>
                 <tr>
-                    <td>十進位經度（decimalLongitude）</td>
-                    <td>縣（Country）</td>
+                    <td>{% trans "十進位經度（decimalLongitude）" %}</td>
+                    <td>{% trans "縣（Country）" %}</td>
                 </tr>
                 <tr>
-                    <td>大地基準（geodeticDatum）</td>
-                    <td>市（Municipality）</td>
+                    <td>{% trans "大地基準（geodeticDatum）" %}</td>
+                    <td>{% trans "市（Municipality）" %}</td>
                 </tr>
                 <tr>
-                    <td>座標誤差（公尺）（coordinateUncertaintyInMeters*) </td>
-                    <td>地點（locality）</td>
+                    <td>{% trans "座標誤差（公尺）（coordinateUncertaintyInMeters*)" %} </td>
+                    <td>{% trans "地點（locality）" %}</td>
                 </tr>
                 <tr>
-                    <td>座標精確度（coordinatePrecision*）</td>
+                    <td>{% trans "座標精確度（coordinatePrecision*）" %}</td>
                     <td>&nbsp;</td>
                 </tr>
             </tbody>
@@ -155,16 +155,16 @@ hr {
 
         <h4 class="heading-md">3.2.2 {% trans "測量或事實（MeasurementOrFact）之核心詞彙" %}</h4>
         <ul>
-            <li>調查活動識別碼（eventID**) </li>
-            <li>測量識別碼（measurementID </li>
-            <li>測量類型（measurementType）</li>
-            <li>測量值（measurementValue）</li>
-            <li>測量準確度（measurementAccuracy）</li>
-            <li>測量單位（measurementUnit）</li>
-            <li>測量確認者（measurementDeterminedBy） </li>
-            <li>測量確認日期（measurementDeterminedDate）</li>
-            <li>測量方法（measurementMethod）</li>
-            <li>測量備註（measurementRemarks）</li>
+            <li>{% trans "調查活動識別碼（eventID**)" %} </li>
+            <li>{% trans "測量識別碼（measurementID" %} </li>
+            <li>{% trans "測量類型（measurementType）" %}</li>
+            <li>{% trans "測量值（measurementValue）" %}</li>
+            <li>{% trans "測量準確度（measurementAccuracy）" %}</li>
+            <li>{% trans "測量單位（measurementUnit）" %}</li>
+            <li>{% trans "測量確認者（measurementDeterminedBy）" %} </li>
+            <li>{% trans "測量確認日期（measurementDeterminedDate）" %}</li>
+            <li>{% trans "測量方法（measurementMethod）" %}</li>
+            <li>{% trans "測量備註（measurementRemarks）" %}</li>
         </ul>
         <p>{% trans "參照：" %}<a href="http://tools.gbif.org/dwca-validator/extension.do?id=dwc:MeasurementOrFact">http://tools.gbif.org/dwca-validator/extension.do?id=dwc:MeasurementOrFact</a></p>
 
@@ -173,59 +173,59 @@ hr {
         <table class="table table-bordered">
             <tbody>
                 <tr>
-                    <td>調查活動識別碼（eventID**）</td>
-                    <td>個體數（individualCount）</td>
+                    <td>{% trans "調查活動識別碼（eventID**）" %}</td>
+                    <td>{% trans "個體數（individualCount）" %}</td>
                 </tr>
                 <tr>
-                    <td>出現紀錄識別碼（occurrenceID**）</td>
-                    <td>生物體數量（organismQuantity）</td>
+                    <td>{% trans "出現紀錄識別碼（occurrenceID**）" %}</td>
+                    <td>{% trans "生物體數量（organismQuantity）" %}</td>
                 </tr>
                 <tr>
-                    <td>學名識別碼（scientificNameID）</td>
-                    <td>生物體數量類別（organismQuantityType）</td>
+                    <td>{% trans "學名識別碼（scientificNameID）" %}</td>
+                    <td>{% trans "生物體數量類別（organismQuantityType）" %}</td>
                 </tr>
                 <tr>
-                    <td>學名（scientificName）</td>
-                    <td>性別（sex）</td>
+                    <td>{% trans "學名（scientificName）" %}</td>
+                    <td>{% trans "性別（sex）" %}</td>
                 </tr>
                 <tr>
-                    <td>分類識別碼（taxonID）</td>
-                    <td>生活史階段（lifestage）</td>
+                    <td>{% trans "分類識別碼（taxonID）" %}</td>
+                    <td>{% trans "生活史階段（lifestage）" %}</td>
                 </tr>
                 <tr>
-                    <td>俗名（vernacularName）</td>
-                    <td>繁殖狀況（reproductiveCondition）</td>
+                    <td>{% trans "俗名（vernacularName）" %}</td>
+                    <td>{% trans "繁殖狀況（reproductiveCondition）" %}</td>
                 </tr>
                 <tr>
-                    <td>分類階層（taxonRank）</td>
-                    <td>行為（behavior）</td>
+                    <td>{% trans "分類階層（taxonRank）" %}</td>
+                    <td>{% trans "行為（behavior）" %}</td>
                 </tr>
                 <tr>
-                    <td>界（kingdom）</td>
-                    <td>出現紀錄狀態（occurrenceStatus）</td>
+                    <td>{% trans "界（kingdom）" %}</td>
+                    <td>{% trans "出現紀錄狀態（occurrenceStatus）" %}</td>
                 </tr>
                 <tr>
-                    <td>門（phylum）</td>
-                    <td>有效學名使用名稱識別碼（acceptedNameUsageID）</td>
+                    <td>{% trans "門（phylum）" %}</td>
+                    <td>{% trans "有效學名使用名稱識別碼（acceptedNameUsageID）" %}</td>
                 </tr>
                 <tr>
-                    <td>綱（class）</td>
-                    <td>有效學名使用名稱（acceptedNameUsage）</td>
+                    <td>{% trans "綱（class）" %}</td>
+                    <td>{% trans "有效學名使用名稱（acceptedNameUsage）" %}</td>
                 </tr>
                 <tr>
-                    <td>目（order）</td>
-                    <td>種小名（specificEpithet）</td>
+                    <td>{% trans "目（order）" %}</td>
+                    <td>{% trans "種小名（specificEpithet）" %}</td>
                 </tr>
                 <tr>
-                    <td>科（family）</td>
-                    <td>亞種小名（infraspecificEpithet）</td>
+                    <td>{% trans "科（family）" %}</td>
+                    <td>{% trans "亞種小名（infraspecificEpithet）" %}</td>
                 </tr>
                 <tr>
-                    <td>屬（genus） </td>
-                    <td>學名命名者（scientificNameAuthorship）</td>
+                    <td>{% trans "屬（genus）" %} </td>
+                    <td>{% trans "學名命名者（scientificNameAuthorship）" %}</td>
                 </tr>
                 <tr>
-                    <td>記錄者（recordedBy）</td>
+                    <td>{% trans "記錄者（recordedBy）" %}</td>
                     <td>&nbsp;</td>
                 </tr>
             </tbody>
@@ -277,13 +277,13 @@ hr {
             <li>1_AlienPlantSurvey.xlsx {% trans "（範例：外來種植物調查）" %}</li>
             <li>{% trans "7個表格：" %}
                 <ol>
-                    <li>部分調查樣區（partialSurveyPlot）</li>
-                    <li>部分植物出現紀錄（partialplantOccurrence）</li>
-                    <li>部分已對應資料（partialMatchingData）</li>
-                    <li>部分已清理資料（partialCleanedData）</li>
-                    <li>部分調查活動（partialEvent）</li>
-                    <li>部分測量值（partialMeasurement）</li>
-                    <li>部分出現紀錄（partialOccurrence）</li>
+                    <li>{% trans "部分調查樣區（partialSurveyPlot）" %}</li>
+                    <li>{% trans "部分植物出現紀錄（partialplantOccurrence）" %}</li>
+                    <li>{% trans "部分已對應資料（partialMatchingData）" %}</li>
+                    <li>{% trans "部分已清理資料（partialCleanedData）" %}</li>
+                    <li>{% trans "部分調查活動（partialEvent）" %}</li>
+                    <li>{% trans "部分測量值（partialMeasurement）" %}</li>
+                    <li>{% trans "部分出現紀錄（partialOccurrence）" %}</li>
                 </ol>
             </li>
         </ul>

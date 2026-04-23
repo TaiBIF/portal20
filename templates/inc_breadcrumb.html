@@ -4,27 +4,27 @@
   {% if LANGUAGE_CODE == "zh-hant" %}
     
     <ol class="breadcrumb">
-      <li><a href="{% url 'index' %}">首頁</a></li>
+      <li><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
       {% if tab == "01" %}
-      <li>資料開放</li>
+      <li>{% trans "資料開放" %}</li>
       {% elif tab  == "02" %}
-      <li>工具與文件</li>
+      <li>{% trans "工具與文件" %}</li>
       {% elif tab  == "03" %}
-      <li>關於 TaiBIF</li>
+      <li>{% trans "關於 TaiBIF" %}</li>
       {% elif tab  == "04" %}
-      <li><a href="{% url 'article-search' %}">更多資訊</a></li>
+      <li><a href="{% url 'article-search' %}">{% trans "更多資訊" %}</a></li>
       {% elif tab  == "0501" %}
-      <li><a href="{% url 'search-occurrence' cat='search' %}">物種出現紀錄</a></li>
+      <li><a href="{% url 'search-occurrence' cat='search' %}">{% trans "物種出現紀錄" %}</a></li>
       {% elif tab  == "0502" %}
-      <li><a href="{% url 'search-species' %}">物種</a></li>
+      <li><a href="{% url 'search-species' %}">{% trans "物種" %}</a></li>
       {% elif tab  == "0503" %}
-      <li><a href="{% url 'search-dataset' %}">資料集</a></li>
+      <li><a href="{% url 'search-dataset' %}">{% trans "資料集" %}</a></li>
       {% elif tab  == "0504" %}
-      <li><a href="{% url 'search-publisher' %}">發布單位</a></li>
+      <li><a href="{% url 'search-publisher' %}">{% trans "發布單位" %}</a></li>
       {% elif tab  == "05" %}
-      <li>搜尋</li>
+      <li>{% trans "搜尋" %}</li>
       {% elif tab  == "occurrence" %}
-      <li><a href="/occurrence/search/">搜尋出現紀錄</a></li>
+      <li><a href="/occurrence/search/">{% trans "搜尋出現紀錄" %}</a></li>
       {% endif %}
       <li class="active">{{ active_label }}</li>
     </ol>
