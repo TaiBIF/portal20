@@ -1462,32 +1462,36 @@ def dataset_view(request, taibif_dataset_id):
 
 
 def publisher_view(request, pk):
-    context = {}
-    dataset = []
+    publisher = get_object_or_404(DatasetOrganization, pk=pk)
+    public_datasets = Dataset.objects.filter(organization_id=pk, status="PUBLIC")
 
-    context["publisher"] = get_object_or_404(DatasetOrganization, pk=pk)
-    for x in Dataset.objects.filter(organization=pk, status="PUBLIC").all():
+    dataset = []
+    for x in public_datasets:
         dataset.append(
             {
                 "name": x.name,
-                "name_zh": x.title,
+                "name_zh": x.title or x.name,
                 "core_type": DATA_MAPPING["publisher_dwc"].get(
                     x.dwc_core_type, x.dwc_core_type or "未知"
                 ),
-                "num_record": x.num_record,
+                "num_record": x.num_record or 0,
                 "taibif_dataset_id": x.taibif_dataset_id,
             }
         )
 
-    context["info"] = {
-        "dataset_num": Dataset.objects.filter(
-            organization__id=pk, status="PUBLIC"
-        ).count(),
-        "sum_occurrence": Dataset.objects.filter(
-            organization__id=pk, status="PUBLIC"
-        ).aggregate(Sum("num_occurrence"))["num_occurrence__sum"],
+    info_agg = public_datasets.aggregate(
+        sum_occurrence=Sum("num_occurrence"),
+        sum_record=Sum("num_record"),
+    )
+    context = {
+        "publisher": publisher,
+        "info": {
+            "dataset_num": public_datasets.count(),
+            "sum_occurrence": info_agg["sum_occurrence"] or 0,
+            "sum_record": info_agg["sum_record"] or 0,
+        },
+        "dataset": dataset,
     }
-    context["dataset"] = dataset
 
     return render(request, "publisher.html", context)
 

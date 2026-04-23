@@ -20,35 +20,25 @@
     <div class="article-content-wrapper content-readable-panel content-readable-full-panel">
         <p>{{ publisher.description }}</p>
         <ul>
-            {% if info.dataset_num %}
             <li>
-                {% blocktrans trimmed %}資料集數量：{{ info.dataset_num }}{% endblocktrans %}
+                {% blocktrans trimmed with dataset_num=info.dataset_num|default_if_none:0|intcomma:False %}資料集數量：{{ dataset_num }}{% endblocktrans %}
             </li>
-            {% endif %}
 
-            {% if info.sum_occurrence %}
             <li>
-                {% blocktrans trimmed with sum_occurrence=info.sum_occurrence|intcomma:False %}發現紀錄總筆數：{{ sum_occurrence }}{% endblocktrans %}
+                {% blocktrans trimmed with sum_occurrence=info.sum_occurrence|default_if_none:0|intcomma:False %}發現紀錄總筆數：{{ sum_occurrence }}{% endblocktrans %}
             </li>
-            {% endif %}
 
-            {% if publisher.country_or_area %}
             <li>
-                {% blocktrans trimmed %}國家或地區：{{ publisher.country_or_area }}{% endblocktrans %}
+                {% blocktrans trimmed with country_or_area=publisher.country_or_area|default:"-" %}國家或地區：{{ country_or_area }}{% endblocktrans %}
             </li>
-            {% endif %}
 
-            {% if publisher.administrative_contact %}
             <li>
-                {% blocktrans trimmed %}行政聯絡人：{{ publisher.administrative_contact }}{% endblocktrans %}
+                {% blocktrans trimmed with administrative_contact=publisher.administrative_contact|default:"-" %}行政聯絡人：{{ administrative_contact }}{% endblocktrans %}
             </li>
-            {% endif %}
             
-            {% if publisher.technical_contact %}
             <li>
-                {% blocktrans trimmed %}技術聯絡人：{{ publisher.technical_contact }}{% endblocktrans %}
+                {% blocktrans trimmed with technical_contact=publisher.technical_contact|default:"-" %}技術聯絡人：{{ technical_contact }}{% endblocktrans %}
             </li>
-            {% endif %}
             
         </ul>
 
