@@ -450,7 +450,7 @@
                                         <a href="{% url 'tech-volunteer' %}"
                                             >參與協作者培訓</a
                                         >
-                                        <a href="#">我想成為發布單位</a>
+                                        <a href="#" class="js-newsletter-open" data-modal-mode="coming-soon" data-modal-title="內容籌備中" data-modal-desc="此頁面目前正在籌備中，敬請期待。">我想成為發布單位</a>
                                         <a href="#" class="js-newsletter-open">我願意收到電子報</a>
                                         <a href="{% url 'thanks-list' %}"
                                             >感謝名單</a
@@ -470,7 +470,7 @@
                                         <a href="{% url 'taibif-api' %}"
                                             >TaiBIF API</a
                                         >
-                                        <a href="#">首先要找到資料</a>
+                                        <a href="#" class="js-newsletter-open" data-modal-mode="coming-soon" data-modal-title="內容籌備中" data-modal-desc="此頁面目前正在籌備中，敬請期待。">首先要找到資料</a>
                                     </div>
                                 </div>
                             </li>
@@ -604,6 +604,7 @@
             <div class="newsletter-modal__panel" role="dialog" aria-modal="true" aria-labelledby="newsletter-modal-title">
                 <h3 id="newsletter-modal-title" class="newsletter-modal__title">TaiBIF電子報：掌握開放資料的第一手資訊</h3>
                 <p class="newsletter-modal__desc">電子報採不定期發送（約每半年一次），訂閱後，您將收到以下資訊：</p>
+                <p id="newsletter-modal-simple-desc" class="newsletter-modal__desc" style="display: none;"></p>
                 <ul class="newsletter-modal__list">
                     <li>活動推廣：包含線上活動、工作坊、數據松，以及實體社群交流活動。</li>
                     <li>領域新知：分享國內外資料開放的應用案例或最新進展。</li>
@@ -622,6 +623,9 @@
                         <button type="submit" class="newsletter-modal__btn newsletter-modal__btn--submit">送出</button>
                     </div>
                 </form>
+                <div id="newsletter-modal-simple-actions" class="newsletter-modal__actions" style="display: none;">
+                    <button type="button" id="newsletter-close-btn" class="newsletter-modal__btn newsletter-modal__btn--cancel">關閉</button>
+                </div>
             </div>
         </div>
 
@@ -631,11 +635,52 @@
                 const triggers = document.querySelectorAll(".js-newsletter-open");
                 const newsletterModal = document.getElementById("newsletter-modal");
                 const newsletterCancelBtn = document.getElementById("newsletter-cancel-btn");
+                const newsletterCloseBtn = document.getElementById("newsletter-close-btn");
                 const newsletterForm = document.getElementById("newsletter-form");
                 const newsletterMessage = document.getElementById("newsletter-message");
+                const newsletterTitle = document.getElementById("newsletter-modal-title");
+                const newsletterDesc = newsletterModal.querySelector(".newsletter-modal__desc");
+                const newsletterSimpleDesc = document.getElementById("newsletter-modal-simple-desc");
+                const newsletterList = newsletterModal.querySelector(".newsletter-modal__list");
+                const newsletterSimpleActions = document.getElementById("newsletter-modal-simple-actions");
                 if (!triggers.length || !newsletterModal || !newsletterForm) return;
 
-                const openNewsletterModal = () => {
+                const defaultContent = {
+                    title: newsletterTitle ? newsletterTitle.textContent : "",
+                    desc: newsletterDesc ? newsletterDesc.textContent : "",
+                };
+
+                const switchToNewsletterMode = () => {
+                    if (newsletterTitle) newsletterTitle.textContent = defaultContent.title;
+                    if (newsletterDesc) newsletterDesc.style.display = "";
+                    if (newsletterSimpleDesc) newsletterSimpleDesc.style.display = "none";
+                    if (newsletterList) newsletterList.style.display = "";
+                    newsletterForm.style.display = "";
+                    if (newsletterSimpleActions) newsletterSimpleActions.style.display = "none";
+                };
+
+                const switchToComingSoonMode = (trigger) => {
+                    const title = trigger.getAttribute("data-modal-title") || "內容籌備中";
+                    const desc = trigger.getAttribute("data-modal-desc") || "此頁面目前正在籌備中，敬請期待。";
+
+                    if (newsletterTitle) newsletterTitle.textContent = title;
+                    if (newsletterDesc) newsletterDesc.style.display = "none";
+                    if (newsletterSimpleDesc) {
+                        newsletterSimpleDesc.textContent = desc;
+                        newsletterSimpleDesc.style.display = "";
+                    }
+                    if (newsletterList) newsletterList.style.display = "none";
+                    newsletterForm.style.display = "none";
+                    if (newsletterSimpleActions) newsletterSimpleActions.style.display = "";
+                };
+
+                const openNewsletterModal = (trigger) => {
+                    const mode = trigger.getAttribute("data-modal-mode");
+                    if (mode === "coming-soon") {
+                        switchToComingSoonMode(trigger);
+                    } else {
+                        switchToNewsletterMode();
+                    }
                     newsletterModal.classList.add("is-open");
                     newsletterModal.setAttribute("aria-hidden", "false");
                     document.body.style.overflow = "hidden";
@@ -655,12 +700,15 @@
                 triggers.forEach((trigger) => {
                     trigger.addEventListener("click", function (e) {
                         e.preventDefault();
-                        openNewsletterModal();
+                        openNewsletterModal(trigger);
                     });
                 });
 
                 if (newsletterCancelBtn) {
                     newsletterCancelBtn.addEventListener("click", closeNewsletterModal);
+                }
+                if (newsletterCloseBtn) {
+                    newsletterCloseBtn.addEventListener("click", closeNewsletterModal);
                 }
 
                 newsletterModal.addEventListener("click", function (e) {
