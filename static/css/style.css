@@ -2879,12 +2879,14 @@ a.btn-dataicon-downlod {
     margin-bottom: 1em;
 }
 .article-detail-page .article-content-wrapper a {
-    color: #846c5b;
+    /* color: #846c5b;
     text-decoration: underline;
-    text-underline-offset: 3px;
+    text-underline-offset: 3px; */
+    color: #0000ee !important;
 }
 .article-detail-page .article-content-wrapper a:hover {
-    color: #6e584b;
+    /* color: #6e584b; */
+    color: #0000ee !important;
 }
 .article-detail-page .article-attachment-wrapper {
     list-style: none;
