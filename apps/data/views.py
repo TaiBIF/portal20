@@ -57,7 +57,6 @@ STATIC_PAGE_SEARCH_ITEMS = [
         "template": "about-taibif.html",
     },
     {"url_name": "about-gbif", "title": "GBIF 介紹", "template": "about-gbif.html"},
-    {"url_name": "open_data", "title": "開放資料", "template": "open-data.html"},
     {
         "url_name": "open-process",
         "title": "有哪些步驟",
@@ -68,13 +67,6 @@ STATIC_PAGE_SEARCH_ITEMS = [
         "title": "開放資料的好處",
         "template": "open-benefits.html",
     },
-    {
-        "url_name": "open-metadata",
-        "title": "詮釋資料",
-        "template": "open-metadata.html",
-    },
-    {"url_name": "open-license", "title": "資料授權", "template": "open-license.html"},
-    {"url_name": "open-upload", "title": "資料上傳", "template": "open-upload.html"},
     {
         "url_name": "open-consulation",
         "title": "我需要幫忙",
@@ -313,7 +305,9 @@ def search_all(request):
                 {"cat": "publisher", "label": "發布單位", "rows": publisher_rows}
             )
         if "article" in selected_targets:
-            results.append({"cat": "article", "label": "最新消息", "rows": article_rows})
+            results.append(
+                {"cat": "article", "label": "最新消息", "rows": article_rows}
+            )
 
         context = {
             "results": results,

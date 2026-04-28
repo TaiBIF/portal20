@@ -41,12 +41,12 @@ urlpatterns = [
     #     name="api-occurrence-search-v1-gallery",
     # ),
     path("dataset/export", views.export, name="export"),
-    path(
-        "v2/occurrence/get_map_species", views.get_map_species, name="get_map_species"
-    ),
-    path("get_map_geojson/", views.get_map_geojson, name="get_map_geojson"),
-    path("get_heatmap_data/", views.get_heatmap_data, name="get_heatmap_data"),
-    path("get_barchart_data/", views.get_barchart_data, name="get_barchart_data"),
+    # path(
+    #     "v2/occurrence/get_map_species", views.get_map_species, name="get_map_species"
+    # ),
+    # path("get_map_geojson/", views.get_map_geojson, name="get_map_geojson"),
+    # path("get_heatmap_data/", views.get_heatmap_data, name="get_heatmap_data"),
+    # path("get_barchart_data/", views.get_barchart_data, name="get_barchart_data"),
     path(
         "get_dataset_sunburst_data/",
         views.get_dataset_sunburst_data,
@@ -73,17 +73,17 @@ urlpatterns = [
         name="api-coordinate-convert-batch",
     ),
     # 外部使用的API
-    path("v2/dataset", views.dataset_api, name="api_dataset"),
+    # path("v2/dataset", views.dataset_api, name="api_dataset"),
     # path('v1/taxon', views.taxon_api, name='api_taxon'),
-    path("v2/publisher", views.publisher_api, name="api_publisher"),
-    path(
-        "v2/publisher/dataset/<int:pk>",
-        views.publisher_dataset_api,
-        name="api_publisher_dataset",
-    ),
+    # path("v2/publisher", views.publisher_api, name="api_publisher"),
+    # path(
+    #     "v2/publisher/dataset/<int:pk>",
+    #     views.publisher_dataset_api,
+    #     name="api_publisher_dataset",
+    # ),
     # path('v2/occurrence/basic_occ', views.for_basic_occ, name='api_basic_occ'),
-    path("v2/occurrence/detail_occ", views.occurrence_api, name="occurrence_api"),
-    path("v2/occurrence/raw_occ", views.raw_occ_api, name="raw_occ_api"),
+    # path("v2/occurrence/detail_occ", views.occurrence_api, name="occurrence_api"),
+    # path("v2/occurrence/raw_occ", views.raw_occ_api, name="raw_occ_api"),
     path(
         "get_autocomplete_taxon/",
         views.get_autocomplete_taxon,
