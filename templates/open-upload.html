@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load static %}
-{% block title %}{% trans "資料上傳" %}{% endblock %}
+{% block title %}{% trans "資料上傳 TaiBIF IPT" %}{% endblock %}
 
 
 {% block main %}
@@ -10,7 +10,7 @@
 <div class="bg-main-pale">
 	<div class="container">
 		<div class="caption-mascot-wrapper">
-			<h1 class="title">{% trans "資料上傳" %}</h1>
+			<h1 class="title">{% trans "資料上傳 TaiBIF IPT" %}</h1>
 			<img src="{% static 'images/mascot-Mreevesi.png' %} " alt="" class="symbol">
 		</div>
 	</div>
@@ -18,19 +18,20 @@
 <!-- topnav end -->
 
 <!-- container begin -->
-<div class="container my-5">
+<div class="container my-5 container-1340">
 	<!-- breadcrumb begin -->
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
-			<li class="breadcrumb-item">{% trans "開放資料" %}</li>
-			<li class="breadcrumb-item active" aria-current="page">{% trans "資料上傳" %}</li>
+			<li class="breadcrumb-item">{% trans "我想開放資料" %}</li>
+       		<li class="breadcrumb-item">{% trans "有哪些步驟" %}</li>
+			<li class="breadcrumb-item active" aria-current="page">{% trans "資料上傳 TaiBIF IPT" %}</li>
 		</ol>
 	</nav>
 	<!-- breadcrumb end -->
 
 	<!-- row begin -->
-	<div class="row justify-content-center">
+	<div class="row justify-content-center content-readable-panel content-readable-full-panel">
 		<!-- col begin -->
 		<div class="col-12 col-md-10 offset-md-1">
 			<small>{% trans "若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。" %}</small>

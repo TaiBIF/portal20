@@ -58,6 +58,16 @@ STATIC_PAGE_SEARCH_ITEMS = [
     },
     {"url_name": "about-gbif", "title": "GBIF 介紹", "template": "about-gbif.html"},
     {
+        "url_name": "open-standard",
+        "title": "資料標準化",
+        "template": "open-standard.html",
+    },
+    {
+        "url_name": "open-license",
+        "title": "開放 CC 授權",
+        "template": "open-license.html",
+    },
+    {
         "url_name": "open-process",
         "title": "有哪些步驟",
         "template": "open-process.html",

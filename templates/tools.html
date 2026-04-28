@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load static %}
-{% block title %}{% trans "開放資料工具" %}{% endblock %}
+{% block title %}{% trans "有哪工具可以使用" %}{% endblock %}
 
 {% block main %}
 
@@ -21,7 +21,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
-            <li class="breadcrumb-item">{% trans "開放資料" %}</li>
+            <li class="breadcrumb-item">{% trans "我想開放資料" %}</li>
             <li class="breadcrumb-item active" aria-current="page">{% trans "有哪工具可以使用" %}</li>
         </ol>
     </nav>

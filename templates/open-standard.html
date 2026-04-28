@@ -16,12 +16,13 @@
 </div>
 <!-- topnav end -->
 <!-- container begin -->
-<div class="container my-5">
+<div class="container my-5 container-1340">
     <!-- breadcrumb begin -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
-        <li class="breadcrumb-item">{% trans "開放資料" %}</li>
+        <li class="breadcrumb-item">{% trans "我想開放資料" %}</li>
+        <li class="breadcrumb-item">{% trans "有哪些步驟" %}</li>
         <li class="breadcrumb-item active" aria-current="page">{% trans "資料標準化" %}</li>
         </ol>
     </nav>
@@ -31,30 +32,24 @@
         <!-- col left begin -->
         <div class="col-12 col-md-3">
             <div class="dropdown dropdown-flexible-wrapper">
-                <a data-cat="open-standard" class="btn btn-toggle-flexible current-green toggle-item" href="#">
-                {% trans "資料標準與模板" %}
+                <a class="btn btn-toggle-flexible visible-xs" href="#" data-toggle="dropdown" aria-expanded="false">
+                    {% trans "資料標準化" %}
                 </a>
-                <div class="dropdown-menu dropdown-menu-flexible show">
-                <a data-cat="dwc" class="dropdown-item toggle-item" href="#">{% trans "達爾文核心標準 Darwin Core" %}</a>
-                <a data-cat="meta-data" class="dropdown-item toggle-item" href="#">{% trans "詮釋資料 EML 標準" %}</a>
-                <a data-cat="concept" class="dropdown-item toggle-item" href="#">{% trans "資料標準概念介紹" %}</a>
-                </div>
-            </div>
-
-            <div class="dropdown dropdown-flexible-wrapper">
-                <a data-cat="topic-guide" class="btn btn-toggle-flexible toggle-item" href="#" data-toggle="dropdown">
-                {% trans "主題資料發布指引" %}
-                </a>
-                <div class="dropdown-menu dropdown-menu-flexible">
-                    <a data-cat="dna-guide" class="dropdown-item toggle-item" href="#">{% trans "DNA 資料發布指引" %}</a>
-                    <a data-cat="event" class="dropdown-item toggle-item" href="#">{% trans "調查活動資料發布" %}</a>
+                <div class="dropdown-menu-flexible d-md-block">
+                    <a data-cat="open-standard" class="dropdown-item nav-item current-sunset" href="#">{% trans "資料標準與模板" %}</a>
+                    <a data-cat="dwc" class="dropdown-item nav-item" href="#">{% trans "達爾文核心標準 Darwin Core" %}</a>
+                    <a data-cat="meta-data" class="dropdown-item nav-item" href="#">{% trans "詮釋資料 EML 標準" %}</a>
+                    <a data-cat="concept" class="dropdown-item nav-item" href="#">{% trans "資料標準概念介紹" %}</a>
+                    <a data-cat="topic-guide" class="dropdown-item nav-item" href="#">{% trans "主題資料發布指引" %}</a>
+                    <a data-cat="dna-guide" class="dropdown-item nav-item" href="#">{% trans "DNA 資料發布指引" %}</a>
+                    <a data-cat="event" class="dropdown-item nav-item" href="#">{% trans "調查活動資料發布" %}</a>
                 </div>
             </div>
         </div>
         <!-- col left end -->
 
         <!-- col right begin -->
-        <div data-cat="open-standard" class="col-12 col-md-9 toggle-item-content">
+        <div data-cat="open-standard" class="col-12 col-md-9 nav-item-content content-readable-panel">
             <h4 class="headline-left-hr">{% trans "資料標準與模板" %}</h4>
             <p>
                 在生物多樣性的領域，主要負責開發及維護資料標準的是<a href="http://www.tdwg.org/" target="_blank">{% trans "生物多樣性資訊標準" %}</a>組織。
@@ -74,7 +69,7 @@
             </p>
         </div>
 
-        <div data-cat="dwc" class="col-12 col-md-9 toggle-item-content hide">
+        <div data-cat="dwc" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
             <h4 class="headline-left-hr">{% trans "達爾文核心標準 Darwin Core" %}</h4>
             <p>
                 {% trans "一份好的資料集，必須可以再利用（具互操作性），若能提供越多欄位資料，則資料的品質及價值也能相對地提高，在任何情況下，資料集至少要有下列所述的 Darwin Core 欄位" %}
@@ -88,7 +83,7 @@
             <div class="article-content-wrapper">
                 <h3>{% trans "物種名錄 Checklist" %}</h3>
             </div>
-            <table class="table table-ltmilo">
+            <table class="table content-readable-table">
                 <thead>
                     <tr>
                         <th class="col-md">{% trans "DwC 欄位名稱" %}</th>
@@ -126,7 +121,7 @@
             <div class="article-content-wrapper">
                 <h3>{% trans "出現紀錄 Occurrence" %}</h3>
             </div>
-            <table class="table table-ltmilo">
+            <table class="table content-readable-table">
                 <thead>
                     <tr>
                         <th class="col-md">{% trans "DwC 欄位名稱" %}</th>
@@ -220,7 +215,7 @@
             <div class="article-content-wrapper">
                 <h3>{% trans "調查活動 Sampling event" %}</h3>
             </div>
-            <table class="table table-ltmilo">
+            <table class="table content-readable-table">
                 <thead>
                     <tr>
                         <th class="col-md">{% trans "DwC 欄位名稱" %}</th>
@@ -277,19 +272,19 @@
             </table>
         </div>
 
-        <div data-cat="meta-data" class="col-12 col-md-9 toggle-item-content hide">
+        <div data-cat="meta-data" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
             <h4 class="headline-left-hr">{% trans "詮釋資料 EML 標準" %}</h4>
             <p><a href="https://docs.google.com/document/d/1Bj6gi6igKphUM7ISIkfASAiHM_je5YXHRT3WvhwQ3dA/edit" target="_blank">{% trans "填寫說明" %}</a></p>
         </div>
 
-        <div data-cat="concept" class="col-12 col-md-9 toggle-item-content hide">
+        <div data-cat="concept" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
             <h4 class="headline-left-hr">{% trans "資料標準概念介紹" %}</h4>
             <small>{% trans "若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。" %}</small>
             <iframe src="https://www.slideshare.net/slideshow/embed_code/key/leS5VyHXNiaqlL?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
             <p class="mt-3">{% trans "PDF講義下載：" %}<a href="/media/資料標準概念介紹.pdf" target="_blank" class="myicon icon-download-document"></a></p>
         </div>
 
-        <div data-cat="topic-guide" class="col-12 col-md-9 toggle-item-content hide">
+        <div data-cat="topic-guide" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
             <h4 class="headline-left-hr">{% trans "主題資料發布指引" %}</h4>
             <p>
                 {% blocktrans %}
@@ -308,12 +303,12 @@
             </p>
         </div>
         
-        <div data-cat="dna-guide" class="col-12 col-md-9 toggle-item-content hide">
+        <div data-cat="dna-guide" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
             <h4 class="headline-left-hr">{% trans "DNA 資料發布指引" %}</h4>
             <p><a href="https://docs.gbif-uat.org/publishing-dna-derived-data/zh-TW/" target="_blank">{% trans "說明文件" %}</a></p>
         </div>
 
-        <div data-cat="event" class="col-12 col-md-9 toggle-item-content hide">
+        <div data-cat="event" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
             <h4 class="headline-left-hr">{% trans "調查活動資料發布" %}</h4>
             <p><a href="https://www.gbif.org/zh-tw/sampling-event-data" target="_blank">{% trans "說明文件" %}</a></p>
         </div>
