@@ -80,6 +80,7 @@ urlpatterns = [
     # path("data-story", views.data_story, name="data-story"),
     # path("web-navi", views.web_navi, name="web-navi"),
     path("monthly-status", views.monthly_status, name="monthly-status"),
+    path("become-publisher", views.become_publisher, name="become-publisher"),
     path("i18n/", include("django.conf.urls.i18n")),
     ## Kuan Yu added for sitemap
     path(

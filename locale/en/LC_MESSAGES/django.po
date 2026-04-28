@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-23 15:02+0800\n"
+"POT-Creation-Date: 2026-04-28 15:26+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: apps/page/views.py:724
+#: apps/page/views.py:730
 msgid "這裡放需要翻譯的文字"
 msgstr "Text to be translated here"
 
@@ -76,14 +76,14 @@ msgstr "About GBIF"
 
 #: templates/about-gbif.html:25 templates/about-taibif.html:84
 #: templates/article-detail.html:28 templates/article-list.html:132
-#: templates/contact-us.html:107 templates/cookbook-detail-1.html:41
-#: templates/cookbook-detail-2.html:44 templates/cookbook-detail-3.html:38
-#: templates/coordinate-converter.html:72 templates/data-case.html:29
-#: templates/data-clean.html:23 templates/data-paper.html:76
-#: templates/data-policy.html:26 templates/data-product.html:23
-#: templates/data-stats.html:158 templates/data-visual.html:39
-#: templates/download-resources.html:23 templates/faq.html:55
-#: templates/inc_breadcrumb.html:7 templates/links.html:25
+#: templates/become-publisher.html:73 templates/contact-us.html:107
+#: templates/cookbook-detail-1.html:41 templates/cookbook-detail-2.html:44
+#: templates/cookbook-detail-3.html:38 templates/coordinate-converter.html:72
+#: templates/data-case.html:29 templates/data-clean.html:23
+#: templates/data-paper.html:76 templates/data-policy.html:26
+#: templates/data-product.html:23 templates/data-stats.html:158
+#: templates/data-visual.html:39 templates/download-resources.html:23
+#: templates/faq.html:55 templates/inc_breadcrumb.html:7
 #: templates/monthly-status.html:24 templates/occurrence.html:131
 #: templates/open-benefits.html:24 templates/open-consulation.html:73
 #: templates/open-license.html:24 templates/open-metadata.html:25
@@ -102,10 +102,8 @@ msgstr "Home Page"
 
 #: templates/about-gbif.html:26 templates/about-taibif.html:85
 #: templates/base.html:497 templates/data-policy.html:27
-#: templates/download-resources.html:24 templates/faq.html:56
-#: templates/links.html:26 templates/taibif-achievement.html:25
-#: templates/thanks-list.html:27 templates/web-navi.html:28
-#: templates/web-navi.html:38
+#: templates/download-resources.html:24 templates/taibif-achievement.html:25
+#: templates/web-navi.html:28 templates/web-navi.html:38
 msgid "關於我們"
 msgstr "About Us"
 
@@ -709,7 +707,8 @@ msgstr "Recommended Articles"
 
 #: templates/article-list.html:8 templates/article-list.html:119
 #: templates/article-list.html:133 templates/base.html:478
-#: templates/index.html:262 templates/web-navi.html:111
+#: templates/index.html:262 templates/search_all.html:74
+#: templates/web-navi.html:111
 msgid "最新消息"
 msgstr "News & Notices"
 
@@ -758,17 +757,24 @@ msgstr "Publications"
 msgid "閱讀更多"
 msgstr "Read more"
 
-#: templates/base.html:406 templates/open-process.html:26
+#: templates/base.html:406 templates/data-clean.html:24 templates/faq.html:56
+#: templates/open-consulation.html:74 templates/open-license.html:25
+#: templates/open-process.html:26 templates/open-standard.html:24
+#: templates/open-upload.html:26 templates/tools.html:24
 msgid "我想開放資料"
 msgstr "Open Data"
 
-#: templates/base.html:410 templates/index.html:104
-#: templates/open-process.html:13 templates/open-process.html:27
+#: templates/base.html:410 templates/data-clean.html:25
+#: templates/index.html:104 templates/open-license.html:26
+#: templates/open-process.html:4 templates/open-process.html:13
+#: templates/open-process.html:27 templates/open-standard.html:25
+#: templates/open-upload.html:27
 msgid "有哪些步驟"
 msgstr "What are the steps"
 
 #: templates/base.html:413 templates/coordinate-converter.html:74
-#: templates/index.html:110 templates/tools.html:12 templates/tools.html:25
+#: templates/index.html:110 templates/tools.html:4 templates/tools.html:12
+#: templates/tools.html:25
 msgid "有哪工具可以使用"
 msgstr "What tools are available"
 
@@ -784,6 +790,7 @@ msgid "開放資料常見問題"
 msgstr "FAQ"
 
 #: templates/base.html:426 templates/open-benefits.html:25
+#: templates/tech-book.html:81 templates/tech-online-class.html:81
 msgid "我想探索教育資源"
 msgstr "Educational Resources"
 
@@ -802,13 +809,15 @@ msgstr "Benefits of Open Data"
 
 #: templates/base.html:435 templates/index.html:154
 #: templates/tech-online-class.html:4 templates/tech-online-class.html:68
-#: templates/tech-online-class.html:83 templates/tech-workshop.html:64
+#: templates/tech-online-class.html:82 templates/tech-workshop.html:64
 #: templates/tech-workshop.html:84
 msgid "線上教材包"
 msgstr "Online Learning Materials"
 
-#: templates/base.html:441 templates/monthly-status.html:25
-#: templates/tech-workshop.html:25
+#: templates/base.html:441 templates/become-publisher.html:74
+#: templates/monthly-status.html:25 templates/tech-class-license.html:82
+#: templates/tech-volunteer.html:82 templates/tech-workshop.html:25
+#: templates/thanks-list.html:27
 msgid "我想參與社群"
 msgstr "Community Involvement"
 
@@ -830,9 +839,11 @@ msgstr "Join TaiBIF Workshops"
 msgid "參與協作者培訓"
 msgstr "Join Collaborator Training"
 
-#: templates/base.html:453 templates/index.html:191
-msgid "我想成為發布單位"
-msgstr "Become Publishers"
+#: templates/base.html:453 templates/become-publisher.html:4
+#: templates/become-publisher.html:64 templates/become-publisher.html:75
+#: templates/become-publisher.html:82 templates/index.html:191
+msgid "我想成為資料發布單位"
+msgstr "Become Data Publishers"
 
 #: templates/base.html:454 templates/index.html:197
 msgid "我願意收到電子報"
@@ -881,6 +892,188 @@ msgstr "Logo Downloads"
 #: templates/base.html:508 templates/web-navi.html:48
 msgid "使用條款暨隱私權政策"
 msgstr "Terms of Use & Privacy Policy"
+
+#: templates/become-publisher.html:85 templates/become-publisher.html:92
+msgid "誰有資格"
+msgstr ""
+
+#: templates/become-publisher.html:86 templates/become-publisher.html:115
+msgid "如何申請"
+msgstr ""
+
+#: templates/become-publisher.html:94
+msgid "任何"
+msgstr ""
+
+#: templates/become-publisher.html:94
+msgid "機構或組織"
+msgstr ""
+
+#: templates/become-publisher.html:94
+msgid ""
+"若想透過 TaiBIF 分享資料到 GBIF上，可以在填寫註冊申請表獲得許可，成為資料發布"
+"者。"
+msgstr ""
+
+#: templates/become-publisher.html:97
+msgid "此申請程序目的在於確保發布單位："
+msgstr ""
+
+#: templates/become-publisher.html:99
+msgid "所發布的資料與 GBIF 的目標和範圍相關"
+msgstr ""
+
+#: templates/become-publisher.html:100
+msgid "有穩定且長期可以聯繫的管理窗口"
+msgstr ""
+
+#: templates/become-publisher.html:101
+msgid "資料的發布及使用可以得到國家、地區及相關領域的互助支持"
+msgstr ""
+
+#: templates/become-publisher.html:102
+msgid "資料盡可能為開放、可被分享及再利用"
+msgstr ""
+
+#: templates/become-publisher.html:103
+msgid "資料發布者能回應使用者意見及提升資料品質"
+msgstr ""
+
+#: templates/become-publisher.html:106
+msgid "若你希望以個人來發布資料，你可以選擇："
+msgstr ""
+
+#: templates/become-publisher.html:108
+msgid "透過GBIF附屬組織或已註冊的資料發布單位（第三方）來發布資料"
+msgstr ""
+
+#: templates/become-publisher.html:109
+msgid "透過具有 GBIF 託管服務的期刊發布者發布資料論文"
+msgstr ""
+
+#: templates/become-publisher.html:110
+msgid "透過向 GBIF 發布紀錄的眾多公民科學平台之一來分享紀錄"
+msgstr ""
+
+#: templates/become-publisher.html:117
+msgid "文字說明"
+msgstr ""
+
+#: templates/become-publisher.html:119
+msgid "透過下列步驟，完成資料發布單位的註冊(Register)："
+msgstr ""
+
+#: templates/become-publisher.html:122
+#, fuzzy
+#| msgid "填寫說明"
+msgid "填寫"
+msgstr "Instructions"
+
+#: templates/become-publisher.html:122
+#, fuzzy
+#| msgid "資料發布單位"
+msgid "資料發布單位註冊表單"
+msgstr "Publishers"
+
+#: templates/become-publisher.html:122
+msgid "（此為由GBIF位於丹麥的秘書處管理，請以英文填寫）"
+msgstr ""
+
+#: templates/become-publisher.html:124
+msgid "先登入/註冊GBIF帳號（可用Google帳號登入）"
+msgstr ""
+
+#: templates/become-publisher.html:126
+msgid "到網頁最末端，勾選「我所屬的組織尚未完成註冊」，系統會自動引導下一步"
+msgstr ""
+
+#: templates/become-publisher.html:129
+msgid "確認條款及細則，直接三個選項勾選"
+msgstr ""
+
+#: templates/become-publisher.html:132
+msgid "接著簡單用英文填寫"
+msgstr ""
+
+#: templates/become-publisher.html:134
+msgid "「組織詳情」：單位基本介紹，並附上單位的logo連結"
+msgstr ""
+
+#: templates/become-publisher.html:135
+msgid ""
+"「認可節點」：若為位於臺灣的單位組織，請維持預設選項，GBIF 秘書處會協助貴單位"
+"與TaiBIF團隊聯繫"
+msgstr ""
+
+#: templates/become-publisher.html:136
+msgid "「GBIF 專案」：回答是否曾獲得 GBIF 計畫經費補助"
+msgstr ""
+
+#: templates/become-publisher.html:137
+msgid ""
+"「聯絡資訊」：可提供 2-3 位窗口，包含行政聯繫與技術聯繫，也可以官方 email 為"
+"聯絡方式，以避免因人力轉換而失去聯繫"
+msgstr ""
+
+#: templates/become-publisher.html:138
+msgid ""
+"「什麼與如何」：勾選預期會發布的資料類型（勾選哪些不會影響未來資料發布類型的"
+"更動），並簡單描述貴單位所擁有的資料概況"
+msgstr ""
+
+#: templates/become-publisher.html:139
+msgid "最後回答下列三個問題"
+msgstr ""
+
+#: templates/become-publisher.html:141
+msgid "「您是否能夠執行、維護伺服器，或存取一伺服器，以將您的原始資料集公開在 "
+msgstr ""
+
+#: templates/become-publisher.html:141
+msgid "？」請答否，主要會由TaiBIF團隊維運伺服器並提供服務"
+msgstr ""
+
+#: templates/become-publisher.html:142
+msgid ""
+"「您是否計畫安裝並執行發布軟體（例如整合式資料發布工具— IPT），並將資料直接發"
+"布至 "
+msgstr ""
+
+#: templates/become-publisher.html:142
+msgid "？」也請答否，理由同上。"
+msgstr ""
+
+#: templates/become-publisher.html:143
+msgid "「您需要協助發布資料嗎？」若您需要請TaiBIF團隊協助，請填是。"
+msgstr ""
+
+#: templates/become-publisher.html:146
+msgid "完成上述欄位後，請點按「註冊組織」送出申請"
+msgstr ""
+
+#: templates/become-publisher.html:151
+msgid ""
+"請等待1-3個工作天，您會收到來自 GBIF 秘書處的確認信並會附上單位註冊密碼"
+"(token)，請將此信"
+msgstr ""
+
+#: templates/become-publisher.html:151
+msgid "轉寄"
+msgstr ""
+
+#: templates/become-publisher.html:151
+msgid "給我們TaiBIF團隊。"
+msgstr ""
+
+#: templates/become-publisher.html:152
+msgid ""
+"TaiBIF 團隊會使用貴單位的註冊密碼，將貴單位納入資料發布平台的組織清單中，您將"
+"能以自己單位的名義，發布資料集"
+msgstr ""
+
+#: templates/become-publisher.html:156
+msgid "流程圖"
+msgstr ""
 
 #: templates/contact-us.html:5 templates/contact-us.html:97
 #: templates/contact-us.html:108 templates/contact-us.html:129
@@ -937,9 +1130,7 @@ msgid "生物多樣性資訊概論"
 msgstr "Biodiversity Information Cookbook"
 
 #: templates/cookbook-detail-1.html:42 templates/cookbook-detail-2.html:45
-#: templates/cookbook-detail-3.html:39 templates/tech-book.html:81
-#: templates/tech-class-license.html:82 templates/tech-online-class.html:81
-#: templates/tech-open.html:27 templates/tech-volunteer.html:82
+#: templates/cookbook-detail-3.html:39 templates/tech-open.html:27
 #: templates/web-navi.html:70
 msgid "教育資源"
 msgstr "Educational Resources"
@@ -1368,8 +1559,7 @@ msgid "Cookbook 2 - 資料標準化"
 msgstr "Data Standardization"
 
 #: templates/cookbook-detail-2.html:34 templates/cookbook-detail-3.html:26
-#: templates/tech-class-license.html:83 templates/tech-online-class.html:82
-#: templates/web-navi.html:74
+#: templates/tech-class-license.html:83 templates/web-navi.html:74
 msgid "資料開放與應用工作坊"
 msgstr "Data Mobilization and Application Workshop"
 
@@ -1532,7 +1722,7 @@ msgid "時間"
 msgstr "When"
 
 #: templates/cookbook-detail-2.html:167 templates/cookbook-detail-2.html:187
-#: templates/cookbook-detail-2.html:213 templates/open-standard.html:172
+#: templates/cookbook-detail-2.html:213 templates/open-standard.html:167
 #: templates/publishing-data.html:141
 msgid "地點"
 msgstr "Where"
@@ -1593,12 +1783,12 @@ msgstr ""
 msgid "文獻 表C"
 msgstr "Literature Table C"
 
-#: templates/cookbook-detail-2.html:214 templates/open-standard.html:179
+#: templates/cookbook-detail-2.html:214 templates/open-standard.html:174
 #: templates/publishing-data.html:142 templates/taibif-api.html:772
 msgid "緯度"
 msgstr "Latitute"
 
-#: templates/cookbook-detail-2.html:215 templates/open-standard.html:186
+#: templates/cookbook-detail-2.html:215 templates/open-standard.html:181
 #: templates/publishing-data.html:143 templates/taibif-api.html:767
 msgid "經度"
 msgstr "Longitude"
@@ -1850,7 +2040,7 @@ msgstr ""
 msgid "生物分類學資料庫工作小組（TWDG)"
 msgstr ""
 
-#: templates/cookbook-detail-2.html:287 templates/publisher.html:60
+#: templates/cookbook-detail-2.html:287 templates/publisher.html:50
 #, fuzzy
 msgid "達爾文核心集"
 msgstr "Use Darwin Core as the main standard"
@@ -2071,9 +2261,7 @@ msgstr ""
 "can be downloaded for windows; and online UUID generator services are also "
 "available such as UUID Generator."
 
-#: templates/cookbook-detail-2.html:379 templates/links.html:5
-#: templates/links.html:13 templates/links.html:27 templates/links.html:31
-#: templates/web-navi.html:45
+#: templates/cookbook-detail-2.html:379 templates/web-navi.html:45
 msgid "相關連結"
 msgstr "Related Links"
 
@@ -2791,12 +2979,9 @@ msgstr "Prepare sampling-event data using Excel template"
 msgid "地理分布線上座標轉換"
 msgstr ""
 
-#: templates/coordinate-converter.html:73 templates/data-clean.html:24
-#: templates/data-stats.html:159 templates/open-consulation.html:74
-#: templates/open-license.html:25 templates/open-metadata.html:26
-#: templates/open-standard.html:24 templates/open-timezone.html:26
-#: templates/open-upload.html:26 templates/tools-common_name_checker.html:41
-#: templates/tools.html:24 templates/web-navi.html:56
+#: templates/coordinate-converter.html:73 templates/data-stats.html:159
+#: templates/open-metadata.html:26 templates/open-timezone.html:26
+#: templates/tools-common_name_checker.html:41 templates/web-navi.html:56
 msgid "開放資料"
 msgstr "Open Data"
 
@@ -2897,15 +3082,15 @@ msgid "TaiBIF 應用案例"
 msgstr "Data Use Cases"
 
 #: templates/data-clean.html:4 templates/data-clean.html:11
-#: templates/data-clean.html:25 templates/open-process.html:48
+#: templates/data-clean.html:26 templates/open-process.html:48
 msgid "清理資料"
 msgstr "Data Cleaning"
 
-#: templates/data-clean.html:38 templates/data-clean.html:46
+#: templates/data-clean.html:39 templates/data-clean.html:47
 msgid "通則"
 msgstr "General Rules"
 
-#: templates/data-clean.html:39 templates/data-clean.html:53
+#: templates/data-clean.html:40 templates/data-clean.html:54
 msgid "敏感資料處理原則"
 msgstr "Sensitive Data Handling Principles"
 
@@ -2931,7 +3116,7 @@ msgstr "TaiBIF Data Paper Publication"
 msgid "資料論文合作"
 msgstr "Call for Data Paper"
 
-#: templates/data-paper.html:102 templates/journals.html:23
+#: templates/data-paper.html:102
 msgid "什麼是資料論文？"
 msgstr "What is a data paper?"
 
@@ -3086,14 +3271,14 @@ msgstr ""
 "The following PDF tutorial will guide you step by step on how to use this "
 "tool to publish data articles."
 
-#: templates/data-paper.html:143 templates/open-standard.html:287
-#: templates/open-upload.html:36 templates/taibif-achievement.html:88
-#: templates/tech-online-class.html:121 templates/tech-online-class.html:141
-#: templates/tech-online-class.html:161 templates/tech-online-class.html:181
-#: templates/tech-online-class.html:201 templates/tech-online-class.html:221
-#: templates/tech-online-class.html:235 templates/tech-online-class.html:255
-#: templates/tech-online-class.html:275 templates/tech-online-class.html:295
-#: templates/tech-online-class.html:315 templates/tech-online-class.html:335
+#: templates/data-paper.html:143 templates/open-standard.html:282
+#: templates/open-upload.html:37 templates/taibif-achievement.html:88
+#: templates/tech-online-class.html:120 templates/tech-online-class.html:140
+#: templates/tech-online-class.html:160 templates/tech-online-class.html:180
+#: templates/tech-online-class.html:200 templates/tech-online-class.html:220
+#: templates/tech-online-class.html:234 templates/tech-online-class.html:254
+#: templates/tech-online-class.html:274 templates/tech-online-class.html:294
+#: templates/tech-online-class.html:314 templates/tech-online-class.html:334
 msgid ""
 "若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯"
 "示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。"
@@ -4413,7 +4598,7 @@ msgstr "can all be different"
 
 #: templates/faq.html:130 templates/inc_breadcrumb.html:21
 #: templates/index.html:349 templates/occurrence.html:178
-#: templates/publisher.html:59 templates/search_all.html:52
+#: templates/publisher.html:49 templates/search_all.html:52
 #: templates/species.html:171 templates/taibif-achievement.html:186
 #: templates/taibif-achievement.html:196 templates/taibif-api.html:89
 #: templates/taibif-api.html:936 templates/web-navi.html:100
@@ -4559,13 +4744,11 @@ msgid "授權方式說明"
 msgstr "License guide"
 
 #: templates/inc_publishing-data-nav-items.html:7
-#, fuzzy
 msgid "資料上傳網站 (IPT)"
-msgstr "Data Uploading via TaiBIF IPT"
+msgstr "TaiBIF IPT"
 
 #: templates/inc_publishing-data-nav-items.html:8
 #: templates/open-timezone.html:53 templates/publishing-data.html:194
-#, fuzzy
 msgid "國科會資料繳交依據與時程"
 msgstr "Project Data Submission and Timelines"
 
@@ -4576,15 +4759,14 @@ msgid "國科會生物多樣性學科相關計畫開放資料繳交規範"
 msgstr "NSTC Biodiversity Program Open Data Submission Guidelines"
 
 #: templates/index.html:5
-#, fuzzy
 msgid "TaiBIF 台灣生物多樣性資訊機構"
-msgstr "Copyright © Taiwan Biodiversity Information Facility"
+msgstr "Taiwan Biodiversity Information Facility"
 
 #: templates/index.html:40
 msgid "生物多樣性資料開放的推手"
 msgstr "The Facilitator of Biodiversity Open Data"
 
-#: templates/index.html:187 templates/index.html:242
+#: templates/index.html:242
 msgid "內容籌備中"
 msgstr "Content in Preparation"
 
@@ -4619,252 +4801,6 @@ msgstr "Advisors"
 #: templates/index.html:422
 msgid "夥伴單位"
 msgstr "Partners"
-
-#: templates/journals.html:7 templates/journals.html:15
-#, fuzzy
-msgid "資料論文/期刊"
-msgstr "Call for Data Paper"
-
-#: templates/journals.html:19
-#, fuzzy
-msgid "資料期刊/論文"
-msgstr "Data Papers & Journals"
-
-#: templates/journals.html:24
-msgid ""
-"資料論文（Data paper）是一個透過同儕審查（Peer reviewed）的論文發表形式，並發"
-"表於相關的期刊上，內容主要為描述作者所開放的資料集相關資訊，包含如何產生及收"
-"集資料、資料類型、涵蓋的物種、資料開放於何處及此資料集背景資訊（Meta data）等"
-"等，透過作者於此資料集所開放的資料授權方式，可作為日後學術論文應用其資料時所"
-"引用的依據。"
-msgstr ""
-
-#: templates/journals.html:25
-#, fuzzy
-msgid "資料論文期刊"
-msgstr "Call for Data Paper"
-
-#: templates/journals.html:26
-msgid "當您透過 TaiBIF 的資料發布工具"
-msgstr "When you use TaiBIF data publishing tool"
-
-#: templates/journals.html:26
-msgid ""
-"上傳您的資料並發布後，可下載其自動產生的 RTF 檔來撰寫您的資料論文，並選擇下列"
-"期刊投稿（期刊的 impact factor 及發表費用請見："
-msgstr ""
-
-#: templates/links.html:34
-#, fuzzy
-msgid "網站"
-msgstr "Shortcuts"
-
-#: templates/links.html:35
-msgid ""
-"下列為國內外與生物多樣性資訊研究相關或與 TaiBIF 密切合作之政府單位或團體組"
-"織，部分單位亦依據不同目的建立生物多樣性開放資料相關資料庫，歡迎大家多加探索"
-"及利用！"
-msgstr ""
-
-#: templates/links.html:41
-msgid "nstc 國科會 國家科學及技術委員會"
-msgstr ""
-
-#: templates/links.html:49
-msgid "國家科學及技術委員會"
-msgstr "National Science and Technology Council"
-
-#: templates/links.html:56
-msgid "sinica 中研院 中央研究院"
-msgstr ""
-
-#: templates/links.html:64
-msgid "中央研究院"
-msgstr "Academia Sinica"
-
-#: templates/links.html:71
-msgid "brcas 生多中心 中研院生物多樣性研究中心"
-msgstr ""
-
-#: templates/links.html:79
-msgid "中研院生物多樣性研究中心"
-msgstr "Biodiversity Research Center, Academia Sinica"
-
-#: templates/links.html:86
-msgid "fnca 林業署 農業部林業及自然保育署"
-msgstr ""
-
-#: templates/links.html:94
-msgid "農業部林業及自然保育署"
-msgstr "Forestry and Nature Conservation Agency, MOA"
-
-#: templates/links.html:101
-msgid "ten 林業署 國土生態綠網"
-msgstr ""
-
-#: templates/links.html:109
-msgid "國土生態綠網"
-msgstr "Ecological Network Program"
-
-#: templates/links.html:116
-msgid "tbri 生多所 農業部生物多樣性研究所"
-msgstr ""
-
-#: templates/links.html:124
-msgid "農業部生物多樣性研究所"
-msgstr "Taiwan Biodiversity Research Institute, MOA"
-
-#: templates/links.html:131
-msgid "trfi 林試所 農業部林業試驗所"
-msgstr ""
-
-#: templates/links.html:139
-msgid "農業部林業試驗所"
-msgstr "Taiwan Forestry Research Institute, MOA"
-
-#: templates/links.html:146
-msgid "oca 海保署 海洋委員會海洋保育署"
-msgstr ""
-
-#: templates/links.html:154
-msgid "海洋委員會海洋保育署"
-msgstr "Ocean Conservation Administration, Ocean Affairs Council"
-
-#: templates/links.html:161
-msgid "nps 內政部國家公園署"
-msgstr ""
-
-#: templates/links.html:169
-msgid "內政部國家公園署"
-msgstr "National Park Service, Ministry of the Interior"
-
-#: templates/links.html:176
-msgid "ntm 台博館 國立臺灣博物館"
-msgstr ""
-
-#: templates/links.html:184
-msgid "國立臺灣博物館"
-msgstr "National Taiwan Museum"
-
-#: templates/links.html:191
-msgid "nmns 科博館 國立自然科學博物館"
-msgstr ""
-
-#: templates/links.html:199
-msgid "國立自然科學博物館"
-msgstr "National Museum of Natural Science"
-
-#: templates/links.html:206
-msgid "wra 水利署 經濟部水利署"
-msgstr ""
-
-#: templates/links.html:214
-msgid "經濟部水利署"
-msgstr "Water Resources Agency, Ministry of Economic Affairs"
-
-#: templates/links.html:221 templates/links.html:229
-msgid "研究資料寄存所 depositar"
-msgstr "Research Data Repository (depositar)"
-
-#: templates/links.html:236
-#, fuzzy
-msgid "資料庫"
-msgstr "Find Data"
-
-#: templates/links.html:242
-msgid "臺灣物種名錄 TaiCOL"
-msgstr "Taiwan Species Checklist (TaiCOL)"
-
-#: templates/links.html:243
-msgid "為由 TaiBIF 所管理之物種名錄資料庫，提供臺灣物種之分類檢索資訊。"
-msgstr ""
-
-#: templates/links.html:249
-msgid "臺灣生命大百科 TaiEOL"
-msgstr "Taiwan Encyclopedia of Life (TaiEOL)"
-
-#: templates/links.html:250
-msgid ""
-"為由中央研究院數位文化中心所管理之科普型資料庫，提供許多物種的圖片及基本介紹"
-"資訊。"
-msgstr ""
-
-#: templates/links.html:256
-#, fuzzy
-msgid "生物多樣性資料庫共通查詢系統"
-msgstr "Where are the resources of biodiversity data / information?"
-
-#: templates/links.html:257
-msgid ""
-"我們是一群關心生物多樣性、有生物資料庫的機構。面對生物多樣性資料四散或缺乏、"
-"格式不一致不易應用等問題，期望藉由夥伴關係成員間的協作，一起推動資料的整合及"
-"共享，提升生物多樣性資訊的能見度。"
-msgstr ""
-
-#: templates/links.html:263
-#, fuzzy
-msgid "台灣生物多樣性網絡 TBN"
-msgstr "Levels of Biodiversity"
-
-#: templates/links.html:264
-msgid "致力於運用生態調查開放資料，提供臺灣野生生物分布查詢的線上服務平台。"
-msgstr ""
-
-#: templates/links.html:270
-msgid "中央研究院植物標本館 HAST"
-msgstr "Herbarium, Academia Sinica (HAST)"
-
-#: templates/links.html:271
-msgid ""
-"中研院植物標本館主要蒐藏台灣（含附屬島嶼）及東亞維管束植物。特殊的蒐藏有菊"
-"科、秋海棠科、鴨跖草科、珍珠菜屬（報春花科）、細辛屬（馬兜鈴科）、魔芋屬（天"
-"南星科）、茜草科、地錦屬（大戟科）及茶科。"
-msgstr ""
-
-#: templates/links.html:277
-msgid "中央研究院臺灣魚類資料庫"
-msgstr "Taiwan Fish Database, Academia Sinica"
-
-#: templates/links.html:279
-msgid ""
-"臺灣資料庫之目的在提供臺灣魚類的分類資訊，即以魚類名錄為核心，利用學名整合臺"
-"灣的魚類資料。內容主要可分為下列幾大項："
-msgstr ""
-
-#: templates/links.html:280
-msgid "(1)魚種的基本解說、形態、影像、同種異名、遺傳、分布及利用等資料，"
-msgstr ""
-
-#: templates/links.html:281
-msgid ""
-"(2)標本資料—整合臺灣10個魚類標本典藏單位之資料共約40,000及散佚海外33個機構之"
-"臺灣魚類標本資料共約4,800筆資料，"
-msgstr ""
-
-#: templates/links.html:282
-msgid ""
-"(3)分布資料—整合近23萬筆之分布調查資料，(4)文獻資料—含原始描述文獻近1,000\\\\"
-msgstr ""
-
-#: templates/links.html:289
-msgid "臺灣貝類資料庫"
-msgstr "Taiwan Mollusca Database"
-
-#: templates/links.html:291
-msgid ""
-"臺灣貝類資料庫已建置有臺灣貝類292科3,818種，是由臺灣貝種名錄、臺灣貝類標本名"
-"錄、臺灣貝塚貝類、貝類化石、貝器、貝種科名、地理分布資訊、"
-msgstr ""
-
-#: templates/links.html:292
-msgid ""
-"貝類文獻、貝類新種及新紀錄種名錄、貝字百譜、世界常見貝類、貝類齒舌及微細構造"
-"等子資料庫所組成，提供貝類型態特徵、棲息環境、分布地點等訊息，"
-msgstr ""
-
-#: templates/links.html:293
-msgid "目的在於讓使用者瞭解臺灣貝類的多樣性並能快速查詢臺灣貝類的相關資料。"
-msgstr ""
 
 #: templates/monthly-status.html:34
 msgid ""
@@ -4947,7 +4883,7 @@ msgstr "Prepare raw data"
 msgid "備註"
 msgstr "Notes"
 
-#: templates/occurrence.html:241 templates/open-standard.html:127
+#: templates/occurrence.html:241 templates/open-standard.html:122
 #: templates/publishing-data.html:131
 msgid "出現紀錄 Occurrence"
 msgstr "Occurrence"
@@ -4988,57 +4924,76 @@ msgid ""
 "是一項穩賺不賠的投資："
 msgstr ""
 
-#: templates/open-benefits.html:38
-msgid ""
-"成為全球保育與永續發展的關鍵解方。開放資料能讓你的每筆觀察紀錄，成為全球生物"
-"多樣性知識的重要拼圖。當資料符合 FAIR 原則並公開發布，就能成為政策與保育行動"
-"的科學依據。例如，在公共工程的生態檢核制度中，開放資料能幫助相關單位避開敏感"
-"物種（如保育類或紅皮書物種）的棲息地，在工程規劃之初就將傷害減到最低，成為實"
-"質的保育力量。"
-msgstr ""
-
 #: templates/open-benefits.html:39
-msgid ""
-"開啟跨領域合作的無限可能獨木難支，開放資料能創造研究者與資料提供者間的合作新"
-"機。資料的發布促成了全球資料集的整合，讓志同道合、擁有彼此需要知識的人更容易"
-"找到彼此。例如，曾有研究是透過開放資料，成功串聯了「標本採集者」、「氣候變遷"
-"學者」與「資料科學家」，共同發表具影響力的跨界研究成果。"
+msgid "成為全球保育與永續發展的關鍵解方。"
 msgstr ""
 
 #: templates/open-benefits.html:40
 msgid ""
+"開放資料能讓你的每筆觀察紀錄，成為全球生物多樣性知識的重要拼圖。當資料符合 "
+"FAIR 原則並公開發布，就能成為政策與保育行動的科學依據。例如，在公共工程的生態"
+"檢核制度中，開放資料能幫助相關單位避開敏感物種（如保育類或紅皮書物種）的棲息"
+"地，在工程規劃之初就將傷害減到最低，成為實質的保育力量。"
+msgstr ""
+
+#: templates/open-benefits.html:43
+msgid ""
+"開啟跨領域合作的無限可能獨木難支，開放資料能創造研究者與資料提供者間的合作新"
+"機。"
+msgstr ""
+
+#: templates/open-benefits.html:44
+msgid ""
+"資料的發布促成了全球資料集的整合，讓志同道合、擁有彼此需要知識的人更容易找到"
+"彼此。例如，曾有研究是透過開放資料，成功串聯了「標本採集者」、「氣候變遷學"
+"者」與「資料科學家」，共同發表具影響力的跨界研究成果。"
+msgstr ""
+
+#: templates/open-benefits.html:47
+msgid ""
 "讓幕後英雄獲得完整的貢獻肯定過去，資料管理者或協助採集的人員往往難以在傳統論"
-"文中被凸顯。開放資料能幫助實務工作者，獲得在野外調查與資料管理的完整貢獻肯"
-"定。透過撰寫完善的詮釋資料（metadata），可以清楚標明「誰是蒐集者」、「誰清理"
-"資料」、「誰寫詮釋資料」，彰顯每個角色的個人工作成就。你甚至可以將其撰寫成"
-"「資料論文（Data Paper）」，讓這些成就在學術界獲得實質認可。"
+"文中被凸顯。"
 msgstr ""
 
-#: templates/open-benefits.html:41
+#: templates/open-benefits.html:48
 msgid ""
-"輕鬆掌握資料的影響力與被引用狀況。把資料交出去，然後呢？別擔心，幫助你掌握資"
-"料被引用與應用的實際狀況，是開放資料平台的核心功能之一。以 GBIF 為例，平台對"
-"於資料集的引用與追蹤做得特別好 ，系統會自動為你統計並追蹤他人如何使用你蒐集的"
-"資料 。這不僅能為你帶來新的研究靈感，這些客觀的被引用數據更是展現個人或組織影"
-"響力的絕佳 KPI。"
+"開放資料能幫助實務工作者，獲得在野外調查與資料管理的完整貢獻肯定。透過撰寫完"
+"善的詮釋資料（metadata），可以清楚標明「誰是蒐集者」、「誰清理資料」、「誰寫"
+"詮釋資料」，彰顯每個角色的個人工作成就。你甚至可以將其撰寫成「資料論文（Data "
+"Paper）」，讓這些成就在學術界獲得實質認可。"
 msgstr ""
 
-#: templates/open-benefits.html:42
+#: templates/open-benefits.html:51
+msgid "輕鬆掌握資料的影響力與被引用狀況。"
+msgstr ""
+
+#: templates/open-benefits.html:52
 msgid ""
-"符合計畫要求，爭取資料管理預算。隨著科學界對「開放科學」的重視，研究期刊對資"
-"料開放的期待日益提升，越來越多經費補助單位也將開放資料列為申請條件 。例如，國"
-"科會計畫鼓勵納入「研究資料管理方案 (DMP)」，要求明訂資料分享方式。開放資料不"
-"僅能提升計畫的公益性與研究成果的可再現性，也能讓你在計畫申請時，更名正言順地"
-"爭取資料管理所需的預算。"
+"把資料交出去，然後呢？別擔心，幫助你掌握資料被引用與應用的實際狀況，是開放資"
+"料平台的核心功能之一。以 GBIF 為例，平台對於資料集的引用與追蹤做得特別好 ，系"
+"統會自動為你統計並追蹤他人如何使用你蒐集的資料 。這不僅能為你帶來新的研究靈"
+"感，這些客觀的被引用數據更是展現個人或組織影響力的絕佳 KPI。"
 msgstr ""
 
-#: templates/open-benefits.html:45
+#: templates/open-benefits.html:55
+msgid "符合計畫要求，爭取資料管理預算。"
+msgstr ""
+
+#: templates/open-benefits.html:56
+msgid ""
+"隨著科學界對「開放科學」的重視，研究期刊對資料開放的期待日益提升，越來越多經"
+"費補助單位也將開放資料列為申請條件 。例如，國科會計畫鼓勵納入「研究資料管理方"
+"案 (DMP)」，要求明訂資料分享方式。開放資料不僅能提升計畫的公益性與研究成果的"
+"可再現性，也能讓你在計畫申請時，更名正言順地爭取資料管理所需的預算。"
+msgstr ""
+
+#: templates/open-benefits.html:60
 msgid ""
 "別讓你的調查人生留下遺憾！不論你的角色是現地採集者、資料管理者、研究發表者、"
 "策略擬定者，或是一線工作者 ，你都可以參與開放資料的貢獻與應用。"
 msgstr ""
 
-#: templates/open-benefits.html:46
+#: templates/open-benefits.html:61
 msgid ""
 "TaiBIF 作為生物多樣性資料開放的推手，提供了完善的資料標準、管理方法以及 IPT "
 "等資料發布工具 。現在就行動，讓你的心血被世界看見！"
@@ -5406,8 +5361,7 @@ msgid ""
 "是整個塔的崩潰。"
 msgstr ""
 
-#: templates/open-data.html:52 templates/tech-book.html:110
-#: templates/tech-open.html:51
+#: templates/open-data.html:52 templates/tech-open.html:51
 msgid ""
 "面對資料我們也有類似的問題。當我們提到資料 (或著程式碼) 共用 (commons) 時，我"
 "們指的是「開放」資料中的一部分，可以自由地與其他「開放」資料相互混用。而可互"
@@ -5432,15 +5386,15 @@ msgid "文字來源:"
 msgstr "Source text:"
 
 #: templates/open-license.html:4 templates/open-license.html:12
-#: templates/open-license.html:26
-msgid "開放授權"
+#: templates/open-license.html:27 templates/open-process.html:71
+msgid "開放 CC 授權"
 msgstr "Open Data with CC License"
 
-#: templates/open-license.html:32 templates/publishing-data.html:82
+#: templates/open-license.html:33 templates/publishing-data.html:82
 msgid "姓名標示 (CC-BY)"
 msgstr "Attribution (CC BY)"
 
-#: templates/open-license.html:34 templates/publishing-data.html:84
+#: templates/open-license.html:36 templates/publishing-data.html:84
 #, fuzzy
 msgid ""
 "本授權條款允許使用者重製、散布、傳輸以及修改著作（包括商業性利用），惟使用時"
@@ -5451,11 +5405,11 @@ msgstr ""
 "for commercial purposes. User must attribute the contributor’s name in the "
 "manner specified by the contributor."
 
-#: templates/open-license.html:38 templates/publishing-data.html:90
+#: templates/open-license.html:41 templates/publishing-data.html:90
 msgid "姓名標示-非商業性(CC-BY-NC)"
 msgstr "Attribution-NonCommercial (CC BY-NC)"
 
-#: templates/open-license.html:40 templates/publishing-data.html:92
+#: templates/open-license.html:44 templates/publishing-data.html:92
 #, fuzzy
 msgid ""
 "本授權條款允許使用者重製、散布、傳輸以及修改著作，但不得為商業目的之使用。使"
@@ -5466,11 +5420,11 @@ msgstr ""
 "for commercial purposes. User must attribute the contributor’s name in the "
 "manner specified by the contributor."
 
-#: templates/open-license.html:44 templates/publishing-data.html:97
+#: templates/open-license.html:49 templates/publishing-data.html:97
 msgid "公眾領域貢獻宣告 (CC0)"
 msgstr "Public Domain Dedication (CC0)"
 
-#: templates/open-license.html:45 templates/publishing-data.html:98
+#: templates/open-license.html:51 templates/publishing-data.html:98
 msgid ""
 "可使科學家、教育工作者、藝術家、其他創作者及著作權人，或內容受資料庫保護的權"
 "利人等拋棄他們對各自著作的利益，並盡可能將這些著作釋出到公眾領域，讓其他人可"
@@ -5481,11 +5435,11 @@ msgid ""
 "人的排他權。參考:"
 msgstr ""
 
-#: templates/open-license.html:48 templates/publishing-data.html:102
+#: templates/open-license.html:55 templates/publishing-data.html:102
 msgid "參考:"
 msgstr "Reference:"
 
-#: templates/open-license.html:48 templates/publishing-data.html:102
+#: templates/open-license.html:55 templates/publishing-data.html:102
 msgid "CC 台灣社群"
 msgstr "CC Taiwan Community"
 
@@ -5623,13 +5577,10 @@ msgstr "Data Validation"
 msgid "寫詮釋資料"
 msgstr "Metadata"
 
-#: templates/open-process.html:64
+#: templates/open-process.html:64 templates/open-upload.html:4
+#: templates/open-upload.html:13 templates/open-upload.html:28
 msgid "資料上傳 TaiBIF IPT"
 msgstr "Data Uploading via TaiBIF IPT"
-
-#: templates/open-process.html:71
-msgid "開放 CC 授權"
-msgstr "Open Data with CC License"
 
 #: templates/open-process.html:78
 msgid "發表資料論文"
@@ -5640,54 +5591,54 @@ msgid "資料再利用"
 msgstr "Data Reuse"
 
 #: templates/open-standard.html:4 templates/open-standard.html:12
-#: templates/open-standard.html:25
+#: templates/open-standard.html:26 templates/open-standard.html:36
 msgid "資料標準化"
 msgstr "Data Standardization"
 
-#: templates/open-standard.html:35 templates/open-standard.html:58
+#: templates/open-standard.html:39 templates/open-standard.html:53
 #, fuzzy
 msgid "資料標準與模板"
 msgstr "Data Templates"
 
-#: templates/open-standard.html:38 templates/open-standard.html:78
+#: templates/open-standard.html:40 templates/open-standard.html:73
 msgid "達爾文核心標準 Darwin Core"
 msgstr "Darwin Core Standard"
 
-#: templates/open-standard.html:39 templates/open-standard.html:281
+#: templates/open-standard.html:41 templates/open-standard.html:276
 #, fuzzy
 msgid "詮釋資料 EML 標準"
 msgstr "Metadata"
 
-#: templates/open-standard.html:40 templates/open-standard.html:286
+#: templates/open-standard.html:42 templates/open-standard.html:281
 #, fuzzy
 msgid "資料標準概念介紹"
 msgstr "Data Templates"
 
-#: templates/open-standard.html:46 templates/open-standard.html:293
+#: templates/open-standard.html:43 templates/open-standard.html:288
 #, fuzzy
 msgid "主題資料發布指引"
 msgstr "Data Publishing Status"
 
-#: templates/open-standard.html:49 templates/open-standard.html:312
+#: templates/open-standard.html:44 templates/open-standard.html:307
 #, fuzzy
 msgid "DNA 資料發布指引"
 msgstr "Data Publishing Status"
 
-#: templates/open-standard.html:50 templates/open-standard.html:317
+#: templates/open-standard.html:45 templates/open-standard.html:312
 #, fuzzy
 msgid "調查活動資料發布"
 msgstr "What is sampling-event data?"
 
-#: templates/open-standard.html:60
+#: templates/open-standard.html:55
 #, fuzzy
 msgid "生物多樣性資訊標準"
 msgstr "Biodiversity Information Cookbook"
 
-#: templates/open-standard.html:61
+#: templates/open-standard.html:56
 msgid "國際生命科學聯盟"
 msgstr "International Union of Biological Sciences"
 
-#: templates/open-standard.html:62
+#: templates/open-standard.html:57
 msgid ""
 "\n"
 "                生物多樣性的社群成員一般將此組織稱為<strong>TDWG</strong>（音"
@@ -5701,90 +5652,90 @@ msgstr ""
 "Group）。\n"
 "                "
 
-#: templates/open-standard.html:67
+#: templates/open-standard.html:62
 #, fuzzy
 msgid "達爾文核心標準"
 msgstr "Use Darwin Core as the main standard"
 
-#: templates/open-standard.html:70
+#: templates/open-standard.html:65
 #, fuzzy
 msgid "生態詮釋資料語言"
 msgstr "Prepare metadata"
 
-#: templates/open-standard.html:71
+#: templates/open-standard.html:66
 msgid ""
 "它使用一系列模組化、可擴展的 XML 文件類型來記錄生態資料集的資訊。 所有資料集"
 "的描述都依賴詮釋資料；"
 msgstr ""
 
-#: templates/open-standard.html:72
+#: templates/open-standard.html:67
 msgid ""
 "也就是說，關於資料的資訊都使用此開源 EML 標準—它是由生物複雜性知識網絡所管理"
 "及維護。"
 msgstr ""
 
-#: templates/open-standard.html:73
+#: templates/open-standard.html:68
 msgid ""
 "每個達爾文核心集資料檔案的組成部件中都包含一個 EML 文件（以XML 格式撰寫）。"
 msgstr ""
 
-#: templates/open-standard.html:80
+#: templates/open-standard.html:75
 msgid ""
 "一份好的資料集，必須可以再利用（具互操作性），若能提供越多欄位資料，則資料的"
 "品質及價值也能相對地提高，在任何情況下，資料集至少要有下列所述的 Darwin Core "
 "欄位"
 msgstr ""
 
-#: templates/open-standard.html:82 templates/publishing-data.html:114
+#: templates/open-standard.html:77 templates/publishing-data.html:114
 msgid "相關參考連結："
 msgstr "Related references:"
 
-#: templates/open-standard.html:84 templates/publishing-data.html:116
+#: templates/open-standard.html:79 templates/publishing-data.html:116
 msgid "DwC 資料欄位的各集合內容："
 msgstr "DwC registered extension sets:"
 
-#: templates/open-standard.html:84
+#: templates/open-standard.html:79
 msgid "（按核心資料表 core 和延伸資料表 extension 分類"
 msgstr ""
 
-#: templates/open-standard.html:85 templates/publishing-data.html:117
+#: templates/open-standard.html:80 templates/publishing-data.html:117
 msgid "DwC 資料欄位標準英文定義快速查詢："
 msgstr "Quick lookup of DwC term definitions (English):"
 
-#: templates/open-standard.html:85
+#: templates/open-standard.html:80
 msgid "Darwin core quick reference guide（按詞條的類別 Category 分類）"
 msgstr ""
 
-#: templates/open-standard.html:89 templates/publishing-data.html:121
+#: templates/open-standard.html:84 templates/publishing-data.html:121
 msgid "物種名錄 Checklist"
 msgstr "Checklist"
 
-#: templates/open-standard.html:94 templates/open-standard.html:132
-#: templates/open-standard.html:226 templates/publishing-data.html:124
+#: templates/open-standard.html:89 templates/open-standard.html:127
+#: templates/open-standard.html:221 templates/publishing-data.html:124
 #: templates/publishing-data.html:134 templates/publishing-data.html:151
 msgid "DwC 欄位名稱"
 msgstr "DwC field name"
 
-#: templates/open-standard.html:95 templates/open-standard.html:133
-#: templates/open-standard.html:227 templates/publishing-data.html:124
+#: templates/open-standard.html:90 templates/open-standard.html:128
+#: templates/open-standard.html:222 templates/publishing-data.html:124
 #: templates/publishing-data.html:134 templates/publishing-data.html:151
 msgid "所屬類別"
 msgstr "Category"
 
-#: templates/open-standard.html:96 templates/open-standard.html:134
-#: templates/open-standard.html:228 templates/publishing-data.html:124
+#: templates/open-standard.html:91 templates/open-standard.html:129
+#: templates/open-standard.html:223 templates/publishing-data.html:124
 #: templates/publishing-data.html:134 templates/publishing-data.html:151
 msgid "定義"
 msgstr "Definition"
 
-#: templates/open-standard.html:97 templates/open-standard.html:135
-#: templates/open-standard.html:229 templates/publishing-data.html:124
+#: templates/open-standard.html:92 templates/open-standard.html:130
+#: templates/open-standard.html:224 templates/publishing-data.html:124
 #: templates/publishing-data.html:134 templates/publishing-data.html:151
 msgid "常見對應名稱"
 msgstr "Common corresponding names"
 
-#: templates/open-standard.html:98 templates/open-standard.html:136
-#: templates/open-standard.html:230 templates/publishing-data.html:124
+#: templates/open-standard.html:93 templates/open-standard.html:131
+#: templates/open-standard.html:225 templates/publishing-data.html:124
 #: templates/publishing-data.html:134 templates/publishing-data.html:151
 #: templates/taibif-api.html:120 templates/taibif-api.html:176
 #: templates/taibif-api.html:219 templates/taibif-api.html:390
@@ -5795,30 +5746,30 @@ msgstr "Common corresponding names"
 msgid "範例"
 msgstr "Data file: "
 
-#: templates/open-standard.html:105
+#: templates/open-standard.html:100
 msgid ""
 "分類識別碼，可設定有意義的組合格式，或使用全球唯一辨識碼(GUID)或通用唯一辨識"
 "碼(UUID)，序號不可有重複。"
 msgstr ""
 
-#: templates/open-standard.html:106 templates/open-standard.html:144
-#: templates/open-standard.html:238 templates/publishing-data.html:127
+#: templates/open-standard.html:101 templates/open-standard.html:139
+#: templates/open-standard.html:233 templates/publishing-data.html:127
 #: templates/publishing-data.html:137 templates/publishing-data.html:154
 msgid "ID、編號"
 msgstr "ID / number"
 
-#: templates/open-standard.html:112 templates/publishing-data.html:128
+#: templates/open-standard.html:107 templates/publishing-data.html:128
 msgid ""
 "完整的學名，包括已知的作者和日期資訊。若是作為鑑定的一部分，應是可確定的最低"
 "分類階層的名稱。"
 msgstr ""
 
-#: templates/open-standard.html:113 templates/publishing-data.html:128
+#: templates/open-standard.html:108 templates/publishing-data.html:128
 msgid "學名、Name、名字"
 msgstr "Scientific name / Name"
 
-#: templates/open-standard.html:114 templates/open-standard.html:173
-#: templates/open-standard.html:215 templates/publishing-data.html:141
+#: templates/open-standard.html:109 templates/open-standard.html:168
+#: templates/open-standard.html:210 templates/publishing-data.html:141
 #: templates/publishing-data.html:145 templates/publishing-data.html:354
 #: templates/taibif-api.html:149 templates/taibif-api.html:150
 #: templates/taibif-api.html:152 templates/taibif-api.html:153
@@ -5826,145 +5777,145 @@ msgstr "Scientific name / Name"
 msgid "\\"
 msgstr ""
 
-#: templates/open-standard.html:119
+#: templates/open-standard.html:114
 msgid "物種的分類階層"
 msgstr "Taxonomic rank of species"
 
-#: templates/open-standard.html:120 templates/taibif-api.html:685
+#: templates/open-standard.html:115 templates/taibif-api.html:685
 msgid "分類階層"
 msgstr "Taxonomic rank"
 
-#: templates/open-standard.html:143
+#: templates/open-standard.html:138
 msgid ""
 "出現紀錄識別碼，可設定有意義的組合格式，或使用全球唯一辨識碼(GUID)或通用唯一"
 "辨識碼(UUID)，序號在此資料集中不可有重複。"
 msgstr ""
 
-#: templates/open-standard.html:150 templates/publishing-data.html:138
+#: templates/open-standard.html:145 templates/publishing-data.html:138
 msgid "資料紀錄的特定性質、類型，建議使用 Darwin Core 的控制詞彙"
 msgstr ""
 
-#: templates/open-standard.html:151
+#: templates/open-standard.html:146
 msgid "紀錄類型、樣本來源"
 msgstr "Record type / basis of record"
 
-#: templates/open-standard.html:152
+#: templates/open-standard.html:147
 msgid ""
 "保存標本 PreservedSpecimen, 化石標本 FossilSpecimen, 活體標本 "
 "LivingSpecimen, 人為觀測 HumanObservation, 材料樣本 MaterialSample, 機器觀測 "
 "MachineObservation"
 msgstr ""
 
-#: templates/open-standard.html:157 templates/open-standard.html:244
+#: templates/open-standard.html:152 templates/open-standard.html:239
 #: templates/publishing-data.html:139 templates/publishing-data.html:155
 msgid "該筆資料被記錄的日期。"
 msgstr "The date this record was documented."
 
-#: templates/open-standard.html:158 templates/open-standard.html:245
+#: templates/open-standard.html:153 templates/open-standard.html:240
 msgid "調查日期、Date、日期"
 msgstr "Event date / Date"
 
-#: templates/open-standard.html:159 templates/open-standard.html:246
+#: templates/open-standard.html:154 templates/open-standard.html:241
 msgid ""
 "「1994-11-05」代表單日；「1996-06」代表 1996 年 6 月；「2022-01/02」代表2022"
 "年1-2月(以 \\"
 msgstr ""
 
-#: templates/open-standard.html:164 templates/publishing-data.html:140
+#: templates/open-standard.html:159 templates/publishing-data.html:140
 msgid "出現紀錄被記錄時存在的個體數量。"
 msgstr "Number of individuals present when recorded."
 
-#: templates/open-standard.html:165 templates/publishing-data.html:140
+#: templates/open-standard.html:160 templates/publishing-data.html:140
 msgid "數量、個體數"
 msgstr "Count / number of individuals"
 
-#: templates/open-standard.html:171 templates/publishing-data.html:141
+#: templates/open-standard.html:166 templates/publishing-data.html:141
 msgid "採集或觀測地點的明確描述。"
 msgstr "A specific description of the collection/observation location."
 
-#: templates/open-standard.html:178 templates/publishing-data.html:142
+#: templates/open-standard.html:173 templates/publishing-data.html:142
 msgid "字面緯度，採集或觀測取得紀錄的緯度，任何座標系統皆可。"
 msgstr ""
 
-#: templates/open-standard.html:185 templates/publishing-data.html:143
+#: templates/open-standard.html:180 templates/publishing-data.html:143
 msgid "字面經度，採集或觀測取得紀錄的緯度，任何座標系統皆可。"
 msgstr ""
 
-#: templates/open-standard.html:192 templates/publishing-data.html:144
+#: templates/open-standard.html:187 templates/publishing-data.html:144
 msgid "紀錄的座標單位"
 msgstr "Coordinate unit of the record"
 
-#: templates/open-standard.html:193
+#: templates/open-standard.html:188
 msgid "座標單位"
 msgstr "Coordinate unit"
 
-#: templates/open-standard.html:199 templates/open-standard.html:200
+#: templates/open-standard.html:194 templates/open-standard.html:195
 msgid "十進位緯度"
 msgstr "Decimal latitude"
 
-#: templates/open-standard.html:206 templates/open-standard.html:207
+#: templates/open-standard.html:201 templates/open-standard.html:202
 msgid "十進位經度"
 msgstr "Decimal longitude"
 
-#: templates/open-standard.html:213 templates/publishing-data.html:145
+#: templates/open-standard.html:208 templates/publishing-data.html:145
 msgid "座標的大地基準。建議使用控制詞彙；若全未知，則填入\\"
 msgstr ""
 
-#: templates/open-standard.html:214
+#: templates/open-standard.html:209
 msgid "大地基準、大地系統"
 msgstr "Geodetic datum / coordinate reference system"
 
-#: templates/open-standard.html:221 templates/publishing-data.html:148
+#: templates/open-standard.html:216 templates/publishing-data.html:148
 msgid "調查活動 Sampling event"
 msgstr "Sampling Event"
 
-#: templates/open-standard.html:237
+#: templates/open-standard.html:232
 msgid ""
 "調查活動識別碼，可設定有意義的組合格式，或使用全球唯一辨識碼(GUID)或通用唯一"
 "辨識碼(UUID)，序號不可有重複。"
 msgstr ""
 
-#: templates/open-standard.html:251 templates/publishing-data.html:156
+#: templates/open-standard.html:246 templates/publishing-data.html:156
 msgid "調查方法或流程的名稱、描述，或其參考文獻。"
 msgstr "Name/description of sampling protocol or reference source."
 
-#: templates/open-standard.html:252
+#: templates/open-standard.html:247
 msgid "調查方法、材料方法、Method、Sampling method"
 msgstr ""
 
-#: templates/open-standard.html:258
+#: templates/open-standard.html:253
 msgid "採樣調查中單次採樣的大小數值(時間間隔、長度、範圍，或體積)"
 msgstr ""
 
-#: templates/open-standard.html:259
+#: templates/open-standard.html:254
 msgid "採樣量、取樣大小"
 msgstr "Sample size / sampling amount"
 
-#: templates/open-standard.html:265
+#: templates/open-standard.html:260
 msgid "採樣大小的量測單位"
 msgstr "Measurement unit of sample size"
 
-#: templates/open-standard.html:266
+#: templates/open-standard.html:261
 msgid "採樣量單位"
 msgstr "Sampling unit"
 
-#: templates/open-standard.html:272
+#: templates/open-standard.html:267
 msgid "一次調查的努力量"
 msgstr "Sampling effort per event"
 
-#: templates/open-standard.html:273
+#: templates/open-standard.html:268
 msgid "調查努力量"
 msgstr "Sampling effort"
 
-#: templates/open-standard.html:282
+#: templates/open-standard.html:277
 msgid "填寫說明"
 msgstr "Instructions"
 
-#: templates/open-standard.html:289
+#: templates/open-standard.html:284
 msgid "PDF講義下載："
 msgstr "PDF handout download:"
 
-#: templates/open-standard.html:295
+#: templates/open-standard.html:290
 msgid ""
 "\n"
 "                <a href=\"https://dwc.tdwg.org/\" target=\"_blank\">Darwin "
@@ -5976,36 +5927,36 @@ msgstr ""
 "Core</a> 達爾文核心標準(簡稱 DwC)，是目前國際通用的生物多樣性資料標準，\n"
 "                "
 
-#: templates/open-standard.html:298
+#: templates/open-standard.html:293
 msgid ""
 "也是TaiBIF和GBIF體系在推廣並提供的資料架構及概念。由於DwC根據不同類型的資料需"
 "求，提供自由且彈性的欄位及格式參考，"
 msgstr ""
 
-#: templates/open-standard.html:299
+#: templates/open-standard.html:294
 msgid ""
 "卻也讓資料發布初學者不易上手，無法快速了解自己的資料符合或可用哪些DwC欄位；"
 msgstr ""
 
-#: templates/open-standard.html:300
+#: templates/open-standard.html:295
 msgid ""
 "加上近年有越來越多新興主題的生物多樣性資料加入開放資料的行列，需求越趨多樣"
 "化，因此GBIF開始規劃不同主題的資料發布指引，"
 msgstr ""
 
-#: templates/open-standard.html:301
+#: templates/open-standard.html:296
 msgid ""
 "並與社群合作設計不同的主題資料架構，希望能更精準地對應不同生物多樣性背景的資"
 "料發布者的需求。"
 msgstr ""
 
-#: templates/open-standard.html:304
+#: templates/open-standard.html:299
 msgid ""
 "目前大多指引文件為英文版，TaiBIF及翻譯協作者們繁體中文翻譯完成將陸續列於下列"
 "清單，"
 msgstr ""
 
-#: templates/open-standard.html:305
+#: templates/open-standard.html:300
 msgid ""
 "\n"
 "                更多英文資訊請見<a href=\"https://www.gbif.org/zh-tw/"
@@ -6019,7 +5970,7 @@ msgstr ""
 "target=\"_blank\">GBIF New Data Model</a>\n"
 "                "
 
-#: templates/open-standard.html:313 templates/open-standard.html:318
+#: templates/open-standard.html:308 templates/open-standard.html:313
 msgid "說明文件"
 msgstr "Documentation"
 
@@ -6121,17 +6072,11 @@ msgstr "7. Publish and release data"
 msgid "確認資料填寫無誤之後，上傳原始資料並發布至 TaiBIF，恭喜發布資料成功！"
 msgstr ""
 
-#: templates/open-upload.html:4 templates/open-upload.html:13
-#: templates/open-upload.html:27 templates/publishing-data.html:5
-#: templates/publishing-data.html:31
-msgid "資料上傳"
-msgstr "Data Uploading"
-
-#: templates/open-upload.html:40 templates/publishing-data.html:75
+#: templates/open-upload.html:41 templates/publishing-data.html:75
 msgid "操作流程下載："
 msgstr "Workflow download:"
 
-#: templates/open-upload.html:42
+#: templates/open-upload.html:43
 #, fuzzy
 msgid "進入資料上傳網站 TaiBIF IPT"
 msgstr "Data Uploading via TaiBIF IPT"
@@ -6160,34 +6105,38 @@ msgid ""
 "性與生態服務納入提案外，亦會將評估土地流失與恢復納入。"
 msgstr ""
 
-#: templates/publisher.html:25
+#: templates/publisher.html:24
 #, python-format
-msgid "資料集數量：%(info.dataset_num)s"
+msgid "資料集數量：%(dataset_num)s"
 msgstr ""
 
-#: templates/publisher.html:31
+#: templates/publisher.html:28
 #, python-format
 msgid "發現紀錄總筆數：%(sum_occurrence)s"
 msgstr ""
 
-#: templates/publisher.html:37
+#: templates/publisher.html:32
 #, python-format
-msgid "國家或地區：%(publisher.country_or_area)s"
+msgid "國家或地區：%(country_or_area)s"
 msgstr ""
 
-#: templates/publisher.html:43
+#: templates/publisher.html:36
 #, python-format
-msgid "行政聯絡人：%(publisher.administrative_contact)s"
+msgid "行政聯絡人：%(administrative_contact)s"
 msgstr ""
 
-#: templates/publisher.html:49
+#: templates/publisher.html:40
 #, python-format
-msgid "技術聯絡人：%(publisher.technical_contact)s"
+msgid "技術聯絡人：%(technical_contact)s"
 msgstr ""
 
-#: templates/publisher.html:61
+#: templates/publisher.html:51
 msgid "核心集資料筆數"
 msgstr "Core record count"
+
+#: templates/publishing-data.html:5 templates/publishing-data.html:31
+msgid "資料上傳"
+msgstr "Data Uploading"
 
 #: templates/publishing-data.html:38 templates/publishing-data.html:252
 #, fuzzy
@@ -6295,7 +6244,7 @@ msgstr "Site Search"
 msgid "靜態頁面"
 msgstr "Static pages"
 
-#: templates/search_all.html:95
+#: templates/search_all.html:106
 msgid "查無資料"
 msgstr "No Data"
 
@@ -7363,6 +7312,24 @@ msgstr "Open Data"
 msgid "生物多樣性概論"
 msgstr "Biodiversity Information Cookbook"
 
+#: templates/tech-book.html:110
+msgid ""
+"面對資料我們也有類似的問題。當我們提到資料 (或著程式碼) 共用 (commons) 時，我"
+"們指的是「開放」資料中的一部分，可以自由地與其他「開放」資料相互混用。而可互"
+"通性就是達到「開放性」(openness) 所帶來的最大好處時最重要條件 : 因為當不同資"
+"料集可以更容易地組合在一起，我們就能更容易地發展出更多和更好的產品與服務（這"
+"些好處將在「"
+msgstr ""
+
+#: templates/tech-book.html:110
+#, fuzzy
+msgid "為什麼要開放資料"
+msgstr "What is Open Data"
+
+#: templates/tech-book.html:110
+msgid "」一章中有更詳細的說明）"
+msgstr ""
+
 #: templates/tech-book.html:186
 msgid "使用Excel模板準備調查活動資料構"
 msgstr "Prepare sampling-event data using Excel template"
@@ -7540,82 +7507,82 @@ msgstr ""
 msgid "增能課程通過名單"
 msgstr ""
 
-#: templates/tech-online-class.html:92 templates/tech-online-class.html:111
+#: templates/tech-online-class.html:91 templates/tech-online-class.html:110
 msgid "核心00-TaiBIF簡介"
 msgstr ""
 
-#: templates/tech-online-class.html:93 templates/tech-online-class.html:131
+#: templates/tech-online-class.html:92 templates/tech-online-class.html:130
 #, fuzzy
 msgid "核心01-開放資料流程"
 msgstr "Publish Your Data"
 
-#: templates/tech-online-class.html:94 templates/tech-online-class.html:151
+#: templates/tech-online-class.html:93 templates/tech-online-class.html:150
 msgid "核心02-資料發布類型"
 msgstr ""
 
-#: templates/tech-online-class.html:95 templates/tech-online-class.html:171
+#: templates/tech-online-class.html:94 templates/tech-online-class.html:170
 msgid "核心03-資料標準及共通欄位"
 msgstr ""
 
-#: templates/tech-online-class.html:96 templates/tech-online-class.html:191
+#: templates/tech-online-class.html:95 templates/tech-online-class.html:190
 msgid "核心04-開放資料的前置準備及清理"
 msgstr ""
 
-#: templates/tech-online-class.html:97 templates/tech-online-class.html:211
+#: templates/tech-online-class.html:96 templates/tech-online-class.html:210
 msgid "核心05-生物多樣性敏感資料處理原則"
 msgstr ""
 
-#: templates/tech-online-class.html:98 templates/tech-online-class.html:231
+#: templates/tech-online-class.html:97 templates/tech-online-class.html:230
 #, fuzzy
 msgid "核心06-資料上傳 IPT"
 msgstr "Data Uploading via TaiBIF IPT"
 
-#: templates/tech-online-class.html:99 templates/tech-online-class.html:245
+#: templates/tech-online-class.html:98 templates/tech-online-class.html:244
 #, fuzzy
 msgid "增能01-開放資料授權規範"
 msgstr "Publish Your Data"
 
-#: templates/tech-online-class.html:100 templates/tech-online-class.html:265
+#: templates/tech-online-class.html:99 templates/tech-online-class.html:264
 msgid "增能02-TBIA及入口網介紹"
 msgstr ""
 
-#: templates/tech-online-class.html:101 templates/tech-online-class.html:285
+#: templates/tech-online-class.html:100 templates/tech-online-class.html:284
 msgid "增能03-如何下載及引用開放資料"
 msgstr ""
 
-#: templates/tech-online-class.html:102 templates/tech-online-class.html:305
+#: templates/tech-online-class.html:101 templates/tech-online-class.html:304
 #, fuzzy
 msgid "增能04-資料論文"
 msgstr "About Data Paper"
 
-#: templates/tech-online-class.html:103 templates/tech-online-class.html:325
+#: templates/tech-online-class.html:102 templates/tech-online-class.html:324
 msgid "增能05-OpenRefine 資料清理工具介紹與實作"
 msgstr ""
 
-#: templates/tech-online-class.html:114 templates/tech-online-class.html:134
-#: templates/tech-online-class.html:154 templates/tech-online-class.html:174
-#: templates/tech-online-class.html:194 templates/tech-online-class.html:214
-#: templates/tech-online-class.html:248 templates/tech-online-class.html:268
-#: templates/tech-online-class.html:288 templates/tech-online-class.html:308
-#: templates/tech-online-class.html:328
+#: templates/tech-online-class.html:113 templates/tech-online-class.html:133
+#: templates/tech-online-class.html:153 templates/tech-online-class.html:173
+#: templates/tech-online-class.html:193 templates/tech-online-class.html:213
+#: templates/tech-online-class.html:247 templates/tech-online-class.html:267
+#: templates/tech-online-class.html:287 templates/tech-online-class.html:307
+#: templates/tech-online-class.html:327
 msgid "教學影片"
 msgstr "Tutorial Videos"
 
-#: templates/tech-online-class.html:120 templates/tech-online-class.html:140
-#: templates/tech-online-class.html:160 templates/tech-online-class.html:180
-#: templates/tech-online-class.html:200 templates/tech-online-class.html:220
-#: templates/tech-online-class.html:234 templates/tech-online-class.html:254
-#: templates/tech-online-class.html:274 templates/tech-online-class.html:294
-#: templates/tech-online-class.html:314 templates/tech-online-class.html:334
+#: templates/tech-online-class.html:119 templates/tech-online-class.html:139
+#: templates/tech-online-class.html:159 templates/tech-online-class.html:179
+#: templates/tech-online-class.html:199 templates/tech-online-class.html:219
+#: templates/tech-online-class.html:233 templates/tech-online-class.html:253
+#: templates/tech-online-class.html:273 templates/tech-online-class.html:293
+#: templates/tech-online-class.html:313 templates/tech-online-class.html:333
 msgid "教學講義"
 msgstr "Course Handouts"
 
-#: templates/tech-online-class.html:126 templates/tech-online-class.html:146
-#: templates/tech-online-class.html:166 templates/tech-online-class.html:186
-#: templates/tech-online-class.html:206 templates/tech-online-class.html:226
-#: templates/tech-online-class.html:240 templates/tech-online-class.html:260
-#: templates/tech-online-class.html:280 templates/tech-online-class.html:300
-#: templates/tech-online-class.html:320 templates/tech-online-class.html:340
+#: templates/tech-online-class.html:125 templates/tech-online-class.html:145
+#: templates/tech-online-class.html:165 templates/tech-online-class.html:185
+#: templates/tech-online-class.html:205 templates/tech-online-class.html:225
+#: templates/tech-online-class.html:239 templates/tech-online-class.html:259
+#: templates/tech-online-class.html:279 templates/tech-online-class.html:299
+#: templates/tech-online-class.html:319 templates/tech-online-class.html:339
 msgid "PDF 講義下載："
 msgstr ""
 
@@ -8070,8 +8037,7 @@ msgid "TaiBIFer 姓名"
 msgstr ""
 
 #: templates/tools-common_name_checker.html:24
-#: templates/tools-common_name_checker.html:42 templates/tools.html:4
-#: templates/web-navi.html:60
+#: templates/tools-common_name_checker.html:42 templates/web-navi.html:60
 msgid "開放資料工具"
 msgstr "TaiBIF Tools"
 
@@ -8230,6 +8196,86 @@ msgstr "Data Use Cases"
 #: templates/web-navi.html:123
 msgid "專題文章"
 msgstr "Articles"
+
+#, fuzzy
+#~ msgid "網站"
+#~ msgstr "Shortcuts"
+
+#~ msgid "國家科學及技術委員會"
+#~ msgstr "National Science and Technology Council"
+
+#~ msgid "中央研究院"
+#~ msgstr "Academia Sinica"
+
+#~ msgid "中研院生物多樣性研究中心"
+#~ msgstr "Biodiversity Research Center, Academia Sinica"
+
+#~ msgid "農業部林業及自然保育署"
+#~ msgstr "Forestry and Nature Conservation Agency, MOA"
+
+#~ msgid "國土生態綠網"
+#~ msgstr "Ecological Network Program"
+
+#~ msgid "農業部生物多樣性研究所"
+#~ msgstr "Taiwan Biodiversity Research Institute, MOA"
+
+#~ msgid "農業部林業試驗所"
+#~ msgstr "Taiwan Forestry Research Institute, MOA"
+
+#~ msgid "海洋委員會海洋保育署"
+#~ msgstr "Ocean Conservation Administration, Ocean Affairs Council"
+
+#~ msgid "內政部國家公園署"
+#~ msgstr "National Park Service, Ministry of the Interior"
+
+#~ msgid "國立臺灣博物館"
+#~ msgstr "National Taiwan Museum"
+
+#~ msgid "國立自然科學博物館"
+#~ msgstr "National Museum of Natural Science"
+
+#~ msgid "經濟部水利署"
+#~ msgstr "Water Resources Agency, Ministry of Economic Affairs"
+
+#~ msgid "研究資料寄存所 depositar"
+#~ msgstr "Research Data Repository (depositar)"
+
+#, fuzzy
+#~ msgid "資料庫"
+#~ msgstr "Find Data"
+
+#~ msgid "臺灣物種名錄 TaiCOL"
+#~ msgstr "Taiwan Species Checklist (TaiCOL)"
+
+#~ msgid "臺灣生命大百科 TaiEOL"
+#~ msgstr "Taiwan Encyclopedia of Life (TaiEOL)"
+
+#, fuzzy
+#~ msgid "生物多樣性資料庫共通查詢系統"
+#~ msgstr "Where are the resources of biodiversity data / information?"
+
+#, fuzzy
+#~ msgid "台灣生物多樣性網絡 TBN"
+#~ msgstr "Levels of Biodiversity"
+
+#~ msgid "中央研究院植物標本館 HAST"
+#~ msgstr "Herbarium, Academia Sinica (HAST)"
+
+#~ msgid "中央研究院臺灣魚類資料庫"
+#~ msgstr "Taiwan Fish Database, Academia Sinica"
+
+#~ msgid "臺灣貝類資料庫"
+#~ msgstr "Taiwan Mollusca Database"
+
+#, fuzzy
+#~ msgid "資料論文期刊"
+#~ msgstr "Call for Data Paper"
+
+#~ msgid "當您透過 TaiBIF 的資料發布工具"
+#~ msgstr "When you use TaiBIF data publishing tool"
+
+#~ msgid "開放授權"
+#~ msgstr "Open Data with CC License"
 
 #~ msgid "目標及任務"
 #~ msgstr "Purpose & Mission"

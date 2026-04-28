@@ -231,14 +231,20 @@ def newsletter_subscribe(request):
     confirm_email = (request.POST.get("confirm_email") or "").strip().lower()
 
     if not email or not confirm_email:
-        return JsonResponse({"ok": False, "message": "請填寫電子信箱與確認信箱。"}, status=400)
+        return JsonResponse(
+            {"ok": False, "message": "請填寫電子信箱與確認信箱。"}, status=400
+        )
 
     if email != confirm_email:
-        return JsonResponse({"ok": False, "message": "兩次輸入的電子信箱不一致。"}, status=400)
+        return JsonResponse(
+            {"ok": False, "message": "兩次輸入的電子信箱不一致。"}, status=400
+        )
 
     email_validator = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
     if not email_validator.match(email):
-        return JsonResponse({"ok": False, "message": "電子信箱格式不正確。"}, status=400)
+        return JsonResponse(
+            {"ok": False, "message": "電子信箱格式不正確。"}, status=400
+        )
 
     _, created = NewsletterSubscription.objects.get_or_create(email=email)
     if created:
@@ -859,3 +865,7 @@ def monthly_status(request):
         "dataset_rows": dataset_rows,
     }
     return render(request, "monthly-status.html", context)
+
+
+def become_publisher(request):
+    return render(request, "become-publisher.html")
