@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-28 15:26+0800\n"
+"POT-Creation-Date: 2026-04-28 15:56+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -83,20 +83,20 @@ msgstr "About GBIF"
 #: templates/data-paper.html:76 templates/data-policy.html:26
 #: templates/data-product.html:23 templates/data-stats.html:158
 #: templates/data-visual.html:39 templates/download-resources.html:23
-#: templates/faq.html:55 templates/inc_breadcrumb.html:7
-#: templates/monthly-status.html:24 templates/occurrence.html:131
-#: templates/open-benefits.html:24 templates/open-consulation.html:73
-#: templates/open-license.html:24 templates/open-metadata.html:25
-#: templates/open-process.html:25 templates/open-standard.html:23
-#: templates/open-timezone.html:25 templates/open-upload.html:25
-#: templates/publisher.html:11 templates/search_all.html:18
-#: templates/species.html:96 templates/taibif-achievement.html:24
-#: templates/taibif-api.html:78 templates/tech-book.html:80
-#: templates/tech-class-license.html:81 templates/tech-online-class.html:80
-#: templates/tech-open.html:26 templates/tech-volunteer.html:81
-#: templates/tech-workshop.html:24 templates/thanks-list.html:26
-#: templates/tools-common_name_checker.html:40 templates/tools.html:23
-#: templates/web-navi.html:27
+#: templates/faq.html:55 templates/find-data.html:19
+#: templates/inc_breadcrumb.html:7 templates/monthly-status.html:24
+#: templates/occurrence.html:131 templates/open-benefits.html:24
+#: templates/open-consulation.html:73 templates/open-license.html:24
+#: templates/open-metadata.html:25 templates/open-process.html:25
+#: templates/open-standard.html:23 templates/open-timezone.html:25
+#: templates/open-upload.html:25 templates/publisher.html:11
+#: templates/search_all.html:18 templates/species.html:96
+#: templates/taibif-achievement.html:24 templates/taibif-api.html:78
+#: templates/tech-book.html:80 templates/tech-class-license.html:81
+#: templates/tech-online-class.html:80 templates/tech-open.html:26
+#: templates/tech-volunteer.html:81 templates/tech-workshop.html:24
+#: templates/thanks-list.html:26 templates/tools-common_name_checker.html:40
+#: templates/tools.html:23 templates/web-navi.html:27
 msgid "首頁"
 msgstr "Home Page"
 
@@ -601,10 +601,11 @@ msgid ""
 "諮詢服務及發表合作，協助將生物多樣性資料整理成資料集並發布至 GBIF。"
 msgstr ""
 
-#: templates/about-taibif.html:278 templates/data-paper.html:4
-#: templates/data-paper.html:65 templates/data-paper.html:78
-#: templates/data-paper.html:86 templates/index.html:227
-#: templates/taibif-achievement.html:162 templates/web-navi.html:85
+#: templates/about-taibif.html:278 templates/base.html:468
+#: templates/data-paper.html:4 templates/data-paper.html:65
+#: templates/data-paper.html:78 templates/data-paper.html:86
+#: templates/index.html:233 templates/taibif-achievement.html:162
+#: templates/web-navi.html:85
 msgid "資料期刊與論文"
 msgstr "Data Papers & Journals"
 
@@ -857,32 +858,27 @@ msgstr "Acknowledgement"
 
 #: templates/base.html:462 templates/data-case.html:30
 #: templates/data-paper.html:77 templates/data-product.html:24
-#: templates/taibif-api.html:79
+#: templates/find-data.html:20 templates/taibif-api.html:79
 msgid "開放資料怎麼應用"
 msgstr "Data Application"
 
-#: templates/base.html:465 templates/data-case.html:4
-#: templates/data-case.html:17 templates/data-case.html:31
+#: templates/base.html:465 templates/find-data.html:4
+#: templates/find-data.html:10 templates/find-data.html:21
 #: templates/index.html:221
+msgid "首先要找到資料"
+msgstr "Find the data"
+
+#: templates/base.html:466 templates/data-case.html:4
+#: templates/data-case.html:17 templates/data-case.html:31
+#: templates/index.html:227
 msgid "給我一些例子"
 msgstr "Show me some examples"
 
-#: templates/base.html:467 templates/taibif-achievement.html:187
-#: templates/taibif-achievement.html:197 templates/taibif-achievement.html:257
-#: templates/taibif-achievement.html:290
-#, fuzzy
-msgid "資料論文"
-msgstr "About Data Paper"
-
-#: templates/base.html:469 templates/data-product.html:4
+#: templates/base.html:470 templates/data-product.html:4
 #: templates/data-product.html:12 templates/data-product.html:25
-#: templates/index.html:234
+#: templates/index.html:240
 msgid "有哪些資料產品"
 msgstr "Data Products"
-
-#: templates/base.html:473 templates/index.html:246
-msgid "首先要找到資料"
-msgstr "Find the data"
 
 #: templates/base.html:506 templates/download-resources.html:4
 #: templates/download-resources.html:12 templates/download-resources.html:25
@@ -1513,10 +1509,9 @@ msgstr ""
 "collecting and keeping them may be laborious and costly. Also, collecting "
 "larger numbers of specimens are not easy compared to observation or survey."
 
-#: templates/cookbook-detail-1.html:187
-#, fuzzy
+#: templates/cookbook-detail-1.html:187 templates/find-data.html:27
 msgid "GBIF 全球生物多樣性資訊機構"
-msgstr "Copyright © Taiwan Biodiversity Information Facility"
+msgstr "Global Biodiversity Information Facility, GBIF"
 
 #: templates/cookbook-detail-1.html:188
 msgid "OBIS 海洋生物地理資訊系統"
@@ -4696,6 +4691,48 @@ msgid ""
 "型，然後再重新 Mapping資料檔案並publish。"
 msgstr ""
 
+#: templates/find-data.html:30
+msgid ""
+"是全球最大的開放生物多樣性資料平台之一，由各國政府與合作機構共同支持，致力於"
+"整合來自世界各地的物種觀察紀錄、館藏標本資料、環境調查成果與相關研究資訊。使"
+"用者可透過網站搜尋全球的物種分布、下載資料集、瀏覽資料視覺化成果。GBIF.org 同"
+"時提供資料發布機制與技術標準，協助各國機構將在地資料連結至全球網絡，促進國際"
+"合作與知識共享。"
+msgstr ""
+"GBIF.org is one of the world’s largest open biodiversity data platforms, "
+"supported by governments and partner institutions worldwide. It is dedicated "
+"to integrating species occurrence records, museum and herbarium specimen "
+"data, environmental survey results, and related research information from "
+"across the globe. Users can search species distributions, download datasets, "
+"and explore data visualizations for use. GBIF.org also provides data "
+"publishing infrastructure and technical standards that help institutions "
+"connect local biodiversity data to a global network, fostering international "
+"collaboration and knowledge sharing."
+
+#: templates/find-data.html:37
+msgid "TBIA 生物多樣性資料庫共通查詢系統"
+msgstr "Taiwan Biodiversity Database Portal"
+
+#: templates/find-data.html:40
+msgid ""
+"為臺灣生物多樣性資訊聯盟（TBIA）建置的生物多樣性資料入口網站，整合臺灣學術研"
+"究單位、各大博物館及自然史典藏單位、政府單位，與部分企業、民間團體所提供的生"
+"態與物種資料，提供一站式查詢與應用服務。網站聚焦臺灣在地需求，使用者可快速查"
+"找臺灣物種分布、觀測紀錄與相關資料來源，作為生態研究、保育管理、環境評估及教"
+"育推廣的重要基礎。透過跨單位資料串聯與標準化整合，tbiadata.tw 致力於提升臺灣"
+"生物多樣性資料的可近性與實際應用價值。"
+msgstr ""
+"This is the biodiversity data portal established by the Taiwan Biodiversity "
+"Information Alliance (TBIA), integrating ecological and species data "
+"contributed by Taiwanese research institutions, natural history institutions, "
+"public sectors, private sectors, and citizen science projects. It offers a "
+"one-stop platform for data discovery and application. Users can efficiently "
+"access information on species distributions, observation records, and related "
+"data sources in Taiwan, supporting ecological research, conservation "
+"management, environmental assessment, and education. Through cross-"
+"institutional data integration and standardized exchange, tbiadata.tw aims to "
+"enhance the accessibility and practical value of Taiwan’s biodiversity data."
+
 #: templates/inc_breadcrumb.html:9
 msgid "資料開放"
 msgstr "Open Data"
@@ -4765,10 +4802,6 @@ msgstr "Taiwan Biodiversity Information Facility"
 #: templates/index.html:40
 msgid "生物多樣性資料開放的推手"
 msgstr "The Facilitator of Biodiversity Open Data"
-
-#: templates/index.html:242
-msgid "內容籌備中"
-msgstr "Content in Preparation"
 
 #: templates/index.html:267
 msgid "全部"
@@ -6419,6 +6452,12 @@ msgstr ""
 #: templates/taibif-achievement.html:185
 msgid "TaiBIF 博士後研究員何芷蔚協助中央研究院生物多樣性國際研究生學程中的"
 msgstr ""
+
+#: templates/taibif-achievement.html:187 templates/taibif-achievement.html:197
+#: templates/taibif-achievement.html:257 templates/taibif-achievement.html:290
+#, fuzzy
+msgid "資料論文"
+msgstr "About Data Paper"
 
 #: templates/taibif-achievement.html:206
 msgid ""
@@ -8197,6 +8236,9 @@ msgstr "Data Use Cases"
 msgid "專題文章"
 msgstr "Articles"
 
+#~ msgid "內容籌備中"
+#~ msgstr "Content in Preparation"
+
 #, fuzzy
 #~ msgid "網站"
 #~ msgstr "Shortcuts"
@@ -8266,10 +8308,6 @@ msgstr "Articles"
 
 #~ msgid "臺灣貝類資料庫"
 #~ msgstr "Taiwan Mollusca Database"
-
-#, fuzzy
-#~ msgid "資料論文期刊"
-#~ msgstr "Call for Data Paper"
 
 #~ msgid "當您透過 TaiBIF 的資料發布工具"
 #~ msgstr "When you use TaiBIF data publishing tool"

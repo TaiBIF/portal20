@@ -869,3 +869,7 @@ def monthly_status(request):
 
 def become_publisher(request):
     return render(request, "become-publisher.html")
+
+
+def find_data(request):
+    return render(request, "find-data.html")
