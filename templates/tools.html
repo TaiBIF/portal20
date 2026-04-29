@@ -2,6 +2,17 @@
 {% load i18n %}
 {% load static %}
 {% block title %}{% trans "有哪工具可以使用" %}{% endblock %}
+{% block style %}
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
+
+    .tools-page .tools-card {
+        scroll-margin-top: 130px;
+    }
+</style>
+{% endblock style %}
 
 {% block main %}
 
@@ -28,7 +39,7 @@
     <!-- breadcrumb end -->
     <!-- col begin -->
     <div class="col-12">
-        <div class="card-tools-wrapper tools-card">
+        <div id="coordinate-converter" class="card-tools-wrapper tools-card">
             <div class="title">{% trans "地理分布線上座標轉換" %}</div>
             <div class="content">
                 <p>
@@ -39,7 +50,7 @@
             </div>
         </div>
 
-        <div class="card-tools-wrapper tools-card">
+        <div id="common-name-checker" class="card-tools-wrapper tools-card">
             <div class="title">{% trans "物種中文名比對" %}</div>
             <div class="content">
                 <p>
@@ -50,7 +61,7 @@
             </div>
         </div>
 
-        <div class="card-tools-wrapper tools-card">
+        <div id="nomenmatch" class="card-tools-wrapper tools-card">
             <div class="title">{% trans "有效學名比對" %}</div>
             <div class="content">
                 <p>
@@ -60,7 +71,7 @@
             </div>
         </div>
 
-        <div class="card-tools-wrapper tools-card">
+        <div id="gbif-validator" class="card-tools-wrapper tools-card">
             <div class="title">{% trans "GBIF 資料驗證工具" %}</div>
             <div class="content">
                 <p>
@@ -70,7 +81,7 @@
             </div>
         </div>
 
-        <div class="card-tools-wrapper tools-card">
+        <div id="digital-taibifer" class="card-tools-wrapper tools-card">
             <div class="title">{% trans "數位 TaiBIFer" %}</div>
             <div class="content">
                 <p>
@@ -82,7 +93,7 @@
             </div>
         </div>
 
-        <div class="card-tools-wrapper tools-card">
+        <div id="odt" class="card-tools-wrapper tools-card">
             <div class="title">TaiBIF Open Data Toolkit</div>
             <div class="content">
                 <p>
