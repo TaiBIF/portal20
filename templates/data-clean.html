@@ -9,19 +9,20 @@
     <div class="container">
         <div class="caption-mascot-wrapper">
         <h1 class="title">{% trans "清理資料" %}</h1>
-        <img src="{% static 'images/mascot-flower.png' %}" alt="" class="symbol">
+        <img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
         </div>
     </div>
 </div>
 <!-- topnav end -->
 
 <!-- container begin -->
-<div class="container my-5">
+<div class="container my-5 container-1340">
     <!-- breadcrumb begin -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
-        <li class="breadcrumb-item">{% trans "開放資料" %}</li>
+        <li class="breadcrumb-item">{% trans "我想開放資料" %}</li>
+        <li class="breadcrumb-item">{% trans "有哪些步驟" %}</li>
         <li class="breadcrumb-item active" aria-current="page">{% trans "清理資料" %}</li>
         </ol>
     </nav>
@@ -42,14 +43,14 @@
         </div>
         <!-- col left end -->
         <!-- col right begin -->
-        <div data-cat="principle" class="col-12 col-md-9 nav-item-content">
-            <h1 class="heading-lg-ul">{% trans "通則" %}</h1>
+        <div data-cat="principle" class="col-12 col-md-9 nav-item-content content-readable-panel">
+            <h4 class="heading-lg-ul">{% trans "通則" %}</h4>
             <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
             <iframe src="https://www.slideshare.net/slideshow/embed_code/key/Kbxxix0B5hZQz9?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
             <p class="mt-3">PDF講義下載：<a href="/media/開放資料流程-清理資料01-通則.pdf" target="_blank" class="myicon icon-download-document"></a></p>
         </div>
 
-        <div data-cat="sensitive-data" class="col-12 col-md-9 nav-item-content hide">
+        <div data-cat="sensitive-data" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
             <h1 class="heading-lg-ul">{% trans "敏感資料處理原則" %}</h1>
             <small>若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。</small>
             <iframe src="https://www.slideshare.net/slideshow/embed_code/key/EtPvWuXkzRSxnj?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>

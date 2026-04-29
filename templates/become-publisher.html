@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block title %}{% trans "我想成為資料發布單位" %}{% endblock %}
+{% block script %}
+<script>
+$(document).ready(function () {
+    function updateBreadcrumb(dataCat, text) {
+        // 移除現有的動態生成的麵包屑
+        $('ol.breadcrumb li.dynamic-item').remove();
+
+        // 動態新增麵包屑
+        const dynamicBreadcrumb = 
+            '<li class="breadcrumb-item active dynamic-item" aria-current="page" data-cat="' + dataCat + '">' 
+            + text + 
+            '</li>';
+
+        $('ol.breadcrumb').append(dynamicBreadcrumb);
+    }
+
+    // 預設 hash 值
+    const defaultHash = 'who';
+
+    // 進入頁面時，初始化 url 上的 hash
+    if (!window.location.hash) {
+        window.location.hash = defaultHash;
+    }
+
+    // 獲取當前 url 上的 hash，若不存在則使用預設值
+    const hash = window.location.hash.substring(1) || defaultHash;
+    if (hash) {
+        $('.dropdown-item[data-cat="' + hash + '"]').click();
+    }
+
+    // 根據 hash 初始化麵包屑
+    const $matchedItem = $('.dropdown-item[data-cat="' + hash + '"]');
+    if ($matchedItem.length) {
+        const text = $matchedItem.text();
+        updateBreadcrumb(hash, text); 
+    }
+
+    // 點擊 dropdown-item 更新麵包屑
+    $('.dropdown-item').on('click', function (e) {
+
+        // 取得 data-cat 和文字內容
+        const dataCat = $(this).data('cat');
+        const text = $(this).text();
+
+        // 更新 url
+        window.location.hash = dataCat;
+
+        // 更新麵包屑
+        updateBreadcrumb(dataCat, text);
+    });
+});
+</script>
+{% endblock %}
+
+
+{% block main %}
+<div class="bg-main-pale">
+    <div class="container">
+        <div class="caption-mascot-wrapper">
+            <h1 class="title">{% trans "我想成為資料發布單位" %}</h1>
+            <img src="{% static 'images/mascot-flower.png'%}" alt="" class="symbol">
+        </div>
+    </div>
+</div>
+
+<div class="container my-5 container-1340">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
+            <li class="breadcrumb-item">{% trans "我想參與社群" %}</li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans "我想成為資料發布單位" %}</li>
+        </ol>
+    </nav>
+
+    <div class="col-12 col-md-3">
+        <div class="dropdown dropdown-flexible-wrapper">
+            <a class="btn btn-toggle-flexible visible-xs" href="#" data-toggle="dropdown" aria-expanded="false">
+            {% trans "我想成為資料發布單位" %}
+            </a>
+            <div class="dropdown-menu-flexible d-md-block">
+                <a data-cat="who" class="dropdown-item nav-item current-sunset" href="#who">{% trans "誰有資格" %}</a>
+                <a data-cat="how" class="dropdown-item nav-item" href="#how">{% trans "如何申請" %}</a>
+            </div>
+        </div>
+    </div>
+
+    <div data-cat="who" class="col-12 col-md-9 nav-item-content content-readable-panel">
+        <h4 class="heading-lg-ul">{% trans "誰有資格" %}</h4>
+        <p>
+            {% trans "任何" %}<strong>{% trans "機構或組織" %}</strong>{% trans "若想透過 TaiBIF 分享資料到 GBIF上，可以在填寫註冊申請表獲得許可，成為資料發布者。" %}
+        </p>
+
+        <p>{% trans "此申請程序目的在於確保發布單位：" %}</p>
+        <ol>
+            <li>{% trans "所發布的資料與 GBIF 的目標和範圍相關" %}</li>
+            <li>{% trans "有穩定且長期可以聯繫的管理窗口" %}</li>
+            <li>{% trans "資料的發布及使用可以得到國家、地區及相關領域的互助支持" %}</li>
+            <li>{% trans "資料盡可能為開放、可被分享及再利用" %}</li>
+            <li>{% trans "資料發布者能回應使用者意見及提升資料品質" %}</li>
+        </ol>
+
+        <p>{% trans "若你希望以個人來發布資料，你可以選擇：" %}</p>
+        <ul>
+            <li>{% trans "透過GBIF附屬組織或已註冊的資料發布單位（第三方）來發布資料" %}</li>
+            <li>{% trans "透過具有 GBIF 託管服務的期刊發布者發布資料論文" %}</li>
+            <li>{% trans "透過向 GBIF 發布紀錄的眾多公民科學平台之一來分享紀錄" %}</li>
+        </ul>
+    </div>
+
+    <div data-cat="how" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
+        <h4 class="heading-lg-ul">{% trans "如何申請" %}</h4>
+        <div class="article-content-wrapper">
+            <h3>{% trans "文字說明" %}</h3>
+        </div>
+        <p>{% trans "透過下列步驟，完成資料發布單位的註冊(Register)：" %}</p>
+        <ol>
+            <li>
+                {% trans "填寫" %}<a href="https://www.gbif.org/zh-tw/become-a-publisher" target="_blank">{% trans "資料發布單位註冊表單" %}</a>{% trans "（此為由GBIF位於丹麥的秘書處管理，請以英文填寫）" %}
+                <ol style="list-style-type: lower-alpha;">
+                    <li>{% trans "先登入/註冊GBIF帳號（可用Google帳號登入）" %}</li>
+                    <li>
+                        {% trans "到網頁最末端，勾選「我所屬的組織尚未完成註冊」，系統會自動引導下一步" %}
+                        <img src="{% static 'images/become-publisher/image4.png'%}" alt="" class="img-fluid"/>
+                    </li>
+                    <li>{% trans "確認條款及細則，直接三個選項勾選" %}
+                        <img src="{% static 'images/become-publisher/image2.png'%}" alt="" class="img-fluid"/>
+                    </li>
+                    <li>{% trans "接著簡單用英文填寫" %}
+                        <ul>
+                            <li>{% trans "「組織詳情」：單位基本介紹，並附上單位的logo連結" %}</li>
+                            <li>{% trans "「認可節點」：若為位於臺灣的單位組織，請維持預設選項，GBIF 秘書處會協助貴單位與TaiBIF團隊聯繫" %}</li>
+                            <li>{% trans "「GBIF 專案」：回答是否曾獲得 GBIF 計畫經費補助" %}</li>
+                            <li>{% trans "「聯絡資訊」：可提供 2-3 位窗口，包含行政聯繫與技術聯繫，也可以官方 email 為聯絡方式，以避免因人力轉換而失去聯繫" %}</li>
+                            <li>{% trans "「什麼與如何」：勾選預期會發布的資料類型（勾選哪些不會影響未來資料發布類型的更動），並簡單描述貴單位所擁有的資料概況" %}</li>
+                            <li>{% trans "最後回答下列三個問題" %}
+                                <ol>
+                                    <li>{% trans "「您是否能夠執行、維護伺服器，或存取一伺服器，以將您的原始資料集公開在 " %}<a href="http://GBIF.org" target="_blank">GBIF.org</a>{% trans "？」請答否，主要會由TaiBIF團隊維運伺服器並提供服務" %}</li>
+                                    <li>{% trans "「您是否計畫安裝並執行發布軟體（例如整合式資料發布工具— IPT），並將資料直接發布至 " %}<a href="http://GBIF.org" target="_blank">GBIF.org</a>{% trans "？」也請答否，理由同上。" %}</li>
+                                    <li>{% trans "「您需要協助發布資料嗎？」若您需要請TaiBIF團隊協助，請填是。" %}</li>
+                                </ol>
+                            </li>
+                            <li>{% trans "完成上述欄位後，請點按「註冊組織」送出申請" %}</li>
+                        </ul>
+                    </li>
+                </ol>
+            </li>
+            <li>{% trans "請等待1-3個工作天，您會收到來自 GBIF 秘書處的確認信並會附上單位註冊密碼(token)，請將此信" %}<a href="taibif.brcas@gmail.com">{% trans "轉寄" %}</a>{% trans "給我們TaiBIF團隊。" %}</li>
+            <li>{% trans "TaiBIF 團隊會使用貴單位的註冊密碼，將貴單位納入資料發布平台的組織清單中，您將能以自己單位的名義，發布資料集" %}</li>
+        </ol>
+
+        <div class="article-content-wrapper">
+            <h3>{% trans "流程圖" %}</h3>
+        </div>
+        <img src="{% static 'images/become-publisher/image5.png'%}" alt="" class="img-fluid"/>
+    </div>
+</div>
+{% endblock %}

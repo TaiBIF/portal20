@@ -96,7 +96,7 @@
     {% endif %}
 
 
-    {% if article.category == "PUB" and article.memo_text|slice:"0:9" == "__files__" %}
+    {% if "PUB" in article.category_list and article.memo_text|slice:"0:9" == "__files__" %}
     <ul class="article-attachment-wrapper">
         {% for i in article.get_legacy_info.files %}
         <li>{% trans "附件下載：" %}<a href="{{ i.url }}" class="myicon icon-download-document">{{ i.descr }}</a></li>

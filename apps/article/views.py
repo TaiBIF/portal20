@@ -43,12 +43,13 @@ def article_list(request, category):
 
     if not valid_category:
         raise Http404('category does not exist')
+    category_query = Article.category_q(category.upper())
     query = Article.objects.filter(
-        category=category.upper(),
+        category_query,
         is_pinned='N'
     ).all()
     cover_list = Article.objects.filter(
-        category=category.upper(),
+        category_query,
         is_pinned='Y'
     )
 
@@ -79,10 +80,12 @@ def article_list(request, category):
 def article_detail(request, pk):
     article = get_object_or_404(Article, pk=pk)
     imagesList = PostImage.objects.filter(post=pk)
-    recommended = Article.objects.filter(category=article.category).order_by('?')[0:5]
+    recommended = Article.objects.filter(
+        Article.category_q(article.primary_category)
+    ).order_by('?')[0:5]
     return render(request, 'article-detail.html', {
         'article': article,
-        'article_type': dict(article.CATEGORY_CHOICE)[article.category],
+        'article_type': article.get_category_display(),
         'recommended': recommended,
         'imagesList': imagesList
     })
@@ -100,12 +103,13 @@ def article_search(request):
                 article_cat.append(i.upper())
 
     if article_cat :
+        category_query = Article.category_q(article_cat)
         if article_search_keyword:
-            rows = Article.objects.filter(category__in=article_cat,title__icontains=article_search_keyword).all()
-            cover_list = Article.objects.filter(category__in=article_cat,title__icontains=article_search_keyword,is_pinned='Y')
+            rows = Article.objects.filter(category_query,title__icontains=article_search_keyword).all()
+            cover_list = Article.objects.filter(category_query,title__icontains=article_search_keyword,is_pinned='Y')
         else:
-            rows = Article.objects.filter(category__in=article_cat).all() 
-            cover_list = Article.objects.filter(category__in=article_cat,is_pinned='Y')
+            rows = Article.objects.filter(category_query).all()
+            cover_list = Article.objects.filter(category_query,is_pinned='Y')
     else:
         rows = Article.objects.filter(title__icontains=article_search_keyword).all()    
         cover_list = Article.objects.filter(title__icontains=article_search_keyword,is_pinned='Y')

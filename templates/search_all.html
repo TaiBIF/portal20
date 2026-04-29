@@ -62,6 +62,17 @@
                 <span class="checkmark"></span>
                 {% trans "發布單位" %}
             </label>
+            <label class="custom-input-ctn">
+                <input
+                    type="checkbox"
+                    class="select-search-type"
+                    name="target"
+                    value="article"
+                    {% if "article" in selected_targets %}checked="checked"{% endif %}
+                >
+                <span class="checkmark"></span>
+                {% trans "最新消息" %}
+            </label>
         </form>
     </div>
 

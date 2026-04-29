@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block title %}{% trans "首先要找到資料" %}{% endblock %}
+
+{% block main %}
+<div class="bg-main-pale">
+    <div class="container">
+        <div class="caption-mascot-wrapper">
+            <h1 class="title">{% trans "首先要找到資料" %}</h1>
+            <img src="{% static 'images/mascot-butterfly.png'%}" alt="" class="symbol">
+        </div>
+    </div>
+</div>
+
+<div class="container my-5 tools-page container-1340">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
+            <li class="breadcrumb-item">{% trans "開放資料怎麼應用" %}</li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans "首先要找到資料" %}</li>
+        </ol>
+    </nav>
+
+    <div class="col-12">
+        <div class="card-tools-wrapper tools-card">
+            <div class="title">{% trans "GBIF 全球生物多樣性資訊機構" %}</div>
+            <div class="content">
+                <p>
+                    {% trans "是全球最大的開放生物多樣性資料平台之一，由各國政府與合作機構共同支持，致力於整合來自世界各地的物種觀察紀錄、館藏標本資料、環境調查成果與相關研究資訊。使用者可透過網站搜尋全球的物種分布、下載資料集、瀏覽資料視覺化成果。GBIF.org 同時提供資料發布機制與技術標準，協助各國機構將在地資料連結至全球網絡，促進國際合作與知識共享。" %}
+                </p>
+                <a href="https://www.gbif.org/" target="_blank" class="link-item"><span class="myicon icon-link"></span> GBIF.org</a>
+            </div>
+        </div>
+
+        <div class="card-tools-wrapper tools-card">
+            <div class="title">{% trans "TBIA 生物多樣性資料庫共通查詢系統" %}</div>
+            <div class="content">
+                <p>
+                    {% trans "為臺灣生物多樣性資訊聯盟（TBIA）建置的生物多樣性資料入口網站，整合臺灣學術研究單位、各大博物館及自然史典藏單位、政府單位，與部分企業、民間團體所提供的生態與物種資料，提供一站式查詢與應用服務。網站聚焦臺灣在地需求，使用者可快速查找臺灣物種分布、觀測紀錄與相關資料來源，作為生態研究、保育管理、環境評估及教育推廣的重要基礎。透過跨單位資料串聯與標準化整合，tbiadata.tw 致力於提升臺灣生物多樣性資料的可近性與實際應用價值。" %}
+                </p>
+                <a href="https://tbiadata.tw/" target="_blank" class="link-item"><span class="myicon icon-link"></span> tbiadata.tw</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

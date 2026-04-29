@@ -3,6 +3,7 @@ import csv
 import requests
 import os
 import re
+import ast
 from functools import lru_cache
 from html import unescape
 
@@ -35,6 +36,7 @@ from .helpers.mod_search import (
     DatasetSearch,
     PublisherSearch,
 )
+from apps.article.models import Article
 from apps.data.helpers.synonyms_variants_convertion import *
 from utils.solr_query import SolrQuery
 from utils.map_data import get_geojson
@@ -55,7 +57,16 @@ STATIC_PAGE_SEARCH_ITEMS = [
         "template": "about-taibif.html",
     },
     {"url_name": "about-gbif", "title": "GBIF 介紹", "template": "about-gbif.html"},
-    {"url_name": "open_data", "title": "開放資料", "template": "open-data.html"},
+    {
+        "url_name": "open-standard",
+        "title": "資料標準化",
+        "template": "open-standard.html",
+    },
+    {
+        "url_name": "open-license",
+        "title": "開放 CC 授權",
+        "template": "open-license.html",
+    },
     {
         "url_name": "open-process",
         "title": "有哪些步驟",
@@ -66,13 +77,6 @@ STATIC_PAGE_SEARCH_ITEMS = [
         "title": "開放資料的好處",
         "template": "open-benefits.html",
     },
-    {
-        "url_name": "open-metadata",
-        "title": "詮釋資料",
-        "template": "open-metadata.html",
-    },
-    {"url_name": "open-license", "title": "資料授權", "template": "open-license.html"},
-    {"url_name": "open-upload", "title": "資料上傳", "template": "open-upload.html"},
     {
         "url_name": "open-consulation",
         "title": "我需要幫忙",
@@ -134,13 +138,40 @@ STATIC_PAGE_SEARCH_ITEMS = [
 _SCRIPT_STYLE_RE = re.compile(
     r"<(script|style)[^>]*>.*?</\1>", re.IGNORECASE | re.DOTALL
 )
+_TRANS_TAG_RE = re.compile(
+    r"{%\s*trans\s+((?:\"(?:\\.|[^\"])*\")|(?:'(?:\\.|[^'])*'))(?:\s+[^%]*)?%}",
+    re.DOTALL,
+)
+_BLOCKTRANS_START_RE = re.compile(
+    r"{%\s*(?:blocktrans|transblock)(?:\s+[^%]*)?%}",
+    re.IGNORECASE,
+)
+_BLOCKTRANS_END_RE = re.compile(
+    r"{%\s*(?:endblocktrans|endtransblock)\s*%}",
+    re.IGNORECASE,
+)
 _DJANGO_TAG_RE = re.compile(r"({%.*?%}|{{.*?}}|{#.*?#})", re.DOTALL)
 _HTML_TAG_RE = re.compile(r"<[^>]+>")
 _SPACE_RE = re.compile(r"\s+")
 
 
+def _unquote_template_string(value):
+    try:
+        return ast.literal_eval(value)
+    except (SyntaxError, ValueError):
+        return value.strip("\"'")
+
+
+def _preserve_translation_text(raw_html):
+    text = _TRANS_TAG_RE.sub(lambda m: _unquote_template_string(m.group(1)), raw_html)
+    text = _BLOCKTRANS_START_RE.sub(" ", text)
+    text = _BLOCKTRANS_END_RE.sub(" ", text)
+    return text
+
+
 def _clean_template_text(raw_html):
     text = _SCRIPT_STYLE_RE.sub(" ", raw_html)
+    text = _preserve_translation_text(text)
     text = _DJANGO_TAG_RE.sub(" ", text)
     text = _HTML_TAG_RE.sub(" ", text)
     text = unescape(text)
@@ -168,10 +199,10 @@ def search_all(request):
     elif request.method == "GET":
         q = request.GET.get("q", "")
         selected_targets = request.GET.getlist("target")
-        valid_targets = {"static", "dataset", "publisher"}
+        valid_targets = {"static", "dataset", "publisher", "article"}
         selected_targets = [x for x in selected_targets if x in valid_targets]
         if not selected_targets:
-            selected_targets = ["static", "dataset", "publisher"]
+            selected_targets = ["static", "dataset", "publisher", "article"]
         mappings = load_mappings()
         variant_map = mappings["variant_map"]
         synonyms_map = mappings["synonyms_map"]
@@ -231,13 +262,28 @@ def search_all(request):
                     }
                 )
 
+        # article
+        article_rows = []
+        if "article" in selected_targets:
+            query = Q()
+            for variant in query_variants:
+                query |= Q(title__icontains=variant) | Q(content__icontains=variant)
+            for x in Article.objects.filter(query).all()[:5]:
+                article_rows.append(
+                    {
+                        "title": x.title,
+                        "content": x.content,
+                        "url": reverse("article-detail-id", kwargs={"pk": x.id}),
+                    }
+                )
+
         # static pages
         static_rows = []
         if "static" in selected_targets:
             q_variants_lower = [x.lower() for x in query_variants if x]
             for page in STATIC_PAGE_SEARCH_ITEMS:
                 visible_text = _load_template_visible_text(page["template"])
-                target = visible_text.lower()
+                target = f"{page['title']} {visible_text}".lower()
                 matched_variant = next(
                     (v for v in q_variants_lower if v in target), None
                 )
@@ -267,6 +313,10 @@ def search_all(request):
         if "publisher" in selected_targets:
             results.append(
                 {"cat": "publisher", "label": "發布單位", "rows": publisher_rows}
+            )
+        if "article" in selected_targets:
+            results.append(
+                {"cat": "article", "label": "最新消息", "rows": article_rows}
             )
 
         context = {
