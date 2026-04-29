@@ -11,7 +11,6 @@ from .sitemaps import DatasetSitemap
 from .sitemaps import StaticSitemap
 from .views import robots_txt
 
-
 # Dictionary containing your sitemap classes
 sitemaps = {
     "static": StaticSitemap,
@@ -74,7 +73,7 @@ urlpatterns = [
     path("tech-online-class", views.tech_online_class, name="tech-online-class"),
     path("tech-class-license", views.tech_class_license, name="tech-class-license"),
     path("data-paper", views.data_paper, name="data-paper"),
-    path("data-visual", views.data_visual, name="data-visual"),
+    # path("data-visual", views.data_visual, name="data-visual"),
     path("data-case", views.data_case, name="data-case"),
     path("data-product", views.data_product, name="data-product"),
     # path("data-story", views.data_story, name="data-story"),
