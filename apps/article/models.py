@@ -4,6 +4,7 @@ import uuid
 from datetime import datetime
 
 from django.db import models
+from django.db.models import Q
 from django.utils import timezone
 from django.utils.text import slugify
 from django.urls import reverse
@@ -84,7 +85,7 @@ class Article(models.Model):
     slug = models.SlugField(unique=True, blank=True, max_length=500)
     created = models.DateTimeField('發布時間', default=timezone.now)
     changed = models.DateTimeField('修改時間', default=timezone.now)
-    category = models.CharField('分類', max_length=50, choices=CATEGORY_CHOICE, default='NEWS')
+    category = models.CharField('分類', max_length=255, default='NEWS')
     is_pinned = models.CharField('置頂', max_length=2, default='N', choices=PINNED_CHOICE)
     is_homepage = models.BooleanField('首頁專題文章', null=True)
     is_content_markdown = models.BooleanField('內文是否 markdown', null=True, blank=True, help_text='舊文章要特別勾, 才會有 markdown 顯示')
@@ -99,6 +100,8 @@ class Article(models.Model):
     new_case_type = models.ForeignKey(CaseType, on_delete=models.SET_NULL, null=True, blank=True, help_text='（若為以上應用案例打勾，請選擇案例類型）', verbose_name='應用案例類型')
 
     def save(self, *args, **kwargs):
+        self.category = self.normalize_category_value(self.category)
+
         if not self.id:
             if not self.slug:
                 self.slug = slugify(self.title, allow_unicode=True)
@@ -124,9 +127,59 @@ class Article(models.Model):
         #else:
         return reverse('article-detail-id', kwargs=kwargs)
 
+    @classmethod
+    def normalize_category_value(cls, value):
+        if isinstance(value, (list, tuple, set)):
+            values = value
+        else:
+            values = str(value or '').split(',')
+
+        normalized = []
+        for category in values:
+            category = str(category).strip().upper()
+            if category and category not in normalized:
+                normalized.append(category)
+
+        return ','.join(normalized) or 'NEWS'
+
+    @classmethod
+    def category_q(cls, categories):
+        if isinstance(categories, str):
+            categories = [categories]
+
+        query = Q()
+        for category in categories:
+            category = str(category).strip().upper()
+            if not category:
+                continue
+
+            query |= (
+                Q(category=category)
+                | Q(category__startswith=f'{category},')
+                | Q(category__endswith=f',{category}')
+                | Q(category__contains=f',{category},')
+            )
+
+        return query
+
+    @property
+    def category_list(self):
+        return self.normalize_category_value(self.category).split(',')
+
+    @property
+    def primary_category(self):
+        return self.category_list[0]
+
+    def has_category(self, category):
+        return str(category).strip().upper() in self.category_list
+
+    def get_category_display(self):
+        label_map = dict(self.CATEGORY_CHOICE)
+        return '、'.join(label_map.get(category, category) for category in self.category_list)
+
     def get_legacy_info(self):
         if 'nid:' in self.memo:
-            if self.category == 'PUB':
+            if self.has_category('PUB'):
                 files = []
                 for _, v in enumerate(self.memo_text.split('\n')):
                     if '__files__' not in v:

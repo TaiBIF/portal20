@@ -54,9 +54,9 @@ def act_lang(func):
 
 # @act_lang
 def index(request):
-    article_qs = Article.objects.filter(category__in=["NEWS", "EVENT", "SCI"]).order_by(
-        "-is_pinned", "-created"
-    )
+    article_qs = Article.objects.filter(
+        Article.category_q(["NEWS", "EVENT", "SCI"])
+    ).order_by("-is_pinned", "-created")
 
     category_map = {"NEWS": [], "EVENT": [], "SCI": []}
     news_all_list = []
@@ -64,8 +64,9 @@ def index(request):
         if len(news_all_list) < 4:
             news_all_list.append(article)
 
-        if article.category in category_map and len(category_map[article.category]) < 4:
-            category_map[article.category].append(article)
+        for category in category_map:
+            if article.has_category(category) and len(category_map[category]) < 4:
+                category_map[category].append(article)
 
         if len(news_all_list) >= 12 and all(
             len(category_map[key]) >= 4 for key in ("NEWS", "EVENT", "SCI")
@@ -76,7 +77,7 @@ def index(request):
     event_list = category_map["EVENT"]
     update_list = category_map["SCI"]
 
-    story_list = Article.objects.filter(category="STORY").order_by("-created").all()[:6]
+    story_list = Article.objects.filter(Article.category_q("STORY")).order_by("-created").all()[:6]
 
     def assign_card_image(articles):
         # Priority: cover image > media_url > fallback image.
@@ -298,7 +299,7 @@ def links(request):
 
 # @act_lang
 def about_taibif(request):
-    achievement_qs = Article.objects.filter(category="POS").order_by("-created")
+    achievement_qs = Article.objects.filter(Article.category_q("POS")).order_by("-created")
     achievement_years = sorted(
         set(achievement_qs.values_list("created__year", flat=True)),
         reverse=True,
@@ -681,7 +682,7 @@ def data_visual(request):
 
 def data_case(request):
     articles = (
-        Article.objects.filter(is_data_case=True, category="SCI")
+        Article.objects.filter(Article.category_q("SCI"), is_data_case=True)
         .order_by("-created")
         .select_related("new_case_type")[:3]
     )  # 只選最新三筆呈現

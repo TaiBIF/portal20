@@ -19,13 +19,13 @@
                     <span>{% trans "置頂" %}</span>
                 </div>
             {% endif %}
-            {% if i.category == 'NEWS' %}
+            {% if 'NEWS' in i.category_list %}
                 <div class="class-item color-1">{% trans "新聞" %}</div>
-            {% elif i.category == 'EVENT' %}
+            {% elif 'EVENT' in i.category_list %}
                 <div class="class-item color-2">{% trans "活動" %}</div>
-            {% elif i.category == 'SCI' %}
+            {% elif 'SCI' in i.category_list %}
                 <div class="class-item color-3">{% trans "科普" %}</div>
-            {% elif i.category == 'STORY' %}
+            {% elif 'STORY' in i.category_list %}
                 <div class="class-item color-4">{% trans "資料故事" %}</div>
             {% else %}
                 <div class="class-item color-5">{% trans "其他" %}</div>

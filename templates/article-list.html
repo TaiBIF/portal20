@@ -183,7 +183,7 @@
             <span class="listbox-inner-date">{{ article.created|date:'Y/m/d' }}</span>
             <h3 class="listbox-inner-title">{{ article.title }}</h3>
 
-            {% if article.memo|slice:"0:4" == "nid:" and article.category == "UPDATE" %}
+            {% if article.memo|slice:"0:4" == "nid:" and "UPDATE" in article.category_list %}
             {% else %}
               <p class="listbox-inner-summary hidden-xs">{{ article.summary|striptags|truncatechars:150 }}</p>
             {% endif %}
