@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django import forms
+from django.utils.html import format_html
 
-from .models import Article, Tag, PostImage, CaseType, CaseMedia
+from .models import Article, Tag, PostImage, CaseType, CaseMedia, ArticleImageAsset
 
 class PostImageAdmin(admin.StackedInline):
     model = PostImage
@@ -86,7 +87,70 @@ class CaseTypeAdmin(admin.ModelAdmin):
     search_fields = ['name']
     fields = ('name', 'description')
 
+class ArticleImageAssetAdmin(admin.ModelAdmin):
+    model = ArticleImageAsset
+    list_display = ('title', 'image_preview', 'public_url_display', 'created')
+    search_fields = ('title',)
+    readonly_fields = (
+        'image_preview',
+        'public_url_display',
+        'markdown_display',
+        'image_uuid',
+        'created',
+        'changed',
+    )
+    fields = (
+        'title',
+        'image',
+        'image_preview',
+        'public_url_display',
+        'markdown_display',
+        'image_uuid',
+        'created',
+        'changed',
+    )
+
+    def _set_request(self, request):
+        self._request = request
+
+    def _absolute_url(self, url):
+        request = getattr(self, '_request', None)
+        if request:
+            return request.build_absolute_uri(url)
+        return url
+
+    def changelist_view(self, request, extra_context=None):
+        self._set_request(request)
+        return super().changelist_view(request, extra_context=extra_context)
+
+    def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
+        self._set_request(request)
+        return super().changeform_view(request, object_id, form_url, extra_context)
+
+    @admin.display(description='預覽')
+    def image_preview(self, obj):
+        if not obj or not obj.image:
+            return '-'
+        return format_html(
+            '<img src="{}" style="max-width: 240px; max-height: 160px;" />',
+            obj.public_url,
+        )
+
+    @admin.display(description='對外 URL')
+    def public_url_display(self, obj):
+        if not obj or not obj.public_url:
+            return '-'
+        url = self._absolute_url(obj.public_url)
+        return format_html('<a href="{0}" target="_blank" rel="noopener">{0}</a>', url)
+
+    @admin.display(description='Markdown')
+    def markdown_display(self, obj):
+        if not obj or not obj.public_url:
+            return '-'
+        return '![large-size image]({})'.format(self._absolute_url(obj.public_url))
+
 
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Tag, TagAdmin)
 admin.site.register(CaseType, CaseTypeAdmin)
+admin.site.register(ArticleImageAsset, ArticleImageAssetAdmin)
