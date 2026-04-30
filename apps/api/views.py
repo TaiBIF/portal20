@@ -59,27 +59,7 @@ from .cached import COUNTRY_ROWS, YEAR_ROWS
 
 from conf.settings import ENV
 
-# ----------------- defaul map geojson -----------------#
-default_solr = SolrQuery("taibif_occurrence", None, None)
-default_solr_url = default_solr.generate_solr_url(None)
-default_map_geojson = get_geojson(default_solr_url)
-cache.set("default_map_geojson", default_map_geojson, 2592000)
-
-req = default_solr.request()
-resp = default_solr.get_response()
-cache.set("default_solr_count", resp["count"] if resp else 0, 2592000)
-
-# ----------------- defaul map geojson -----------------#
-
-init_solr = SolrQuery("taibif_occurrence")
-init_solr_req = init_solr.request()
-init_solr_resp = init_solr.get_response()
-init_solr_menus = init_solr.get_menus()
-init_solr_resp["menus"] = init_solr_menus
-init_solr_resp["elapsed"] = (
-    init_solr_req["solr_response"]["responseHeader"]["QTime"] / 1000
-)
-init_solr_resp["tree"] = [
+OCCURRENCE_ROOT_TREE = [
     {"id": "t0000005", "data": {"name": "細菌界 Bacteria", "count": None}},
     {"id": "t0000007", "data": {"name": "原藻界 Chromista", "count": None}},
     {"id": "t0000004", "data": {"name": "古菌界 Archaea", "count": None}},
@@ -88,7 +68,24 @@ init_solr_resp["tree"] = [
     {"id": "t0000003", "data": {"name": "植物界 Plantae", "count": None}},
     {"id": "t0000006", "data": {"name": "原生生物界 Protozoa", "count": None}},
 ]
-cache.set("init_solr_resp", init_solr_resp, 2592000)
+
+
+def _get_initial_occurrence_response():
+    cached_response = cache.get("init_solr_resp")
+    if cached_response:
+        return cached_response
+
+    solr = SolrQuery("taibif_occurrence")
+    req = solr.request()
+    resp = solr.get_response()
+    if not resp:
+        return None
+
+    resp["menus"] = solr.get_menus()
+    resp["elapsed"] = req["solr_response"]["responseHeader"]["QTime"] / 1000
+    resp["tree"] = OCCURRENCE_ROOT_TREE
+    cache.set("init_solr_resp", resp, 2592000)
+    return resp
 
 COORDINATE_SYSTEM_MAP = {
     "1": "EPSG:4326",  # WGS84 經緯度
@@ -595,10 +592,11 @@ def occurrence_search_v2(request):
     current_path = request.path
     if (
         current_path == "/api/v2/occurrence/search"
-        and cache.get("init_solr_resp")
         and len(list(request.GET.lists())) == 0
     ):
-        return JsonResponse(init_solr_resp)
+        init_solr_resp = _get_initial_occurrence_response()
+        if init_solr_resp:
+            return JsonResponse(init_solr_resp)
 
     time_start = time.time()
     solr = SolrQuery("taibif_occurrence", request.GET, None)
@@ -693,13 +691,7 @@ def occurrence_search_v2(request):
     # } for x in treeRoot]
     # resp['tree'] = treeData
     resp["tree"] = [
-        {"id": "t0000005", "data": {"name": "細菌界 Bacteria", "count": None}},
-        {"id": "t0000007", "data": {"name": "原藻界 Chromista", "count": None}},
-        {"id": "t0000004", "data": {"name": "古菌界 Archaea", "count": None}},
-        {"id": "t0000008", "data": {"name": "真菌界 Fungi", "count": None}},
-        {"id": "t0000009", "data": {"name": "動物界 Animalia", "count": None}},
-        {"id": "t0000003", "data": {"name": "植物界 Plantae", "count": None}},
-        {"id": "t0000006", "data": {"name": "原生生物界 Protozoa", "count": None}},
+        *OCCURRENCE_ROOT_TREE,
     ]
     # TODO, init taxon_key
     # resp['taxon_checked'] = tkey
@@ -711,18 +703,20 @@ def occurrence_search_v2(request):
     resp["solr_qtime"] = req["solr_response"]["responseHeader"]["QTime"]
 
     if current_path == "/api/v2/occurrence/map":
+        default_solr_count = cache.get("default_solr_count")
+        default_map_geojson = cache.get("default_map_geojson")
         solr_updated = (
-            False if cache.get("default_solr_count") == resp["count"] else True
+            False if default_solr_count == resp["count"] else True
         )
         query_params = list(request.GET.lists())
         if len(query_params) > 0:
             solr_url = solr.generate_solr_url(request.GET)
             resp["map_geojson"] = get_geojson(solr_url)
-        elif solr_updated or not cache.get("default_map_geojson"):
+        elif solr_updated or not default_map_geojson:
             # 如果沒有篩選條件且solr資料有更新 或 如果沒有篩選條件且cache沒有default_map_geojson
             resp["map_geojson"] = get_geojson(solr.solr_url)
-            cache.set("default_map_geojson", resp["map_geojson"])
-            cache.set("default_solr_count", resp["count"])
+            cache.set("default_map_geojson", resp["map_geojson"], 2592000)
+            cache.set("default_solr_count", resp["count"], 2592000)
         else:  # 如果沒有篩選條件且solr沒更新且cache有default_map_geojson
             resp["map_geojson"] = default_map_geojson
 
