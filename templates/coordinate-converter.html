@@ -53,6 +53,16 @@
     color: #fff;
     box-shadow: 0 0 0 0.15rem rgba(132, 108, 91, 0.2);
   }
+
+  .coordinate-converter-page .coordinate-converter-notes {
+    margin: 0 0 3rem;
+    padding-left: 1.5rem;
+  }
+
+  .coordinate-converter-page .coordinate-converter-notes a {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
 </style>
 {% endblock %}
 
@@ -80,32 +90,42 @@
         <div class="card-tools-wrapper tools-card">
             <div class="title">{% trans "地理分布線上座標轉換" %}</div>
             <div class="content">
-                <p>{% trans "本工具支援 WGS 84、TWD67、TWD97 等座標系統互轉，適合單筆查詢與大量資料整理。輸入時每列代表一筆資料，支援「x y」或「x,y」兩種格式，系統會依行數逐筆輸出轉換結果。" %}</p>
+                <ul class="coordinate-converter-notes">
+                    <li>{% trans "本工具支援 WGS 84、TWD67、TWD97 等座標系統互轉。" %}</li>
+                    <li>{% trans "一般選項依下拉選單中標示的 EPSG 代碼進行轉換，不額外套用自訂參數。" %}</li>
+                    <li>{% trans "標示為「修正版」的選項使用自訂坐標參考系統，將 EPSG:3828 原 PROJ.4 定義中的 ellps=aust_SA 改為 ellps=GRS67，並加入 towgs84 轉換參數。" %}{% trans "修正版參考：" %}
+                        <a href="https://gis.rchss.sinica.edu.tw/mapclub_20240610/" target="_blank" rel="noopener noreferrer">https://gis.rchss.sinica.edu.tw/mapclub_20240610/</a></li>
+                    <li>{% trans "輸入時每列代表一筆資料，支援「x y」或「x,y」兩種格式，系統會依行數逐筆輸出轉換結果。" %}</li>
+                </ul>
 
                 <form id="coord-converter-form" class="mb-3" onsubmit="return false;">
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
                             <label for="sourceSystem" class="form-label">{% trans "來源座標系統" %}</label>
                             <select id="sourceSystem" class="form-select">
-                                <option value="1">{% trans "WGS 84 經緯度" %}</option>
-                                <option value="2">{% trans "TWD 67 經緯度" %}</option>
-                                <option value="3">{% trans "TWD 97 經緯度" %}</option>
-                                <option value="4">{% trans "TWD97/ 澎湖地區" %}</option>
-                                <option value="5">{% trans "TWD97/ 臺灣地區" %}</option>
-                                <option value="6">{% trans "TWD67/ 澎湖地區" %}</option>
-                                <option value="7">{% trans "TWD67/ 臺灣地區" %}</option>
+                                <option value="1">{% trans "WGS84 經緯度（EPSG:4326）" %}</option>
+                                <option value="2">{% trans "TWD67 經緯度（EPSG:3821）" %}</option>
+                                <option value="3">{% trans "TWD97 經緯度（EPSG:3824）" %}</option>
+                                <option value="4">{% trans "TWD97 / TM2 中央經線119度（EPSG:3825，澎湖金門馬祖）" %}</option>
+                                <option value="5">{% trans "TWD97 / TM2 中央經線121度（EPSG:3826，臺灣本島）" %}</option>
+                                <option value="6">{% trans "TWD67 / TM2 中央經線119度（EPSG:3827，澎湖金門馬祖）" %}</option>
+                                <option value="7">{% trans "TWD67 / TM2 中央經線121度（EPSG:3828，臺灣本島）" %}</option>
+                                <option value="8">{% trans "TWD67 / TM2 中央經線121度（修正版，臺灣本島）" %}</option>
+                                <option value="9">{% trans "虎子山經緯度（EPSG:4236）" %}</option>
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label for="targetSystem" class="form-label">{% trans "目標座標系統" %}</label>
                             <select id="targetSystem" class="form-select">
-                                <option value="1">{% trans "WGS 84 經緯度" %}</option>
-                                <option value="2">{% trans "TWD 67 經緯度" %}</option>
-                                <option value="3">{% trans "TWD 97 經緯度" %}</option>
-                                <option value="4">{% trans "TWD97/ 澎湖地區" %}</option>
-                                <option value="5">{% trans "TWD97/ 臺灣地區" %}</option>
-                                <option value="6">{% trans "TWD67/ 澎湖地區" %}</option>
-                                <option value="7">{% trans "TWD67/ 臺灣地區" %}</option>
+                                <option value="1">{% trans "WGS84 經緯度（EPSG:4326）" %}</option>
+                                <option value="2">{% trans "TWD67 經緯度（EPSG:3821）" %}</option>
+                                <option value="3">{% trans "TWD97 經緯度（EPSG:3824）" %}</option>
+                                <option value="4">{% trans "TWD97 / TM2 中央經線119度（EPSG:3825，澎湖金門馬祖）" %}</option>
+                                <option value="5">{% trans "TWD97 / TM2 中央經線121度（EPSG:3826，臺灣本島）" %}</option>
+                                <option value="6">{% trans "TWD67 / TM2 中央經線119度（EPSG:3827，澎湖金門馬祖）" %}</option>
+                                <option value="7">{% trans "TWD67 / TM2 中央經線121度（EPSG:3828，臺灣本島）" %}</option>
+                                <option value="8">{% trans "TWD67 / TM2 中央經線121度（修正版，臺灣本島）" %}</option>
+                                <option value="9">{% trans "虎子山經緯度（EPSG:4236）" %}</option>
                             </select>
                         </div>
                     </div>
