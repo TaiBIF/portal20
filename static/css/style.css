@@ -4335,6 +4335,14 @@ body {
     margin-right: auto;
 }
 
+.article-content-wrapper iframe {
+    display: block;
+    width: min(100%, 720px);
+    aspect-ratio: 16 / 9;
+    height: auto;
+    margin: 24px auto;
+}
+
 .relateed-website-wrapper {
     padding: 0;
     list-style: none;
