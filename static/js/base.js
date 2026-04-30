@@ -1,4 +1,37 @@
 $(document).ready(function () {
+    function closeMobileMenu() {
+        $(".right-menu").removeAttr("style");
+        $(".ham8").removeClass("active");
+        $(".menu2").removeAttr("style");
+        $("body").css("overflow", "");
+    }
+
+    $(".ham8")
+        .off("click.mobileMenu")
+        .on("click.mobileMenu", function () {
+            if ($(window).width() < 1024) {
+                $(this).toggleClass("active");
+                $(".right-menu").stop().slideToggle();
+                $("body").css("overflow", $(this).hasClass("active") ? "hidden" : "");
+            }
+        });
+
+    $(".menu1 .btitle")
+        .off("click.mobileMenu")
+        .on("click.mobileMenu", function () {
+            if ($(window).width() < 1024) {
+                $(this).siblings(".menu2").stop().slideToggle();
+            }
+        });
+
+    $(window)
+        .off("resize.mobileMenu")
+        .on("resize.mobileMenu", function () {
+            if ($(window).width() >= 1024) {
+                closeMobileMenu();
+            }
+        });
+
     function submitNavbarSearch() {
         const $input = $("#navbar-search-input");
         const q = ($input.val() || "").trim();

@@ -474,33 +474,6 @@
 			},
 		});
 	});
-	$('.ham8').on('click', function() {
-		if ($(window).width() < 1024) {
-			$(this).toggleClass('active');
-			$('.right-menu').stop().slideToggle();
-
-			// 判斷是否有 active 類別來控制捲軸
-			if ($(this).hasClass('active')) {
-				$('body').css('overflow', 'hidden');
-			} else {
-				$('body').css('overflow', 'auto');
-			}
-		}
-	});
-	$('.menu1 .btitle').on('click', function() {
-		if ($(window).width() < 1024) {
-			$(this).siblings('.menu2').stop().slideToggle();
-		}
-	});
-	$(window).on('resize', function() {
-		if ($(window).width() >= 1024) {
-			// 當回到電腦版時，移除 jQuery 殘留的 inline style 與 active 類別
-			$('.right-menu').removeAttr('style');
-			$('.ham8').removeClass('active');
-			$('.menu2').removeAttr('style');
-		}
-	});
-
 	$(window).on('load', function() {
 		let currentNewsTab = 'all';
 
