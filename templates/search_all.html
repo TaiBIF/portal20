@@ -3,6 +3,7 @@
 {% load static %}
 {% load humanize %}
 {% load i18n %}
+{% load helper_tags %}
 
 {% block head %}
 {% endblock %}
@@ -90,7 +91,7 @@
                                 <div class="col-xs-12">
                                     <span class="listbox-inner-date">{{ cat.label }}</span>
                                     <h3 class="listbox-inner-title">{{ i.title }}</h3>
-                                    <p class="listbox-inner-summary">{{ i.content|striptags|truncatechars:200 }}</p>
+                                    <p class="listbox-inner-summary">{{ i.content|markdown_plain_text|truncatechars:200 }}</p>
                                 </div>
                             </div>
                         </a>

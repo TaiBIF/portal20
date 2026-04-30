@@ -1,6 +1,10 @@
+from html import unescape
+
 from django import template
 from django.conf import settings
+from django.utils.html import strip_tags
 from django.template.defaultfilters import stringfilter
+from django.utils.text import normalize_newlines
 
 import markdown as md
 
@@ -11,6 +15,13 @@ register = template.Library()
 @stringfilter
 def markdown(value):
     return md.markdown(value, extensions=["extra"])
+
+
+@register.filter()
+@stringfilter
+def markdown_plain_text(value):
+    text = strip_tags(unescape(md.markdown(value, extensions=["extra"])))
+    return " ".join(normalize_newlines(text).split())
 
 
 @register.simple_tag
