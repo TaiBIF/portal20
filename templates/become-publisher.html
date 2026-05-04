@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load static %}
 {% block title %}{% trans "我想成為資料發布單位" %}{% endblock %}
+{% get_current_language as LANGUAGE_CODE %}
 {% block script %}
 <script>
 $(document).ready(function () {
@@ -124,10 +125,18 @@ $(document).ready(function () {
                     <li>{% trans "先登入/註冊GBIF帳號（可用Google帳號登入）" %}</li>
                     <li>
                         {% trans "到網頁最末端，勾選「我所屬的組織尚未完成註冊」，系統會自動引導下一步" %}
+                        {% if LANGUAGE_CODE == "en" %}
+                        <img src="{% static 'images/become-publisher/image4-en.png'%}" alt="" class="img-fluid"/>
+                        {% else %}
                         <img src="{% static 'images/become-publisher/image4.png'%}" alt="" class="img-fluid"/>
+                        {% endif %}
                     </li>
                     <li>{% trans "確認條款及細則，直接三個選項勾選" %}
+                        {% if LANGUAGE_CODE == "en" %}
+                        <img src="{% static 'images/become-publisher/image2-en.png'%}" alt="" class="img-fluid"/>
+                        {% else %}
                         <img src="{% static 'images/become-publisher/image2.png'%}" alt="" class="img-fluid"/>
+                        {% endif %}
                     </li>
                     <li>{% trans "接著簡單用英文填寫" %}
                         <ul>
@@ -155,7 +164,11 @@ $(document).ready(function () {
         <div class="article-content-wrapper">
             <h3>{% trans "流程圖" %}</h3>
         </div>
+        {% if LANGUAGE_CODE == "en" %}
+        <img src="{% static 'images/become-publisher/image5-en.png'%}" alt="" class="img-fluid"/>
+        {% else %}
         <img src="{% static 'images/become-publisher/image5.png'%}" alt="" class="img-fluid"/>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
