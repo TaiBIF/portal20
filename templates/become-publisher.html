@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load static %}
 {% block title %}{% trans "我想成為資料發布單位" %}{% endblock %}
+{% get_current_language as LANGUAGE_CODE %}
 {% block script %}
 <script>
 $(document).ready(function () {
@@ -62,7 +63,7 @@ $(document).ready(function () {
     <div class="container">
         <div class="caption-mascot-wrapper">
             <h1 class="title">{% trans "我想成為資料發布單位" %}</h1>
-            <img src="{% static 'images/mascot-flower.png'%}" alt="" class="symbol">
+            <img src="{% static 'images/mascot-Mreevesi.png'%}" alt="" class="symbol">
         </div>
     </div>
 </div>
@@ -71,7 +72,7 @@ $(document).ready(function () {
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
-            <li class="breadcrumb-item">{% trans "我想參與社群" %}</li>
+            <li class="breadcrumb-item">{% trans "我想開放資料" %}</li>
             <li class="breadcrumb-item active" aria-current="page">{% trans "我想成為資料發布單位" %}</li>
         </ol>
     </nav>
@@ -124,10 +125,18 @@ $(document).ready(function () {
                     <li>{% trans "先登入/註冊GBIF帳號（可用Google帳號登入）" %}</li>
                     <li>
                         {% trans "到網頁最末端，勾選「我所屬的組織尚未完成註冊」，系統會自動引導下一步" %}
+                        {% if LANGUAGE_CODE == "en" %}
+                        <img src="{% static 'images/become-publisher/image4-en.png'%}" alt="" class="img-fluid"/>
+                        {% else %}
                         <img src="{% static 'images/become-publisher/image4.png'%}" alt="" class="img-fluid"/>
+                        {% endif %}
                     </li>
                     <li>{% trans "確認條款及細則，直接三個選項勾選" %}
+                        {% if LANGUAGE_CODE == "en" %}
+                        <img src="{% static 'images/become-publisher/image2-en.png'%}" alt="" class="img-fluid"/>
+                        {% else %}
                         <img src="{% static 'images/become-publisher/image2.png'%}" alt="" class="img-fluid"/>
+                        {% endif %}
                     </li>
                     <li>{% trans "接著簡單用英文填寫" %}
                         <ul>
@@ -148,14 +157,18 @@ $(document).ready(function () {
                     </li>
                 </ol>
             </li>
-            <li>{% trans "請等待1-3個工作天，您會收到來自 GBIF 秘書處的確認信並會附上單位註冊密碼(token)，請將此信" %}<a href="taibif.brcas@gmail.com">{% trans "轉寄" %}</a>{% trans "給我們TaiBIF團隊。" %}</li>
+            <li>{% trans "請等待1-3個工作天，您會收到來自 GBIF 秘書處的確認信並會附上單位註冊密碼(token)，請將此信" %}<a href="mailto:taibif.brcas@gmail.com">{% trans "轉寄" %}</a>{% trans "給我們TaiBIF團隊。" %}</li>
             <li>{% trans "TaiBIF 團隊會使用貴單位的註冊密碼，將貴單位納入資料發布平台的組織清單中，您將能以自己單位的名義，發布資料集" %}</li>
         </ol>
 
         <div class="article-content-wrapper">
             <h3>{% trans "流程圖" %}</h3>
         </div>
+        {% if LANGUAGE_CODE == "en" %}
+        <img src="{% static 'images/become-publisher/image5-en.png'%}" alt="" class="img-fluid"/>
+        {% else %}
         <img src="{% static 'images/become-publisher/image5.png'%}" alt="" class="img-fluid"/>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

@@ -412,12 +412,16 @@
                                         <a href="{% url 'tools' %}"
                                             >{% trans "有哪工具可以使用" %}</a
                                         >
+                                        <a href="{% url 'become-publisher' %}">{% trans "我想成為資料發布單位" %}</a>
                                         <a
                                             href="{% url 'open-consulation' %}#self-learning"
                                             >{% trans "我需要幫忙" %}</a
                                         >
                                         <a href="{% url 'faq' %}"
                                             >{% trans "開放資料常見問題" %}</a
+                                        >
+                                        <a href="{% url 'monthly-status' %}"
+                                            >{% trans "每月資料發佈狀況" %}</a
                                         >
                                     </div>
                                 </div>
@@ -441,16 +445,12 @@
                                 <p class="btitle">{% trans "我想參與社群" %}</p>
                                 <div class="menu2">
                                     <div class="w-bg">
-                                        <a href="{% url 'monthly-status' %}"
-                                            >{% trans "每月資料發佈狀況" %}</a
-                                        >
                                         <a href="{% url 'tech-workshop' %}"
                                             >{% trans "參加 TaiBIF 工作坊" %}</a
                                         >
                                         <a href="{% url 'tech-volunteer' %}"
                                             >{% trans "參與協作者培訓" %}</a
                                         >
-                                        <a href="{% url 'become-publisher' %}">{% trans "我想成為資料發布單位" %}</a>
                                         <a href="#" class="js-newsletter-open">{% trans "我願意收到電子報" %}</a>
                                         <a href="{% url 'thanks-list' %}"
                                             >{% trans "感謝名單" %}</a

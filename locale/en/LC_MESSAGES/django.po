@@ -891,185 +891,235 @@ msgstr "Terms of Use & Privacy Policy"
 
 #: templates/become-publisher.html:85 templates/become-publisher.html:92
 msgid "誰有資格"
-msgstr ""
+msgstr "Eligibility"
 
 #: templates/become-publisher.html:86 templates/become-publisher.html:115
 msgid "如何申請"
-msgstr ""
+msgstr "How to apply"
 
 #: templates/become-publisher.html:94
 msgid "任何"
-msgstr ""
+msgstr "Any "
 
 #: templates/become-publisher.html:94
 msgid "機構或組織"
-msgstr ""
+msgstr "institution or organization"
 
 #: templates/become-publisher.html:94
 msgid ""
 "若想透過 TaiBIF 分享資料到 GBIF上，可以在填寫註冊申請表獲得許可，成為資料發布"
 "者。"
 msgstr ""
+" that wants to share data through GBIF may register here to request "
+"endorsement as a data publisher."
 
 #: templates/become-publisher.html:97
 msgid "此申請程序目的在於確保發布單位："
-msgstr ""
+msgstr "The endorsement procedure aims to ensure that:"
 
 #: templates/become-publisher.html:99
 msgid "所發布的資料與 GBIF 的目標和範圍相關"
-msgstr ""
+msgstr "Published data are relevant to GBIF's scope and objectives"
 
 #: templates/become-publisher.html:100
 msgid "有穩定且長期可以聯繫的管理窗口"
-msgstr ""
+msgstr "Arrangements for data hosting are stable and persistent"
 
 #: templates/become-publisher.html:101
 msgid "資料的發布及使用可以得到國家、地區及相關領域的互助支持"
 msgstr ""
+"Data publishing and use are supported by strong national, regional and "
+"thematic engagement"
 
 #: templates/become-publisher.html:102
 msgid "資料盡可能為開放、可被分享及再利用"
-msgstr ""
+msgstr "Data are as open as possible and available for sharing and reuse"
 
 #: templates/become-publisher.html:103
 msgid "資料發布者能回應使用者意見及提升資料品質"
-msgstr ""
+msgstr "Data publishers can respond to feedback and improve data quality"
 
 #: templates/become-publisher.html:106
 msgid "若你希望以個人來發布資料，你可以選擇："
 msgstr ""
+"Note: GBIF and its Participants only publish data from organizations, that "
+"is, institutions, networks and societies, rather than individuals. Options "
+"for individuals who wish to publish data include:"
 
 #: templates/become-publisher.html:108
 msgid "透過GBIF附屬組織或已註冊的資料發布單位（第三方）來發布資料"
-msgstr ""
+msgstr "working through their affiliated organizations to seek endorsement as a publisher"
 
 #: templates/become-publisher.html:109
 msgid "透過具有 GBIF 託管服務的期刊發布者發布資料論文"
 msgstr ""
+"publishing data papers through a journal publisher with GBIF-ready software "
+"and/or hosting services"
 
 #: templates/become-publisher.html:110
 msgid "透過向 GBIF 發布紀錄的眾多公民科學平台之一來分享紀錄"
 msgstr ""
+"sharing records through one of the many citizen science platforms that "
+"publish records to GBIF"
 
 #: templates/become-publisher.html:117
 msgid "文字說明"
-msgstr ""
+msgstr "Instructions"
 
 #: templates/become-publisher.html:119
 msgid "透過下列步驟，完成資料發布單位的註冊(Register)："
 msgstr ""
+"Complete the registration of your institution as a data publisher by "
+"following the steps below:"
 
 #: templates/become-publisher.html:122
-#, fuzzy
-#| msgid "填寫說明"
 msgid "填寫"
-msgstr "Instructions"
+msgstr "Complete the "
 
 #: templates/become-publisher.html:122
-#, fuzzy
-#| msgid "資料發布單位"
 msgid "資料發布單位註冊表單"
-msgstr "Publishers"
+msgstr "data publisher registration form"
 
 #: templates/become-publisher.html:122
 msgid "（此為由GBIF位於丹麥的秘書處管理，請以英文填寫）"
 msgstr ""
+" (This form is managed by the GBIF Secretariat. Please complete it in "
+"English.)"
 
 #: templates/become-publisher.html:124
 msgid "先登入/註冊GBIF帳號（可用Google帳號登入）"
 msgstr ""
+"Sign in / create a GBIF account: You will first need to sign in or create a "
+"GBIF account. Google sign-in is also available."
 
 #: templates/become-publisher.html:126
 msgid "到網頁最末端，勾選「我所屬的組織尚未完成註冊」，系統會自動引導下一步"
 msgstr ""
+"Confirm your organization is not yet registered: At the bottom of the page, "
+"tick the option indicating that your organization has not yet been "
+"registered. The system will then guide you to the next step."
 
 #: templates/become-publisher.html:129
 msgid "確認條款及細則，直接三個選項勾選"
 msgstr ""
+"Accept the terms and conditions: Please review the agreements and tick all "
+"three checkboxes to proceed."
 
 #: templates/become-publisher.html:132
 msgid "接著簡單用英文填寫"
-msgstr ""
+msgstr "Complete the form in English"
 
 #: templates/become-publisher.html:134
 msgid "「組織詳情」：單位基本介紹，並附上單位的logo連結"
 msgstr ""
+"Organization details: Provide a brief introduction to your institution and "
+"include a link to your organization logo."
 
 #: templates/become-publisher.html:135
 msgid ""
 "「認可節點」：若為位於臺灣的單位組織，請維持預設選項，GBIF 秘書處會協助貴單位"
 "與TaiBIF團隊聯繫"
 msgstr ""
+"Endorsing node: If your organization is based in Taiwan, please keep the "
+"default suggested option. The GBIF Secretariat will help connect your "
+"organization with the TaiBIF team."
 
 #: templates/become-publisher.html:136
 msgid "「GBIF 專案」：回答是否曾獲得 GBIF 計畫經費補助"
 msgstr ""
+"GBIF project: Indicate whether your organization has previously received "
+"funding through a GBIF programme or project."
 
 #: templates/become-publisher.html:137
 msgid ""
 "「聯絡資訊」：可提供 2-3 位窗口，包含行政聯繫與技術聯繫，也可以官方 email 為"
 "聯絡方式，以避免因人力轉換而失去聯繫"
 msgstr ""
+"Contact information: You may provide 2-3 contact persons, including both "
+"administrative and technical contacts. A general institutional email address "
+"is also recommended to avoid losing contact when staff change."
 
 #: templates/become-publisher.html:138
 msgid ""
 "「什麼與如何」：勾選預期會發布的資料類型（勾選哪些不會影響未來資料發布類型的"
 "更動），並簡單描述貴單位所擁有的資料概況"
 msgstr ""
+"What and how: Select the types of data you expect to publish. Your selections "
+"will not limit future changes to dataset types. Please also briefly describe "
+"the biodiversity data held by your organization."
 
 #: templates/become-publisher.html:139
 msgid "最後回答下列三個問題"
-msgstr ""
+msgstr "Final questions"
 
 #: templates/become-publisher.html:141
 msgid "「您是否能夠執行、維護伺服器，或存取一伺服器，以將您的原始資料集公開在 "
 msgstr ""
+"Are you able to run and maintain a server, or access a server, to make your "
+"source datasets publicly available through "
 
 #: templates/become-publisher.html:141
 msgid "？」請答否，主要會由TaiBIF團隊維運伺服器並提供服務"
 msgstr ""
+"? Please answer No. The TaiBIF team or the GBIF Asia Regional Support Team "
+"can provide hosting and technical support."
 
 #: templates/become-publisher.html:142
 msgid ""
 "「您是否計畫安裝並執行發布軟體（例如整合式資料發布工具— IPT），並將資料直接發"
 "布至 "
 msgstr ""
+"Do you plan to install and run publishing software, such as the Integrated "
+"Publishing Toolkit, IPT, and publish datasets directly to "
 
 #: templates/become-publisher.html:142
 msgid "？」也請答否，理由同上。"
-msgstr ""
+msgstr "? Please answer No, for the same reason as above."
 
 #: templates/become-publisher.html:143
 msgid "「您需要協助發布資料嗎？」若您需要請TaiBIF團隊協助，請填是。"
 msgstr ""
+"Do you need assistance publishing data? If you would like support from the "
+"TaiBIF team, please answer Yes."
 
 #: templates/become-publisher.html:146
 msgid "完成上述欄位後，請點按「註冊組織」送出申請"
 msgstr ""
+"Submit the application: Once all required fields are completed, click "
+"Register Organization to submit your request."
 
 #: templates/become-publisher.html:151
 msgid ""
 "請等待1-3個工作天，您會收到來自 GBIF 秘書處的確認信並會附上單位註冊密碼"
 "(token)，請將此信"
 msgstr ""
+"Wait for confirmation from GBIF. Please wait for approximately 1-3 business "
+"days. You will receive a confirmation email from the GBIF Secretariat "
+"containing your organization registration token. Please "
 
 #: templates/become-publisher.html:151
 msgid "轉寄"
-msgstr ""
+msgstr "forward"
 
 #: templates/become-publisher.html:151
 msgid "給我們TaiBIF團隊。"
 msgstr ""
+" this email to the TaiBIF team (taibif.brcas@gmail.com) or the GBIF Asia "
+"Regional Support Team (asia_support@gbif.org)."
 
 #: templates/become-publisher.html:152
 msgid ""
 "TaiBIF 團隊會使用貴單位的註冊密碼，將貴單位納入資料發布平台的組織清單中，您將"
 "能以自己單位的名義，發布資料集"
 msgstr ""
+"TaiBIF will complete the endorsement and activate your publishing access. "
+"The TaiBIF team will use your registration token to add your organization to "
+"the publishing platform. Once completed, your institution will be able to "
+"publish datasets under its own organizational name through the GBIF network."
 
 #: templates/become-publisher.html:156
 msgid "流程圖"
-msgstr ""
+msgstr "Flowchart"
 
 #: templates/contact-us.html:5 templates/contact-us.html:97
 #: templates/contact-us.html:108 templates/contact-us.html:129
