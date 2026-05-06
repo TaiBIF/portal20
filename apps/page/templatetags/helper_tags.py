@@ -6,15 +6,40 @@ from django.utils.html import strip_tags
 from django.template.defaultfilters import stringfilter
 from django.utils.text import normalize_newlines
 
+from bs4 import BeautifulSoup
 import markdown as md
 
 register = template.Library()
 
 
+def _open_external_links_in_new_tab(html):
+    soup = BeautifulSoup(html, "html.parser")
+
+    for link in soup.find_all("a", href=True):
+        href = link["href"].strip().lower()
+        if not href.startswith(("http://", "https://")):
+            continue
+
+        link["target"] = "_blank"
+
+        rel = link.get("rel", [])
+        if isinstance(rel, str):
+            rel = rel.split()
+
+        for value in ("noopener", "noreferrer"):
+            if value not in rel:
+                rel.append(value)
+
+        link["rel"] = rel
+
+    return str(soup)
+
+
 @register.filter()
 @stringfilter
 def markdown(value):
-    return md.markdown(value, extensions=["extra"])
+    html = md.markdown(value, extensions=["extra"])
+    return _open_external_links_in_new_tab(html)
 
 
 @register.filter()
