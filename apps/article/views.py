@@ -133,6 +133,7 @@ def article_tag_list(request, tag_name):
 
     return render(request, 'article-tag-list.html', {
         'article_list': article_list,
+        'tag_name': tag_name,
     })
 
 def data_case(request):
