@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-28 15:56+0800\n"
+"POT-Creation-Date: 2026-05-29 11:14+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,15 +18,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: apps/page/views.py:730
+#: apps/page/views.py:731
 msgid "這裡放需要翻譯的文字"
 msgstr "Text to be translated here"
 
-#: conf/settings.py:158
+#: conf/settings.py:154
 msgid "Traditional Chinese"
 msgstr "Traditional Chinese"
 
-#: conf/settings.py:159
+#: conf/settings.py:155
 msgid "English"
 msgstr "English"
 
@@ -76,27 +76,28 @@ msgstr "About GBIF"
 
 #: templates/about-gbif.html:25 templates/about-taibif.html:84
 #: templates/article-detail.html:28 templates/article-list.html:132
-#: templates/become-publisher.html:73 templates/contact-us.html:107
-#: templates/cookbook-detail-1.html:41 templates/cookbook-detail-2.html:44
-#: templates/cookbook-detail-3.html:38 templates/coordinate-converter.html:72
-#: templates/data-case.html:29 templates/data-clean.html:23
-#: templates/data-paper.html:76 templates/data-policy.html:26
-#: templates/data-product.html:23 templates/data-stats.html:158
-#: templates/data-visual.html:39 templates/download-resources.html:23
-#: templates/faq.html:55 templates/find-data.html:19
-#: templates/inc_breadcrumb.html:7 templates/monthly-status.html:24
-#: templates/occurrence.html:131 templates/open-benefits.html:24
-#: templates/open-consulation.html:73 templates/open-license.html:24
-#: templates/open-metadata.html:25 templates/open-process.html:25
-#: templates/open-standard.html:23 templates/open-timezone.html:25
-#: templates/open-upload.html:25 templates/publisher.html:11
-#: templates/search_all.html:18 templates/species.html:96
-#: templates/taibif-achievement.html:24 templates/taibif-api.html:78
-#: templates/tech-book.html:80 templates/tech-class-license.html:81
-#: templates/tech-online-class.html:80 templates/tech-open.html:26
-#: templates/tech-volunteer.html:81 templates/tech-workshop.html:24
-#: templates/thanks-list.html:26 templates/tools-common_name_checker.html:40
-#: templates/tools.html:23 templates/web-navi.html:27
+#: templates/article-tag-list.html:59 templates/become-publisher.html:74
+#: templates/contact-us.html:107 templates/cookbook-detail-1.html:41
+#: templates/cookbook-detail-2.html:44 templates/cookbook-detail-3.html:38
+#: templates/coordinate-converter.html:82 templates/data-case.html:29
+#: templates/data-clean.html:23 templates/data-paper.html:76
+#: templates/data-policy.html:26 templates/data-product.html:23
+#: templates/data-stats.html:158 templates/data-visual.html:39
+#: templates/download-resources.html:23 templates/faq.html:55
+#: templates/find-data.html:19 templates/inc_breadcrumb.html:7
+#: templates/monthly-status.html:24 templates/occurrence.html:131
+#: templates/open-benefits.html:24 templates/open-consulation.html:73
+#: templates/open-license.html:24 templates/open-metadata.html:25
+#: templates/open-process.html:25 templates/open-standard.html:23
+#: templates/open-timezone.html:25 templates/open-upload.html:25
+#: templates/publisher.html:11 templates/search_all.html:19
+#: templates/species.html:96 templates/taibif-achievement.html:24
+#: templates/taibif-api.html:78 templates/tech-book.html:80
+#: templates/tech-class-license.html:81 templates/tech-online-class.html:80
+#: templates/tech-open.html:26 templates/tech-volunteer.html:81
+#: templates/tech-workshop.html:24 templates/thanks-list.html:26
+#: templates/tools-common_name_checker.html:40 templates/tools.html:34
+#: templates/web-navi.html:27
 msgid "首頁"
 msgstr "Home Page"
 
@@ -681,6 +682,7 @@ msgid "全部年份"
 msgstr "All years"
 
 #: templates/about-taibif.html:352 templates/article-list.html:196
+#: templates/article-tag-list.html:81
 msgid "文章縮圖"
 msgstr "Article Thumbnail"
 
@@ -707,9 +709,9 @@ msgid "推薦文章"
 msgstr "Recommended Articles"
 
 #: templates/article-list.html:8 templates/article-list.html:119
-#: templates/article-list.html:133 templates/base.html:478
-#: templates/index.html:262 templates/search_all.html:74
-#: templates/web-navi.html:111
+#: templates/article-list.html:133 templates/article-tag-list.html:60
+#: templates/base.html:478 templates/index.html:262
+#: templates/search_all.html:75 templates/web-navi.html:111
 msgid "最新消息"
 msgstr "News & Notices"
 
@@ -717,12 +719,12 @@ msgstr "News & Notices"
 msgid "篩選"
 msgstr "Filtered by "
 
-#: templates/article-list.html:142 templates/search_all.html:27
+#: templates/article-list.html:142 templates/search_all.html:28
 msgid "請輸入關鍵字"
 msgstr "Please enter keywords"
 
 #: templates/article-list.html:143 templates/inc_breadcrumb.html:25
-#: templates/plans.html:18 templates/search_all.html:28
+#: templates/plans.html:18 templates/search_all.html:29
 #, fuzzy
 msgid "搜尋"
 msgstr "Site Search"
@@ -754,14 +756,17 @@ msgstr "Data Stories"
 msgid "出版品"
 msgstr "Publications"
 
-#: templates/article-tag-list.html:55
-msgid "閱讀更多"
-msgstr "Read more"
+#: templates/article-tag-list.html:7 templates/article-tag-list.html:49
+#, python-format
+msgid "標籤：%(tag_name)s"
+msgstr ""
 
-#: templates/base.html:406 templates/data-clean.html:24 templates/faq.html:56
-#: templates/open-consulation.html:74 templates/open-license.html:25
-#: templates/open-process.html:26 templates/open-standard.html:24
-#: templates/open-upload.html:26 templates/tools.html:24
+#: templates/base.html:406 templates/become-publisher.html:75
+#: templates/data-clean.html:24 templates/faq.html:56
+#: templates/monthly-status.html:25 templates/open-consulation.html:74
+#: templates/open-license.html:25 templates/open-process.html:26
+#: templates/open-standard.html:24 templates/open-upload.html:26
+#: templates/tools.html:35
 msgid "我想開放資料"
 msgstr "Open Data"
 
@@ -773,78 +778,77 @@ msgstr "Open Data"
 msgid "有哪些步驟"
 msgstr "What are the steps"
 
-#: templates/base.html:413 templates/coordinate-converter.html:74
-#: templates/index.html:110 templates/tools.html:4 templates/tools.html:12
-#: templates/tools.html:25
-msgid "有哪工具可以使用"
+#: templates/base.html:413 templates/coordinate-converter.html:84
+#: templates/index.html:110 templates/tools.html:4 templates/tools.html:23
+#: templates/tools.html:36
+msgid "有哪些工具可以使用"
 msgstr "What tools are available"
 
-#: templates/base.html:417 templates/index.html:117
+#: templates/base.html:415 templates/become-publisher.html:4
+#: templates/become-publisher.html:65 templates/become-publisher.html:76
+#: templates/become-publisher.html:83 templates/index.html:117
+msgid "我想成為資料發布單位"
+msgstr "Become Data Publishers"
+
+#: templates/base.html:418 templates/index.html:123
 #: templates/open-consulation.html:4 templates/open-consulation.html:64
 #: templates/open-consulation.html:75
 msgid "我需要幫忙"
 msgstr "I need help"
 
-#: templates/base.html:420 templates/faq.html:4 templates/faq.html:43
-#: templates/faq.html:57 templates/index.html:123
+#: templates/base.html:421 templates/faq.html:4 templates/faq.html:43
+#: templates/faq.html:57 templates/index.html:129
 msgid "開放資料常見問題"
 msgstr "FAQ"
 
-#: templates/base.html:426 templates/open-benefits.html:25
+#: templates/base.html:424 templates/index.html:135
+#: templates/monthly-status.html:4 templates/monthly-status.html:12
+#: templates/monthly-status.html:26
+msgid "每月資料發布狀況"
+msgstr "Monthly Data Release Status"
+
+#: templates/base.html:430 templates/open-benefits.html:25
 #: templates/tech-book.html:81 templates/tech-online-class.html:81
 msgid "我想探索教育資源"
 msgstr "Educational Resources"
 
-#: templates/base.html:430 templates/index.html:141 templates/tech-book.html:5
+#: templates/base.html:434 templates/index.html:153 templates/tech-book.html:5
 #: templates/tech-book.html:67 templates/tech-book.html:82
 #: templates/tech-open.html:4 templates/tech-open.html:14
 #: templates/tech-open.html:28 templates/web-navi.html:72
 msgid "什麼是開放資料"
 msgstr "What is Open Data"
 
-#: templates/base.html:432 templates/index.html:147
+#: templates/base.html:436 templates/index.html:159
 #: templates/open-benefits.html:4 templates/open-benefits.html:12
 #: templates/open-benefits.html:26
 msgid "開放資料的好處"
 msgstr "Benefits of Open Data"
 
-#: templates/base.html:435 templates/index.html:154
+#: templates/base.html:439 templates/index.html:166
 #: templates/tech-online-class.html:4 templates/tech-online-class.html:68
 #: templates/tech-online-class.html:82 templates/tech-workshop.html:64
 #: templates/tech-workshop.html:84
 msgid "線上教材包"
 msgstr "Online Learning Materials"
 
-#: templates/base.html:441 templates/become-publisher.html:74
-#: templates/monthly-status.html:25 templates/tech-class-license.html:82
+#: templates/base.html:445 templates/tech-class-license.html:82
 #: templates/tech-volunteer.html:82 templates/tech-workshop.html:25
 #: templates/thanks-list.html:27
 msgid "我想參與社群"
 msgstr "Community Involvement"
 
-#: templates/base.html:445 templates/index.html:172
-#: templates/monthly-status.html:4 templates/monthly-status.html:12
-#: templates/monthly-status.html:26
-msgid "每月資料發佈狀況"
-msgstr "Monthly Data Release Status"
-
-#: templates/base.html:448 templates/index.html:178
+#: templates/base.html:449 templates/index.html:184
 #: templates/tech-workshop.html:4 templates/tech-workshop.html:12
 #: templates/tech-workshop.html:26
 msgid "參加 TaiBIF 工作坊"
 msgstr "Join TaiBIF Workshops"
 
-#: templates/base.html:451 templates/index.html:184
+#: templates/base.html:452 templates/index.html:190
 #: templates/tech-volunteer.html:4 templates/tech-volunteer.html:69
 #: templates/tech-volunteer.html:83 templates/tech-volunteer.html:92
 msgid "參與協作者培訓"
 msgstr "Join Collaborator Training"
-
-#: templates/base.html:453 templates/become-publisher.html:4
-#: templates/become-publisher.html:64 templates/become-publisher.html:75
-#: templates/become-publisher.html:82 templates/index.html:191
-msgid "我想成為資料發布單位"
-msgstr "Become Data Publishers"
 
 #: templates/base.html:454 templates/index.html:197
 msgid "我願意收到電子報"
@@ -889,23 +893,23 @@ msgstr "Logo Downloads"
 msgid "使用條款暨隱私權政策"
 msgstr "Terms of Use & Privacy Policy"
 
-#: templates/become-publisher.html:85 templates/become-publisher.html:92
+#: templates/become-publisher.html:86 templates/become-publisher.html:93
 msgid "誰有資格"
 msgstr "Eligibility"
 
-#: templates/become-publisher.html:86 templates/become-publisher.html:115
+#: templates/become-publisher.html:87 templates/become-publisher.html:116
 msgid "如何申請"
 msgstr "How to apply"
 
-#: templates/become-publisher.html:94
+#: templates/become-publisher.html:95
 msgid "任何"
 msgstr "Any "
 
-#: templates/become-publisher.html:94
+#: templates/become-publisher.html:95
 msgid "機構或組織"
 msgstr "institution or organization"
 
-#: templates/become-publisher.html:94
+#: templates/become-publisher.html:95
 msgid ""
 "若想透過 TaiBIF 分享資料到 GBIF上，可以在填寫註冊申請表獲得許可，成為資料發布"
 "者。"
@@ -913,109 +917,111 @@ msgstr ""
 " that wants to share data through GBIF may register here to request "
 "endorsement as a data publisher."
 
-#: templates/become-publisher.html:97
+#: templates/become-publisher.html:98
 msgid "此申請程序目的在於確保發布單位："
 msgstr "The endorsement procedure aims to ensure that:"
 
-#: templates/become-publisher.html:99
+#: templates/become-publisher.html:100
 msgid "所發布的資料與 GBIF 的目標和範圍相關"
 msgstr "Published data are relevant to GBIF's scope and objectives"
 
-#: templates/become-publisher.html:100
+#: templates/become-publisher.html:101
 msgid "有穩定且長期可以聯繫的管理窗口"
 msgstr "Arrangements for data hosting are stable and persistent"
 
-#: templates/become-publisher.html:101
+#: templates/become-publisher.html:102
 msgid "資料的發布及使用可以得到國家、地區及相關領域的互助支持"
 msgstr ""
 "Data publishing and use are supported by strong national, regional and "
 "thematic engagement"
 
-#: templates/become-publisher.html:102
+#: templates/become-publisher.html:103
 msgid "資料盡可能為開放、可被分享及再利用"
 msgstr "Data are as open as possible and available for sharing and reuse"
 
-#: templates/become-publisher.html:103
+#: templates/become-publisher.html:104
 msgid "資料發布者能回應使用者意見及提升資料品質"
 msgstr "Data publishers can respond to feedback and improve data quality"
 
-#: templates/become-publisher.html:106
+#: templates/become-publisher.html:107
 msgid "若你希望以個人來發布資料，你可以選擇："
 msgstr ""
 "Note: GBIF and its Participants only publish data from organizations, that "
 "is, institutions, networks and societies, rather than individuals. Options "
 "for individuals who wish to publish data include:"
 
-#: templates/become-publisher.html:108
-msgid "透過GBIF附屬組織或已註冊的資料發布單位（第三方）來發布資料"
-msgstr "working through their affiliated organizations to seek endorsement as a publisher"
-
 #: templates/become-publisher.html:109
+msgid "透過GBIF附屬組織或已註冊的資料發布單位（第三方）來發布資料"
+msgstr ""
+"working through their affiliated organizations to seek endorsement as a "
+"publisher"
+
+#: templates/become-publisher.html:110
 msgid "透過具有 GBIF 託管服務的期刊發布者發布資料論文"
 msgstr ""
 "publishing data papers through a journal publisher with GBIF-ready software "
 "and/or hosting services"
 
-#: templates/become-publisher.html:110
+#: templates/become-publisher.html:111
 msgid "透過向 GBIF 發布紀錄的眾多公民科學平台之一來分享紀錄"
 msgstr ""
 "sharing records through one of the many citizen science platforms that "
 "publish records to GBIF"
 
-#: templates/become-publisher.html:117
+#: templates/become-publisher.html:118
 msgid "文字說明"
 msgstr "Instructions"
 
-#: templates/become-publisher.html:119
+#: templates/become-publisher.html:120
 msgid "透過下列步驟，完成資料發布單位的註冊(Register)："
 msgstr ""
 "Complete the registration of your institution as a data publisher by "
 "following the steps below:"
 
-#: templates/become-publisher.html:122
+#: templates/become-publisher.html:123
 msgid "填寫"
 msgstr "Complete the "
 
-#: templates/become-publisher.html:122
+#: templates/become-publisher.html:123
 msgid "資料發布單位註冊表單"
 msgstr "data publisher registration form"
 
-#: templates/become-publisher.html:122
+#: templates/become-publisher.html:123
 msgid "（此為由GBIF位於丹麥的秘書處管理，請以英文填寫）"
 msgstr ""
 " (This form is managed by the GBIF Secretariat. Please complete it in "
 "English.)"
 
-#: templates/become-publisher.html:124
+#: templates/become-publisher.html:125
 msgid "先登入/註冊GBIF帳號（可用Google帳號登入）"
 msgstr ""
 "Sign in / create a GBIF account: You will first need to sign in or create a "
 "GBIF account. Google sign-in is also available."
 
-#: templates/become-publisher.html:126
+#: templates/become-publisher.html:127
 msgid "到網頁最末端，勾選「我所屬的組織尚未完成註冊」，系統會自動引導下一步"
 msgstr ""
 "Confirm your organization is not yet registered: At the bottom of the page, "
 "tick the option indicating that your organization has not yet been "
 "registered. The system will then guide you to the next step."
 
-#: templates/become-publisher.html:129
+#: templates/become-publisher.html:134
 msgid "確認條款及細則，直接三個選項勾選"
 msgstr ""
 "Accept the terms and conditions: Please review the agreements and tick all "
 "three checkboxes to proceed."
 
-#: templates/become-publisher.html:132
+#: templates/become-publisher.html:141
 msgid "接著簡單用英文填寫"
 msgstr "Complete the form in English"
 
-#: templates/become-publisher.html:134
+#: templates/become-publisher.html:143
 msgid "「組織詳情」：單位基本介紹，並附上單位的logo連結"
 msgstr ""
 "Organization details: Provide a brief introduction to your institution and "
 "include a link to your organization logo."
 
-#: templates/become-publisher.html:135
+#: templates/become-publisher.html:144
 msgid ""
 "「認可節點」：若為位於臺灣的單位組織，請維持預設選項，GBIF 秘書處會協助貴單位"
 "與TaiBIF團隊聯繫"
@@ -1024,13 +1030,13 @@ msgstr ""
 "default suggested option. The GBIF Secretariat will help connect your "
 "organization with the TaiBIF team."
 
-#: templates/become-publisher.html:136
+#: templates/become-publisher.html:145
 msgid "「GBIF 專案」：回答是否曾獲得 GBIF 計畫經費補助"
 msgstr ""
 "GBIF project: Indicate whether your organization has previously received "
 "funding through a GBIF programme or project."
 
-#: templates/become-publisher.html:137
+#: templates/become-publisher.html:146
 msgid ""
 "「聯絡資訊」：可提供 2-3 位窗口，包含行政聯繫與技術聯繫，也可以官方 email 為"
 "聯絡方式，以避免因人力轉換而失去聯繫"
@@ -1039,32 +1045,32 @@ msgstr ""
 "administrative and technical contacts. A general institutional email address "
 "is also recommended to avoid losing contact when staff change."
 
-#: templates/become-publisher.html:138
+#: templates/become-publisher.html:147
 msgid ""
 "「什麼與如何」：勾選預期會發布的資料類型（勾選哪些不會影響未來資料發布類型的"
 "更動），並簡單描述貴單位所擁有的資料概況"
 msgstr ""
-"What and how: Select the types of data you expect to publish. Your selections "
-"will not limit future changes to dataset types. Please also briefly describe "
-"the biodiversity data held by your organization."
+"What and how: Select the types of data you expect to publish. Your "
+"selections will not limit future changes to dataset types. Please also "
+"briefly describe the biodiversity data held by your organization."
 
-#: templates/become-publisher.html:139
+#: templates/become-publisher.html:148
 msgid "最後回答下列三個問題"
 msgstr "Final questions"
 
-#: templates/become-publisher.html:141
+#: templates/become-publisher.html:150
 msgid "「您是否能夠執行、維護伺服器，或存取一伺服器，以將您的原始資料集公開在 "
 msgstr ""
 "Are you able to run and maintain a server, or access a server, to make your "
 "source datasets publicly available through "
 
-#: templates/become-publisher.html:141
+#: templates/become-publisher.html:150
 msgid "？」請答否，主要會由TaiBIF團隊維運伺服器並提供服務"
 msgstr ""
 "? Please answer No. The TaiBIF team or the GBIF Asia Regional Support Team "
 "can provide hosting and technical support."
 
-#: templates/become-publisher.html:142
+#: templates/become-publisher.html:151
 msgid ""
 "「您是否計畫安裝並執行發布軟體（例如整合式資料發布工具— IPT），並將資料直接發"
 "布至 "
@@ -1072,23 +1078,23 @@ msgstr ""
 "Do you plan to install and run publishing software, such as the Integrated "
 "Publishing Toolkit, IPT, and publish datasets directly to "
 
-#: templates/become-publisher.html:142
+#: templates/become-publisher.html:151
 msgid "？」也請答否，理由同上。"
 msgstr "? Please answer No, for the same reason as above."
 
-#: templates/become-publisher.html:143
+#: templates/become-publisher.html:152
 msgid "「您需要協助發布資料嗎？」若您需要請TaiBIF團隊協助，請填是。"
 msgstr ""
 "Do you need assistance publishing data? If you would like support from the "
 "TaiBIF team, please answer Yes."
 
-#: templates/become-publisher.html:146
+#: templates/become-publisher.html:155
 msgid "完成上述欄位後，請點按「註冊組織」送出申請"
 msgstr ""
 "Submit the application: Once all required fields are completed, click "
 "Register Organization to submit your request."
 
-#: templates/become-publisher.html:151
+#: templates/become-publisher.html:160
 msgid ""
 "請等待1-3個工作天，您會收到來自 GBIF 秘書處的確認信並會附上單位註冊密碼"
 "(token)，請將此信"
@@ -1097,17 +1103,17 @@ msgstr ""
 "days. You will receive a confirmation email from the GBIF Secretariat "
 "containing your organization registration token. Please "
 
-#: templates/become-publisher.html:151
+#: templates/become-publisher.html:160
 msgid "轉寄"
 msgstr "forward"
 
-#: templates/become-publisher.html:151
+#: templates/become-publisher.html:160
 msgid "給我們TaiBIF團隊。"
 msgstr ""
 " this email to the TaiBIF team (taibif.brcas@gmail.com) or the GBIF Asia "
 "Regional Support Team (asia_support@gbif.org)."
 
-#: templates/become-publisher.html:152
+#: templates/become-publisher.html:161
 msgid ""
 "TaiBIF 團隊會使用貴單位的註冊密碼，將貴單位納入資料發布平台的組織清單中，您將"
 "能以自己單位的名義，發布資料集"
@@ -1117,7 +1123,7 @@ msgstr ""
 "the publishing platform. Once completed, your institution will be able to "
 "publish datasets under its own organizational name through the GBIF network."
 
-#: templates/become-publisher.html:156
+#: templates/become-publisher.html:165
 msgid "流程圖"
 msgstr "Flowchart"
 
@@ -1160,7 +1166,7 @@ msgstr "Name"
 msgid "留言內容"
 msgstr "Message"
 
-#: templates/contact-us.html:172 templates/coordinate-converter.html:125
+#: templates/contact-us.html:172 templates/coordinate-converter.html:145
 msgid "送出"
 msgstr "Submit"
 
@@ -3018,73 +3024,105 @@ msgstr "Darwin Core - Sampling-event Star Schema"
 msgid "3.4 使用Excel模板準備調查活動資料構"
 msgstr "Prepare sampling-event data using Excel template"
 
-#: templates/coordinate-converter.html:5 templates/coordinate-converter.html:63
-#: templates/coordinate-converter.html:75
-#: templates/coordinate-converter.html:81 templates/tools.html:32
+#: templates/coordinate-converter.html:5 templates/coordinate-converter.html:73
+#: templates/coordinate-converter.html:85
+#: templates/coordinate-converter.html:91 templates/tools.html:43
 msgid "地理分布線上座標轉換"
-msgstr ""
+msgstr "Coordinate Conversion"
 
-#: templates/coordinate-converter.html:73 templates/data-stats.html:159
+#: templates/coordinate-converter.html:83 templates/data-stats.html:159
 #: templates/open-metadata.html:26 templates/open-timezone.html:26
 #: templates/tools-common_name_checker.html:41 templates/web-navi.html:56
 msgid "開放資料"
 msgstr "Open Data"
 
-#: templates/coordinate-converter.html:83
+#: templates/coordinate-converter.html:94
+msgid "本工具支援 WGS 84、TWD67、TWD97 等座標系統互轉。"
+msgstr "This tool supports conversion among coordinate systems such as WGS 84, TWD67, and TWD97."
+
+#: templates/coordinate-converter.html:95
+msgid "一般選項依下拉選單中標示的 EPSG 代碼進行轉換，不額外套用自訂參數。"
+msgstr "Standard options are converted according to the EPSG codes shown in the dropdown menu, without applying additional custom parameters."
+
+#: templates/coordinate-converter.html:96
 msgid ""
-"本工具支援 WGS 84、TWD67、TWD97 等座標系統互轉，適合單筆查詢與大量資料整理。"
+"標示為「修正版」的選項使用自訂坐標參考系統，將 EPSG:3828 原 PROJ.4 定義中的 "
+"ellps=aust_SA 改為 ellps=GRS67，並加入 towgs84 轉換參數。"
+msgstr ""
+"Options marked as \"Revised\" use a custom coordinate reference system: "
+"ellps=aust_SA in the original EPSG:3828 PROJ.4 definition is changed to "
+"ellps=GRS67, and towgs84 transformation parameters are added."
+
+#: templates/coordinate-converter.html:96
+msgid "修正版參考："
+msgstr "Reference for the revised option:"
+
+#: templates/coordinate-converter.html:98
+msgid ""
 "輸入時每列代表一筆資料，支援「x y」或「x,y」兩種格式，系統會依行數逐筆輸出轉"
 "換結果。"
 msgstr ""
+"Each input row represents one record. Both \"x y\" and \"x,y\" formats are "
+"supported, and the system outputs conversion results row by row."
 
-#: templates/coordinate-converter.html:88
+#: templates/coordinate-converter.html:104
 msgid "來源座標系統"
 msgstr "Source coordinate system"
 
-#: templates/coordinate-converter.html:90
-#: templates/coordinate-converter.html:102
-msgid "WGS 84 經緯度"
-msgstr "WGS 84 Latitude/Longitude"
-
-#: templates/coordinate-converter.html:91
-#: templates/coordinate-converter.html:103
-msgid "TWD 67 經緯度"
-msgstr "TWD67 Latitude/Longitude"
-
-#: templates/coordinate-converter.html:92
-#: templates/coordinate-converter.html:104
-msgid "TWD 97 經緯度"
-msgstr "TWD97 Latitude/Longitude"
-
-#: templates/coordinate-converter.html:93
-#: templates/coordinate-converter.html:105
-msgid "TWD97/ 澎湖地區"
-msgstr "TWD97 / Penghu"
-
-#: templates/coordinate-converter.html:94
 #: templates/coordinate-converter.html:106
-msgid "TWD97/ 臺灣地區"
-msgstr "TWD97 / Taiwan"
+#: templates/coordinate-converter.html:120
+msgid "WGS84 經緯度（EPSG:4326）"
+msgstr "WGS84 latitude/longitude (EPSG:4326)"
 
-#: templates/coordinate-converter.html:95
 #: templates/coordinate-converter.html:107
-msgid "TWD67/ 澎湖地區"
-msgstr "TWD67 / Penghu"
+#: templates/coordinate-converter.html:121
+msgid "TWD67 經緯度（EPSG:3821）"
+msgstr "TWD67 latitude/longitude (EPSG:3821)"
 
-#: templates/coordinate-converter.html:96
 #: templates/coordinate-converter.html:108
-msgid "TWD67/ 臺灣地區"
-msgstr "TWD67 / Taiwan"
+#: templates/coordinate-converter.html:122
+msgid "TWD97 經緯度（EPSG:3824）"
+msgstr "TWD97 latitude/longitude (EPSG:3824)"
 
-#: templates/coordinate-converter.html:100
+#: templates/coordinate-converter.html:109
+#: templates/coordinate-converter.html:123
+msgid "TWD97 / TM2 中央經線119度（EPSG:3825，澎湖金門馬祖）"
+msgstr "TWD97 / TM2 central meridian 119° (EPSG:3825, Penghu, Kinmen, and Matsu)"
+
+#: templates/coordinate-converter.html:110
+#: templates/coordinate-converter.html:124
+msgid "TWD97 / TM2 中央經線121度（EPSG:3826，臺灣本島）"
+msgstr "TWD97 / TM2 central meridian 121° (EPSG:3826, Taiwan main island)"
+
+#: templates/coordinate-converter.html:111
+#: templates/coordinate-converter.html:125
+msgid "TWD67 / TM2 中央經線119度（EPSG:3827，澎湖金門馬祖）"
+msgstr "TWD67 / TM2 central meridian 119° (EPSG:3827, Penghu, Kinmen, and Matsu)"
+
+#: templates/coordinate-converter.html:112
+#: templates/coordinate-converter.html:126
+msgid "TWD67 / TM2 中央經線121度（EPSG:3828，臺灣本島）"
+msgstr "TWD67 / TM2 central meridian 121° (EPSG:3828, Taiwan main island)"
+
+#: templates/coordinate-converter.html:113
+#: templates/coordinate-converter.html:127
+msgid "TWD67 / TM2 中央經線121度（修正版，臺灣本島）"
+msgstr "TWD67 / TM2 central meridian 121° (revised, Taiwan main island)"
+
+#: templates/coordinate-converter.html:114
+#: templates/coordinate-converter.html:128
+msgid "虎子山經緯度（EPSG:4236）"
+msgstr "Hutzushan latitude/longitude (EPSG:4236)"
+
+#: templates/coordinate-converter.html:118
 msgid "目標座標系統"
 msgstr "Target coordinate system"
 
-#: templates/coordinate-converter.html:115
+#: templates/coordinate-converter.html:135
 msgid "原始坐標"
 msgstr "Source coordinates"
 
-#: templates/coordinate-converter.html:119
+#: templates/coordinate-converter.html:139
 msgid "轉換結果"
 msgstr "Conversion result"
 
@@ -4325,7 +4363,7 @@ msgstr "Dataset name"
 
 #: templates/data-stats.html:238 templates/inc_breadcrumb.html:23
 #: templates/monthly-status.html:64 templates/occurrence.html:180
-#: templates/publisher.html:12 templates/search_all.html:63
+#: templates/publisher.html:12 templates/search_all.html:64
 #: templates/taibif-api.html:90 templates/taibif-api.html:1172
 msgid "發布單位"
 msgstr "Publishers"
@@ -4345,7 +4383,7 @@ msgid "出現紀錄"
 msgstr "Occurrences"
 
 #: templates/data-stats.html:242
-msgid "發佈時間"
+msgid "發布時間"
 msgstr "Published date"
 
 #: templates/data-stats.html:243
@@ -4643,7 +4681,7 @@ msgstr "can all be different"
 
 #: templates/faq.html:130 templates/inc_breadcrumb.html:21
 #: templates/index.html:349 templates/occurrence.html:178
-#: templates/publisher.html:49 templates/search_all.html:52
+#: templates/publisher.html:49 templates/search_all.html:53
 #: templates/species.html:171 templates/taibif-achievement.html:186
 #: templates/taibif-achievement.html:196 templates/taibif-api.html:89
 #: templates/taibif-api.html:936 templates/web-navi.html:100
@@ -4774,14 +4812,15 @@ msgid ""
 msgstr ""
 "This is the biodiversity data portal established by the Taiwan Biodiversity "
 "Information Alliance (TBIA), integrating ecological and species data "
-"contributed by Taiwanese research institutions, natural history institutions, "
-"public sectors, private sectors, and citizen science projects. It offers a "
-"one-stop platform for data discovery and application. Users can efficiently "
-"access information on species distributions, observation records, and related "
-"data sources in Taiwan, supporting ecological research, conservation "
-"management, environmental assessment, and education. Through cross-"
-"institutional data integration and standardized exchange, tbiadata.tw aims to "
-"enhance the accessibility and practical value of Taiwan’s biodiversity data."
+"contributed by Taiwanese research institutions, natural history "
+"institutions, public sectors, private sectors, and citizen science projects. "
+"It offers a one-stop platform for data discovery and application. Users can "
+"efficiently access information on species distributions, observation "
+"records, and related data sources in Taiwan, supporting ecological research, "
+"conservation management, environmental assessment, and education. Through "
+"cross-institutional data integration and standardized exchange, tbiadata.tw "
+"aims to enhance the accessibility and practical value of Taiwan’s "
+"biodiversity data."
 
 #: templates/inc_breadcrumb.html:9
 msgid "資料開放"
@@ -6313,21 +6352,21 @@ msgstr "Darwin Core (DwC) Field Standard"
 msgid "找資料"
 msgstr "Find Data"
 
-#: templates/search_all.html:11
+#: templates/search_all.html:12
 #, fuzzy
 msgid "TaiBIF 找資料"
 msgstr "TaiBIF Achievements"
 
-#: templates/search_all.html:19 templates/search_all.html:25
+#: templates/search_all.html:20 templates/search_all.html:26
 #: templates/web-navi.html:103
 msgid "全站搜尋"
 msgstr "Site Search"
 
-#: templates/search_all.html:41
+#: templates/search_all.html:42
 msgid "靜態頁面"
 msgstr "Static pages"
 
-#: templates/search_all.html:106
+#: templates/search_all.html:107
 msgid "查無資料"
 msgstr "No Data"
 
@@ -6637,7 +6676,7 @@ msgstr "Overseas report"
 
 #: templates/taibif-achievement.html:256
 msgid ""
-"TaiBIF 團隊協助 NGO 組織在資料上的審核與發佈、資料論文上提供撰寫建議與論文發"
+"TaiBIF 團隊協助 NGO 組織在資料上的審核與發布、資料論文上提供撰寫建議與論文發"
 "表費。"
 msgstr ""
 
@@ -6659,7 +6698,7 @@ msgstr ""
 
 #: templates/taibif-achievement.html:288
 msgid ""
-"TaiBIF團隊協助 NGO 組織在資料上的審核與發佈、資料論文上提供撰寫建議與論文發表"
+"TaiBIF團隊協助 NGO 組織在資料上的審核與發布、資料論文上提供撰寫建議與論文發表"
 "費。"
 msgstr ""
 
@@ -8131,12 +8170,11 @@ msgid "開放資料工具"
 msgstr "TaiBIF Tools"
 
 #: templates/tools-common_name_checker.html:43
-#: templates/tools-common_name_checker.html:55 templates/tools.html:43
-#: templates/tools.html:48
+#: templates/tools-common_name_checker.html:55
 msgid "物種中文名比對"
 msgstr ""
 
-#: templates/tools-common_name_checker.html:58 templates/tools.html:46
+#: templates/tools-common_name_checker.html:58
 msgid ""
 "此工具提供使用者上傳多筆中文名稱，工具會針對所上傳的物種中文名稱比對出臺灣物"
 "種名錄中所對應的物種學名與物種代碼（name code），若比對不到中文名稱則傳回"
@@ -8173,53 +8211,93 @@ msgstr ""
 msgid "搜尋替換"
 msgstr ""
 
-#: templates/tools.html:35
+#: templates/tools.html:46
 msgid ""
 "生物多樣性資料校對轉換工具為 TaiBIF 資訊團隊研發，目前提供學名檢查、中文名批"
 "次比對與座標轉換。本研究目前由中研院「台灣生物多樣性資訊平台之學術、社會推廣"
 "與國際接軌」、國科會「建置與維護及整合臺灣生物多樣性資訊國家入口網 (TaiBIF) "
 "及與 GBIF 接軌」及林務局「生態資源資料庫分組整合推動計畫」等計畫經費支持。"
 msgstr ""
+"The Biodiversity Data Validation and Conversion Tool was developed by the "
+"TaiBIF information team. It currently provides scientific name checking, "
+"batch Chinese common name matching, and coordinate conversion. This work is "
+"supported by Academia Sinica's \"Taiwan Biodiversity Information Facility: "
+"Academic and Social Outreach and International Alignment\" project, the "
+"National Science and Technology Council's \"Development, Maintenance, and "
+"Integration of the Taiwan Biodiversity Information Facility (TaiBIF) and "
+"Alignment with GBIF\" project, and the Forestry Bureau's \"Ecological "
+"Resource Database Integration Promotion Project.\""
 
-#: templates/tools.html:36
+#: templates/tools.html:47
 msgid ""
 "有鑑於過去物種生態分布之地理座標系統不同，造成整合地理資訊上之困難，及物種於"
 "地圖上標記之錯誤，因此本系統可提供線上地理座標資訊，以便使用者更新老舊生態分"
 "布之資料，得以進一步比較分析與研究，系統提供 WGS 84、TM2 67 與 TM2 97 三種格"
 "式之間的相互轉換。"
 msgstr ""
+"Because species distribution records have historically used different "
+"geographic coordinate systems, integrating spatial information can be "
+"difficult and species may be mapped incorrectly. This system provides online "
+"coordinate conversion so users can update older ecological distribution data "
+"for further comparison, analysis, and research. It supports conversion among "
+"WGS 84, TM2 67, and TM2 97."
 
-#: templates/tools.html:38
+#: templates/tools.html:49
 msgid "座標轉換"
-msgstr ""
+msgstr "Coordinate Conversion"
 
-#: templates/tools.html:55
+#: templates/tools.html:54 templates/tools.html:61
+msgid "學名與物種中文名比對"
+msgstr "Scientific Name and Chinese Common Name Matching"
+
+#: templates/tools.html:57
+msgid ""
+"由<a href=\"https://taicol.tw/zh-hant/\" target=\"_blank\" rel=\"noopener "
+"noreferrer\">臺灣物種名錄</a>（TaiCOL）提供，使用者可批次貼入學名與中文名進行"
+"比對，得到對應的物種有效學名與物種編號。支援跨生物界與各分類階層的比對，並允"
+"許使用者根據需求調整查詢設定。（比對來源為TaiCOL）"
+msgstr ""
+"Provided by the <a href=\"https://taicol.tw/zh-hant/\" target=\"_blank\" "
+"rel=\"noopener noreferrer\">Taiwan Catalogue of Life</a> (TaiCOL), this tool "
+"allows users to paste scientific names and Chinese common names in batches "
+"for matching, and returns the corresponding accepted scientific names and "
+"species IDs. It supports matching across kingdoms and taxonomic ranks, and "
+"allows users to adjust query settings as needed. (Matching source: TaiCOL)"
+
+#: templates/tools.html:66
 msgid "有效學名比對"
-msgstr ""
+msgstr "Accepted Scientific Name Matching"
 
-#: templates/tools.html:58
+#: templates/tools.html:69
 msgid ""
 "物種在分類學上往往存在同物異名，本工具提供批次的物種學名比對，可提供該學名是"
-"否為有效學名及物種代碼等相關資訊。"
+"否為有效學名及物種代碼等相關資訊，比對來源包含GBIF、COL、TBN與TaiCOL等。"
 msgstr ""
+"Synonyms are common in taxonomy. This tool provides batch scientific name "
+"matching and returns information such as whether each name is accepted and "
+"its species code. Matching sources include GBIF, COL, TBN, and TaiCOL."
 
-#: templates/tools.html:65
+#: templates/tools.html:76
 msgid "GBIF 資料驗證工具"
-msgstr ""
+msgstr "GBIF Data Validator"
 
-#: templates/tools.html:68
+#: templates/tools.html:79
 msgid ""
 "為全球生物多樣性資訊機構 GBIF 所開發的網頁版資料驗證工具，可將文字檔或excel上"
 "傳，並顯示資料檔案中的資料問題及錯誤之處。上傳的資料檔案欄位須符合 DwC，使用"
 "前亦須先登入GBIF會員（可用google帳號註冊）。"
 msgstr ""
+"A web-based data validation tool developed by the Global Biodiversity "
+"Information Facility (GBIF). Users can upload text files or Excel files to "
+"identify issues and errors in their data. Uploaded data fields must follow "
+"Darwin Core (DwC), and users must sign in with a GBIF account before use "
+"(Google accounts can be used to register)."
 
-#: templates/tools.html:75
+#: templates/tools.html:86
 msgid "數位 TaiBIFer"
-msgstr ""
+msgstr "Digital TaiBIFer"
 
-#: templates/tools.html:78
-#, fuzzy
+#: templates/tools.html:89
 msgid ""
 "\n"
 "                    提供全天候協助的數位 TaiBIFer，隨時為您解答有關生物多樣性"
@@ -8236,33 +8314,39 @@ msgstr ""
 "inference methods, and it is recommended to verify the information before "
 "use to ensure its accuracy."
 
-#: templates/tools.html:90
+#: templates/tools.html:101
 msgid ""
 "TaiBIF Open Data Toolkit 是一個專門針對生物多樣性資料整合的工具，採用了國際生"
 "物多樣性領域常用的 Darwin Core 資料標準， 旨在幫助使用者建立並有效管理、編"
 "輯、驗證和清理生物多樣性資料集。若想要建立資料模板、資料編輯管理和發布，此工"
 "具將能引導您進入理想的資料管理流程，並協助管控資料品質。"
 msgstr ""
+"The TaiBIF Open Data Toolkit is designed specifically for biodiversity data "
+"integration. It uses Darwin Core, a widely adopted international data "
+"standard in the biodiversity field, to help users create, manage, edit, "
+"validate, and clean biodiversity datasets. For users who need to create data "
+"templates, manage and edit data, or publish datasets, this tool guides them "
+"through a practical data management workflow and helps control data quality."
 
-#: templates/tools.html:97
+#: templates/tools.html:108
 msgid "Windows 安裝程式"
-msgstr ""
+msgstr "Windows Installer"
 
-#: templates/tools.html:105
+#: templates/tools.html:116
 msgid "MacOS Arm 安裝程式"
-msgstr ""
+msgstr "MacOS Arm Installer"
 
-#: templates/tools.html:113
+#: templates/tools.html:124
 msgid "MacOS Intel 安裝程式"
-msgstr ""
+msgstr "MacOS Intel Installer"
 
-#: templates/tools.html:120
+#: templates/tools.html:131
 msgid "GitHub 專案"
-msgstr ""
+msgstr "GitHub Project"
 
-#: templates/tools.html:122
+#: templates/tools.html:133
 msgid "教學手冊"
-msgstr ""
+msgstr "User Guide"
 
 #: templates/web-navi.html:5 templates/web-navi.html:16
 #: templates/web-navi.html:29 templates/web-navi.html:44
@@ -8285,6 +8369,21 @@ msgstr "Data Use Cases"
 #: templates/web-navi.html:123
 msgid "專題文章"
 msgstr "Articles"
+
+#~ msgid "閱讀更多"
+#~ msgstr "Read more"
+
+#~ msgid "TWD97/ 澎湖地區"
+#~ msgstr "TWD97 / Penghu"
+
+#~ msgid "TWD97/ 臺灣地區"
+#~ msgstr "TWD97 / Taiwan"
+
+#~ msgid "TWD67/ 澎湖地區"
+#~ msgstr "TWD67 / Penghu"
+
+#~ msgid "TWD67/ 臺灣地區"
+#~ msgstr "TWD67 / Taiwan"
 
 #~ msgid "內容籌備中"
 #~ msgstr "Content in Preparation"
