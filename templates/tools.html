@@ -51,13 +51,14 @@
         </div>
 
         <div id="common-name-checker" class="card-tools-wrapper tools-card">
-            <div class="title">{% trans "物種中文名比對" %}</div>
+            <div class="title">{% trans "學名與物種中文名比對" %}</div>
             <div class="content">
                 <p>
-                {% trans "此工具提供使用者上傳多筆中文名稱，工具會針對所上傳的物種中文名稱比對出臺灣物種名錄中所對應的物種學名與物種代碼（name code），若比對不到中文名稱則傳回「no match」之訊息。" %}
+                {% blocktrans trimmed %}
+                由<a href="https://taicol.tw/zh-hant/" target="_blank" rel="noopener noreferrer">臺灣物種名錄</a>（TaiCOL）提供，使用者可批次貼入學名與中文名進行比對，得到對應的物種有效學名與物種編號。支援跨生物界與各分類階層的比對，並允許使用者根據需求調整查詢設定。（比對來源為TaiCOL）
+                {% endblocktrans %}
                 </p>
-                <a href="{% url 'tools-common_name_checker' %}" target="_blank"><span class="myicon icon-link"></span> {% trans "物種中文名比對" %}</a>
-                {% comment %} <a href="/common-name-checker" target="_blank" class="link-item"><span class="myicon icon-link"></span> {% trans "物種中文名比對" %}</a> {% endcomment %}
+                <a href="https://taicol.tw/zh-hant/name/match" target="_blank" rel="noopener noreferrer"><span class="myicon icon-link"></span> {% trans "學名與物種中文名比對" %}</a>
             </div>
         </div>
 
@@ -65,9 +66,9 @@
             <div class="title">{% trans "有效學名比對" %}</div>
             <div class="content">
                 <p>
-                {% trans "物種在分類學上往往存在同物異名，本工具提供批次的物種學名比對，可提供該學名是否為有效學名及物種代碼等相關資訊。" %}
+                {% trans "物種在分類學上往往存在同物異名，本工具提供批次的物種學名比對，可提供該學名是否為有效學名及物種代碼等相關資訊，比對來源包含GBIF、COL、TBN與TaiCOL等。" %}
                 </p>
-                <a href="http://match.taibif.tw/" target="_blank" class="link-item"><span class="myicon icon-link"></span> NomenMatch</a>
+                <a href="http://match.taibif.tw/v2/index.html" target="_blank" class="link-item"><span class="myicon icon-link"></span> NomenMatch</a>
             </div>
         </div>
 
