@@ -71,7 +71,7 @@ else:
         <p>我們一共整理了 {len(updated_dataset_this_month)} 筆資料集，主題多元、內容豐富，等你來探索 📚🔍</p>
         <p>趕快來看看這些本月的新鮮資料吧👇👇</p>
         {table_html}
-        <div class="content-readable-panel">若想查看各月份的資料集更新歷程，可以利用 <a href="{monthly_status_url}" rel="noopener noreferrer">每月資料發佈狀況</a> 頁面。</div>
+        <div class="content-readable-panel">若想查看各月份的資料集更新歷程，可以利用 <a href="{monthly_status_url}" rel="noopener noreferrer">每月資料發布狀況</a> 頁面。</div>
         """
 
         article = Article(
@@ -89,4 +89,4 @@ else:
         )
         article.save()
 
-        print(f"{current_year}-{current_month} 資料集文章成功發佈")
+        print(f"{current_year}-{current_month} 資料集文章成功發布")

@@ -776,7 +776,7 @@ msgstr "What are the steps"
 #: templates/base.html:413 templates/coordinate-converter.html:74
 #: templates/index.html:110 templates/tools.html:4 templates/tools.html:12
 #: templates/tools.html:25
-msgid "有哪工具可以使用"
+msgid "有哪些工具可以使用"
 msgstr "What tools are available"
 
 #: templates/base.html:417 templates/index.html:117
@@ -825,7 +825,7 @@ msgstr "Community Involvement"
 #: templates/base.html:445 templates/index.html:172
 #: templates/monthly-status.html:4 templates/monthly-status.html:12
 #: templates/monthly-status.html:26
-msgid "每月資料發佈狀況"
+msgid "每月資料發布狀況"
 msgstr "Monthly Data Release Status"
 
 #: templates/base.html:448 templates/index.html:178
@@ -4345,7 +4345,7 @@ msgid "出現紀錄"
 msgstr "Occurrences"
 
 #: templates/data-stats.html:242
-msgid "發佈時間"
+msgid "發布時間"
 msgstr "Published date"
 
 #: templates/data-stats.html:243
@@ -6637,7 +6637,7 @@ msgstr "Overseas report"
 
 #: templates/taibif-achievement.html:256
 msgid ""
-"TaiBIF 團隊協助 NGO 組織在資料上的審核與發佈、資料論文上提供撰寫建議與論文發"
+"TaiBIF 團隊協助 NGO 組織在資料上的審核與發布、資料論文上提供撰寫建議與論文發"
 "表費。"
 msgstr ""
 
@@ -6659,7 +6659,7 @@ msgstr ""
 
 #: templates/taibif-achievement.html:288
 msgid ""
-"TaiBIF團隊協助 NGO 組織在資料上的審核與發佈、資料論文上提供撰寫建議與論文發表"
+"TaiBIF團隊協助 NGO 組織在資料上的審核與布、資料論文上提供撰寫建議與論文發表"
 "費。"
 msgstr ""
 

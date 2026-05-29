@@ -82,7 +82,7 @@ STATIC_PAGE_SEARCH_ITEMS = [
         "title": "我需要幫忙",
         "template": "open-consulation.html",
     },
-    {"url_name": "tools", "title": "有哪工具可以使用", "template": "tools.html"},
+    {"url_name": "tools", "title": "有哪些工具可以使用", "template": "tools.html"},
     {"url_name": "data-stats", "title": "資料發布狀況", "template": "data-stats.html"},
     {"url_name": "data-clean", "title": "清理資料", "template": "data-clean.html"},
     {"url_name": "data-case", "title": "給我一些例子", "template": "data-case.html"},
@@ -115,7 +115,7 @@ STATIC_PAGE_SEARCH_ITEMS = [
     {"url_name": "faq", "title": "開放資料常見問題", "template": "faq.html"},
     {
         "url_name": "monthly-status",
-        "title": "每月資料發佈狀況",
+        "title": "每月資料發布狀況",
         "template": "monthly-status.html",
     },
     {
