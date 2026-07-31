@@ -420,7 +420,7 @@ msgid ""
 msgstr ""
 
 #: templates/about-taibif.html:176 templates/taibif-achievement.html:101
-msgid "臺灣自動相機資訊系"
+msgid "臺灣自動相機資訊系統"
 msgstr "Taiwan Camera Trap Information System"
 
 #: templates/about-taibif.html:176
