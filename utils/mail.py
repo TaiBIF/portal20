@@ -1,6 +1,11 @@
+import logging
+
 #from django.core.mail import send_mail
 from django.core.mail import EmailMessage
 from django.conf import settings
+
+logger = logging.getLogger(__name__)
+
 
 def taibif_mail_contact_us(data):
 
@@ -35,11 +40,11 @@ Email: {}
             #headers={'Message-ID': 'foo'},
         )
         msg.send()
-    except Exception as e:
-        ret['message']['head'] = '有錯誤(admin)'
-        ret['message']['content'] = e
-
-
+    except Exception:
+        logger.exception("Failed to send contact form notification to administrators")
+        ret['message']['head'] = '信件無法送出'
+        ret['message']['content'] = '信件目前無法送出，請稍後再試。'
+        return ret
 
     # send to user
     subject = '[taibif.tw] 關於我們留言: {}'.format(data['cat'])
@@ -67,8 +72,8 @@ TaiBIF
             #headers={'Message-ID': 'foo'},
         )
         msg.send()
-    except Exception as e:
-        ret['message']['head'] = '有錯誤(user)'
-        ret['message']['content'] = e
+    except Exception:
+        logger.exception("Failed to send contact form confirmation to user")
+        ret['message']['content'] = '留言已收到，但確認信目前無法寄出。'
 
     return ret
