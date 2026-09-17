@@ -2,6 +2,7 @@ import re
 import csv
 import codecs
 import json
+import logging
 import requests
 
 import os
@@ -41,6 +42,8 @@ from django.utils.translation import activate
 from django.utils import timezone
 from collections import defaultdict
 from django.core.paginator import Paginator
+
+logger = logging.getLogger(__name__)
 
 
 def act_lang(func):
@@ -262,11 +265,19 @@ def contact_us(request):
         recaptcha_response = request.POST.get("h-captcha-response")
         # print(recaptcha_response)
         data = {"secret": settings.HCAPTCHA_SECRET_KEY, "response": recaptcha_response}
-        r = requests.post("https://hcaptcha.com/siteverify", data=data)
-        result = r.json()
+        try:
+            r = requests.post(
+                "https://hcaptcha.com/siteverify", data=data, timeout=5
+            )
+            r.raise_for_status()
+            result = r.json()
+        except (requests.RequestException, ValueError):
+            logger.exception("Failed to verify contact form hCaptcha response")
+            messages.error(request, "驗證服務暫時無法使用，請稍後再試")
+            return redirect("contact_us")
         """ End reCAPTCHA validation """
 
-        if result["success"] == False:
+        if not result.get("success", False):
             messages.error(request, "請進行驗證，謝謝")
             return redirect("contact_us")
 
