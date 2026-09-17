@@ -30,13 +30,20 @@ Email: {}
 '''.format(data['cat'], data['name'], data['email'], data['content'])
     #print (content)
     try:
+        admin_recipients = [
+            email.strip()
+            for email in settings.TAIBIF_BCC_EMAIL_LIST.split(',')
+            if email.strip()
+        ]
+        if not admin_recipients:
+            raise ValueError("TAIBIF_BCC_EMAIL_LIST is empty")
+
         msg = EmailMessage(
-            subject,
-            content,
-            settings.TAIBIF_SERVICE_EMAIL,
-            [settings.TAIBIF_SERVICE_EMAIL],
-            settings.TAIBIF_BCC_EMAIL_LIST.split(','),
-            #reply_to=['another@example.com'],
+            subject=subject,
+            body=content,
+            from_email=settings.TAIBIF_SERVICE_EMAIL,
+            to=admin_recipients,
+            reply_to=[data['email']],
             #headers={'Message-ID': 'foo'},
         )
         msg.send()
