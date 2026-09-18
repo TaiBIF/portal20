@@ -589,11 +589,6 @@ def taibif_achievement(request):
     return render(request, "taibif-achievement.html", context)
 
 
-def faq(request):
-    context = {}
-    return render(request, "faq.html", context)
-
-
 def download_resources(request):
     context = {}
     return render(request, "download-resources.html", context)

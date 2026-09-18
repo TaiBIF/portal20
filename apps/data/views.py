@@ -112,7 +112,6 @@ STATIC_PAGE_SEARCH_ITEMS = [
         "title": "線上教材包",
         "template": "tech-online-class.html",
     },
-    {"url_name": "faq", "title": "開放資料常見問題", "template": "faq.html"},
     {
         "url_name": "thanks-list",
         "title": "感謝名單",

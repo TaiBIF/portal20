@@ -53,6 +53,11 @@ $(document).ready(function () {
         // 更新麵包屑
         updateBreadcrumb(dataCat, text);
     });
+
+    $('.qa-section-link').on('click', function (e) {
+        e.preventDefault();
+        $('.dropdown-item[data-cat="qa"]').trigger('click');
+    });
 });
 </script>
 {% endblock %}
@@ -67,7 +72,7 @@ $(document).ready(function () {
     </div>
 </div>
 
-<div class="container my-5 container-1340 open-consulation-page">
+<div class="container my-5 container-1340 open-consulation-page tools-page">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
@@ -83,6 +88,7 @@ $(document).ready(function () {
                 <a data-cat="data-cleaning" class="dropdown-item nav-item" href="#data-cleaning">{% trans "申請資料清理服務" %}</a>
                 <a data-cat="consulation" class="dropdown-item nav-item" href="#consulation">{% trans "資料發布問題諮詢" %}</a>
                 <a data-cat="collaboration" class="dropdown-item nav-item" href="#collaboration">{% trans "資料論文合作" %}</a>
+                <a data-cat="qa" class="dropdown-item nav-item" href="#qa">{% trans "開放資料常見問題" %}</a>
             </div>
         </div>
     </div>
@@ -196,7 +202,7 @@ $(document).ready(function () {
     <div data-cat="consulation" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
         <h4 class="headline-left-hr content-readable-title">{% trans "資料發布問題諮詢" %}</h4>
         <p>
-            TaiBIF 提供任何生物多樣性資料發布的諮詢服務及協助，常見問題可先參考<a href="{% url 'faq' %}">{% trans "資料集發布常見問題" %}</a>，
+            TaiBIF 提供任何生物多樣性資料發布的諮詢服務及協助，常見問題可先參考<a href="#qa" class="qa-section-link">{% trans "開放資料常見問題" %}</a>，
             若沒有找到您需要的解答，可加入FB社團：<a href="https://www.facebook.com/groups/3176539809245108" target="_blank">{% trans "TaiBIF/GBIF 資料發布問題討論" %}</a>並發問，
             或進一步<a href="{% url 'contact_us' %}">{% trans "聯繫我們" %}</a>。
         </p>
@@ -212,7 +218,7 @@ $(document).ready(function () {
                 <h3>{% trans "TaiBIF 可提供的合作項目" %}</h3>
             </div>
             <ol>
-                <li>{% trans "開放資料流程協助或諮詢服務（包含協助清理及開放資料）" %}</a></li>
+                <li>{% trans "開放資料流程協助或諮詢服務（包含協助清理及開放資料）" %}</li>
                 <li>{% trans "為論文草稿提供撰寫建議" %}</li>
                 <li>{% trans "建議適合投稿的資料期刊" %}</li>
                 <li>{% trans "資助論文發表費（需符合補助條件）" %}</li>
@@ -238,6 +244,99 @@ $(document).ready(function () {
                 <li>{% trans "以非營利組織及國內經費有限之學術研究單位優先補助對象" %}</li>
             </ol>
         </p>
+    </div>
+
+    <div data-cat="qa" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
+        <h4 class="headline-left-hr content-readable-title">{% trans "開放資料常見問題" %}</h4>
+
+        <div class="card-tools-wrapper tools-card">
+            <div class="title">{% trans "要如何註冊成為資料發布單位？" %}</div>
+            <div class="content">
+                <p>{% trans "原則上註冊成為資料發布單位（GBIF data publisher），可以組織、團體、公司企業、公部門、大專院校系所為單位，不建議以個人名義註冊成為資料發布單位，步驟如下：" %}</p>
+                <p>{% trans "詳細申請說明與流程請參考" %}<a href="{% url 'become-publisher' %}#who">{% trans "我想成為資料發布單位" %}</a>頁面。</p>
+            </div>
+        </div>
+
+        <div class="card-tools-wrapper tools-card">
+            <div class="title">{% trans "資料發布的流程為何？" %}</div>
+            <div class="content">
+                <p>{% trans "詳細的步驟與說明，請見" %}<a href="{% url 'open-process' %}">{% trans "開放資料流程" %}</a>{% trans "，點選每個步驟的按鈕即可檢視指引文件。" %}</p>
+            </div>
+        </div>
+
+        <div class="card-tools-wrapper tools-card">
+            <div class="title">{% trans "我已經檢核好資料，也在 IPT 上成功發布，為什麼在 GBIF 看不到最新的資料筆數？" %}</div>
+            <div class="content">
+                <p>{% trans "有幾種可能原因：" %}</p>
+                <ol>
+                    <li><strong>{% trans "資料筆數過大" %}</strong>{% trans "，GBIF 需要時間更新，可以過一兩天後再確認，如果過三天還是沒有，歡迎" %}<a href="mailto:taibif.brcas@gmail.com">{% trans "聯繫 TaiBIF" %}</a>。</li>
+                    <li>{% trans "更新資料集時，" %}<strong>{% trans "換掉超過 50% 的舊資料 ID" %}</strong>{% trans "，導致 GBIF 暫停此次更新。需要聯繫 TaiBIF，或是自己換回原本的資料ID再重新上傳（盡量不要更改已發布的資料ID）。" %}</li>
+                    <li>{% trans "若資料集的 Core 為調查活動 Sampling Event，可能是" %}<strong>{% trans "Occurrence Extension 沒有對應到 core 的 eventID" %}</strong>{% trans "，所以系統無法順利將 core 和 extension 連結，請再次檢查每筆 occurrence 是否都有對應到 eventID。" %}</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="card-tools-wrapper tools-card">
+            <div class="title">{% trans "我想新增資料，需要重新上傳整個檔案嗎？" %}</div>
+            <div class="content">
+                <p>{% trans "以下兩點需要特別注意：" %}</p>
+                <ol>
+                    <li><strong>{% trans "不需要" %}</strong>{% trans "，只要上傳新的檔案就好，但要注意" %}<strong>{% trans "欄位和舊資料一致" %}</strong></li>
+                    <li>{% trans "如果必須整個檔案上傳，" %}<strong>{% trans "不要換掉超過 50% 的舊資料 ID" %}</strong> {% trans "(eventID, occurrence ID 等)，超過比例會導致 GBIF 暫停此次更新。" %}</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="card-tools-wrapper tools-card">
+            <div class="title">{% trans "資料只能選一種授權類型嗎？" %}</div>
+            <div class="content">
+                <p>{% trans "資料集、每筆出現紀錄、多媒體檔案的授權類型" %}<strong>{% trans "都可以不同" %}</strong>。</p>
+                <ul class="license-list">
+                    <li><span class="highlight-box-primary">{% trans "資料集" %}</span> {% trans "在 IPT 中的 metadata 中定義" %}</li>
+                    <li><span class="highlight-box-primary">{% trans "出現紀錄" %}</span> {% trans "用 core/extension 中的 DwC 欄位 license 定義" %}</li>
+                    <li><span class="highlight-box-primary">{% trans "多媒體檔案" %}</span> {% trans "用 extension Simple Multimedia 中的欄位 license 定義" %}</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card-tools-wrapper tools-card">
+            <div class="title">{% trans "如果資料用一樣的調查方法收集，但計畫隨著不同年份有所修改，建議如何填寫？" %}</div>
+            <div class="content">
+                <p>{% trans "建議持續更新成一個" %}<strong>{% trans "更大的" %}</strong>{% trans "資料集，並修改詮釋資料（metadata）的年份範圍（temporal coverage），保持資料集是" %}<strong>{% trans "活的" %}</strong>{% trans "，也能提高資料的能見度和再利用性。" %}</p>
+            </div>
+        </div>
+
+        <div class="card-tools-wrapper tools-card">
+            <div class="title">{% trans "如果想將發布過的資料集換發布單位，要怎麼處理？" %}</div>
+            <div class="content">
+                <p>{% trans "如果已發布並註冊到 GBIF.org，則無法自己更改發布單位，請" %}<a href="mailto:taibif.brcas@gmail.com">{% trans "聯繫 TaiBIF" %}</a> {% trans "協助處理。" %}</p>
+            </div>
+        </div>
+
+        <div class="card-tools-wrapper tools-card">
+            <div class="title">{% trans "IPT上的詮釋資料 Metadata 怎麼寫？" %}</div>
+            <div class="content">
+                <p>{% trans "填寫的說明和範例參考，請見：" %}<a href="https://docs.google.com/document/d/1Bj6gi6igKphUM7ISIkfASAiHM_je5YXHRT3WvhwQ3dA/edit" target="_blank" rel="noopener noreferrer">{% trans "詮釋資料(範本)" %}</a>。</p>
+            </div>
+        </div>
+
+        <div class="card-tools-wrapper tools-card">
+            <div class="title">{% trans "我能自己安裝 IPT 嗎？" %}</div>
+            <div class="content">
+                <p>{% trans "可以自己部署，程式碼全是開源的，但" %}<strong>{% trans "完全不建議" %}</strong>{% trans "，因為需要一定技術力、花費部署以及維護成本。如果要發布資料到 GBIF 還會需要與 GBIF 秘書處聯繫來設定串連。" %}</p>
+                <p>{% trans "TaiBIF 目前是" %}<strong>{% trans "全亞洲唯一個" %}</strong>{% trans "通過 GBIF 認證的" %}<a href="https://www.gbif.org/data-hosting-centres" target="_blank" rel="noopener noreferrer">{% trans "資料託管中心（Data-hosting center）" %}</a>{% trans "，提供及維運 IPT 相關服務。" %}</p>
+            </div>
+        </div>
+
+        <div class="card-tools-wrapper tools-card">
+            <div class="title">{% trans "我已經發布了資料集到GBIF，想改變資料集類型可以嗎？" %}</div>
+            <div class="content">
+                <p><strong>{% trans "可以！" %}</strong>{% trans "在IPT上把 Mapping 過的資料檔案刪掉，即可於詮釋資料（metadata）修改資料集類型，然後再重新 Mapping資料檔案並publish。" %}</p>
+                <div id="ipt-mapping">
+                    <img src="{% static 'images/ipt-mapping.png' %}" alt="{% trans 'IPT 資料集類型設定畫面' %}">
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
