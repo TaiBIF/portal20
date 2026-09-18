@@ -6,264 +6,504 @@
 {% get_current_language as LANGUAGE_CODE %}
 
 {% block title %}
-{% trans "資料發布狀況" %}
+	{% trans "資料發布狀況" %}
 {% endblock %}
 {% block head %}
-<style>
-  .info {
-    position: relative;
-    display: inline-block;
-  }
-  .info[alt]:hover::after {
-    content: attr(alt);
-    white-space: pre;
-    position: absolute;
-    top: -120%;
-    padding: 7px;
-    border-radius: 5px;
-    color: white;
-    background-color: #4A3E3A ;
-  }
-  .axis {
-      font: 16px sans-serif;
-  }
-  .axis path,
-  .axis line {
-      fill: none;
-      stroke: #000;
-      shape-rendering: crispEdges;
-  }
+	<style>
+		.info {
+			position: relative;
+			display: inline-block;
+		}
 
-svg text.label {
-  fill: #846C5B;
-  font-size: 15px;
-  font-weight: 400;
-  text-anchor: middle;
-}
+		.info[alt]:hover::after {
+			content: attr(alt);
+			white-space: pre;
+			position: absolute;
+			top: -120%;
+			padding: 7px;
+			border-radius: 5px;
+			color: white;
+			background-color: #4A3E3A;
+		}
 
-.data-stats-chart .content.responsive {
-    width: 100%;
-    padding: 0;
-    overflow-x: hidden;
-}
+		.axis {
+			font: 16px sans-serif;
+		}
 
-.data-stats-chart .content.responsive > div {
-    min-height: 360px;
-    width: 100%;
-}
+		.axis path,
+		.axis line {
+			fill: none;
+			stroke: #000;
+			shape-rendering: crispEdges;
+		}
 
-.data-stats-chart .content.responsive svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-}
+		svg text.label {
+			fill: #846C5B;
+			font-size: 15px;
+			font-weight: 400;
+			text-anchor: middle;
+		}
 
-.data-stats-tooltip {
-    position: fixed;
-    z-index: 9999;
-    pointer-events: none;
-    max-width: 240px;
-    padding: 6px 10px;
-    border-radius: 8px;
-    background: rgba(74, 62, 58, 0.92);
-    color: #fff;
-    font-size: 13px;
-    line-height: 1.35;
-    white-space: nowrap;
-    opacity: 0;
-    transition: opacity 0.15s ease;
-}
+		.data-stats-chart .content.responsive {
+			width: 100%;
+			padding: 0;
+			overflow-x: hidden;
+		}
 
-</style>
+		.data-stats-chart .content.responsive > div {
+			min-height: 360px;
+			width: 100%;
+		}
+
+		.data-stats-chart .content.responsive svg {
+			width: 100%;
+			height: 100%;
+			display: block;
+		}
+
+		.data-stats-tooltip {
+			position: fixed;
+			z-index: 9999;
+			pointer-events: none;
+			max-width: 240px;
+			padding: 6px 10px;
+			border-radius: 8px;
+			background: rgba(74, 62, 58, 0.92);
+			color: #fff;
+			font-size: 13px;
+			line-height: 1.35;
+			white-space: nowrap;
+			opacity: 0;
+			transition: opacity 0.15s ease;
+		}
+
+		.chart-filter-copy {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.chart-filter-note {
+			margin-top: 2px;
+			color: #8a7a72;
+			font-size: 12px;
+			font-weight: 400;
+			line-height: 1.5;
+		}
+
+	</style>
 {% endblock %}
 
 {% block script %}
-<script src="{% static 'js/d3.min.js' %}"></script>
-<script src="{% static 'js/analytics.js' %}"></script>
+	<script src="{% static 'js/d3.min.js' %}"></script>
+	<script src="{% static 'js/analytics.js' %}"></script>
 
-<script>
-const checkboxes = document.querySelectorAll('input[type=checkbox]');
-const checkMostCheckbox = document.querySelector('.check-most');
-const checkTaibifIptCheckbox = document.querySelector('.check-taibif-ipt');
-const checkTaibifAllCheckbox = document.querySelector('.check-all');
-let baseURL = `${window.location.origin}${window.location.pathname}`;
+	<script>
+		const checkboxes = document.querySelectorAll('input[type=checkbox]');
+		const checkMostCheckbox = document.querySelector('.check-most');
+		const checkTaibifAllCheckbox = document.querySelector('.check-all');
+		let baseURL = `${window.location.origin}${window.location.pathname}`;
 
-// Set checkTaibifAllCheckbox as default
-if (baseURL === window.location.href) {
-    checkTaibifAllCheckbox.setAttribute('checked', 'checked');
-};
+		const initialParams = new URLSearchParams(window.location.search);
+		const showMostOnly = initialParams.get('most') === '1';
+		checkMostCheckbox.checked = showMostOnly;
+		checkTaibifAllCheckbox.checked = !showMostOnly;
 
-checkboxes.forEach(checkbox => {
-    // Multiple choice function of checkboxes
-    checkbox.addEventListener('change', function() {
-        if (this.checked) {
-            checkboxes.forEach(otherCheckbox => {
-                if (otherCheckbox !== this) {
-                    otherCheckbox.checked = false;
-                }
-            })
-        }
-    })
+		checkboxes.forEach(checkbox => {
+			checkbox.addEventListener('change', function() {
+				const useMostFilter = this === checkMostCheckbox && this.checked;
+				checkMostCheckbox.checked = useMostFilter;
+				checkTaibifAllCheckbox.checked = !useMostFilter;
 
-    // Redrirect to the specific url based on the slelected checkbox
-    checkbox.addEventListener('change', function() {
-        if (this === checkMostCheckbox && this.checked) {
-            window.location.href = `${baseURL}?most=1`
-        } else {
-            window.location.href = baseURL;
-        }
-    })
-});
+				const url = new URL(window.location.href);
+				if (useMostFilter) {
+					url.searchParams.set('most', '1');
+				} else {
+					url.searchParams.delete('most');
+				}
+				url.hash = 'chart';
+				window.history.replaceState({}, '', url);
 
-$('#search-input').on('keypress', function(event) {
-    if (event.which === 13) {
-        var inputValue = $(this).val();
-        window.location.href = `${baseURL}?search_query=${inputValue}`
-    };
-})
+				window.updateDataStatsCharts(useMostFilter);
+			});
+		});
 
-if (window.location.href.includes('search_query')) {
-    const URLParmas = window.location.href.split('?')[1];
-    const searchValue = URLParmas.split('=')[1];
-    $('#search-input').val(searchValue);
-};
+		$('#search-input').on('keypress', function(event) {
+			if (event.which === 13) {
+				var inputValue = $(this).val();
+				window.location.href = `${baseURL}?search_query=${inputValue}`
+			};
+		})
 
-$('#clean-search').on('click', function() {
-    window.location.href = baseURL;
-});
-</script>
+		if (window.location.href.includes('search_query')) {
+			const URLParmas = window.location.href.split('?')[1];
+			const searchValue = URLParmas.split('=')[1];
+			$('#search-input').val(searchValue);
+		};
+
+		$('#clean-search').on('click', function() {
+			window.location.href = baseURL;
+		});
+
+		$(document).ready(function() {
+			const organizationTable = $('#organization-table').DataTable({
+				lengthChange: false,
+				searching: true,
+				ordering: false,
+				info: false,
+				pageLength: 5,
+				paging: true,
+				language: {
+					paginate: {
+						previous: "<span class='myicon icon-arrow-left'></span>",
+						next: "<span class='myicon icon-arrow-right'></span>"
+					},
+					search: "搜尋關鍵字："
+				},
+				dom: 'Bfrtip',
+				buttons: [
+					{
+						extend: 'excel',
+						text: '下載 XLSX 格式',
+						className: 'table-btn'
+					},
+					{
+						extend: 'csv',
+						text: '下載 CSV 格式',
+						className: 'table-btn'
+					}
+				]
+			});
+
+			const navItems = document.querySelectorAll('.anchor-nav-link');
+			const sections = document.querySelectorAll('.anchor-section');
+			const header = document.querySelector('header');
+
+			function getHeaderOffset() {
+				return (header ? header.offsetHeight : 0) + 16;
+			}
+
+			function updateHeaderOffset() {
+				document.documentElement.style.setProperty(
+					'--anchor-header-offset',
+					`${getHeaderOffset()}px`
+				);
+			}
+
+			function syncActiveSection() {
+				if (!sections.length) {
+					return;
+				}
+
+				const marker = getHeaderOffset() + 1;
+				let activeSection = sections[0];
+
+				sections.forEach(function(section) {
+					if (section.getBoundingClientRect().top <= marker) {
+						activeSection = section;
+					}
+				});
+
+				const pageBottom = window.scrollY + window.innerHeight;
+				if (pageBottom >= document.documentElement.scrollHeight - 2) {
+					activeSection = sections[sections.length - 1];
+				}
+
+				setActiveSection(activeSection.id);
+			}
+
+			function scrollToSection(section, smooth) {
+				const top = section.getBoundingClientRect().top + window.scrollY - getHeaderOffset();
+				window.scrollTo({
+					top: Math.max(0, top),
+					behavior: smooth ? 'smooth' : 'auto'
+				});
+			}
+
+			function setActiveSection(sectionId) {
+				navItems.forEach(function(item) {
+					const isActive = item.dataset.anchor === sectionId;
+					item.classList.toggle('is-active', isActive);
+					if (isActive) {
+						item.setAttribute('aria-current', 'location');
+					} else {
+						item.removeAttribute('aria-current');
+					}
+				});
+			}
+
+			navItems.forEach(function(item) {
+				item.addEventListener('click', function(event) {
+					const section = document.getElementById(this.dataset.anchor);
+					if (!section) {
+						return;
+					}
+
+					event.preventDefault();
+					const url = new URL(window.location.href);
+					url.hash = this.hash;
+					history.replaceState({}, '', url);
+					scrollToSection(section, true);
+				});
+			});
+
+			updateHeaderOffset();
+			let scrollTicking = false;
+			window.addEventListener('scroll', function() {
+				if (!scrollTicking) {
+					requestAnimationFrame(function() {
+						syncActiveSection();
+						scrollTicking = false;
+					});
+					scrollTicking = true;
+				}
+			}, { passive: true });
+
+			window.addEventListener('resize', function() {
+				updateHeaderOffset();
+				syncActiveSection();
+			});
+
+			if (window.location.hash) {
+				const sectionId = window.location.hash.slice(1);
+				const section = document.getElementById(sectionId);
+				setActiveSection(sectionId);
+				if (section) {
+					requestAnimationFrame(function() {
+						scrollToSection(section, false);
+						syncActiveSection();
+					});
+				}
+			} else {
+				syncActiveSection();
+			}
+		});
+	</script>
 {% endblock %}
 
 {% block main %}
+	{% comment %} {% include "inc_breadcrumb.html" with tab="01" active_label="資料發布狀況" %} {% endcomment %}
 
+	<!-- topnav begin -->
+	<div class="bg-main-pale">
+		<div class="container">
+			<div class="caption-mascot-wrapper">
+				<h1 class="title">{% trans "資料發布狀況" %}</h1>
+				<img src="{% static 'images/mascot-Mreevesi.png' %}" alt="" class="symbol">
+			</div>
+		</div>
+	</div>
+	<!-- topnav end -->
 
-{% comment %} {% include "inc_breadcrumb.html" with tab="01" active_label="資料發布狀況" %} {% endcomment %}
+	<!-- container begin -->
+	<div class="container my-5 container-1340 article-search-page">
+		<!-- breadcrumb begin -->
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
+				<li class="breadcrumb-item">{% trans "開放資料" %}</li>
+				<li class="breadcrumb-item active" aria-current="page">{% trans "資料發布狀況" %}</li>
+			</ol>
+		</nav>
+		<!-- breadcrumb end -->
 
-<!-- topnav begin -->
-<div class="bg-main-pale">
-    <div class="container">
-    <div class="caption-mascot-wrapper">
-        <h1 class="title">{% trans "資料發布狀況" %}</h1>
-        <img src="{% static 'images/mascot-Mreevesi.png'%}" alt="" class="symbol">
-    </div>
-    </div>
-</div>
-<!-- topnav end -->
-<!-- container begin -->
-<div class="container my-5 container-1340 article-search-page">
-    <!-- breadcrumb begin -->
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
-            <li class="breadcrumb-item">{% trans "開放資料" %}</li>
-            <li class="breadcrumb-item active" aria-current="page">{% trans "資料發布狀況" %}</li>
-        </ol>
-    </nav>
-    <!-- breadcrumb end -->
+		<div class="anchor-layout">
+			<!-- col left begin -->
+			<aside class="anchor-sidebar">
+				<nav class="anchor-nav" aria-label="{% trans '本頁導覽' %}">
+					<a data-anchor="monthly-status" class="anchor-nav-link is-active" href="#monthly-status" aria-current="location">{% trans "每月資料發布狀況" %}</a>
+					<a data-anchor="dataset" class="anchor-nav-link" href="#dataset">{% trans "資料集列表" %}</a>
+					<a data-anchor="organization" class="anchor-nav-link" href="#organization">{% trans "資料發布單位" %}</a>
+					<a data-anchor="chart" class="anchor-nav-link" href="#chart">{% trans "資料量圖表" %}</a>
+				</nav>
+			</aside>
+			<!-- col left end -->
 
-    <!-- col begin -->
-    <div class="col-12">
-        <div class="heading-sort-ctn">
-            <form class="form-inline">
-                <label class="custom-input-ctn">
-                    <input type="checkbox" class="check-all">
-                    <span class="checkmark"></span>
-                    {% trans "檢視 TaiBIF IPT 裡所有資料的發布狀況" %}
-                </label>
-                <label class="custom-input-ctn">
-                    <input type="checkbox"  class="check-most" {% if request.GET.most %} checked {% endif %}>
-                    <span class="checkmark"></span>
-                    {% trans "僅檢視國科會發布狀況 (TaiBIF 的資料庫及基礎建設乃由國科會之經費及相關計畫支持，勾選此項可了解國科會生物多樣性計畫物種資料開放狀況)" %}
-                </label>
-            </form>
-        </div>
+			<div class="anchor-content">
+				<section id="monthly-status" class="anchor-section content-readable-panel">
+					<h4 class="heading-lg-ul">{% trans "每月資料發布狀況" %}</h4>
+					<div class="article-content-wrapper">
+						<p>
+							{% trans "本頁依每週更新後建立的資料集更新事件表彙整內容，僅納入來源為 TaiBIF IPT、狀態為公開的資料集。每次資料更新都會被記錄為一筆事件，並依事件發生月份統整呈現。可透過下拉選單篩選年份與月份，查看各月份的資料集更新總覽。" %}
+						</p>
 
-        <!-- <h3 class="headline-left sub-heading">{% trans "統整數據" %}</h3> -->
+						<div class="heading-sort-ctn">
+							<form class="form-inline" method="get">
+								<span class="heading-sort-name monthly-status-summary-control">{% trans "年份" %}</span>
+								<select name="year" class="form-control">
+									{% for year in available_years %}
+										<option value="{{ year }}" {% if year == selected_year %}selected{% endif %}>{{ year }}</option>
+									{% endfor %}
+								</select>
 
-        <!-- <div class="card-tools-wrapper data-stats-chart">
-        <div class="title">
-            {% trans "TaiBIF IPT 今年度上傳出現紀錄資料筆數" %}
-        </div>
-        <div class="content responsive">
-            <div id="taibif-stats__this_year_occurrence"></div>
-        </div>
-        </div>
+								<span class="heading-sort-name">{% trans "月份" %}</span>
+								<select name="month" class="form-control">
+									{% for month in available_months %}
+										<option value="{{ month }}" {% if month == selected_month %}selected{% endif %}>{{ month }}</option>
+									{% endfor %}
+								</select>
+								<button type="submit" class="btn">{% trans "篩選" %}</button>
+							</form>
+						</div>
 
-        <div class="card-tools-wrapper data-stats-chart">
-        <div class="title">
-            {% trans "TaiBIF IPT 今年度上傳資料集數量" %}
-        </div>
-        <div class="content responsive">
-            <div id="taibif-stats__this_year_dataset"></div>
-        </div>
-        </div> -->
+						<h3 class="monthly-status-summary-title">{% blocktrans trimmed %}{{ selected_month_label }} 資料集更新總覽{% endblocktrans %}</h3>
 
-        <div class="card-tools-wrapper data-stats-chart">
-        <div class="title">
-            {% trans "TaiBIF IPT 累積出現紀錄資料筆數" %}
-        </div>
-        <div class="content responsive">
-            <div id="taibif-stats__trend_occurrence"></div>
-        </div>
-        </div>
+						{% if monthly_dataset_rows %}
+							<div class="table-responsive">
+								<table class="table content-readable-table">
+									<thead>
+										<tr>
+											<th>{% trans "資料集名稱" %}</th>
+											<th>{% trans "資料集類型" %}</th>
+											<th>{% trans "發布單位" %}</th>
+											<th>{% trans "IPT 頁面" %}</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for row in monthly_dataset_rows %}
+											<tr>
+												<td>
+													<a class="highlight-link" href="{% url 'dataset-detail-i18n' taibif_dataset_id=row.taibif_dataset_id %}">
+														{{ row.title }}
+													</a>
+												</td>
+												<td>{{ row.dwc_core_type }}</td>
+												<td>
+													{% if row.publisher_id %}
+														<a class="highlight-link" href="{% url 'publisher-detail-i18n' pk=row.publisher_id %}">
+															{{ row.organization_name }}
+														</a>
+													{% else %}
+														{{ row.organization_name }}
+													{% endif %}
+												</td>
+												<td>
+													<a class="highlight-link" href="{{ row.ipt_link }}" target="_blank" rel="noopener noreferrer">{% trans "連結" %}</a>
+												</td>
+											</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						{% else %}
+							<div>{% trans "沒有符合條件的資料集更新。" %}</div>
+						{% endif %}
+					</div>
+				</section>
 
-        <div class="card-tools-wrapper data-stats-chart">
-        <div class="title">
-            {% trans "TaiBIF IPT 累積資料集數量" %}
-        </div>
-        <div class="content responsive">
-            <div id="taibif-stats__trend_dataset"></div>
-        </div>
-        </div>
-        <!-- <div id="dataset-table-container" lang="zh-hant"></div> -->
+				<section id="dataset" class="anchor-section content-readable-panel">
+			<h4 class="heading-lg-ul">{% trans "資料集列表" %}</h4>
+			<div class="article-content-wrapper">
+				<p>
+					{% blocktrans %}
+					以下資料集列表為透過 <a href="https://ipt.taibif.tw/" target="_blank">TaiBIF IPT</a> 發布的公開資料。可使用下方按鈕分別下載 XLSX 與 CSV 格式的資料列表。
+					{% endblocktrans %}
+				</p>
 
-        <div class="article-content-wrapper">
-            <h3>
-                {% trans "資料集列表" %}
-            </h3>
-            <p>
-                {% blocktrans %}
-                以下資料集列表為透過 <a href="https://ipt.taibif.tw/" target="_blank">TaiBIF IPT</a> 發布的公開資料。可使用下方按鈕分別下載 XLSX 與 CSV 格式的資料列表。
-                {% endblocktrans %}
-            </p>
+				<div class="table-responsive">
+					<table class="table content-readable-table" id="opendata-table">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>{% trans "資料集名稱" %}</th>
+								<th>{% trans "發布單位" %}</th>
+								<th>{% trans "資料類型" %}</th>
+								<th>{% trans "資料筆數" %}</th>
+								<th>{% trans "出現紀錄" %}</th>
+								<th>{% trans "發布時間" %}</th>
+								<!-- <th>{% trans "地區" %}</th> -->
+								<!-- <th>{% trans "NSTC 計畫" %}</th> -->
+							</tr>
+						</thead>
+						<tbody>
+							{% for i in dataset %}
+								<tr>
+									<td>{{ forloop.counter }}</td>
+									<td><a href="{% url 'dataset-detail-i18n' taibif_dataset_id=i.taibif_dataset_id %}">{{ i.title }}</a></td>
+									<td>{{ i.organization_name }}</td>
+									<td>{{ i.dwc_core_type }}</td>
+									<td>{{ i.num_record }}</td>
+									<td>{{ i.num_occurrence }}</td>
+									<td>{{ i.pub_date|date:"Y-m-d" }}</td>
+									<!-- <td>{{ i.country }}</td> -->
+									<!-- <td>{{ i.is_most_project }}</td> -->
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+				</section>
 
+				<section id="organization" class="anchor-section content-readable-panel">
+			<h4 class="heading-lg-ul">{% trans "資料發布單位" %}</h4>
+			<div class="article-content-wrapper">
+				<p>{% trans "以下列表彙整 TaiBIF 的資料發布單位及其資料集與出現紀錄數量，可使用下方按鈕分別下載 XLSX 與 CSV 格式的資料列表。" %}</p>
 
-            <div class="table-responsive">
-                <table class="table content-readable-table" id="opendata-table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>{% trans "資料集名稱" %}</th>
-                            <th>{% trans "發布單位" %}</th>
-                            <th>{% trans "資料類型" %}</th>
-                            <th>{% trans "資料筆數" %}</th>
-                            <th>{% trans "出現紀錄" %}</th>
-                            <th>{% trans "發布時間" %}</th>
-                            <th>{% trans "地區" %}</th>
-                            <th>{% trans "NSTC 計畫" %}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for i in dataset %}
-                        <tr>
-                            <td>{{ forloop.counter }}</td>
-                            <td><a href="/dataset/{{ i.taibif_dataset_id }}/">{{ i.title }}</a></td>
-                            <td>{{ i.organization_name }}</td>
-                            <td>{{ i.dwc_core_type }}</td>
-                            <td>{{ i.num_record }}</td>
-                            <td>{{ i.num_occurrence }}</td>
-                            <td>{{ i.pub_date|date:"Y-m-d"}}</td>
-                            <td>{{ i.country }}</td>
-                            <td>{{ i.is_most_project }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div> 
-        </div>
-    </div>
-    <!-- col end -->
+				<div class="table-responsive">
+					<table class="table content-readable-table" id="organization-table">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>{% trans "發布單位名稱" %}</th>
+								<th>{% trans "資料集數量" %}</th>
+								<th>{% trans "出現紀錄" %}</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for organization in organizations %}
+								<tr>
+									<td>{{ forloop.counter }}</td>
+									<td><a href="{% url 'publisher-detail-i18n' pk=organization.id %}">{{ organization.name }}</a></td>
+									<td>{{ organization.dataset_num|default_if_none:0 }}</td>
+									<td>{{ organization.occurences_num|default_if_none:0 }}</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+				</section>
 
-    </div>
-    <!-- container end -->
+				<section id="chart" class="anchor-section content-readable-panel">
+			<h4 class="heading-lg-ul">{% trans "資料量圖表" %}</h4>
+			<div class="heading-sort-ctn">
+				<form class="form-inline">
+					<label class="custom-input-ctn">
+						<input type="checkbox" class="check-all">
+						<span class="checkmark"></span>
+						{% trans "檢視 TaiBIF IPT 裡所有資料的發布狀況" %}
+					</label>
+					<label class="custom-input-ctn">
+						<input type="checkbox" class="check-most" {% if request.GET.most %}checked{% endif %}>
+						<span class="checkmark"></span>
+						<span class="chart-filter-copy">
+							<span>{% trans "僅檢視國科會發布狀況" %}</span>
+							<small class="chart-filter-note">{% trans "TaiBIF 的資料庫及基礎建設由國科會經費與相關計畫支持；勾選此項可查看國科會生物多樣性計畫的物種資料開放狀況。" %}</small>
+						</span>
+					</label>
+				</form>
+			</div>
+
+			<div class="card-tools-wrapper data-stats-chart">
+				<div class="title">
+					{% trans "TaiBIF IPT 累積出現紀錄資料筆數" %}
+				</div>
+				<div class="content responsive">
+					<div id="taibif-stats__trend_occurrence"></div>
+				</div>
+			</div>
+
+			<div class="card-tools-wrapper data-stats-chart">
+				<div class="title">
+					{% trans "TaiBIF IPT 累積資料集數量" %}
+				</div>
+				<div class="content responsive">
+					<div id="taibif-stats__trend_dataset"></div>
+				</div>
+			</div>
+				</section>
+			</div>
+		</div>
+	</div>
+	<!-- container end -->
 {% endblock %}
