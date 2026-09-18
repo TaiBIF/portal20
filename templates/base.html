@@ -412,13 +412,15 @@
                                         <a href="{% url 'tools' %}"
                                             >{% trans "有哪些工具可以使用" %}</a
                                         >
-                                        <a href="{% url 'become-publisher' %}">{% trans "我想成為資料發布單位" %}</a>
                                         <a
                                             href="{% url 'open-consulation' %}#self-learning"
                                             >{% trans "我需要幫忙" %}</a
                                         >
                                         <a href="{% url 'faq' %}"
                                             >{% trans "開放資料常見問題" %}</a
+                                        >
+                                        <a href="{% url 'data-paper' %}#about"
+                                            >{% trans "資料期刊與論文" %}</a
                                         >
                                     </div>
                                 </div>
@@ -457,9 +459,6 @@
                                     <div class="w-bg">
                                         <a href="{% url 'find-data' %}">{% trans "首先要找到資料" %}</a>
                                         <a href="{% url 'data-case' %}">{% trans "給我一些例子" %}</a>
-                                        <a href="{% url 'data-paper' %}#about"
-                                            >{% trans "資料期刊與論文" %}</a
-                                        >
                                         <a href="{% url 'data-product' %}">{% trans "有哪些資料產品" %}</a>
                                         <a href="{% url 'taibif-api' %}"
                                             >TaiBIF API</a
