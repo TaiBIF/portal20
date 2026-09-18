@@ -427,14 +427,13 @@
                                 <p class="btitle">{% trans "我想探索教育資源" %}</p>
                                 <div class="menu2">
                                     <div class="w-bg">
+                                        <a href="{% url 'tech-workshop' %}"
+                                            >{% trans "參加 TaiBIF 工作坊" %}</a
+                                        >
                                         <a href="{% url 'tech-book' %}"
                                             >{% trans "什麼是開放資料" %}</a
                                         >
                                         <a href="{% url 'open-benefits' %}">{% trans "開放資料的好處" %}</a>
-                                        <a
-                                            href="{% url 'tech-online-class' %}#standard-00"
-                                            >{% trans "線上教材包" %}</a
-                                        >
                                     </div>
                                 </div>
                             </li>
@@ -442,9 +441,6 @@
                                 <p class="btitle">{% trans "我想參與社群" %}</p>
                                 <div class="menu2">
                                     <div class="w-bg">
-                                        <a href="{% url 'tech-workshop' %}"
-                                            >{% trans "參加 TaiBIF 工作坊" %}</a
-                                        >
                                         <a href="{% url 'tech-volunteer' %}"
                                             >{% trans "參與協作者培訓" %}</a
                                         >
