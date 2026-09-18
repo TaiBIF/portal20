@@ -649,6 +649,12 @@ header{
       display: flex;
       flex-wrap: wrap;
       height: 100%;
+      &.two-item{
+        .item-box{
+          width: 100%;
+          height: 50%;
+        }
+      }
       .item-box{
         width: 50%;
         position: relative;
