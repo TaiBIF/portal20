@@ -89,7 +89,7 @@ def build_dataset_article_content(events):
     """
 
     with override("zh-hant"):
-        monthly_status_url = reverse("monthly-status")
+        monthly_status_url = f'{reverse("data-stats")}#monthly-status'
 
     return f"""
     <p>🎉 本月 TaiBIF 平台又有新氣象啦！</p>

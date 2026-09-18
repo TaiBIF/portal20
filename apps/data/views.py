@@ -114,11 +114,6 @@ STATIC_PAGE_SEARCH_ITEMS = [
     },
     {"url_name": "faq", "title": "開放資料常見問題", "template": "faq.html"},
     {
-        "url_name": "monthly-status",
-        "title": "每月資料發布狀況",
-        "template": "monthly-status.html",
-    },
-    {
         "url_name": "thanks-list",
         "title": "感謝名單",
         "template": "thanks-list.html",
