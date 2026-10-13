@@ -1383,6 +1383,7 @@ header{
     position: relative;
   }
   .bubble-message{
+    --bubble-background: #E6C735;
     width: 120px;
     bottom: 70px;
     right: 0;
@@ -1390,10 +1391,9 @@ header{
     border-radius: 15px;
     font-size: 12px;
     letter-spacing: 0;
-    color: #FFF;
-    background: rgba(104,145,188,0.8);
+    color: $col-brown2;
+    background: var(--bubble-background);
     animation: float-5 0.8s 0s linear infinite;
-    backdrop-filter: blur(5px);
     @include bg_change(0.3s);
     @include respond(tablet) {
       bottom: 90px;
@@ -1404,15 +1404,7 @@ header{
       bottom: 110px;
       &:hover {
         @include bg_change(0.3s);
-        background: rgba(104,145,188,1);
-        .arr-bottom{
-          svg{
-            path{
-              opacity: 1;
-              @include bg_change(0.3s);
-            }
-          }
-        }
+        --bubble-background: #D9B925;
       }
     }
     .rel{
@@ -1424,13 +1416,18 @@ header{
     .arr-bottom{
       right: 20px;
       position: absolute;
-      bottom: -10px;
+      bottom: -8px;
+      height: 10px;
+      line-height: 0;
       @include respond(tablet) {
         width: 40px;
       }
       svg{
         display: block;
+        width: 12px;
+        height: 10px;
         path{
+          fill: var(--bubble-background);
           @include bg_change(0.3s);
         }
       }

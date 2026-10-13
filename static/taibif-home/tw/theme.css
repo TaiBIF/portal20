@@ -2279,6 +2279,7 @@ header .right-menu .menu1 .menu2 .w-bg a {
     position: relative;
 }
 .right-fixed .bubble-message {
+    --bubble-background: #e6c735;
     width: 120px;
     bottom: 70px;
     right: 0;
@@ -2286,10 +2287,9 @@ header .right-menu .menu1 .menu2 .w-bg a {
     border-radius: 15px;
     font-size: 12px;
     letter-spacing: 0;
-    color: #fff;
-    background: rgba(104, 145, 188, 0.8);
+    color: #4a3e3a;
+    background: var(--bubble-background);
     animation: float-5 0.8s 0s linear infinite;
-    backdrop-filter: blur(5px);
     transition: all 0.3s;
     -moz-transition: all 0.3s;
     -o-transition: all 0.3s;
@@ -2313,15 +2313,7 @@ header .right-menu .menu1 .menu2 .w-bg a {
         -o-transition: all 0.3s;
         -ms-transition: all 0.3s;
         -webkit-transition: all 0.3s;
-        background: #6891bc;
-    }
-    .right-fixed .bubble-message:hover .arr-bottom svg path {
-        opacity: 1;
-        transition: all 0.3s;
-        -moz-transition: all 0.3s;
-        -o-transition: all 0.3s;
-        -ms-transition: all 0.3s;
-        -webkit-transition: all 0.3s;
+        --bubble-background: #d9b925;
     }
 }
 .right-fixed .bubble-message .rel {
@@ -2335,7 +2327,9 @@ header .right-menu .menu1 .menu2 .w-bg a {
 .right-fixed .bubble-message .arr-bottom {
     right: 20px;
     position: absolute;
-    bottom: -10px;
+    bottom: -8px;
+    height: 10px;
+    line-height: 0;
 }
 @media (min-width: 768px) {
     .right-fixed .bubble-message .arr-bottom {
@@ -2344,8 +2338,11 @@ header .right-menu .menu1 .menu2 .w-bg a {
 }
 .right-fixed .bubble-message .arr-bottom svg {
     display: block;
+    width: 12px;
+    height: 10px;
 }
 .right-fixed .bubble-message .arr-bottom svg path {
+    fill: var(--bubble-background);
     transition: all 0.3s;
     -moz-transition: all 0.3s;
     -o-transition: all 0.3s;
