@@ -31,7 +31,7 @@ from apps.data.models import (
     Taibifer,
 )
 from .models import Post, Journal, IndexBubbleSetting
-from .models import NewsletterSubscription
+from .models import NewsletterSubscription, OnlineWorkshopCourse
 from utils.mail import taibif_mail_contact_us
 
 from apps.data.helpers.stats import get_home_stats
@@ -669,7 +669,7 @@ def tech_workshop(request):
 
 
 def tech_online_class(request):
-    context = {}
+    context = {"courses": OnlineWorkshopCourse.objects.filter(is_active=True)}
     return render(request, "tech-online-class.html", context)
 
 

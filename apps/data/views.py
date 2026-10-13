@@ -37,6 +37,7 @@ from .helpers.mod_search import (
     PublisherSearch,
 )
 from apps.article.models import Article
+from apps.page.models import OnlineWorkshopCourse
 from apps.data.helpers.synonyms_variants_convertion import *
 from utils.solr_query import SolrQuery
 from utils.map_data import get_geojson
@@ -277,6 +278,12 @@ def search_all(request):
             q_variants_lower = [x.lower() for x in query_variants if x]
             for page in STATIC_PAGE_SEARCH_ITEMS:
                 visible_text = _load_template_visible_text(page["template"])
+                if page["url_name"] == "tech-online-class":
+                    course_text = " ".join(
+                        f"{course.title} {course.title_en} {course.description} {course.description_en}"
+                        for course in OnlineWorkshopCourse.objects.filter(is_active=True)
+                    )
+                    visible_text = f"{visible_text} {course_text}"
                 target = f"{page['title']} {visible_text}".lower()
                 matched_variant = next(
                     (v for v in q_variants_lower if v in target), None

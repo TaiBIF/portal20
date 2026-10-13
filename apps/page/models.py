@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.utils.text import slugify
 
 from conf import settings
+from .online_materials import preview_url, validate_material_link, validate_web_url
 
 
 # Create your models here.
@@ -114,3 +115,67 @@ class NewsletterSubscription(models.Model):
         ordering = ["-created_at"]
         verbose_name = u"電子報訂閱名單"
         verbose_name_plural = u"電子報訂閱名單"
+
+
+class OnlineWorkshopCourse(models.Model):
+    slug = models.SlugField(
+        '網址錨點', max_length=100, unique=True,
+        help_text='如 standard-00；既有課程請保留此值，避免原有連結失效。',
+    )
+    title = models.CharField('課程名稱', max_length=200)
+    title_en = models.CharField('英文課程名稱', max_length=200, blank=True)
+    description = models.TextField('課程說明', blank=True)
+    description_en = models.TextField('英文課程說明', blank=True)
+    video_updated_on = models.DateField('影片最後更新日期', blank=True, null=True, help_text='選填；留空時前台不顯示更新日期。')
+    handout_updated_on = models.DateField('講義最後更新日期', blank=True, null=True, help_text='選填；留空時前台不顯示更新日期。')
+    video_url = models.URLField(
+        '影片連結', max_length=1000, blank=True,
+        validators=[validate_web_url],
+        help_text='可貼上 YouTube 觀看、分享或嵌入連結，以及 Google Drive 檔案連結。',
+    )
+    handout_url = models.CharField(
+        '講義預覽連結', max_length=1000, blank=True,
+        validators=[validate_material_link],
+        help_text='可貼上 Google Drive 檔案連結、SlideShare 嵌入網址或 PDF 網址；也支援 /media/ 路徑。',
+    )
+    handout_download_url = models.CharField(
+        '講義開啟／下載連結', max_length=1000, blank=True,
+        validators=[validate_material_link],
+        help_text='完整網址或 /media/ 路徑；留空時使用講義預覽連結。',
+    )
+    sort = models.PositiveIntegerField('排序', default=0)
+    is_active = models.BooleanField('顯示於前台', default=True)
+
+    def __str__(self):
+        return self.title
+
+    @property
+    def display_title(self):
+        from django.utils.translation import get_language, gettext
+        if (get_language() or '').startswith('en'):
+            return self.title_en or gettext(self.title)
+        return self.title
+
+    @property
+    def display_description(self):
+        from django.utils.translation import get_language
+        if (get_language() or '').startswith('en'):
+            return self.description_en or self.description
+        return self.description
+
+    @property
+    def video_preview_url(self):
+        return preview_url(self.video_url)
+
+    @property
+    def handout_preview_url(self):
+        return preview_url(self.handout_url)
+
+    @property
+    def handout_link(self):
+        return self.handout_download_url or self.handout_url
+
+    class Meta:
+        ordering = ['sort', 'pk']
+        verbose_name = '線上教材課程'
+        verbose_name_plural = '線上教材課程'
