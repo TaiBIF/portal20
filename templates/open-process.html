@@ -4,6 +4,14 @@
 {% block title %}{% trans "有哪些步驟" %}{% endblock %}
 
 
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/open-process.css' %}">
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'js/open-process.js' %}" defer></script>
+{% endblock %}
+
 {% block main %}
 
 <!-- topnav begin -->
@@ -29,6 +37,47 @@
     </nav>
     <!-- breadcrumb end -->
     <!-- row begin -->
+    <p>{% trans "根據這些開放資料的要素，我們提供資料開放者如下的開放資料步驟做參考，點選每個步驟即可檢視詳細的說明和指引，讓開放資料能更容易上手：" %}</p>
+    <div class="open-process-flow" data-open-process-flow>
+        <svg class="open-process-flow-arrows" aria-hidden="true" focusable="false">
+            <defs>
+                <marker id="open-process-arrowhead" viewBox="0 0 10 10" refX="0" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto">
+                    <path d="M 0 0 L 10 5 L 0 10 Z"></path>
+                </marker>
+            </defs>
+            <g data-flow-connections></g>
+        </svg>
+        <ol class="open-process-flow-grid" aria-label="{% trans '開放資料流程' %}">
+            <li class="open-process-flow-node" data-flow-node="prepare">
+                <span class="open-process-flow-number" aria-hidden="true">1</span>
+                <a href="{% url 'data-clean' %}" class="btn btn-outline-chocolate">{% trans "清理資料" %}</a>
+                <a href="{% url 'open-standard' %}" class="btn btn-outline-chocolate">{% trans "資料標準化 (DwC)" %}</a>
+            </li>
+            <li class="open-process-flow-node" data-flow-node="validate">
+                <span class="open-process-flow-number" aria-hidden="true">2</span>
+                <a href="{% url 'tools' %}" class="btn btn-outline-chocolate">{% trans "檢核資料" %}</a>
+            </li>
+            <li class="open-process-flow-node" data-flow-node="upload">
+                <span class="open-process-flow-number" aria-hidden="true">3</span>
+                <a href="{% url 'become-publisher' %}#who" class="btn btn-outline-chocolate">{% trans "我想成為資料發布單位" %}</a>
+                <a href="https://docs.google.com/document/d/1Bj6gi6igKphUM7ISIkfASAiHM_je5YXHRT3WvhwQ3dA/edit" target="_blank" rel="noopener noreferrer" class="btn btn-outline-chocolate">{% trans "寫詮釋資料" %}</a>
+                <a href="{% url 'tech-online-class' %}#standard-06" class="btn btn-outline-chocolate">{% trans "資料上傳 TaiBIF IPT" %}</a>
+            </li>
+            <li class="open-process-flow-node" data-flow-node="license">
+                <span class="open-process-flow-number" aria-hidden="true">4</span>
+                <a href="{% url 'open-license' %}" class="btn btn-outline-chocolate">{% trans "開放 CC 授權" %}</a>
+            </li>
+            <li class="open-process-flow-node" data-flow-node="publish">
+                <span class="open-process-flow-number" aria-hidden="true">5</span>
+                <a href="{% url 'data-paper' %}" class="btn btn-outline-chocolate">{% trans "發表資料論文" %}</a>
+            </li>
+            <li class="open-process-flow-node" data-flow-node="reuse">
+                <span class="open-process-flow-number" aria-hidden="true">6</span>
+                <a href="{% url 'data-case' %}" class="btn btn-outline-chocolate">{% trans "資料再利用" %}</a>
+            </li>
+        </ol>
+    </div>
+
     <p>
         {% trans "一份好的開放資料，應符合 2016年Wilkinson及Mons等人發表於Scientific Data期刊內的論文中所定義的「FAIR原則」：" %}
         意即資料若要符合開放的概念，必須要<strong>{% trans "找得到(Findable)、拿得到(Accessible)、可互用 (Interoperable)、可再用(Reusable)" %}</strong>。
@@ -39,53 +88,6 @@
     <div id="fair-principle" >
         <img src="{% static 'images/FAIR_principle.png'%}"/>
         <small>{% trans "圖：資料的FAIR原則。 by SangyaPundir (採CC-BY-SA 4.0授權)" %}</small>
-    </div>
-    <p>{% trans "根據這些開放資料的要素，我們提供資料開放者如下的開放資料步驟做參考，點選每個步驟即可檢視詳細的說明和指引，讓開放資料能更容易上手：" %}</p>
-    <div class="opendata-flow-wrapper">
-        <!-- col begin -->
-        <div class="col-12 col-md-4" data-order="order-1">
-            <div class="card card-opendata-flow">
-                <a href="{% url 'data-clean' %}" class="btn btn-outline-chocolate">{% trans "清理資料" %}</a>
-                <a href="{% url 'open-standard' %}" class="btn btn-outline-chocolate">{% trans "資料標準化 (DwC)" %}</a>
-            </div>
-        </div>
-        <!-- col end -->
-        <!-- col begin -->
-        <div class="col-12 col-md-4" data-order="order-2">
-            <div class="card card-opendata-flow">
-                <a href="{% url 'tools' %}" class="btn btn-outline-chocolate">{% trans "檢核資料" %}</a>
-            </div>
-        </div>
-        <!-- col end -->
-        <!-- col begin -->
-        <div class="col-12 col-md-4" data-order="order-3">
-            <div class="card card-opendata-flow">
-                <a href="https://docs.google.com/document/d/1Bj6gi6igKphUM7ISIkfASAiHM_je5YXHRT3WvhwQ3dA/edit" target="_blank"class="btn btn-outline-chocolate">{% trans "寫詮釋資料" %}</a>
-                <a href="{% url 'open-upload' %}" class="btn btn-outline-chocolate">{% trans "資料上傳 TaiBIF IPT" %}</a>
-            </div>
-        </div>
-        <!-- col end -->
-        <!-- col begin -->
-        <div class="col-12 col-md-4" data-order="order-4">
-            <div class="card card-opendata-flow">
-                <a href="{% url 'open-license' %}" class="btn btn-outline-chocolate">{% trans "開放 CC 授權" %}</a>
-            </div>
-        </div>
-        <!-- col end -->
-        <!-- col begin -->
-        <div class="col-12 col-md-4" data-order="order-5">
-            <div class="card card-opendata-flow">
-                <a href="{% url 'data-paper' %}" class="btn btn-outline-chocolate">{% trans "發表資料論文" %}</a>
-            </div>
-        </div>
-        <!-- col end -->
-        <!-- col begin -->
-        <div class="col-12 col-md-4" data-order="order-6">
-            <div class="card card-opendata-flow">
-                <a href="{% url 'data-case' %}" class="btn btn-outline-chocolate">{% trans "資料再利用" %}</a>
-            </div>
-        </div>
-        <!-- col end -->
     </div>
     <!-- row end -->
 </div>
