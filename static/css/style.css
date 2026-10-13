@@ -5606,13 +5606,18 @@ a.btn-sunset-md {
     height: auto;
 }
 
+.online-workshop-course-table tr th:first-child {
+    width: 40%;
+}
+
 .online-workshop-course-table tr th:nth-child(2) {
-    width: 10%;
+    width: 60%;
 }
 
 .online-workshop-course-table tr th,
 .online-workshop-course-table tr td {
     vertical-align: middle !important;
+    overflow-wrap: anywhere;
 }
 
 .icon-container {

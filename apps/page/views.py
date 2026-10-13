@@ -821,7 +821,8 @@ def response_error_handler(request, exception=None):
 
 
 def open_consulation(request):
-    return render(request, "open-consulation.html")
+    context = {"courses": OnlineWorkshopCourse.objects.filter(is_active=True)}
+    return render(request, "open-consulation.html", context)
 
 
 def open_benefits(request):
