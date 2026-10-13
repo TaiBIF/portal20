@@ -80,7 +80,11 @@ def index(request):
     event_list = category_map["EVENT"]
     update_list = category_map["SCI"]
 
-    story_list = Article.objects.filter(Article.category_q("STORY")).order_by("-created").all()[:6]
+    story_list = (
+        Article.objects.filter(Article.category_q("STORY"))
+        .order_by("-created")
+        .all()[:6]
+    )
 
     def assign_card_image(articles):
         # Priority: cover image > media_url > fallback image.
@@ -261,9 +265,7 @@ def contact_us(request):
         # print(recaptcha_response)
         data = {"secret": settings.HCAPTCHA_SECRET_KEY, "response": recaptcha_response}
         try:
-            r = requests.post(
-                "https://hcaptcha.com/siteverify", data=data, timeout=5
-            )
+            r = requests.post("https://hcaptcha.com/siteverify", data=data, timeout=5)
             r.raise_for_status()
             result = r.json()
         except (requests.RequestException, ValueError):
@@ -305,7 +307,9 @@ def links(request):
 
 # @act_lang
 def about_taibif(request):
-    achievement_qs = Article.objects.filter(Article.category_q("POS")).order_by("-created")
+    achievement_qs = Article.objects.filter(Article.category_q("POS")).order_by(
+        "-created"
+    )
     achievement_years = sorted(
         set(achievement_qs.values_list("created__year", flat=True)),
         reverse=True,
@@ -643,16 +647,6 @@ def tech_book(request):
 
 
 def tech_workshop(request):
-    context = {}
-    return render(request, "tech-workshop.html", context)
-
-
-def tech_online_class(request):
-    context = {}
-    return render(request, "tech-online-class.html", context)
-
-
-def tech_class_license(request):
     certification_list = WorkshopCertificationList.objects.all().order_by("year")
     certification_data = {}
     for item in certification_list:
@@ -671,6 +665,16 @@ def tech_class_license(request):
         sorted(certification_data.items(), key=lambda item: item[0], reverse=True)
     )
     context = {"certification_data": sorted_certification_data}
+    return render(request, "tech-workshop.html", context)
+
+
+def tech_online_class(request):
+    context = {}
+    return render(request, "tech-online-class.html", context)
+
+
+def tech_class_license(request):
+    context = {}
     return render(request, "tech-class-license.html", context)
 
 

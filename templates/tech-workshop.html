@@ -2,7 +2,51 @@
 {% load i18n %}
 {% load static %}
 {% block title %}{% trans "參加 TaiBIF 工作坊" %}{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/tech-class-license.css' %}">
+{% endblock head %}
 
+
+{% block script %}
+<script>
+$(document).ready(function () {
+    const $page = $('.tech-workshop-page');
+    const $items = $page.find('.nav-item');
+    const defaultCategory = 'overview';
+
+    function syncSection() {
+        const category = window.location.hash.substring(1);
+        let $item = $items.filter(function () {
+            return $(this).attr('data-cat') === category;
+        });
+        if (!$item.length) {
+            $item = $items.filter('[data-cat="' + defaultCategory + '"]');
+            window.history.replaceState(null, '', '#' + defaultCategory);
+        }
+        $item.trigger('click');
+        $items.removeAttr('aria-current');
+        $item.attr('aria-current', 'page');
+        $page.find('.breadcrumb .dynamic-item').remove();
+        $('<li>', {
+            'class': 'breadcrumb-item active dynamic-item',
+            'aria-current': 'page',
+            'text': $item.text()
+        }).appendTo($page.find('.breadcrumb'));
+        $page.find('.breadcrumb-item').not('.dynamic-item').removeAttr('aria-current').removeClass('active');
+    }
+
+    $items.on('click.workshop', function (event) {
+        event.preventDefault();
+        const category = $(this).attr('data-cat');
+        if (window.location.hash !== '#' + category) {
+            window.location.hash = category;
+        }
+    });
+    $(window).on('hashchange.workshop', syncSection);
+    syncSection();
+});
+</script>
+{% endblock %}
 
 {% block main %}
 <!-- topnav begin -->
@@ -17,19 +61,31 @@
 <!-- topnav end -->
 
 <!-- container begin -->
-<div class="container my-5 container-1340">
+<div class="container my-5 container-1340 tech-workshop-page">
     <!-- breadcrumb begin -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "首頁" %}</a></li>
-            <li class="breadcrumb-item">{% trans "我想參與社群" %}</li>
+            <li class="breadcrumb-item">{% trans "我想探索教育資源" %}</li>
             <li class="breadcrumb-item active" aria-current="page">{% trans "參加 TaiBIF 工作坊" %}</li>
         </ol>
     </nav>
     <!-- breadcrumb end -->
 
-    <!-- col begin -->
-    <div class="col-12 content-readable-panel content-readable-full-panel">
+    <div class="col-12 col-md-3">
+        <div class="dropdown dropdown-flexible-wrapper">
+            <nav class="dropdown-menu-flexible d-md-block" aria-label="{% trans '工作坊導覽' %}">
+                <a data-cat="overview" class="dropdown-item nav-item current-sunset" href="#overview">{% trans "工作坊介紹" %}</a>
+                <a data-cat="online-learning" class="dropdown-item nav-item" href="#online-learning">{% trans "線上教材包" %}</a>
+                <a data-cat="certification" class="dropdown-item nav-item" href="#certification">{% trans "課程認證" %}</a>
+                <a data-cat="online-workshop-certification" class="dropdown-item nav-item" href="#online-workshop-certification">{% trans "線上自學工作坊課程認證" %}</a>
+                <a data-cat="certified-list" class="dropdown-item nav-item" href="#certified-list">{% trans "歷年通過認證名單" %}</a>
+            </nav>
+        </div>
+    </div>
+
+    <div data-cat="overview" class="col-12 col-md-9 nav-item-content content-readable-panel">
+        <h4 class="headline-left-hr content-readable-title">{% trans "工作坊介紹" %}</h4>
         <p>
             {% trans "為了讓資料提供者及大眾更加了解生物多樣性資料開放的概念，形成資料共享的文化，我們每年會於上半年和下半年各舉辦一場 TaiBIF 資料發布及應用工作坊，並針對下列主題進行說明（三天課程），也會依照工作坊的主題或學員背景不同進行微調：" %}
         </p>
@@ -60,39 +116,114 @@
             <li>{% trans "資料應用案例介紹、資料論文、如何避免資料誤用 60 min" %}</li>
             <li>{% trans "資料管理方案（DMP）實務探討（depositar） 2 hr" %}</li>
         </ul>
-        <div class="article-content-wrapper">
-            <h3>{% trans "線上教材包" %}</h3>
-        </div>
+    </div>
+
+    <div data-cat="online-learning" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
+        <h4 class="headline-left-hr content-readable-title">{% trans "線上教材包" %}</h4>
         <p>
             {% trans "為提供無法參加實體工作坊之資料開放者線上學習資源，我們將部分工作坊主題之上課錄影檔及講義開放上線，" %}
             歡迎大家多多利用，內容詳情請點選下方按鈕。另外，也歡迎有興趣做線上學習並希望拿到認證的來申請<a href="{% url 'open-consulation' %}">{% trans "線上自學工作坊" %}</a>！
         </p>
-        <div class="article-content-wrapper">
-            <h3>{% trans "課程認證" %}</h3>
-        </div>
-        <p>{% trans "工作坊作業繳交" %}</p>
-        <ul>
-            <li>{% trans "時程：需要證書者，可於參加完工作坊一個月內完成作業並繳交，經過審核後通過課程認證並核發證書。" %}</li>
-            <li>{% trans "核心課程證書：完成" %} <span class="highlight-box-primary">HW</span> {% trans "即可獲得，亦將成為IPT 帳號審核相關依據" %}</li>
-            <li>{% trans "增能課程證書：完成" %} <span class="highlight-box-primary">HW</span> {% trans "及" %} <span class="highlight-box-primary">{% trans "增能  HW" %}</span> {% trans "即可獲得，可進一步選擇成為 TaiBIFer 協作者（表示已完成協作者培訓的必要條件）" %}</li>
-        </ul>
-        <p>{% trans "歡迎點選下方按鈕了解詳細的課程認證方式，若已上過線上自學工作坊者，也請點選下方按進行課後認證。" %}</p>
-
         <div class="row">
             <div class="col-12 col-md-6 my-3">
                 <a href="{% url 'tech-online-class' %}" class="btn-cta-learning">
                     <span class="heading">{% trans "線上教材包" %}</span>
                     <img src="{% static 'images/edu-video.png'%}" alt="">
-                    
-                </a>
-            </div>
-            <div class="col-12 col-md-6 my-3">
-                <a href="{% url 'tech-class-license' %}" class="btn-cta-learning">
-                    <span class="heading">{% trans "課程認證" %}</span>
-                    <img src="{% static 'images/edu-lesson.png'%}" alt="">
+
                 </a>
             </div>
         </div>
+    </div>
+
+    <div data-cat="certification" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
+        <h4 class="headline-left-hr content-readable-title">{% trans "課程認證" %}</h4>
+        <p>
+            {% trans "每期工作坊皆有4項課程指定作業，包含2項核心作業及2項增能作業。 完成課程指定作業，並於課後一個月內繳交至線上作業繳交表單，" %}
+            {% trans "經各項主題課程講師評分後，分數達標即可獲得TaiBIF課程認證證書。" %}
+        </p>
+        <ul>
+            <li>{% trans "時程：需要證書者，可於參加完工作坊一個月內完成作業並繳交，經過審核後通過課程認證並核發證書。" %}</li>
+            <li>{% trans "核心課程證書：完成" %} <span class="highlight-box-primary">HW</span> {% trans "即可獲得，亦將成為IPT 帳號審核相關依據" %}</li>
+            <li>{% trans "增能課程證書：完成" %} <span class="highlight-box-primary">HW</span> {% trans "及" %} <span class="highlight-box-primary">{% trans "增能  HW" %}</span> {% trans "即可獲得，可進一步選擇成為 TaiBIFer 協作者（表示已完成協作者培訓的必要條件）" %}</li>
+        </ul>
+        <div class="article-content-wrapper">
+            <h3>{% trans "指定作業項目（將持續更新）" %}</h3>
+        </div>
+        <p>
+            <strong>{% trans "核心作業" %}</strong>
+            <ol>
+                <li>{% trans "DwC 資料欄位對應 + Sampling Event 資料集整理" %}</li>
+                <li>{% trans "資料集上傳TaiBIF test IPT" %}</li>
+            </ol>
+        </p>
+        <p>
+            <strong>{% trans "增能作業" %}</strong>
+            <ol>
+                <li>{% trans "openRefine 資料清理" %}</li>
+                <li>{% trans "開放資料下載" %}</li>
+            </ol>
+        </p> 
+        <div class="article-content-wrapper">
+            <h3>{% trans "作業評核標準" %}</h3>
+        </div>
+        <p>
+            <strong>{% trans "核心認證" %}</strong>
+            <p>{% trans "核心作業每項滿分20分，累計各項作業總分達25分即通過。" %}</p>
+        </p>
+        <p>
+            <strong>{% trans "增能認證" %}</strong>
+            <p>{% trans "此認證須完成包含核心作業在內所有作業，每項滿分20分，累計各項作業總分達60分即通過；40分以上未達60分者則給予核心認證。" %}</p>
+        </p> 
+        <div class="article-content-wrapper">
+            <h3>{% trans "證書樣式" %}</h3>
+        </div>
+        <div class="certification-container">
+            <img src="{% static 'images/workshop_certification.png'%}"/>
+            <img src="{% static 'images/workshop_certification_advanced.png'%}"/>
+        </div>
+    </div>
+
+    <div data-cat="online-workshop-certification" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
+        <h4 class="heading-lg-ul">{% trans "線上自學工作坊課程認證" %}</h4>
+        <p>
+            若您有申請<a href="{% url 'open-consulation' %}">{% trans "線上自學工作坊" %}</a>{% trans "，則請點選" %}<a href="https://forms.gle/DoG5epPyfyS3BsrJA" target="_blank">{% trans "線上自學工作坊作業繳交區" %}</a>，上傳核心和增能認證作業，並聯繫我們告知您已完成作業。
+        </p>
+    </div>
+
+    <div data-cat="certified-list" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
+        <h4 class="heading-lg-ul">{% trans "歷年通過認證名單" %}</h4>
+        <p>
+            {% trans "課程認證制度自 2022-09-26 起（2022最後場次工作坊）實施" %}
+        </p>
+        <div class="certification-container">
+            <img src="{% static 'images/workshop_certification.png'%}"/>
+            <img src="{% static 'images/workshop_certification_advanced.png'%}"/>
+        </div>
+        {% for year, levels in certification_data.items %}
+            <div class="article-content-wrapper">
+                <h3>{% blocktrans trimmed %}{{ year }}年度{% endblocktrans %}</h3>
+            </div>
+            {% if levels.basic %}
+                <div>
+                    <strong>{% trans "核心課程通過名單" %}</strong><small>（共計 {{ levels.basic|length }} 名）</small>
+                    <ul class="certification-list-container">
+                        {% for name in levels.basic %}
+                            <li>{{ name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            {% if levels.advanced %}
+                <div>
+                    <strong>{% trans "增能課程通過名單" %}</strong><small>（共計 {{ levels.advanced|length }} 名）</small>
+                    <ul class="certification-list-container">
+                        {% for name in levels.advanced %}
+                            <li>{{ name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        {% endfor %}
     </div>
     <!-- row end -->
 </div>
