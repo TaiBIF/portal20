@@ -1,24 +1,24 @@
-.online-class-page .content-readable-panel > h4 {
+.course-materials-page .content-readable-panel > h4 {
     margin-bottom: 12px;
 }
 
-.online-class-page .course-material + .course-material {
+.course-materials-page .course-material + .course-material {
     margin-top: 20px;
 }
 
-.online-class-page .course-material h3 {
+.course-materials-page .course-material h3 {
     margin: 0 0 8px;
     font-size: 22px;
     line-height: 1.4;
 }
 
-.online-class-page .course-material iframe {
+.course-materials-page .course-material iframe {
     display: block;
     width: 100%;
     border: 0;
 }
 
-.online-class-page .course-material-updated {
+.course-materials-page .course-material-updated {
     display: inline-block;
     margin-left: 8px;
     font-size: 13px;
@@ -26,7 +26,7 @@
     color: #6a5a52;
 }
 
-.online-class-page .course-material-note {
+.course-materials-page .course-material-note {
     display: block;
     max-width: 720px;
     margin-bottom: 8px;
@@ -35,19 +35,19 @@
     color: #6a5a52;
 }
 
-.online-class-page .course-video,
-.online-class-page .course-handout {
+.course-materials-page .course-video,
+.course-materials-page .course-handout {
     max-width: 720px;
     aspect-ratio: 16 / 9;
     height: auto;
 }
 
-.online-class-page .course-material-link {
+.course-materials-page .course-material-link {
     margin: 8px 0 0;
 }
 
 @media (max-width: 767px) {
-    .online-class-page .course-material + .course-material {
+    .course-materials-page .course-material + .course-material {
         margin-top: 16px;
     }
 

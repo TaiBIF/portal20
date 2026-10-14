@@ -3,6 +3,9 @@
 {% load static %}
 {% block title %}{% trans "資料標準化" %}{% endblock %}
 
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/tech-online-class.css' %}">
+{% endblock %}
 
 {% block main %}
 <!-- topnav begin -->
@@ -16,7 +19,7 @@
 </div>
 <!-- topnav end -->
 <!-- container begin -->
-<div class="container my-5 container-1340">
+<div class="container my-5 container-1340 course-materials-page">
     <!-- breadcrumb begin -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -279,9 +282,11 @@
 
         <div data-cat="concept" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
             <h4 class="headline-left-hr">{% trans "資料標準概念介紹" %}</h4>
-            <small>{% trans "若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。" %}</small>
-            <iframe src="https://www.slideshare.net/slideshow/embed_code/key/leS5VyHXNiaqlL?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
-            <p class="mt-3">{% trans "PDF講義下載：" %}<a href="/media/資料標準概念介紹.pdf" target="_blank" class="myicon icon-download-document"></a></p>
+            <section class="course-material">
+                <small class="course-material-note">{% trans "若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的「開啟／下載講義」連結，直接查看講義。" %}</small>
+                <iframe class="course-handout" src="https://www.slideshare.net/slideshow/embed_code/key/leS5VyHXNiaqlL?hostedIn=slideshare&amp;page=upload" title="{% trans '資料標準概念講義預覽' %}" loading="lazy" allowfullscreen></iframe>
+                <p class="course-material-link"><a href="/media/資料標準概念介紹.pdf" target="_blank" rel="noopener noreferrer">{% trans "開啟／下載講義" %}</a></p>
+            </section>
         </div>
 
         <div data-cat="topic-guide" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
