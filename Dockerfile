@@ -1,17 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM node:18-alpine as build
-WORKDIR /code/frontend-data
-COPY ./frontend-data/package*.json ./frontend-data/yarn.lock ./
-COPY ./frontend-data/webpack.config.js ./frontend-data/.babelrc ./
-RUN yarn install
-COPY ./frontend-data/src ./src
-RUN yarn build-dev
-RUN yarn build
-
-##
-# stage 2
-##
-FROM python:3.10-slim-bookworm as final
+FROM python:3.10-slim-bookworm
 
 # set environment varibles
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -45,6 +33,3 @@ RUN pip install -r requirements.txt
 
 
 COPY . .
-
-# Keep build output outside /taibif-code because Compose bind-mounts the project there.
-COPY --from=build /code/static/js/ /opt/taibif-assets/js/

@@ -1,3 +1,6 @@
 .git
-frontend-data/node_modules
-frontend-data/dist
+frontend-data/
+static/js/search.dev.js*
+static/js/search.min.js*
+static/js/dataset-table.dev.js*
+static/js/dataset-table.min.js*
