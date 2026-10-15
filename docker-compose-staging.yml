@@ -77,6 +77,6 @@ services:
 
   solr:
     environment:
-      - SOLR_JAVA_MEM=-Xms8g -Xms8g
+      - SOLR_JAVA_MEM=-Xms512m -Xmx1g
   celery:
     image: taibif-web-stag-image
