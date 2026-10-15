@@ -40,12 +40,17 @@ services:
     restart: always
     ports:
       - 80:80
+      - 443:443
     volumes:
-      - ./nginx/staging:/etc/nginx/conf.d
+      - ./nginx/staging:/etc/nginx/staging:ro
+      - ./scripts/staging-nginx.sh:/opt/staging-nginx.sh:ro
+      - ../taibif-volumes/certbot-staging/conf:/etc/letsencrypt:ro
+      - ../taibif-volumes/certbot-staging/www:/var/www/certbot:ro
       - ../taibif-volumes/static:/taibif-volumes/static
       - ../taibif-volumes/media:/taibif-volumes/media
       - ../taibif-volumes/logs/nginx:/var/log/nginx
       - ../taibif-volumes/biomap:/biomap
+    entrypoint: ["/bin/sh", "/opt/staging-nginx.sh"]
     links:
       - web:web
     logging:
@@ -54,6 +59,22 @@ services:
         max-size: "1m"
         max-file: "3"
   
+  certbot:
+    image: certbot/certbot:latest
+    restart: unless-stopped
+    volumes:
+      - ../taibif-volumes/certbot-staging/conf:/etc/letsencrypt
+      - ../taibif-volumes/certbot-staging/www:/var/www/certbot
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        trap 'exit 0' TERM INT
+        while :; do
+          certbot renew --non-interactive --webroot -w /var/www/certbot
+          sleep 43200 &
+          wait $$!
+        done
+
   solr:
     environment:
       - SOLR_JAVA_MEM=-Xms8g -Xms8g

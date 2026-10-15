@@ -1,11 +1,12 @@
 # syntax=docker/dockerfile:1
 FROM node:18-alpine as build
-WORKDIR /code
+WORKDIR /code/frontend-data
 COPY ./frontend-data/package*.json ./frontend-data/yarn.lock ./
 COPY ./frontend-data/webpack.config.js ./frontend-data/.babelrc ./
 RUN yarn install
 COPY ./frontend-data/src ./src
 RUN yarn build-dev
+RUN yarn build
 
 ##
 # stage 2
@@ -45,4 +46,5 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-# COPY --from=build /code/dist /frondend
+# Keep build output outside /taibif-code because Compose bind-mounts the project there.
+COPY --from=build /code/static/js/ /opt/taibif-assets/js/

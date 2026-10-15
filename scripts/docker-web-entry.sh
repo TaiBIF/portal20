@@ -1,13 +1,11 @@
 #!/bin/bash
+set -euo pipefail
 
 cd /taibif-code
 
-npm run build
-
-cp /frontend/search.min.js /taibif-code/static/js
-cp /frontend/data-table.min.js /taibif-code/static/js
+bash ./scripts/prepare-static-assets.sh
 
 python manage.py migrate --no-input
 python manage.py collectstatic --no-input
 
-gunicorn --bind 0.0.0.0:8001 --workers=5 --timeout 120 conf.wsgi:application
+exec gunicorn --bind 0.0.0.0:8001 --workers=5 --timeout 120 conf.wsgi:application
