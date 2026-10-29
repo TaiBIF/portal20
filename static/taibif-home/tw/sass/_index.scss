@@ -1100,43 +1100,23 @@ header{
     }
   }
   .five-item{
-    display: flex;
-    gap: 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 250px));
+    justify-content: center;
+    gap: 20px;
     margin-bottom: 30px;
     position: relative;
     z-index: 5;
     list-style: none;
-    flex-wrap: wrap;
-    justify-content: center;
-    @include respond(tablet) {
-      gap: 20px;
-    }
     li{
       border-radius: 10px;
       background: rgba(147,122,105,0.6);
       backdrop-filter: blur(8px);
       padding: 20px;
-      width: calc(50% - 10px);
+      min-width: 0;
       height: 175px;
       position: relative;
       opacity: 0;
-      @include respond(tablet) {
-        width: 200px;
-        flex: 0 0 auto;
-      }
-      @include respond(desktop) {
-        width: calc(70%/4 - 20px);
-      }
-      &:first-child{
-        width: 100%;
-        @include respond(tablet) {
-          width: 300px;
-          flex: 0 0 auto;
-        }
-        @include respond(laptop) {
-          width: calc(30% - 20px);
-        }
-      }
       h3{
         color: #FFF;
         font-size: 18px;
@@ -1145,11 +1125,11 @@ header{
       h2{
         font-weight: 500;
         color: #FFF;
-        font-size: 10vw;
+        font-size: clamp(28px, 3vw, 32px);
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0;
+        white-space: nowrap;
         line-height: 1.2;
-        @include respond(tablet) {
-          font-size: 40px;
-        }
       }
       .iconbox{
         position: absolute;

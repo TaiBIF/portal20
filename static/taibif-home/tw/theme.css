@@ -1942,54 +1942,24 @@ header .right-menu .menu1 .menu2 .w-bg a {
     color: #fff;
 }
 .s3-data .five-item {
-    display: flex;
-    gap: 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 250px));
+    justify-content: center;
+    gap: 20px;
     margin-bottom: 30px;
     position: relative;
     z-index: 5;
     list-style: none;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-@media (min-width: 768px) {
-    .s3-data .five-item {
-        gap: 20px;
-    }
 }
 .s3-data .five-item li {
     border-radius: 10px;
     background: rgba(147, 122, 105, 0.6);
     backdrop-filter: blur(8px);
     padding: 20px;
-    width: calc(50% - 10px);
+    min-width: 0;
     height: 175px;
     position: relative;
     opacity: 0;
-}
-@media (min-width: 768px) {
-    .s3-data .five-item li {
-        width: 200px;
-        flex: 0 0 auto;
-    }
-}
-@media (min-width: 1280px) {
-    .s3-data .five-item li {
-        width: calc(70% / 4 - 20px);
-    }
-}
-.s3-data .five-item li:first-child {
-    width: 100%;
-}
-@media (min-width: 768px) {
-    .s3-data .five-item li:first-child {
-        width: 300px;
-        flex: 0 0 auto;
-    }
-}
-@media (min-width: 1024px) {
-    .s3-data .five-item li:first-child {
-        width: calc(30% - 20px);
-    }
 }
 .s3-data .five-item li h3 {
     color: #fff;
@@ -1999,13 +1969,11 @@ header .right-menu .menu1 .menu2 .w-bg a {
 .s3-data .five-item li h2 {
     font-weight: 500;
     color: #fff;
-    font-size: 10vw;
+    font-size: clamp(28px, 3vw, 32px);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0;
+    white-space: nowrap;
     line-height: 1.2;
-}
-@media (min-width: 768px) {
-    .s3-data .five-item li h2 {
-        font-size: 40px;
-    }
 }
 .s3-data .five-item li .iconbox {
     position: absolute;
