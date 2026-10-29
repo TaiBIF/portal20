@@ -76,9 +76,8 @@ $(document).ready(function () {
         <div class="dropdown dropdown-flexible-wrapper">
             <nav class="dropdown-menu-flexible d-md-block" aria-label="{% trans '工作坊導覽' %}">
                 <a data-cat="overview" class="dropdown-item nav-item current-sunset" href="#overview">{% trans "工作坊介紹" %}</a>
-                <a data-cat="online-learning" class="dropdown-item nav-item" href="#online-learning">{% trans "線上教材包" %}</a>
                 <a data-cat="certification" class="dropdown-item nav-item" href="#certification">{% trans "課程認證" %}</a>
-                <a data-cat="online-workshop-certification" class="dropdown-item nav-item" href="#online-workshop-certification">{% trans "線上自學工作坊課程認證" %}</a>
+                <a data-cat="online-workshop-certification" class="dropdown-item nav-item" href="#online-workshop-certification">{% trans "線上自學工作坊" %}</a>
                 <a data-cat="certified-list" class="dropdown-item nav-item" href="#certified-list">{% trans "歷年通過認證名單" %}</a>
             </nav>
         </div>
@@ -87,7 +86,10 @@ $(document).ready(function () {
     <div data-cat="overview" class="col-12 col-md-9 nav-item-content content-readable-panel">
         <h4 class="headline-left-hr content-readable-title">{% trans "工作坊介紹" %}</h4>
         <p>
-            {% trans "為了讓資料提供者及大眾更加了解生物多樣性資料開放的概念，形成資料共享的文化，我們每年會於上半年和下半年各舉辦一場 TaiBIF 資料發布及應用工作坊，並針對下列主題進行說明（三天課程），也會依照工作坊的主題或學員背景不同進行微調：" %}
+            {% trans "為了讓資料提供者及大眾更加了解生物多樣性資料開放的概念，形成資料共享的文化，我們每年會舉辦 1 至 2 場 TaiBIF 資料發布及應用工作坊，並針對下列主題進行說明（三天課程），也會依照工作坊的主題或學員背景不同進行微調：" %}
+        </p>
+        <p>
+            工作坊相關舉辦時程資訊，請密切注意本官網<a href="{% url 'article-search' %}?category=news">{% trans "最新消息" %}</a>，或追蹤我們的<a href="https://www.facebook.com/TaiBIF.tw/" target="_blank" rel="noopener noreferrer">Facebook 粉絲專頁</a>。
         </p>
         <div class="article-content-wrapper">
             <h3>{% trans "核心— 基礎概論" %}</h3>
@@ -116,23 +118,6 @@ $(document).ready(function () {
             <li>{% trans "資料應用案例介紹、資料論文、如何避免資料誤用 60 min" %}</li>
             <li>{% trans "資料管理方案（DMP）實務探討（depositar） 2 hr" %}</li>
         </ul>
-    </div>
-
-    <div data-cat="online-learning" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
-        <h4 class="headline-left-hr content-readable-title">{% trans "線上教材包" %}</h4>
-        <p>
-            {% trans "為提供無法參加實體工作坊之資料開放者線上學習資源，我們將部分工作坊主題之上課錄影檔及講義開放上線，" %}
-            歡迎大家多多利用，內容詳情請點選下方按鈕。另外，也歡迎有興趣做線上學習並希望拿到認證的來申請<a href="{% url 'open-consulation' %}">{% trans "線上自學工作坊" %}</a>！
-        </p>
-        <div class="row">
-            <div class="col-12 col-md-6 my-3">
-                <a href="{% url 'tech-online-class' %}" class="btn-cta-learning">
-                    <span class="heading">{% trans "線上教材包" %}</span>
-                    <img src="{% static 'images/edu-video.png'%}" alt="">
-
-                </a>
-            </div>
-        </div>
     </div>
 
     <div data-cat="certification" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
@@ -184,7 +169,20 @@ $(document).ready(function () {
     </div>
 
     <div data-cat="online-workshop-certification" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
-        <h4 class="heading-lg-ul">{% trans "線上自學工作坊課程認證" %}</h4>
+        <h4 class="heading-lg-ul">{% trans "線上自學工作坊" %}</h4>
+        <p>
+            {% trans "為提供無法參加實體工作坊之資料開放者線上學習資源，我們將部分工作坊主題之上課錄影檔及講義開放上線，" %}
+            歡迎大家多多利用，內容詳情請點選下方按鈕。另外，也歡迎有興趣做線上學習並希望拿到認證的來申請<a href="{% url 'open-consulation' %}">{% trans "線上自學工作坊" %}</a>！
+        </p>
+        <div class="row">
+            <div class="col-12 col-md-6 my-3">
+                <a href="{% url 'tech-online-class' %}" class="btn-cta-learning">
+                    <span class="heading">{% trans "線上教材包" %}</span>
+                    <img src="{% static 'images/edu-video.png'%}" alt="">
+
+                </a>
+            </div>
+        </div>
         <p>
             若您有申請<a href="{% url 'open-consulation' %}">{% trans "線上自學工作坊" %}</a>{% trans "，則請點選" %}<a href="https://forms.gle/DoG5epPyfyS3BsrJA" target="_blank">{% trans "線上自學工作坊作業繳交區" %}</a>，上傳核心和增能認證作業，並聯繫我們告知您已完成作業。
         </p>
