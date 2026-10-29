@@ -329,6 +329,7 @@ header{
           padding: 0px 15px;
         }
         .btitle{
+          font-size: 16px;
           cursor: pointer;
           font-weight: 500;
           color: $col-brown2;
@@ -409,11 +410,10 @@ header{
           a{
             display: block;
             padding: 7px 20px;
-            font-size: 14px;
+            font-size: 16px;
             @include bg_change(0.3s);
             @include respond(laptop) {
               padding: 12px 20px;
-              font-size: 16px;
               &:hover {
                 background: #EBE7E4;
                 @include bg_change(0.3s);
@@ -759,11 +759,8 @@ header{
             display: flex;
             position: relative;
             @include bg_change(0.3s);
-            font-size: 14px;
+            font-size: clamp(16px, 1vw, 18px);
             letter-spacing: 0;
-            @include respond(tablet) {
-              font-size: 16px;
-            }
             .arr{
               position: absolute;
               left: 0;
