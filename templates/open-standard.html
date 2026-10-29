@@ -277,7 +277,8 @@
 
         <div data-cat="meta-data" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
             <h4 class="headline-left-hr">{% trans "詮釋資料 EML 標準" %}</h4>
-            <p><a href="https://docs.google.com/document/d/1Bj6gi6igKphUM7ISIkfASAiHM_je5YXHRT3WvhwQ3dA/edit" target="_blank">{% trans "填寫說明" %}</a></p>
+            <p>詮釋資料(metadata)為資料集的摘要背景資訊，用來說明原始資料產生的背景資訊，包括聯絡人、計畫目的、摘要、採樣時間範圍、包含的物種、參與人員、發布單位等，<strong>就像一份資料的摘要說明書，讓資料使用者可藉此判斷資料是否適用</strong>。</p>
+            <p>GBIF 資料集詮釋資料的詳細欄位內容，請見<a href="https://docs.google.com/document/d/1Bj6gi6igKphUM7ISIkfASAiHM_je5YXHRT3WvhwQ3dA/edit" target="_blank">{% trans "填寫說明及範例" %}</a>。</p>
         </div>
 
         <div data-cat="concept" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
@@ -310,7 +311,8 @@
         
         <div data-cat="dna-guide" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
             <h4 class="headline-left-hr">{% trans "DNA 資料發布指引" %}</h4>
-            <p><a href="https://docs.gbif-uat.org/publishing-dna-derived-data/zh-TW/" target="_blank">{% trans "說明文件" %}</a></p>
+            <p>DNA metabarcoding 和 eDNA 資料發布，可透過由 GBIF 開發的 Metabarcoding Data Toolkit, MDT 發布工具上傳，類似IPT的功能，但針對DNA資料設計，比傳統GBIF資料架構更簡易，也結合了資料驗證功能，驗證完可直接發布。 TaiBIF 目前為亞洲唯一提供 MDT 工具使用的 GBIF 節點：<a href="https://mdt.taibif.tw/" target="_blank">TaiBIF MDT</a>，若需要申請帳號，歡迎<a href="{% url 'contact_us' %}">聯繫我們</a>。</p>
+            <p>相關發布指引請參閱<a href="https://docs.gbif.org/publishing-dna-derived-data/zh-TW/" target="_blank">{% trans "說明文件" %}</a>。</p>
         </div>
 
         <div data-cat="event" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
