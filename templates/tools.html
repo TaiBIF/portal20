@@ -148,7 +148,10 @@
 
         <div class="anchor-content">
         <div id="coordinate-converter" class="card-tools-wrapper tools-card anchor-section">
-            <div class="title">{% trans "地理分布線上座標轉換" %}</div>
+            <div class="title">
+                <span>{% trans "地理分布線上座標轉換" %}</span>
+                <span class="tool-tags"><span class="tool-tag">{% trans "資料標準化" %}</span></span>
+            </div>
             <div class="content">
                 <p>
                 {% trans "生物多樣性資料校對轉換工具為 TaiBIF 資訊團隊研發，目前提供學名檢查、中文名批次比對與座標轉換。本研究目前由中研院「台灣生物多樣性資訊平台之學術、社會推廣與國際接軌」、國科會「建置與維護及整合臺灣生物多樣性資訊國家入口網 (TaiBIF) 及與 GBIF 接軌」及林務局「生態資源資料庫分組整合推動計畫」等計畫經費支持。" %}
@@ -159,7 +162,10 @@
         </div>
 
         <div id="common-name-checker" class="card-tools-wrapper tools-card anchor-section">
-            <div class="title">{% trans "學名與物種中文名比對" %}</div>
+            <div class="title">
+                <span>{% trans "學名與物種中文名比對" %}</span>
+                <span class="tool-tags"><span class="tool-tag">{% trans "資料標準化" %}</span></span>
+            </div>
             <div class="content">
                 <p>
                 {% blocktrans trimmed %}
@@ -171,7 +177,10 @@
         </div>
 
         <div id="nomenmatch" class="card-tools-wrapper tools-card anchor-section">
-            <div class="title">{% trans "有效學名比對" %}</div>
+            <div class="title">
+                <span>{% trans "有效學名比對" %}</span>
+                <span class="tool-tags"><span class="tool-tag">{% trans "資料清理" %}</span></span>
+            </div>
             <div class="content">
                 <p>
                 {% trans "物種在分類學上往往存在同物異名，本工具提供批次的物種學名比對，可提供該學名是否為有效學名及物種代碼等相關資訊，比對來源包含GBIF、COL、TBN與TaiCOL等。" %}
@@ -181,7 +190,10 @@
         </div>
 
         <div id="gbif-validator" class="card-tools-wrapper tools-card anchor-section">
-            <div class="title">{% trans "GBIF 資料驗證工具" %}</div>
+            <div class="title">
+                <span>{% trans "GBIF 資料驗證工具" %}</span>
+                <span class="tool-tags"><span class="tool-tag">{% trans "資料檢核" %}</span></span>
+            </div>
             <div class="content">
                 <p>
                 {% trans "為全球生物多樣性資訊機構 GBIF 所開發的網頁版資料驗證工具，可將文字檔或excel上傳，並顯示資料檔案中的資料問題及錯誤之處。上傳的資料檔案欄位須符合 DwC，使用前亦須先登入GBIF會員（可用google帳號註冊）。" %}
@@ -191,7 +203,10 @@
         </div>
 
         <div id="digital-taibifer" class="card-tools-wrapper tools-card anchor-section">
-            <div class="title">{% trans "數位 TaiBIFer" %}</div>
+            <div class="title">
+                <span>{% trans "數位 TaiBIFer" %}</span>
+                <span class="tool-tags"><span class="tool-tag">{% trans "諮詢協助" %}</span></span>
+            </div>
             <div class="content">
                 <p>
                     {% blocktrans %}
@@ -203,7 +218,10 @@
         </div>
 
         <div id="odt" class="card-tools-wrapper tools-card anchor-section">
-            <div class="title">TaiBIF Open Data Toolkit</div>
+            <div class="title">
+                <span>TaiBIF Open Data Toolkit</span>
+                <span class="tool-tags"><span class="tool-tag">{% trans "資料標準化" %}</span><span class="tool-tag">{% trans "資料清理" %}</span><span class="tool-tag">{% trans "資料檢核" %}</span></span>
+            </div>
             <div class="content">
                 <p>
                     {% trans "TaiBIF Open Data Toolkit 是一個專門針對生物多樣性資料整合的工具，採用了國際生物多樣性領域常用的 Darwin Core 資料標準， 旨在幫助使用者建立並有效管理、編輯、驗證和清理生物多樣性資料集。若想要建立資料模板、資料編輯管理和發布，此工具將能引導您進入理想的資料管理流程，並協助管控資料品質。" %}
