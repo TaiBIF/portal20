@@ -3,6 +3,9 @@
 {% load static %}
 {% block title %}{% trans "資料標準化" %}{% endblock %}
 
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/tech-online-class.css' %}">
+{% endblock %}
 
 {% block main %}
 <!-- topnav begin -->
@@ -16,7 +19,7 @@
 </div>
 <!-- topnav end -->
 <!-- container begin -->
-<div class="container my-5 container-1340">
+<div class="container my-5 container-1340 course-materials-page">
     <!-- breadcrumb begin -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -274,14 +277,17 @@
 
         <div data-cat="meta-data" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
             <h4 class="headline-left-hr">{% trans "詮釋資料 EML 標準" %}</h4>
-            <p><a href="https://docs.google.com/document/d/1Bj6gi6igKphUM7ISIkfASAiHM_je5YXHRT3WvhwQ3dA/edit" target="_blank">{% trans "填寫說明" %}</a></p>
+            <p>詮釋資料(metadata)為資料集的摘要背景資訊，用來說明原始資料產生的背景資訊，包括聯絡人、計畫目的、摘要、採樣時間範圍、包含的物種、參與人員、發布單位等，<strong>就像一份資料的摘要說明書，讓資料使用者可藉此判斷資料是否適用</strong>。</p>
+            <p>GBIF 資料集詮釋資料的詳細欄位內容，請見<a href="https://docs.google.com/document/d/1Bj6gi6igKphUM7ISIkfASAiHM_je5YXHRT3WvhwQ3dA/edit" target="_blank">{% trans "填寫說明及範例" %}</a>。</p>
         </div>
 
         <div data-cat="concept" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
             <h4 class="headline-left-hr">{% trans "資料標準概念介紹" %}</h4>
-            <small>{% trans "若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的 PDF 講義下載圖示，直接查看 PDF 檔案。" %}</small>
-            <iframe src="https://www.slideshare.net/slideshow/embed_code/key/leS5VyHXNiaqlL?hostedIn=slideshare&page=upload" width="850" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
-            <p class="mt-3">{% trans "PDF講義下載：" %}<a href="/media/資料標準概念介紹.pdf" target="_blank" class="myicon icon-download-document"></a></p>
+            <section class="course-material">
+                <small class="course-material-note">{% trans "若您在使用 Safari 瀏覽器時無法顯示內嵌的 PDF，請嘗試重新整理頁面。如仍無法顯示，您可以點擊下方的「開啟／下載講義」連結，直接查看講義。" %}</small>
+                <iframe class="course-handout" src="https://www.slideshare.net/slideshow/embed_code/key/leS5VyHXNiaqlL?hostedIn=slideshare&amp;page=upload" title="{% trans '資料標準概念講義預覽' %}" loading="lazy" allowfullscreen></iframe>
+                <p class="course-material-link"><a href="/media/資料標準概念介紹.pdf" target="_blank" rel="noopener noreferrer">{% trans "開啟／下載講義" %}</a></p>
+            </section>
         </div>
 
         <div data-cat="topic-guide" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
@@ -305,7 +311,8 @@
         
         <div data-cat="dna-guide" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
             <h4 class="headline-left-hr">{% trans "DNA 資料發布指引" %}</h4>
-            <p><a href="https://docs.gbif-uat.org/publishing-dna-derived-data/zh-TW/" target="_blank">{% trans "說明文件" %}</a></p>
+            <p>DNA metabarcoding 和 eDNA 資料發布，可透過由 GBIF 開發的 Metabarcoding Data Toolkit, MDT 發布工具上傳，類似IPT的功能，但針對DNA資料設計，比傳統GBIF資料架構更簡易，也結合了資料驗證功能，驗證完可直接發布。 TaiBIF 目前為亞洲唯一提供 MDT 工具使用的 GBIF 節點：<a href="https://mdt.taibif.tw/" target="_blank">TaiBIF MDT</a>，若需要申請帳號，歡迎<a href="{% url 'contact_us' %}">聯繫我們</a>。</p>
+            <p>相關發布指引請參閱<a href="https://docs.gbif.org/publishing-dna-derived-data/zh-TW/" target="_blank">{% trans "說明文件" %}</a>。</p>
         </div>
 
         <div data-cat="event" class="col-12 col-md-9 nav-item-content hide content-readable-panel">

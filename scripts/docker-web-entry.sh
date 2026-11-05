@@ -1,13 +1,11 @@
 #!/bin/bash
+set -euo pipefail
 
 cd /taibif-code
 
-npm run build
-
-cp /frontend/search.min.js /taibif-code/static/js
-cp /frontend/data-table.min.js /taibif-code/static/js
-
 python manage.py migrate --no-input
-python manage.py collectstatic --no-input
+python manage.py collectstatic --no-input \
+    --ignore='search.dev.js*' --ignore='search.min.js*' \
+    --ignore='dataset-table.dev.js*' --ignore='dataset-table.min.js*'
 
-gunicorn --bind 0.0.0.0:8001 --workers=5 --timeout 120 conf.wsgi:application
+exec gunicorn --bind 0.0.0.0:8001 --workers=5 --timeout 120 conf.wsgi:application

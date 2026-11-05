@@ -515,19 +515,41 @@
     });
   }
 
-  const dataURL = (location.search.indexOf('most=') >= 0)
-    ? '/api/data/stats?most=1'
-    : '/api/data/stats';
+  const chartSelectors = [
+    '#taibif-stats__this_year_occurrence',
+    '#taibif-stats__this_year_dataset',
+    '#taibif-stats__trend_occurrence',
+    '#taibif-stats__trend_dataset'
+  ];
+  let chartRequestId = 0;
 
-  d3.json(dataURL)
-    .then(function (data) {
-      renderBarChart('#taibif-stats__this_year_occurrence', data.current_year.occurrence);
-      renderBarChart('#taibif-stats__this_year_dataset', data.current_year.dataset);
-      renderLineChart('#taibif-stats__trend_occurrence', data.history.occurrence);
-      renderLineChart('#taibif-stats__trend_dataset', data.history.dataset);
-    })
-    .catch(function (error) {
-      // 靜默失敗，保留現有頁面不阻斷渲染流程
-      console.error('資料統計 API 讀取失敗：', error);
-    });
+  function updateDataStatsCharts(showMostOnly) {
+    const requestId = ++chartRequestId;
+    const dataURL = showMostOnly ? '/api/data/stats?most=1' : '/api/data/stats';
+
+    return d3.json(dataURL)
+      .then(function (data) {
+        if (requestId !== chartRequestId) {
+          return;
+        }
+
+        chartSelectors.forEach(function (selector) {
+          d3.select(selector).selectAll('*').remove();
+        });
+
+        renderBarChart('#taibif-stats__this_year_occurrence', data.current_year.occurrence);
+        renderBarChart('#taibif-stats__this_year_dataset', data.current_year.dataset);
+        renderLineChart('#taibif-stats__trend_occurrence', data.history.occurrence);
+        renderLineChart('#taibif-stats__trend_dataset', data.history.dataset);
+      })
+      .catch(function (error) {
+        // 靜默失敗，保留現有圖表，不阻斷頁面操作。
+        console.error('資料統計 API 讀取失敗：', error);
+      });
+  }
+
+  window.updateDataStatsCharts = updateDataStatsCharts;
+
+  const initialParams = new URLSearchParams(window.location.search);
+  updateDataStatsCharts(initialParams.get('most') === '1');
 })();

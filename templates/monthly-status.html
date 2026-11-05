@@ -53,47 +53,47 @@
             </form>
         </div>
 
-        <h3>{% blocktrans trimmed %}{{ selected_month_label }} 資料集更新總覽{% endblocktrans %}</h3>
+        <h3 class="monthly-status-summary-title">{% blocktrans trimmed %}{{ selected_month_label }} 資料集更新總覽{% endblocktrans %}</h3>
 
-        {% if dataset_rows %}
-            <table class="table content-readable-table">
-                <thead>
-                    <tr>
-                        <th>{% trans "資料集名稱" %}</th>
-                        <th>{% trans "資料集類型" %}</th>
-                        <th>{% trans "發布單位" %}</th>
-                        <th>{% trans "IPT 頁面" %}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for row in dataset_rows %}
+        {% if monthly_dataset_rows %}
+            <div class="table-responsive">
+                <table class="table content-readable-table">
+                    <thead>
                         <tr>
-                            <td>
-                                <a class="highlight-link" href="{% url 'dataset-detail-i18n' taibif_dataset_id=row.taibif_dataset_id %}">
-                                    {{ row.title }}
-                                </a>
-                            </td>
-                            <td>{{ row.dwc_core_type }}</td>
-                            <td>
-                                {% if row.publisher_id %}
-                                    <a class="highlight-link" href="{% url 'publisher-detail-i18n' pk=row.publisher_id %}">
-                                        {{ row.organization_name }}
-                                    </a>
-                                {% else %}
-                                    {{ row.organization_name }}
-                                {% endif %}
-                            </td>
-                            <td>
-                                <a class="highlight-link" href="{{ row.ipt_link }}" target="_blank" rel="noopener noreferrer">{% trans "連結" %}</a>
-                            </td>
+                            <th>{% trans "資料集名稱" %}</th>
+                            <th>{% trans "資料集類型" %}</th>
+                            <th>{% trans "發布單位" %}</th>
+                            <th>{% trans "IPT 頁面" %}</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% else %}
-            <div>
-                {% trans "沒有符合條件的資料集更新。" %}
+                    </thead>
+                    <tbody>
+                        {% for row in monthly_dataset_rows %}
+                            <tr>
+                                <td>
+                                    <a class="highlight-link" href="{% url 'dataset-detail-i18n' taibif_dataset_id=row.taibif_dataset_id %}">
+                                        {{ row.title }}
+                                    </a>
+                                </td>
+                                <td>{{ row.dwc_core_type }}</td>
+                                <td>
+                                    {% if row.publisher_id %}
+                                        <a class="highlight-link" href="{% url 'publisher-detail-i18n' pk=row.publisher_id %}">
+                                            {{ row.organization_name }}
+                                        </a>
+                                    {% else %}
+                                        {{ row.organization_name }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a class="highlight-link" href="{{ row.ipt_link }}" target="_blank" rel="noopener noreferrer">{% trans "連結" %}</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
+        {% else %}
+            <div>{% trans "沒有符合條件的資料集更新。" %}</div>
         {% endif %}
     </div>
     <!-- row end -->

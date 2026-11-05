@@ -329,6 +329,7 @@ header{
           padding: 0px 15px;
         }
         .btitle{
+          font-size: 16px;
           cursor: pointer;
           font-weight: 500;
           color: $col-brown2;
@@ -409,11 +410,10 @@ header{
           a{
             display: block;
             padding: 7px 20px;
-            font-size: 14px;
+            font-size: 16px;
             @include bg_change(0.3s);
             @include respond(laptop) {
               padding: 12px 20px;
-              font-size: 16px;
               &:hover {
                 background: #EBE7E4;
                 @include bg_change(0.3s);
@@ -649,6 +649,12 @@ header{
       display: flex;
       flex-wrap: wrap;
       height: 100%;
+      &.two-item{
+        .item-box{
+          width: 100%;
+          height: 50%;
+        }
+      }
       .item-box{
         width: 50%;
         position: relative;
@@ -753,11 +759,8 @@ header{
             display: flex;
             position: relative;
             @include bg_change(0.3s);
-            font-size: 14px;
+            font-size: clamp(16px, 1vw, 18px);
             letter-spacing: 0;
-            @include respond(tablet) {
-              font-size: 16px;
-            }
             .arr{
               position: absolute;
               left: 0;
@@ -1097,43 +1100,23 @@ header{
     }
   }
   .five-item{
-    display: flex;
-    gap: 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 250px));
+    justify-content: center;
+    gap: 20px;
     margin-bottom: 30px;
     position: relative;
     z-index: 5;
     list-style: none;
-    flex-wrap: wrap;
-    justify-content: center;
-    @include respond(tablet) {
-      gap: 20px;
-    }
     li{
       border-radius: 10px;
       background: rgba(147,122,105,0.6);
       backdrop-filter: blur(8px);
       padding: 20px;
-      width: calc(50% - 10px);
+      min-width: 0;
       height: 175px;
       position: relative;
       opacity: 0;
-      @include respond(tablet) {
-        width: 200px;
-        flex: 0 0 auto;
-      }
-      @include respond(desktop) {
-        width: calc(70%/4 - 20px);
-      }
-      &:first-child{
-        width: 100%;
-        @include respond(tablet) {
-          width: 300px;
-          flex: 0 0 auto;
-        }
-        @include respond(laptop) {
-          width: calc(30% - 20px);
-        }
-      }
       h3{
         color: #FFF;
         font-size: 18px;
@@ -1142,11 +1125,11 @@ header{
       h2{
         font-weight: 500;
         color: #FFF;
-        font-size: 10vw;
+        font-size: clamp(28px, 3vw, 32px);
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0;
+        white-space: nowrap;
         line-height: 1.2;
-        @include respond(tablet) {
-          font-size: 40px;
-        }
       }
       .iconbox{
         position: absolute;
@@ -1377,6 +1360,7 @@ header{
     position: relative;
   }
   .bubble-message{
+    --bubble-background: #E6C735;
     width: 120px;
     bottom: 70px;
     right: 0;
@@ -1384,10 +1368,9 @@ header{
     border-radius: 15px;
     font-size: 12px;
     letter-spacing: 0;
-    color: #FFF;
-    background: rgba(104,145,188,0.8);
+    color: $col-brown2;
+    background: var(--bubble-background);
     animation: float-5 0.8s 0s linear infinite;
-    backdrop-filter: blur(5px);
     @include bg_change(0.3s);
     @include respond(tablet) {
       bottom: 90px;
@@ -1398,15 +1381,7 @@ header{
       bottom: 110px;
       &:hover {
         @include bg_change(0.3s);
-        background: rgba(104,145,188,1);
-        .arr-bottom{
-          svg{
-            path{
-              opacity: 1;
-              @include bg_change(0.3s);
-            }
-          }
-        }
+        --bubble-background: #D9B925;
       }
     }
     .rel{
@@ -1418,13 +1393,18 @@ header{
     .arr-bottom{
       right: 20px;
       position: absolute;
-      bottom: -10px;
+      bottom: -8px;
+      height: 10px;
+      line-height: 0;
       @include respond(tablet) {
         width: 40px;
       }
       svg{
         display: block;
+        width: 12px;
+        height: 10px;
         path{
+          fill: var(--bubble-background);
           @include bg_change(0.3s);
         }
       }

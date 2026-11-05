@@ -1,16 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM node:18-alpine as build
-WORKDIR /code
-COPY ./frontend-data/package*.json ./frontend-data/yarn.lock ./
-COPY ./frontend-data/webpack.config.js ./frontend-data/.babelrc ./
-RUN yarn install
-COPY ./frontend-data/src ./src
-RUN yarn build-dev
-
-##
-# stage 2
-##
-FROM python:3.10-slim-bookworm as final
+FROM python:3.10-slim-bookworm
 
 # set environment varibles
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -44,5 +33,3 @@ RUN pip install -r requirements.txt
 
 
 COPY . .
-
-# COPY --from=build /code/dist /frondend

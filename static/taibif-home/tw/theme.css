@@ -932,6 +932,7 @@ header .right-menu .menu1 li {
     }
 }
 header .right-menu .menu1 li .btitle {
+    font-size: 16px;
     cursor: pointer;
     font-weight: 500;
     color: #4a3e3a;
@@ -1041,7 +1042,7 @@ header .right-menu .menu1 .menu2 .w-bg {
 header .right-menu .menu1 .menu2 .w-bg a {
     display: block;
     padding: 7px 20px;
-    font-size: 14px;
+    font-size: 16px;
     transition: all 0.3s;
     -moz-transition: all 0.3s;
     -o-transition: all 0.3s;
@@ -1051,7 +1052,6 @@ header .right-menu .menu1 .menu2 .w-bg a {
 @media (min-width: 1024px) {
     header .right-menu .menu1 .menu2 .w-bg a {
         padding: 12px 20px;
-        font-size: 16px;
     }
     header .right-menu .menu1 .menu2 .w-bg a:hover {
         background: #ebe7e4;
@@ -1340,6 +1340,10 @@ header .right-menu .menu1 .menu2 .w-bg a {
     -ms-transition: all 0.3s;
     -webkit-transition: all 0.3s;
 }
+.s1-kv-area .right-main-menu .four-item.two-item .item-box {
+    width: 100%;
+    height: 50%;
+}
 @media (min-width: 768px) {
     .s1-kv-area .right-main-menu .four-item .item-box {
         padding: 30px;
@@ -1461,13 +1465,8 @@ header .right-menu .menu1 .menu2 .w-bg a {
     -o-transition: all 0.3s;
     -ms-transition: all 0.3s;
     -webkit-transition: all 0.3s;
-    font-size: 14px;
+    font-size: clamp(16px, 1vw, 18px);
     letter-spacing: 0;
-}
-@media (min-width: 768px) {
-    .s1-kv-area .right-main-menu .four-item .item-box .bottom-linkarea a {
-        font-size: 16px;
-    }
 }
 .s1-kv-area .right-main-menu .four-item .item-box .bottom-linkarea a .arr {
     position: absolute;
@@ -1943,54 +1942,24 @@ header .right-menu .menu1 .menu2 .w-bg a {
     color: #fff;
 }
 .s3-data .five-item {
-    display: flex;
-    gap: 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 250px));
+    justify-content: center;
+    gap: 20px;
     margin-bottom: 30px;
     position: relative;
     z-index: 5;
     list-style: none;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-@media (min-width: 768px) {
-    .s3-data .five-item {
-        gap: 20px;
-    }
 }
 .s3-data .five-item li {
     border-radius: 10px;
     background: rgba(147, 122, 105, 0.6);
     backdrop-filter: blur(8px);
     padding: 20px;
-    width: calc(50% - 10px);
+    min-width: 0;
     height: 175px;
     position: relative;
     opacity: 0;
-}
-@media (min-width: 768px) {
-    .s3-data .five-item li {
-        width: 200px;
-        flex: 0 0 auto;
-    }
-}
-@media (min-width: 1280px) {
-    .s3-data .five-item li {
-        width: calc(70% / 4 - 20px);
-    }
-}
-.s3-data .five-item li:first-child {
-    width: 100%;
-}
-@media (min-width: 768px) {
-    .s3-data .five-item li:first-child {
-        width: 300px;
-        flex: 0 0 auto;
-    }
-}
-@media (min-width: 1024px) {
-    .s3-data .five-item li:first-child {
-        width: calc(30% - 20px);
-    }
 }
 .s3-data .five-item li h3 {
     color: #fff;
@@ -2000,13 +1969,11 @@ header .right-menu .menu1 .menu2 .w-bg a {
 .s3-data .five-item li h2 {
     font-weight: 500;
     color: #fff;
-    font-size: 10vw;
+    font-size: clamp(28px, 3vw, 32px);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0;
+    white-space: nowrap;
     line-height: 1.2;
-}
-@media (min-width: 768px) {
-    .s3-data .five-item li h2 {
-        font-size: 40px;
-    }
 }
 .s3-data .five-item li .iconbox {
     position: absolute;
@@ -2275,6 +2242,7 @@ header .right-menu .menu1 .menu2 .w-bg a {
     position: relative;
 }
 .right-fixed .bubble-message {
+    --bubble-background: #e6c735;
     width: 120px;
     bottom: 70px;
     right: 0;
@@ -2282,10 +2250,9 @@ header .right-menu .menu1 .menu2 .w-bg a {
     border-radius: 15px;
     font-size: 12px;
     letter-spacing: 0;
-    color: #fff;
-    background: rgba(104, 145, 188, 0.8);
+    color: #4a3e3a;
+    background: var(--bubble-background);
     animation: float-5 0.8s 0s linear infinite;
-    backdrop-filter: blur(5px);
     transition: all 0.3s;
     -moz-transition: all 0.3s;
     -o-transition: all 0.3s;
@@ -2309,15 +2276,7 @@ header .right-menu .menu1 .menu2 .w-bg a {
         -o-transition: all 0.3s;
         -ms-transition: all 0.3s;
         -webkit-transition: all 0.3s;
-        background: #6891bc;
-    }
-    .right-fixed .bubble-message:hover .arr-bottom svg path {
-        opacity: 1;
-        transition: all 0.3s;
-        -moz-transition: all 0.3s;
-        -o-transition: all 0.3s;
-        -ms-transition: all 0.3s;
-        -webkit-transition: all 0.3s;
+        --bubble-background: #d9b925;
     }
 }
 .right-fixed .bubble-message .rel {
@@ -2331,7 +2290,9 @@ header .right-menu .menu1 .menu2 .w-bg a {
 .right-fixed .bubble-message .arr-bottom {
     right: 20px;
     position: absolute;
-    bottom: -10px;
+    bottom: -8px;
+    height: 10px;
+    line-height: 0;
 }
 @media (min-width: 768px) {
     .right-fixed .bubble-message .arr-bottom {
@@ -2340,8 +2301,11 @@ header .right-menu .menu1 .menu2 .w-bg a {
 }
 .right-fixed .bubble-message .arr-bottom svg {
     display: block;
+    width: 12px;
+    height: 10px;
 }
 .right-fixed .bubble-message .arr-bottom svg path {
+    fill: var(--bubble-background);
     transition: all 0.3s;
     -moz-transition: all 0.3s;
     -o-transition: all 0.3s;

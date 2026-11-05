@@ -2,17 +2,114 @@
 {% load i18n %}
 {% load static %}
 {% block title %}{% trans "有哪些工具可以使用" %}{% endblock %}
-{% block style %}
-<style>
-    html {
-        scroll-behavior: smooth;
-    }
+{% block script %}
+<script>
+    $(document).ready(function() {
+        const navItems = document.querySelectorAll('.anchor-nav-link');
+        const sections = document.querySelectorAll('.anchor-section');
+        const header = document.querySelector('header');
 
-    .tools-page .tools-card {
-        scroll-margin-top: 130px;
-    }
-</style>
-{% endblock style %}
+        function getHeaderOffset() {
+            return (header ? header.offsetHeight : 0) + 16;
+        }
+
+        function updateHeaderOffset() {
+            document.documentElement.style.setProperty(
+                '--anchor-header-offset',
+                `${getHeaderOffset()}px`
+            );
+        }
+
+        function setActiveSection(sectionId) {
+            navItems.forEach(function(item) {
+                const isActive = item.dataset.anchor === sectionId;
+                item.classList.toggle('is-active', isActive);
+                if (isActive) {
+                    item.setAttribute('aria-current', 'location');
+                } else {
+                    item.removeAttribute('aria-current');
+                }
+            });
+        }
+
+        function syncActiveSection() {
+            if (!sections.length) {
+                return;
+            }
+
+            const marker = getHeaderOffset() + 1;
+            let activeSection = sections[0];
+
+            sections.forEach(function(section) {
+                if (section.getBoundingClientRect().top <= marker) {
+                    activeSection = section;
+                }
+            });
+
+            const pageBottom = window.scrollY + window.innerHeight;
+            if (pageBottom >= document.documentElement.scrollHeight - 2) {
+                activeSection = sections[sections.length - 1];
+            }
+
+            setActiveSection(activeSection.id);
+        }
+
+        function scrollToSection(section, smooth) {
+            const top = section.getBoundingClientRect().top + window.scrollY - getHeaderOffset();
+            window.scrollTo({
+                top: Math.max(0, top),
+                behavior: smooth ? 'smooth' : 'auto'
+            });
+        }
+
+        navItems.forEach(function(item) {
+            item.addEventListener('click', function(event) {
+                const section = document.getElementById(this.dataset.anchor);
+                if (!section) {
+                    return;
+                }
+
+                event.preventDefault();
+                const url = new URL(window.location.href);
+                url.hash = this.hash;
+                history.replaceState({}, '', url);
+                scrollToSection(section, true);
+            });
+        });
+
+        updateHeaderOffset();
+        let scrollTicking = false;
+        window.addEventListener('scroll', function() {
+            if (!scrollTicking) {
+                requestAnimationFrame(function() {
+                    syncActiveSection();
+                    scrollTicking = false;
+                });
+                scrollTicking = true;
+            }
+        }, { passive: true });
+
+        window.addEventListener('resize', function() {
+            updateHeaderOffset();
+            syncActiveSection();
+        });
+
+        if (window.location.hash) {
+            const sectionId = window.location.hash.slice(1);
+            const section = document.getElementById(sectionId);
+            setActiveSection(sectionId);
+            if (section) {
+                requestAnimationFrame(function() {
+                    scrollToSection(section, false);
+                    syncActiveSection();
+                });
+            }
+        } else {
+            syncActiveSection();
+        }
+    });
+</script>
+{% endblock %}
 
 {% block main %}
 
@@ -37,10 +134,24 @@
         </ol>
     </nav>
     <!-- breadcrumb end -->
-    <!-- col begin -->
-    <div class="col-12">
-        <div id="coordinate-converter" class="card-tools-wrapper tools-card">
-            <div class="title">{% trans "地理分布線上座標轉換" %}</div>
+    <div class="anchor-layout">
+        <aside class="anchor-sidebar">
+            <nav class="anchor-nav" aria-label="{% trans '本頁工具導覽' %}">
+                <a data-anchor="coordinate-converter" class="anchor-nav-link is-active" href="#coordinate-converter" aria-current="location">{% trans "地理分布線上座標轉換" %}</a>
+                <a data-anchor="common-name-checker" class="anchor-nav-link" href="#common-name-checker">{% trans "學名與物種中文名比對" %}</a>
+                <a data-anchor="nomenmatch" class="anchor-nav-link" href="#nomenmatch">{% trans "有效學名比對" %}</a>
+                <a data-anchor="gbif-validator" class="anchor-nav-link" href="#gbif-validator">{% trans "GBIF 資料驗證工具" %}</a>
+                <a data-anchor="digital-taibifer" class="anchor-nav-link" href="#digital-taibifer">{% trans "數位 TaiBIFer" %}</a>
+                <a data-anchor="odt" class="anchor-nav-link" href="#odt">TaiBIF Open Data Toolkit</a>
+            </nav>
+        </aside>
+
+        <div class="anchor-content">
+        <div id="coordinate-converter" class="card-tools-wrapper tools-card anchor-section">
+            <div class="title">
+                <span>{% trans "地理分布線上座標轉換" %}</span>
+                <span class="tool-tags"><span class="tool-tag">{% trans "資料標準化" %}</span></span>
+            </div>
             <div class="content">
                 <p>
                 {% trans "生物多樣性資料校對轉換工具為 TaiBIF 資訊團隊研發，目前提供學名檢查、中文名批次比對與座標轉換。本研究目前由中研院「台灣生物多樣性資訊平台之學術、社會推廣與國際接軌」、國科會「建置與維護及整合臺灣生物多樣性資訊國家入口網 (TaiBIF) 及與 GBIF 接軌」及林務局「生態資源資料庫分組整合推動計畫」等計畫經費支持。" %}
@@ -50,8 +161,11 @@
             </div>
         </div>
 
-        <div id="common-name-checker" class="card-tools-wrapper tools-card">
-            <div class="title">{% trans "學名與物種中文名比對" %}</div>
+        <div id="common-name-checker" class="card-tools-wrapper tools-card anchor-section">
+            <div class="title">
+                <span>{% trans "學名與物種中文名比對" %}</span>
+                <span class="tool-tags"><span class="tool-tag">{% trans "資料標準化" %}</span></span>
+            </div>
             <div class="content">
                 <p>
                 {% blocktrans trimmed %}
@@ -62,8 +176,11 @@
             </div>
         </div>
 
-        <div id="nomenmatch" class="card-tools-wrapper tools-card">
-            <div class="title">{% trans "有效學名比對" %}</div>
+        <div id="nomenmatch" class="card-tools-wrapper tools-card anchor-section">
+            <div class="title">
+                <span>{% trans "有效學名比對" %}</span>
+                <span class="tool-tags"><span class="tool-tag">{% trans "資料清理" %}</span></span>
+            </div>
             <div class="content">
                 <p>
                 {% trans "物種在分類學上往往存在同物異名，本工具提供批次的物種學名比對，可提供該學名是否為有效學名及物種代碼等相關資訊，比對來源包含GBIF、COL、TBN與TaiCOL等。" %}
@@ -72,8 +189,11 @@
             </div>
         </div>
 
-        <div id="gbif-validator" class="card-tools-wrapper tools-card">
-            <div class="title">{% trans "GBIF 資料驗證工具" %}</div>
+        <div id="gbif-validator" class="card-tools-wrapper tools-card anchor-section">
+            <div class="title">
+                <span>{% trans "GBIF 資料驗證工具" %}</span>
+                <span class="tool-tags"><span class="tool-tag">{% trans "資料檢核" %}</span></span>
+            </div>
             <div class="content">
                 <p>
                 {% trans "為全球生物多樣性資訊機構 GBIF 所開發的網頁版資料驗證工具，可將文字檔或excel上傳，並顯示資料檔案中的資料問題及錯誤之處。上傳的資料檔案欄位須符合 DwC，使用前亦須先登入GBIF會員（可用google帳號註冊）。" %}
@@ -82,8 +202,11 @@
             </div>
         </div>
 
-        <div id="digital-taibifer" class="card-tools-wrapper tools-card">
-            <div class="title">{% trans "數位 TaiBIFer" %}</div>
+        <div id="digital-taibifer" class="card-tools-wrapper tools-card anchor-section">
+            <div class="title">
+                <span>{% trans "數位 TaiBIFer" %}</span>
+                <span class="tool-tags"><span class="tool-tag">{% trans "諮詢協助" %}</span></span>
+            </div>
             <div class="content">
                 <p>
                     {% blocktrans %}
@@ -94,8 +217,11 @@
             </div>
         </div>
 
-        <div id="odt" class="card-tools-wrapper tools-card">
-            <div class="title">TaiBIF Open Data Toolkit</div>
+        <div id="odt" class="card-tools-wrapper tools-card anchor-section">
+            <div class="title">
+                <span>TaiBIF Open Data Toolkit</span>
+                <span class="tool-tags"><span class="tool-tag">{% trans "資料標準化" %}</span><span class="tool-tag">{% trans "資料清理" %}</span><span class="tool-tag">{% trans "資料檢核" %}</span></span>
+            </div>
             <div class="content">
                 <p>
                     {% trans "TaiBIF Open Data Toolkit 是一個專門針對生物多樣性資料整合的工具，採用了國際生物多樣性領域常用的 Darwin Core 資料標準， 旨在幫助使用者建立並有效管理、編輯、驗證和清理生物多樣性資料集。若想要建立資料模板、資料編輯管理和發布，此工具將能引導您進入理想的資料管理流程，並協助管控資料品質。" %}
@@ -117,8 +243,8 @@
                 <a href="https://docs.google.com/presentation/d/1gUZVPFy-PQjzYEEdDcxm6lBKGXuZUW8MYQK05URy2Qw/edit?usp=sharing" target="_blank" class="link-item"><span class="myicon icon-link"></span> {% trans "教學手冊" %} </a>
             </div>
         </div>
+        </div>
     </div>
-    <!-- col end -->
 </div>
 <!-- container end -->
 {% endblock %}

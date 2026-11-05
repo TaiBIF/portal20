@@ -31,7 +31,7 @@ from apps.data.models import (
     Taibifer,
 )
 from .models import Post, Journal, IndexBubbleSetting
-from .models import NewsletterSubscription
+from .models import NewsletterSubscription, OnlineWorkshopCourse
 from utils.mail import taibif_mail_contact_us
 
 from apps.data.helpers.stats import get_home_stats
@@ -80,7 +80,11 @@ def index(request):
     event_list = category_map["EVENT"]
     update_list = category_map["SCI"]
 
-    story_list = Article.objects.filter(Article.category_q("STORY")).order_by("-created").all()[:6]
+    story_list = (
+        Article.objects.filter(Article.category_q("STORY"))
+        .order_by("-created")
+        .all()[:6]
+    )
 
     def assign_card_image(articles):
         # Priority: cover image > media_url > fallback image.
@@ -145,15 +149,13 @@ def index(request):
     else:
         gbif_data_case_count = 0
 
-    taibif_case_count = Article.objects.filter(is_data_case=True).count()
-    total_case_count = gbif_data_case_count + taibif_case_count
     index_bubble = IndexBubbleSetting.get_solo()
 
     occ_num_display = f"{occ_num:,}"
     dataset_num_display = f"{dataset_num:,}"
     taxon_num_display = f"{taxon_num:,}"
     publisher_num_display = f"{publisher_num:,}"
-    case_count_display = f"{total_case_count:,}"
+    case_count_display = f"{gbif_data_case_count:,}"
 
     context = {
         "news_all_list": news_all_list,
@@ -161,16 +163,13 @@ def index(request):
         "event_list": event_list,
         "update_list": update_list,
         "story_list": story_list,
-        # "stats": get_home_stats(),
         "dataset_num": dataset_num,
         "occ_num": occ_num,
         "taxon_num": taxon_num,
         "occ_num_display": occ_num_display,
         "dataset_num_display": dataset_num_display,
         "taxon_num_display": taxon_num_display,
-        # "taxonGroup_dict": taxonGroup_dict,
         "publisher_num": publisher_num,
-        "case_count": total_case_count,
         "publisher_num_display": publisher_num_display,
         "case_count_display": case_count_display,
         "index_bubble": index_bubble,
@@ -266,9 +265,7 @@ def contact_us(request):
         # print(recaptcha_response)
         data = {"secret": settings.HCAPTCHA_SECRET_KEY, "response": recaptcha_response}
         try:
-            r = requests.post(
-                "https://hcaptcha.com/siteverify", data=data, timeout=5
-            )
+            r = requests.post("https://hcaptcha.com/siteverify", data=data, timeout=5)
             r.raise_for_status()
             result = r.json()
         except (requests.RequestException, ValueError):
@@ -310,7 +307,9 @@ def links(request):
 
 # @act_lang
 def about_taibif(request):
-    achievement_qs = Article.objects.filter(Article.category_q("POS")).order_by("-created")
+    achievement_qs = Article.objects.filter(Article.category_q("POS")).order_by(
+        "-created"
+    )
     achievement_years = sorted(
         set(achievement_qs.values_list("created__year", flat=True)),
         reverse=True,
@@ -343,95 +342,141 @@ def open_data(request):
 
 # @act_lang
 def data_stats(request):
-    most = request.GET.get("most", "")
-    search_query = request.GET.get("search_query", "")
-    # print(f'search_query:{search_query}')
+    today = timezone.localdate()
+    current_year = today.year
+    current_month = today.month
 
-    query = Dataset.objects
-    if most:
-        query = query.filter(is_most_project=True)
-    # url = f"http://solr:8983/solr/taibif_occurrence/select?q=basisOfRecord:*&indent=true&q.op=OR&rows=0"
-    # r = requests.get(url).json()
-    # occ_num = r["response"]["numFound"]
+    try:
+        selected_year = int(request.GET.get("year", current_year))
+    except (TypeError, ValueError):
+        selected_year = current_year
 
-    # dataset_num = Dataset.objects.filter(status="PUBLIC", source="TaiBIF IPT").count()
-    # publisher_num = DatasetOrganization.objects.count()
+    try:
+        selected_month = int(request.GET.get("month", current_month))
+    except (TypeError, ValueError):
+        selected_month = current_month
 
-    dataset_orm = Dataset.objects.filter(source="TaiBIF IPT", status="PUBLIC").order_by(
-        "-pub_date"
+    if selected_month < 1 or selected_month > 12:
+        selected_month = current_month
+
+    dataset_fields = (
+        "title",
+        "organization_name",
+        "dwc_core_type",
+        "num_occurrence",
+        "num_record",
+        "pub_date",
+        # "country",
+        "status",
+        # "is_most_project",
+        "taibif_dataset_id",
     )
-    # Grab the content for the table
-    if search_query:
-        dataset = dataset_orm.filter(
-            Q(title__contains=search_query) | Q(dwc_core_type__contains=search_query)
-        ).values(
-            "title",
-            "organization_name",
-            "dwc_core_type",
-            "num_occurrence",
-            "num_record",
-            "pub_date",
-            "country",
-            "status",
-            "is_most_project",
-            "taibif_dataset_id",
-        )
-    else:
-        dataset = dataset_orm.values(
-            "title",
-            "organization_name",
-            "dwc_core_type",
-            "num_occurrence",
-            "num_record",
-            "pub_date",
-            "country",
-            "status",
-            "is_most_project",
-            "taibif_dataset_id",
-        )
+    organization_fields = (
+        "id",
+        "name",
+        "dataset_num",
+        "occurences_num",
+    )
 
-    if most == "1":
-        dataset = dataset.filter(is_most_project=True)
-
-    value_mapping = {
-        "OCCURRENCE": "出現紀錄",
-        "SAMPLINGEVENT": "調查活動",
-        "CHECKLIST": "物種名錄",
+    type_labels = {
+        "occurrence": "出現紀錄",
+        "samplingevent": "調查活動",
+        "checklist": "物種名錄",
         "metadata": "詮釋資料",
     }
 
-    modified_dataset = []
-
-    for item in dataset:
-        item["dwc_core_type"] = value_mapping.get(
-            item["dwc_core_type"], item["dwc_core_type"]
-        )
-        modified_dataset.append(item)
-
-    gbif_data_case_url = (
-        "https://api.gbif.org/v1/literature/search?countriesOfCoverage=TW"
+    event_queryset = DatasetUpdateEvent.objects.all()
+    available_years = list(
+        event_queryset.values_list("dataset_mod_date__year", flat=True)
+        .distinct()
+        .order_by("-dataset_mod_date__year")
     )
-    gbif_data_case_response = requests.get(gbif_data_case_url)
-    if gbif_data_case_response.status_code == 200:
-        gbif_data_case_dict = gbif_data_case_response.json()
-        if gbif_data_case_dict:
-            gbif_data_case_count = gbif_data_case_dict["count"]
-        else:
-            gbif_data_case_count = 0
-    else:
-        gbif_data_case_count = 0
+    if not available_years:
+        available_years = [current_year]
 
-    taibif_case_count = Article.objects.filter(is_data_case=True).count()
-    total_case_count = gbif_data_case_count + taibif_case_count
+    monthly_events = (
+        event_queryset.filter(
+            dataset_mod_date__year=selected_year,
+            dataset_mod_date__month=selected_month,
+        )
+        .values(
+            "dataset_id",
+            "dataset_title",
+            "dataset_name",
+            "dwc_core_type",
+            "organization_name",
+            "taibif_dataset_id",
+            "dataset_mod_date",
+        )
+        .order_by("-dataset_mod_date", "dataset_name")
+    )
+
+    monthly_latest_events = {}
+    for event in monthly_events:
+        monthly_latest_events.setdefault(event["dataset_id"], event)
+
+    monthly_dataset_ids = list(monthly_latest_events)
+    monthly_dataset_org_map = dict(
+        Dataset.objects.filter(id__in=monthly_dataset_ids).values_list(
+            "id", "organization_id"
+        )
+    )
+
+    monthly_dataset_rows = []
+    for event in monthly_latest_events.values():
+        core_type = event["dwc_core_type"]
+        if isinstance(core_type, str):
+            core_type = type_labels.get(core_type.casefold(), core_type)
+
+        monthly_dataset_rows.append(
+            {
+                "title": event["dataset_title"] or event["dataset_name"],
+                "dwc_core_type": core_type,
+                "organization_name": event["organization_name"] or "－",
+                "publisher_id": monthly_dataset_org_map.get(event["dataset_id"]),
+                "taibif_dataset_id": event["taibif_dataset_id"],
+                "ipt_link": f"https://ipt.taibif.tw/resource?r={event['dataset_name']}",
+            }
+        )
+
+    most = request.GET.get("most", "")
+    search_query = request.GET.get("search_query", "")
+
+    datasets = Dataset.objects.filter(
+        source="TaiBIF IPT",
+        status="PUBLIC",
+    ).order_by(
+        F("mod_date").desc(nulls_last=True),
+        "title",
+    )
+
+    if search_query:
+        datasets = datasets.filter(
+            Q(title__contains=search_query) | Q(dwc_core_type__contains=search_query)
+        )
+
+    if most == "1":
+        datasets = datasets.filter(is_most_project=True)
+
+    dataset_rows = list(datasets.values(*dataset_fields))
+    for row in dataset_rows:
+        core_type = row["dwc_core_type"]
+        if isinstance(core_type, str):
+            row["dwc_core_type"] = type_labels.get(core_type.casefold(), core_type)
+
+    organization_rows = DatasetOrganization.objects.order_by("name").values(
+        *organization_fields
+    )
 
     context = {
-        "dataset_list": query.order_by(F("pub_date").desc(nulls_last=True)).all(),
-        # "dataset_num": dataset_num,
-        # "publisher_num": publisher_num,
-        # "occ_num": occ_num,
-        "env": settings.ENV,
-        "dataset": modified_dataset,
-        "case_count": total_case_count,
+        "dataset": dataset_rows,
+        "organizations": organization_rows,
+        "selected_year": selected_year,
+        "selected_month": selected_month,
+        "selected_month_label": f"{selected_year:04d}-{selected_month:02d}",
+        "available_years": available_years,
+        "available_months": list(range(1, 13)),
+        "monthly_dataset_rows": monthly_dataset_rows,
     }
     return render(request, "data-stats.html", context)
 
@@ -548,11 +593,6 @@ def taibif_achievement(request):
     return render(request, "taibif-achievement.html", context)
 
 
-def faq(request):
-    context = {}
-    return render(request, "faq.html", context)
-
-
 def download_resources(request):
     context = {}
     return render(request, "download-resources.html", context)
@@ -607,16 +647,6 @@ def tech_book(request):
 
 
 def tech_workshop(request):
-    context = {}
-    return render(request, "tech-workshop.html", context)
-
-
-def tech_online_class(request):
-    context = {}
-    return render(request, "tech-online-class.html", context)
-
-
-def tech_class_license(request):
     certification_list = WorkshopCertificationList.objects.all().order_by("year")
     certification_data = {}
     for item in certification_list:
@@ -635,6 +665,16 @@ def tech_class_license(request):
         sorted(certification_data.items(), key=lambda item: item[0], reverse=True)
     )
     context = {"certification_data": sorted_certification_data}
+    return render(request, "tech-workshop.html", context)
+
+
+def tech_online_class(request):
+    context = {"courses": OnlineWorkshopCourse.objects.filter(is_active=True)}
+    return render(request, "tech-online-class.html", context)
+
+
+def tech_class_license(request):
+    context = {}
     return render(request, "tech-class-license.html", context)
 
 
@@ -781,102 +821,12 @@ def response_error_handler(request, exception=None):
 
 
 def open_consulation(request):
-    return render(request, "open-consulation.html")
+    context = {"courses": OnlineWorkshopCourse.objects.filter(is_active=True)}
+    return render(request, "open-consulation.html", context)
 
 
 def open_benefits(request):
     return render(request, "open-benefits.html")
-
-
-def monthly_status(request):
-    today = timezone.localdate()
-    current_year = today.year
-    current_month = today.month
-
-    try:
-        selected_year = int(request.GET.get("year", current_year))
-    except (TypeError, ValueError):
-        selected_year = current_year
-
-    try:
-        selected_month = int(request.GET.get("month", current_month))
-    except (TypeError, ValueError):
-        selected_month = current_month
-
-    if selected_month < 1 or selected_month > 12:
-        selected_month = current_month
-
-    core_type_mapping = {
-        "CHECKLIST": "物種名錄",
-        "OCCURRENCE": "出現紀錄",
-        "SAMPLINGEVENT": "調查活動",
-        "METADATA": "詮釋資料",
-        "metadata": "詮釋資料",
-    }
-
-    event_queryset = DatasetUpdateEvent.objects.all()
-
-    available_years = list(
-        event_queryset.values_list("dataset_mod_date__year", flat=True)
-        .distinct()
-        .order_by("-dataset_mod_date__year")
-    )
-    if not available_years:
-        available_years = [current_year]
-
-    monthly_events = (
-        event_queryset.filter(
-            dataset_mod_date__year=selected_year,
-            dataset_mod_date__month=selected_month,
-        )
-        .values(
-            "dataset_id",
-            "dataset_title",
-            "dataset_name",
-            "dwc_core_type",
-            "organization_name",
-            "taibif_dataset_id",
-            "dataset_mod_date",
-        )
-        .order_by("-dataset_mod_date", "dataset_name")
-    )
-
-    # Keep only the latest event per dataset in the selected month.
-    dataset_latest_event_map = {}
-    for event in monthly_events:
-        if event["dataset_id"] not in dataset_latest_event_map:
-            dataset_latest_event_map[event["dataset_id"]] = event
-
-    dataset_ids = list(dataset_latest_event_map.keys())
-    dataset_org_map = dict(
-        Dataset.objects.filter(id__in=dataset_ids).values_list("id", "organization_id")
-    )
-
-    dataset_rows = []
-    for event in dataset_latest_event_map.values():
-        publisher_id = dataset_org_map.get(event["dataset_id"])
-        dataset_rows.append(
-            {
-                "title": event["dataset_title"] or event["dataset_name"],
-                "dwc_core_type": core_type_mapping.get(
-                    event["dwc_core_type"], event["dwc_core_type"]
-                ),
-                "organization_name": event["organization_name"] or "－",
-                "publisher_id": publisher_id,
-                "taibif_dataset_id": event["taibif_dataset_id"],
-                "ipt_link": f"https://ipt.taibif.tw/resource?r={event['dataset_name']}",
-            }
-        )
-
-    context = {
-        "selected_year": selected_year,
-        "selected_month": selected_month,
-        "selected_month_label": f"{selected_year:04d}-{selected_month:02d}",
-        "available_years": available_years,
-        "available_months": list(range(1, 13)),
-        "dataset_rows": dataset_rows,
-    }
-    return render(request, "monthly-status.html", context)
 
 
 def become_publisher(request):

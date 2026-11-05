@@ -192,47 +192,12 @@ $(document).ready(function () {
     <div data-cat="application" class="col-12 col-md-9 nav-item-content hide content-readable-panel">
         <h4 class="heading-lg-ul">{% trans "申請成為 TaiBIFer 協作者" %}</h4>
         <p>
-            {% trans "要成為TaiBIFer，必要條件為參與TaiBIF 所辦理的「生物多樣性資料發布及應用工作坊」並完成核心及增能課程認證，每年會舉辦兩次，" %}
-            開放報名時間請隨時關注<a href="https://www.facebook.com/TaiBIF.tw/" target="_blank">{% trans "TaiBIF粉絲頁" %}</a>最新消息。完成課程認證後，我們將會依據您於報名時所選的協作者類型，與您聯繫進一步的考核事宜。
+            {% trans "要成為 TaiBIFer，必要條件為參與 TaiBIF 所辦理的「生物多樣性資料發布及應用工作坊」並完成核心及增能" %}
+            <a href="{% url 'tech-workshop' %}#certification">{% trans "課程認證" %}</a>
+            {% trans "。工作坊每年舉辦兩次，開放報名時間請隨時關注" %}
+            <a href="https://www.facebook.com/TaiBIF.tw/" target="_blank" rel="noopener noreferrer">{% trans "TaiBIF粉絲頁" %}</a>
+            {% trans "最新消息。完成課程認證後，我們將會依據您於報名時所選的協作者類型，與您聯繫進一步的考核事宜。" %}
         </p>
-
-        <div class="article-content-wrapper">
-            <h3>{% trans "工作坊課程認證辦法" %}</h3>
-        </div>
-        <p>
-            {% trans "每期工作坊皆有4項課程指定作業，包含2項核心作業及2項增能作業。完成課程指定作業，" %}
-            {% trans "並於課後一個月內繳交至線上作業繳交表單，經各項主題課程講師評分後，分數達標即可獲得TaiBIF課程認證證書。" %}
-        </p>
-
-        <div class="article-content-wrapper">
-            <h3>{% trans "指定作業項目" %} <span class="highlight-box-primary highlight-box-small">{% trans "將持續更新" %}</span></h3>
-        </div>
-        <div class="sub-heading-2">{% trans "核心作業" %}</div>
-        <ol>
-            <li>{% trans "DwC 資料欄位對應 + Sampling Event 資料集整理" %}</li>
-            <li>{% trans "資料集上傳TaiBIF test IPT" %}</li>
-        </ol>
-        <div class="sub-heading-2">{% trans "增能作業" %}</div>
-        <ol>
-            <li>{% trans "openRefine 資料清理" %}</li>
-            <li>{% trans "開放資料下載" %}</li>
-        </ol>
-
-        <div class="article-content-wrapper">
-            <h3>{% trans "作業評核標準" %}</h3>
-        </div>
-        <div class="sub-heading-2">{% trans "核心作業" %}</div>
-        <p>{% trans "核心作業每項滿分20分，累計各項作業總分達25分即通過。" %}</p>
-        <div class="sub-heading-2">{% trans "增能作業" %}</div>
-        <p>{% trans "此認證須完成包含核心作業在內所有作業，每項滿分20分，累計各項作業總分達60分即通過；40分以上未達60分者則給予核心認證。" %}</p>
-
-        <div class="article-content-wrapper">
-            <h3>{% trans "證書樣式" %}</h3>
-        </div>
-        <div class="certification-container">
-            <img src="{% static 'images/workshop_certification.png'%}"/>
-            <img src="{% static 'images/workshop_certification_advanced.png'%}"/>
-        </div>
     </div>
 
     <div data-cat="list" class="col-12 col-md-9 nav-item-content hide content-readable-panel">

@@ -1,0 +1,121 @@
+.open-process-flow {
+    --flow-arrow-color: #aa806d;
+    position: relative;
+    margin: 24px 0 12px;
+    padding: 12px 16px;
+}
+
+.open-process-flow-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 64px clamp(44px, 5vw, 72px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.open-process-flow-node {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 10px;
+    min-width: 0;
+    min-height: 164px;
+    margin: 0;
+    padding: 40px 20px 20px;
+    border-radius: 12px;
+    background-color: #f6f3f2;
+    text-align: center;
+}
+
+.open-process-flow-node[data-flow-node="license"] {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+.open-process-flow-node[data-flow-node="publish"] {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.open-process-flow-node[data-flow-node="reuse"] {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.open-process-flow-number {
+    position: absolute;
+    top: 10px;
+    left: 14px;
+    color: #8a6b5c;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.open-process-flow-node .btn {
+    display: block;
+    margin: 0;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: 16px;
+    line-height: 1.5;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+.open-process-flow-node .btn:focus-visible {
+    outline: 2px solid #846c5b;
+    outline-offset: 3px;
+}
+
+.open-process-flow-arrows {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+}
+
+.open-process-flow-arrows marker path {
+    fill: var(--flow-arrow-color);
+    stroke: none;
+}
+
+.open-process-flow-connection {
+    fill: none;
+    stroke: var(--flow-arrow-color);
+    stroke-width: 2.5px;
+    stroke-linecap: butt;
+    stroke-linejoin: round;
+    marker-end: url(#open-process-arrowhead);
+}
+
+.open-process-flow-note {
+    margin: 0 0 24px;
+    color: #6a5a52;
+    font-size: 14px;
+}
+
+@media (max-width: 899px) {
+    .open-process-flow {
+        padding: 12px 8px 12px 36px;
+    }
+
+    .open-process-flow-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 52px;
+    }
+
+    .open-process-flow-node {
+        min-height: 112px;
+        padding: 36px 16px 16px;
+    }
+
+    .open-process-flow-node[data-flow-node] {
+        grid-column: auto;
+        grid-row: auto;
+    }
+}
