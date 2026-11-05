@@ -1,5 +1,3 @@
-version: '3.7'
-
 services:
   web:
     build: .
@@ -19,7 +17,6 @@ services:
       - ../taibif-volumes/logs/web:/taibif-code/logs
       - ../taibif-volumes/biomap:/biomap
     command: "./scripts/wait-for-it.sh db:5432 -t 30 -- ./scripts/docker-web-entry.sh"
-    #command: ./docker-web-entry.sh
     restart: always
     env_file:
       - .env
