@@ -1610,15 +1610,17 @@ def species_view(request, taicol_taxon_id):
 
 
 def search_view(request, cat=""):
-
-    context = {"env": settings.ENV}
-    return render(request, "search.html", context)
+    # Preserve old bookmarks without loading the retired React search bundles.
+    params = request.GET.copy()
+    if cat in {"dataset", "publisher"}:
+        params.setlist("target", [cat])
+    query = params.urlencode()
+    url = reverse("search_all")
+    return HttpResponseRedirect(f"{url}?{query}" if query else url)
 
 
 def search_view_species(request, cat=""):
-
-    context = {"env": settings.ENV}
-    return render(request, "search_species.html", context)
+    return search_view(request, cat=cat)
 
 
 def search_occurrence_download_view(request):

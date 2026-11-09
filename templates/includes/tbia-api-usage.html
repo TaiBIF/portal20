@@ -1,0 +1,183 @@
+{% load i18n %}
+{% url 'tbia-dataset' as tbia_dataset_url %}
+<div class="col-12 col-md-9 nav-item-content hide content-readable-panel"
+     data-cat="tbia-usage">
+    <h4 class="heading-lg-ul">{% trans "V4 說明" %}</h4>
+    <div class="pub-data-section">
+        <div class="article-content-wrapper">
+            <h3>服務說明</h3>
+        </div>
+        <ul>
+            <li>參考<a class="highlight-link"
+                     href="https://tbiadata.tw/"
+                     target="_blank"
+                     rel="noopener noreferrer">臺灣生物多樣性資訊聯盟（TBIA）</a>的介接建議，統一 API 查詢參數格式與回傳結構，方便使用者查詢、擷取及整合資料。</li>
+            <li>目前 TaiBIF 出現紀錄僅提供透過 API 下載，請依下方說明設定查詢參數，以取得所需資料。</li>
+            <li>請使用 GET 方法傳送查詢。</li>
+            <li>回應格式為 JSON，字元編碼為 UTF-8。</li>
+        </ul>
+        <div class="article-content-wrapper">
+            <h3>查詢規則</h3>
+        </div>
+        <ul>
+            <li>請以網址查詢參數傳送條件。</li>
+            <li>可用參數、控制詞彙與多值查詢方式，請參閱各分頁的說明。</li>
+            <li>未知參數或無效值，會回傳 HTTP 400。</li>
+        </ul>
+        <div class="article-content-wrapper">
+            <h3>分頁規則</h3>
+        </div>
+        <p>大量資料若一次回傳，會增加傳輸時間與伺服器負擔，也可能造成連線逾時。因此，API 將查詢結果分頁回傳。請使用 limit 設定每頁筆數，並使用 offset 依序取得資料。</p>
+        <table class="table content-readable-table">
+            <thead>
+                <tr>
+                    <th>名稱</th>
+                    <th>說明</th>
+                    <th>範例</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>limit</td>
+                    <td>每頁最多回傳筆數。須為正整數。預設 100，上限 1000。超過上限時採 1000。</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_dataset_url }}?limit=100"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_dataset_url }}?limit=100</a></td>
+                </tr>
+                <tr>
+                    <td>offset</td>
+                    <td>略過的資料筆數。須為非負整數。預設 0。</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_dataset_url }}?offset=100"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_dataset_url }}?offset=100</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="api-subsection">
+            <h4 class="api-subsection-title">連續取得資料</h4>
+            <p>每次請求只取得一頁資料。以每頁 100 筆為例，先查詢 offset=0，再依序查詢 offset=100、offset=200。每次取得資料後，依下表判斷是否繼續。</p>
+            <table class="table content-readable-table">
+                <thead>
+                    <tr>
+                        <th>本頁回傳筆數</th>
+                        <th>下一步</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>100 筆</td>
+                        <td>繼續取得下一頁，將 offset 加上 100。</td>
+                    </tr>
+                    <tr>
+                        <td>1 至 99 筆</td>
+                        <td>已取得最後一頁，結束擷取。</td>
+                    </tr>
+                    <tr>
+                        <td>0 筆</td>
+                        <td>已無資料，結束擷取。</td>
+                    </tr>
+                </tbody>
+            </table>
+            <ul>
+                <li>翻頁時，請保留相同的查詢條件。若採用其他每頁筆數，請以回應中的 meta.limit 取代上述的 100。</li>
+                <li>若資料共 200 筆，前兩頁各回傳 100 筆。再查詢 offset=200 時會取得空陣列，此時結束擷取。</li>
+                <li>也可直接開啟 links.next 的網址取得下一頁，無須自行計算 offset。links.next 為 null 時，即可結束擷取。</li>
+            </ul>
+        </div>
+        <div class="article-content-wrapper">
+            <h3>回傳內容</h3>
+        </div>
+        <table class="table content-readable-table">
+            <thead>
+                <tr>
+                    <th>名稱</th>
+                    <th>說明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>status.code</td>
+                    <td>回應狀態碼，與 HTTP 狀態碼相同。查無資料時仍為 200。</td>
+                </tr>
+                <tr>
+                    <td>status.message</td>
+                    <td>回應狀態說明。</td>
+                </tr>
+                <tr>
+                    <td>meta.total</td>
+                    <td>符合查詢條件的總筆數，包含其他頁的資料。查無資料時為 0；offset 超過尾端時，仍保留符合條件的總筆數。</td>
+                </tr>
+                <tr>
+                    <td>meta.limit</td>
+                    <td>實際採用的每頁筆數。</td>
+                </tr>
+                <tr>
+                    <td>links.self</td>
+                    <td>本頁的完整網址。</td>
+                </tr>
+                <tr>
+                    <td>links.next</td>
+                    <td>下一頁的完整網址，保留查詢條件。沒有下一頁時為 null。</td>
+                </tr>
+                <tr>
+                    <td>data</td>
+                    <td>本頁資料的陣列。每筆資料均保留文件所列欄位。缺值與空白文字為 null；日期缺值不以其他日期代填。筆數為 0 時保留數字 0。查無資料或 offset 超過尾端時，回傳空陣列。</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="api-subsection">
+            <h4 class="api-subsection-title">回傳範例（JSON 格式）</h4>
+            <pre class="api-code-block"><code>{
+    "status": {
+        "code": 回傳狀態代碼,
+        "message": 回傳狀態說明
+    },
+    "meta": {
+        "total": 符合查詢條件的總筆數,
+        "limit": 實際採用的每頁筆數
+    },
+    "links": {
+        "self": 本頁的完整網址,
+        "next": 下一頁的完整網址，沒有下一頁時為 null
+    },
+    "data": [本頁資料陣列]
+}</code></pre>
+        </div>
+        <div class="api-subsection">
+            <h4 class="api-subsection-title">HTTP 狀態碼</h4>
+            <table class="table content-readable-table">
+                <thead>
+                    <tr>
+                        <th>狀態碼</th>
+                        <th>說明</th>
+                        <th>處理方式</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>200</td>
+                        <td>查詢成功，包含查無資料。</td>
+                        <td>讀取 data 與分頁資訊。</td>
+                    </tr>
+                    <tr>
+                        <td>400</td>
+                        <td>查詢參數無效。</td>
+                        <td>依 status.message 修正參數後重試。</td>
+                    </tr>
+                    <tr>
+                        <td>405</td>
+                        <td>請求方法不支援。</td>
+                        <td>改用 GET 方法。</td>
+                    </tr>
+                    <tr>
+                        <td>500</td>
+                        <td>資料庫查詢失敗。</td>
+                        <td>稍後重試。若持續失敗，請聯絡維護人員。</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
