@@ -1,0 +1,967 @@
+{% load i18n %}
+{% url 'tbia-occurrence' as tbia_occurrence_url %}
+<div class="col-12 col-md-9 nav-item-content hide content-readable-panel"
+     data-cat="tbia-occurrence">
+    <h4 class="heading-lg-ul">{% trans "V4 出現紀錄" %}</h4>
+    <p><strong>端點：</strong><code>GET {{ tbia_occurrence_url }}</code></p>
+    <div class="pub-data-section">
+        <p>各參數均為選填，可依下列分類表格查詢公開出現紀錄。共通分頁及回應規則請參閱「V4 說明」。</p>
+        <div class="article-content-wrapper">
+            <h3>物種資訊參數</h3>
+        </div>
+        <table class="table content-readable-table">
+            <thead>
+                <tr>
+                    <th>名稱</th>
+                    <th>備註</th>
+                    <th>範例</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>occurrenceID</td>
+                    <td>以 TaiBIF 紀錄 ID 精確查詢。若來源 ID 重複，回傳 HTTP 500，不任意選取其中一筆。</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?occurrenceID=example-occurrence-id"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?occurrenceID=example-occurrence-id</a></td>
+                </tr>
+                <tr>
+                    <td>catalogNumber</td>
+                    <td>以典藏機構登錄號精確查詢，可回傳多筆。</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?catalogNumber=example-catalog-number"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?catalogNumber=example-catalog-number</a></td>
+                </tr>
+                <tr>
+                    <td>originalOccurrenceID</td>
+                    <td>以資料發布者提供的原始紀錄 ID 精確查詢，可能回傳多筆。</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?originalOccurrenceID=b92ca705-d4de-4319-820c-1bbad1079844"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?originalOccurrenceID=b92ca705-d4de-4319-820c-1bbad1079844</a></td>
+                </tr>
+                <tr>
+                    <td>basisOfRecord</td>
+                    <td>需要使用控制詞彙進行查詢，請參閱下方「控制詞彙查詢參數對照表」</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?basisOfRecord=HumanObservation"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?basisOfRecord=HumanObservation</a></td>
+                </tr>
+                <tr>
+                    <td>taibifScientificName</td>
+                    <td>以 TaiBIF 校定物種學名精確查詢；與 scientificName 查詢相同。</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?taibifScientificName=Muntiacus%20reevesi%20micrurus%20%28Sclater,%201875%29"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?taibifScientificName=Muntiacus reevesi micrurus (Sclater, 1875)</a></td>
+                </tr>
+                <tr>
+                    <td>taxonRank</td>
+                    <td>需要使用控制詞彙進行查詢，請參閱下方「控制詞彙查詢參數對照表」</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?taxonRank=Species"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?taxonRank=Species</a></td>
+                </tr>
+                <tr>
+                    <td>kingdom</td>
+                    <td>需要使用控制詞彙進行查詢，請參閱下方「控制詞彙查詢參數對照表」</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?kingdom=Plantae"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?kingdom=Plantae</a></td>
+                </tr>
+                <tr>
+                    <td>phylum</td>
+                    <td>物種分類階層之門</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?phylum=Tracheophyta"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?phylum=Tracheophyta</a></td>
+                </tr>
+                <tr>
+                    <td>class</td>
+                    <td>物種分類階層之綱</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?class=Elasmobranchii"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?class=Elasmobranchii</a></td>
+                </tr>
+                <tr>
+                    <td>order</td>
+                    <td>物種分類階層之目</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?order=Magnoliales"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?order=Magnoliales</a></td>
+                </tr>
+                <tr>
+                    <td>family</td>
+                    <td>物種分類階層之科</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?family=Erebidae"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?family=Erebidae</a></td>
+                </tr>
+                <tr>
+                    <td>genus</td>
+                    <td>物種分類階層之屬</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?genus=Grevillea"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?genus=Grevillea</a></td>
+                </tr>
+                <tr>
+                    <td>establishmentMeans</td>
+                    <td>需要使用控制詞彙進行查詢，請參閱下方「控制詞彙查詢參數對照表」</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?establishmentMeans=%E5%8E%9F%E7%94%9F"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?establishmentMeans=原生</a></td>
+                </tr>
+                <tr>
+                    <td>occurrenceStatus</td>
+                    <td>需要使用控制詞彙進行查詢，請參閱下方「控制詞彙查詢參數對照表」</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?occurrenceStatus=%E5%87%BA%E7%8F%BE"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?occurrenceStatus=出現</a></td>
+                </tr>
+                <tr>
+                    <td>scientificName</td>
+                    <td>以校定物種學名精確查詢。</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?scientificName=Muntiacus%20reevesi%20micrurus%20%28Sclater,%201875%29"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?scientificName=Muntiacus reevesi micrurus (Sclater, 1875)</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="article-content-wrapper">
+            <h3>時間資訊參數</h3>
+        </div>
+        <table class="table content-readable-table">
+            <thead>
+                <tr>
+                    <th>名稱</th>
+                    <th>備註</th>
+                    <th>範例</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>modified</td>
+                    <td>以資料解讀／處理日期查詢。格式 YYYYMMDD，區間以逗號分隔，包含起訖日全天。</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?modified=20240101,20241231"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?modified=20240101,20241231</a></td>
+                </tr>
+                <tr>
+                    <td>eventDate</td>
+                    <td>以觀測日期查詢。格式 YYYY-MM-DD；單值查詢該日起的資料，區間以逗號分隔，包含起訖日期。</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?eventDate=2022-01-01"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?eventDate=2022-01-01</a></td>
+                </tr>
+                <tr>
+                    <td>year</td>
+                    <td>以觀測年查詢。可用範圍為 1700 至今年；單值表示該年起，區間以逗號分隔，包含起訖年。</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?year=2022"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?year=2022</a></td>
+                </tr>
+                <tr>
+                    <td>month</td>
+                    <td>以觀測月查詢。可用範圍 1 至 12；單值表示該月起，區間以逗號分隔，包含起訖月。</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?month=01"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?month=01</a></td>
+                </tr>
+                <tr>
+                    <td>taibifModifiedDate</td>
+                    <td>以 TaiBIF 資料解讀／處理日期查詢。沿用舊格式 YYYY-MM-DD；單值表示該日起，區間以逗號分隔。不同於 modified 的 YYYYMMDD 單日查詢。</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?taibifModifiedDate=2022-01-01"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?taibifModifiedDate=2022-01-01</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="article-content-wrapper">
+            <h3>地理資訊參數</h3>
+        </div>
+        <table class="table content-readable-table">
+            <thead>
+                <tr>
+                    <th>名稱</th>
+                    <th>備註</th>
+                    <th>範例</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>boundedBy</td>
+                    <td>以四邊形座標範圍查詢。格式：最小經度,最小緯度,最大經度,最大緯度。沿用既有公開網格，邊界結果可能包含同一網格內的其他位置。</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?boundedBy=121.1,22.1,121.2,22.2"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?boundedBy=121.1,22.1,121.2,22.2</a></td>
+                </tr>
+                <tr>
+                    <td>coordinateUncertaintyInMeters</td>
+                    <td>取得座標誤差（含以下）之物種出現紀錄資料，單位為公尺</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?coordinateUncertaintyInMeters=100"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?coordinateUncertaintyInMeters=100</a></td>
+                </tr>
+                <tr>
+                    <td>country</td>
+                    <td>以國家名稱查詢</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?country=Taiwan"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?country=Taiwan</a></td>
+                </tr>
+                <tr>
+                    <td>county</td>
+                    <td>需要使用控制詞彙進行查詢，請參閱下方「控制詞彙查詢參數對照表」</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?county=%E8%87%BA%E5%8C%97%E5%B8%82"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?county=臺北市</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="article-content-wrapper">
+            <h3>資料集資訊參數</h3>
+        </div>
+        <table class="table content-readable-table">
+            <thead>
+                <tr>
+                    <th>名稱</th>
+                    <th>備註</th>
+                    <th>範例</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>datasetID</td>
+                    <td>以 TaiBIF 資料集 UUID 查詢該資料集的紀錄。</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?datasetID=00000000-0000-4000-8000-000000000001"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?datasetID=00000000-0000-4000-8000-000000000001</a></td>
+                </tr>
+                <tr>
+                    <td>datasetName</td>
+                    <td>以資料集完整名稱精確查詢，只提供公開資料集的紀錄。</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?datasetName=Sea%20turtle%20sightings%20in%20Taiwan%20%7C%20%E5%8F%B0%E7%81%A3%E6%B5%B7%E9%BE%9C%E7%9B%AE%E6%93%8A%E7%B4%80%E9%8C%84"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?datasetName=Sea turtle sightings in Taiwan | 台灣海龜目擊紀錄</a></td>
+                </tr>
+                <tr>
+                    <td>taibifDatasetID</td>
+                    <td>以 TaiBIF 資料集 UUID 查詢，與 datasetID 查詢相同。</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?taibifDatasetID=2e0a47e6-07f2-4b3d-9ed7-cfac5abccbb2"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?taibifDatasetID=2e0a47e6-07f2-4b3d-9ed7-cfac5abccbb2</a></td>
+                </tr>
+                <tr>
+                    <td>gbifDatasetID</td>
+                    <td>以 GBIF 資料集 ID 精確查詢。</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?gbifDatasetID=00000000-0000-4000-8000-000000000002"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?gbifDatasetID=00000000-0000-4000-8000-000000000002</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="article-content-wrapper">
+            <h3>其他資訊參數</h3>
+        </div>
+        <table class="table content-readable-table">
+            <thead>
+                <tr>
+                    <th>名稱</th>
+                    <th>備註</th>
+                    <th>範例</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>selfProduced</td>
+                    <td>需要使用控制詞彙進行查詢，請參閱下方「控制詞彙查詢參數對照表」</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?selfProduced=True"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?selfProduced=True</a></td>
+                </tr>
+                <tr>
+                    <td>license</td>
+                    <td>需要使用控制詞彙進行查詢，請參閱下方「控制詞彙查詢參數對照表」</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_occurrence_url }}?license=CC0"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_occurrence_url }}?license=CC0</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="article-content-wrapper">
+            <h3>控制詞彙查詢參數對照表</h3>
+        </div>
+        <p>以下各表列出限定查詢值的參數及其意義，請依表中拼字與標點輸入。</p>
+        <div class="api-subsection">
+            <h4 class="api-subsection-title">basisOfRecord</h4>
+            <table class="table content-readable-table">
+                <thead>
+                    <tr>
+                        <th>可接受的查詢值</th>
+                        <th>中文對照與說明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>PreservedSpecimen</code></td>
+                        <td>保存標本</td>
+                    </tr>
+                    <tr>
+                        <td><code>FossilSpecimen</code></td>
+                        <td>化石標本</td>
+                    </tr>
+                    <tr>
+                        <td><code>LivingSpecimen</code></td>
+                        <td>活體標本</td>
+                    </tr>
+                    <tr>
+                        <td><code>MaterialSample</code></td>
+                        <td>材料樣本、組織樣本</td>
+                    </tr>
+                    <tr>
+                        <td><code>HumanObservation</code></td>
+                        <td>人為觀測</td>
+                    </tr>
+                    <tr>
+                        <td><code>MachineObservation</code></td>
+                        <td>機器觀測</td>
+                    </tr>
+                    <tr>
+                        <td><code>Event</code></td>
+                        <td>調查活動</td>
+                    </tr>
+                    <tr>
+                        <td><code>Taxon</code></td>
+                        <td>名錄/分類群</td>
+                    </tr>
+                    <tr>
+                        <td><code>Occurrence</code></td>
+                        <td>出現紀錄</td>
+                    </tr>
+                    <tr>
+                        <td><code>MaterialEntity</code></td>
+                        <td>材料實體</td>
+                    </tr>
+                    <tr>
+                        <td><code>MaterialCitation</code></td>
+                        <td>材料引證</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="api-subsection">
+            <h4 class="api-subsection-title">taxonRank</h4>
+            <table class="table content-readable-table">
+                <thead>
+                    <tr>
+                        <th>可接受的查詢值</th>
+                        <th>中文對照與說明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>Kingdom</code></td>
+                        <td>界</td>
+                    </tr>
+                    <tr>
+                        <td><code>Phylum</code></td>
+                        <td>門</td>
+                    </tr>
+                    <tr>
+                        <td><code>Class</code></td>
+                        <td>綱</td>
+                    </tr>
+                    <tr>
+                        <td><code>Order</code></td>
+                        <td>目</td>
+                    </tr>
+                    <tr>
+                        <td><code>Family</code></td>
+                        <td>科</td>
+                    </tr>
+                    <tr>
+                        <td><code>Genus</code></td>
+                        <td>屬</td>
+                    </tr>
+                    <tr>
+                        <td><code>Species</code></td>
+                        <td>種</td>
+                    </tr>
+                    <tr>
+                        <td><code>Subspecies</code></td>
+                        <td>亞種</td>
+                    </tr>
+                    <tr>
+                        <td><code>Variety</code></td>
+                        <td>變種</td>
+                    </tr>
+                    <tr>
+                        <td><code>Form</code></td>
+                        <td>型</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="api-subsection">
+            <h4 class="api-subsection-title">kingdom</h4>
+            <table class="table content-readable-table">
+                <thead>
+                    <tr>
+                        <th>可接受的查詢值</th>
+                        <th>中文對照與說明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>Animalia</code></td>
+                        <td>動物界</td>
+                    </tr>
+                    <tr>
+                        <td><code>Archaea</code></td>
+                        <td>古菌界</td>
+                    </tr>
+                    <tr>
+                        <td><code>Bacteria</code></td>
+                        <td>細菌界</td>
+                    </tr>
+                    <tr>
+                        <td><code>Chromista</code></td>
+                        <td>原藻界</td>
+                    </tr>
+                    <tr>
+                        <td><code>Fungi</code></td>
+                        <td>真菌界</td>
+                    </tr>
+                    <tr>
+                        <td><code>Plantae</code></td>
+                        <td>植物界</td>
+                    </tr>
+                    <tr>
+                        <td><code>Protozoa</code></td>
+                        <td>原生動物界</td>
+                    </tr>
+                    <tr>
+                        <td><code>Viruses</code></td>
+                        <td>病毒</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="api-subsection">
+            <h4 class="api-subsection-title">establishmentMeans</h4>
+            <table class="table content-readable-table">
+                <thead>
+                    <tr>
+                        <th>可接受的查詢值</th>
+                        <th>中文對照與說明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>原生</code></td>
+                        <td>請使用完整中文值查詢</td>
+                    </tr>
+                    <tr>
+                        <td><code>原生：再引進</code></td>
+                        <td>請使用完整中文值查詢</td>
+                    </tr>
+                    <tr>
+                        <td><code>引進（外來、非原生、非原住）</code></td>
+                        <td>請使用完整中文值查詢</td>
+                    </tr>
+                    <tr>
+                        <td><code>引進（協助拓殖）</code></td>
+                        <td>請使用完整中文值查詢</td>
+                    </tr>
+                    <tr>
+                        <td><code>流浪的</code></td>
+                        <td>請使用完整中文值查詢</td>
+                    </tr>
+                    <tr>
+                        <td><code>不確定的（未知、隱源性）</code></td>
+                        <td>請使用完整中文值查詢</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="api-subsection">
+            <h4 class="api-subsection-title">occurrenceStatus</h4>
+            <table class="table content-readable-table">
+                <thead>
+                    <tr>
+                        <th>可接受的查詢值</th>
+                        <th>中文對照與說明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>出現</code></td>
+                        <td>紀錄所述的物種出現狀態</td>
+                    </tr>
+                    <tr>
+                        <td><code>未出現</code></td>
+                        <td>紀錄所述的物種出現狀態</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="api-subsection">
+            <h4 class="api-subsection-title">county</h4>
+            <table class="table content-readable-table">
+                <thead>
+                    <tr>
+                        <th>可接受的查詢值</th>
+                        <th>中文對照與說明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>基隆市</code></td>
+                        <td>基隆市</td>
+                    </tr>
+                    <tr>
+                        <td><code>新北市</code></td>
+                        <td>新北市</td>
+                    </tr>
+                    <tr>
+                        <td><code>臺北市</code></td>
+                        <td>臺北市</td>
+                    </tr>
+                    <tr>
+                        <td><code>桃園市</code></td>
+                        <td>桃園市</td>
+                    </tr>
+                    <tr>
+                        <td><code>新竹縣</code></td>
+                        <td>新竹縣</td>
+                    </tr>
+                    <tr>
+                        <td><code>新竹市</code></td>
+                        <td>新竹市</td>
+                    </tr>
+                    <tr>
+                        <td><code>苗栗縣</code></td>
+                        <td>苗栗縣</td>
+                    </tr>
+                    <tr>
+                        <td><code>臺中市</code></td>
+                        <td>臺中市</td>
+                    </tr>
+                    <tr>
+                        <td><code>彰化縣</code></td>
+                        <td>彰化縣</td>
+                    </tr>
+                    <tr>
+                        <td><code>南投縣</code></td>
+                        <td>南投縣</td>
+                    </tr>
+                    <tr>
+                        <td><code>雲林縣</code></td>
+                        <td>雲林縣</td>
+                    </tr>
+                    <tr>
+                        <td><code>嘉義縣</code></td>
+                        <td>嘉義縣</td>
+                    </tr>
+                    <tr>
+                        <td><code>嘉義市</code></td>
+                        <td>嘉義市</td>
+                    </tr>
+                    <tr>
+                        <td><code>臺南市</code></td>
+                        <td>臺南市</td>
+                    </tr>
+                    <tr>
+                        <td><code>高雄市</code></td>
+                        <td>高雄市</td>
+                    </tr>
+                    <tr>
+                        <td><code>屏東縣</code></td>
+                        <td>屏東縣</td>
+                    </tr>
+                    <tr>
+                        <td><code>宜蘭縣</code></td>
+                        <td>宜蘭縣</td>
+                    </tr>
+                    <tr>
+                        <td><code>花蓮縣</code></td>
+                        <td>花蓮縣</td>
+                    </tr>
+                    <tr>
+                        <td><code>臺東縣</code></td>
+                        <td>臺東縣</td>
+                    </tr>
+                    <tr>
+                        <td><code>澎湖縣</code></td>
+                        <td>澎湖縣</td>
+                    </tr>
+                    <tr>
+                        <td><code>金門縣</code></td>
+                        <td>金門縣</td>
+                    </tr>
+                    <tr>
+                        <td><code>連江縣</code></td>
+                        <td>連江縣</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="api-subsection">
+            <h4 class="api-subsection-title">selfProduced</h4>
+            <table class="table content-readable-table">
+                <thead>
+                    <tr>
+                        <th>可接受的查詢值</th>
+                        <th>中文對照與說明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>true</code></td>
+                        <td>第一手資料；也接受 True。</td>
+                    </tr>
+                    <tr>
+                        <td><code>false</code></td>
+                        <td>非第一手資料；也接受 False。</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="api-subsection">
+            <h4 class="api-subsection-title">license</h4>
+            <table class="table content-readable-table">
+                <thead>
+                    <tr>
+                        <th>可接受的查詢值</th>
+                        <th>中文對照與說明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>CC0</code></td>
+                        <td>公眾領域貢獻宣告。</td>
+                    </tr>
+                    <tr>
+                        <td><code>CC-BY</code></td>
+                        <td>創用 CC 姓名標示授權。</td>
+                    </tr>
+                    <tr>
+                        <td><code>CC-BY-NC</code></td>
+                        <td>創用 CC 姓名標示－非商業性授權。</td>
+                    </tr>
+                    <tr>
+                        <td><code>NA</code></td>
+                        <td>來源授權不明；不包含所有授權缺值。</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="article-content-wrapper">
+            <h3>回傳欄位說明</h3>
+        </div>
+        <table class="table content-readable-table">
+            <thead>
+                <tr>
+                    <th>名稱</th>
+                    <th>類型</th>
+                    <th>說明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>occurrenceID</td>
+                    <td>字串</td>
+                    <td>TaiBIF 物種出現紀錄識別碼。</td>
+                </tr>
+                <tr>
+                    <td>catalogNumber</td>
+                    <td>字串</td>
+                    <td>典藏機構登錄號。</td>
+                </tr>
+                <tr>
+                    <td>modified</td>
+                    <td>字串</td>
+                    <td>TaiBIF 資料解讀／處理日期，格式 YYYYMMDD，不是來源紀錄的原始修改日期。</td>
+                </tr>
+                <tr>
+                    <td>selfProduced</td>
+                    <td>布林值</td>
+                    <td>是否為第一手資料，以 true 或 false 表示，無法判定時為 null。</td>
+                </tr>
+                <tr>
+                    <td>license</td>
+                    <td>字串</td>
+                    <td>紀錄授權方式：CC0、CC-BY、CC-BY-NC，無法辨識時為 null。</td>
+                </tr>
+                <tr>
+                    <td>basisOfRecord</td>
+                    <td>字串</td>
+                    <td>紀錄類型，無法對應控制詞彙時為 null。</td>
+                </tr>
+                <tr>
+                    <td>recordNumber</td>
+                    <td>字串</td>
+                    <td>採集號。</td>
+                </tr>
+                <tr>
+                    <td>recordedBy</td>
+                    <td>字串</td>
+                    <td>記錄者／採集者。</td>
+                </tr>
+                <tr>
+                    <td>datasetName</td>
+                    <td>字串</td>
+                    <td>所屬公開資料集名稱，與 TBIA 資料集 API 一致。</td>
+                </tr>
+                <tr>
+                    <td>datasetID</td>
+                    <td>字串</td>
+                    <td>所屬資料集的 TaiBIF UUID，與 TBIA 資料集 API 一致。</td>
+                </tr>
+                <tr>
+                    <td>resourceCitationIdentifier</td>
+                    <td>字串</td>
+                    <td>所屬資料集的 GBIF 頁面網址。</td>
+                </tr>
+                <tr>
+                    <td>associatedMedia</td>
+                    <td>字串</td>
+                    <td>關聯多媒體。</td>
+                </tr>
+                <tr>
+                    <td>mediaLicense</td>
+                    <td>字串</td>
+                    <td>多媒體授權方式，採用與 license 相同的控制詞彙。</td>
+                </tr>
+                <tr>
+                    <td>organismQuantity</td>
+                    <td>數值</td>
+                    <td>數量。</td>
+                </tr>
+                <tr>
+                    <td>organismQuantityType</td>
+                    <td>字串</td>
+                    <td>數量單位。</td>
+                </tr>
+                <tr>
+                    <td>typeStatus</td>
+                    <td>字串</td>
+                    <td>典藏模式/引證類型。</td>
+                </tr>
+                <tr>
+                    <td>locality</td>
+                    <td>字串</td>
+                    <td>地區。</td>
+                </tr>
+                <tr>
+                    <td>verbatimSRS</td>
+                    <td>字串</td>
+                    <td>原始大地基準。</td>
+                </tr>
+                <tr>
+                    <td>geodeticDatum</td>
+                    <td>字串</td>
+                    <td>大地基準。</td>
+                </tr>
+                <tr>
+                    <td>coordinateUncertaintyInMeters</td>
+                    <td>數值</td>
+                    <td>以公尺為單位的坐標誤差。</td>
+                </tr>
+                <tr>
+                    <td>dataGeneralizations</td>
+                    <td>字串</td>
+                    <td>模糊化方式說明。</td>
+                </tr>
+                <tr>
+                    <td>decimalLatitude</td>
+                    <td>數值</td>
+                    <td>現有公開資料的十進位緯度，不以原始精確座標補值。</td>
+                </tr>
+                <tr>
+                    <td>decimalLongitude</td>
+                    <td>數值</td>
+                    <td>現有公開資料的十進位經度，不以原始精確座標補值。</td>
+                </tr>
+                <tr>
+                    <td>countryCode</td>
+                    <td>字串</td>
+                    <td>國家代碼。</td>
+                </tr>
+                <tr>
+                    <td>county</td>
+                    <td>字串</td>
+                    <td>直轄市或省轄縣市。</td>
+                </tr>
+                <tr>
+                    <td>year</td>
+                    <td>整數</td>
+                    <td>西元年。</td>
+                </tr>
+                <tr>
+                    <td>month</td>
+                    <td>整數</td>
+                    <td>月。</td>
+                </tr>
+                <tr>
+                    <td>day</td>
+                    <td>整數</td>
+                    <td>日。</td>
+                </tr>
+                <tr>
+                    <td>verbatimScientificName</td>
+                    <td>字串</td>
+                    <td>來源提供的原始物種學名。</td>
+                </tr>
+                <tr>
+                    <td>scientificName</td>
+                    <td>字串</td>
+                    <td>TaiBIF 現有資料處理流程採用的校定學名。</td>
+                </tr>
+                <tr>
+                    <td>vernacularName</td>
+                    <td>字串</td>
+                    <td>校定物種俗名。</td>
+                </tr>
+                <tr>
+                    <td>scientificNameID</td>
+                    <td>字串</td>
+                    <td>TaiBIF 校定物種名稱代碼，使用的分類觀依據 nameAccordingTo。</td>
+                </tr>
+                <tr>
+                    <td>nameAccordingTo</td>
+                    <td>字串</td>
+                    <td>校定學名的參考來源，例如 TaiCOL 或 GBIF。</td>
+                </tr>
+                <tr>
+                    <td>taxonRank</td>
+                    <td>字串</td>
+                    <td>鑑定層級。</td>
+                </tr>
+                <tr>
+                    <td>taxonGroup</td>
+                    <td>字串</td>
+                    <td>TaiBIF 生物類群。</td>
+                </tr>
+                <tr>
+                    <td>kingdom</td>
+                    <td>字串</td>
+                    <td>界。</td>
+                </tr>
+                <tr>
+                    <td>phylum</td>
+                    <td>字串</td>
+                    <td>門。</td>
+                </tr>
+                <tr>
+                    <td>class</td>
+                    <td>字串</td>
+                    <td>綱。</td>
+                </tr>
+                <tr>
+                    <td>order</td>
+                    <td>字串</td>
+                    <td>目。</td>
+                </tr>
+                <tr>
+                    <td>family</td>
+                    <td>字串</td>
+                    <td>科。</td>
+                </tr>
+                <tr>
+                    <td>genus</td>
+                    <td>字串</td>
+                    <td>屬。</td>
+                </tr>
+                <tr>
+                    <td>originalOccurrenceID</td>
+                    <td>字串</td>
+                    <td>來源提供的原始出現紀錄識別碼。</td>
+                </tr>
+                <tr>
+                    <td>gbifID</td>
+                    <td>字串</td>
+                    <td>GBIF 出現紀錄識別碼。</td>
+                </tr>
+                <tr>
+                    <td>establishmentMeans</td>
+                    <td>字串</td>
+                    <td>類群當地原生性</td>
+                </tr>
+                <tr>
+                    <td>occurrenceStatus</td>
+                    <td>字串</td>
+                    <td>觀測狀態</td>
+                </tr>
+                <tr>
+                    <td>eventDate</td>
+                    <td>字串</td>
+                    <td>觀測日期，保留原有公開資料的日期表示。</td>
+                </tr>
+                <tr>
+                    <td>coordinatePrecision</td>
+                    <td>浮點數</td>
+                    <td>既有公開座標的精度或模糊化程度。</td>
+                </tr>
+                <tr>
+                    <td>country</td>
+                    <td>字串</td>
+                    <td>國家</td>
+                </tr>
+                <tr>
+                    <td>habitatReserve</td>
+                    <td>字串</td>
+                    <td>紀錄位置對應的自然生態保護區。</td>
+                </tr>
+                <tr>
+                    <td>wildlifeReserve</td>
+                    <td>字串</td>
+                    <td>紀錄位置對應的野生動物保護區。</td>
+                </tr>
+                <tr>
+                    <td>datasetShortName</td>
+                    <td>字串</td>
+                    <td>資料集短名稱。</td>
+                </tr>
+                <tr>
+                    <td>gbifDatasetID</td>
+                    <td>字串</td>
+                    <td>GBIF 資料集識別碼。</td>
+                </tr>
+                <tr>
+                    <td>issue</td>
+                    <td>字串</td>
+                    <td>資料處理時發現的問題；多個值以 | 分隔。</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

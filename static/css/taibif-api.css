@@ -72,3 +72,49 @@ ul li div {
 /* .table-container table {
     font-size: 14px !important;
 } */
+
+.api-subsection {
+    margin: 24px 0;
+}
+
+.content-readable-panel .api-subsection-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 14px;
+    padding: 0;
+    color: #4a3e3a;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.api-subsection-title::after {
+    content: "";
+    width: 32px;
+    height: 2px;
+    background-color: #cd7745;
+}
+
+.content-readable-panel[data-cat="tbia-usage"] .article-content-wrapper {
+    margin: 32px 0 16px;
+}
+
+.content-readable-panel[data-cat="tbia-usage"] .pub-data-section > .article-content-wrapper:first-child {
+    margin-top: 16px;
+}
+
+.content-readable-panel[data-cat="tbia-usage"] .article-content-wrapper > h3 {
+    margin: 0;
+    padding: 0 0 10px;
+    color: #352d2a;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.dropdown-menu-flexible .api-nav-divider {
+    height: 0;
+    margin: 16px 20px;
+    border-top: 2px solid #cd7745;
+}

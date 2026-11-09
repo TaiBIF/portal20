@@ -1,8 +1,12 @@
 from django.urls import path, re_path
 
 from . import views
+from .tbia import dataset_api as tbia_dataset_api
+from .tbia_occurrence import occurrence_api as tbia_occurrence_api
 
 urlpatterns = [
+    path("v4/dataset", tbia_dataset_api, name="tbia-dataset"),
+    path("v4/occurrence", tbia_occurrence_api, name="tbia-occurrence"),
     # path("dataset/search/", views.search_dataset, name="api-search-dataset"),
     # re_path(
     #     "^occurrence/(?P<cat>search|taxonomy|charts|gallery|map|download)/",

@@ -1,0 +1,263 @@
+{% load i18n %}
+{% url 'tbia-dataset' as tbia_dataset_url %}
+<div class="col-12 col-md-9 nav-item-content hide content-readable-panel"
+     data-cat="tbia-dataset">
+    <h4 class="heading-lg-ul">{% trans "V4 資料集" %}</h4>
+    <p>
+        <strong>端點：</strong><code>GET {{ tbia_dataset_url }}</code>
+    </p>
+    <p>各參數均為選填，可依下表查詢公開資料集。共通分頁及回應規則請參閱「TBIA 說明」。</p>
+    <div class="pub-data-section">
+        <div class="article-content-wrapper">
+            <h3>查詢參數</h3>
+        </div>
+        <table class="table content-readable-table">
+            <thead>
+                <tr>
+                    <th>名稱</th>
+                    <th>備註</th>
+                    <th>範例</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>datasetID</td>
+                    <td>以 TaiBIF 資料集 ID 精確查詢指定資料集。</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_dataset_url }}?datasetID=2e0a47e6-0fce-4db5-a4d2-5d2c0f37b781"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_dataset_url }}?datasetID=2e0a47e6-0fce-4db5-a4d2-5d2c0f37b781</a></td>
+                </tr>
+                <tr>
+                    <td>datasetName</td>
+                    <td>以資料集名稱查詢，回傳名稱包含指定文字的資料集。</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_dataset_url }}?datasetName=%E8%87%BA%E7%81%A3"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_dataset_url }}?datasetName=臺灣</a></td>
+                </tr>
+                <tr>
+                    <td>gbifDatasetID</td>
+                    <td>以 GBIF 資料集 ID 精確查詢指定資料集。</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_dataset_url }}?gbifDatasetID=85af82a6-f762-11e1-a439-00145eb45e9a"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_dataset_url }}?gbifDatasetID=85af82a6-f762-11e1-a439-00145eb45e9a</a></td>
+                </tr>
+                <tr>
+                    <td>datasetPublisher</td>
+                    <td>以資料發布單位名稱查詢，支援部分名稱。</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_dataset_url }}?datasetPublisher=%E7%A0%94%E7%A9%B6"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_dataset_url }}?datasetPublisher=研究</a></td>
+                </tr>
+                <tr>
+                    <td>datasetPublisherID</td>
+                    <td>以資料發布單位 ID 精確查詢。</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_dataset_url }}?datasetPublisherID=e506ec0c-b3c5-4c3d-ae69-ebc56596fc52"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_dataset_url }}?datasetPublisherID=e506ec0c-b3c5-4c3d-ae69-ebc56596fc52</a></td>
+                </tr>
+                <tr>
+                    <td>core</td>
+                    <td>需要使用控制詞彙進行查詢，請參閱下方「控制詞彙查詢參數對照表」</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_dataset_url }}?core=OCCURRENCE"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_dataset_url }}?core=OCCURRENCE</a></td>
+                </tr>
+                <tr>
+                    <td>source</td>
+                    <td>需要使用控制詞彙進行查詢，請參閱下方「控制詞彙查詢參數對照表」</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_dataset_url }}?source=TaiBIF%20IPT&amp;source=GBIF"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_dataset_url }}?source=TaiBIF IPT&amp;source=GBIF</a></td>
+                </tr>
+                <tr>
+                    <td>datasetLicense</td>
+                    <td>需要使用控制詞彙進行查詢，請參閱下方「控制詞彙查詢參數對照表」</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_dataset_url }}?datasetLicense=CC0&amp;datasetLicense=CC-BY"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_dataset_url }}?datasetLicense=CC0&amp;datasetLicense=CC-BY</a></td>
+                </tr>
+                <tr>
+                    <td>created</td>
+                    <td>以資料集建立日期查詢。格式：YYYYMMDD；區間以逗號分隔，包含起訖日全天，日期以臺灣時區為準。</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_dataset_url }}?created=20240101,20241231"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_dataset_url }}?created=20240101,20241231</a></td>
+                </tr>
+                <tr>
+                    <td>modified</td>
+                    <td>以資料集更新日期查詢。格式：YYYYMMDD；區間以逗號分隔，包含起訖日全天，日期以臺灣時區為準。</td>
+                    <td><a class="highlight-link"
+                           href="{{ tbia_dataset_url }}?modified=20240101,20241231"
+                           target="_blank"
+                           rel="noopener noreferrer">{{ tbia_dataset_url }}?modified=20240101,20241231</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="article-content-wrapper">
+            <h3>控制詞彙查詢參數對照表</h3>
+        </div>
+        <p>以下各表列出限定查詢值的參數及其意義。請依表中大小寫、空格與標點輸入。</p>
+        <div class="api-subsection">
+            <h4 class="api-subsection-title">core</h4>
+            <table class="table content-readable-table">
+                <thead>
+                    <tr>
+                        <th>可接受的查詢值</th>
+                        <th>中文對照與說明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>SAMPLINGEVENT</code></td>
+                        <td>調查活動</td>
+                    </tr>
+                    <tr>
+                        <td><code>OCCURRENCE</code></td>
+                        <td>出現紀錄</td>
+                    </tr>
+                    <tr>
+                        <td><code>CHECKLIST</code></td>
+                        <td>物種名錄</td>
+                    </tr>
+                    <tr>
+                        <td><code>METADATA</code></td>
+                        <td>僅詮釋資料</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="api-subsection">
+            <h4 class="api-subsection-title">source</h4>
+            <table class="table content-readable-table">
+                <thead>
+                    <tr>
+                        <th>可接受的查詢值</th>
+                        <th>中文對照與說明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>TaiBIF IPT</code></td>
+                        <td>透過 TaiBIF IPT 發布的資料集</td>
+                    </tr>
+                    <tr>
+                        <td><code>GBIF</code></td>
+                        <td>來自 GBIF 的資料集</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="api-subsection">
+            <h4 class="api-subsection-title">datasetLicense</h4>
+            <table class="table content-readable-table">
+                <thead>
+                    <tr>
+                        <th>可接受的查詢值</th>
+                        <th>中文對照與說明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>CC0</code></td>
+                        <td>公眾領域貢獻宣告</td>
+                    </tr>
+                    <tr>
+                        <td><code>CC-BY</code></td>
+                        <td>創用 CC 姓名標示授權</td>
+                    </tr>
+                    <tr>
+                        <td><code>CC-BY-NC</code></td>
+                        <td>創用 CC 姓名標示－非商業性授權</td>
+                    </tr>
+                    <tr>
+                        <td><code>NA</code></td>
+                        <td>來源標示授權不明；不包含所有授權缺值。此值僅供查詢，回傳欄位不會出現字串 NA。</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="article-content-wrapper">
+            <h3>回傳欄位說明</h3>
+        </div>
+        <table class="table content-readable-table">
+            <thead>
+                <tr>
+                    <th>名稱</th>
+                    <th>類型</th>
+                    <th>說明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>datasetName</td>
+                    <td>字串</td>
+                    <td>資料集名稱。</td>
+                </tr>
+                <tr>
+                    <td>datasetID</td>
+                    <td>字串</td>
+                    <td>TaiBIF 資料集的唯一識別碼（UUID）。</td>
+                </tr>
+                <tr>
+                    <td>gbifDatasetID</td>
+                    <td>字串</td>
+                    <td>GBIF 資料集的唯一識別碼。</td>
+                </tr>
+                <tr>
+                    <td>occurrenceCount</td>
+                    <td>整數</td>
+                    <td>資料集含括的紀錄總筆數。</td>
+                </tr>
+                <tr>
+                    <td>resourceCitationIdentifier</td>
+                    <td>字串</td>
+                    <td>GBIF 資料集頁面的完整網址；沒有 GBIF 資料集 ID 時為 null。</td>
+                </tr>
+                <tr>
+                    <td>datasetPublisher</td>
+                    <td>字串</td>
+                    <td>資料發布單位名稱。</td>
+                </tr>
+                <tr>
+                    <td>datasetPublisherID</td>
+                    <td>字串</td>
+                    <td>資料發布單位的識別碼。</td>
+                </tr>
+                <tr>
+                    <td>core</td>
+                    <td>字串</td>
+                    <td>資料集核心類型。控制詞彙：SAMPLINGEVENT（調查活動）、OCCURRENCE（出現紀錄）、CHECKLIST（物種名錄）、METADATA（僅詮釋資料）。</td>
+                </tr>
+                <tr>
+                    <td>source</td>
+                    <td>字串</td>
+                    <td>資料集來源：TaiBIF IPT 或 GBIF。</td>
+                </tr>
+                <tr>
+                    <td>datasetLicense</td>
+                    <td>字串</td>
+                    <td>資料集的授權方式。可能值：CC0（公眾領域貢獻宣告）、CC-BY（姓名標示）、CC-BY-NC（姓名標示－非商業性）。來源標示授權不明、未提供或尚無法辨識時回傳 null。</td>
+                </tr>
+                <tr>
+                    <td>created</td>
+                    <td>字串</td>
+                    <td>資料集建立日期，臺灣時區，格式 YYYYMMDD。</td>
+                </tr>
+                <tr>
+                    <td>modified</td>
+                    <td>字串</td>
+                    <td>資料集更新日期，臺灣時區，格式 YYYYMMDD。</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
